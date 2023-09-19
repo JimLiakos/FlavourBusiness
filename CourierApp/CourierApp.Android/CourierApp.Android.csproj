@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,8 +56,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Essentials">
+      <Version>1.7.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -88,14 +91,14 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-	  <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.Droid\OOAdvantech.NetStandard.Droid.csproj">
-		  <Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
-		  <Name>OOAdvantech.NetStandard.Droid</Name>
-	  </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.Droid\OOAdvantech.NetStandard.Droid.csproj">
+      <Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
+      <Name>OOAdvantech.NetStandard.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CourierApp\CourierApp.csproj">
       <Project>{5518E1C5-2C00-48F8-A2A2-5F6BB915A750}</Project>
       <Name>CourierApp</Name>
     </ProjectReference>
   </ItemGroup>
- <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

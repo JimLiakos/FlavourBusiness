@@ -1,34 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk" ProjectGUID="39d098e4-84ed-4a3c-a9f6-1d94aee897d8">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>
-
-<ItemGroup>
-	<PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
-	<PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
-	<PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
-	<PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
-</ItemGroup>
-<ItemGroup>
-	<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
-	<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Json.NetStandard\OOAdvantech.Json.NetStandard.csproj" />
-	<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
-	<ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
-	<ProjectReference Include="..\..\DontWaitAppNS\FlavourOrderPresentation\FlavourOrderPresentation.csproj" />
-</ItemGroup>
-	
-	
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Json.NetStandard\OOAdvantech.Json.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+    <ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
+    <ProjectReference Include="..\..\DontWaitAppNS\FlavourOrderPresentation\FlavourOrderPresentation.csproj" />
+  </ItemGroup>
 </Project>

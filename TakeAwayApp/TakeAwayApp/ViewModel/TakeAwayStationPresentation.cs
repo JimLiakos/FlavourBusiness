@@ -582,10 +582,8 @@ namespace TakeAwayApp.ViewModel
             if (member == nameof(IServicesContextWorker.ActiveShiftWork))
             {
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
-
                 GetMessages();
             }
-
         }
 
         /// <MetaDataID>{4ee6f4c1-6fbf-41ab-9499-ea5f181cb690}</MetaDataID>

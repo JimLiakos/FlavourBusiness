@@ -9,99 +9,21 @@ using System.Threading.Tasks;
 
 namespace CourierApp
 {
-    public class ApplicationSettings : DontWaitApp.ApplicationSettings
+    /// <MetaDataID>{ca4de730-f591-438c-86eb-e1054f058dc0}</MetaDataID>
+    [BackwardCompatibilityID("{ca4de730-f591-438c-86eb-e1054f058dc0}")]
+    [Persistent()]
+    public class ApplicationSettings 
     {
-         
-
-        /// <exclude>Excluded</exclude>
-        string _TakeAwayStationCredentialKey;
-
-
-        /// <MetaDataID>{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}</MetaDataID>
-
-        [PersistentMember(nameof(_TakeAwayStationCredentialKey))]
-        [BackwardCompatibilityID("+1")]
-        public string TakeAwayStationCredentialKey
-        {
-            get => _TakeAwayStationCredentialKey;
-            set
-            {
-                if (_TakeAwayStationCredentialKey != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _TakeAwayStationCredentialKey = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
-
-        /// <exclude>Excluded</exclude>
-        string _DeliveryCallCenterCredentialKey;
-
-        /// <MetaDataID>{dc7d2a80-7eb1-42a7-a5e9-b8f71560acfa}</MetaDataID>
-        [PersistentMember(nameof(_DeliveryCallCenterCredentialKey))]
-        [BackwardCompatibilityID("+3")]
-        public string DeliveryCallCenterCredentialKey
-        {
-            get => _DeliveryCallCenterCredentialKey;
-            internal set
-            {
-                if (_DeliveryCallCenterCredentialKey != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _DeliveryCallCenterCredentialKey = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
-
-
-
-        /// <exclude>Excluded</exclude>
-        string _TakeAwayStationTitle;
-
-
-        /// <MetaDataID>{4b583826-fc80-4c00-acc3-7e5cdd0f2c36}</MetaDataID>
-        [PersistentMember(nameof(_TakeAwayStationTitle))]
-        [BackwardCompatibilityID("+2")]
-        public string TakeAwayStationTitle
-        {
-            get => _TakeAwayStationTitle;
-
-            set
-            {
-                if (_TakeAwayStationTitle != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _TakeAwayStationTitle = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
-
-
-
-
-
-        /// <MetaDataID>{ba4a2ec6-cafc-4042-8a38-cbec16bd17e5}</MetaDataID>
-        public static string ExtraStoragePath { get; internal set; }
-
-
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
-
+   
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
 
+        public static string ExtraStoragePath { get; internal set; }
 
         /// <MetaDataID>{f7626e2a-7093-42fa-bdb7-2f5aef189a1e}</MetaDataID>
-        public static ObjectStorage AppSettingsStorage
+        public static OOAdvantech.PersistenceLayer.ObjectStorage AppSettingsStorage
         {
             get
             {
@@ -119,19 +41,19 @@ namespace CourierApp
 
                     if (!System.IO.Directory.Exists(appDataPath))
                         System.IO.Directory.CreateDirectory(appDataPath);
-                    string storageLocation = appDataPath + "\\PreparationStationAppSettings.xml";
+                    string storageLocation = appDataPath + "\\CourierAppSettings.xml";
 #endif
 
                     try
                     {
-                        _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("PreparationStationAppSettings", storageLocation, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
+                        _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("CourierAppSettings", storageLocation, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
                     }
                     catch (StorageException error)
                     {
 
                         if (error.Reason == StorageException.ExceptionReason.StorageDoesnotExist)
                         {
-                            _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.NewStorage("PreparationStationAppSettings",
+                            _AppSettingsStorage = OOAdvantech.PersistenceLayer.ObjectStorage.NewStorage("CourierAppSettings",
                                                                     storageLocation,
                                                                     "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
                         }
@@ -149,6 +71,8 @@ namespace CourierApp
 
 
 
+        /// <exclude>Excluded</exclude>
+        protected static ApplicationSettings _Current;
 
         /// <MetaDataID>{cf33574b-2964-47d3-9d1e-d9f5d778fa8d}</MetaDataID>
         public new static ApplicationSettings Current
@@ -173,7 +97,7 @@ namespace CourierApp
             }
         }
 
-
+        public string CourierObjectRef { get; internal set; }
     }
 }
 

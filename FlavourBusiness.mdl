@@ -2700,6 +2700,217 @@
 		quid       	"6474ABEC00C5"
 		exportControl 	"Public"
 		logical_models 	(list unit_reference_list)
+		logical_presentations 	(list unit_reference_list))
+	    (object Class_Category "CourierApp"
+		attributes 	(list Attribute_Set
+		    (object Attribute
+			tool       	"MetaData"
+			name       	"MetaObjectID"
+			value      	"CourierApp")
+		    (object Attribute
+			tool       	"C#"
+			name       	"FullName"
+			value      	"CourierApp"))
+		quid       	"65092769035B"
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "App"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"MetaObjectID"
+				value      	"{fb79f3c9-89fe-4efa-b3ed-73078ac2b894}"))
+			quid       	"650927690365"
+			operations 	(list Operations
+			    (object Operation "App"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{f2aa7a20-355b-4754-a588-cfb9d23250e1}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283602A5"))
+				quid       	"6509283602A5"
+				result     	"void"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "OnStart"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{cafbaedf-880a-4314-971b-3a8796e365a3}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283602B6"))
+				quid       	"6509283602B6"
+				result     	"void"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "OnSleep"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{b759c930-dff3-4bfc-a91c-038b6fb30d15}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283602C1"))
+				quid       	"6509283602C1"
+				result     	"void"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "OnResume"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{646d5d92-8d90-4ee3-9dae-6bc9fb5d590a}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283602CC"))
+				quid       	"6509283602CC"
+				result     	"void"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0))
+			module     	"Component View::CourierApp::CourierApp"
+			quidu      	"65087AFB00DA"
+			language   	"C#")
+		    (object Class "ApplicationSettings"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"MetaObjectID"
+				value      	"{ca4de730-f591-438c-86eb-e1054f058dc0}")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityIDTransfered"
+				value      	"True")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityID"
+				value      	"")
+			    (object Attribute
+				tool       	"C#"
+				name       	"Identity"
+				value      	"{ca4de730-f591-438c-86eb-e1054f058dc0}")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"LastMemberID"
+				value      	"1"))
+			quid       	"6509283602E3"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"65092837014F"
+				supplier   	"Logical View::DontWaitApp::ApplicationSettings"
+				quidu      	"5EFD67BC02AC"))
+			class_attributes 	(list class_attribute_list
+			    (object ClassAttribute "ExtraStoragePath"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{ba4a2ec6-cafc-4042-8a38-cbec16bd17e5}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283703B9")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE))
+				quid       	"6509283703B9"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "AppSettingsStorage"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{f7626e2a-7093-42fa-bdb7-2f5aef189a1e}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"650928380021")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE))
+				quid       	"650928380021"
+				type       	"OOAdvantech.PersistenceLayer.ObjectStorage"
+				exportControl 	"Public")
+			    (object ClassAttribute "Current"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{cf33574b-2964-47d3-9d1e-d9f5d778fa8d}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"650928380064")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE))
+				quid       	"650928380064"
+				type       	"CourierApp.ApplicationSettings"
+				exportControl 	"Public"))
+			module     	"Component View::CourierApp::CourierApp"
+			quidu      	"65087AFB00DA"
+			language   	"C#"
+			persistence 	"Persistent")
+		    (object Class "MainPage"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"MetaObjectID"
+				value      	"{86a3a8b4-2d1b-4621-a111-25305b60b1e7}"))
+			quid       	"6509283800BE"
+			operations 	(list Operations
+			    (object Operation "MainPage"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{cf8d310d-7926-490d-81f9-2e9032f450f8}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"6509283802B7"))
+				quid       	"6509283802B7"
+				result     	"void"
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0))
+			module     	"Component View::CourierApp::CourierApp"
+			quidu      	"65087AFB00DA"
+			language   	"C#"))
 		logical_presentations 	(list unit_reference_list)))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
@@ -3654,7 +3865,20 @@
 	    (object SubSystem "CourierApp"
 		quid       	"65087AD0002F"
 		physical_models 	(list unit_reference_list
-		    (object module "CourierAppt" "NotAModuleType" "NotAModulePart"
+		    (object module "CourierApp" "NotAModuleType" "NotAModulePart"
+			attributes 	(list Attribute_Set
+			    (object Attribute
+				tool       	"DotNet"
+				name       	"Solution"
+				value      	"$dot Net Projects Path\\FlavourBusiness\\CourierApp\\CourierApp.sln")
+			    (object Attribute
+				tool       	"DotNet"
+				name       	"Project"
+				value      	"$dot Net Projects Path\\FlavourBusiness\\CourierApp\\CourierApp\\CourierApp.csproj")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"MetaObjectID"
+				value      	"39d098e4-84ed-4a3c-a9f6-1d94aee897d8"))
 			quid       	"65087AFB00DA"
 			stereotype 	""
 			language   	"C#"))
@@ -3668,7 +3892,7 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object ModView "Component View::CourierApp::CourierAppt" "NotAModuleType" "NotAModulePart" @91
+			    (object ModView "Component View::CourierApp::CourierApp" "NotAModuleType" "NotAModulePart" @91
 				location   	(562, 400)
 				font       	(object Font
 				    size       	10
@@ -3682,20 +3906,19 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@91
-				    location   	(484, 373)
+				    location   	(527, 375)
 				    fill_color 	13434879
 				    anchor_loc 	3
 				    nlines     	2
-				    max_width  	294
-				    label      	"CourierAppt")
+				    max_width  	126
+				    label      	"CourierApp")
 				icon_style 	"Decoration"
 				line_color 	3342489
 				fill_color 	13434879
 				quidu      	"65087AFB00DA"
-				width      	531
-				height     	175
-				width      	531
-				height     	175))))))
+				width      	228
+				width      	228
+				height     	162))))))
 	physical_presentations 	(list unit_reference_list
 	    (object Module_Diagram "Main"
 		quid       	"5721F36F021F"

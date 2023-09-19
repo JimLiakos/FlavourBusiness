@@ -7,6 +7,7 @@ using System.Linq;
 using FlavourBusinessManager.RoomService;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using FlavourBusinessFacade.HumanResources;
 
 namespace DontWaitApp
 {
@@ -333,10 +334,10 @@ namespace DontWaitApp
             }
         }
 
-
+        
 
         /// <exclude>Excluded</exclude>
-       protected static ApplicationSettings _Current;
+        protected static ApplicationSettings _Current;
 
         /// <MetaDataID>{392dfc5c-a5b1-46d6-a5a1-4f456e14e755}</MetaDataID>
         public static ApplicationSettings Current
