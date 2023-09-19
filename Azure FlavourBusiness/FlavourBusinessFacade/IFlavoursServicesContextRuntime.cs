@@ -186,8 +186,9 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{5baba715-4433-44f0-9317-8031e719f00c}</MetaDataID>
         ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
-        
 
+        /// <MetaDataID>{7c8299af-cb13-47ba-8d8b-57ee819b9d4b}</MetaDataID>
+        ICourier AssignCourierNativeUser(string courierAssignKey, string userName, string password, string userFullName);
 
         /// <MetaDataID>{bb9b4c11-c932-495d-ab49-31f5ad2e4241}</MetaDataID>
         string RestaurantMenuDataSharedUri { get; }
@@ -228,8 +229,7 @@ namespace FlavourBusinessFacade
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
         /// <MetaDataID>{435882c5-db4c-4d32-9d44-ae0607a3fd3d}</MetaDataID>
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
-        /// <MetaDataID>{7c8299af-cb13-47ba-8d8b-57ee819b9d4b}</MetaDataID>
-        ICourier AssignCourierNativeUser(string courierAssignKey, string userName, string password, string userFullName);
+        
 
 
 #endif

@@ -4,6 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
+#if DeviceDotNet
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+#endif
+
+
 namespace ServiceContextManagerApp
 {
 

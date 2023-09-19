@@ -237,17 +237,17 @@ namespace ServiceContextManagerApp.Proxies
             System.Type[] argsTypes = new System.Type[1];
             args[0] = mealCourses;
             argsTypes[0] = typeof(System.Collections.Generic.IList<FlavourBusinessManager.RoomService.ViewModel.MealCourse>);
-            object retValue = this.Invoke(typeof(ServiceContextManagerApp.MealCoursesUpdatedHandle), "Invoke", args, argsTypes);
+            object retValue = this.Invoke(typeof(FlavourBusinessManager.RoomService.ViewModel.MealCoursesUpdatedHandle), "Invoke", args, argsTypes);
         }
         
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
-            eventInfo.AddEventHandler(target, new ServiceContextManagerApp.MealCoursesUpdatedHandle(this.Invoke));
+            eventInfo.AddEventHandler(target, new FlavourBusinessManager.RoomService.ViewModel.MealCoursesUpdatedHandle(this.Invoke));
         }
         
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
-            eventInfo.RemoveEventHandler(target, new ServiceContextManagerApp.MealCoursesUpdatedHandle(this.Invoke));
+            eventInfo.RemoveEventHandler(target, new FlavourBusinessManager.RoomService.ViewModel.MealCoursesUpdatedHandle(this.Invoke));
         }
     }
     

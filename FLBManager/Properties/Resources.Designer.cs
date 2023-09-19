@@ -97,6 +97,33 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign  courier device.
+        /// </summary>
+        public static string AssignCourierDevicePrompt {
+            get {
+                return ResourceManager.GetString("AssignCourierDevicePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Courier Divice.
+        /// </summary>
+        public static string AssignCourierDeviceTitle {
+            get {
+                return ResourceManager.GetString("AssignCourierDeviceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan to register courier device.
+        /// </summary>
+        public static string AssignCourierDivecePrompt {
+            get {
+                return ResourceManager.GetString("AssignCourierDivecePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign  device.
         /// </summary>
         public static string AssignPreparationDevicePrompt {

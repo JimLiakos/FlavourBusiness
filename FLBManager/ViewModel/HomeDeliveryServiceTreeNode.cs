@@ -36,6 +36,16 @@ namespace FLBManager.ViewModel
             });
 
 
+            AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                var sdsd = this.HomeDeliveryService.ServicesPointIdentity;
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup(Properties.Resources.AssignCourierDeviceTitle , Properties.Resources.AssignCourierDevicePrompt) { CodeValue = this.HomeDeliveryService.ServicesPointIdentity };
+                QRCodePopup.Owner = win;
+                QRCodePopup.ShowDialog();
+
+            });
+
 
             NewTakeAwaySationCommand = new RelayCommand((object sender) =>
             {
@@ -115,6 +125,8 @@ namespace FLBManager.ViewModel
         public RelayCommand LaunchHomeDeliveryCommand { get; protected set; }
         public RelayCommand SettingsCommand { get; protected set; }
 
+        public RelayCommand AssignCommand { get; protected set; }
+
         private void OpenHomeDeliverySettings()
         {
             System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
@@ -168,6 +180,16 @@ namespace FLBManager.ViewModel
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
                     menuItem.Command = SettingsCommand;
                     _ContextMenuItems.Add(menuItem);
+
+
+                    menuItem = new MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/Key16.png"));
+                    menuItem.Header = Properties.Resources.AssignCourierDevicePrompt;
+                    menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                    menuItem.Command = AssignCommand;
+
+                    _ContextMenuItems.Add(menuItem);
+
 
                     _ContextMenuItems.Add(null);
 

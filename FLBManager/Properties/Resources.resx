@@ -132,6 +132,15 @@
     <value>Administration</value>
     <comment>Tree view node Name for Administration</comment>
   </data>
+  <data name="AssignCourierDevicePrompt" xml:space="preserve">
+    <value>Assign  courier device</value>
+  </data>
+  <data name="AssignCourierDeviceTitle" xml:space="preserve">
+    <value>Courier Divice</value>
+  </data>
+  <data name="AssignCourierDivecePrompt" xml:space="preserve">
+    <value>Scan to register courier device</value>
+  </data>
   <data name="AssignPreparationDevicePrompt" xml:space="preserve">
     <value>Assign  device</value>
   </data>

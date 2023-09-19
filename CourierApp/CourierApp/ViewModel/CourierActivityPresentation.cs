@@ -34,12 +34,28 @@ namespace CourierApp.ViewModel
 
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
-            throw new NotImplementedException();
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+            try
+            {
+                UserData userData = new UserData() { UserName = UserName, Email = Email, FullName = FullName, PhoneNumber = PhoneNumber };
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
         }
 
         public IList<UserData> GetNativeUsers()
         {
             throw new NotImplementedException();
+            //return this.TakeAwayStation.GetNativeUsers();
+            
         }
 
         public OOAdvantech.Remoting.MarshalByRefObject GetObjectFromUri(string uri)

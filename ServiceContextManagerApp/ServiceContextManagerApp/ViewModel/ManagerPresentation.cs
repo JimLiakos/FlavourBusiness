@@ -689,6 +689,7 @@ namespace ServiceContextManagerApp
                         else
                             _ServicesContexts = new List<IServicesContextPresentation>();
 
+                        var count = _ServicesContexts.Count;
 
                         _ObjectChangeState?.Invoke(this, null);
                         return true;
