@@ -15,7 +15,7 @@ namespace CourierApp
 
         /// <exclude>Excluded</exclude>
         string _TakeAwayStationCredentialKey;
-
+         
 
         /// <MetaDataID>{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}</MetaDataID>
 
