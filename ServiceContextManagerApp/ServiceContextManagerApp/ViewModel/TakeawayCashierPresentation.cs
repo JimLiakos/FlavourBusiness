@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.HumanResources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,9 @@ namespace ServiceContextManagerApp
             TakeawayCashier = takeawayCashier;
             ActiveShiftWork = TakeawayCashier.ActiveShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
+            NativeUser=takeawayCashier.NativeUser;
         }
+        public bool NativeUser { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <MetaDataID>{edf5cf93-b741-4640-9ff3-f28ff364d91f}</MetaDataID>
@@ -34,6 +37,14 @@ namespace ServiceContextManagerApp
             get
             {
                 return TakeawayCashier.Identity;
+            }
+        }
+        public string WorkerIdentity
+        {
+            get
+            {
+
+                return this.TakeawayCashierIdentity;
             }
         }
 

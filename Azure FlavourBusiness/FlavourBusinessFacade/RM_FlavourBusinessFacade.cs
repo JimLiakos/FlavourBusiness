@@ -6016,6 +6016,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public bool NativeUser
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_NativeUser", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(bool);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_NativeUser", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAccountability> Responsibilities
         {
             get
@@ -6729,6 +6749,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public bool NativeUser
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_NativeUser", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(bool);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_NativeUser", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAccountability> Responsibilities
         {
             get
@@ -7267,6 +7307,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public bool NativeUser
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_NativeUser", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(bool);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_NativeUser", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAccountability> Responsibilities
         {
             get
@@ -7662,6 +7722,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool NativeUser
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_NativeUser", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(bool);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_NativeUser", args, argsTypes);
             }
         }
         

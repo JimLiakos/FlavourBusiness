@@ -165,6 +165,28 @@ namespace FlavourBusinessManager
             }
         }
 
+
+        /// <exclude>Excluded</exclude>
+        string _OAuthUserIdentity;
+
+        /// <MetaDataID>{97348ecc-b2f6-425b-86b8-017a9d2a87e1}</MetaDataID>
+        [PersistentMember(nameof(_OAuthUserIdentity))]
+        [BackwardCompatibilityID("+7")]
+        public string OAuthUserIdentity
+        {
+            get => _OAuthUserIdentity; set
+            {
+                if (_OAuthUserIdentity!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OAuthUserIdentity=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{eb0a6728-600a-450a-9fe6-e8dfbc80e0af}</MetaDataID>
         public void CreateFirebaseEmailUserCredential()
         {

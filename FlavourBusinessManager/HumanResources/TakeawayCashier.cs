@@ -51,6 +51,8 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public bool NativeUser { get; set; }
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 

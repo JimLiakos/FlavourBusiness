@@ -537,7 +537,77 @@ namespace ServiceContextManagerApp
 
 
 
+        public NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color)
+        {
+            if (worker?.NativeUser==true)
+            {
+                string codeValue = this.ServicesContext.ServicesContextIdentity+";"+worker.WorkerIdentity;
+                string SigBase64 = "";
+#if DeviceDotNet
+            var barcodeWriter = new BarcodeWriterGeneric()
+            {
+                Format = ZXing.BarcodeFormat.QR_CODE,
+                Options = new ZXing.Common.EncodingOptions
+                {
+                    Height = 400,
+                    Width = 400
+                }
+            };
 
+
+            var bitmapMatrix = barcodeWriter.Encode(codeValue);
+            var width = bitmapMatrix.Width;
+            var height = bitmapMatrix.Height;
+            int[] pixelsImage = new int[width * height];
+            SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
+
+            SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
+            if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
+                fgColor = SkiaSharp.SKColors.Black;
+
+            var pixels = qrCodeImage.Pixels;
+            int k = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (bitmapMatrix[j, i])
+                        pixels[k++] = fgColor;
+                    else
+                        pixels[k++] = SkiaSharp.SKColors.White;
+                }
+            }
+            qrCodeImage.Pixels = pixels;
+
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+                d.SaveTo(ms);
+                byte[] byteImage = ms.ToArray();
+                SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
+            }
+#else
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                var qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
+
+                using (System.IO.MemoryStream ms = new MemoryStream())
+                {
+                    qrCodeImage.Save(ms, ImageFormat.Png);
+                    byte[] byteImage = ms.ToArray();
+                    SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
+                }
+#endif
+
+
+                return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
+
+
+            }
+            else
+                return null;
+        }
 
 
 

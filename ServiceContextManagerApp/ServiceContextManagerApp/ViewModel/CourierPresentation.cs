@@ -4,17 +4,34 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using FlavourBusinessManager.HumanResources;
 
 namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{50154c26-f1f3-479a-a182-3f3e0f14afbd}</MetaDataID>
-    public class CourierPresentation: MarshalByRefObject, ICourierPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class CourierPresentation : MarshalByRefObject, ICourierPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
         private readonly ICourier Courier;
         private IShiftWork ActiveShiftWork;
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
-        public string FullName { get => Courier.FullName; set { } }
+        public string FullName
+        {
+            get
+            {
+                string fullName = Courier.FullName;
+                if (!string.IsNullOrWhiteSpace(fullName))
+                    return fullName;
+                else
+                    return Courier.Name;
+            }
+
+            set
+            {
+            }
+        }
+
+        public string WorkerIdentity { get => this.CourierIdentity; }
         public string UserName { get => Courier.UserName; set { } }
         public string Email { get => Courier.Email; set { } }
         public string PhotoUrl { get => Courier.PhotoUrl; set { } }
@@ -52,7 +69,7 @@ namespace ServiceContextManagerApp
             }
         }
 
-       public DateTime ActiveShiftWorkStartedAt
+        public DateTime ActiveShiftWorkStartedAt
         {
             get
             {
@@ -78,8 +95,9 @@ namespace ServiceContextManagerApp
             Courier = courier;
             ActiveShiftWork = courier.ActiveShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
+            NativeUser=courier.NativeUser;
         }
-
+        public bool NativeUser { get; set; }
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {
             ServicesContextRuntime.ChangeSiftWork(this.Courier.ActiveShiftWork, startedAt, timespanInHours);

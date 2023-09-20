@@ -234,7 +234,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                     select waiter).ToList();
 
                         foreach (var waiter in _Waiters)
+                        {
+                            waiter.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==waiter.OAuthUserIdentity).FirstOrDefault()!=null;
                             waiter.ObjectChangeState += Waiter_ObjectChangeState;
+                        }
                     }
 
                     return _Waiters.ToList();
@@ -296,7 +299,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                              select takeawayCashier).ToList();
 
                         foreach (var takeawayCashier in _TakeawayCashiers)
+                        {
+                            takeawayCashier.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==takeawayCashier.OAuthUserIdentity).FirstOrDefault()!=null;
                             takeawayCashier.ObjectChangeState +=TakeawayCashier_ObjectChangeState;
+
+                        }
                     }
 
                     return _TakeawayCashiers.ToList();
@@ -327,8 +334,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                              where courier.ServicesContextIdentity == servicesContextIdentity
                                              select courier).ToList();
 
-                        foreach (var takeawayCashier in _TakeawayCashiers)
-                            takeawayCashier.ObjectChangeState += TakeawayCashier_ObjectChangeState;
+
+                        foreach (var courier in _Couriers)
+                        {
+                            courier.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==courier.OAuthUserIdentity).FirstOrDefault()!=null;
+                            courier.ObjectChangeState += Courier_ObjectChangeState;
+                        }
                     }
 
                     return _Couriers.ToList();
@@ -340,6 +351,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{c543c675-b069-4660-a061-3fbbe7a42b0b}</MetaDataID>
         private void TakeawayCashier_ObjectChangeState(object _object, string member)
+        {
+            if (member == nameof(IWaiter.ActiveShiftWork))
+            {
+                Task.Run(() =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                });
+            }
+        }
+
+        private void Courier_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(IWaiter.ActiveShiftWork))
             {
@@ -2690,8 +2712,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (!NativeUsers.Contains(nativeAuthUser))
-                            NativeUsers.Add(nativeAuthUser);
+                        if (_NativeUsers.Contains(nativeAuthUser))
+                            _NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -2773,8 +2795,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (!NativeUsers.Contains(nativeAuthUser))
-                            NativeUsers.Add(nativeAuthUser);
+                        if (!_NativeUsers.Contains(nativeAuthUser))
+                            _NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -2842,7 +2864,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
-
+                        nativeAuthUser.OAuthUserIdentity= authUser.User_ID;
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
@@ -2854,8 +2876,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (!NativeUsers.Contains(nativeAuthUser))
-                            NativeUsers.Add(nativeAuthUser);
+                        if (!_NativeUsers.Contains(nativeAuthUser))
+                            _NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -3013,7 +3035,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{895528db-162c-4fef-b4e0-aa2dcb0e60ec}</MetaDataID>
         object NativeUsersLock = new object();
         /// <MetaDataID>{8f937803-ac74-41c3-bc61-cf1e5af8ee2c}</MetaDataID>
-        List<NativeAuthUser> _NativeUsers;
+        List<NativeAuthUser> _NativeUsers=new List<NativeAuthUser>();
         /// <MetaDataID>{25fe9404-b580-4dc4-b373-e552ce7682db}</MetaDataID>
         List<NativeAuthUser> NativeUsers
         {

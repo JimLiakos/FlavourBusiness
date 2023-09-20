@@ -33,10 +33,11 @@ namespace FlavourBusinessManager.HumanResources
         [PersistentMember(nameof(_Responsibilities))]
         public List<IAccountability> Responsibilities => _Responsibilities.ToThreadSafeList();
 
+
+        public bool NativeUser { get; set; }
+
         /// <exclude>Excluded</exclude>
         string _PhotoUrl;
-
-
         /// <MetaDataID>{c9221896-e02e-402a-ad3f-c0b4cc2bba95}</MetaDataID>
         [PersistentMember(nameof(_PhotoUrl))]
         [BackwardCompatibilityID("+18")]

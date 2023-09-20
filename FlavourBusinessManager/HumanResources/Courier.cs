@@ -16,7 +16,7 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{4c8009f5-08ad-49f6-a32c-c51648eba5bd}</MetaDataID>
     [BackwardCompatibilityID("{4c8009f5-08ad-49f6-a32c-c51648eba5bd}")]
     [Persistent()]
-    public class Courier : FlavourBusinessFacade.HumanResources.ICourier
+    public class Courier : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourier
     {
 
         /// <MetaDataID>{9934c842-848c-4aee-9503-cae650097b4e}</MetaDataID>
@@ -229,7 +229,7 @@ namespace FlavourBusinessManager.HumanResources
             get
             {
                 var mileStoneDate = System.DateTime.UtcNow - TimeSpan.FromDays(1);
-                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                var objectStorage = ObjectStorage.GetStorageOfObject(this);
                 if (objectStorage != null)
                 {
                     if (RecentlyShiftWorks == null)
@@ -404,6 +404,8 @@ namespace FlavourBusinessManager.HumanResources
                 return _Roles;
             }
         }
+
+        public bool NativeUser { get; set; }
 
 
         /// <MetaDataID>{1478a073-3a9b-4f68-9d77-b1859d666c17}</MetaDataID>

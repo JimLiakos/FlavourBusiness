@@ -46,6 +46,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{0db5ebc9-5c07-4512-ba47-dc6c0dd7e177}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         string Password { get; set; }
+        
 
         /// <MetaDataID>{91d91e46-e2d0-4bc5-b079-b31c86a3c210}</MetaDataID>
         IList<IServingBatch> GetServingBatches();

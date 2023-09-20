@@ -67,6 +67,9 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{133db335-fd6c-4ecf-832d-3da1d8c3f431}</MetaDataID>
         NewUserCode GetNewCourierQRCode(string color);
 
+        NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color);
+
+
         // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 
         /// <MetaDataID>{3a7f890b-c57c-4bf8-b2fd-c9ce2b82ea8d}</MetaDataID>

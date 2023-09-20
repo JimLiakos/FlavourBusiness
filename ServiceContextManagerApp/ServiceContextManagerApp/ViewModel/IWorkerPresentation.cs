@@ -33,5 +33,9 @@ namespace ServiceContextManagerApp.ViewModel
 
         /// <MetaDataID>{fd03d41b-d879-4d4b-965e-b5c3a84aac2f}</MetaDataID>
         List<IServingShiftWork> GetLastThreeSifts();
+
+        bool NativeUser { get; set; }
+
+        string WorkerIdentity { get; }
     }
 }

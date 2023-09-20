@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.HumanResources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +23,10 @@ namespace ServiceContextManagerApp
             Waiter = waiter;
             ActiveShiftWork = Waiter.ActiveShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
+            NativeUser=Waiter.NativeUser;
         }
+        public bool NativeUser { get; set ; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string WaiterIdentity
@@ -32,6 +36,8 @@ namespace ServiceContextManagerApp
                 return Waiter.Identity;
             }
         }
+
+        public string WorkerIdentity { get => WaiterIdentity; }
 
         public bool Suspended
         {
@@ -139,6 +145,8 @@ namespace ServiceContextManagerApp
                     return DateTime.MinValue;
             }
         }
+
+        
 
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {

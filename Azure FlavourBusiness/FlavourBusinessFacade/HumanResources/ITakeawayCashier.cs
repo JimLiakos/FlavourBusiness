@@ -17,6 +17,6 @@ namespace FlavourBusinessFacade.HumanResources
 
         /// <MetaDataID>{b6a6576e-c50f-40c3-8abf-dd3889bf3414}</MetaDataID>
         string DeviceFirebaseToken { get; set; }
-
+        
     }
 }
