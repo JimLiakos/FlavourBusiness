@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceContextManagerApp.ViewModel
+namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{736132b0-eb8f-406f-bbbe-dcbff02b2479}</MetaDataID>
     [HttpVisible]
-    public interface ICourierPresentation : IWorkerPresentation
+    public interface ICourierPresentation : ViewModel.IWorkerPresentation
     {
         /// <MetaDataID>{8f62c7fc-02f7-4d11-a06c-3299f7bffc46}</MetaDataID>
         string FullName { get; set; }

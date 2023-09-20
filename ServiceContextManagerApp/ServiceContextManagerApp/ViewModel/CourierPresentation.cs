@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace ServiceContextManagerApp.ViewModel
+namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{50154c26-f1f3-479a-a182-3f3e0f14afbd}</MetaDataID>
     public class CourierPresentation: MarshalByRefObject, ICourierPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject

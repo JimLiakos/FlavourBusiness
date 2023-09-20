@@ -9,6 +9,7 @@ using FlavourBusinessManager.RoomService.ViewModel;
 using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using ServiceContextManagerApp.ViewModel;
+using FlavourBusinessManager.HumanResources;
 
 
 
@@ -356,7 +357,10 @@ namespace ServiceContextManagerApp
 
             _TakeawayCashiers = serviceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(TakeawayCashiers));
-             
+
+            _Couriers = serviceContextHumanResources.Couriers.Select(x => new CourierPresentation(x, ServicesContextRuntime)).OfType<ICourierPresentation>().ToList();
+            _ObjectChangeState?.Invoke(this, nameof(Couriers));
+
         }
 
         [OOAdvantech.MetaDataRepository.HttpInVisible]

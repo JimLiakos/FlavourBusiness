@@ -66,7 +66,7 @@ namespace FlavourBusinessManager.HumanResources
         public string Identity
         {
             get
-            {
+            {  
                 if (_Identity == null)
                 {
 
@@ -248,7 +248,7 @@ namespace FlavourBusinessManager.HumanResources
                     return RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
                 }
                 else
-                    return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).Last();
+                    return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).LastOrDefault();
             }
         }
 
@@ -274,7 +274,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<Message> _Messages;
+        OOAdvantech.Collections.Generic.Set<Message> _Messages=new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
         [BackwardCompatibilityID("+12")]

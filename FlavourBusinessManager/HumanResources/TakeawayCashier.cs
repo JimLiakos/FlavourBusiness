@@ -250,7 +250,7 @@ namespace FlavourBusinessManager.HumanResources
                     return RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
                 }
                 else
-                    return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).Last();
+                    return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).LastOrDefault();
             }
         }
 

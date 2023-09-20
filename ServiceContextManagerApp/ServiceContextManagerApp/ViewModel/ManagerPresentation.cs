@@ -49,7 +49,7 @@ namespace ServiceContextManagerApp
 
         public ManagerPresentation()
         {
-            
+
             DeviceAuthentication.AuthStateChanged += DeviceAuthentication_AuthStateChanged;
 #if DeviceDotNet
 
@@ -146,7 +146,7 @@ namespace ServiceContextManagerApp
 
             try
             {
-               var pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                var pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 UserData = pAuthFlavourBusiness.SignIn();
                 return true;
             }
@@ -159,7 +159,7 @@ namespace ServiceContextManagerApp
                 throw;
             }
 
-       
+
 
 
 
@@ -393,7 +393,7 @@ namespace ServiceContextManagerApp
 
                     try
                     {
-                     pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                        pAuthFlavourBusiness = GetFlavourBusinessAuth();
 
                     }
                     catch (System.Net.WebException error)
@@ -417,7 +417,7 @@ namespace ServiceContextManagerApp
                         if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
                         }
 
                         role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
@@ -428,7 +428,7 @@ namespace ServiceContextManagerApp
                                 administratorIdentity = ServiceContextSupervisor.Identity;
 
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
                         }
                         else
@@ -436,11 +436,11 @@ namespace ServiceContextManagerApp
 
                         _FullName = UserData.FullName;
                         _UserName = UserData.UserName;
-                        _Email=UserData.Email;
+                        _Email = UserData.Email;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
 
-                        AuthUser=authUser;
+                        AuthUser = authUser;
                         _ObjectChangeState?.Invoke(this, null);
 
                         //if(Organization!=null&& ServiceContextSupervisor!=null)
@@ -601,7 +601,7 @@ namespace ServiceContextManagerApp
                 return true;
 
 
-            if (SignInTask == null||!OnSignIn)
+            if (SignInTask == null || !OnSignIn)
             {
 
                 lock (SignInTaskLock)
@@ -609,7 +609,7 @@ namespace ServiceContextManagerApp
                     SignInTask = Task<bool>.Run(async () =>
             {
 
-                
+
 
                 OnSignIn = true;
                 try
@@ -648,31 +648,33 @@ namespace ServiceContextManagerApp
 
                     }
                     authUser = DeviceAuthentication.AuthUser;
-                    _OAuthUserIdentity=null;
+                    _OAuthUserIdentity = null;
                     UserData = pAuthFlavourBusiness.SignIn();
                     if (UserData != null)
                     {
                         _FullName = UserData.FullName;
                         _UserName = UserData.UserName;
-                        _Email=UserData.Email;
+                        _Email = UserData.Email;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
 
-                        AuthUser=authUser;
+                        AuthUser = authUser;
 
                         var role = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault();
                         if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
                         }
 
                         role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
                         if (role.RoleType == RoleType.Organization)
                         {
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
+
+
                             string administratorIdentity = "";
-                            _OAuthUserIdentity=UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
 
                             if (ServiceContextSupervisor != null)
                             {
@@ -685,11 +687,11 @@ namespace ServiceContextManagerApp
 
                             }
                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
+                            //_ObjectChangeState?.Invoke(this, null);
                         }
                         else
                             _ServicesContexts = new List<IServicesContextPresentation>();
 
-                        var count = _ServicesContexts.Count;
 
                         _ObjectChangeState?.Invoke(this, null);
                         return true;
@@ -701,17 +703,17 @@ namespace ServiceContextManagerApp
                 }
                 catch (Exception error)
                 {
-                     
+
                     throw;
                 }
                 finally
                 {
                     OnSignIn = false;
                 }
-            }); 
+            });
                 }
 
-                
+
 
             }
             return await SignInTask;
@@ -757,7 +759,7 @@ namespace ServiceContextManagerApp
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
@@ -768,9 +770,9 @@ namespace ServiceContextManagerApp
 
             try
             {
-                
-                
-                UserData userData = new UserData() { UserName=UserName, Email=Email, FullName=FullName, Address=Address, PhoneNumber=PhoneNumber };
+
+
+                UserData userData = new UserData() { UserName = UserName, Email = Email, FullName = FullName, Address = Address, PhoneNumber = PhoneNumber };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
@@ -806,7 +808,7 @@ namespace ServiceContextManagerApp
         }
 
 
-      
+
 
 
         List<IServicesContextPresentation> _ServicesContexts = new List<IServicesContextPresentation>();
@@ -869,7 +871,7 @@ namespace ServiceContextManagerApp
                 using (System.Net.WebClient wc = new System.Net.WebClient())
                 {
                     var json = wc.DownloadString(fontUrl);
-                    fontData= OOAdvantech.Json.JsonConvert.DeserializeObject<FontData>(json);
+                    fontData = OOAdvantech.Json.JsonConvert.DeserializeObject<FontData>(json);
                     Fonts[fontUri] = fontData;
                 }
             }

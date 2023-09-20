@@ -2847,7 +2847,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedCourier.WorkerAssignKey = null;
-                        (unassignedCourier as TakeawayCashier).OAuthUserIdentity = authUser.User_ID;
+                        (unassignedCourier as Courier).OAuthUserIdentity = authUser.User_ID;
                         unassignedCourier.Name = userFullName;
 
                         stateTransition.Consistent = true;
