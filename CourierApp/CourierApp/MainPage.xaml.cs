@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOAdvantech.Web;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,25 @@ namespace CourierApp
         public MainPage()
         {
             InitializeComponent();
+
+            this.SizeChanged += MainPage_SizeChanged;
+           // BindingContext = new ViewModel.FlavoursServiceOrderTakingStation();
+
+            if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
+            {
+                string url = @"http://192.168.2.8:4306/";//org
+                url = @"http://192.168.2.12:4306/";//Braxati
+                //url = @"http://10.0.0.13:4306/";//work
+                //url = "local://index.html";
+
+                url = string.Format(@"http://{0}:4306/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
+                hybridWebView.Uri = url;
+            }
+        }
+        private void MainPage_SizeChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -2712,8 +2712,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (_NativeUsers.Contains(nativeAuthUser))
-                            _NativeUsers.Add(nativeAuthUser);
+                        if (NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -2795,8 +2795,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (!_NativeUsers.Contains(nativeAuthUser))
-                            _NativeUsers.Add(nativeAuthUser);
+                        if (!NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -2876,8 +2876,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                     lock (NativeUsersLock)
                     {
-                        if (!_NativeUsers.Contains(nativeAuthUser))
-                            _NativeUsers.Add(nativeAuthUser);
+                        if (!NativeUsers.Contains(nativeAuthUser))
+                            NativeUsers.Add(nativeAuthUser);
                     }
                     ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
                 }
@@ -3035,7 +3035,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{895528db-162c-4fef-b4e0-aa2dcb0e60ec}</MetaDataID>
         object NativeUsersLock = new object();
         /// <MetaDataID>{8f937803-ac74-41c3-bc61-cf1e5af8ee2c}</MetaDataID>
-        List<NativeAuthUser> _NativeUsers=new List<NativeAuthUser>();
+        List<NativeAuthUser> _NativeUsers;
         /// <MetaDataID>{25fe9404-b580-4dc4-b373-e552ce7682db}</MetaDataID>
         List<NativeAuthUser> NativeUsers
         {

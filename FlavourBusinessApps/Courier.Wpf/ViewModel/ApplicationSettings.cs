@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace CourierApp
 {
+    /// <MetaDataID>{9011d063-f54f-4f88-a6f8-2269da8ae623}</MetaDataID>
     public class ApplicationSettings : DontWaitApp.ApplicationSettings
     {
-         
+
 
         /// <exclude>Excluded</exclude>
         string _TakeAwayStationCredentialKey;
-         
+
 
         /// <MetaDataID>{21b6eea8-9f5e-4c87-a0cc-76e293ac20d9}</MetaDataID>
 

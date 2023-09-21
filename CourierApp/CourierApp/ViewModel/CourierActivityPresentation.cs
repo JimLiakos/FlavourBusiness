@@ -370,5 +370,10 @@ namespace CourierApp.ViewModel
             pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
+
+        public Task<bool> RequestPermissionsForQRCodeScan()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

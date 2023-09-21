@@ -19,13 +19,14 @@ namespace CourierApp.Wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// <MetaDataID>{357e3eb1-7a09-47b7-9724-e8b6d1c5d82a}</MetaDataID>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
 
-           // DataContext = new ViewModel.FlavoursServiceOrderTakingStation();
+            // DataContext = new ViewModel.FlavoursServiceOrderTakingStation();
             string url = @"http://192.168.2.8:4306/";//org
             url = @"http://192.168.2.5:4306/";//Braxati
             //url = @"http://10.0.0.13:4306/";//work
@@ -36,7 +37,7 @@ namespace CourierApp.Wpf
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));
-
+             
         }
 
         public WebBrowserOverlay Browser { get; }

@@ -1,6 +1,5 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.HumanResources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

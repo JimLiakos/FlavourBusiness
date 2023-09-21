@@ -48,6 +48,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{41bd3c34-4706-430b-b450-48d352418ae6}</MetaDataID>
         List<IServingShiftWork> GetLastThreeSifts();
 
+        /// <MetaDataID>{d2bfcb05-fdc1-4ca3-9bbf-e9fb6da31696}</MetaDataID>
         [CachingDataOnClientSide]
         bool NativeUser { get; set; }
     }
