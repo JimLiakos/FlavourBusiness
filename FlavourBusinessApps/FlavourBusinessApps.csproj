@@ -54,6 +54,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CourierApp\CourierApp\ApplicationSettings.cs">
+      <Link>Courier.Wpf\ViewModel\ApplicationSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\CourierApp\CourierApp\ViewModel\CourierActivityPresentation.cs">
+      <Link>Courier.Wpf\ViewModel\CourierActivityPresentation.cs</Link>
+    </Compile>
+    <Compile Include="..\CourierApp\CourierApp\ViewModel\ICourierActivityPresentation.cs">
+      <Link>Courier.Wpf\ViewModel\ICourierActivityPresentation.cs</Link>
+    </Compile>
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs">
       <Link>ViewModel\FlavoursOrderServer.cs</Link>
     </Compile>
@@ -155,7 +164,6 @@
     <Compile Include="Courier.Wpf\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Courier.Wpf\ViewModel\ApplicationSettings.cs" />
     <Compile Include="MenuCanvas\IFontsResolver.cs" />
     <Compile Include="PreparationStationDevice.WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

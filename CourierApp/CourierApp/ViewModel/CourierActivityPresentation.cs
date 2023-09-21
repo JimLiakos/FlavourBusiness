@@ -12,6 +12,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+#if DeviceDotNet
+using Xamarin.Essentials;
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+#else
+using MarshalByRefObject = System.MarshalByRefObject;
+#endif
+
 
 namespace CourierApp.ViewModel
 {
@@ -58,7 +65,7 @@ namespace CourierApp.ViewModel
             
         }
 
-        public OOAdvantech.Remoting.MarshalByRefObject GetObjectFromUri(string uri)
+        public MarshalByRefObject GetObjectFromUri(string uri)
         {
             throw new NotImplementedException();
         }
@@ -178,7 +185,7 @@ namespace CourierApp.ViewModel
                             foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.TakeAwayCashier))
                             {
                                 if (role.RoleType == RoleType.TakeAwayCashier)
-                                {
+                                { 
                                     if (Courier != null)
                                     {
                                         Courier.ObjectChangeState -= Courier_ObjectChangeState;
@@ -198,7 +205,7 @@ namespace CourierApp.ViewModel
                                     if (Courier is ITransparentProxy)
                                         (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
 
-
+                                     
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                     TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
