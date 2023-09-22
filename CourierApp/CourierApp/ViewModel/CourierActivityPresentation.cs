@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using static QRCoder.PayloadGenerator;
+//using static QRCoder.PayloadGenerator;
 #if DeviceDotNet
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -27,7 +27,7 @@ namespace CourierApp.ViewModel
 
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
-    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourierActivityPresentation, ISecureUser, IBoundObject
+    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
         public string SignInProvider { get; set; }
         public string OAuthUserIdentity { get; set; }
@@ -67,10 +67,7 @@ namespace CourierApp.ViewModel
             return new List<UserData>();
         }
 
-        public MarshalByRefObject GetObjectFromUri(string uri)
-        {
-            throw new NotImplementedException();
-        }
+   
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
@@ -162,7 +159,7 @@ namespace CourierApp.ViewModel
                                     (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 #if DeviceDotNet
-                                TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+                                Courier.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 //ApplicationSettings.Current.FriendlyName = Courier.FullName;
                                 GetMessages();
@@ -458,6 +455,11 @@ namespace CourierApp.ViewModel
         public Task<bool> RequestPermissionsForQRCodeScan()
         {
             throw new NotImplementedException();
+        }
+
+        public MarshalByRefObject GetObjectFromUri(string uri)
+        {
+            return this;
         }
     }
 }

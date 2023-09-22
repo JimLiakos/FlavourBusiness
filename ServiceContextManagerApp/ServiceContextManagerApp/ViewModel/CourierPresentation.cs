@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{50154c26-f1f3-479a-a182-3f3e0f14afbd}</MetaDataID>
-    public class CourierPresentation : MarshalByRefObject, ICourierPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class CourierPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourierPresentation,OOAdvantech.IDevicePermissions
     {
         /// <MetaDataID>{ad596b08-29b3-41b8-9780-bc7a1384aba0}</MetaDataID>
         private readonly ICourier Courier;
@@ -127,6 +127,17 @@ namespace ServiceContextManagerApp
         public List<IServingShiftWork> GetLastThreeSifts()
         {
             return Courier.GetLastThreeSifts();
+        }
+
+        public Task<bool> CheckPermissionsForQrcodeScan()
+        {
+            return Task<bool>.FromResult(false);
+            
+        }
+
+        public Task<bool> RequestPermissionsForQRCodeScan()
+        {
+            return Task<bool>.FromResult(false);
         }
     }
 }
