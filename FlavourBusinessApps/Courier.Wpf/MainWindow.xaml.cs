@@ -26,7 +26,7 @@ namespace CourierApp.Wpf
         {
             InitializeComponent();
 
-            // DataContext = new ViewModel.FlavoursServiceOrderTakingStation();
+             DataContext = new ViewModel.CourierActivityPresentation();
             string url = @"http://192.168.2.8:4306/";//org
             url = @"http://192.168.2.5:4306/";//Braxati
             //url = @"http://10.0.0.13:4306/";//work

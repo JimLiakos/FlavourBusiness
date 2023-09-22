@@ -462,7 +462,7 @@ namespace TakeAwayApp.ViewModel
                             UserName = UserData.UserName;
                             PhoneNumber = UserData.PhoneNumber;
                             Email = UserData.Email;
-                            OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            
 
                             foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.TakeAwayCashier))
                             {
@@ -479,6 +479,8 @@ namespace TakeAwayApp.ViewModel
                                     TakeAwayCashier = RemotingServices.CastTransparentProxy<ITakeawayCashier>(role.User);
                                     if (TakeAwayCashier == null)
                                         continue;
+
+                                    OAuthUserIdentity = TakeAwayCashier.OAuthUserIdentity;
                                     string objectRef = RemotingServices.SerializeObjectRef(TakeAwayCashier);
                                     ApplicationSettings.Current.WaiterObjectRef = objectRef;
                                     TakeAwayCashier.ObjectChangeState += TakeAwayCashier_ObjectChangeState;

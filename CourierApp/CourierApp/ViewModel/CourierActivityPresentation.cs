@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using static QRCoder.PayloadGenerator;
 #if DeviceDotNet
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -31,6 +32,9 @@ namespace CourierApp.ViewModel
         public string SignInProvider { get; set; }
         public string OAuthUserIdentity { get; set; }
         public string FullName { get; set; }
+
+        public string Address { get; set; }
+
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -60,9 +64,7 @@ namespace CourierApp.ViewModel
 
         public IList<UserData> GetNativeUsers()
         {
-            throw new NotImplementedException();
-            //return this.TakeAwayStation.GetNativeUsers();
-            
+            return new List<UserData>();
         }
 
         public MarshalByRefObject GetObjectFromUri(string uri)
@@ -72,7 +74,22 @@ namespace CourierApp.ViewModel
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
-            throw new NotImplementedException();
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
         }
 
         public void SaveUserProfile()
@@ -97,9 +114,6 @@ namespace CourierApp.ViewModel
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 authUser = DeviceAuthentication.AuthUser;
-            if (DeviceAuthentication.AuthUser == null)
-            {
-            }
             if (authUser == null)
                 return false;
 
@@ -180,11 +194,11 @@ namespace CourierApp.ViewModel
                             UserName = UserData.UserName;
                             PhoneNumber = UserData.PhoneNumber;
                             Email = UserData.Email;
-                            OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            //OAuthUserIdentity = UserData.OAuthUserIdentity;
 
-                            foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.TakeAwayCashier))
+                            foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Courier))
                             {
-                                if (role.RoleType == RoleType.TakeAwayCashier)
+                                if (role.RoleType == RoleType.Courier)
                                 { 
                                     if (Courier != null)
                                     {
@@ -208,30 +222,27 @@ namespace CourierApp.ViewModel
                                      
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                    TakeAwayCashier.DeviceFirebaseToken = device.FirebaseToken;
+                                    Courier.DeviceFirebaseToken = device.FirebaseToken;
                                     if (!device.IsBackgroundServiceStarted)
                                     {
                                         BackgroundServiceState serviceState = new BackgroundServiceState();
                                         device.RunInBackground(new Action(async () =>
                                         {
-                                            var message = TakeAwayCashier.PeekMessage();
-                                            TakeAwayCashier.MessageReceived += MessageReceived;
+                                            var message = Courier.PeekMessage();
+                                            Courier.MessageReceived += MessageReceived;
                                             do
                                             {
                                                 System.Threading.Thread.Sleep(1000);
 
                                             } while (!serviceState.Terminate);
 
-                                            TakeAwayCashier.MessageReceived -= MessageReceived;
+                                            Courier.MessageReceived -= MessageReceived;
                                             //if (Waiter is ITransparentProxy)
                                             //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                         }), serviceState);
                                     }
 #endif
                                     ActiveShiftWork = Courier.ActiveShiftWork;
-                                    //UpdateServingBatches(Courier.GetServingBatches());
-                                    
-
                                     GetMessages();
                                 }
                             }
@@ -301,10 +312,76 @@ namespace CourierApp.ViewModel
             throw new NotImplementedException();
         }
 
-        public Task<bool> SignUp()
+        public async Task<bool> SignUp()
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+            {
+                authUser = DeviceAuthentication.AuthUser;
+            }
+            if (DeviceAuthentication.AuthUser == null)
+            {
+
+            }
+            return await Task<bool>.Run(async () =>
+            {
+
+                OnSignIn = true;
+                try
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                    serverUrl = "http://localhost:8090/api/";
+                    serverUrl = AzureServerUrl;
+                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
+                    try
+                    {
+                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                    }
+                    catch (System.Net.WebException error)
+                    {
+                        throw;
+                    }
+                    catch (Exception error)
+                    {
+                        throw;
+                    }
+                    if (authUser == null)
+                    {
+                    }
+                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
+                    UserData = pAuthFlavourBusiness.SignUp(UserData);
+
+                    if (UserData != null)
+                    {
+                        FullName = UserData.FullName;
+                        UserName = UserData.UserName;
+                        PhoneNumber = UserData.PhoneNumber;
+                        //Address = UserData.Address;
+                        //OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        AuthUser = authUser;
+                        ObjectChangeState?.Invoke(this, null);
+                        return true;
+                    }
+                    else
+                        return false;
+
+                }
+                catch (Exception error)
+                {
+                    throw;
+                }
+                finally
+                {
+                    OnSignIn = false;
+                }
+            });
         }
+
 
         IShiftWork ActiveShiftWork;
 

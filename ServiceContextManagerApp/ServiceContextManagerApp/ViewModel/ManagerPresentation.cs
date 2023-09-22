@@ -417,7 +417,7 @@ namespace ServiceContextManagerApp
                         if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
                         }
 
                         role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
@@ -428,7 +428,7 @@ namespace ServiceContextManagerApp
                                 administratorIdentity = ServiceContextSupervisor.Identity;
 
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = Organization.OAuthUserIdentity;
                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
                         }
                         else
@@ -664,7 +664,7 @@ namespace ServiceContextManagerApp
                         if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
                         }
 
                         role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
@@ -674,7 +674,7 @@ namespace ServiceContextManagerApp
 
 
                             string administratorIdentity = "";
-                            _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                            _OAuthUserIdentity = Organization.OAuthUserIdentity;
 
                             if (ServiceContextSupervisor != null)
                             {

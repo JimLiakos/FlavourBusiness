@@ -340,7 +340,7 @@ namespace WaiterApp.ViewModel
         Task<bool> SignInTask;
 
         /// <MetaDataID>{0b631e28-fc5c-46ab-85c1-944ce7ead3eb}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.HttpVisible]
+        [HttpVisible]
         public async Task<bool> SignIn()
         {
 
@@ -377,7 +377,7 @@ namespace WaiterApp.ViewModel
                 });
 
                 ObjectChangeState?.Invoke(this, null);
-                OAuthUserIdentity = Waiter.OAuthUserIdentity;
+                OAuthUserIdentity = Waiter?.OAuthUserIdentity;
                 return true;
             }
 
@@ -491,7 +491,7 @@ namespace WaiterApp.ViewModel
                         _UserName = UserData.UserName;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
-                        _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        
 
                         foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Waiter))
                         {
@@ -508,6 +508,7 @@ namespace WaiterApp.ViewModel
                                 Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
                                 if (Waiter==null)
                                     continue;
+                                _OAuthUserIdentity = Waiter.OAuthUserIdentity;
                                 string objectRef = RemotingServices.SerializeObjectRef(Waiter);
                                 ApplicationSettings.Current.WaiterObjectRef = objectRef;
                                 Waiter.ObjectChangeState += Waiter_ObjectChangeState;
@@ -982,7 +983,7 @@ namespace WaiterApp.ViewModel
                         _UserName = UserData.UserName;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
-                        _OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        //_OAuthUserIdentity = UserData.OAuthUserIdentity;
                         AuthUser=authUser;
                         ObjectChangeState?.Invoke(this, null);
 

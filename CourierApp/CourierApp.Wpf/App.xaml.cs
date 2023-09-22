@@ -34,5 +34,12 @@ namespace CourierApp.Wpf
 
             base.OnStartup(e);
         }
+
+
+        protected override void OnActivated(EventArgs e)
+        {
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            base.OnActivated(e);
+        }
     }
 }
