@@ -1,30 +1,27 @@
-﻿using System;
+﻿using OOAdvantech.MetaDataRepository;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CourierApp.ViewModel
 {
-    
+    /// <MetaDataID>{99fe8217-2732-4d1a-b074-c88a95272563}</MetaDataID>
+    [HttpVisible]
     public interface ICourierActivityPresentation
     {
-        /// <summary>
-        /// Request Permission to access infrastructure for QR code scanning 
-        /// </summary>
-        /// <returns>
-        /// for granted  return true
-        /// else return false
-        /// </returns>
-        Task<bool> RequestPermissionsForQRCodeScan();
 
 
-        
+        Task<bool> AssignCourier();
+
+        Task<bool> AssignDevice();
+
         bool InActiveShiftWork { get; }
 
-        
+
         System.DateTime ActiveShiftWorkStartedAt { get; }
 
-        
+
         System.DateTime ActiveShiftWorkEndsAt { get; }
     }
 }

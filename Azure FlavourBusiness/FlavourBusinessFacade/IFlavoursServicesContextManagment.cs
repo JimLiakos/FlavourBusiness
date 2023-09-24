@@ -42,6 +42,14 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{9879b845-4ce0-421c-974d-0054a8664a83}</MetaDataID>
         HumanResources.IWaiter AssignWaiterUser(string waiterAssignKey);
 
+        HumanResources.ICourier AssignCourierUser(string courierAssignKey);
+
+        HumanResources.ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey);
+
+        string AssignDevice(string DeviceAssignKey);
+
+
+
 
         /// <MetaDataID>{f1791b25-d9b2-423a-b4d2-b6a5b4012d70}</MetaDataID>
         System.Collections.Generic.List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location);

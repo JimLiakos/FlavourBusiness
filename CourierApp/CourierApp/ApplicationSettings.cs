@@ -12,14 +12,15 @@ namespace CourierApp
     /// <MetaDataID>{ca4de730-f591-438c-86eb-e1054f058dc0}</MetaDataID>
     [BackwardCompatibilityID("{ca4de730-f591-438c-86eb-e1054f058dc0}")]
     [Persistent()]
-    public class ApplicationSettings 
+    public class ApplicationSettings
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
-   
+
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
 
+        /// <MetaDataID>{8692cff4-9a37-4489-83ce-840956b72bc6}</MetaDataID>
         public static string ExtraStoragePath { get; internal set; }
 
         /// <MetaDataID>{f7626e2a-7093-42fa-bdb7-2f5aef189a1e}</MetaDataID>
@@ -97,7 +98,51 @@ namespace CourierApp
             }
         }
 
-        public string CourierObjectRef { get; internal set; }
+        /// <exclude>Excluded</exclude>
+        string _CourierObjectRef;
+
+        /// <MetaDataID>{8c68f200-c9e3-4a46-8c5a-051a06dcd5b0}</MetaDataID>
+        [PersistentMember(nameof(_CourierObjectRef))]
+        [BackwardCompatibilityID("+1")]
+        public string CourierObjectRef
+        {
+            get => _CourierObjectRef;
+            set
+            {
+
+                if (_CourierObjectRef != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CourierObjectRef = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _ServiceContextDevice;
+        /// <MetaDataID>{119c7726-37c7-4763-acbc-f347fd01fd0b}</MetaDataID>
+        [PersistentMember(nameof(_ServiceContextDevice))]
+        [BackwardCompatibilityID("+2")]
+        public string ServiceContextDevice
+        {
+            get => _ServiceContextDevice;
+            set
+            {
+                if (_ServiceContextDevice != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServiceContextDevice = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }
 

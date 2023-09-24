@@ -933,6 +933,36 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IWaiter>(retValue);
         }
         
+        public FlavourBusinessFacade.HumanResources.ICourier AssignCourierUser(string courierAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = courierAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignCourierUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.ICourier>(retValue);
+        }
+        
+        public FlavourBusinessFacade.HumanResources.ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = takeawayCashierAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignTakeawayCashierUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.ITakeawayCashier>(retValue);
+        }
+        
+        public string AssignDevice(string DeviceAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = DeviceAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
+        
         public System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(FlavourBusinessFacade.EndUsers.Coordinate location)
         {
             object[] args = new object[1];

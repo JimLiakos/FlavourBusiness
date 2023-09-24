@@ -2719,7 +2719,19 @@
 			    (object Attribute
 				tool       	"MetaData"
 				name       	"MetaObjectID"
-				value      	"{fb79f3c9-89fe-4efa-b3ed-73078ac2b894}"))
+				value      	"{fb79f3c9-89fe-4efa-b3ed-73078ac2b894}")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityIDTransfered"
+				value      	"True")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityID"
+				value      	"")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"LastMemberID"
+				value      	"1"))
 			quid       	"650927690365"
 			operations 	(list Operations
 			    (object Operation "App"
@@ -2806,7 +2818,7 @@
 			    (object Attribute
 				tool       	"MetaData"
 				name       	"LastMemberID"
-				value      	"1"))
+				value      	"3"))
 			quid       	"6509283602E3"
 			superclasses 	(list inheritance_relationship_list
 			    (object Inheritance_Relationship
@@ -2880,6 +2892,97 @@
 					value      	TRUE))
 				quid       	"650928380064"
 				type       	"CourierApp.ApplicationSettings"
+				exportControl 	"Public")
+			    (object ClassAttribute "ExtraStoragePath"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{8692cff4-9a37-4489-83ce-840956b72bc6}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"65106C490330")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE))
+				quid       	"65106C490330"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "CourierObjectRef"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{8c68f200-c9e3-4a46-8c5a-051a06dcd5b0}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"65106C500284")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"Persistent"
+					name       	"Persistent"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"Identity"
+					value      	"+1"))
+				quid       	"65106C500284"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "ServiceContextDevice"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{119c7726-37c7-4763-acbc-f347fd01fd0b}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"65106C500319")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"Persistent"
+					name       	"Persistent"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"Identity"
+					value      	"+2"))
+				quid       	"65106C500319"
+				type       	"string"
 				exportControl 	"Public"))
 			module     	"Component View::CourierApp::CourierApp"
 			quidu      	"65087AFB00DA"
@@ -2890,7 +2993,19 @@
 			    (object Attribute
 				tool       	"MetaData"
 				name       	"MetaObjectID"
-				value      	"{86a3a8b4-2d1b-4621-a111-25305b60b1e7}"))
+				value      	"{86a3a8b4-2d1b-4621-a111-25305b60b1e7}")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityIDTransfered"
+				value      	"True")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"BackwardCompatibilityID"
+				value      	"")
+			    (object Attribute
+				tool       	"MetaData"
+				name       	"LastMemberID"
+				value      	"1"))
 			quid       	"6509283800BE"
 			operations 	(list Operations
 			    (object Operation "MainPage"

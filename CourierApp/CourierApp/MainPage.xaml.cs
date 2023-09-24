@@ -18,7 +18,7 @@ namespace CourierApp
             InitializeComponent();
 
             this.SizeChanged += MainPage_SizeChanged;
-           // BindingContext = new ViewModel.FlavoursServiceOrderTakingStation();
+            BindingContext = new ViewModel.CourierActivityPresentation();
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
             {

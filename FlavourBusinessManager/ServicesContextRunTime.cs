@@ -2665,6 +2665,59 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        public ICourier AssignCourierUser(string courierAssignKey, string signUpUserIdentity, string userName)
+        {
+            lock (SupervisorsLock)
+            {
+                var unassignedCourier = (from courier in Couriers
+                                        where courier.WorkerAssignKey == courierAssignKey
+                                         select courier).FirstOrDefault();
+
+                if (unassignedCourier != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        unassignedCourier.WorkerAssignKey = null;
+                        (unassignedCourier as Waiter).OAuthUserIdentity = signUpUserIdentity;
+                        unassignedCourier.Name = userName;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                }
+
+                return unassignedCourier;
+            }
+        }
+        public ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey, string signUpUserIdentity, string userName)
+        {
+            lock (SupervisorsLock)
+            {
+                var unassignedCashier = (from cashier in TakeawayCashiers
+                                         where cashier.WorkerAssignKey == takeawayCashierAssignKey
+                                         select cashier).FirstOrDefault();
+
+                if (unassignedCashier != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        unassignedCashier.WorkerAssignKey = null;
+                        (unassignedCashier as Waiter).OAuthUserIdentity = signUpUserIdentity;
+                        unassignedCashier.Name = userName;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                }
+
+                return unassignedCashier;
+            }
+        }
+        public string AssignDevice(string deviceAssignKey)
+        {
+            return deviceAssignKey;
+        }
+
+
+
         /// <MetaDataID>{ca263376-0c75-4e57-abf9-2e06345ff26c}</MetaDataID>
         public IWaiter AssignWaiterNativeUser(string waiterAssignKey, string userName, string password, string userFullName)
         {

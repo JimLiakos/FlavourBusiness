@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:web="clr-namespace:OOAdvantech.Web;assembly=OOAdvantech"
-             x:Class="CourierApp.MainPage">
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="CourierApp.MainPage"
+             NavigationPage.HasNavigationBar="false"
+             ios:Page.UseSafeArea="true">
 
 
     <ContentPage.Content>

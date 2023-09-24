@@ -12,7 +12,7 @@ namespace CourierApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         /// <MetaDataID>{cafbaedf-880a-4314-971b-3a8796e365a3}</MetaDataID>

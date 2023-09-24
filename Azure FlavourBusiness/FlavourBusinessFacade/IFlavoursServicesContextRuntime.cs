@@ -229,7 +229,10 @@ namespace FlavourBusinessFacade
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
         /// <MetaDataID>{435882c5-db4c-4d32-9d44-ae0607a3fd3d}</MetaDataID>
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
-        
+        ICourier AssignCourierUser(string courierAssignKey, string signUpUserIdentity, string userName);
+        ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey, string signUpUserIdentity, string userName);
+        string AssignDevice(string deviceAssignKey);
+
 
 
 #endif

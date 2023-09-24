@@ -127,6 +127,75 @@ namespace FlavourBusinessManager
             return waiter;
         }
 
+
+        public FlavourBusinessFacade.HumanResources.ICourier AssignCourierUser(string courierAssignKey)
+        {
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException();
+
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException("User isn't signed up.");
+
+            string[] servicePointIdentityParts = courierAssignKey.Split(';');
+            string servicesContextIdentity = servicePointIdentityParts[0];
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+
+            FlavourBusinessFacade.HumanResources.ICourier courier = flavoursServicesContextRunTime.AssignCourierUser(courierAssignKey, authUser.User_ID, authUserRef.FullName);
+            authUserRef.AddRole(courier);
+
+            return courier;
+        }
+
+        public FlavourBusinessFacade.HumanResources.ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException();
+
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException("User isn't signed up.");
+
+            string[] servicePointIdentityParts = takeawayCashierAssignKey.Split(';');
+            string servicesContextIdentity = servicePointIdentityParts[0];
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+
+            FlavourBusinessFacade.HumanResources.ITakeawayCashier cashier = flavoursServicesContextRunTime.AssignTakeawayCashierUser(takeawayCashierAssignKey, authUser.User_ID, authUserRef.FullName);
+            authUserRef.AddRole(cashier);
+
+            return cashier;
+        }
+
+        public string AssignDevice(string deviceAssignKey)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException();
+
+            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+            if (authUser == null)
+                throw new System.Security.Authentication.AuthenticationException("User isn't signed up.");
+
+            string[] servicePointIdentityParts = deviceAssignKey.Split(';');
+            string servicesContextIdentity = servicePointIdentityParts[0];
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            return flavoursServicesContextRunTime.AssignDevice(deviceAssignKey);
+        }
+
+
+
         /// <MetaDataID>{ce23edf9-4f91-4120-9a43-7e55e8edb31b}</MetaDataID>
         public FlavourBusinessFacade.HumanResources.IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey)
         {

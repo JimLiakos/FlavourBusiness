@@ -11,9 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
+
 //using static QRCoder.PayloadGenerator;
 #if DeviceDotNet
+using Xamarin.Forms;
+using DeviceUtilities.NetStandard;
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
@@ -67,7 +69,7 @@ namespace CourierApp.ViewModel
             return new List<UserData>();
         }
 
-   
+
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
@@ -137,7 +139,7 @@ namespace CourierApp.ViewModel
                     OnSignIn = true;
                     try
                     {
-                        if (authUser != null )
+                        if (authUser != null)
                         {
                             if (Courier != null)
                             {
@@ -157,8 +159,9 @@ namespace CourierApp.ViewModel
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (Courier is ITransparentProxy)
                                     (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
-                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
 #if DeviceDotNet
+                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                 Courier.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 //ApplicationSettings.Current.FriendlyName = Courier.FullName;
@@ -196,7 +199,7 @@ namespace CourierApp.ViewModel
                             foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Courier))
                             {
                                 if (role.RoleType == RoleType.Courier)
-                                { 
+                                {
                                     if (Courier != null)
                                     {
                                         Courier.ObjectChangeState -= Courier_ObjectChangeState;
@@ -216,7 +219,7 @@ namespace CourierApp.ViewModel
                                     if (Courier is ITransparentProxy)
                                         (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
 
-                                     
+
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                                     Courier.DeviceFirebaseToken = device.FirebaseToken;
@@ -392,7 +395,7 @@ namespace CourierApp.ViewModel
                     return DateTime.MinValue;
             }
         }
-        
+
         public DateTime ActiveShiftWorkEndsAt
         {
             get
@@ -404,7 +407,7 @@ namespace CourierApp.ViewModel
             }
         }
 
-        
+
         public bool InActiveShiftWork
         {
             get
@@ -451,15 +454,180 @@ namespace CourierApp.ViewModel
             pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
-
-        public Task<bool> RequestPermissionsForQRCodeScan()
+        public void ShowAppPermissions()
         {
-            throw new NotImplementedException();
+#if DeviceDotNet
+            AppInfo.ShowSettingsUI();
+#endif
+        }
+        public async Task<bool> RequestPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+            return (await Permissions.RequestAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+#else
+            return false;
+#endif
+
+
+        }
+#if DeviceDotNet
+        public ScanCode ScanCode = new ScanCode();
+#endif
+        public async Task<bool> AssignCourier()
+        {
+#if DeviceDotNet
+            string courierAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                courierAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                this.Courier = servicesContextManagment.AssignCourierUser(courierAssignKey);
+                type = "FlavourBusinessManager.AuthFlavourBusiness";
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                UserData = pAuthFlavourBusiness.SignIn();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+            return false;
+#endif
+
         }
 
+        public async Task<bool> AssignDevice()
+        {
+#if DeviceDotNet
+            string deviceAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                deviceAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                ApplicationSettings.Current.ServiceContextDevice = servicesContextManagment.AssignDevice(deviceAssignKey);
+                //this.Waiter = servicesContextManagment.AssignWaiterUser(waiterAssignKey);
+                //type = "FlavourBusinessManager.AuthFlavourBusiness";
+                //var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                //var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                //UserData = pAuthFlavourBusiness.SignIn();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+            return false;
+#endif
+
+        }
+
+        
         public MarshalByRefObject GetObjectFromUri(string uri)
         {
             return this;
         }
+        public string DeviceName
+        {
+            get
+            {
+#if DeviceDotNet
+                return DeviceInfo.Name;
+#else
+                return "";
+#endif
+                
+                //DeviceInfo.Name;
+            }
+        }
+        public async Task<bool> CheckPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+
+            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+#else
+            return false;
+#endif
+
+        }
+
+
     }
 }
