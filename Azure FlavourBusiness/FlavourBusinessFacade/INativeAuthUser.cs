@@ -13,4 +13,15 @@ namespace FlavourBusinessFacade
         [BackwardCompatibilityID("+1")]
         string UserName { get; }
     }
+
+    public class NativeUserSignInData
+    {
+        public string FireBaseUserName { get; set; }
+        public string FireBasePasword { get; set; }
+
+        public string ServiceContextIdentity { get; set; }
+
+
+
+    }
 }

@@ -247,6 +247,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "GetMessage", args, argsTypes);
             return this.Proxy.GetValue<string>(retValue);
         }
+        
+        public System.Collections.Generic.IList<FlavourBusinessFacade.UserData> GetNativeUsers(string serviceContextIdentity, FlavourBusinessFacade.RoleType roleType)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = serviceContextIdentity;
+            argsTypes[0] = typeof(string);
+            args[1] = roleType;
+            argsTypes[1] = typeof(FlavourBusinessFacade.RoleType);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "GetNativeUsers", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.UserData>>(retValue);
+        }
     }
     
     public sealed class Pr_IParty : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IParty, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -1199,14 +1211,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.ITakeawayCashier>(retValue);
         }
         
-        public string AssignDevice(string DeviceAssignKey)
+        public FlavourBusinessFacade.NativeUserSignInData AssignDeviceToNativeUser(string DeviceAssignKey)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = DeviceAssignKey;
             argsTypes[0] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignDevice", args, argsTypes);
-            return this.Proxy.GetValue<string>(retValue);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignDeviceToNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.NativeUserSignInData>(retValue);
         }
         
         public System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(FlavourBusinessFacade.EndUsers.Coordinate location)
@@ -2074,14 +2086,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.ITakeawayCashier>(retValue);
         }
         
-        public string AssignDevice(string deviceAssignKey)
+        public FlavourBusinessFacade.NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = deviceAssignKey;
             argsTypes[0] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignDevice", args, argsTypes);
-            return this.Proxy.GetValue<string>(retValue);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignDeviceToNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.NativeUserSignInData>(retValue);
         }
     }
     

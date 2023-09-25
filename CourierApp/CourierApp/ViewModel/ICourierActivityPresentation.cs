@@ -1,4 +1,5 @@
-﻿using OOAdvantech.MetaDataRepository;
+﻿using FlavourBusinessFacade;
+using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,7 @@ namespace CourierApp.ViewModel
 
         Task<bool> AssignCourier();
 
-        Task<bool> AssignDevice();
+        Task<UserData> AssignDevice();
 
         bool InActiveShiftWork { get; }
 

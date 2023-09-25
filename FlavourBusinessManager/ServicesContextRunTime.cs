@@ -2711,9 +2711,45 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return unassignedCashier;
             }
         }
-        public string AssignDevice(string deviceAssignKey)
+        public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
-            return deviceAssignKey;
+            NativeAuthUser nativeUser=null;
+            string wokerIdentity = deviceAssignKey.Split(';')[1];
+            var waiter= this.Waiters.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+            if (waiter != null)
+            {
+                nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==waiter.OAuthUserIdentity).FirstOrDefault();
+            }
+            else
+            {
+                var courier = this.Couriers.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                if (courier != null)
+                {
+                    nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==courier.OAuthUserIdentity).FirstOrDefault();
+
+                }
+                else
+                {
+                    var cashier = this.TakeawayCashiers.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                    if (cashier != null)
+                    {
+                        nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==cashier.OAuthUserIdentity).FirstOrDefault();
+                    }
+                    else
+                    {
+                        var supervisor = this.Supervisors.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                        if (supervisor != null)
+                        {
+                            nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==supervisor.OAuthUserIdentity).FirstOrDefault();
+                        }
+
+                    }
+                }
+            }
+            if (nativeUser!=null)
+                return new NativeUserSignInData() { FireBaseUserName=nativeUser.FireBaseUserName, FireBasePasword=nativeUser.FireBasePasword, ServiceContextIdentity=ServicesContextIdentity };
+
+            return null;
         }
 
 

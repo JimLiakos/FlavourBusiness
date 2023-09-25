@@ -19,6 +19,7 @@ using Microsoft.Azure.Documents;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
 using FlavourBusinessManager.ServicePointRunTime;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager
 {
@@ -967,7 +968,12 @@ namespace FlavourBusinessManager
                 return null;
         }
 
-      
+        public IList<UserData> GetNativeUsers(string servicesContextIdentity, RoleType roleType)
+        {
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            return  flavoursServicesContextRunTime.GetNativeUsers(roleType);
+        }
     }
 
     /// <MetaDataID>{73ec8edf-ac89-4daf-83a6-7a452c8b67a7}</MetaDataID>

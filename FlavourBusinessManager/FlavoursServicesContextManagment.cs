@@ -174,24 +174,17 @@ namespace FlavourBusinessManager
 
             return cashier;
         }
-
-        public string AssignDevice(string deviceAssignKey)
+        
+        public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-                throw new System.Security.Authentication.AuthenticationException();
 
-            AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
-
-            if (authUser == null)
-                throw new System.Security.Authentication.AuthenticationException("User isn't signed up.");
 
             string[] servicePointIdentityParts = deviceAssignKey.Split(';');
             string servicesContextIdentity = servicePointIdentityParts[0];
 
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
-            return flavoursServicesContextRunTime.AssignDevice(deviceAssignKey);
+            return flavoursServicesContextRunTime.AssignDeviceToNativeUser(deviceAssignKey);
         }
 
 

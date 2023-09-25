@@ -46,7 +46,7 @@ namespace FlavourBusinessFacade
 
         HumanResources.ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey);
 
-        string AssignDevice(string DeviceAssignKey);
+        NativeUserSignInData AssignDeviceToNativeUser(string DeviceAssignKey);
 
 
 
@@ -92,5 +92,8 @@ namespace FlavourBusinessFacade
         //     Indicates that Xamarin.Forms is running on a Tizen watch.
         Watch
     }
+
+
+
 
 }

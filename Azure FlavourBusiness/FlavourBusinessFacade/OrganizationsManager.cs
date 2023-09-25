@@ -3,7 +3,7 @@ using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using OOAdvantech.Authentication;
-using OOAdvantech.PersistenceLayer;
+
 
 namespace FlavourBusinessFacade
 {
@@ -60,12 +60,17 @@ namespace FlavourBusinessFacade
             AuthFlavourBusiness.UpdateEndUserProfile(endUserDataData);
         }
 
+        public System.Collections.Generic.IList<UserData> GetNativeUsers(string serviceContextIdentity, RoleType roleType)
+        {
+            return AuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier);
+        }
+
         public string GetMessage(string name, int age, IOrganization pok)
         {
             return AuthFlavourBusiness.GetMessage(name, age, pok);
         }
 
-   
+
         public IFoodServiceClient SIMCardSignInEndUser(string simCardIdentity)
         {
             return AuthFlavourBusiness.SIMCardSignInEndUser(simCardIdentity);

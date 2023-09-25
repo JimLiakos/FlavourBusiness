@@ -89,8 +89,11 @@ namespace FlavourBusinessFacade
                     return RoleType.EndUser;
                 if ("FlavourBusinessManager.HumanResources.TakeawayCashier" == typeFullName)
                     return RoleType.TakeAwayCashier;
+                if ("FlavourBusinessManager.HumanResources.Courier" == typeFullName)
+                    return RoleType.Courier;
 
-                
+
+
 
                 return RoleType.Unknown;
             }

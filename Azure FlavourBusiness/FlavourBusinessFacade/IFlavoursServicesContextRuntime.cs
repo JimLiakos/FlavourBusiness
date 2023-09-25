@@ -231,7 +231,7 @@ namespace FlavourBusinessFacade
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
         ICourier AssignCourierUser(string courierAssignKey, string signUpUserIdentity, string userName);
         ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey, string signUpUserIdentity, string userName);
-        string AssignDevice(string deviceAssignKey);
+        NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey);
 
 
 

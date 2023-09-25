@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.EndUsers;
 using OOAdvantech.Authentication;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade
 {
@@ -75,6 +76,6 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{8427508a-0738-4f55-b42b-1938a56817d7}</MetaDataID>
         //string GetMessage(string name, int age, IOrganization pok, out string message);
         string GetMessage(string name, int age, IOrganization pok);
-        
+        IList<UserData> GetNativeUsers(string serviceContextIdentity, RoleType roleType);
     }
 }
