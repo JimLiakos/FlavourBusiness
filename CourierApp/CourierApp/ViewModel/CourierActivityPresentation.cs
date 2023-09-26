@@ -182,7 +182,7 @@ namespace CourierApp.ViewModel
                 SignInTask = Task<bool>.Run(async () =>
                 {
                     OnSignIn = true;
-                    try
+                    try 
                     {
                         if (authUser != null)
                         {

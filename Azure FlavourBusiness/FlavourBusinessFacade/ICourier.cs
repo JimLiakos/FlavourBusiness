@@ -1,8 +1,10 @@
 using OOAdvantech.Remoting;
 using OOAdvantech;
+using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.HumanResources
 {
+    [GenerateFacadeProxy]
     /// <MetaDataID>{9a46c7ba-f831-4e78-8737-9b7015f48847}</MetaDataID>
     public interface ICourier : IServicesContextWorker, EndUsers.IMessageConsumer, IUser
     {
