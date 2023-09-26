@@ -232,8 +232,9 @@ namespace FlavourBusinessFacade
         ICourier AssignCourierUser(string courierAssignKey, string signUpUserIdentity, string userName);
         ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey, string signUpUserIdentity, string userName);
         NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey);
+        UserData SignInNativeUser(string userName, string password);
 
-
+        
 
 #endif
     } 

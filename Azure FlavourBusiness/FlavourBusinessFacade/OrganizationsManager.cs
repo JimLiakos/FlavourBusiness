@@ -130,6 +130,11 @@ namespace FlavourBusinessFacade
         {
             return AuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
         }
+
+        public UserData SignInNativeUser(string serviceContextIdentity, string userName, string password)
+        {
+            return AuthFlavourBusiness.SignInNativeUser(serviceContextIdentity, userName, password);
+        }
 #endif
     }
 

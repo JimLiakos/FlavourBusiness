@@ -80,13 +80,35 @@ namespace CourierApp.ViewModel
                 return new List<UserData>();
 
 
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+            pAuthFlavourBusiness=GetAuthFlavourBusiness();
+
+            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
+
+            lock (this)
+            {
+                NativeUsers=nativeUsers;
+            }
+
+
+
+
+            return nativeUsers; ;
+            //return new List<UserData>();
+        }
+
+        private static IAuthFlavourBusiness GetAuthFlavourBusiness()
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness;
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
             //System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
             serverUrl = "http://localhost:8090/api/";
             serverUrl = AzureServerUrl;
-            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
             try
             {
                 var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
@@ -100,21 +122,9 @@ namespace CourierApp.ViewModel
             {
                 throw;
             }
-            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
 
-            lock (this)
-            {
-                NativeUsers=nativeUsers;
-            }
-             
-
-            return nativeUsers; ;
-            //return new List<UserData>();
+            return pAuthFlavourBusiness;
         }
-
-
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
@@ -349,7 +359,13 @@ namespace CourierApp.ViewModel
         }
         public UserData SignInNativeUser(string userName, string password)
         {
-            throw new NotImplementedException();
+
+
+            var pAuthFlavourBusiness=GetAuthFlavourBusiness();
+            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+
+            return pAuthFlavourBusiness.SignInNativeUser(serviceContextIdentity, userName, password);
+
         }
 
         public void SignOut()

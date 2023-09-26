@@ -21,6 +21,7 @@ using Firebase.Auth.Providers;
 using FlavourBusinessManager.ServicePointRunTime;
 using System.Collections.Generic;
 
+
 namespace FlavourBusinessManager
 {
     /// <MetaDataID>{7e0db2af-8db5-41a5-b7a7-68c767a4615e}</MetaDataID>
@@ -973,6 +974,13 @@ namespace FlavourBusinessManager
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
             return  flavoursServicesContextRunTime.GetNativeUsers(roleType);
+        }
+
+       public UserData SignInNativeUser(string servicesContextIdentity, string userName, string password)
+        {
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            return flavoursServicesContextRunTime.SignInNativeUser(userName,  password);
         }
     }
 

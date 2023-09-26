@@ -259,6 +259,20 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "GetNativeUsers", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.UserData>>(retValue);
         }
+        
+        public FlavourBusinessFacade.UserData SignInNativeUser(string serviceContextIdentity, string userName, string password)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = serviceContextIdentity;
+            argsTypes[0] = typeof(string);
+            args[1] = userName;
+            argsTypes[1] = typeof(string);
+            args[2] = password;
+            argsTypes[2] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IAuthFlavourBusiness), "SignInNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.UserData>(retValue);
+        }
     }
     
     public sealed class Pr_IParty : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IParty, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -2094,6 +2108,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignDeviceToNativeUser", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.NativeUserSignInData>(retValue);
+        }
+        
+        public FlavourBusinessFacade.UserData SignInNativeUser(string userName, string password)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = userName;
+            argsTypes[0] = typeof(string);
+            args[1] = password;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "SignInNativeUser", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.UserData>(retValue);
         }
     }
     

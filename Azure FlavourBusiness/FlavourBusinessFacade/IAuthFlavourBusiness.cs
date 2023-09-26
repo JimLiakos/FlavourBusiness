@@ -77,5 +77,6 @@ namespace FlavourBusinessFacade
         //string GetMessage(string name, int age, IOrganization pok, out string message);
         string GetMessage(string name, int age, IOrganization pok);
         IList<UserData> GetNativeUsers(string serviceContextIdentity, RoleType roleType);
+        UserData SignInNativeUser(string serviceContextIdentity, string userName, string password);
     }
 }

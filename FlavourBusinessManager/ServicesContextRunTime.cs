@@ -3158,7 +3158,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{294f1115-7a48-48a6-a5c4-58870a77a191}</MetaDataID>
-        internal UserData SignInNativeUser(string userName, string password)
+        public UserData SignInNativeUser(string userName, string password)
         {
             lock (NativeUsersLock)
             {
