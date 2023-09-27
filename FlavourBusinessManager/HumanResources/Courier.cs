@@ -10,6 +10,10 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using OOAdvantech.PersistenceLayer;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
+
+using FlavourBusinessFacade.Shipping;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -630,7 +634,33 @@ namespace FlavourBusinessManager.HumanResources
                 return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
         }
 
+        List<IFoodShipping> AssignedFoodShippings = new List<IFoodShipping>();
+        List<IFoodShipping> FoodShippings = new List<IFoodShipping>();
+
+        public IList<IFoodShipping> GetFoodShippings()
+        {
+            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IFoodShipping>().ToList();
+            AssignedFoodShippings = servingBatches.Where(x => x.IsAssigned).ToList();
+            FoodShippings = servingBatches.Where(x => !x.IsAssigned).ToList();
+            return servingBatches;
+        }
 
 
+        internal void FindNewFoodShippings()
+        {
+            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            var assignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
+            var unAssignedservingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
+
+            if (assignedServingBatches.Count != AssignedFoodShippings.Count ||
+                unAssignedservingBatches.Count != FoodShippings.Count)
+            {
+                _ServingBatchesChanged?.Invoke();
+            }
+            if (AssignedServingBatches.Count > 0 && !AssignedServingBatches.ContainsAll(assignedServingBatches))
+                _ServingBatchesChanged?.Invoke();
+            else if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
+                _ServingBatchesChanged?.Invoke();
+        }
     }
 }

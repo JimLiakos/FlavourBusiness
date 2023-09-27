@@ -86,6 +86,7 @@ namespace FlavourBusinessManager.RoomService
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<FlavourBusinessFacade.HumanResources.IServingShiftWork> _ShiftWork = new Member<FlavourBusinessFacade.HumanResources.IServingShiftWork>();
 
+        /// <MetaDataID>{afbee022-ff6f-45ad-a5e5-7f0ac055a7df}</MetaDataID>
         [PersistentMember(nameof(_ShiftWork))]
         public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork => _ShiftWork.Value;
 

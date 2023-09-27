@@ -64,6 +64,7 @@
     <Compile Include="ICashierStationRuntime.cs" />
     <Compile Include="ICourier.cs" />
     <Compile Include="IDebtCollection.cs" />
+    <Compile Include="IFoodShipping.cs" />
     <Compile Include="IFoodTypeTag.cs" />
     <Compile Include="IGeocoding.cs" />
     <Compile Include="IHomeDeliveryCallcenterStation.cs" />

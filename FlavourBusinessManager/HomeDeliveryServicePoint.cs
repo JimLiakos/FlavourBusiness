@@ -58,7 +58,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
-        internal bool IsAssignedTo(IWaiter waiter, IShiftWork shiftWork)
+        internal bool IsAssignedTo(ICourier waiter, IShiftWork shiftWork)
         {
             return true;
         }

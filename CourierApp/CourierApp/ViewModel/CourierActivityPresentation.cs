@@ -266,6 +266,7 @@ namespace CourierApp.ViewModel
                                     Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
                                     if (Courier == null)
                                         continue;
+                                    ActiveShiftWork = Courier.ActiveShiftWork;
                                     string objectRef = RemotingServices.SerializeObjectRef(Courier);
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
                                     Courier.ObjectChangeState += Courier_ObjectChangeState;

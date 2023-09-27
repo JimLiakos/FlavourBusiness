@@ -429,6 +429,7 @@
     <Compile Include="CallerIDServer.cs" />
     <Compile Include="CashierStation.cs" />
     <Compile Include="CloudNotificationManager.cs" />
+    <Compile Include="FoodShipping.cs" />
     <Compile Include="HumanResources\Courier.cs" />
     <Compile Include="DeviceIDAbbreviation.cs" />
     <Compile Include="FisicalParty.cs" />

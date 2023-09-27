@@ -3611,7 +3611,7 @@
 			quidu      	"6444AF3103A6"
 			width      	531
 			height     	181)
-		    (object CategoryView "Logical View::FlavourBusinessFacade::Food Shipping" @82
+		    (object CategoryView "Logical View::FlavourBusinessFacade::Shipping" @82
 			location   	(1080, 512)
 			font       	(object Font
 			    size       	10
@@ -3630,14 +3630,14 @@
 			    nlines     	2
 			    max_width  	500
 			    justify    	0
-			    label      	"Food Shipping")
+			    label      	"Shipping")
 			icon_style 	"Decoration"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"64F363EE003D"
 			width      	513
 			height     	181)
-		    (object CategoryView "Logical View::FlavourBusinessManager::Food Shipping" @83
+		    (object CategoryView "Logical View::FlavourBusinessManager::Shipping" @83
 			location   	(1109, 1472)
 			font       	(object Font
 			    size       	10
@@ -3656,7 +3656,7 @@
 			    nlines     	2
 			    max_width  	552
 			    justify    	0
-			    label      	"Food Shipping")
+			    label      	"Shipping")
 			icon_style 	"Decoration"
 			line_color 	3342489
 			fill_color 	13434879

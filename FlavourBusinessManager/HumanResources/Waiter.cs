@@ -593,8 +593,6 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
-        /// <exclude>Excluded</exclude>
-        ServicePointRunTime.ServicesContextRunTime _ServicesContextRunTime;
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
@@ -603,17 +601,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             get
             {
-                if (_ServicesContextRunTime == null)
-                {
-                    var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                    if (objectStorage != null)
-                    {
-                        OOAdvantech.Linq.Storage linqStorage = new OOAdvantech.Linq.Storage(objectStorage);
-                        _ServicesContextRunTime = (from serviceContext in linqStorage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
-                                                   select serviceContext).FirstOrDefault();
-                    }
-                }
-                return _ServicesContextRunTime;
+                return ServicePointRunTime.ServicesContextRunTime.Current;
             }
         }
 
