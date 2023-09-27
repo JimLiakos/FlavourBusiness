@@ -24,5 +24,10 @@ namespace CourierApp.ViewModel
 
 
         System.DateTime ActiveShiftWorkEndsAt { get; }
+
+        void SiftWorkStart(DateTime startedAt, double timespanInHours);
+
+        void ExtendSiftWorkStart(double timespanInHours);
+
     }
 }

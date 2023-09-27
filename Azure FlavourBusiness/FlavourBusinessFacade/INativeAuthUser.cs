@@ -14,6 +14,7 @@ namespace FlavourBusinessFacade
         string UserName { get; }
     }
 
+    /// <MetaDataID>{1879032b-c805-450a-809f-a99d2610f3c2}</MetaDataID>
     public class NativeUserSignInData
     {
         public string FireBaseUserName { get; set; }

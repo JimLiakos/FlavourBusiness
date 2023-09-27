@@ -500,6 +500,23 @@ namespace CourierApp.ViewModel
                 }
             }
         }
+
+
+        public async void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        {
+            ActiveShiftWork = Courier.NewShiftWork(startedAt, timespanInHours);
+
+            if (ActiveShiftWork != null)
+            {
+                //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+                //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
+                ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            }
+
+
+        }
+
+
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
         public UserData UserData { get; private set; }
@@ -663,7 +680,7 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;cc05236e47984bda895ea287c33e5fe4";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;76cd4b84f5fb40948596ee7412741d85";
 
             try
             {
@@ -722,6 +739,9 @@ namespace CourierApp.ViewModel
 
         }
 
-
+        public void ExtendSiftWorkStart(double timespanInHours)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

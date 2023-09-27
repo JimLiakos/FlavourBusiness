@@ -216,6 +216,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         /// <MetaDataID>{1909309d-6473-4d8d-8ec9-eaf329ef9f42}</MetaDataID>
+        [PersistentMember(nameof(_ShiftWorks))]
         [BackwardCompatibilityID("+10")]
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
 
@@ -242,7 +243,7 @@ namespace FlavourBusinessManager.HumanResources
 
                     if (RecentlyShiftWorks.Count > 0)
                     {
-                    }
+                    } 
 
 
                     return RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
@@ -405,6 +406,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{8aec60ce-6276-49b4-8c05-73fc9b3c4625}</MetaDataID>
         public bool NativeUser { get; set; }
 
 
