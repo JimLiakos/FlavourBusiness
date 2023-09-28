@@ -645,6 +645,18 @@ namespace FlavourBusinessManager.HumanResources
             return servingBatches;
         }
 
+        event FoodShippingsChangedHandler _FoodShippingsChanged;
+        public event FoodShippingsChangedHandler FoodShippingsChanged
+        {
+            add
+            {
+                _FoodShippingsChanged += value;
+            }
+            remove
+            {
+                _FoodShippingsChanged -= value;
+            }
+        }
 
         internal void FindNewFoodShippings()
         {
@@ -655,12 +667,12 @@ namespace FlavourBusinessManager.HumanResources
             if (assignedServingBatches.Count != AssignedFoodShippings.Count ||
                 unAssignedservingBatches.Count != FoodShippings.Count)
             {
-                _ServingBatchesChanged?.Invoke();
+                _FoodShippingsChanged?.Invoke();
             }
-            if (AssignedServingBatches.Count > 0 && !AssignedServingBatches.ContainsAll(assignedServingBatches))
-                _ServingBatchesChanged?.Invoke();
-            else if (ServingBatches.Count > 0 && !ServingBatches.ContainsAll(unAssignedservingBatches))
-                _ServingBatchesChanged?.Invoke();
+            if (AssignedFoodShippings.Count > 0 && !AssignedFoodShippings.ContainsAll(assignedServingBatches))
+                _FoodShippingsChanged?.Invoke();
+            else if (FoodShippings.Count > 0 && !FoodShippings.ContainsAll(unAssignedservingBatches))
+                _FoodShippingsChanged?.Invoke();
         }
     }
 }

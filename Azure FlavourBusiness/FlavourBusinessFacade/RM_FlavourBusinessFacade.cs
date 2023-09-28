@@ -3366,6 +3366,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
+        // The Width property for the object.
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_RestaurantMenuDataSharedUri", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -6574,6 +6586,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 remove
                 {
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
+public event FlavourBusinessFacade.HumanResources.FoodShippingsChangedHandler FoodShippingsChanged
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "add_FoodShippingsChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.FoodShippingsChangedHandler)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "remove_FoodShippingsChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.HumanResources.FoodShippingsChangedHandler)});
                 }
             }
 public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceived

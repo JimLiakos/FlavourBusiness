@@ -12,6 +12,7 @@ namespace TakeAwayApp.Wpf.Properties
 {
 
 
+    /// <MetaDataID>{b3333c11-3a38-4426-8661-1bb1695f588d}</MetaDataID>
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase

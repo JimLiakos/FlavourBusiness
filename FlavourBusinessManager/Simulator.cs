@@ -69,7 +69,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator()
         {
-            return;
+            //return;
 
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {

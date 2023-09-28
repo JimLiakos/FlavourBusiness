@@ -499,7 +499,13 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-
+        public string RestaurantMenuDataSharedUri
+        {
+            get
+            {
+                return ServicePointRunTime.ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
+            }
+        }
 
         //public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
         //{

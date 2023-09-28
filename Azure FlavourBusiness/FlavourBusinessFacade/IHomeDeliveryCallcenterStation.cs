@@ -44,8 +44,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         OrganizationStorageRef Menu { get; }
+        string RestaurantMenuDataSharedUri { get; }
 
-        
         System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location);
 
 

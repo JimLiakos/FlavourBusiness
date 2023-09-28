@@ -71,6 +71,7 @@ namespace TakeAwayApp.ViewModel
         /// <MetaDataID>{f3e59a9a-7d80-4113-b0a7-fddc88db81d1}</MetaDataID>
         Task<bool> IsDeliveryCallCenterStationActive { get; }
 
+        /// <MetaDataID>{7be464a8-5863-4e81-8e0a-1d1f3e3e5aef}</MetaDataID>
         List<WatchingOrderPresentation> WatchingOrders { get; }
 
 
@@ -124,6 +125,7 @@ namespace TakeAwayApp.ViewModel
         /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
         Task<IHomeDeliverySession> NewHomeDeliverSession();
 
+        /// <MetaDataID>{fa6aaa89-c9c7-469b-934c-4b690d736f49}</MetaDataID>
         Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID);
 
         /// <MetaDataID>{06fd4791-60ad-4ab6-9788-d28a2fc13e29}</MetaDataID>
@@ -132,6 +134,7 @@ namespace TakeAwayApp.ViewModel
 
 
 
+        /// <MetaDataID>{71c41ce6-7b00-4091-ad5a-c9e454272c2a}</MetaDataID>
         IFoodServicesClientSessionViewModel TakeAwaySession { get; }
 
 
@@ -183,11 +186,13 @@ namespace TakeAwayApp.ViewModel
             //var ss = Xamarin.Forms.Device.Idiom;
         }
 
+        /// <MetaDataID>{a1a793ed-5fb7-44e6-9200-9e64bce46ac4}</MetaDataID>
         private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, FlavourBusinessManager.RoomService.ViewModel.MealCourse> sender, IMealCourse key, FlavourBusinessManager.RoomService.ViewModel.MealCourse value)
         {
-            value.MealCourseUpdated+=OnMealCourseUpdated;
+            value.MealCourseUpdated += OnMealCourseUpdated;
         }
 
+        /// <MetaDataID>{0b41ad20-2fa2-4b05-b03e-82c566120f96}</MetaDataID>
         private void OnMealCourseUpdated(FlavourBusinessManager.RoomService.ViewModel.MealCourse mealCourse)
         {
             ObjectChangeState?.Invoke(this, nameof(WatchingOrders));

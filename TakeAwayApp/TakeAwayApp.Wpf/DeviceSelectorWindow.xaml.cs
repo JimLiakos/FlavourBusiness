@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TakeAwayApp.ViewModel;
 
 namespace TakeAwayApp.Wpf
 {
@@ -41,10 +42,9 @@ namespace TakeAwayApp.Wpf
         }
 
         public int SelectedIndex { get; set; }
+        public HomeDeliveryUnitTest HomeDeliveryUnitTest { get; private set; }
 
-         
-
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
 
@@ -54,6 +54,11 @@ namespace TakeAwayApp.Wpf
             
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+            if (await (mainWindow.DataContext as FlavoursServiceOrderTakingStation)?.IsDeliveryCallCenterStationActive)
+            {
+                HomeDeliveryUnitTest = new HomeDeliveryUnitTest(mainWindow.DataContext as FlavoursServiceOrderTakingStation);
+               await HomeDeliveryUnitTest.AssignShippingsToCourierTest();
+            }
             base.OnClosing(e);
         }
     }

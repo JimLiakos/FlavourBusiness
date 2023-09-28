@@ -11,12 +11,13 @@ namespace TakeAwayApp.Wpf
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// <MetaDataID>{5b9db04a-50df-4294-a517-b0f826c33da7}</MetaDataID>
     public partial class App : Application, OOAdvantech.IAppLifeTime
     {
 
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
 
-         
+
         public event EventHandler ApplicationResuming;
         public event EventHandler ApplicationSleeping;
         OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
@@ -25,7 +26,7 @@ namespace TakeAwayApp.Wpf
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
-          
+
             SerializeTaskScheduler.RunAsync();
 
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
