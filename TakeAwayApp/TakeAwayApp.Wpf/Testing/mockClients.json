@@ -1,0 +1,262 @@
+[
+  {
+    "SignInProvider": "",
+    "Email": "jim.liakos_a@gmail.com",
+    "Address": null,
+    "Identity": "org_client_sim_1d7d697ea4581_a",
+    "Name": "",
+    "PhoneNumber": "2108822590",
+    "SIMCardData": {
+      "SIMCardIdentity": null,
+      "SIMCardPhoneNumber": null,
+      "SIMCardDescription": null
+    },
+    "DeliveryPlaces": [
+      {
+        "ExtensionProperties": {
+          "DeliveryPlaceBell": "Λιάκος Δημήτρης a",
+          "RouteDistanceInMeters": "2851",
+          "RouteDurationInMinutes": "578",
+          "RouteOrigin": "{\"Longitude\":23.765026,\"Latitude\":37.9960904}",
+          "DeliveryPlaceFloor": "3ος"
+        },
+        "CityTown": "Αθήνα",
+        "StateProvinceRegion": "",
+        "Description": "Λαχανά 22 Αθήνα",
+        "StreetNumber": "22",
+        "Street": "Λαχανά",
+        "Area": "",
+        "PostalCode": "113 63",
+        "Country": "Ελλάδα",
+        "Location": {
+          "Longitude": 23.7439006,
+          "Latitude": 37.9989517
+        },
+        "PlaceID": "ChIJL3pnFbeioRQRO4HCQrPnNPg",
+        "Default": true
+      }
+    ],
+    "FriendlyName": "Λιάκος Δημήτρης a",
+    "PhotoUrl": "",
+    "FullName": "",
+    "UserName": "",
+    "Roles": [
+      {
+        "User": {},
+        "RoleType": 8
+      }
+    ],
+    "DeviceFirebaseToken": null,
+    "OAuthUserIdentity": "org_client_sim_1d7d697ea4581_a",
+    "NotesForClient": null,
+    "IsPlatformClient": false
+  },
+  {
+    "SignInProvider": "",
+    "Email": "jim.liakos_b@gmail.com",
+    "Address": null,
+    "Identity": "org_client_sim_1d7d697ea4581_b",
+    "Name": "",
+    "PhoneNumber": "2108822591",
+    "SIMCardData": {
+      "SIMCardIdentity": null,
+      "SIMCardPhoneNumber": null,
+      "SIMCardDescription": null
+    },
+    "DeliveryPlaces": [
+      {
+        "ExtensionProperties": {
+          "DeliveryPlaceBell": "Λιάκος Δημήτρης b",
+          "RouteDistanceInMeters": "2851",
+          "RouteDurationInMinutes": "578",
+          "RouteOrigin": "{\"Longitude\":23.765026,\"Latitude\":37.9960904}",
+          "DeliveryPlaceFloor": "3ος"
+        },
+        "CityTown": "Αθήνα",
+        "StateProvinceRegion": "",
+        "Description": "Λαχανά 22 Αθήνα",
+        "StreetNumber": "22",
+        "Street": "Λαχανά",
+        "Area": "",
+        "PostalCode": "113 63",
+        "Country": "Ελλάδα",
+        "Location": {
+          "Longitude": 23.7439006,
+          "Latitude": 37.9989517
+        },
+        "PlaceID": "ChIJL3pnFbeioRQRO4HCQrPnNPg",
+        "Default": true
+      }
+    ],
+    "FriendlyName": "Λιάκος Δημήτρης b",
+    "PhotoUrl": "",
+    "FullName": "",
+    "UserName": "",
+    "Roles": [
+      {
+        "User": {},
+        "RoleType": 8
+      }
+    ],
+    "DeviceFirebaseToken": null,
+    "OAuthUserIdentity": "org_client_sim_1d7d697ea4581_b",
+    "NotesForClient": null,
+    "IsPlatformClient": false
+  },
+  {
+    "SignInProvider": "",
+    "Email": "jim.liakos_c@gmail.com",
+    "Address": null,
+    "Identity": "org_client_sim_1d7d697ea4581_c",
+    "Name": "",
+    "PhoneNumber": "2108822592",
+    "SIMCardData": {
+      "SIMCardIdentity": null,
+      "SIMCardPhoneNumber": null,
+      "SIMCardDescription": null
+    },
+    "DeliveryPlaces": [
+      {
+        "ExtensionProperties": {
+          "DeliveryPlaceBell": "Λιάκος Δημήτρης c",
+          "RouteDistanceInMeters": "2851",
+          "RouteDurationInMinutes": "578",
+          "RouteOrigin": "{\"Longitude\":23.765026,\"Latitude\":37.9960904}",
+          "DeliveryPlaceFloor": "3ος"
+        },
+        "CityTown": "Αθήνα",
+        "StateProvinceRegion": "",
+        "Description": "Λαχανά 22 Αθήνα",
+        "StreetNumber": "22",
+        "Street": "Λαχανά",
+        "Area": "",
+        "PostalCode": "113 63",
+        "Country": "Ελλάδα",
+        "Location": {
+          "Longitude": 23.7439006,
+          "Latitude": 37.9989517
+        },
+        "PlaceID": "ChIJL3pnFbeioRQRO4HCQrPnNPg",
+        "Default": true
+      }
+    ],
+    "FriendlyName": "Λιάκος Δημήτρης c",
+    "PhotoUrl": "",
+    "FullName": "",
+    "UserName": "",
+    "Roles": [
+      {
+        "User": {},
+        "RoleType": 8
+      }
+    ],
+    "DeviceFirebaseToken": null,
+    "OAuthUserIdentity": "org_client_sim_1d7d697ea4581_c",
+    "NotesForClient": null,
+    "IsPlatformClient": false
+  },
+  {
+    "SignInProvider": "",
+    "Email": "jim.liakos_d@gmail.com",
+    "Address": null,
+    "Identity": "org_client_sim_1d7d697ea4581_d",
+    "Name": "",
+    "PhoneNumber": "2108822593",
+    "SIMCardData": {
+      "SIMCardIdentity": null,
+      "SIMCardPhoneNumber": null,
+      "SIMCardDescription": null
+    },
+    "DeliveryPlaces": [
+      {
+        "ExtensionProperties": {
+          "DeliveryPlaceBell": "Λιάκος Δημήτρης d",
+          "RouteDistanceInMeters": "2851",
+          "RouteDurationInMinutes": "578",
+          "RouteOrigin": "{\"Longitude\":23.765026,\"Latitude\":37.9960904}",
+          "DeliveryPlaceFloor": "3ος"
+        },
+        "CityTown": "Αθήνα",
+        "StateProvinceRegion": "",
+        "Description": "Λαχανά 22 Αθήνα",
+        "StreetNumber": "22",
+        "Street": "Λαχανά",
+        "Area": "",
+        "PostalCode": "113 63",
+        "Country": "Ελλάδα",
+        "Location": {
+          "Longitude": 23.7439006,
+          "Latitude": 37.9989517
+        },
+        "PlaceID": "ChIJL3pnFbeioRQRO4HCQrPnNPg",
+        "Default": true
+      }
+    ],
+    "FriendlyName": "Λιάκος Δημήτρης d",
+    "PhotoUrl": "",
+    "FullName": "",
+    "UserName": "",
+    "Roles": [
+      {
+        "User": {},
+        "RoleType": 8
+      }
+    ],
+    "DeviceFirebaseToken": null,
+    "OAuthUserIdentity": "org_client_sim_1d7d697ea4581_d",
+    "NotesForClient": null,
+    "IsPlatformClient": false
+  },
+  {
+    "SignInProvider": "",
+    "Email": "jim.liakos_e@gmail.com",
+    "Address": null,
+    "Identity": "org_client_sim_1d7d697ea4581_e",
+    "Name": "",
+    "PhoneNumber": "2108822594",
+    "SIMCardData": {
+      "SIMCardIdentity": null,
+      "SIMCardPhoneNumber": null,
+      "SIMCardDescription": null
+    },
+    "DeliveryPlaces": [
+      {
+        "ExtensionProperties": {
+          "DeliveryPlaceBell": "Λιάκος Δημήτρης e",
+          "RouteDistanceInMeters": "2851",
+          "RouteDurationInMinutes": "578",
+          "RouteOrigin": "{\"Longitude\":23.765026,\"Latitude\":37.9960904}",
+          "DeliveryPlaceFloor": "3ος"
+        },
+        "CityTown": "Αθήνα",
+        "StateProvinceRegion": "",
+        "Description": "Λαχανά 22 Αθήνα",
+        "StreetNumber": "22",
+        "Street": "Λαχανά",
+        "Area": "",
+        "PostalCode": "113 63",
+        "Country": "Ελλάδα",
+        "Location": {
+          "Longitude": 23.7439006,
+          "Latitude": 37.9989517
+        },
+        "PlaceID": "ChIJL3pnFbeioRQRO4HCQrPnNPg",
+        "Default": true
+      }
+    ],
+    "FriendlyName": "Λιάκος Δημήτρης e",
+    "PhotoUrl": "",
+    "FullName": "",
+    "UserName": "",
+    "Roles": [
+      {
+        "User": {},
+        "RoleType": 8
+      }
+    ],
+    "DeviceFirebaseToken": null,
+    "OAuthUserIdentity": "org_client_sim_1d7d697ea4581_e",
+    "NotesForClient": null,
+    "IsPlatformClient": false
+  }
+]

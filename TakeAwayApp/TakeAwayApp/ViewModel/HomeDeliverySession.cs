@@ -107,6 +107,8 @@ namespace TakeAwayApp.ViewModel
             }
         }
 
+        public string SimulationDeviceID;
+
         private void LoadSessionDataForClient(FoodServiceClientUri homeDeliveryClient)
         {
             if (homeDeliveryClient.FoodServiceClient == null)
@@ -145,6 +147,7 @@ namespace TakeAwayApp.ViewModel
                 else
                 {
                     OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
                     (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop, device.FirebaseToken, _HomeDeliveryServicePoint);
 
                     if (FoodServiceClientSession.FoodServicesClientSession != null)

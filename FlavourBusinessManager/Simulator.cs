@@ -30,10 +30,10 @@ namespace FlavourBusinessManager.RoomService
 
 
     /// <MetaDataID>{c99be1be-17c0-435d-87ae-81b2bf5ec133}</MetaDataID>
-    public class Simulator
+    public class Simulator: MarshalByRefObject, IExtMarshalByRefObject
     {
 
-
+        
         /// <MetaDataID>{5639f6bd-def5-49c5-ba3d-8990fb6a4d47}</MetaDataID>
         internal static double Velocity = 0.33;
 
@@ -146,6 +146,83 @@ namespace FlavourBusinessManager.RoomService
             }
             //clientDeviceID="S_81000000296"
             //clientName="clientName"
+
+        }
+
+
+        public void StartClientSideSimulation()
+        {
+            if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
+            {
+                SimulationTask = Task.Run(() =>
+                {
+                    System.Threading.Thread.Sleep(50000);
+                    DateTime? lastMealCourseAdded = null;
+
+                    var servicePoints = (from serviceArea in ServicesContextRunTime.Current.ServiceAreas
+                                         from ServicePoint in serviceArea.ServicePoints
+                                         select ServicePoint).ToList();
+
+                    List<IMenuItem> menuItems = GetMenuItems(ServicesContextRunTime.Current.OperativeRestaurantMenu.RootCategory);
+
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicesContextRunTime.Current.OperativeRestaurantMenu));
+                    var twoCoursesMealType = (from fixedMealType in storage.GetObjectCollection<FixedMealType>()
+                                              select fixedMealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault();
+                    //var clientSession = GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
+
+                    var mainMealCourseType = twoCoursesMealType.Courses.Where(x => x.IsDefault).FirstOrDefault();
+                    var mainMealCourseMenuItems = menuItems.Where(x => x.PartofMeals.Any(y => y.MealCourseType == mainMealCourseType)).ToList();
+                    string mainMealCourseTypeUri = ObjectStorage.GetStorageOfObject(mainMealCourseType).GetPersistentObjectUri(mainMealCourseType);
+                    Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
+
+
+
+
+                    foreach (var preparationStation in SimulatorPreparationStations.ToList())
+                    {
+                        var preparationSationItems = mainMealCourseMenuItems.Where(x => preparationStation.CanPrepareItem(x)).ToList();
+                        if (preparationSationItems.Count > 0)
+                            preparationStationsItems[preparationStation] = preparationSationItems;
+                    }
+
+                    IFoodServiceClientSession clientSession = null;
+
+
+                    int i = 0;
+                    while (!EndOfSimulation && servicePoints.Count > 0)
+                    {
+
+                        if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
+                        {
+                            List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
+
+                            var freeServicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
+
+                            if (freeServicePoints.Count > 0 && servicePoints.Where(x => x.State != ServicePointState.Free).Count() < 5)
+                            {
+
+                                string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
+                                clientSession = simulateClientSideSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems, servicesPointIdentity);
+                                lastMealCourseAdded = DateTime.UtcNow;
+                            }
+                            else
+                            {
+
+                            }
+                            ////DeleteSimulationData();
+                        }
+
+                        //PreparationStations[0].
+                        //clientSession.FoodServiceClientSession.AddItem
+                        System.Threading.Thread.Sleep(10000);
+
+                    }
+                });
+            }
+            else
+            {
+
+            }
 
         }
 
@@ -358,6 +435,66 @@ namespace FlavourBusinessManager.RoomService
 
             //   clientSession.FoodServiceClientSession.Commit(itemsToPrepare);
         }
+
+
+
+        private void simulateClientSideSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<List<PSItemsPattern>> preparationStationSimulatorItems, string servicesPointIdentity )
+        {
+
+
+
+            List<IItemPreparation> itemsToPrepare = new List<IItemPreparation>();
+            var patern = preparationStationSimulatorItems[_R.Next(preparationStationSimulatorItems.Count - 1)].ToList();
+
+
+
+            foreach (var psItemsPattern in patern)
+            {
+                if (psItemsPattern.NumberOfItems != null)
+                {
+                    while (psItemsPattern.NumberOfItems > 0)
+                    {
+                        var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)]];
+                        var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        itemsToPrepare.Add(itemPreparation);
+                        psItemsPattern.NumberOfItems = psItemsPattern.NumberOfItems - 1;
+                    }
+                }
+                if (psItemsPattern.ItemsPatterns != null)
+                {
+                    foreach (var itemPatern in psItemsPattern.ItemsPatterns)
+                    {
+                        var preparationStation = preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)];
+                        var preparationStationItems = preparationStationsItems[preparationStation];
+
+                        preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPatern.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPatern.MaxDuration / 2).ToList();
+                        var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        itemsToPrepare.Add(itemPreparation);
+                    }
+                }
+
+
+            }
+
+            //IFoodServiceClientSession clientSession = null;
+
+
+            //using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            //{
+            //    clientSession = ServicesContextRunTime.Current.GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, DeviceType.Phone, null, ServicesContextRunTime.Current.OrganizationIdentity, ServicesContextRunTime.Current.GraphicMenus, true, true).FoodServiceClientSession;
+            //    foreach (var itemToPrepare in itemsToPrepare)
+            //        clientSession.AddItem(itemToPrepare);
+            //    stateTransition.Consistent = true;
+            //}
+            //clientSession.Commit(itemsToPrepare);
+            //return clientSession;
+
+            //   clientSession.FoodServiceClientSession.Commit(itemsToPrepare);
+        }
+
+
 
         /// <MetaDataID>{538da042-5afb-4e85-bf8c-e467b434fbfc}</MetaDataID>
         private List<IMenuItem> GetMenuItems(IItemsCategory rootCategory)

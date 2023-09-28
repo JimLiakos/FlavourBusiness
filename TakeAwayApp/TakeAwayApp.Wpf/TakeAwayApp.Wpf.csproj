@@ -68,7 +68,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomeDeliveryUnitTest.cs" />
+    <Compile Include="Testing\HomeDeliveryUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -90,6 +90,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Testing\mockClients.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -107,6 +108,10 @@
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Net\OOAdvantech.Net.csproj">
       <Project>{ceb65441-0a94-444a-af99-5e4850ae623c}</Project>
       <Name>OOAdvantech.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantechFacade\OOAdvantechFacade -VS10.csproj">
+      <Project>{09083B37-96EF-4867-AA51-4D698AD34344}</Project>
+      <Name>OOAdvantechFacade -VS10</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech\OOAdvantech - VS10.csproj">
       <Project>{83492998-8e8b-44a9-bcc8-9a6e979e3eb6}</Project>

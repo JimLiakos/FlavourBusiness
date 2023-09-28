@@ -149,6 +149,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivaWalletPos", "VivaWallet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourierApp.Wpf", "CourierApp\CourierApp.Wpf\CourierApp.Wpf.csproj", "{CA5B4170-03F2-48B2-A6FD-11101570FECB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlavourBusinessUnitsTest", "FlavourBusinessUnitsTest\FlavourBusinessUnitsTest.csproj", "{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1035,6 +1037,18 @@ Global
 		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|x64.Build.0 = Release|Any CPU
 		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|x86.ActiveCfg = Release|Any CPU
 		{CA5B4170-03F2-48B2-A6FD-11101570FECB}.Release|x86.Build.0 = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|x64.Build.0 = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Debug|x86.Build.0 = Debug|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|x64.ActiveCfg = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|x64.Build.0 = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|x86.ActiveCfg = Release|Any CPU
+		{A871A9AE-152F-48F2-B4A4-92001A5DEBA4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
