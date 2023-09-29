@@ -24,13 +24,14 @@ using FinanceFacade;
 using MenuModel;
 using FlavourBusinessManager.ServicePointRunTime;
 
+
 namespace FlavourBusinessManager.RoomService
 {
 
 
 
     /// <MetaDataID>{c99be1be-17c0-435d-87ae-81b2bf5ec133}</MetaDataID>
-    public class Simulator: MarshalByRefObject, IExtMarshalByRefObject
+    public class Simulator: MarshalByRefObject, IExtMarshalByRefObject, FlavourBusinessFacade.UnitTest.IFoodServicesSessionsSimulator
     {
 
         
@@ -66,10 +67,12 @@ namespace FlavourBusinessManager.RoomService
 
         };
 
+        public event FlavourBusinessFacade.UnitTest.NewSimulateSessionHandler NewSimulateSession;
+
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator()
         {
-            //return;
+            return;
 
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
@@ -185,8 +188,7 @@ namespace FlavourBusinessManager.RoomService
                             preparationStationsItems[preparationStation] = preparationSationItems;
                     }
 
-                    IFoodServiceClientSession clientSession = null;
-
+               
 
                     int i = 0;
                     while (!EndOfSimulation && servicePoints.Count > 0)
@@ -194,7 +196,7 @@ namespace FlavourBusinessManager.RoomService
 
                         if (lastMealCourseAdded == null || (DateTime.UtcNow - lastMealCourseAdded.Value).TotalMinutes > 0.6)
                         {
-                            List<List<PSItemsPattern>> preparationStationSimulatorItems = GetNextPreparationPatern(i++);
+                            List<List<PSItemsPattern>> preparationStationSimulatorItems = GetClientSideNextPreparationPatern(i++);
 
                             var freeServicePoints = servicePoints.Where(x => x.State == ServicePointState.Free).ToList();
 
@@ -202,7 +204,7 @@ namespace FlavourBusinessManager.RoomService
                             {
 
                                 string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
-                                clientSession = simulateClientSideSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems, servicesPointIdentity);
+                                simulateClientSideSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems);
                                 lastMealCourseAdded = DateTime.UtcNow;
                             }
                             else
@@ -301,6 +303,73 @@ namespace FlavourBusinessManager.RoomService
             }
             return PreparationStationSimulatorItems;
         }
+
+
+        private List<List<PSItemsPattern>> GetClientSideNextPreparationPatern(int step)
+        {
+            List<List<PSItemsPattern>> preparationPaterns = new List<List<PSItemsPattern>>();
+
+            if (step == 0)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5))  ,
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(8.5,10.5),new ItemPattern(3.5,5.5)) });
+                return preparationPaterns;
+            }
+            if (step == 1)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,4.5),new ItemPattern(3.5,4.5)),
+                    new PSItemsPattern(0)});
+
+                return preparationPaterns;
+            }
+
+            if (step == 0)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5))
+                });
+                return preparationPaterns;
+            }
+            if (step == 1)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                        PSItemsPattern.GetItemsPatterns(new ItemPattern(3.5,5.5),new ItemPattern(3.5,5.5))
+                });
+                return preparationPaterns;
+            }
+            if (step == 2)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(3) });
+                return preparationPaterns;
+            }
+            if (step == 3)
+            {
+                preparationPaterns.Add(new List<PSItemsPattern> {
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(0),
+                    new PSItemsPattern(3) });
+                return preparationPaterns;
+            }
+            return PreparationStationSimulatorItems;
+        }
+
 
         /// <MetaDataID>{04391a35-b2a6-4cea-ad53-6d18922a9380}</MetaDataID>
         internal void DeleteSimulationData()
@@ -438,12 +507,12 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-        private void simulateClientSideSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<List<PSItemsPattern>> preparationStationSimulatorItems, string servicesPointIdentity )
+        private void simulateClientSideSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<List<PSItemsPattern>> preparationStationSimulatorItems  )
         {
 
 
 
-            List<IItemPreparation> itemsToPrepare = new List<IItemPreparation>();
+            List<ItemPreparation> itemsToPrepare = new List<ItemPreparation>();
             var patern = preparationStationSimulatorItems[_R.Next(preparationStationSimulatorItems.Count - 1)].ToList();
 
 
@@ -477,6 +546,9 @@ namespace FlavourBusinessManager.RoomService
 
 
             }
+
+            NewSimulateSession?.Invoke(itemsToPrepare.OfType<IItemPreparation>().ToList());
+
 
             //IFoodServiceClientSession clientSession = null;
 

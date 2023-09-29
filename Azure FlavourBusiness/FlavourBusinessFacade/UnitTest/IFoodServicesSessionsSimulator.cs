@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FlavourBusinessFacade.RoomService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessUnitsTest
+namespace FlavourBusinessFacade.UnitTest
 {
     public interface IFoodServicesSessionsSimulator
     {
@@ -13,5 +14,8 @@ namespace FlavourBusinessUnitsTest
         event NewSimulateSessionHandler NewSimulateSession;
     } 
 
-    public delegate void NewSimulateSessionHandler(List<FlavourBusinessFacade.ItemPreparationAbbreviation> removedServingItems);
+    public delegate void NewSimulateSessionHandler(List<IItemPreparation> sessionItems);
+
+
+    
 }

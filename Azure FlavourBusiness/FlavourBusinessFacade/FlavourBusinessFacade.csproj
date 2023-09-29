@@ -100,6 +100,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="UnitTest\IFoodServicesSessionsSimulator.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="ΙHallLayout.cs" />
     <Compile Include="HumanResources\ΙShifWork.cs" />

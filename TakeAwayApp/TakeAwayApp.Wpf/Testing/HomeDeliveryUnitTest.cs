@@ -1,6 +1,7 @@
 ﻿using CefSharp;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ViewModel;
 using FlavourBusinessManager.EndUsers;
 using MenuModel.JsonViewModel;
@@ -21,6 +22,8 @@ namespace TakeAwayApp.Wpf
     {
         /// <MetaDataID>{0baf0495-b27f-42d3-bcea-10111dc76a57}</MetaDataID>
         FlavoursServiceOrderTakingStation FlavoursServiceOrderTakingStation;
+        private List<FoodServiceClient> ClientsForUnitTest;
+
         public HomeDeliveryUnitTest(FlavoursServiceOrderTakingStation flavoursServiceOrderTakingStation)
         {
 
@@ -52,28 +55,24 @@ namespace TakeAwayApp.Wpf
             };
 
             var mockClientsJson = System.Text.Encoding.Default.GetString(Properties.Resources.mockClients);
-           var clientsForUnitTest= OOAdvantech.Json.JsonConvert.DeserializeObject<List<FlavourBusinessManager.EndUsers.FoodServiceClient>>(mockClientsJson, settings);
+            ClientsForUnitTest = OOAdvantech.Json.JsonConvert.DeserializeObject<List<FlavourBusinessManager.EndUsers.FoodServiceClient>>(mockClientsJson, settings);
 
 
-            IHomeDeliverySession homeDeliverySession = await FlavoursServiceOrderTakingStation.NewHomeDeliverSession();
-            homeDeliverySession.CallerPhone = clientsForUnitTest.FirstOrDefault().PhoneNumber;
+            this.FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.FoodServicesSessionsSimulator.NewSimulateSession += FoodServicesSessionsSimulator_NewSimulateSession;
 
-            (homeDeliverySession.SessionClient.FoodServiceClient as FoodServiceClient).Synchronize(clientsForUnitTest.FirstOrDefault());
 
-            homeDeliverySession.DeliveryPlace=homeDeliverySession.SessionClient.FoodServiceClient.DeliveryPlaces.FirstOrDefault();
+            this.FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.FoodServicesSessionsSimulator.StartClientSideSimulation();
 
-            
-            
+            //  this.FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.FoodServicesSessionsSimulator.NewSimulateSession -= FoodServicesSessionsSimulator_NewSimulateSession;
 
-            string tt = OOAdvantech.Json.JsonConvert.SerializeObject(homeDeliverySession.SessionClient.FoodServiceClient);
-
-            var sdsds = homeDeliverySession.FoodServiceClientSession.OrderItems;
-
-            var watchingOrders = FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.SessionID == homeDeliverySession.FoodServiceClientSession.MainSessionID).FirstOrDefault();
-
-            var preparation = watchingOrders.MealCourses.FirstOrDefault()?.FoodItemsInProgress.FirstOrDefault()?.PreparationStationIdentity;
             //homeDeliverySession.OrderCommit();
 
+        }
+
+        private void FoodServicesSessionsSimulator_NewSimulateSession(List<IItemPreparation> sessionItems)
+        {
+
+            var preparationItems = sessionItems.OfType<FlavourBusinessManager.RoomService.ItemPreparation>().Where(x => x.LoadMenuItem(MenuItems) != null).ToList();
         }
     }
 

@@ -602,7 +602,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
         /// <MetaDataID>{41576ebd-3865-4161-988d-071e26c5b296}</MetaDataID>
-        Simulator Simulator = new Simulator();
+        internal Simulator Simulator = new Simulator();
 
         /// <MetaDataID>{269a82d7-69e7-4e6c-9832-c50e7a1fa8b2}</MetaDataID>
         [ObjectActivationCall]

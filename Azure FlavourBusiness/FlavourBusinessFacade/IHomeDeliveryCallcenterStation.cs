@@ -14,7 +14,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{0a59d844-6b8e-4e2f-99c9-54f71ccea47d}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         string GraphicMenuStorageIdentity { get; set; }
-         
+
         /// <MetaDataID>{0525f79f-be19-4d04-9ac8-518d03fc14f6}</MetaDataID>
         [RoleAMultiplicityRange(0)]
         [RoleBMultiplicityRange(1, 1)]
@@ -37,7 +37,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e229d169-2500-41cc-98c9-d1daa6e306ca}</MetaDataID>
         void AddHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);
         void CancelHomeDeliverFoodServicesClientSession(IFoodServiceClientSession foodServicesClientSession);
-        IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken,HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint);
+        IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint);
 
         /// <MetaDataID>{608a2ffa-549d-4e62-aaba-fe09751f93a6}</MetaDataID>
         void RemoveHomeDeliveryServicePoint(IHomeDeliveryServicePoint homeDeliveryServicePoint);
@@ -57,6 +57,12 @@ namespace FlavourBusinessFacade.ServicesContextResources
         FoodServiceClientUri GetFoodServicesOpenSession(HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID);
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+#if DEBUG
+        UnitTest.IFoodServicesSessionsSimulator FoodServicesSessionsSimulator {get;}
+#endif
+        void SetObjectChangeState();
+
     }
 
     /// <MetaDataID>{05a19c03-47b8-443e-886f-1976132586c2}</MetaDataID>

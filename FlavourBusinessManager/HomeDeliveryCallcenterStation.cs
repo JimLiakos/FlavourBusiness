@@ -3,6 +3,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.UnitTest;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
 using MenuPresentationModel;
@@ -449,6 +450,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             return callCenterStationWatchingOrders;
         }
 
+        public void SetObjectChangeState()
+        {
+            throw new NotImplementedException();
+        }
+
         DeviceType ClientDeviceType = DeviceType.Desktop;
         /// <exclude>Excluded</exclude>
         OrganizationStorageRef _Menu;
@@ -506,6 +512,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                 return ServicePointRunTime.ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
             }
         }
+#if DEBUG
+        public IFoodServicesSessionsSimulator FoodServicesSessionsSimulator => ServicesContextRunTime.Current.Simulator;
+
+#endif
 
         //public System.Collections.Generic.List<HomeDeliveryServicePointAbbreviation> GetNeighborhoodFoodServers(Coordinate location)
         //{

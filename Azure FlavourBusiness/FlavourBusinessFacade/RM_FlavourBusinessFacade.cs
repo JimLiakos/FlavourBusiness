@@ -3378,6 +3378,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             }
         }
         
+        // The Width property for the object.
+        public FlavourBusinessFacade.UnitTest.IFoodServicesSessionsSimulator FoodServicesSessionsSimulator
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "get_FoodServicesSessionsSimulator", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.UnitTest.IFoodServicesSessionsSimulator>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -3485,6 +3497,13 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetFoodServicesOpenSession", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.FoodServiceClientUri>(retValue);
+        }
+        
+        public void SetObjectChangeState()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "SetObjectChangeState", args, argsTypes);
         }
     }
     

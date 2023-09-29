@@ -141,6 +141,10 @@
       <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
       <Name>MenuModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
+      <Project>{D85BE368-8C63-4BAC-A287-B111A5D25EFF}</Project>
+      <Name>MenuModelFacade</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
