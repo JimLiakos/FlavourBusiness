@@ -23,6 +23,7 @@ using FlavourBusinessManager.RoomService;
 using FinanceFacade;
 using MenuModel;
 using FlavourBusinessManager.ServicePointRunTime;
+using System.ServiceModel.Configuration;
 
 
 namespace FlavourBusinessManager.RoomService
@@ -153,13 +154,27 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        public void StartClientSideSimulation()
+        public void StartClientSideSimulation(SessionType sessionType)
         {
+            string defaultMealTypeUri = null;
+
+            if (sessionType==SessionType.Hall)
+                defaultMealTypeUri = ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas.FirstOrDefault().ServesMealTypesUris.FirstOrDefault();
+                
+
+            if (sessionType==SessionType.HomeDeliveryGuest||sessionType==SessionType.HomeDelivery)
+                defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+
+            if (sessionType==SessionType.Takeaway)
+                defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
+
+
+
             if (SimulationTask == null || SimulationTask.Status != TaskStatus.Running)
             {
                 SimulationTask = Task.Run(() =>
                 {
-                    System.Threading.Thread.Sleep(50000);
+                    System.Threading.Thread.Sleep(5000);
                     DateTime? lastMealCourseAdded = null;
 
                     var servicePoints = (from serviceArea in ServicesContextRunTime.Current.ServiceAreas
@@ -169,12 +184,15 @@ namespace FlavourBusinessManager.RoomService
                     List<IMenuItem> menuItems = GetMenuItems(ServicesContextRunTime.Current.OperativeRestaurantMenu.RootCategory);
 
                     OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicesContextRunTime.Current.OperativeRestaurantMenu));
-                    var twoCoursesMealType = (from fixedMealType in storage.GetObjectCollection<FixedMealType>()
-                                              select fixedMealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault();
+                    var mealType = (from fixedMealType in storage.GetObjectCollection<FixedMealType>()
+                                              select fixedMealType).ToList().Where(x=>x.MealTypeUri==defaultMealTypeUri).FirstOrDefault();
                     //var clientSession = GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, null, OrganizationIdentity, GraphicMenus, true);
 
-                    var mainMealCourseType = twoCoursesMealType.Courses.Where(x => x.IsDefault).FirstOrDefault();
+                    var mainMealCourseType = mealType.Courses.Where(x => x.IsDefault).FirstOrDefault();
                     var mainMealCourseMenuItems = menuItems.Where(x => x.PartofMeals.Any(y => y.MealCourseType == mainMealCourseType)).ToList();
+                    if (mainMealCourseMenuItems.Count==0)
+                        mainMealCourseMenuItems=menuItems;
+
                     string mainMealCourseTypeUri = ObjectStorage.GetStorageOfObject(mainMealCourseType).GetPersistentObjectUri(mainMealCourseType);
                     Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems = new Dictionary<IPreparationStation, List<IMenuItem>>();
 
@@ -206,6 +224,7 @@ namespace FlavourBusinessManager.RoomService
                                 string servicesPointIdentity = freeServicePoints[_R.Next(freeServicePoints.Count - 1)].ServicesPointIdentity;
                                 simulateClientSideSession(mainMealCourseTypeUri, preparationStationsItems, preparationStationSimulatorItems);
                                 lastMealCourseAdded = DateTime.UtcNow;
+                                break;
                             }
                             else
                             {
@@ -378,8 +397,12 @@ namespace FlavourBusinessManager.RoomService
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
             var simulationClientSessions = (from clientSession in servicesContextStorage.GetObjectCollection<FoodServiceClientSession>()
-                                            where clientSession.ClientDeviceID == "S_81000000296"
                                             select clientSession).ToList();
+
+            simulationClientSessions=simulationClientSessions.Where(x => x.ClientDeviceID == "S_81000000296"||x.ClientDeviceID.IndexOf("org_client_sim_")==0).ToList();
+            
+
+
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {

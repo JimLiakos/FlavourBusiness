@@ -122,8 +122,8 @@ namespace TakeAwayApp.ViewModel
 
 
 
-        /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
-        Task<IHomeDeliverySession> NewHomeDeliverSession();
+        ///// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
+        //Task<IHomeDeliverySession> NewHomeDeliverySession { get; }
 
         /// <MetaDataID>{fa6aaa89-c9c7-469b-934c-4b690d736f49}</MetaDataID>
         Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID);
@@ -705,7 +705,7 @@ namespace TakeAwayApp.ViewModel
             return this.TakeAwayStation.SignInNativeUser(userName, password);
         }
         /// <MetaDataID>{cd75f775-036f-40a0-b1df-9ec6ad410980}</MetaDataID>
-        private static IAuthFlavourBusiness GetFlavourBusinessAuth()
+        public static IAuthFlavourBusiness GetFlavourBusinessAuth()
         {
             IAuthFlavourBusiness pAuthFlavourBusiness;
             OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
@@ -716,6 +716,18 @@ namespace TakeAwayApp.ViewModel
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
             pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
+        }
+
+        public static IFlavoursServicesContextManagment GetServicesContextManagment()
+        {
+
+            IAuthFlavourBusiness pAuthFlavourBusiness;
+            OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+            return servicesContextManagment;
         }
 
         /// <MetaDataID>{56425520-6845-48c1-9d95-ca1d08642eec}</MetaDataID>
@@ -1234,7 +1246,7 @@ namespace TakeAwayApp.ViewModel
 
         }
 
-        public async Task<IHomeDeliverySession> NewHomeDeliverSession()
+        public async Task<IHomeDeliverySession> NewHomeDeliverySession()
         {
 
             var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);

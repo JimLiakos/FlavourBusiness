@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.RoomService;
+﻿using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.RoomService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FlavourBusinessFacade.UnitTest
 {
     public interface IFoodServicesSessionsSimulator
     {
-        void StartClientSideSimulation();
+        void StartClientSideSimulation(SessionType sessionType);
 
         event NewSimulateSessionHandler NewSimulateSession;
     } 

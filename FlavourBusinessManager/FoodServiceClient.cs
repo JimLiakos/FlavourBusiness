@@ -234,6 +234,10 @@ namespace FlavourBusinessManager.EndUsers
                     return _DeliveryPlaces.OfType<IPlace>().ToList();
                 }
             }
+            set
+            {
+                _DeliveryPlaces=value?.OfType<Place>().ToList();
+            }
         }
 
         /// <exclude>Excluded</exclude>
