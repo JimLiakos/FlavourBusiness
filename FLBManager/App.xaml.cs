@@ -146,7 +146,7 @@ namespace FLBManager
 
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
 
-            //Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
+            Restore(@"F:\myproject\terpo\OpenVersions\FlavourBusiness\FlavourBusinessApps\Backup", "DevStorage", "", "",true);
             //Restore(@"F:\X-Drive\Source\OpenVersions\FlavourBusiness\Data\Backup", "DevStorage", "", "", true);
 
             //Restore(@"F:\NewPc\Azure blob storage\Backup", "DevStorage", "", "");
