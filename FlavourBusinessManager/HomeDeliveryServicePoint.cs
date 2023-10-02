@@ -470,7 +470,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
                             SessionID = foodServicesSession.SessionID,
                             ClientPhone= foodServicesSession.PartialClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
-                            SessionType= foodServicesSession.SessionType,
+                            ClientIdentity = foodServicesSession.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.Identity,
+                            SessionType = foodServicesSession.SessionType,
                             DeliveryPlace = foodServicesSession.DeliveryPlace,
                             EntryDateTime = foodServicesSession.SessionStarts,
                             HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },

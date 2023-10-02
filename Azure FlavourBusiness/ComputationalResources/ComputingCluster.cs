@@ -252,7 +252,7 @@ namespace ComputationalResources
             }
 
             ResourcesAllocationTimer.Elapsed += ResourcesAllocationTimer_Elapsed;
-            ResourcesAllocationTimer.Interval = TimeSpan.FromMinutes(0.5).TotalMilliseconds;
+            ResourcesAllocationTimer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
             ResourcesAllocationTimer.Start();
 
             if (ComputationalResourcesContext != null && ComputationalResourcesContext.ComputingResourceID == ComputingCluster.CurrentComputingResource.ResourceIndex)
@@ -272,7 +272,14 @@ namespace ComputationalResources
         }
 
         /// <MetaDataID>{483d0c46-ec7c-43e3-bd5b-b8afe0e2cf7f}</MetaDataID>
-        System.DateTime LastRefreshDateTime;
+        DateTime LastRefreshDateTime;
+
+        DateTime LastResourceAllocationhDateTime;
+
+        object ResourcesAllocationLock = new object();
+        bool InResourcesAllocation = false;
+
+
         /// <MetaDataID>{84f9ac62-febc-47a0-b9ac-8dc4155928df}</MetaDataID>
         IsolatedComputingContext ComputationalResourcesContext;
         /// <MetaDataID>{8f55b78d-b294-4ef7-8207-010adfdcb6c9}</MetaDataID>
@@ -281,29 +288,45 @@ namespace ComputationalResources
             //bool utd = true;
             //if (utd)
             //    return;
-
-            if (ComputationalResourcesContext.ComputingResourceID == CurrentComputingResource.ResourceIndex)
+            lock (ResourcesAllocationLock)
             {
-                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ClusterObjectStorage);
-
-                var computingResourceContext = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
-                                                where computingContext.ContextID == ComputingCluster.ComputingContextID
-                                                select computingContext.Refresh()).FirstOrDefault();
-
-                ComputationalResourcesAllocation();
-
+                if (InResourcesAllocation)
+                    return;
             }
-            else if (((TimeSpan)(DateTime.UtcNow - LastRefreshDateTime)).TotalMinutes > 3)
+            try
             {
-                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ClusterObjectStorage);
+                InResourcesAllocation = true;
 
-                var computingResourceContext = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
-                                                where computingContext.ContextID == ComputingCluster.ComputingContextID
-                                                select computingContext.Refresh()).FirstOrDefault();
+                if (ComputationalResourcesContext.ComputingResourceID == CurrentComputingResource.ResourceIndex)
+                {
+                    if (((TimeSpan)(DateTime.UtcNow - LastResourceAllocationhDateTime)).TotalMinutes > 0.5)
+                    {
+                        OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ClusterObjectStorage);
 
-                LastRefreshDateTime = DateTime.UtcNow;
+                        var computingResourceContext = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
+                                                        where computingContext.ContextID == ComputingCluster.ComputingContextID
+                                                        select computingContext.Refresh()).FirstOrDefault();
+
+                        ComputationalResourcesAllocation();
+                        LastResourceAllocationhDateTime = DateTime.UtcNow;
+                    }
+
+                }
+                else if (((TimeSpan)(DateTime.UtcNow - LastRefreshDateTime)).TotalMinutes > 3)
+                {
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ClusterObjectStorage);
+
+                    var computingResourceContext = (from computingContext in storage.GetObjectCollection<IsolatedComputingContext>()
+                                                    where computingContext.ContextID == ComputingCluster.ComputingContextID
+                                                    select computingContext.Refresh()).FirstOrDefault();
+
+                    LastRefreshDateTime = DateTime.UtcNow;
+                }
             }
-
+            finally
+            {
+                InResourcesAllocation = false;
+            }
         }
 
         /// <MetaDataID>{7ffd0b9a-d415-4c18-83d2-36cccdb21175}</MetaDataID>

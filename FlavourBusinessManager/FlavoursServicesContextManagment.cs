@@ -45,9 +45,10 @@ namespace FlavourBusinessManager
             }
 
         }
-
-
-
+        static object MonitoringLock = new object();
+        static bool InFlavoursServicesContextsMonitoring = false;
+        static DateTime FlavoursServicesContextsMonitoringTimestamp = DateTime.UtcNow;
+        
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -55,13 +56,32 @@ namespace FlavourBusinessManager
             //bool utd = true;
             //if (utd)
             //    return;
-
-            foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
+            lock (MonitoringLock)
             {
-                System.Threading.Tasks.Task.Run(() =>
+                if (InFlavoursServicesContextsMonitoring)
+                    return;
+            }
+            try
+            {
+                lock (MonitoringLock)
+                    InFlavoursServicesContextsMonitoring = true;
+
+                if ((DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp).TotalSeconds > 20)
                 {
-                    var organizationIdentity = flavoursServicesContext.GetRunTime().OrganizationIdentity;
-                });
+                    foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
+                    {
+                        System.Threading.Tasks.Task.Run(() =>
+                        {
+                            var organizationIdentity = flavoursServicesContext.GetRunTime().OrganizationIdentity;
+                        });
+                    }
+                    FlavoursServicesContextsMonitoringTimestamp = DateTime.UtcNow;
+                }
+            }
+            finally
+            {
+                lock (MonitoringLock)
+                    InFlavoursServicesContextsMonitoring = false;
             }
         }
 
@@ -174,7 +194,7 @@ namespace FlavourBusinessManager
 
             return cashier;
         }
-        
+
         public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
 
@@ -796,7 +816,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{a429d4d6-ecb7-45b7-bc39-7fb0aba7cf2b}</MetaDataID>
         public bool FindPoint(double? latitude, double? longitude)
         {
-            if(latitude == null || longitude == null) 
+            if (latitude == null || longitude == null)
                 return false;
 
             int sides = Points.Count - 1;

@@ -56,8 +56,8 @@ namespace TakeAwayApp.Wpf
             mainWindow.Show();
             if (await (mainWindow.DataContext as FlavoursServiceOrderTakingStation)?.IsDeliveryCallCenterStationActive)
             {
-                HomeDeliveryUnitTest = new HomeDeliveryUnitTest(mainWindow.DataContext as FlavoursServiceOrderTakingStation);
-               await HomeDeliveryUnitTest.AssignShippingsToCourierTest();
+                //HomeDeliveryUnitTest = new HomeDeliveryUnitTest(mainWindow.DataContext as FlavoursServiceOrderTakingStation);
+                //await HomeDeliveryUnitTest.AssignShippingsToCourierTest();
             }
             base.OnClosing(e);
         }

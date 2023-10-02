@@ -8,12 +8,18 @@ namespace FlavourBusinessFacade.RoomService
 {
 
     /// <summary>
-    /// Defines 
+    /// Defines items context. 
+    /// The items belong to specific mealCourse 
+    /// and prepared at specific preparation station or all are trade products, available for serving
     /// </summary>
     /// <MetaDataID>{d83d4466-195d-471e-be61-fdceb04c166e}</MetaDataID>
     public class ItemsPreparationContext
     {
 
+        /// <summary>
+        /// Defines the identity of preparation station where prepared or 
+        /// TradeProductsStationIdentity which inform us that the items are available for serving
+        /// </summary>
         /// <MetaDataID>{8b5f1668-5da4-4e06-a565-03b8a622c502}</MetaDataID>
         public string PreparationStationIdentity { get; set; }
 

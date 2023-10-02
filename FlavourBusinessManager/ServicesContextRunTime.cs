@@ -55,11 +55,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get => _OrganizationStorageIdentity;
             set
             {
-                if (_OrganizationStorageIdentity!=value)
+                if (_OrganizationStorageIdentity != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _OrganizationStorageIdentity=value;
+                        _OrganizationStorageIdentity = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -74,7 +74,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 ObjectStorage.DeleteObject(paymentTerminal);
                 lock (ServiceContextRTLock)
                 {
-                    if (_PaymentTerminals!=null)
+                    if (_PaymentTerminals != null)
                         _PaymentTerminals.Remove(paymentTerminal);
                 }
 
@@ -235,7 +235,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         foreach (var waiter in _Waiters)
                         {
-                            waiter.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==waiter.OAuthUserIdentity).FirstOrDefault()!=null;
+                            waiter.NativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == waiter.OAuthUserIdentity).FirstOrDefault() != null;
                             waiter.ObjectChangeState += Waiter_ObjectChangeState;
                         }
                     }
@@ -268,7 +268,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                              select takeawayCashier).ToList();
 
                         foreach (var paymentTerminal in _PaymentTerminals)
-                            paymentTerminal.ObjectChangeState +=PaymentTerminal_ObjectChangeState;
+                            paymentTerminal.ObjectChangeState += PaymentTerminal_ObjectChangeState;
                     }
 
                     return _PaymentTerminals.ToList();
@@ -300,8 +300,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         foreach (var takeawayCashier in _TakeawayCashiers)
                         {
-                            takeawayCashier.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==takeawayCashier.OAuthUserIdentity).FirstOrDefault()!=null;
-                            takeawayCashier.ObjectChangeState +=TakeawayCashier_ObjectChangeState;
+                            takeawayCashier.NativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == takeawayCashier.OAuthUserIdentity).FirstOrDefault() != null;
+                            takeawayCashier.ObjectChangeState += TakeawayCashier_ObjectChangeState;
 
                         }
                     }
@@ -316,7 +316,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <exclude>Excluded</exclude>
         List<ICourier> _Couriers;
-        
+
         public IList<ICourier> Couriers
         {
             get
@@ -331,13 +331,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         var servicesContextIdentity = ServicesContextIdentity;
                         _Couriers = (from courier in servicesContextStorage.GetObjectCollection<ICourier>()
-                                             where courier.ServicesContextIdentity == servicesContextIdentity
-                                             select courier).ToList();
+                                     where courier.ServicesContextIdentity == servicesContextIdentity
+                                     select courier).ToList();
 
 
                         foreach (var courier in _Couriers)
                         {
-                            courier.NativeUser=NativeUsers.Where(x => x.OAuthUserIdentity==courier.OAuthUserIdentity).FirstOrDefault()!=null;
+                            courier.NativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == courier.OAuthUserIdentity).FirstOrDefault() != null;
                             courier.ObjectChangeState += Courier_ObjectChangeState;
                         }
                     }
@@ -725,7 +725,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 Payment.SetPaymentProvider("Viva", vivaProvider);
             if (Payment.GetPaymentProvider("VivaPayment") == null)
                 Payment.SetPaymentProvider("VivaPayment", vivaProvider);
-            Payment.PaymentFinder=new ServiceContextPaymentFinder();
+            Payment.PaymentFinder = new ServiceContextPaymentFinder();
 
 
 
@@ -768,6 +768,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     }
                     CollectGarbageClientSessions();
+
                     return _OpenClientSessions;
                 }
             }
@@ -861,54 +862,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     }
                 }
 
-                List<HumanResources.Waiter> waitersWithUnreadedMessages = null;
-                lock (ServiceContextRTLock)
-                {
-                    if (WaitersWithUnreadedMessages == null)
-                    {
-                        lock (ServiceContextRTLock)
-                        {
-                            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                                 where shiftWork.Worker is IWaiter
-                                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
-
-                            WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                           from message in activeWaiter.Messages
-                                                           where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
-                                                           select activeWaiter).ToList();
-
-                        }
-                    }
-                    waitersWithUnreadedMessages = WaitersWithUnreadedMessages.ToList();
-                }
-                foreach (var waiter in WaitersWithUnreadedMessages)
-                {
-                    var messages = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded && x.NotificationsNum <= 5).ToList();
-                    if (messages.Count > 0)
-                    {
-                        var layMessage = messages[0];
-                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
-                        {
-                            var last = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded).OrderByDescending(x => x.NotificationTimestamp).Last();
-                            if (System.DateTime.UtcNow - last.NotificationTimestamp.ToUniversalTime() > TimeSpan.FromMinutes(2))
-                            {
-                                CloudNotificationManager.SendMessage(layMessage, waiter.DeviceFirebaseToken);
-                                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                                {
-
-                                    foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
-                                    {
-                                        message.NotificationTimestamp = DateTime.UtcNow;
-                                        message.NotificationsNum += 1;
-                                    }
-
-                                    stateTransition.Consistent = true;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
+                RemindWorkersForUnreadedMessages();
             }
             catch (Exception error)
             {
@@ -916,6 +870,90 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
             SessionsMonitoringTimer.Start();
+        }
+
+        private void RemindWorkersForUnreadedMessages()
+        {
+            List<IMessageConsumer> workersWithUnreadedMessages = null;
+            lock (ServiceContextRTLock)
+            {
+                workersWithUnreadedMessages = WaitersWithUnreadedMessages.OfType<IMessageConsumer>().ToList();
+                workersWithUnreadedMessages.AddRange(CouriersWithUnreadedMessages.OfType<IMessageConsumer>().ToList());
+            }
+
+            foreach (var worker in workersWithUnreadedMessages)
+            {
+                var workerlayMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable &&
+                                                    !x.MessageReaded && x.NotificationsNum <= 5).ToList();
+                if (workerlayMessages.Count > 0)
+                {
+                    string deviceFirebaseToken = null;
+                    if (worker is IWaiter)
+                        deviceFirebaseToken = (worker as IWaiter).DeviceFirebaseToken;
+                    if (worker is ICourier)
+                        deviceFirebaseToken = (worker as ICourier).DeviceFirebaseToken;
+
+                    var layMessage = workerlayMessages[0];
+                    if (!string.IsNullOrWhiteSpace(deviceFirebaseToken))
+                    {
+                        var last = workerlayMessages.Where(x => !x.MessageReaded).OrderByDescending(x => x.NotificationTimestamp).Last();
+                        if (System.DateTime.UtcNow - last.NotificationTimestamp.ToUniversalTime() > TimeSpan.FromMinutes(2))
+                        {
+                            CloudNotificationManager.SendMessage(layMessage, deviceFirebaseToken);
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+
+                                foreach (var message in workerlayMessages.Where(x =>  !x.MessageReaded))
+                                {
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                    message.NotificationsNum += 1;
+                                }
+
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                    break;
+                }
+
+
+                var workerServingMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe &&
+                                                !x.MessageReaded && x.NotificationsNum <= 5).ToList();
+                if (workerServingMessages.Count > 0)
+                {
+                    string deviceFirebaseToken = null;
+                    if (worker is IWaiter)
+                        deviceFirebaseToken = (worker as IWaiter).DeviceFirebaseToken;
+                    if (worker is ICourier)
+                        deviceFirebaseToken = (worker as ICourier).DeviceFirebaseToken;
+
+                    var servingMessage = workerServingMessages[0];
+                    if (!string.IsNullOrWhiteSpace(deviceFirebaseToken))
+                    {
+                        var last = workerServingMessages.Where(x => !x.MessageReaded).OrderByDescending(x => x.NotificationTimestamp).Last();
+                        if (System.DateTime.UtcNow - last.NotificationTimestamp.ToUniversalTime() > TimeSpan.FromMinutes(2))
+                        {
+                            CloudNotificationManager.SendMessage(servingMessage, deviceFirebaseToken);
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+
+                                foreach (var message in workerServingMessages.Where(x => !x.MessageReaded))
+                                {
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                    message.NotificationsNum += 1;
+                                }
+
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                    break;
+                }
+
+            }
+
+
+
         }
 
         /// <MetaDataID>{3a59a851-5bfb-4a61-afd8-cca6d4bdb045}</MetaDataID>
@@ -1141,8 +1179,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
                         _Description = value;
 
-                        if (DeliveryServicePoint!=null)
-                            DeliveryServicePoint.Description=Description;
+                        if (DeliveryServicePoint != null)
+                            DeliveryServicePoint.Description = Description;
                         stateTransition.Consistent = true;
                     }
                     ObjectChangeState?.Invoke(this, nameof(Description));
@@ -1156,7 +1194,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         internal void MealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
         {
             var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
-            if (activeWaiters.Count == 0&&servicePoint is HallServicePoint)
+            if (activeWaiters.Count == 0 && servicePoint is HallServicePoint)
                 activeWaiters = (from shiftWork in GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
@@ -1192,13 +1230,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                             stateTransition.Consistent = true;
                         }
-                        lock (ServiceContextRTLock)
-                        {
-                            WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                           from message in activeWaiter.Messages
-                                                           where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !message.MessageReaded
-                                                           select activeWaiter).ToList();
-                        }
+                        this.UpdateWaitersWithUnreadedMessages();
+
 
                     }
 
@@ -1209,12 +1242,89 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        List<HumanResources.Waiter> _WaitersWithUnreadedMessages;
+
         /// <MetaDataID>{c1f668e1-a630-46cf-9797-3569d2e193b2}</MetaDataID>
-        List<HumanResources.Waiter> WaitersWithUnreadedMessages = null;
+        List<HumanResources.Waiter> WaitersWithUnreadedMessages
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_WaitersWithUnreadedMessages == null)
+                        UpdateWaitersWithUnreadedMessages();
+                    return _WaitersWithUnreadedMessages;
+                }
+            }
+        }
+
+        internal void UpdateWaitersWithUnreadedMessages()
+        {
+            lock (ServiceContextRTLock)
+            {
+
+                var activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                     where shiftWork.Worker is IWaiter
+                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+                _WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                                                from message in activeWaiter.Messages
+                                                where
+                                                (message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable ||
+                                                message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout ||
+                                                message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe
+                                                )
+                                                && !message.MessageReaded
+                                                select activeWaiter).ToList();
+
+
+            }
+        }
+
+
+
+        List<Courier> _CouriersWithUnreadedMessages;
+
+
+        List<Courier> CouriersWithUnreadedMessages
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_CouriersWithUnreadedMessages == null)
+                        UpdateCouriersWithUnreadedMessages();
+                    return _CouriersWithUnreadedMessages;
+                }
+            }
+        }
+
+        internal void UpdateCouriersWithUnreadedMessages()
+        {
+            lock (ServiceContextRTLock)
+            {
+
+                var activeCouriers = (from shiftWork in GetActiveShiftWorks()
+                                      where shiftWork.Worker is ICourier
+                                      select shiftWork.Worker).OfType<Courier>().ToList();
+
+                _CouriersWithUnreadedMessages = (from activeCourier in activeCouriers
+                                                 from message in activeCourier.Messages
+                                                 where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe
+
+                                                 && !message.MessageReaded
+                                                 select activeCourier).ToList();
+            }
+        }
+
+
+
+
+
         /// <MetaDataID>{a8d06287-3ab2-4a1a-8858-e36d8822fcb9}</MetaDataID>
         internal void ServicePointChangeState(ServicePoint servicePoint, ServicePointState oldState, ServicePointState newState)
         {
-            if (newState == ServicePointState.Laying&&servicePoint is HallServicePoint)
+            if (newState == ServicePointState.Laying && servicePoint is HallServicePoint)
             {
                 //if (servicePoint.OpenClientSessions.Where(x => !x.IsWaiterSession).FirstOrDefault() != null)
                 //{
@@ -1252,73 +1362,20 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                                 stateTransition.Consistent = true;
                             }
-                            lock (ServiceContextRTLock)
-                            {
-                                WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
+                            var waitersWithUnreadedMessages = (from activeWaiter in activeWaiters
                                                                from message in activeWaiter.Messages
                                                                where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
                                                                select activeWaiter).ToList();
-                            }
-
                         }
-
                     }
                     //}
                 }
+                this.UpdateWaitersWithUnreadedMessages();
             }
         }
 
 
 
-
-        /// <MetaDataID>{d718d244-0e50-4ac9-b66a-495fc9f91b43}</MetaDataID>
-        internal void MealItemsReadyToServe(ServicePoint servicePoint)
-        {
-
-
-            var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                 where servicePoint is HallServicePoint &&shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
-
-            foreach (var waiter in activeWaiters)
-            {
-                if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
-                {
-                    var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
-                    if (clientMessage == null)
-                    {
-                        clientMessage = new Message();
-                        clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
-                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
-                        clientMessage.Notification = new Notification() { Title = "There are items read to serve", Body = "Check items ready to serve List" };
-                    }
-                    waiter.PushMessage(clientMessage);
-
-                    if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
-                    {
-                        CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
-
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                        {
-                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
-                            {
-                                message.NotificationsNum += 1;
-                                message.NotificationTimestamp = DateTime.UtcNow;
-                            }
-
-                            stateTransition.Consistent = true;
-                        }
-                        lock (ServiceContextRTLock)
-                        {
-                            WaitersWithUnreadedMessages = (from activeWaiter in activeWaiters
-                                                           from message in activeWaiter.Messages
-                                                           where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !message.MessageReaded
-                                                           select activeWaiter).ToList();
-                        }
-                    }
-                }
-            }
-        }
 
         /// <exclude>Excluded</exclude>
         FlavoursServicesContext _FlavoursServicesContext;
@@ -1328,13 +1385,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                if (_FlavoursServicesContext!=null)
+                if (_FlavoursServicesContext != null)
                     return _FlavoursServicesContext;
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(FlavoursServicesContext.OpenFlavourBusinessesStorage());
 
-                _FlavoursServicesContext=(from flavoursServicesContext in storage.GetObjectCollection<FlavoursServicesContext>()
-                                          where flavoursServicesContext.ServicesContextIdentity==ServicesContextIdentity
-                                          select flavoursServicesContext).FirstOrDefault();
+                _FlavoursServicesContext = (from flavoursServicesContext in storage.GetObjectCollection<FlavoursServicesContext>()
+                                            where flavoursServicesContext.ServicesContextIdentity == ServicesContextIdentity
+                                            select flavoursServicesContext).FirstOrDefault();
 
                 return _FlavoursServicesContext;
             }
@@ -1365,11 +1422,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             continue;
 
                         hallLayout.ServiceArea = serviceArea;
-                        foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
-                            if (servicePoint != null)
-                                servicePointShape.ServicesPointState = servicePoint.State;
+                            foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
+                            {
+                                var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
+                                if (servicePoint != null)
+                                {
+
+                                    if (servicePoint.State != ServicePointState.Free && OpenClientSessions.Where(x => x.ServicePoint.ServicesPointIdentity == servicePoint.ServicesContextIdentity).Count() == 0)
+                                        servicePoint.State = ServicePointState.Free;
+                                    servicePointShape.ServicesPointState = servicePoint.State;
+                                }
+                            }
+
+                            stateTransition.Consistent = true;
                         }
 
                         halls.Add(hallLayout);
@@ -1398,7 +1466,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         var storageUrl = urlRoot + fbStorage.Url;
                         var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
 
-                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version, PropertiesValues=fbStorage.PropertiesValues };
+                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version, PropertiesValues = fbStorage.PropertiesValues };
                         graphicMenusStorages.Add(storageRef);
                     }
                     catch (Exception error)
@@ -1621,7 +1689,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                     double? pageHeight = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Height;
                     double? pageWidth = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Width;
-                    if (pageHeight!=null)
+                    if (pageHeight != null)
                     {
                         fbstorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
                         fbstorage.SetPropertyValue("MenuPageWidth", pageWidth.Value.ToString(CultureInfo.GetCultureInfo(1033)));
@@ -1844,7 +1912,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             get
             {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations=TakeAwayStations, PaymentTerminals=PaymentTerminals, DeliveryCallCenterStations=this.CallCenterStations };
+                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations = TakeAwayStations, PaymentTerminals = PaymentTerminals, DeliveryCallCenterStations = this.CallCenterStations };
             }
         }
 
@@ -1854,7 +1922,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             get
             {
                 var activeShiftWorks = GetActiveShiftWorks();
-                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers=TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Couriers = Couriers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
+                return new ServiceContextHumanResources() { Waiters = Waiters.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), TakeawayCashiers = TakeawayCashiers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Couriers = Couriers.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), Supervisors = Supervisors.Where(x => !string.IsNullOrWhiteSpace(x.OAuthUserIdentity)).ToList(), ActiveShiftWorks = activeShiftWorks };
             }
         }
 
@@ -2052,7 +2120,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
                         if (_DeliveryServicePoint?.IsActive == true)
                         {
-                            _DeliveryServicePoint.Description=Description;
+                            _DeliveryServicePoint.Description = Description;
                             return _DeliveryServicePoint;
                         }
                         else
@@ -2066,7 +2134,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 var servicesContextIdentity = ServicesContextIdentity;
                 var deliveryServicePoint = (from homeDeliveryServicePoint in servicesContextStorage.GetObjectCollection<HomeDeliveryServicePoint>()
                                             where homeDeliveryServicePoint.ServicesContextIdentity == servicesContextIdentity
-                                            select homeDeliveryServicePoint).ToList().Where(x=>!x.ServicesPointIdentity.EndsWith("_test")).FirstOrDefault();
+                                            select homeDeliveryServicePoint).ToList().Where(x => !x.ServicesPointIdentity.EndsWith("_test")).FirstOrDefault();
 
                 lock (DeliveryServicePointLock)
                 {
@@ -2165,7 +2233,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
             var servicesContextIdentity = ServicesContextIdentity;
-            servicePointIdentity=servicePointIdentity.Replace(servicesContextIdentity+";", "");
+            servicePointIdentity = servicePointIdentity.Replace(servicesContextIdentity + ";", "");
             var servicePoint = (from serviceArea in ServiceAreas
                                 from aServicePoint in serviceArea.ServicePoints
                                 where aServicePoint.ServicesPointIdentity == servicePointIdentity
@@ -2305,7 +2373,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var count = TakeAwayStationsDictionary.Count;
             lock (takeAwayStationsLock)
             {
-                _TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] =  takeAwayStation;
+                _TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] = takeAwayStation;
             }
             //var count = PreparationStationRuntimes.Count;
             return takeAwayStation;
@@ -2371,7 +2439,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 if (CallCenterStationsDictionary.ContainsKey(deliveryCallCenterCredentialKey))
                 {
                     var homeDeliveryCallCenterStation = CallCenterStationsDictionary[deliveryCallCenterCredentialKey];
-                    if (this.DeliveryServicePoint!=null&&!homeDeliveryCallCenterStation.HomeDeliveryServicePoints.Contains(this.DeliveryServicePoint))
+                    if (this.DeliveryServicePoint != null && !homeDeliveryCallCenterStation.HomeDeliveryServicePoints.Contains(this.DeliveryServicePoint))
                         homeDeliveryCallCenterStation.AddHomeDeliveryServicePoint(this.DeliveryServicePoint);
 
                     return _CallCenterStationsDictionary[deliveryCallCenterCredentialKey];
@@ -2670,7 +2738,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             lock (SupervisorsLock)
             {
                 var unassignedCourier = (from courier in Couriers
-                                        where courier.WorkerAssignKey == courierAssignKey
+                                         where courier.WorkerAssignKey == courierAssignKey
                                          select courier).FirstOrDefault();
 
                 if (unassignedCourier != null)
@@ -2713,41 +2781,41 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
         public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
-            NativeAuthUser nativeUser=null;
+            NativeAuthUser nativeUser = null;
             string wokerIdentity = deviceAssignKey.Split(';')[1];
-            var waiter= this.Waiters.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+            var waiter = this.Waiters.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
             if (waiter != null)
             {
-                nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==waiter.OAuthUserIdentity).FirstOrDefault();
+                nativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == waiter.OAuthUserIdentity).FirstOrDefault();
             }
             else
             {
-                var courier = this.Couriers.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                var courier = this.Couriers.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
                 if (courier != null)
                 {
-                    nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==courier.OAuthUserIdentity).FirstOrDefault();
+                    nativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == courier.OAuthUserIdentity).FirstOrDefault();
 
                 }
                 else
                 {
-                    var cashier = this.TakeawayCashiers.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                    var cashier = this.TakeawayCashiers.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
                     if (cashier != null)
                     {
-                        nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==cashier.OAuthUserIdentity).FirstOrDefault();
+                        nativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == cashier.OAuthUserIdentity).FirstOrDefault();
                     }
                     else
                     {
-                        var supervisor = this.Supervisors.Where(x => x.Identity==wokerIdentity).FirstOrDefault();
+                        var supervisor = this.Supervisors.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
                         if (supervisor != null)
                         {
-                            nativeUser  = NativeUsers.Where(x => x.OAuthUserIdentity==supervisor.OAuthUserIdentity).FirstOrDefault();
+                            nativeUser = NativeUsers.Where(x => x.OAuthUserIdentity == supervisor.OAuthUserIdentity).FirstOrDefault();
                         }
 
                     }
                 }
             }
-            if (nativeUser!=null)
-                return new NativeUserSignInData() { FireBaseUserName=nativeUser.FireBaseUserName, FireBasePasword=nativeUser.FireBasePasword, ServiceContextIdentity=ServicesContextIdentity };
+            if (nativeUser != null)
+                return new NativeUserSignInData() { FireBaseUserName = nativeUser.FireBaseUserName, FireBasePasword = nativeUser.FireBasePasword, ServiceContextIdentity = ServicesContextIdentity };
 
             return null;
         }
@@ -2773,7 +2841,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
 
                         nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
-                        nativeAuthUser.RoleType=RoleType.Waiter;
+                        nativeAuthUser.RoleType = RoleType.Waiter;
                         nativeAuthUser.CreateFirebaseEmailUserCredential();
                         UserCredential user = null;
                         var FireBaseAcoountTask = Task.Run(async () =>
@@ -2786,15 +2854,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
                         AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                         authUserRef.AddRole(unassignedWaiter);
-                        authUserRef.UserName=userName;
-                        authUserRef.FullName=userFullName;
+                        authUserRef.UserName = userName;
+                        authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedWaiter.WorkerAssignKey = null;
-                        (unassignedWaiter as Waiter).OAuthUserIdentity =authUser.User_ID;
+                        (unassignedWaiter as Waiter).OAuthUserIdentity = authUser.User_ID;
                         unassignedWaiter.Name = userFullName;
 
                         stateTransition.Consistent = true;
@@ -2855,7 +2923,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
 
                         nativeAuthUser = new NativeAuthUser(userName, password, userFullName);// { UserName=userName, Password=password, UserFullName=userFullName };
-                        nativeAuthUser.RoleType=RoleType.TakeAwayCashier;
+                        nativeAuthUser.RoleType = RoleType.TakeAwayCashier;
                         nativeAuthUser.CreateFirebaseEmailUserCredential();
                         UserCredential user = null;
                         var FireBaseAcoountTask = Task.Run(async () =>
@@ -2868,8 +2936,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
                         AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
                         authUserRef.AddRole(unassignedtakeawayCashier);
-                        authUserRef.UserName=userName;
-                        authUserRef.FullName=userFullName;
+                        authUserRef.UserName = userName;
+                        authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
 
@@ -2877,7 +2945,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedtakeawayCashier.WorkerAssignKey = null;
-                        (unassignedtakeawayCashier as TakeawayCashier).OAuthUserIdentity =authUser.User_ID;
+                        (unassignedtakeawayCashier as TakeawayCashier).OAuthUserIdentity = authUser.User_ID;
                         unassignedtakeawayCashier.Name = userFullName;
 
                         stateTransition.Consistent = true;
@@ -2924,8 +2992,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
                 var unassignedCourier = (from courier in Couriers
-                                                 where courier.WorkerAssignKey == courierAssignKey
-                                                 select courier).FirstOrDefault();
+                                         where courier.WorkerAssignKey == courierAssignKey
+                                         select courier).FirstOrDefault();
 
 
 
@@ -2953,7 +3021,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
-                        nativeAuthUser.OAuthUserIdentity= authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity = authUser.User_ID;
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
@@ -3093,7 +3161,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
                         var restaurantMenu = OOAdvantech.Json.JsonConvert.DeserializeObject<MenuPresentationModel.JsonMenuPresentation.RestaurantMenu>(json, jSetttings);
-                        VersioningGraphicMenus[storageUrl]=restaurantMenu;
+                        VersioningGraphicMenus[storageUrl] = restaurantMenu;
                         return restaurantMenu;
                     }
                 }
@@ -3132,15 +3200,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 lock (NativeUsersLock)
                 {
-                    if (_NativeUsers==null)
+                    if (_NativeUsers == null)
                     {
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
 
                         OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(objectStorage);
 
-                        _NativeUsers= (from nativeUser in servicesContextStorage.GetObjectCollection<NativeAuthUser>()
+                        _NativeUsers = (from nativeUser in servicesContextStorage.GetObjectCollection<NativeAuthUser>()
 
-                                       select nativeUser).ToList();
+                                        select nativeUser).ToList();
                     }
                     return _NativeUsers;
                 }
@@ -3153,7 +3221,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public IList<UserData> GetNativeUsers(RoleType roleType)
         {
 
-            return NativeUsers.Where(x => (x.RoleType&roleType)!=0).Select(x => new UserData() { UserName=x.UserName, FullName=x.UserFullName }).ToList();
+            return NativeUsers.Where(x => (x.RoleType & roleType) != 0).Select(x => new UserData() { UserName = x.UserName, FullName = x.UserFullName }).ToList();
 
         }
 
@@ -3162,11 +3230,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (NativeUsersLock)
             {
-                var nativeUser = NativeUsers.Where(x => x.UserName?.ToLower()==userName?.ToLower()&&x.Password==password).FirstOrDefault();
-                if (nativeUser==null)
+                var nativeUser = NativeUsers.Where(x => x.UserName?.ToLower() == userName?.ToLower() && x.Password == password).FirstOrDefault();
+                if (nativeUser == null)
                     return null;
 
-                UserData userData = new UserData() { Email=nativeUser.FireBaseUserName, Password=nativeUser.FireBasePasword, UserName=nativeUser.UserName, FullName=nativeUser.UserFullName };
+                UserData userData = new UserData() { Email = nativeUser.FireBaseUserName, Password = nativeUser.FireBasePasword, UserName = nativeUser.UserName, FullName = nativeUser.UserFullName };
                 return userData;
 
             }
@@ -3183,14 +3251,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 homeDeliveryCallCenterStation.ServicesContextIdentity = this.ServicesContextIdentity;
                 objectStorage.CommitTransientObjectState(homeDeliveryCallCenterStation);
 
-                if (this.DeliveryServicePoint!=null)
+                if (this.DeliveryServicePoint != null)
                     homeDeliveryCallCenterStation.AddHomeDeliveryServicePoint(this.DeliveryServicePoint);
                 stateTransition.Consistent = true;
             }
             var count = CallCenterStationsDictionary.Count;
             lock (DeliveryCallcenterStationsLock)
             {
-                _CallCenterStationsDictionary[homeDeliveryCallCenterStation.CallcenterStationIdentity] =  homeDeliveryCallCenterStation;
+                _CallCenterStationsDictionary[homeDeliveryCallCenterStation.CallcenterStationIdentity] = homeDeliveryCallCenterStation;
             }
             //var count = PreparationStationRuntimes.Count;
             return homeDeliveryCallCenterStation;

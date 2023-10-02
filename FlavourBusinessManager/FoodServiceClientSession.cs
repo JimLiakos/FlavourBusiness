@@ -118,6 +118,10 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
+                if(this.ServicePoint==null)
+                {
+
+                }
                 var defaultMealTypeUri = this.ServicePoint.ServesMealTypesUris.FirstOrDefault();
                 var servedMealTypesUris = this.ServicePoint.ServesMealTypesUris.ToList();
 
@@ -2017,7 +2021,7 @@ namespace FlavourBusinessManager.EndUsers
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
 
-            foreach (var mealCourse in MainSession.Meal.Courses)
+            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
 
@@ -2155,7 +2159,7 @@ namespace FlavourBusinessManager.EndUsers
             foreach (var clientSession in MainSession.PartialClientSessions)
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
-            foreach (var mealCourse in MainSession.Meal.Courses)
+            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
 
@@ -2186,7 +2190,7 @@ namespace FlavourBusinessManager.EndUsers
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
 
-            foreach (var mealCourse in MainSession.Meal.Courses)
+            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
         }
@@ -2218,7 +2222,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-            foreach (var mealCourse in MainSession.Meal.Courses)
+            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
         }
@@ -2249,7 +2253,7 @@ namespace FlavourBusinessManager.EndUsers
             foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
-            foreach (var mealCourse in MainSession.Meal.Courses)
+            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
                 mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
         }

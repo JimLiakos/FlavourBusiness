@@ -1547,6 +1547,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B68E02DD"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(3233, 569)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	637)
 		    width      	548
 		    height     	426
 		    annotation 	8)
@@ -1720,6 +1738,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B27352C020C"
+		    compartment 	(object Compartment
+			Parent_View 	@21
+			location   	(3159, 1182)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	637)
 		    width      	668
 		    height     	312
 		    annotation 	8)
@@ -2053,7 +2089,7 @@
 		    line_color 	3342489
 		    label      	(object SegLabel @38
 			Parent_View 	@37
-			location   	(3395, 620)
+			location   	(3424, 558)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2070,9 +2106,9 @@
 			max_width  	450
 			justify    	0
 			label      	"StartUp( )"
-			pctDist    	0.500000
-			height     	45
-			orientation 	0)
+			pctDist    	0.741667
+			height     	62
+			orientation 	1)
 		    object_arc 	@36
 		    pctDist    	0.500000
 		    height     	45

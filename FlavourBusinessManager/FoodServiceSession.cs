@@ -371,8 +371,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                              CreateAndInitMeal();
                              stateTransition.Consistent = true;
                          }
-                         (FlavourBusinessManager.ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(_Meal.Value.Courses);
+                         (ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInProgress(_Meal.Value.Courses);
                          _Meal.Value.MonitoringRun();
+
                      }
                  });
             }

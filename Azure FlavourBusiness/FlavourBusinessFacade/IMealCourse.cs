@@ -81,8 +81,8 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{314d0217-3182-440d-8da4-5405eb86c0bd}</MetaDataID>
         EndUsers.SessionData SessionData { get; }
 
-        /// <MetaDataID>{5e6117fe-6aad-4b88-8aea-5ca123480287}</MetaDataID>
-        void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
+        ///// <MetaDataID>{5e6117fe-6aad-4b88-8aea-5ca123480287}</MetaDataID>
+        //void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
 
 
         event ItemsStateChangedHandle ItemsStateChanged;

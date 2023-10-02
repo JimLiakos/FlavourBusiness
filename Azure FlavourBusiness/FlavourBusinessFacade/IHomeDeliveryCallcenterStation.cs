@@ -1,7 +1,7 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HomeDelivery;
 
-using OOAdvantech.Collections.Generic;
+
 using OOAdvantech.MetaDataRepository;
 
 namespace FlavourBusinessFacade.ServicesContextResources
@@ -59,7 +59,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 #if DEBUG
-        UnitTest.IFoodServicesSessionsSimulator FoodServicesSessionsSimulator {get;}
+#if !FlavourBusinessDevice
+        UnitTest.IFoodServicesSessionsSimulator FoodServicesSessionsSimulator { get; }
+#endif
 #endif
         void SetObjectChangeState();
 

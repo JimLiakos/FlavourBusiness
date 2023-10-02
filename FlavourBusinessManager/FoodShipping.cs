@@ -5,14 +5,17 @@ using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
-
+using System;
 namespace FlavourBusinessManager.Shipping
 {
     /// <MetaDataID>{c36022d2-142c-4f52-8ca3-debd1124b925}</MetaDataID>
     [BackwardCompatibilityID("{c36022d2-142c-4f52-8ca3-debd1124b925}")]
     [Persistent()]
-    public class FoodShipping : FlavourBusinessFacade.Shipping.IFoodShipping
+    public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping
     {
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _PreparedItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();

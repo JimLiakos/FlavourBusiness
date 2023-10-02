@@ -1268,9 +1268,10 @@ namespace TakeAwayApp.ViewModel
         internal void UpdateWatchingOrder(WatchingOrder watchingOrder)
         {
 
-            if(watchingOrder!=null)
+            if(watchingOrder!=null )
             {
-                var existingWatchingOrder= this._WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
+
+                var existingWatchingOrder= this.WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
                 if (existingWatchingOrder != null)
                 {
                     var watchingOrderPresentation = new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList());

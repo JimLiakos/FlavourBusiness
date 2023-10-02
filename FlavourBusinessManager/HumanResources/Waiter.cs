@@ -216,29 +216,29 @@ namespace FlavourBusinessManager.HumanResources
             //                              where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
             //                              select theServicePointRun).FirstOrDefault();
 
+            var serviceContextHalls = ServicePointRunTime.ServicesContextRunTime.Current.Halls;
 
             foreach (var serviceArea in ServicePointRunTime.ServicesContextRunTime.Current.ServiceAreas.OfType<ServicesContextResources.ServiceArea>())
             {
                 if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
                 {
-                    HallLayout hallLayout = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as HallLayout;
-
-
+                    HallLayout hallLayout = serviceContextHalls.Where(x => x.HallLayoutUri == serviceArea.HallLayoutUri).FirstOrDefault() as HallLayout;  //.OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as HallLayout;
                     if (hallLayout == null)
                         continue;
-
-                    hallLayout.ServiceArea = serviceArea;
-                    foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
-                    {
-                        var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
-                        if (servicePoint != null)
-                        {
-                            servicePointShape.ServicesPointState = servicePoint.State;
-
-                        }
-                    }
-
                     halls.Add(hallLayout);
+
+                    //hallLayout.ServiceArea = serviceArea;
+                    //foreach (var servicePointShape in hallLayout.Shapes.Where(x => !string.IsNullOrWhiteSpace(x.ServicesPointIdentity)))
+                    //{
+                    //    var servicePoint = hallLayout.ServiceArea.ServicePoints.Where(x => x.ServicesPointIdentity == servicePointShape.ServicesPointIdentity).FirstOrDefault();
+                    //    if (servicePoint != null)
+                    //    {
+                    //        servicePointShape.ServicesPointState = servicePoint.State;
+
+                    //    }
+                    //}
+
+
                 }
             }
             return halls;

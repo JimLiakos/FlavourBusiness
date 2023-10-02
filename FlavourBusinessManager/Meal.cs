@@ -84,7 +84,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{5f5f90f7-bfae-4b34-8dc6-c6aa57297db5}</MetaDataID>
         [PersistentMember(nameof(_Courses))]
         [BackwardCompatibilityID("+2")]
-        [AssociationEndBehavior(PersistencyFlag.CascadeDelete| PersistencyFlag.OnConstruction)]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         public List<IMealCourse> Courses => _Courses.ToThreadSafeList();
 
         /// <exclude>Excluded</exclude>
@@ -240,13 +240,13 @@ namespace FlavourBusinessManager.RoomService
 
                             (Session?.ServicePoint as ServicesContextResources.ServicePoint)?.UpdateState();
 
-                            if(StopMealMonitoring.WaitOne(1000))
+                            if (StopMealMonitoring.WaitOne(1000))
                             {
-                                
+
                                 StopMealMonitoring.Reset();
                                 return;
                             }
-                            
+
                             sesionState = Session.SessionState;
                         }
                         catch (Exception error)
@@ -256,14 +256,14 @@ namespace FlavourBusinessManager.RoomService
                     }
                 });
 
-                
+
             }
 
         }
 
         internal void StopMonitoring()
         {
-            if(MonitoringTask!=null&& MonitoringTask.Status==TaskStatus.Running)
+            if (MonitoringTask != null && MonitoringTask.Status == TaskStatus.Running)
             {
                 StopMealMonitoring.Set();
                 MonitoringTask.Wait(2000);
@@ -311,7 +311,7 @@ namespace FlavourBusinessManager.RoomService
                         {
                             foreach (var mealCourseItem in mealCourseItems)
                                 mealCourse.AddItem(mealCourseItem);
-                                
+
                             stateTransition.Consistent = true;
                         }
 
@@ -320,10 +320,27 @@ namespace FlavourBusinessManager.RoomService
             }
 
             if (newMealCourses.Count > 0)
-            {
+                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInProgress(newMealCourses);
 
-                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInrogress(newMealCourses);
-            }
+            MakeTradeItemsAvailableForServing();
+
+        }
+        /// <summary>
+        /// Search for trade item that are by default prepared available for serving
+        /// </summary>
+        private void MakeTradeItemsAvailableForServing()
+        {
+            var tradeProductsItemsContexts = _Courses.ToThreadSafeList().SelectMany(x => x.FoodItemsInProgress).Where(x => x.PreparationStationIdentity == ItemsPreparationContext.TradeProductsStationIdentity).ToList();
+
+            var tradeItemsUris = tradeProductsItemsContexts.SelectMany(x => x.PreparationItems).Where(x => x.State == ItemPreparationState.IsPrepared).Select(x => x.uid).ToList();
+
+            var clientSessionsItems = (from servicePointPreparationItems in tradeProductsItemsContexts
+                                       from itemPreparation in servicePointPreparationItems.PreparationItems
+                                       where tradeItemsUris.Contains(itemPreparation.uid)
+                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+            foreach (var clientSessionItems in clientSessionsItems)
+                clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
         }
 
         ///// <MetaDataID>{d71ac0eb-ed43-410f-80d8-ab8cce78f64d}</MetaDataID>

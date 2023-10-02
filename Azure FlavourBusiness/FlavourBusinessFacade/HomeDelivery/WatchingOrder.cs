@@ -30,6 +30,7 @@ namespace FlavourBusinessFacade.HomeDelivery
         public WatchingOrderState State { get; set; }
         public string ClientPhone { get; set; }
         public PayAmount OrderTotal { get; set; }
+        public string ClientIdentity { get; set; }
     }
     /// <MetaDataID>{7538441d-4d07-4d1b-94db-178635ea46b4}</MetaDataID>
     public enum WatchingOrderState

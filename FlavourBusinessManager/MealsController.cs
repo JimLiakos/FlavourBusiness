@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -205,11 +206,11 @@ namespace FlavourBusinessManager.RoomService
         }
 
         /// <MetaDataID>{287105f2-4956-4515-b8f8-a1b06d4d5092}</MetaDataID>
-        internal void OnNewMealCoursesInrogress(List<IMealCourse> mealCourses)
+        internal void OnNewMealCoursesInProgress(List<IMealCourse> mealCourses)
         {
             NewMealCoursesInrogress?.Invoke(mealCourses);
 
-            (ServicesContextRunTime.MealsController as MealsController).ReadyToServeMealcoursesCheck(mealCourses);
+            //(ServicesContextRunTime.MealsController as MealsController).ReadyToServeMealcoursesCheck(mealCourses);
             //you have to  filter mealcourses by state.
         }
 
@@ -247,7 +248,7 @@ namespace FlavourBusinessManager.RoomService
                     if (foodServiceSession.SessionType == FlavourBusinessFacade.EndUsers.SessionType.HomeDeliveryGuest)
                         foodServiceSession.SessionType = FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery;
 
-                        foodServiceSession.AddPartialSession(referenceClientSession);
+                    foodServiceSession.AddPartialSession(referenceClientSession);
                     referenceClientSession.ImplicitMealParticipation = true;
 
 
@@ -303,7 +304,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint)&&(mealCourse.Meal.Session.ServicePoint as HallServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint) && (mealCourse.Meal.Session.ServicePoint as HallServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -329,12 +330,12 @@ namespace FlavourBusinessManager.RoomService
                                         select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                     if (servingBatch == null)
                     {
-                        servingBatch=mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                        servingBatch = mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
                         if (servingBatch == null)
                         {
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                             {
-                                servingBatch=new ServingBatch(mealCourse, preparedItems, underPreparationItems);
+                                servingBatch = new ServingBatch(mealCourse, preparedItems, underPreparationItems);
                                 ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(servingBatch);
 
                                 servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
@@ -358,6 +359,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+        /// <MetaDataID>{8b512a24-5f97-4489-81dc-f0c6360e1a75}</MetaDataID>
         internal IList<ServingBatch> GetServingBatches(Courier courier)
         {
 
@@ -376,7 +378,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint)&&(mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).IsAssignedTo(courier, courier.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).IsAssignedTo(courier, courier.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -394,7 +396,7 @@ namespace FlavourBusinessManager.RoomService
                                                                             x.State == ItemPreparationState.IsPrepared)
                                                                             select itemsPreparationContext).ToList();
 
-                    if (underPreparationItems.Count==0)
+                    if (underPreparationItems.Count == 0)
                     {
 
                         var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
@@ -405,12 +407,12 @@ namespace FlavourBusinessManager.RoomService
                                             select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
                         if (servingBatch == null)
                         {
-                            servingBatch=mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                            servingBatch = mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
                             if (servingBatch == null)
                             {
                                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                                 {
-                                    servingBatch=new ServingBatch(mealCourse, preparedItems, underPreparationItems);
+                                    servingBatch = new ServingBatch(mealCourse, preparedItems, underPreparationItems);
                                     ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(servingBatch);
 
                                     servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
@@ -517,68 +519,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
-        /// <summary>
-        /// This method finds all waiter which can serve the meal courses and update them for changes
-        /// </summary>
-        /// <param name="mealCourses">
-        /// Defines the meal courses which are ready for serving
-        /// </param>
 
-        /// <MetaDataID>{17792be3-f73c-4e93-b382-6848fcef9521}</MetaDataID>
-        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses )
-        {
-
-
-            var mealCoursesToServe = (from mealCourse in mealCourses
-                                      where mealCourse.Meal.Session.SessionType==FlavourBusinessFacade.EndUsers.SessionType.Hall
-                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                                      from itemPreparation in itemsPreparationContext.PreparationItems
-                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
-                                      select mealCourse).Distinct().ToList();
-            var mealCoursesServicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
-
-
-            List<HumanResources.Waiter> activeWaitersFormealCoursesServing = new List<HumanResources.Waiter>();
-            foreach (var servicePoint in mealCoursesServicesPoints.OfType<HallServicePoint>())
-            {
-                activeWaitersFormealCoursesServing.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                             where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                                             select shiftWork.Worker).OfType<HumanResources.Waiter>());
-            }
-            activeWaitersFormealCoursesServing = activeWaitersFormealCoursesServing.Distinct().ToList();
-
-            
-            foreach (var a_Waiter in activeWaitersFormealCoursesServing)
-                a_Waiter.FindServingBatchesChanged();
-
-
-
-
-            List<HumanResources.Courier> activeCouriersFormealCoursesShipping = new List<HumanResources.Courier>();
-            foreach (var servicePoint in mealCoursesServicesPoints.OfType<HomeDeliveryServicePoint>())
-            {
-                activeCouriersFormealCoursesShipping.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                               where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
-                                                               select shiftWork.Worker).OfType<Courier>());
-            }
-            activeCouriersFormealCoursesShipping = activeCouriersFormealCoursesShipping.Distinct().ToList();
-
-
-            foreach (var a_Courier in activeCouriersFormealCoursesShipping)
-                a_Courier.FindNewFoodShippings();
-
-
-
-
-            var mealCoursesReadyToHomeDelivery = (from mealCourse in mealCourses
-                                      where mealCourse.Meal.Session.SessionType==FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery
-                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                                      from itemPreparation in itemsPreparationContext.PreparationItems
-                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
-                                      select mealCourse).Distinct().ToList();
-
-
-        }
 
         /// <MetaDataID>{eb9a6c0c-3a5e-4115-a6e2-c1aaee2b0fb9}</MetaDataID>
         internal void ServingBatchAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
@@ -607,11 +548,182 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <MetaDataID>{6bbb221b-cac1-435d-832a-e095be1d5070}</MetaDataID>
         internal PreparationPlan RebuildPreparationPlan()
         {
             RebuildPreparationPlan(ActionContext);
             return ActionContext;
         }
+
+
+        /// <MetaDataID>{d718d244-0e50-4ac9-b66a-495fc9f91b43}</MetaDataID>
+        internal void MealItemsReadyToServe(Meal meal)
+        {
+            if (meal.Session?.SessionType == SessionType.Hall)
+            {
+                var servicePoint = meal.Session.ServicePoint as HallServicePoint;
+
+                var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+                foreach (var waiter in activeWaiters)
+                {
+                    if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    {
+                        var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        if (clientMessage == null)
+                        {
+                            clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
+                            clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                            clientMessage.Notification = new Notification() { Title = "There are items read to serve", Body = "Check items ready to serve List" };
+                        }
+                        waiter.PushMessage(clientMessage);
+
+                        if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                        {
+                            CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                }
+
+                ServicesContextRunTime.Current.UpdateWaitersWithUnreadedMessages();
+            }
+
+            if (meal.Session?.SessionType == SessionType.HomeDelivery&& meal.Courses.All(x => x.PreparationState == ItemPreparationState.Serving))
+            {
+
+                var servicePoint = meal.Session.ServicePoint as HomeDeliveryServicePoint;
+
+
+                List<HumanResources.Courier> activeCouriersForMealCoursesShipping = new List<HumanResources.Courier>();
+
+                activeCouriersForMealCoursesShipping.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                               where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                               select shiftWork.Worker).OfType<Courier>());
+
+                activeCouriersForMealCoursesShipping = activeCouriersForMealCoursesShipping.Distinct().ToList();
+
+
+                //foreach (var a_Courier in activeCouriersFormealCoursesShipping)
+                //    a_Courier.FindNewFoodShippings();
+
+
+                foreach (var courier in activeCouriersForMealCoursesShipping)
+                {
+                    if (courier.ActiveShiftWork != null && DateTime.UtcNow > courier.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < courier.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    {
+                        var clientMessage = courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        if (clientMessage == null)
+                        {
+                            clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.ItemsReadyToServe;
+                            clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                            clientMessage.Notification = new Notification() { Title = "There are items read to serve", Body = "Check items ready to serve List" };
+                        }
+                        courier.PushMessage(clientMessage);
+
+                        if (!string.IsNullOrWhiteSpace(courier.DeviceFirebaseToken))
+                        {
+                            CloudNotificationManager.SendMessage(clientMessage, courier.DeviceFirebaseToken);
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                foreach (var message in courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                }
+
+
+                ServicesContextRunTime.Current.UpdateWaitersWithUnreadedMessages();
+            }
+
+
+        }
+
+
+
+        /// <summary>
+        /// This method finds all waiter which can serve the meal courses and update them for changes
+        /// </summary>
+        /// <param name="mealCourses">
+        /// Defines the meal courses which are ready for serving
+        /// </param>
+
+        /// <MetaDataID>{17792be3-f73c-4e93-b382-6848fcef9521}</MetaDataID>
+        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses)
+        {
+
+
+            var mealCoursesToServe = (from mealCourse in mealCourses
+                                      where mealCourse.Meal.Session.SessionType == FlavourBusinessFacade.EndUsers.SessionType.Hall
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
+                                      select mealCourse).Distinct().ToList();
+            var mealCoursesServicesPoints = mealCoursesToServe.Select(x => x.Meal.Session.ServicePoint).OfType<ServicePoint>().ToList();
+
+
+            List<HumanResources.Waiter> activeWaitersFormealCoursesServing = new List<HumanResources.Waiter>();
+            foreach (var servicePoint in mealCoursesServicesPoints.OfType<HallServicePoint>())
+            {
+                activeWaitersFormealCoursesServing.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                             where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                                             select shiftWork.Worker).OfType<HumanResources.Waiter>());
+            }
+            activeWaitersFormealCoursesServing = activeWaitersFormealCoursesServing.Distinct().ToList();
+
+
+            foreach (var a_Waiter in activeWaitersFormealCoursesServing)
+                a_Waiter.FindServingBatchesChanged();
+
+
+
+
+            List<HumanResources.Courier> activeCouriersFormealCoursesShipping = new List<HumanResources.Courier>();
+            foreach (var servicePoint in mealCoursesServicesPoints.OfType<HomeDeliveryServicePoint>())
+            {
+                activeCouriersFormealCoursesShipping.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                               where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                               select shiftWork.Worker).OfType<Courier>());
+            }
+            activeCouriersFormealCoursesShipping = activeCouriersFormealCoursesShipping.Distinct().ToList();
+
+
+            foreach (var a_Courier in activeCouriersFormealCoursesShipping)
+                a_Courier.FindNewFoodShippings();
+
+
+
+
+            var mealCoursesReadyToHomeDelivery = (from mealCourse in mealCourses
+                                                  where mealCourse.Meal.Session.SessionType == FlavourBusinessFacade.EndUsers.SessionType.HomeDelivery
+                                                  from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                  from itemPreparation in itemsPreparationContext.PreparationItems
+                                                  where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad)
+                                                  select mealCourse).Distinct().ToList();
+
+
+
+        }
+
     }
 
 }

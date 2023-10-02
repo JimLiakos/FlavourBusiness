@@ -155,7 +155,10 @@ namespace CourierApp.ViewModel
         {
             throw new NotImplementedException();
         }
-        ICourier Courier;
+
+        public ICourier Courier=>_Courier;
+
+        ICourier _Courier;
         AuthUser AuthUser;
         private Task<bool> SignInTask;
         private bool OnSignIn;
@@ -180,8 +183,8 @@ namespace CourierApp.ViewModel
                 });
 
                 ObjectChangeState?.Invoke(this, null);
-                if (Courier != null)
-                    OAuthUserIdentity = Courier.OAuthUserIdentity;
+                if (_Courier != null)
+                    OAuthUserIdentity = _Courier.OAuthUserIdentity;
                 return true;
             }
 
@@ -196,33 +199,33 @@ namespace CourierApp.ViewModel
                     {
                         if (authUser != null)
                         {
-                            if (Courier != null)
+                            if (_Courier != null)
                             {
-                                Courier.ObjectChangeState -= Courier_ObjectChangeState;
-                                Courier.MessageReceived -= MessageReceived;
+                                _Courier.ObjectChangeState -= Courier_ObjectChangeState;
+                                _Courier.MessageReceived -= MessageReceived;
                                 //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                                if (Courier is ITransparentProxy)
-                                    (Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
+                                if (_Courier is ITransparentProxy)
+                                    (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
                             }
-                            if (Courier != null && Courier.OAuthUserIdentity == authUser.User_ID)
+                            if (_Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ActiveShiftWork = Courier.ActiveShiftWork;
+                                ActiveShiftWork = _Courier.ActiveShiftWork;
                                 //UpdateServingBatches(Courier.GetServingBatches());
-                                Courier.ObjectChangeState += Courier_ObjectChangeState;
-                                Courier.MessageReceived += MessageReceived;
+                                _Courier.ObjectChangeState += Courier_ObjectChangeState;
+                                _Courier.MessageReceived += MessageReceived;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
-                                if (Courier is ITransparentProxy)
-                                    (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
+                                if (_Courier is ITransparentProxy)
+                                    (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
 
 #if DeviceDotNet
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                _Courier.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 //ApplicationSettings.Current.FriendlyName = Courier.FullName;
                                 GetMessages();
 
-                                OAuthUserIdentity = Courier.OAuthUserIdentity;
+                                OAuthUserIdentity = _Courier.OAuthUserIdentity;
                                 return true;
 
                             }
@@ -255,50 +258,50 @@ namespace CourierApp.ViewModel
                             {
                                 if (role.RoleType == RoleType.Courier)
                                 {
-                                    if (Courier != null)
+                                    if (_Courier != null)
                                     {
-                                        Courier.ObjectChangeState -= Courier_ObjectChangeState;
-                                        Courier.MessageReceived -= MessageReceived;
+                                        _Courier.ObjectChangeState -= Courier_ObjectChangeState;
+                                        _Courier.MessageReceived -= MessageReceived;
                                         //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                                        if (Courier is ITransparentProxy)
-                                            (Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
+                                        if (_Courier is ITransparentProxy)
+                                            (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
                                     }
-                                    Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
-                                    if (Courier == null)
+                                    _Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
+                                    if (_Courier == null)
                                         continue;
-                                    ActiveShiftWork = Courier.ActiveShiftWork;
-                                    string objectRef = RemotingServices.SerializeObjectRef(Courier);
+                                    ActiveShiftWork = _Courier.ActiveShiftWork;
+                                    string objectRef = RemotingServices.SerializeObjectRef(_Courier);
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
-                                    Courier.ObjectChangeState += Courier_ObjectChangeState;
-                                    Courier.MessageReceived += MessageReceived;
+                                    _Courier.ObjectChangeState += Courier_ObjectChangeState;
+                                    _Courier.MessageReceived += MessageReceived;
                                     //Courier.ServingBatchesChanged += ServingBatchesChanged;
-                                    if (Courier is ITransparentProxy)
-                                        (Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
+                                    if (_Courier is ITransparentProxy)
+                                        (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
 
 
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                    Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                    _Courier.DeviceFirebaseToken = device.FirebaseToken;
                                     if (!device.IsBackgroundServiceStarted)
                                     {
                                         BackgroundServiceState serviceState = new BackgroundServiceState();
                                         device.RunInBackground(new Action(async () =>
                                         {
-                                            var message = Courier.PeekMessage();
-                                            Courier.MessageReceived += MessageReceived;
+                                            var message = _Courier.PeekMessage();
+                                            _Courier.MessageReceived += MessageReceived;
                                             do
                                             {
                                                 System.Threading.Thread.Sleep(1000);
 
                                             } while (!serviceState.Terminate);
 
-                                            Courier.MessageReceived -= MessageReceived;
+                                            _Courier.MessageReceived -= MessageReceived;
                                             //if (Waiter is ITransparentProxy)
                                             //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                         }), serviceState);
                                     }
 #endif
-                                    ActiveShiftWork = Courier.ActiveShiftWork;
+                                    ActiveShiftWork = _Courier.ActiveShiftWork;
                                     GetMessages();
                                 }
                             }
@@ -306,8 +309,8 @@ namespace CourierApp.ViewModel
 
 
                             AuthUser = authUser;
-                            if (Courier != null)
-                                OAuthUserIdentity = Courier.OAuthUserIdentity;
+                            if (_Courier != null)
+                                OAuthUserIdentity = _Courier.OAuthUserIdentity;
                             ObjectChangeState?.Invoke(this, null);
                             return true;
                         }
@@ -342,7 +345,7 @@ namespace CourierApp.ViewModel
 
         private void MessageReceived(IMessageConsumer sender)
         {
-
+            var message = this._Courier.PeekMessage();
         }
 
         /// <MetaDataID>{0989d879-8309-46fc-ba3a-947448f9bfb4}</MetaDataID>
@@ -505,7 +508,7 @@ namespace CourierApp.ViewModel
 
         public async void SiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ActiveShiftWork = Courier.NewShiftWork(startedAt, timespanInHours);
+            ActiveShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours);
 
             if (ActiveShiftWork != null)
             {
@@ -580,7 +583,7 @@ namespace CourierApp.ViewModel
             try
             {
                 IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                this.Courier = servicesContextManagment.AssignCourierUser(courierAssignKey);
+                this._Courier = servicesContextManagment.AssignCourierUser(courierAssignKey);
                 type = "FlavourBusinessManager.AuthFlavourBusiness";
                 var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
                 var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);

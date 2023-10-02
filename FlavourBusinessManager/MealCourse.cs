@@ -12,6 +12,8 @@ using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.HumanResources;
+using System.Net;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -138,8 +140,8 @@ namespace FlavourBusinessManager.RoomService
         [CachingDataOnClientSide]
         public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
-        
-        
+
+
 
 
         /// <exclude>Excluded</exclude>
@@ -239,17 +241,38 @@ namespace FlavourBusinessManager.RoomService
 
                 if (_PreparationState != value)
                 {
-                    var activeWaiters = ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.EndsAt > System.DateTime.UtcNow).Select(x => x.Worker).OfType<IWaiter>().ToList();
-                    if (activeWaiters.Count > 0)
+                    if (Meal.Session.SessionType == SessionType.Hall)
                     {
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        var activeWaiters = ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.EndsAt > System.DateTime.UtcNow).Select(x => x.Worker).OfType<IWaiter>().ToList();
+                        if (activeWaiters.Count > 0)
                         {
-                            _PreparationState = value;
-                            stateTransition.Consistent = true;
-                        }
+                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                            {
+                                _PreparationState = value;
+                                stateTransition.Consistent = true;
+                            }
 
-                        if (value == ItemPreparationState.Serving)
-                            ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
+                            if (value == ItemPreparationState.Serving)
+                                (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
+                        }
+                    }
+                    else if (Meal.Session.SessionType == SessionType.HomeDelivery)
+                    {
+
+                        var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                              where shiftWork.Worker is ICourier && (Meal.Session.ServicePoint as HomeDeliveryServicePoint).IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                              select shiftWork.Worker).OfType<Courier>().ToList();
+                        if (activeCouriers.Count > 0)
+                        {
+                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                            {
+                                _PreparationState = value;
+                                stateTransition.Consistent = true;
+                            }
+                            if (value == ItemPreparationState.Serving)
+                                (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
+
+                        }
                     }
                 }
 
@@ -343,7 +366,7 @@ namespace FlavourBusinessManager.RoomService
                     }
                 }
 
-                var items= _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
+                var items = _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
                 return _FoodItemsInProgress;
 
                 //List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
@@ -419,8 +442,8 @@ namespace FlavourBusinessManager.RoomService
 
                 SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData()
                 {
-                    Description= Meal.Session.Description,
-                    SessionType= Meal.Session.SessionType,
+                    Description = Meal.Session.Description,
+                    SessionType = Meal.Session.SessionType,
                     DefaultMealTypeUri = defaultMealTypeUri,
                     ServedMealTypesUris = servedMealTypesUris,
                     FoodServiceSession = Meal.Session,
@@ -614,15 +637,10 @@ namespace FlavourBusinessManager.RoomService
                 if (commonItemPreparationState == ItemPreparationState.Serving && itemsPreparationContext.PreparationState < ItemPreparationState.Serving)
                 {
                     //itemsPreparationContext.PreparationState = commonItemPreparationState;
-                    ServicePointRunTime.ServicesContextRunTime.Current.MealItemsReadyToServe(Meal.Session.ServicePoint as ServicePoint);
+                    (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
                 }
                 itemsPreparationContext.PreparationState = commonItemPreparationState;
             }
-
-            //foreach(var itemsPreparationContext in this.FoodItemsInProgress)
-            //{
-            //    itemsPreparationContext.PreparationState
-            //}
         }
         public event ItemsStateChangedHandle ItemsStateChanged;
 
@@ -641,7 +659,7 @@ namespace FlavourBusinessManager.RoomService
                         _FoodItems.Add(flavourItem);
                         stateTransition.Consistent = true;
                     }
-                    
+
                     if (flavourItem.State == ItemPreparationState.Committed)
                     {
                         if (flavourItem.MenuItem == null)
@@ -655,7 +673,7 @@ namespace FlavourBusinessManager.RoomService
                         }
                         else
                         {
-                            flavourItem.State = ItemPreparationState.Serving;
+                            flavourItem.State = ItemPreparationState.IsPrepared;
                             flavourItem.PreparedAtForecast = DateTime.UtcNow;
                         }
 
@@ -679,17 +697,18 @@ namespace FlavourBusinessManager.RoomService
                             FoodItemsInProgress.Add(itemsPreparationContext);
                         itemsPreparationContext.AddPreparationItem(itemPreparation);
                     }
-                    Transaction.RunOnTransactionCompleted(() => {
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
 
                         flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                         ObjectChangeState?.Invoke(this, nameof(FoodItems));
 
                     });
 
-                  
+
                 }
 
-              //  ;
+                //  ;
             }
         }
 
@@ -709,11 +728,12 @@ namespace FlavourBusinessManager.RoomService
 
                     _FoodItems.Remove(itemPreparation);
                     (itemPreparation as ItemPreparation).ObjectChangeState -= FlavourItem_ObjectChangeState;
-                   
+
                     stateTransition.Consistent = true;
 
 
-                    Transaction.RunOnTransactionCompleted(() => {
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
                         ObjectChangeState?.Invoke(this, nameof(FoodItems));
                     });
                 }
@@ -721,7 +741,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
-                
+
             }
 
         }

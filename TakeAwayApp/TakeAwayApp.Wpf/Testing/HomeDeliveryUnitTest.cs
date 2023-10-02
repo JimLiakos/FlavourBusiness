@@ -1,6 +1,7 @@
 ﻿using CefSharp;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
@@ -64,11 +65,45 @@ namespace TakeAwayApp.Wpf
 
 
             this.FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.FoodServicesSessionsSimulator.StartClientSideSimulation(SessionType.HomeDelivery);
-
+            this.FlavoursServiceOrderTakingStation.ObjectChangeState += FlavoursServiceOrderTakingStation_ObjectChangeState;
+            
             //  this.FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.FoodServicesSessionsSimulator.NewSimulateSession -= FoodServicesSessionsSimulator_NewSimulateSession;
 
             //homeDeliverySession.OrderCommit();
 
+        }
+
+        private void FlavoursServiceOrderTakingStation_ObjectChangeState(object _object, string member)
+        {
+            if(member=="WatchingOrders")
+                MakeOrdersAvalableForShipping();
+        }
+
+        private void MakeOrdersAvalableForShipping()
+        {
+
+            foreach (var watchingOrder in FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.ServerWatchingOrder.ClientIdentity?.IndexOf("org_client_sim") == 0).ToList())
+            {
+                var ereere = watchingOrder.MealCourses.FirstOrDefault().FoodItemsInProgress;
+                foreach (var foodItemsInProgress in watchingOrder.MealCourses.FirstOrDefault().FoodItemsInProgress)
+                {
+
+                    IPreparationStationRuntime preparationStation = null;
+                    if (!string.IsNullOrWhiteSpace(foodItemsInProgress.PreparationStationIdentity))
+                    {
+                        if (!PreparationSations.TryGetValue(foodItemsInProgress.PreparationStationIdentity, out preparationStation))
+                        {
+                            var servicesContextManagment = FlavoursServiceOrderTakingStation.GetServicesContextManagment();
+
+                            preparationStation = servicesContextManagment.GetPreparationStationRuntime(foodItemsInProgress.PreparationStationIdentity);
+                            PreparationSations[foodItemsInProgress.PreparationStationIdentity] = preparationStation;
+                        }
+                        preparationStation.ItemsServing(foodItemsInProgress.PreparationItems.Select(x => x.uid).ToList());
+
+                    }
+                }
+            }
+            
         }
 
         Dictionary<string, IPreparationStationRuntime> PreparationSations = new Dictionary<string, IPreparationStationRuntime>();
@@ -82,39 +117,38 @@ namespace TakeAwayApp.Wpf
             var client = ClientsForUnitTest.FirstOrDefault();
             ClientsForUnitTest.Remove(client);
 
-            homeDeliverySession.CallerPhone=client.PhoneNumber;
-            homeDeliverySession.DeliveryPlace=client.DeliveryPlaces[0];
+            homeDeliverySession.CallerPhone = client.PhoneNumber;
+            homeDeliverySession.DeliveryPlace = client.DeliveryPlaces[0];
             var homeDeliveryServicePoint = homeDeliverySession.GetNeighborhoodFoodServers(homeDeliverySession.DeliveryPlace.Location).FirstOrDefault();
-            homeDeliverySession.HomeDeliveryServicePoint=homeDeliveryServicePoint;
+            homeDeliverySession.HomeDeliveryServicePoint = homeDeliveryServicePoint;
             (homeDeliverySession.SessionClient.FoodServiceClient as FoodServiceClient).Synchronize(client);
-
 
             foreach (var preparation in preparationItems)
             {
                 homeDeliverySession.FoodServiceClientSession.AddItem(preparation);
             }
-          await  homeDeliverySession.OrderCommit();
+            await homeDeliverySession.OrderCommit();
 
 
-            var watchingOrder = FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.SessionID==homeDeliverySession.FoodServiceClientSession.MainSessionID).FirstOrDefault();
+            //var watchingOrder = FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.SessionID==homeDeliverySession.FoodServiceClientSession.MainSessionID).FirstOrDefault();
 
-            foreach (var foodItemsInProgress in watchingOrder.MealCourses.FirstOrDefault().FoodItemsInProgress)
-            {
+            //foreach (var foodItemsInProgress in watchingOrder.MealCourses.FirstOrDefault().FoodItemsInProgress)
+            //{
 
-                IPreparationStationRuntime preparationStation = null;
-                if (!string.IsNullOrWhiteSpace(foodItemsInProgress.PreparationStationIdentity))
-                {
-                    if (!PreparationSations.TryGetValue(foodItemsInProgress.PreparationStationIdentity, out preparationStation))
-                    {
-                        var servicesContextManagment = FlavoursServiceOrderTakingStation.GetServicesContextManagment();
+            //    IPreparationStationRuntime preparationStation = null;
+            //    if (!string.IsNullOrWhiteSpace(foodItemsInProgress.PreparationStationIdentity))
+            //    {
+            //        if (!PreparationSations.TryGetValue(foodItemsInProgress.PreparationStationIdentity, out preparationStation))
+            //        {
+            //            var servicesContextManagment = FlavoursServiceOrderTakingStation.GetServicesContextManagment();
 
-                        preparationStation = servicesContextManagment.GetPreparationStationRuntime(foodItemsInProgress.PreparationStationIdentity);
-                        PreparationSations[foodItemsInProgress.PreparationStationIdentity]= preparationStation;
-                    }
-                    preparationStation.ItemsPrepared(foodItemsInProgress.PreparationItems.Select(x => x.uid).ToList());
+            //            preparationStation = servicesContextManagment.GetPreparationStationRuntime(foodItemsInProgress.PreparationStationIdentity);
+            //            PreparationSations[foodItemsInProgress.PreparationStationIdentity]= preparationStation;
+            //        }
+            //        preparationStation.ItemsPrepared(foodItemsInProgress.PreparationItems.Select(x => x.uid).ToList());
 
-                }
-            }
+            //    }
+            //}
         }
     }
 

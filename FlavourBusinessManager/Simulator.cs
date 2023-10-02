@@ -548,7 +548,7 @@ namespace FlavourBusinessManager.RoomService
                     {
                         var preparationStationItems = preparationStationsItems[preparationStationsItems.Keys.ToList()[patern.IndexOf(psItemsPattern)]];
                         var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri, ModifiedItemPrice = (double)menuItem.MenuItemPrice.Price };
                         itemsToPrepare.Add(itemPreparation);
                         psItemsPattern.NumberOfItems = psItemsPattern.NumberOfItems - 1;
                     }
@@ -562,7 +562,7 @@ namespace FlavourBusinessManager.RoomService
 
                         preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPatern.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPatern.MaxDuration / 2).ToList();
                         var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri, ModifiedItemPrice =(double)menuItem.MenuItemPrice.Price };
                         itemsToPrepare.Add(itemPreparation);
                     }
                 }

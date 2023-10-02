@@ -60,6 +60,9 @@
     <Compile Include="..\CourierApp\CourierApp\ViewModel\CourierActivityPresentation.cs">
       <Link>Courier.Wpf\ViewModel\CourierActivityPresentation.cs</Link>
     </Compile>
+    <Compile Include="..\CourierApp\CourierApp\ViewModel\FoodShippingPresentation.cs">
+      <Link>Courier.Wpf\ViewModel\FoodShippingPresentation.cs</Link>
+    </Compile>
     <Compile Include="..\CourierApp\CourierApp\ViewModel\ICourierActivityPresentation.cs">
       <Link>Courier.Wpf\ViewModel\ICourierActivityPresentation.cs</Link>
     </Compile>

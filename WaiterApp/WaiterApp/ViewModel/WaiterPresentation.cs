@@ -491,7 +491,7 @@ namespace WaiterApp.ViewModel
                         _UserName = UserData.UserName;
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
-                        
+
 
                         foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Waiter))
                         {
@@ -506,8 +506,17 @@ namespace WaiterApp.ViewModel
                                         (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                 }
                                 Waiter = RemotingServices.CastTransparentProxy<IWaiter>(role.User);
-                                if (Waiter==null)
+#if !DEBUG
+                                if (Waiter?.OAuthUserIdentity != UserData.OAuthUserIdentity)
+                                    Waiter = null;
+#else
+                                
+#endif
+
+                                if (Waiter == null)
                                     continue;
+
+
                                 _OAuthUserIdentity = Waiter.OAuthUserIdentity;
                                 string objectRef = RemotingServices.SerializeObjectRef(Waiter);
                                 ApplicationSettings.Current.WaiterObjectRef = objectRef;
@@ -566,11 +575,10 @@ namespace WaiterApp.ViewModel
                         }
                         //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
 
-                 
+
                         AuthUser = authUser;
-                        if (Waiter!=null)
+                        if (Waiter != null)
                         {
-                            OAuthUserIdentity = Waiter.OAuthUserIdentity;
                             ObjectChangeState?.Invoke(this, null);
                         }
                         return true;
@@ -643,7 +651,7 @@ namespace WaiterApp.ViewModel
             System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
             string serverUrl = AzureServerUrl;
             var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
@@ -677,7 +685,7 @@ namespace WaiterApp.ViewModel
 
             try
             {
-                UserData userData = new UserData() { Email=Email, FullName=FullName, Address=Address, UserName=UserName };
+                UserData userData = new UserData() { Email = Email, FullName = FullName, Address = Address, UserName = UserName };
                 pAuthFlavourBusiness = GetFlavourBusinessAuth();
                 pAuthFlavourBusiness.SignUpUserWithEmailAndPassword(Email, Password, userData, emailVerificationCode);
             }
@@ -954,11 +962,11 @@ namespace WaiterApp.ViewModel
                     serverUrl = "http://localhost:8090/api/";
                     serverUrl = AzureServerUrl;
                     IAuthFlavourBusiness pAuthFlavourBusiness = null;
-                     
+
                     try
                     {
                         var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness =RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
 
                     }
                     catch (System.Net.WebException error)
@@ -984,7 +992,7 @@ namespace WaiterApp.ViewModel
                         _PhoneNumber = UserData.PhoneNumber;
                         _Address = UserData.Address;
                         //_OAuthUserIdentity = UserData.OAuthUserIdentity;
-                        AuthUser=authUser;
+                        AuthUser = authUser;
                         ObjectChangeState?.Invoke(this, null);
 
 
