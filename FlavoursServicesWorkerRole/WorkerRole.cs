@@ -27,6 +27,7 @@ namespace FlavoursServicesWorkerRole
 
         public override void Run()
         {
+            
             Trace.TraceInformation("FlavoursServicesWorkerRole is running");
             FlavoursServicesContextManagment.Init();
             System.Collections.Immutable.ImmutableStack<string> tt = null;
