@@ -642,7 +642,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             get
             {
-
+                ObjectActivated.Task.Wait();
                 //GetItemToServingtimespanPredictions();
                 List<ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
@@ -951,7 +951,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{d65435e4-edc6-4442-aa7d-72b3e8a13cee}</MetaDataID>
         internal void AssignItemPreparation(ItemPreparation flavourItem)
         {
-
+            ObjectActivated.Task.Wait();
             if (flavourItem.PreparationStation != this)
             {
                 lock (DeviceUpdateLock)
@@ -1219,6 +1219,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             try
             {
+                ObjectActivated.Task.Wait();
                 SuspendsObjectChangeStateEvents = true;
                 List<ItemsPreparationContext> preparationSections = null;
                 lock (DeviceUpdateLock)

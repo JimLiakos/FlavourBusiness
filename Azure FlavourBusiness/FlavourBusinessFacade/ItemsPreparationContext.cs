@@ -80,10 +80,13 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{57de3627-5720-4605-a451-fec19548023e}</MetaDataID>
         public ItemsPreparationContext(IMealCourse mealCourse, IPreparationStation preparationStation, List<IItemPreparation> preparationItems)
         {
-            if(mealCourse==null)
+            //string uri = null;
+            if (mealCourse==null)
             {
 
             }
+            //else
+            //    uri = OOAdvantech.PersistenceLayer.StorageInstanceRef.GetStorageInstanceRef(mealCourse)?.ObjectID?.ToString();
             this.MealCourse = mealCourse;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             MealCourse.ObjectChangeState += MealCourse_ObjectChangeState;

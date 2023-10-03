@@ -63,7 +63,7 @@ namespace DontWaitApp
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
     public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
-
+         
         /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
         public int Age = 12;
         /// <MetaDataID>{5f360b37-d769-4114-a29c-43bbcbfeffd1}</MetaDataID>

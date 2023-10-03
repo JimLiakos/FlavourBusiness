@@ -340,6 +340,8 @@ namespace FlavourBusinessManager.RoomService
             {
                 lock (FoodItemsInProgressLock)
                 {
+                  // string uri=     StorageInstanceRef.GetStorageInstanceRef(this)?.ObjectID?.ToString();
+
                     if (_FoodItemsInProgress == null)
                     {
                         _FoodItemsInProgress = new List<ItemsPreparationContext>();
@@ -364,9 +366,15 @@ namespace FlavourBusinessManager.RoomService
                         }
 
                     }
+
+                    var items = _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
+                    if (items.Count != _FoodItems.Count)
+                    {
+                        
+                    }
                 }
 
-                var items = _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
+       
                 return _FoodItemsInProgress;
 
                 //List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
