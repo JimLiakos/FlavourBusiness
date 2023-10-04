@@ -174,7 +174,8 @@ namespace FlavourBusinessManager
         [BackwardCompatibilityID("+7")]
         public string OAuthUserIdentity
         {
-            get => _OAuthUserIdentity; set
+            get => _OAuthUserIdentity; 
+            set
             {
                 if (_OAuthUserIdentity!=value)
                 {

@@ -617,7 +617,10 @@ namespace WaiterApp.ViewModel
 
         public UserData SignInNativeUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            var pAuthFlavourBusiness = GetFlavourBusinessAuth();
+            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+
+            return pAuthFlavourBusiness.SignInNativeUser(serviceContextIdentity, userName, password);
         }
 
 
@@ -1030,7 +1033,7 @@ namespace WaiterApp.ViewModel
             pAuthFlavourBusiness = GetFlavourBusinessAuth();
 
             string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
+            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Waiter).ToList();
 
             lock (this)
             {
@@ -1115,8 +1118,8 @@ namespace WaiterApp.ViewModel
 
             //return ConnectToServicePointTask.Task;
 #else
-
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3a907b91e2a3475f8df94af5127e6342";
+            
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3cecf8c9d2624b1f9c218602e929fa0d";
 
             try
             {

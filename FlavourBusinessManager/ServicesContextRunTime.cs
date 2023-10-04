@@ -2857,13 +2857,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.UserName = userName;
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
+                        
 
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedWaiter.WorkerAssignKey = null;
                         (unassignedWaiter as Waiter).OAuthUserIdentity = authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
                         unassignedWaiter.Name = userFullName;
+                        unassignedWaiter.NativeUser=true;
 
                         stateTransition.Consistent = true;
                     }
@@ -2946,7 +2949,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedtakeawayCashier.WorkerAssignKey = null;
                         (unassignedtakeawayCashier as TakeawayCashier).OAuthUserIdentity = authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
                         unassignedtakeawayCashier.Name = userFullName;
+                        unassignedtakeawayCashier.NativeUser=true;
 
                         stateTransition.Consistent = true;
                     }
@@ -3021,13 +3026,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
-                        nativeAuthUser.OAuthUserIdentity = authUser.User_ID;
-
+                        
+                         
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedCourier.WorkerAssignKey = null;
                         (unassignedCourier as Courier).OAuthUserIdentity = authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
                         unassignedCourier.Name = userFullName;
+                        unassignedCourier.NativeUser=true;
 
                         stateTransition.Consistent = true;
                     }

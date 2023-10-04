@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.HumanResources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,9 @@ namespace ServiceContextManagerApp
             ActiveShiftWork = Waiter.ActiveShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
             NativeUser=Waiter.NativeUser;
+
+            var DASD = Waiter.FullName;
+            var SDS = Waiter.UserName;
         }
         public bool NativeUser { get; set ; }
 
@@ -32,6 +36,7 @@ namespace ServiceContextManagerApp
         {
             get
             {
+                string rr = Waiter.Identity;
                 return Waiter.Identity;
             }
         }
