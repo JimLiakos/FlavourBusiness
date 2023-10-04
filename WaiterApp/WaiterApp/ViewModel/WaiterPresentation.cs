@@ -1860,7 +1860,7 @@ namespace WaiterApp.ViewModel
         public async Task<bool> CheckPermissionsForQRCodeScan()
         {
 #if DeviceDotNet
-
+ 
             return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
 #else
             return false;
