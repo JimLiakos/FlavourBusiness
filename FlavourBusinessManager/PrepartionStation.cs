@@ -538,6 +538,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             return itemPreparation.PreparationTimeSpanInMin;
         }
+        /// <MetaDataID>{66b85fba-d3e9-430a-a510-488ecac9adad}</MetaDataID>
         internal double GetCookingTimeSpanInMin(ItemPreparation itemPreparation)
         {
             if (itemPreparation.CookingTimeSpanInMin == -1)
@@ -551,14 +552,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                         break;
                     }
                 }
-              
+
             }
             if (itemPreparation.CookingTimeSpanInMin == -1)
                 return 0;
 
             return itemPreparation.CookingTimeSpanInMin;
         }
-        
+
         /// <MetaDataID>{39ef62a3-cbec-4713-9edd-16f70a9a43c8}</MetaDataID>
         public Dictionary<string, List<ITag>> ItemsPreparationTags
         {
@@ -1343,6 +1344,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{2579a2ec-c9ae-46a2-bd1f-0f782af292b3}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> Predictions { get; private set; }
+        /// <MetaDataID>{3d5d41d8-2f32-4789-b85c-b2deb44c07ff}</MetaDataID>
         double NormalizeTimeSpanInSec = 15;
 
         /// <MetaDataID>{baa4b223-d63e-4981-b948-b4be0a8b8dae}</MetaDataID>

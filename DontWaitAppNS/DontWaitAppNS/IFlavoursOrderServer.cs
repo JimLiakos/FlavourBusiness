@@ -525,10 +525,13 @@ namespace DontWaitApp
 
     public interface IServicePointSupervisor
     {
+        /// <MetaDataID>{2668f2c8-e632-43e6-8e1d-38ab9c3306d3}</MetaDataID>
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
         //void TransferSession(string sourceServicePointIdentity, string targetServicePointIdentity);
 
+        /// <MetaDataID>{c4829ae7-d9b3-492c-b1c4-50bebfb4ea2b}</MetaDataID>
         bool TransferPartialSession(string partialSessionID, string targetSessionID);
+        /// <MetaDataID>{e4dfe843-4932-4bd7-ac17-f542c7f0e153}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation);
     }
 

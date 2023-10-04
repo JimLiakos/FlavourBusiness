@@ -106,6 +106,27 @@ namespace DontWaitApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _ServiceContextDevice;
+        /// <MetaDataID>{119c7726-37c7-4763-acbc-f347fd01fd0b}</MetaDataID>
+        [PersistentMember(nameof(_ServiceContextDevice))]
+        [BackwardCompatibilityID("+16")]
+        public string ServiceContextDevice
+        {
+            get => _ServiceContextDevice;
+            set
+            {
+                if (_ServiceContextDevice != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServiceContextDevice = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
         /// <MetaDataID>{ab7fda42-2d66-4593-81f5-1f0e3a95382d}</MetaDataID>
         public FoodServicesClientSessionViewModel DisplayedFoodServicesClientSession
         {

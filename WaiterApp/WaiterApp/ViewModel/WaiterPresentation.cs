@@ -40,7 +40,7 @@ namespace WaiterApp.ViewModel
 
 
     /// <MetaDataID>{5ec91d09-d693-4c4e-9dca-858a9e09a233}</MetaDataID>
-    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    public class WaiterPresentation : MarshalByRefObject, INotifyPropertyChanged, IWaiterPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IServicePointSupervisor, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject, IDevicePermissions
     {
 
 
@@ -392,8 +392,6 @@ namespace WaiterApp.ViewModel
                 OnSignIn = true;
                 try
                 {
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
                     System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
                     string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
                     serverUrl = "http://localhost:8090/api/";
@@ -452,22 +450,7 @@ namespace WaiterApp.ViewModel
 
                     }
 
-                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-                    try
-                    {
-                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-
-                    }
-                    catch (System.Net.WebException error)
-                    {
-                        throw;
-                    }
-                    catch (Exception error)
-                    {
-                        throw;
-                    }
+                    IAuthFlavourBusiness pAuthFlavourBusiness = GetFlavourBusinessAuth();
 
 
                     //sds.SendTimeout
@@ -631,10 +614,6 @@ namespace WaiterApp.ViewModel
         }
 
 
-        public IList<UserData> GetNativeUsers()
-        {
-            return new List<UserData>();
-        }
 
         public UserData SignInNativeUser(string userName, string password)
         {
@@ -1032,11 +1011,145 @@ namespace WaiterApp.ViewModel
 
         }
 
+        IList<UserData> NativeUsers;
+
+        public IList<UserData> GetNativeUsers()
+        {
+            lock (this)
+            {
+                if (NativeUsers != null)
+                    return NativeUsers;
+            }
+
+            if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.ServiceContextDevice))
+                return new List<UserData>();
+
+
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+            pAuthFlavourBusiness = GetFlavourBusinessAuth();
+
+            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
+
+            lock (this)
+            {
+                NativeUsers = nativeUsers;
+            }
+
+
+
+
+            return nativeUsers; ;
+            //return new List<UserData>();
+        }
+
+
         /// <MetaDataID>{187d772f-a845-4262-9f4a-1efed97515fe}</MetaDataID>
         public async Task<bool> AssignWaiter()
         {
             return await Assign();
         }
+        public async Task<UserData> AssignDeviceToNativeUserWaiter()
+        {
+#if DeviceDotNet
+            string deviceAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return null;
+                deviceAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+
+                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
+                //this.Waiter = servicesContextManagment.AssignWaiterUser(waiterAssignKey);
+                //type = "FlavourBusinessManager.AuthFlavourBusiness";
+                //var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                //var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                //UserData = pAuthFlavourBusiness.SignIn();
+                lock (this)
+                    NativeUsers = null;
+
+
+                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3a907b91e2a3475f8df94af5127e6342";
+
+            try
+            {
+                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                string serverUrl = AzureServerUrl;
+
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+
+                
+                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
+
+                lock (this)
+                    NativeUsers=null;
+                return new UserData() { Email =nativeUserData.FireBaseUserName, Password= nativeUserData.FireBasePasword };
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+
+            return null;
+#endif
+
+        }
+
+
+
+
+
 #if DeviceDotNet
         public ScanCode ScanCode = new ScanCode();
 #endif
@@ -1102,6 +1215,8 @@ namespace WaiterApp.ViewModel
 #endif
 
         }
+
+
 
 
         /// <MetaDataID>{3a868f16-c77b-4316-b6c0-c1a2bc4cf6b8}</MetaDataID>
@@ -1302,6 +1417,18 @@ namespace WaiterApp.ViewModel
 
         /// <MetaDataID>{4adb01c1-c93a-47dc-ad82-c5f8e696aab5}</MetaDataID>
         public string AppIdentity => "com.microneme.dontwaitwaiterapp";
+
+        public string DeviceName
+        {
+            get
+            {
+#if DeviceDotNet
+                return DeviceInfo.Name;
+#else
+                return "";
+#endif
+            }
+        }
 
         /// <MetaDataID>{66534587-dc7c-4f65-8b94-4e14471f0437}</MetaDataID>
         public void SiftWorkStart(DateTime startedAt, double timespanInHours)
@@ -1729,6 +1856,33 @@ namespace WaiterApp.ViewModel
         {
             return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
+
+        public async Task<bool> CheckPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+
+            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+#else
+            return false;
+#endif
+
+        }
+        public async Task<bool> RequestPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+            return (await Permissions.RequestAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+#else
+            return true;
+#endif
+        }
+
+        public void ShowAppPermissions()
+        {
+#if DeviceDotNet
+            AppInfo.ShowSettingsUI();
+#endif
+        }
+
 
     }
 }

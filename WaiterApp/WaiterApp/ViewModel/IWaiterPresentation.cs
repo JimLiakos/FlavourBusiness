@@ -30,7 +30,8 @@ namespace WaiterApp.ViewModel
         [GenerateEventConsumerProxy]
         event MealConversationTimeoutHandle MealConversationTimeout;
 
-        void WillTakeCareMealConversationTimeout(string servicePointIdentity,string  sessionIdentity);
+        /// <MetaDataID>{4f9504ee-2809-4910-b6fd-7f6356eb649b}</MetaDataID>
+        void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity);
 
         /// <MetaDataID>{d89e355f-0e0e-4267-b36b-209817f2ad4c}</MetaDataID>
         DontWaitApp.IFlavoursOrderServer FlavoursOrderServer { get; }
@@ -47,6 +48,7 @@ namespace WaiterApp.ViewModel
             get;
         }
 
+        /// <MetaDataID>{c884e466-102c-4758-b223-70b88e29d47e}</MetaDataID>
         Dictionary<string, ServicePointState> HallsServicePointsState { get; }
         /// <MetaDataID>{030650aa-927d-4f55-bfc3-5c6b03a2a01f}</MetaDataID>
         List<ServingBatchPresentation> ServingBatches
@@ -63,6 +65,7 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{dfaa4dda-f0ac-4161-8a79-0f674b3e22fc}</MetaDataID>
         bool AssignServingBatch(string serviceBatchIdentity);
 
+        /// <MetaDataID>{18cc804f-3d18-44bd-9af6-cf88b0795166}</MetaDataID>
         void PrintServingBatchReceipt(string serviceBatchIdentity);
 
 
@@ -92,18 +95,22 @@ namespace WaiterApp.ViewModel
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
+        /// <MetaDataID>{b20c4296-54cc-4ba7-8571-22662563460a}</MetaDataID>
         void ItemsReadyToServeMessageReceived(string messageID);
 
+        /// <MetaDataID>{e1f075a2-29ed-4ebc-ba36-221dbb047ce4}</MetaDataID>
         void MealConversationTimeoutReceived(string messageID);
-        
 
+
+        /// <MetaDataID>{d2cfeb6c-1497-4e02-a9c1-3af3610ee518}</MetaDataID>
         void LayTheTableMessageReceived(string messageID);
 
 
+        /// <MetaDataID>{40506b95-ca01-4822-8424-0b9fe9143f53}</MetaDataID>
         void TableIsLay(string servicesPointIdentity);
 
 
-      
+
 
 
     }

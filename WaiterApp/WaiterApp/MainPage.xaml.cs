@@ -41,9 +41,9 @@ namespace WaiterApp
             //if (storageWritePermission == Xamarin.Essentials.PermissionStatus.Denied)
             //    storageWritePermission = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.StorageWrite>();
 
-            var cameraPermission = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.Camera>();
-            if (cameraPermission != Xamarin.Essentials.PermissionStatus.Granted)
-                cameraPermission = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Camera>();
+            //var cameraPermission = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.Camera>();
+            //if (cameraPermission != Xamarin.Essentials.PermissionStatus.Granted)
+            //    cameraPermission = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Camera>();
 
             if (!check)
             {

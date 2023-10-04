@@ -32,7 +32,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"16")
+		    value      	"17")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -176,8 +176,7 @@
 			    name       	"Identity"
 			    value      	"+12"))
 		    quid       	"5EFD680C024F"
-		    type       	"string"
-		    exportControl 	"Public")
+		    type       	"string")
 		(object ClassAttribute "ExtraStoragePath"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -300,8 +299,7 @@
 			    name       	"Identity"
 			    value      	"+14"))
 		    quid       	"5F02CFA60388"
-		    type       	"string"
-		    exportControl 	"Public")
+		    type       	"string")
 		(object ClassAttribute "WaiterObjectRef"
 		    attributes 	(list Attribute_Set
 			(object Attribute
@@ -334,7 +332,118 @@
 			    value      	"+15"))
 		    quid       	"5FF3EFF901ED"
 		    type       	"string"
-		    exportControl 	"Public"))
+		    exportControl 	"Public")
+		(object ClassAttribute "ServiceContextDevice"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{119c7726-37c7-4763-acbc-f347fd01fd0b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"651D15A40185")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+16"))
+		    quid       	"651D15A40185"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DisplayedFoodServicesClientSession"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ab7fda42-2d66-4593-81f5-1f0e3a95382d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"651D15A401DF")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"651D15A401DF"
+		    type       	"DontWaitApp.FoodServicesClientSessionViewModel"
+		    exportControl 	"Public")
+		(object ClassAttribute "Current"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{392dfc5c-a5b1-46d6-a5a1-4f456e14e755}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"651D15A403E7")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"651D15A403E7"
+		    type       	"DontWaitApp.ApplicationSettings"
+		    exportControl 	"Public")
+		(object ClassAttribute "AppSettingsStorageLock"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{568752b1-76f6-4a8f-8a81-273e5c24243f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"651D15A5011E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"651D15A5011E"
+		    type       	"object")
+		(object ClassAttribute "AppSettingsTask"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{94684440-5506-4756-a0b2-130a0146ad1b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"651D15A5018A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE))
+		    quid       	"651D15A5018A"
+		    type       	"System.Threading.Tasks.Task<DontWaitApp.ApplicationSettings>"))
 	    module     	"Component View::DontWaitApp::DontWaitApp"
 	    quidu      	"5EFCA653000D"
 	    language   	"C#"
@@ -3575,7 +3684,11 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateGetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"62CFC7A103B7"
 		    label      	"ClientAsGuest"
 		    supplier   	"Logical View::FlavourBusinessManager::EndUsers::FoodServiceClient"
@@ -3591,7 +3704,15 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{af39d0ec-0ec0-4d22-b109-3bd49fe241ff}"))
+			    value      	"{af39d0ec-0ec0-4d22-b109-3bd49fe241ff}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"62CFC7A103BE"
 		    supplier   	"Logical View::DontWaitApp::ApplicationSettings"
 		    quidu      	"5EFD67BC02AC")))
@@ -3701,7 +3822,15 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"GenerateGetOperation"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"ContainerClass"
+			    value      	"System.Collections.Generic.List<DontWaitApp.FoodServicesClientSessionViewModel>")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"634B8EEF004C"
 		    label      	"ActiveSessions"
 		    supplier   	"Logical View::DontWaitApp::FoodServicesClientSessionViewModel"
@@ -3717,7 +3846,15 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{20e3fac5-b213-40d2-b263-2c26ada2e22b}"))
+			    value      	"{20e3fac5-b213-40d2-b263-2c26ada2e22b}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"634B8EEF004F"
 		    supplier   	"Logical View::DontWaitApp::ApplicationSettings"
 		    quidu      	"5EFD67BC02AC"
@@ -3794,8 +3931,8 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
-	    origin_y   	0
+	    origin_x   	269
+	    origin_y   	322
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::DontWaitApp::IFlavoursOrderServer" @1
 		    ShowCompartmentStereotypes 	TRUE
@@ -3884,7 +4021,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::DontWaitApp::ApplicationSettings" @4
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(2690, 1340)
+		    location   	(2690, 1341)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -3897,7 +4034,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2343, 1171)
+			location   	(2343, 1172)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	695
@@ -3911,7 +4048,7 @@
 		    height     	362
 		    annotation 	8)
 		(object AssociationViewNew "AppClientAsGuest" @5
-		    location   	(3372, 1447)
+		    location   	(3372, 1444)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -3924,7 +4061,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @6
 			Parent_View 	@5
-			location   	(3275, 1333)
+			location   	(3275, 1330)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3950,7 +4087,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "ClientAsGuest" @7
 			    Parent_View 	@5
-			    location   	(2553, 807)
+			    location   	(2553, 804)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3963,7 +4100,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @8
 				Parent_View 	@7
-				location   	(3515, 1393)
+				location   	(3515, 1390)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3988,16 +4125,12 @@
 			    quidu      	"62CFC7A103B7"
 			    client     	@5
 			    supplier   	@2
-			    vertices   	(list Points
-				(3372, 1447)
-				(3372, 1443)
-				(3699, 1443))
 			    line_style 	3
-			    origin_attachment 	(3372, 1447)
-			    terminal_attachment 	(3699, 1443)
+			    origin_attachment 	(3372, 1444)
+			    terminal_attachment 	(3699, 1444)
 			    label      	(object SegLabel @9
 				Parent_View 	@7
-				location   	(3633, 1504)
+				location   	(3633, 1501)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4019,15 +4152,15 @@
 				orientation 	1))
 			(object RoleView "$UNNAMED$1" @10
 			    Parent_View 	@5
-			    location   	(2553, 807)
+			    location   	(2553, 804)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"62CFC7A103BE"
 			    client     	@5
 			    supplier   	@4
 			    line_style 	3
-			    origin_attachment 	(3372, 1447)
-			    terminal_attachment 	(3046, 1447))))
+			    origin_attachment 	(3372, 1444)
+			    terminal_attachment 	(3046, 1444))))
 		(object AssociationViewNew "AppFoodServicesClientSession" @11
 		    location   	(1992, 1138)
 		    font       	(object Font
@@ -4150,7 +4283,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @17
 				Parent_View 	@16
-				location   	(2285, 1278)
+				location   	(2284, 1279)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4206,6 +4339,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F01680702E2"
+		    compartment 	(object Compartment
+			Parent_View 	@18
+			location   	(3576, 373)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	578)
 		    width      	782
 		    height     	462
 		    annotation 	8)
@@ -4236,6 +4387,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5CDA68D10304"
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(2180, 436)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	61
+			max_width  	2000)
 		    width      	744
 		    height     	262
 		    annotation 	8)
@@ -4380,6 +4549,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"62CF8F5F0018"
+		    compartment 	(object Compartment
+			Parent_View 	@26
+			location   	(56, 818)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	575)
 		    width      	550
 		    height     	431
 		    annotation 	8)
