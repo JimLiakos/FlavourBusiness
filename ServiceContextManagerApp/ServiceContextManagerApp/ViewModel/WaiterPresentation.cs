@@ -39,7 +39,7 @@ namespace ServiceContextManagerApp
                 string rr = Waiter.Identity;
                 return Waiter.Identity;
             }
-        }
+        } 
 
         public string WorkerIdentity { get => WaiterIdentity; }
 
