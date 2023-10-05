@@ -157,6 +157,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+      <Project>{D90834C6-4F5E-4824-88D2-8955476FCC31}</Project>
+      <Name>OOAdvantech.NetStandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WaiterApp\WaiterApp.csproj">
       <Project>{07735a31-46db-4af9-b207-e011e4c736ba}</Project>
       <Name>WaiterApp</Name>

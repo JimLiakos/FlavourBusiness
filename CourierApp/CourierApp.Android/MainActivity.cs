@@ -44,7 +44,7 @@ namespace CourierApp.Droid
                 string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
                 //Search for package name
                 //"google-services.json   {client[1].oauth_client[where client_type=3].client_id "
-                var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.NativeUser, SignInProvider.Google, SignInProvider.Facebook, SignInProvider.Google, SignInProvider.Twitter };
+                var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.NativeUser, SignInProvider.Google, SignInProvider.Facebook, SignInProvider.Twitter, SignInProvider.Email };
 
                 OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID, providers);
                 OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
