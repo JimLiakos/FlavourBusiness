@@ -14,6 +14,7 @@ using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 
 using FlavourBusinessFacade.Shipping;
+using FlavourBusinessManager.Shipping;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -639,10 +640,10 @@ namespace FlavourBusinessManager.HumanResources
 
         public IList<IFoodShipping> GetFoodShippings()
         {
-            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IFoodShipping>().ToList();
-            AssignedFoodShippings = servingBatches.Where(x => x.IsAssigned).ToList();
-            FoodShippings = servingBatches.Where(x => !x.IsAssigned).ToList();
-            return servingBatches;
+            var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IFoodShipping>().ToList();
+            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned).ToList();
+            FoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
+            return foodShippings;
         }
 
         event FoodShippingsChangedHandler _FoodShippingsChanged;
@@ -658,9 +659,51 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public void CommitFoodShipings()
+        {
+            if (ActiveShiftWork is ServingShiftWork)
+            {
+                lock (this)
+                {
+
+                    try
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var foodShipping in GetFoodShippings().OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.Serving && x.IsAssigned && x.ShiftWork.Worker == this))
+                                foodShipping.OnTheRoad();
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+        }
+
+
+
+        public void AssignFoodShiping(IFoodShipping foodShipping)
+        {
+            if (ActiveShiftWork is ServingShiftWork)
+            {
+                lock (foodShipping)
+                {
+                    if (!foodShipping.IsAssigned)
+                        (ActiveShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
+                }
+                (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ServingBatchAssigned(this, foodShipping);
+            }
+
+        }
+
         internal void FindNewFoodShippings()
         {
-            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetServingBatches(this).OfType<IServingBatch>().ToList();
+            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IServingBatch>().ToList();
             var assignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
             var unAssignedservingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
 

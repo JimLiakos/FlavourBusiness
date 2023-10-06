@@ -1,6 +1,8 @@
 using OOAdvantech.Remoting;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using System.Collections.Generic;
+using FlavourBusinessFacade.Shipping;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -16,9 +18,11 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{b6a6576e-c50f-40c3-8abf-dd3889bf3414}</MetaDataID>
         string DeviceFirebaseToken { get; set; }
 
-        event FoodShippingsChangedHandler FoodShippingsChanged; 
+        event FoodShippingsChangedHandler FoodShippingsChanged;
 
+        IList<IFoodShipping> GetFoodShippings();
 
+        void CommitFoodShipings();
     }
 
     public delegate void FoodShippingsChangedHandler();

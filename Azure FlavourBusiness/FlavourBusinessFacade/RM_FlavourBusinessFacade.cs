@@ -7169,6 +7169,21 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public System.Collections.Generic.IList<FlavourBusinessFacade.Shipping.IFoodShipping> GetFoodShippings()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "GetFoodShippings", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.Shipping.IFoodShipping>>(retValue);
+        }
+        
+        public void CommitFoodShipings()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "CommitFoodShipings", args, argsTypes);
+        }
+        
         public void RemoveShiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shifWork)
         {
             object[] args = new object[1];

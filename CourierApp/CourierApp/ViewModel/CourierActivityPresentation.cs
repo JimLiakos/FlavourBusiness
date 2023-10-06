@@ -2,8 +2,13 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.Shipping;
 using FlavourBusinessFacade.ViewModel;
+using FlavourBusinessManager.HumanResources;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.Shipping;
 using OOAdvantech;
 
 using OOAdvantech.Remoting.RestApi;
@@ -12,6 +17,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UIBaseEx;
+using WaiterApp.ViewModel;
 
 //using static QRCoder.PayloadGenerator;
 #if DeviceDotNet
@@ -233,7 +240,7 @@ namespace CourierApp.ViewModel
                             {
                                 AuthUser = authUser;
                                 ActiveShiftWork = _Courier.ActiveShiftWork;
-                                //UpdateServingBatches(Courier.GetServingBatches());
+                                UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
@@ -657,7 +664,7 @@ namespace CourierApp.ViewModel
         }
 
         /// <MetaDataID>{5cc6f81d-6009-486a-be8a-e098239a3f33}</MetaDataID>
-        public async Task<UserData> AssignDevice()
+        public async Task<UserData> AssignDeviceToNativeUserCourier()
         {
 #if DeviceDotNet
             string deviceAssignKey = null;
@@ -773,6 +780,8 @@ namespace CourierApp.ViewModel
                 //DeviceInfo.Name;
             }
         }
+
+  
         /// <MetaDataID>{5be6b1d5-82d9-4cd6-b0c7-afa7da2a2c26}</MetaDataID>
         public async Task<bool> CheckPermissionsForQRCodeScan()
         {
@@ -785,8 +794,179 @@ namespace CourierApp.ViewModel
 
         }
 
+    
+
+
+
+        private void UpdateFoodShippings(IList<IFoodShipping> allFoodShippings)
+        {
+
+            var foodShippings = allFoodShippings.Where(x => !x.IsAssigned).ToList();
+            foreach (var servingBatch in foodShippings)
+                _FoodShippings.GetViewModelFor(servingBatch, servingBatch, this);
+
+            var asignedFoodShippings = allFoodShippings.Where(x => x.IsAssigned).ToList();
+
+            foreach (var assignedServingBatch in asignedFoodShippings)
+                _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+
+
+            foreach (var servingBatch in _FoodShippings.Keys.Where(x => !foodShippings.Contains(x)).ToList())
+            {
+                _FoodShippings[servingBatch].Dispose();
+                _FoodShippings.Remove(servingBatch);
+            }
+
+            foreach (var assignedFoodShippingh in _AssignedFoodShippings.Keys.Where(x => !asignedFoodShippings.Contains(x)).ToList())
+            {
+                _AssignedFoodShippings[assignedFoodShippingh].Dispose();
+                _AssignedFoodShippings.Remove(assignedFoodShippingh);
+            }
+        }
+
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+
+        public List<FoodShippingPresentation> FoodShippings => _FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+
+        public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+
+
         /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
         public void ExtendSiftWorkStart(double timespanInHours)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AssignFoodShippings(string foodShippingIdentity)
+        {
+            var foodShipping = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping != null)
+            {
+
+                _AssignedFoodShippings[foodShipping.FoodShipping] = _FoodShippings[foodShipping.FoodShipping];
+                _FoodShippings.Remove(foodShipping.FoodShipping);
+
+
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        {
+                            this.Courier.As.AssignServingBatch(foodShipping.FoodShipping);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                        catch (Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool DeAssignFoodShippings(string foodShippingIdentity)
+        {
+            var servingBatch = AssignedFoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+            if (servingBatch != null)
+            {
+
+                _FoodShippings[servingBatch.FoodShipping] = _AssignedFoodShippings[servingBatch.FoodShipping];
+                _AssignedFoodShippings.Remove(servingBatch.FoodShipping);
+
+
+
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        { 
+                            //any desk 270 237 378
+                            this.Courier.DeAssignServingBatch(servingBatch.FoodShipping);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                        catch (Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
+                return true;
+            }
+
+            return false;
+        }
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
+        {
+            get
+            {
+                return AppLifeTime.SerializeTaskScheduler;
+            }
+        }
+        static IAppLifeTime AppLifeTime
+        {
+            get
+            {
+#if DeviceDotNet
+                return Application.Current as IAppLifeTime;
+#else
+                return System.Windows.Application.Current as IAppLifeTime;
+#endif
+            }
+        }
+
+        public bool CommitFoodShippings()
+        {
+            SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        Courier.CommitFoodShipings();
+                        return true;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        var er = error;
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+            return true;
+        }
+
+        public void PrintFoodShippingsReceipt(string foodShippingIdentity)
         {
             throw new NotImplementedException();
         }

@@ -752,7 +752,6 @@ namespace FlavourBusinessManager.HumanResources
                 (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchAssigned(this, servingBatch);
             }
 
-
         }
 
 

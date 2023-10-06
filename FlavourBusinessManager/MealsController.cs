@@ -2,9 +2,11 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.ServicesContextResources;
+using FlavourBusinessManager.Shipping;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Remoting;
 using OOAdvantech.Transactions;
@@ -360,12 +362,12 @@ namespace FlavourBusinessManager.RoomService
 
 
         /// <MetaDataID>{8b512a24-5f97-4489-81dc-f0c6360e1a75}</MetaDataID>
-        internal IList<ServingBatch> GetServingBatches(Courier courier)
+        internal IList<FoodShipping> GetFoodShippings(Courier courier)
         {
 
             var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
 
-            List<ServingBatch> servingBatches = new List<ServingBatch>();
+            List<FoodShipping> servingBatches = new List<FoodShipping>();
             if (courier.ActiveShiftWork != null)
             {
 
@@ -401,28 +403,28 @@ namespace FlavourBusinessManager.RoomService
 
                         var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
-                        var servingBatch = (from itemsPreparationContext in preparedItems
+                        var foodShipping = (from itemsPreparationContext in preparedItems
                                             from itemPreparation in itemsPreparationContext.PreparationItems
                                             where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
-                                            select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
-                        if (servingBatch == null)
+                                            select itemPreparation.ServedInTheBatch).OfType<FoodShipping>().FirstOrDefault();
+                        if (foodShipping == null)
                         {
-                            servingBatch = mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
-                            if (servingBatch == null)
+                            foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                            if (foodShipping == null)
                             {
                                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                                 {
-                                    servingBatch = new ServingBatch(mealCourse, preparedItems, underPreparationItems);
-                                    ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(servingBatch);
+                                    foodShipping = new FoodShipping(mealCourse, preparedItems, underPreparationItems);
+                                    ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(foodShipping);
 
-                                    servingBatches.Add(new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                                    servingBatches.Add(new FoodShipping(mealCourse, preparedItems, underPreparationItems));
 
                                     stateTransition.Consistent = true;
                                 }
                             }
                         }
-                        servingBatch.Update(mealCourse, preparedItems, underPreparationItems);
-                        servingBatches.Add(servingBatch);
+                        foodShipping.Update(mealCourse, preparedItems, underPreparationItems);
+                        servingBatches.Add(foodShipping);
                     }
 
                 }
@@ -535,6 +537,22 @@ namespace FlavourBusinessManager.RoomService
                 a_Waiter.FindServingBatchesChanged();
 
         }
+
+
+        internal void ServingBatchAssigned(HumanResources.Courier waiter, IFoodShipping servingBatch)
+        {
+
+            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+
+            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                  where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != waiter
+                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+
+            foreach (var a_Courier in activeCouriers)
+                a_Courier.FindNewFoodShippings();
+
+        }
+
 
         /// <MetaDataID>{c79fa8ae-e4b6-452e-96d8-9f590b3e5e04}</MetaDataID>
         public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)

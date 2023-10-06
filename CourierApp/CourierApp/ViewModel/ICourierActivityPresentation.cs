@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade;
+using FlavourBusinessManager.Shipping;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace CourierApp.ViewModel
         Task<bool> AssignCourier();
 
         /// <MetaDataID>{727612e2-821b-4e1c-8626-25c56b73a190}</MetaDataID>
-        Task<UserData> AssignDevice();
+        Task<UserData> AssignDeviceToNativeUserCourier();
 
         /// <MetaDataID>{fc4f212d-57ff-417d-8b8b-ea68cb3d8c2a}</MetaDataID>
         bool InActiveShiftWork { get; }
@@ -35,6 +36,18 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{33205e02-25f6-40e9-bba7-908e20107a91}</MetaDataID>
         void ExtendSiftWorkStart(double timespanInHours);
+
+        List<FoodShippingPresentation> FoodShippings { get; }
+
+        List<FoodShippingPresentation> AssignedFoodShippings { get; }
+
+        bool AssignFoodShippings(string foodShippingIdentity);
+
+        bool DeAssignFoodShippings(string foodShippingIdentity);
+
+        bool CommitFoodShippings();
+
+        void PrintFoodShippingsReceipt(string foodShippingIdentity); 
 
     }
 }
