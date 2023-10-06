@@ -6317,24 +6317,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B225E006D"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(2318, 367)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	67
-				max_width  	2384)
 			    width      	807
 			    height     	538
 			    annotation 	8)
@@ -6366,24 +6348,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5B16B1600111"
-			    compartment 	(object Compartment
-				Parent_View 	@2
-				location   	(50, 205)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	33
-				max_width  	2062)
 			    width      	825
 			    height     	831
 			    annotation 	8)
@@ -6770,24 +6734,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B06E8630242"
-			    compartment 	(object Compartment
-				Parent_View 	@20
-				location   	(3676, 1072)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	1365)
 			    width      	943
 			    height     	375
 			    annotation 	8)
@@ -6853,24 +6799,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5B4B2074026F"
-			    compartment 	(object Compartment
-				Parent_View 	@23
-				location   	(2215, 1004)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	95
-				max_width  	3275)
 			    width      	925
 			    height     	394
 			    annotation 	8)
@@ -7174,24 +7102,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F4A2662014F"
-			    compartment 	(object Compartment
-				Parent_View 	@38
-				location   	(953, 2393)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	375)
 			    width      	600
 			    height     	238
 			    annotation 	8)))))
@@ -21684,24 +21594,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@293
-				location   	(1489, 1046)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	56
-				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -22599,24 +22491,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@336
-				location   	(187, 407)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	56
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -33049,7 +32923,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33071,7 +32945,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged( )"
+					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33093,7 +32967,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33115,7 +32989,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33160,7 +33034,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -36959,9 +36833,9 @@
 				quidu      	"6517E34A02EE"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	316
+				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -37043,10 +36917,11 @@
 				    color      	0
 				    default_color 	TRUE)
 				quidu      	"6517E6C90316"
+				anchor_loc 	1
 				nlines     	1
-				max_width  	525
+				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged( )"
+				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 				pctDist    	1.059687
 				height     	107
 				orientation 	0)
@@ -37083,9 +36958,10 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
+				anchor_loc 	2
 				nlines     	1
 				max_width  	450
-				justify    	0
+				justify    	2
 				label      	"newItemsState"
 				pctDist    	-0.300000
 				height     	0
@@ -37129,9 +37005,9 @@
 				quidu      	"65183FCF0173"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	306
+				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<string>)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -37213,10 +37089,11 @@
 				    color      	0
 				    default_color 	TRUE)
 				quidu      	"6517E77A010D"
+				anchor_loc 	1
 				nlines     	1
-				max_width  	600
+				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -37463,9 +37340,9 @@
 				quidu      	"65180545016B"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	519
+				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
