@@ -469,7 +469,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{6ad7a9db-e78f-4fe6-baf6-151bb81a730f}</MetaDataID>
         [PersistentMember(nameof(_ServingBatches))]
         [BackwardCompatibilityID("+10")]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
         public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>

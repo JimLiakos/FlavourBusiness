@@ -6573,6 +6573,58 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public System.Collections.Generic.IList<FlavourBusinessFacade.Shipping.IFoodShipping> GetFoodShippings()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "GetFoodShippings", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.Shipping.IFoodShipping>>(retValue);
+        }
+        
+        public FlavourBusinessFacade.RoomService.ServingBatchUpdates GetFoodShippingUpdates(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation> servingItemsOnDevice)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servingItemsOnDevice;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "GetFoodShippingUpdates", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.ServingBatchUpdates>(retValue);
+        }
+        
+        public void CommitFoodShipings()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "CommitFoodShipings", args, argsTypes);
+        }
+        
+        public void DeAssignFoodShipping(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodShipping;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "DeAssignFoodShipping", args, argsTypes);
+        }
+        
+        public void AssignFoodShipping(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodShipping;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignFoodShipping", args, argsTypes);
+        }
+        
+        public void PrintFoodShippingReceipt(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodShipping;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "PrintFoodShippingReceipt", args, argsTypes);
+        }
+        
         public void RemoveShiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shifWork)
         {
             object[] args = new object[1];
@@ -7849,13 +7901,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "AssignServingBatch", args, argsTypes);
         }
         
-        public void DeassignServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
+        public void DeAssignServingBatch(FlavourBusinessFacade.RoomService.IServingBatch servingBatch)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = servingBatch;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IServingBatch);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "DeassignServingBatch", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "DeAssignServingBatch", args, argsTypes);
         }
         
         public void TableIsLay(string servicesPointIdentity)

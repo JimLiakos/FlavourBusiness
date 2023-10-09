@@ -6,9 +6,8 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessFacade.ViewModel;
-using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.RoomService;
-using FlavourBusinessManager.Shipping;
+
 using OOAdvantech;
 
 using OOAdvantech.Remoting.RestApi;
@@ -18,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UIBaseEx;
-using WaiterApp.ViewModel;
+
 
 //using static QRCoder.PayloadGenerator;
 #if DeviceDotNet
@@ -28,6 +27,10 @@ using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
+using WaiterApp.ViewModel;
+using FlavourBusinessManager.HumanResources;
+using FlavourBusinessManager.Shipping;
+
 #endif
 
 
@@ -373,14 +376,20 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{c57f087c-6cb6-4bc6-a6b9-1b46a58a9884}</MetaDataID>
         private void CourierActivityPresentation_Reconnected(object sender)
-        {
-            throw new NotImplementedException();
+        { 
+            GetServingUpdates();
         }
 
         /// <MetaDataID>{d99357a4-d51b-450e-9dcb-2c2c0f96b6c8}</MetaDataID>
         private void MessageReceived(IMessageConsumer sender)
         {
-            var message = this._Courier.PeekMessage();
+            try
+            {
+                GetMessages();
+            }
+            catch (Exception error)
+            {
+            }
         }
 
         /// <MetaDataID>{0989d879-8309-46fc-ba3a-947448f9bfb4}</MetaDataID>

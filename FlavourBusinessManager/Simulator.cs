@@ -419,7 +419,9 @@ namespace FlavourBusinessManager.RoomService
                         {
                             meal.StopMonitoring();
                             foreach (var mealCourse in meal.Courses)
+                            {
                                 ObjectStorage.DeleteObject(mealCourse);
+                            }
                             ObjectStorage.DeleteObject(meal);
                         }
 

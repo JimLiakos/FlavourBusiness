@@ -609,7 +609,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         void ObjectActivation()
         {
             lock (this)
-            {
+            { 
                 var fbstorage = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
 
                 if (fbstorage != null)
