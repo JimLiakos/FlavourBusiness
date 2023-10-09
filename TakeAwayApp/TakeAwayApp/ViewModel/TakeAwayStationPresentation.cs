@@ -1103,9 +1103,10 @@ namespace TakeAwayApp.ViewModel
                 watchingOrders.AddRange(callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList());
                 _WatchingOrders=watchingOrders;
 
-                ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
+              
 
             }
+            ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
         }
 
 

@@ -1321,7 +1321,7 @@ namespace WaiterApp.ViewModel
             return true;
         }
         /// <MetaDataID>{76ef59a3-cbfb-4908-84c9-4578f906f5d8}</MetaDataID>
-        public bool DeassignServingBatch(string serviceBatchIdentity)
+        public bool DeAssignServingBatch(string serviceBatchIdentity)
         {
             var servingBatch = AssignedServingBatches.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
             if (servingBatch != null)
@@ -1339,7 +1339,7 @@ namespace WaiterApp.ViewModel
                     {
                         try
                         {
-                            this.Waiter.DeassignServingBatch(servingBatch.ServingBatch);
+                            this.Waiter.DeAssignServingBatch(servingBatch.ServingBatch);
                             return true;
                         }
                         catch (System.Net.WebException commError)

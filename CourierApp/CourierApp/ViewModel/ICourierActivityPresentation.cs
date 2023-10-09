@@ -6,13 +6,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CourierApp.ViewModel
 {
+    public delegate void ItemsReadyToServeRequesttHandle(ICourierActivityPresentation courierActivityPresentation, string messageID, string servicePointIdentity);
     /// <MetaDataID>{99fe8217-2732-4d1a-b074-c88a95272563}</MetaDataID>
     [HttpVisible]
     public interface ICourierActivityPresentation
     {
+        [GenerateEventConsumerProxy]
+        event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
+        void ItemsReadyToServeMessageReceived(string messageID);
+        void PrintFoodShippingReceipt(string serviceBatchIdentity);
 
         /// <MetaDataID>{46645e91-8e91-4f6a-b0ce-186746d60b37}</MetaDataID>
         Task<bool> AssignCourier();
@@ -41,9 +47,9 @@ namespace CourierApp.ViewModel
 
         List<FoodShippingPresentation> AssignedFoodShippings { get; }
 
-        bool AssignFoodShippings(string foodShippingIdentity);
+        bool AssignFoodShipping(string foodShippingIdentity);
 
-        bool DeAssignFoodShippings(string foodShippingIdentity);
+        bool DeAssignFoodShipping(string foodShippingIdentity);
 
         bool CommitFoodShippings();
 

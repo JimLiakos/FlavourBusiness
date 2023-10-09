@@ -3,6 +3,7 @@ using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
 using FlavourBusinessFacade.Shipping;
+using FlavourBusinessFacade.RoomService;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -22,7 +23,14 @@ namespace FlavourBusinessFacade.HumanResources
 
         IList<IFoodShipping> GetFoodShippings();
 
+        ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice);
+
         void CommitFoodShipings();
+        void DeAssignFoodShipping(IFoodShipping foodShipping);
+
+        void AssignFoodShipping(IFoodShipping foodShipping);
+
+        void PrintFoodShippingReceipt(IFoodShipping foodShipping);
     }
 
     public delegate void FoodShippingsChangedHandler();

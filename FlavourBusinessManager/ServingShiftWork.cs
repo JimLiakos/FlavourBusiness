@@ -229,7 +229,7 @@ namespace FlavourBusinessManager.HumanResources
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(servingBatch);
-                _ServingBatches.Add(servingBatch as RoomService.ServingBatch);
+                _ServingBatches.Add(servingBatch);
                 stateTransition.Consistent = true;
             }
         }

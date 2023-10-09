@@ -659,7 +659,7 @@ namespace FlavourBusinessManager.HumanResources
                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
                 shiftWork.StartsAt = startedAt;
                 shiftWork.PeriodInHours = timespanInHours;
-                shiftWork.OpeningBalanceFloatCash=openingBalanceFloatCash;
+                shiftWork.OpeningBalanceFloatCash = openingBalanceFloatCash;
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
@@ -755,32 +755,35 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
+
+
         /// <MetaDataID>{e75ecf5b-3567-448e-8424-6ee02d26f10f}</MetaDataID>
-        public void DeassignServingBatch(IServingBatch servingBatch)
+        public void DeAssignServingBatch(IServingBatch servingBatch)
         {
             var mealCourse = servingBatch.MealCourse;
             var preparedItems = servingBatch.ContextsOfPreparedItems;
             var underPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
-            OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
+
+            if (ActiveShiftWork is ServingShiftWork)
+            {
+                lock (servingBatch)
+                    (ActiveShiftWork as ServingShiftWork).RemoveServingBatch(servingBatch);
+            }
+
 
             (servingBatch as RoomService.ServingBatch).Update(mealCourse, preparedItems, underPreparationItems);
-            (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchDeassigned(this, servingBatch);
-
-
-
-
-
+            (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchDeAssigned(this, servingBatch);
         }
         event ServingBatchesChangedHandler _ServingBatchesChanged;
         public event ServingBatchesChangedHandler ServingBatchesChanged
         {
             add
             {
-                _ServingBatchesChanged+=value;
+                _ServingBatchesChanged += value;
             }
             remove
             {
-                _ServingBatchesChanged-=value;
+                _ServingBatchesChanged -= value;
             }
         }
 
@@ -1121,20 +1124,20 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{341989f2-85ba-4805-b05d-4bdeeacd9915}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
         {
-            if (LastThreeShiftsPeriodStart!=null)
+            if (LastThreeShiftsPeriodStart != null)
             {
                 List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
-                lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
-                if (lastThreeSifts.Count>3)
+                lastThreeSifts = lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
+                if (lastThreeSifts.Count > 3)
                 {
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        LastThreeShiftsPeriodStart = lastThreeSifts[2].StartsAt;
                         stateTransition.Consistent = true;
                     }
                 }
-                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                lastThreeSifts = lastThreeSifts.Take(3).ToList();
                 foreach (var shiftWork in lastThreeSifts)
                     shiftWork.RecalculateDeptData();
 
@@ -1148,16 +1151,16 @@ namespace FlavourBusinessManager.HumanResources
                                                           where shiftWork.Worker == this
                                                           orderby shiftWork.StartsAt descending
                                                           select shiftWork).ToList();
-                if (lastThreeSifts.Count>3)
+                if (lastThreeSifts.Count > 3)
                 {
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        LastThreeShiftsPeriodStart = lastThreeSifts[2].StartsAt;
                         stateTransition.Consistent = true;
                     }
                 }
-                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                lastThreeSifts = lastThreeSifts.Take(3).ToList();
                 foreach (var shiftWork in lastThreeSifts)
                     shiftWork.RecalculateDeptData();
 
@@ -1176,13 +1179,13 @@ namespace FlavourBusinessManager.HumanResources
             var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
             if (objectStorage != null)
             {
-                
-                
-                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
-                    var shiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
-                                          where shiftWork.StartsAt >= periodStartDate && shiftWork.StartsAt <= periodEndDate && shiftWork.Worker == this
-                                          select shiftWork).ToList();
-                
+
+
+                OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                var shiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                  where shiftWork.StartsAt >= periodStartDate && shiftWork.StartsAt <= periodEndDate && shiftWork.Worker == this
+                                  select shiftWork).ToList();
+
                 return shiftWorks.OrderBy(x => x.StartsAt).OfType<IServingShiftWork>().ToList();
             }
             else

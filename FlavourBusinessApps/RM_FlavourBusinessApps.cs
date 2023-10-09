@@ -501,3 +501,35 @@ namespace DontWaitApp.Proxies
         }
     }
 }
+namespace CourierApp.ViewModel.Proxies
+{
+    using System;
+    
+    
+    public sealed class CNSPr_ICourierActivityPresentation_ItemsReadyToServeRequest : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(CourierApp.ViewModel.ICourierActivityPresentation courierActivityPresentation, string messageID, string servicePointIdentity)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = courierActivityPresentation;
+            argsTypes[0] = typeof(CourierApp.ViewModel.ICourierActivityPresentation);
+            args[1] = messageID;
+            argsTypes[1] = typeof(string);
+            args[2] = servicePointIdentity;
+            argsTypes[2] = typeof(string);
+            object retValue = this.Invoke(typeof(CourierApp.ViewModel.ItemsReadyToServeRequesttHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new CourierApp.ViewModel.ItemsReadyToServeRequesttHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new CourierApp.ViewModel.ItemsReadyToServeRequesttHandle(this.Invoke));
+        }
+    }
+}

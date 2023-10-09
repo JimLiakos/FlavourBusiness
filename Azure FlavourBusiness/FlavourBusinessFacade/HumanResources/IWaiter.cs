@@ -59,7 +59,7 @@ namespace FlavourBusinessFacade.HumanResources
         void AssignServingBatch(IServingBatch servingBatch);
 
         /// <MetaDataID>{66b51e30-3deb-4365-bcd9-ea6bd3ae251c}</MetaDataID>
-        void DeassignServingBatch(IServingBatch servingBatch);
+        void DeAssignServingBatch(IServingBatch servingBatch);
 
 
         event ServingBatchesChangedHandler ServingBatchesChanged;

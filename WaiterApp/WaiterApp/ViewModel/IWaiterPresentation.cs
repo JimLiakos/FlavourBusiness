@@ -76,7 +76,7 @@ namespace WaiterApp.ViewModel
         bool CommitServingBatches();
 
         /// <MetaDataID>{9f40b25d-5687-4e9e-ab9a-58e07ce7aae9}</MetaDataID>
-        bool DeassignServingBatch(string serviceBatchIdentity);
+        bool DeAssignServingBatch(string serviceBatchIdentity);
 
         /// <MetaDataID>{6431db8a-0b35-4649-b9e6-60772ac21c31}</MetaDataID>
         bool InActiveShiftWork { get; }

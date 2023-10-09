@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using FlavourBusinessManager.RoomService;
+using OOAdvantech.Transactions;
 
 namespace FlavourBusinessManager.Shipping
 {
@@ -45,7 +46,10 @@ namespace FlavourBusinessManager.Shipping
         /// <exclude>Excluded</exclude>
         IMealCourse _MealCourse;
 
-       
+        public FoodShipping()
+        {
+
+        }
 
         public FoodShipping(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
@@ -68,6 +72,41 @@ namespace FlavourBusinessManager.Shipping
 
             //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
         }
+
+        public ItemPreparationState State
+        {
+            get
+            {
+                if (this.PreparedItems.Where(x => x.State == ItemPreparationState.Serving).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.Serving;
+                if (this.PreparedItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.OnRoad;
+
+                if (this.PreparedItems.OfType<ItemPreparation>().Where(x => x.IsInFollowingState(ItemPreparationState.Served)).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                    return ItemPreparationState.Served;
+
+                return ItemPreparationState.Serving;
+            }
+        }
+
+
+        internal void OnTheRoad()
+        {
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in PreparedItems)
+                    itemPreparation.State = ItemPreparationState.OnRoad;
+                stateTransition.Consistent = true;
+            }
+
+
+            Transaction.RunOnTransactionCompleted(() => {
+                ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
+            });
+
+        }
+
 
         private void MealCourseChangeState(object _object, string member)
         {

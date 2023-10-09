@@ -240,7 +240,8 @@ namespace CourierApp.ViewModel
                             {
                                 AuthUser = authUser;
                                 ActiveShiftWork = _Courier.ActiveShiftWork;
-                                UpdateFoodShippings(Courier.GetFoodShippings());
+                                if(ActiveShiftWork!=null)
+                                    UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
@@ -299,6 +300,9 @@ namespace CourierApp.ViewModel
                                     if (_Courier == null)
                                         continue;
                                     ActiveShiftWork = _Courier.ActiveShiftWork;
+                                    if (ActiveShiftWork != null)
+                                        UpdateFoodShippings(Courier.GetFoodShippings());
+
                                     string objectRef = RemotingServices.SerializeObjectRef(_Courier);
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
@@ -388,11 +392,98 @@ namespace CourierApp.ViewModel
                 GetMessages();
             }
         }
+        public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
+
+        object MessagesLock = new object();
+
+
         /// <MetaDataID>{62127532-eedf-43e7-9726-a9fbcd3e4d7e}</MetaDataID>
         private void GetMessages()
         {
+            lock (MessagesLock)
+            {
+                if (Courier != null)
+                {
+                    var message = Courier.PeekMessage();
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe)
+                    {
+                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                            Courier.RemoveMessage(message.MessageID);
+                        else
+                        {
+                            if (message != null && InActiveShiftWork)
+                            {
+                                GetServingUpdates();
 
+                                string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+                                ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
+                                //PartOfMealRequestMessageForward(message);
+                                return;
+                            }
+                        }
+                    }
+        
+                }
+            }
         }
+
+
+
+        private void GetServingUpdates()
+        {
+            List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.FoodShippings
+                                                                      from itemsContext in servingBatch.AllContextsOfPreparedItems
+                                                                      from itemPreparation in itemsContext.PreparationItems
+                                                                      select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+
+            ServingBatchUpdates servingBatchUpdates = Courier.GetFoodShippingUpdates(servingItemsOnDevice);
+
+            var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).OfType<IFoodShipping>().ToList();
+            foreach (var assignedFoodShipping in foodShippings)
+            {
+                var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping, this);
+                foodShippingPresentation.Update();
+            }
+
+            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).OfType<IFoodShipping>().ToList();
+
+            foreach (var assignedFoodShipping in asignedServingBatches)
+            {
+                var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping, this);
+                servingBatchPresentation.Update();
+            }
+
+
+            if (servingBatchUpdates.RemovedServingItems.Count > 0)
+            {
+                foreach (var foodShippingPresentation in FoodShippings.ToList())
+                {
+                    bool allItemsRemoved = true;
+                    foreach (var servingItem in from servingItemContext in foodShippingPresentation.AllContextsOfPreparedItems
+                                                from servingItem in servingItemContext.PreparationItems
+                                                select servingItem)
+                    {
+                        if (servingBatchUpdates.RemovedServingItems.Where(x => x.uid == servingItem.uid).Count() == 0)
+                        {
+                            allItemsRemoved = false;
+                            break;
+                        }
+                    }
+                    if (allItemsRemoved)
+                    {
+                        _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                        foodShippingPresentation.Dispose();
+                    }
+
+                }
+            }
+            ObjectChangeState?.Invoke(this, "ServingBatches");
+        }
+        public void ItemsReadyToServeMessageReceived(string messageID)
+        {
+            Courier.RemoveMessage(messageID);
+        }
+
         /// <MetaDataID>{f946afd9-a98d-417d-911e-6c3d43fcedd2}</MetaDataID>
         public UserData SignInNativeUser(string userName, string password)
         {
@@ -552,6 +643,8 @@ namespace CourierApp.ViewModel
 
             if (ActiveShiftWork != null)
             {
+                    UpdateFoodShippings(Courier.GetFoodShippings());
+
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
@@ -730,7 +823,7 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
 
             try
             {
@@ -839,7 +932,7 @@ namespace CourierApp.ViewModel
             throw new NotImplementedException();
         }
 
-        public bool AssignFoodShippings(string foodShippingIdentity)
+        public bool AssignFoodShipping(string foodShippingIdentity)
         {
             var foodShipping = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 
@@ -857,7 +950,7 @@ namespace CourierApp.ViewModel
                     {
                         try
                         {
-                            this.Courier.As.AssignServingBatch(foodShipping.FoodShipping);
+                            this.Courier.AssignFoodShipping(foodShipping.FoodShipping);
                             return true;
                         }
                         catch (System.Net.WebException commError)
@@ -879,7 +972,17 @@ namespace CourierApp.ViewModel
             return false;
         }
 
-        public bool DeAssignFoodShippings(string foodShippingIdentity)
+        public void PrintFoodShippingReceipt(string serviceBatchIdentity)
+        {
+            var servingBatch = AssignedFoodShippings.Where(x => x.ServiceBatchIdentity == serviceBatchIdentity).FirstOrDefault();
+
+            if (servingBatch != null)
+            {
+                servingBatch.FoodShipping.PrintReceiptAgain();
+            }
+        }
+
+        public bool DeAssignFoodShipping(string foodShippingIdentity)
         {
             var servingBatch = AssignedFoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
             if (servingBatch != null)
@@ -898,7 +1001,7 @@ namespace CourierApp.ViewModel
                         try
                         { 
                             //any desk 270 237 378
-                            this.Courier.DeAssignServingBatch(servingBatch.FoodShipping);
+                            this.Courier.DeAssignFoodShipping(servingBatch.FoodShipping);
                             return true;
                         }
                         catch (System.Net.WebException commError)

@@ -71,7 +71,7 @@ namespace FlavourBusinessManager.HumanResources
         public string Identity
         {
             get
-            {  
+            {
                 if (_Identity == null)
                 {
 
@@ -248,7 +248,7 @@ namespace FlavourBusinessManager.HumanResources
 
                     if (RecentlyShiftWorks.Count > 0)
                     {
-                    } 
+                    }
 
 
                     return RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
@@ -280,7 +280,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<Message> _Messages=new OOAdvantech.Collections.Generic.Set<Message>();
+        OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
         [BackwardCompatibilityID("+12")]
@@ -646,6 +646,44 @@ namespace FlavourBusinessManager.HumanResources
             return foodShippings;
         }
 
+        public ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
+        {
+
+            List<FoodShipping> servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).ToList();
+
+            var itemsToServe = (from servingBatch in servingBatches
+                                from itemsContext in servingBatch.ContextsOfPreparedItems
+                                from itemPreparation in itemsContext.PreparationItems
+                                select new { servingBatch, itemsContext, itemPreparation }).ToList();
+            itemsToServe.AddRange((from servingBatch in servingBatches
+                                   from itemsContext in servingBatch.ContextsOfUnderPreparationItems
+                                   from itemPreparation in itemsContext.PreparationItems
+                                   select new { servingBatch, itemsContext, itemPreparation }).ToList());
+            var copy = itemsToServe.ToList();
+            foreach (var itemToServe in itemsToServe.ToList())
+            {
+                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid).FirstOrDefault();
+                if (servingItemOnDevice != null)
+                {
+                    itemsToServe.Remove(itemToServe);
+                    servingItemsOnDevice.Remove(servingItemOnDevice);
+                }
+                else
+                {
+
+                }
+            }
+            if (servingItemsOnDevice.Count > 0)
+            {
+
+            }
+            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
+
+
+            return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
+        }
+
+
         event FoodShippingsChangedHandler _FoodShippingsChanged;
         public event FoodShippingsChangedHandler FoodShippingsChanged
         {
@@ -685,9 +723,19 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public void DeAssignFoodShipping(IFoodShipping foodShipping)
+        {
 
+            var mealCourse = foodShipping.MealCourse;
+            var preparedItems = foodShipping.ContextsOfPreparedItems;
+            var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
+            ObjectStorage.DeleteObject(foodShipping);
 
-        public void AssignFoodShiping(IFoodShipping foodShipping)
+            (foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
+            (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
+        }
+
+        public void AssignFoodShipping(IFoodShipping foodShipping)
         {
             if (ActiveShiftWork is ServingShiftWork)
             {
@@ -696,26 +744,32 @@ namespace FlavourBusinessManager.HumanResources
                     if (!foodShipping.IsAssigned)
                         (ActiveShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
                 }
-                (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ServingBatchAssigned(this, foodShipping);
+                (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
             }
 
         }
 
-        internal void FindNewFoodShippings()
+        internal void FindFoodShippingsChanges()
         {
-            var servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IServingBatch>().ToList();
-            var assignedServingBatches = servingBatches.Where(x => x.IsAssigned).ToList();
-            var unAssignedservingBatches = servingBatches.Where(x => !x.IsAssigned).ToList();
+            //FindServingBatchesChanged
+            var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IServingBatch>().ToList();
+            var assignedFoodShippings = foodShippings.Where(x => x.IsAssigned).ToList();
+            var unAssignedFoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
 
-            if (assignedServingBatches.Count != AssignedFoodShippings.Count ||
-                unAssignedservingBatches.Count != FoodShippings.Count)
+            if (assignedFoodShippings.Count != AssignedFoodShippings.Count ||
+                unAssignedFoodShippings.Count != FoodShippings.Count)
             {
                 _FoodShippingsChanged?.Invoke();
             }
-            if (AssignedFoodShippings.Count > 0 && !AssignedFoodShippings.ContainsAll(assignedServingBatches))
+            if (AssignedFoodShippings.Count > 0 && !AssignedFoodShippings.ContainsAll(assignedFoodShippings))
                 _FoodShippingsChanged?.Invoke();
-            else if (FoodShippings.Count > 0 && !FoodShippings.ContainsAll(unAssignedservingBatches))
+            else if (FoodShippings.Count > 0 && !FoodShippings.ContainsAll(unAssignedFoodShippings))
                 _FoodShippingsChanged?.Invoke();
+        }
+
+        public void PrintFoodShippingReceipt(IFoodShipping foodShipping)
+        {
+            throw new NotImplementedException();
         }
     }
 }
