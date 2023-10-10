@@ -98,7 +98,8 @@ namespace TakeAwayApp.Wpf
                             preparationStation = servicesContextManagment.GetPreparationStationRuntime(foodItemsInProgress.PreparationStationIdentity);
                             PreparationSations[foodItemsInProgress.PreparationStationIdentity] = preparationStation;
                         }
-                        preparationStation.ItemsServing(foodItemsInProgress.PreparationItems.Select(x => x.uid).ToList());
+                        if(foodItemsInProgress.PreparationItems.Any(x=>x.State.IsInPreviousState(ItemPreparationState.Serving)))
+                            preparationStation.ItemsServing(foodItemsInProgress.PreparationItems.Select(x => x.uid).ToList());
 
                     }
                 }

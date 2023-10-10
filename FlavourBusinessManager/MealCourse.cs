@@ -14,6 +14,7 @@ using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.HumanResources;
 using System.Net;
+using System.Windows.Forms;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -340,7 +341,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 lock (FoodItemsInProgressLock)
                 {
-                  // string uri=     StorageInstanceRef.GetStorageInstanceRef(this)?.ObjectID?.ToString();
+                    // string uri=     StorageInstanceRef.GetStorageInstanceRef(this)?.ObjectID?.ToString();
 
                     if (_FoodItemsInProgress == null)
                     {
@@ -370,11 +371,11 @@ namespace FlavourBusinessManager.RoomService
                     var items = _FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
                     if (items.Count != _FoodItems.Count)
                     {
-                        
+
                     }
                 }
 
-       
+
                 return _FoodItemsInProgress;
 
                 //List<ItemsPreparationContext> foodItemsInProgress = (from itemPreparation in FoodItems
@@ -631,7 +632,8 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{ed457de3-cf46-443e-a9cc-73340c1a1294}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-            ObjectChangeState?.Invoke(this, nameof(FoodItems));
+            RunFoodItemsChanged();
+            //ObjectChangeState?.Invoke(this, nameof(FoodItems));
         }
 
         /// <MetaDataID>{b75dd0be-1b93-4c0d-8c13-f368e2c5a980}</MetaDataID>
@@ -705,11 +707,11 @@ namespace FlavourBusinessManager.RoomService
                             FoodItemsInProgress.Add(itemsPreparationContext);
                         itemsPreparationContext.AddPreparationItem(itemPreparation);
                     }
+                    RunFoodItemsChanged();
+
                     Transaction.RunOnTransactionCompleted(() =>
                     {
-
                         flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
-                        ObjectChangeState?.Invoke(this, nameof(FoodItems));
 
                     });
 
@@ -717,6 +719,37 @@ namespace FlavourBusinessManager.RoomService
                 }
 
                 //  ;
+            }
+        }
+
+        Dictionary<string, Action> FoodItemsChangedActions = new Dictionary<string, Action>();
+        private void RunFoodItemsChanged()
+        {
+            if (OOAdvantech.Transactions.Transaction.Current==null)
+                ObjectChangeState?.Invoke(this, nameof(FoodItems));
+            else
+            {
+                lock (FoodItemsChangedActions)
+                {
+                    if (!FoodItemsChangedActions.ContainsKey(Transaction.Current.LocalTransactionUri))
+                    {
+                        string localTransactionUri = Transaction.Current.LocalTransactionUri;
+                        FoodItemsChangedActions[localTransactionUri]=() =>
+                        {
+                            lock (FoodItemsChangedActions)
+                            {
+                                FoodItemsChangedActions.Remove(localTransactionUri);
+                                ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                                
+                            }
+                        };
+                        Transaction.Current.TransactionCompleted+= (Transaction transaction) =>
+                        {
+                            FoodItemsChangedActions[localTransactionUri]();
+                        };
+                    }
+
+                }
             }
         }
 
@@ -739,11 +772,11 @@ namespace FlavourBusinessManager.RoomService
 
                     stateTransition.Consistent = true;
 
-
-                    Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        ObjectChangeState?.Invoke(this, nameof(FoodItems));
-                    });
+                    RunFoodItemsChanged();
+                    //Transaction.RunOnTransactionCompleted(() =>
+                    //{
+                    //    ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                    //});
                 }
 
 

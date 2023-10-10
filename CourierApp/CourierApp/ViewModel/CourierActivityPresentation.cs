@@ -65,6 +65,8 @@ namespace CourierApp.ViewModel
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
+        
+
         /// <MetaDataID>{4c90f0e2-26af-4b28-bae1-e799b9f2e5c9}</MetaDataID>
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
@@ -85,6 +87,8 @@ namespace CourierApp.ViewModel
             }
         }
 
+
+        
 
         /// <MetaDataID>{7c38008c-e8cc-47cf-b413-45519af70ebc}</MetaDataID>
         IList<UserData> NativeUsers;
@@ -486,7 +490,7 @@ namespace CourierApp.ViewModel
 
                 }
             }
-            ObjectChangeState?.Invoke(this, "ServingBatches");
+            ObjectChangeState?.Invoke(this, "FoodShippings");
         }
         public void ItemsReadyToServeMessageReceived(string messageID)
         {
@@ -1081,6 +1085,17 @@ namespace CourierApp.ViewModel
         public void PrintFoodShippingsReceipt(string foodShippingIdentity)
         {
             throw new NotImplementedException();
+        }
+
+        internal void FoodShippingUpdated(FoodShippingPresentation foodShippingPresentation)
+        {
+            if (foodShippingPresentation.ContextsOfPreparedItems == null || foodShippingPresentation.ContextsOfPreparedItems.Count == 0)
+            {
+                _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                foodShippingPresentation.Dispose();
+            }
+
+            ObjectChangeState?.Invoke(this, nameof(FoodShipping));
         }
     }
 }

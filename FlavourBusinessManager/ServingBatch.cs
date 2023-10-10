@@ -308,7 +308,10 @@ namespace FlavourBusinessManager.RoomService
 
 
             Transaction.RunOnTransactionCompleted(() => {
-                ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
+
+                var status = Transaction.Current?.Status;
+                if (Transaction.Current?.Status==TransactionStatus.Committed)
+                    ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
             });
             
         }

@@ -101,7 +101,8 @@ namespace CourierApp.ViewModel
             {
                 preparedItem.State = newItemsState[preparedItem.uid];
             }
-            //CourierActivityPresentation.FoodShippingUpdated(this);
+            var ssd = State;
+            CourierActivityPresentation.FoodShippingUpdated(this);
         }
 
         /// <MetaDataID>{1afa1a50-8a99-4c9b-9529-f7f29ed01c3a}</MetaDataID>

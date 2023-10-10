@@ -309,6 +309,11 @@ namespace FlavourBusinessManager.RoomService
                         {
 
                         }
+                        if (value == ItemPreparationState.Serving)
+                        {
+
+                        }
+
                         if (_State == ItemPreparationState.InPreparation)
                             _PreparationStartsAt = DateTime.UtcNow;
                         if (_State.IsInPreviousState(ItemPreparationState.InPreparation))
@@ -336,11 +341,10 @@ namespace FlavourBusinessManager.RoomService
                     }
 
 
-                    Transaction.RunOnTransactionCompleted(() =>
-                    {
+                  
 
                         ObjectChangeState?.Invoke(this, nameof(State));
-                    });
+                    
 
 
 
@@ -1041,6 +1045,12 @@ namespace FlavourBusinessManager.RoomService
                 _NumberOfShares = item.NumberOfShares;
                 _CustomItemEnabled = item.CustomItemEnabled;
                 _SelectedMealCourseTypeUri = item.SelectedMealCourseTypeUri;
+
+                if (item._State == ItemPreparationState.Serving)
+                {
+
+                }
+
                 _State = item._State;
                 if (_StateTimestamp != item.StateTimestamp)
                 {

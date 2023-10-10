@@ -263,7 +263,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
 
                             if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
-                                PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                                PrintReceipt(itemPreparation.MealCourse.FoodItems);
                         });
                     }
                     else
@@ -281,7 +281,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                     {
                         if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsPaid))
-                            PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                            PrintReceipt(itemPreparation.MealCourse.FoodItems);
                     });
                 }
             }
@@ -290,7 +290,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{d71448c3-59f6-4ad4-9636-bcc68c045e36}</MetaDataID>
         static object PrintReceiptLock = new object();
         /// <MetaDataID>{7a14c632-b037-4b38-8722-2d631ffbe80b}</MetaDataID>
-        private void PrintReceipt(List<IItemPreparation> receiptItems)
+        private void PrintReceipt(IList<IItemPreparation> receiptItems)
         {
 
 

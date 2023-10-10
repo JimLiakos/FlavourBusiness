@@ -750,7 +750,7 @@ namespace FlavourBusinessManager.HumanResources
                 }
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
             }
-
+             
         }
 
         internal void FindFoodShippingsChanges()
