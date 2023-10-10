@@ -64,6 +64,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{a2f81bb6-721b-4690-af9d-d43ab4304b7b}</MetaDataID>
         public bool? IsPaid { get; set; }
+
+
     }
 
     /// <MetaDataID>{cce15a1a-e252-4e74-9a6c-dff82db1b611}</MetaDataID>

@@ -400,7 +400,7 @@ namespace FlavourBusinessManager.RoomService
                                             select clientSession).ToList();
 
             simulationClientSessions=simulationClientSessions.Where(x => x.ClientDeviceID == "S_81000000296"||x.ClientDeviceID.IndexOf("org_client_sim_")==0).ToList();
-            
+            Dictionary<string, FinanceFacade.Transaction> deletedTransactions = new Dictionary<string, FinanceFacade.Transaction>();
 
 
 
@@ -428,7 +428,17 @@ namespace FlavourBusinessManager.RoomService
                     }
                     clientSession.ServicePoint.State = ServicePointState.Free;
                     foreach (var itemPreparation in clientSession.FlavourItems)
+                    {
                         ObjectStorage.DeleteObject(itemPreparation);
+                        var transactionUri = (itemPreparation as ItemPreparation).TransactionUri;
+                        if (!string.IsNullOrWhiteSpace(transactionUri) && !deletedTransactions.ContainsKey(transactionUri))
+                        {
+                            var transaction = ObjectStorage.GetObjectFromUri<FinanceFacade.Transaction>(transactionUri);
+                            deletedTransactions[transactionUri] = transaction;
+                            ObjectStorage.DeleteObject(transaction);
+                        }
+                        
+                    }
                     ObjectStorage.DeleteObject(clientSession);
 
                 }

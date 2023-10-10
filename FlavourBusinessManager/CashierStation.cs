@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.MetaDataRepository;
@@ -95,46 +96,46 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
 
                 foreach (var servicePointPreparationItems in (from openSession in ServicesContextRunTime.Current.OpenSessions
-                                                          where openSession.CashierStation == this && openSession.Meal != null
-                                                          //from sessionPart in openSession.PartialClientSessions
-                                                          from mealCourse in openSession.Meal.Courses
-                                                          from itemPreparation in mealCourse.FoodItems
-                                                          orderby itemPreparation.PreparedAtForecast
-                                                          group itemPreparation by mealCourse into ServicePointItems
-                                                          select ServicePointItems))
+                                                              where openSession.CashierStation == this && openSession.Meal != null
+                                                              //from sessionPart in openSession.PartialClientSessions
+                                                              from mealCourse in openSession.Meal.Courses
+                                                              from itemPreparation in mealCourse.FoodItems
+                                                              orderby itemPreparation.PreparedAtForecast
+                                                              group itemPreparation by mealCourse into ServicePointItems
+                                                              select ServicePointItems))
 
 
-            {
-                var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
-                foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
                 {
-                    if (item.MenuItem == null)
-                        item.LoadMenuItem();
+                    var preparationItems = new System.Collections.Generic.List<IItemPreparation>();
+                    foreach (var item in servicePointPreparationItems.OfType<RoomService.ItemPreparation>())
+                    {
+                        if (item.MenuItem == null)
+                            item.LoadMenuItem();
 
 
-                    preparationItems.Add(item);
-                    item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                        preparationItems.Add(item);
+                        item.ObjectChangeState += FlavourItem_ObjectChangeState;
+                    }
+                    ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
+
                 }
-                ServicePointsPreparationItems.Add(new ServicePointPreparationItems(servicePointPreparationItems.Key, preparationItems));
-
-            }
 
 
-            if (!string.IsNullOrWhiteSpace(PrintReceiptsConditionsJson))
-                PrintReceiptsConditions = OOAdvantech.Json.JsonConvert.DeserializeObject<List<PrintReceiptCondition>>(PrintReceiptsConditionsJson);
+                if (!string.IsNullOrWhiteSpace(PrintReceiptsConditionsJson))
+                    PrintReceiptsConditions = OOAdvantech.Json.JsonConvert.DeserializeObject<List<PrintReceiptCondition>>(PrintReceiptsConditionsJson);
 
-            if (GetPrintReceiptCondition(ServicePointType.Delivery) == null)
-                PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.Delivery, ItemState = ItemPreparationState.OnRoad });
-            if (GetPrintReceiptCondition(ServicePointType.HallServicePoint) == null)
-                PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.HallServicePoint, ItemState = ItemPreparationState.OnRoad });
-            if (GetPrintReceiptCondition(ServicePointType.TakeAway) == null)
-                PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.TakeAway, ItemState = ItemPreparationState.OnRoad });
+                if (GetPrintReceiptCondition(ServicePointType.Delivery) == null)
+                    PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.Delivery, ItemState = ItemPreparationState.OnRoad });
+                if (GetPrintReceiptCondition(ServicePointType.HallServicePoint) == null)
+                    PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.HallServicePoint, ItemState = ItemPreparationState.OnRoad });
+                if (GetPrintReceiptCondition(ServicePointType.TakeAway) == null)
+                    PrintReceiptsConditions.Add(new PrintReceiptCondition() { ServicePointType = ServicePointType.TakeAway, ItemState = ItemPreparationState.OnRoad });
 
-            foreach (var transaction in _Transactions.OfType<FinanceFacade.Transaction>())
-            {
-                transaction.ObjectChangeState += Transaction_ObjectChangeState;
-            }
-         
+                foreach (var transaction in _Transactions.OfType<FinanceFacade.Transaction>())
+                {
+                    transaction.ObjectChangeState += Transaction_ObjectChangeState;
+                }
+
                 System.Threading.Thread.Sleep(500);
                 foreach (var preparationItem in (from servicePointPreparationItems in ServicePointsPreparationItems
                                                  from preparationItem in servicePointPreparationItems.PreparationItems.OfType<ItemPreparation>()
@@ -250,14 +251,38 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{5fb73605-0c1b-4106-9abc-26c71c953de7}</MetaDataID>
         private void PrintReceiptCheck(ItemPreparation itemPreparation)
         {
-            if (string.IsNullOrWhiteSpace(itemPreparation.TransactionUri)&& itemPreparation.State!=ItemPreparationState.Canceled)
+            if (string.IsNullOrWhiteSpace(itemPreparation.TransactionUri) && itemPreparation.State != ItemPreparationState.Canceled)
             {
                 var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
+
                 if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
                 {
-                    if (itemPreparation.ServedInTheBatch!=null&& itemPreparation.ServedInTheBatch.PreparedItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
-                        PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                    if (printReceiptCondition.IsPaid == null)
+                    {
+                        OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                        {
 
+                            if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
+                                PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                        });
+                    }
+                    else
+                    {
+                        OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                        {
+
+                            if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)&& x.IsPaid))
+                                PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                        });
+                    }
+                }
+                else if (printReceiptCondition.IsPaid == null)
+                {
+                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsPaid))
+                            PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                    });
                 }
             }
         }

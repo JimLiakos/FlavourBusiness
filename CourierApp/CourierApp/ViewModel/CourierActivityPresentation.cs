@@ -243,7 +243,7 @@ namespace CourierApp.ViewModel
                             {
                                 AuthUser = authUser;
                                 ActiveShiftWork = _Courier.ActiveShiftWork;
-                                if(ActiveShiftWork!=null)
+                                if (ActiveShiftWork != null)
                                     UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
@@ -376,7 +376,7 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{c57f087c-6cb6-4bc6-a6b9-1b46a58a9884}</MetaDataID>
         private void CourierActivityPresentation_Reconnected(object sender)
-        { 
+        {
             GetServingUpdates();
         }
 
@@ -431,7 +431,7 @@ namespace CourierApp.ViewModel
                             }
                         }
                     }
-        
+
                 }
             }
         }
@@ -447,7 +447,7 @@ namespace CourierApp.ViewModel
 
             ServingBatchUpdates servingBatchUpdates = Courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
-            var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).OfType<IFoodShipping>().ToList();
+            var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
             foreach (var assignedFoodShipping in foodShippings)
             {
                 var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping, this);
@@ -652,7 +652,7 @@ namespace CourierApp.ViewModel
 
             if (ActiveShiftWork != null)
             {
-                    UpdateFoodShippings(Courier.GetFoodShippings());
+                UpdateFoodShippings(Courier.GetFoodShippings());
 
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
@@ -794,7 +794,7 @@ namespace CourierApp.ViewModel
             {
                 IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
 
-                NativeUserSignInData nativeUserData= servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
 
                 ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
                 //this.Waiter = servicesContextManagment.AssignWaiterUser(waiterAssignKey);
@@ -802,11 +802,11 @@ namespace CourierApp.ViewModel
                 //var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
                 //var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
                 //UserData = pAuthFlavourBusiness.SignIn();
-                 lock (this)
-                    NativeUsers=null;
+                lock (this)
+                    NativeUsers = null;
 
 
-                return new UserData() { Email =nativeUserData.FireBaseUserName,Password= nativeUserData.FireBasePasword };
+                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
             }
             catch (Exception error)
             {
@@ -883,7 +883,7 @@ namespace CourierApp.ViewModel
             }
         }
 
-  
+
         /// <MetaDataID>{5be6b1d5-82d9-4cd6-b0c7-afa7da2a2c26}</MetaDataID>
         public async Task<bool> CheckPermissionsForQRCodeScan()
         {
@@ -896,7 +896,7 @@ namespace CourierApp.ViewModel
 
         }
 
-    
+
 
 
 
@@ -1008,7 +1008,7 @@ namespace CourierApp.ViewModel
                     while (tries > 0)
                     {
                         try
-                        { 
+                        {
                             //any desk 270 237 378
                             this.Courier.DeAssignFoodShipping(servingBatch.FoodShipping);
                             return true;
