@@ -88,7 +88,7 @@ namespace FlavourBusinessManager.Shipping
                 return ItemPreparationState.Serving;
             }
         }
-
+         
 
         internal void OnTheRoad()
         {
@@ -221,6 +221,43 @@ namespace FlavourBusinessManager.Shipping
 
         public event ObjectChangeStateHandle ObjectChangeState;
         public event ItemsStateChangedHandle ItemsStateChanged;
+
+        /// <MetaDataID>{aafc5519-34b2-4c81-9379-a37e19b52226}</MetaDataID>
+        [CommitObjectStateInStorageCall]
+        void CommitObjectState()
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var item in (from itemsPreprationContext in ContextsOfPreparedItems
+                                      from itemPreparation in itemsPreprationContext.PreparationItems
+                                      select itemPreparation))
+                {
+                    _PreparedItems.Add(item);
+                }
+                stateTransition.Consistent = true;
+            }
+        }
+
+        /// <MetaDataID>{36db5a26-d4bc-4f1c-af8f-13cfc237c9f5}</MetaDataID>
+        [DeleteObjectCall]
+        void ObjectDeleting()
+        {
+            if (MealCourse != null)
+                MealCourse.ObjectChangeState -= MealCourseChangeState;
+
+        }
+
+
+        /// <MetaDataID>{a3dfa875-e9b1-4fae-9656-c09968bd587f}</MetaDataID>
+        [ObjectsLinkCall]
+        void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
+        {
+            if (associationEnd.Name == nameof(ShiftWork))
+            {
+
+            }
+        }
 
         /// <MetaDataID>{cee036f2-fe3c-4668-ac0b-b3250d86ea33}</MetaDataID>
         public void PrintReceiptAgain()

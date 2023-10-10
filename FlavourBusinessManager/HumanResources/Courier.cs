@@ -742,7 +742,11 @@ namespace FlavourBusinessManager.HumanResources
                 lock (foodShipping)
                 {
                     if (!foodShipping.IsAssigned)
+                    {
                         (ActiveShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
+
+                        bool isAssined = foodShipping.IsAssigned;
+                    }
                 }
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
             }
