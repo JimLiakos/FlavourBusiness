@@ -1272,6 +1272,16 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+        public bool IsPaid
+        {
+            get
+            {
+                return Bill.IsPaid(this);
+            }
+
+        }
+
         ///// <MetaDataID>{8aade568-ea01-4550-9906-4857220f756b}</MetaDataID>
         //public List<FinanceFacade.IPayment> Payments => new List<FinanceFacade.IPayment>();
 

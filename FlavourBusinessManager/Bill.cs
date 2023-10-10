@@ -310,6 +310,25 @@ namespace FlavourBusinessManager.EndUsers
             return flavourItem.GetPaidAmount(foodServiceClientSession, payments);
         }
 
+        internal static bool IsPaid(ItemPreparation flavourItem)
+        {
+            if (flavourItem.PaidAmounts == null)
+                return false;
+            decimal paidAmount = flavourItem.PaidAmounts.Sum(x => x.Value);
+            decimal amount = (decimal)(flavourItem.ModifiedItemPrice * flavourItem.Quantity);
+            if (amount == 0)
+                return false;
+            decimal remain = amount - paidAmount;
+            if (remain == 0)
+                return true;
+
+            if (remain < (((decimal)(0.01 / 100)) * amount)) //is paid when remain is less than 0.01% of amount remain from rounding
+                return true;
+            return false;
+
+
+        }
+
         internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations, FoodServiceClientSession waiterFoodServicesClientSession)
         {
 
