@@ -1368,8 +1368,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                                        group preparedItem by preparedItem.ClientSession into ClientSessionItems
                                        select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
-            foreach (var clientSessionItems in clientSessionsItems)
-                clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var clientSessionItems in clientSessionsItems)
+                    clientSessionItems.clientSession.ItemsRoasting(clientSessionItems.ClientSessionItems);
+
+                stateTransition.Consistent = true;
+            }
 
 
             return GetItemToServingTimespanPredictions();
@@ -1612,14 +1618,20 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{818687a0-bd81-48e6-8018-e6a99351c9eb}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris)
         {
-            var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
-                                       from itemPreparation in servicePointPreparationItems.PreparationItems
-                                       where itemPreparationUris.Contains(itemPreparation.uid)
-                                       group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
-                                       select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
-            foreach (var clientSessionItems in clientSessionsItems)
-                clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
+                                           from itemPreparation in servicePointPreparationItems.PreparationItems
+                                           where itemPreparationUris.Contains(itemPreparation.uid)
+                                           group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
+                                           select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
+
+                foreach (var clientSessionItems in clientSessionsItems)
+                    clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems); 
+                stateTransition.Consistent = true;
+            }
+
             return GetItemToServingTimespanPredictions();
         }
 
@@ -1658,8 +1670,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                                        group preparedItem by preparedItem.ClientSession into ClientSessionItems
                                        select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
-            foreach (var clientSessionItems in clientSessionsItems)
-                clientSessionItems.clientSession.ItemsPrepared(clientSessionItems.ClientSessionItems);
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var clientSessionItems in clientSessionsItems)
+                    clientSessionItems.clientSession.ItemsPrepared(clientSessionItems.ClientSessionItems);
+
+                stateTransition.Consistent = true;
+            }
 
 
             return GetItemToServingTimespanPredictions();

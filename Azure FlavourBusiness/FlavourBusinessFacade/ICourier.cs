@@ -21,15 +21,21 @@ namespace FlavourBusinessFacade.HumanResources
 
         event FoodShippingsChangedHandler FoodShippingsChanged;
 
+        /// <MetaDataID>{5cb3c164-e95e-431e-95ee-4c188e91160c}</MetaDataID>
         IList<IFoodShipping> GetFoodShippings();
 
+        /// <MetaDataID>{2803ebe2-00a5-418d-a1f6-8a9da623f4d3}</MetaDataID>
         ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice);
 
+        /// <MetaDataID>{078b7291-a5c3-4843-8eb3-2d3d579a9409}</MetaDataID>
         void CommitFoodShipings();
+        /// <MetaDataID>{9358540f-c6db-4eda-a7c3-c8026c39fc84}</MetaDataID>
         void DeAssignFoodShipping(IFoodShipping foodShipping);
 
+        /// <MetaDataID>{ef363053-6811-42a3-b955-fb922d797e91}</MetaDataID>
         void AssignFoodShipping(IFoodShipping foodShipping);
 
+        /// <MetaDataID>{a066838f-a33d-4ed4-a31f-1ca371f51873}</MetaDataID>
         void PrintFoodShippingReceipt(IFoodShipping foodShipping);
     }
 

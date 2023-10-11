@@ -23,7 +23,7 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class Courier : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourier
     {
-
+     
         /// <MetaDataID>{9934c842-848c-4aee-9503-cae650097b4e}</MetaDataID>
         public Courier()
         {
@@ -283,6 +283,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
+        [PersistentMember(nameof(_Messages))]
         [BackwardCompatibilityID("+12")]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message> Messages => _Messages.ToThreadSafeList();
@@ -635,9 +636,12 @@ namespace FlavourBusinessManager.HumanResources
                 return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
         }
 
+        /// <MetaDataID>{2c04fdb9-b716-4fbf-82df-24b7f505ce11}</MetaDataID>
         List<IFoodShipping> AssignedFoodShippings = new List<IFoodShipping>();
+        /// <MetaDataID>{27ad5e17-e923-4a75-adfd-541c33f9f2d7}</MetaDataID>
         List<IFoodShipping> FoodShippings = new List<IFoodShipping>();
 
+        /// <MetaDataID>{351160dd-9807-4a43-8176-dc3a41933d62}</MetaDataID>
         public IList<IFoodShipping> GetFoodShippings()
         {
             var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IFoodShipping>().ToList();
@@ -646,6 +650,7 @@ namespace FlavourBusinessManager.HumanResources
             return foodShippings;
         }
 
+        /// <MetaDataID>{706291dc-5c67-4906-b9d2-ea8072166738}</MetaDataID>
         public ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
 
@@ -697,6 +702,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{ddfec1ac-825d-4e36-8fe0-76dc31bada46}</MetaDataID>
         public void CommitFoodShipings()
         {
             if (ActiveShiftWork is ServingShiftWork)
@@ -723,6 +729,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{63d19f55-e0f7-46ce-aacf-44e729404923}</MetaDataID>
         public void DeAssignFoodShipping(IFoodShipping foodShipping)
         {
 
@@ -735,6 +742,7 @@ namespace FlavourBusinessManager.HumanResources
             (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
         }
 
+        /// <MetaDataID>{02b58641-354e-4b16-a172-95018e80f233}</MetaDataID>
         public void AssignFoodShipping(IFoodShipping foodShipping)
         {
             if (ActiveShiftWork is ServingShiftWork)
@@ -750,9 +758,10 @@ namespace FlavourBusinessManager.HumanResources
                 }
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
             }
-             
+
         }
 
+        /// <MetaDataID>{62b4500f-aeaa-4663-a3dc-248c16c43d10}</MetaDataID>
         internal void FindFoodShippingsChanges()
         {
             //FindServingBatchesChanged
@@ -771,6 +780,7 @@ namespace FlavourBusinessManager.HumanResources
                 _FoodShippingsChanged?.Invoke();
         }
 
+        /// <MetaDataID>{a3e17ca5-33b0-4d87-aa73-5ee31252a66d}</MetaDataID>
         public void PrintFoodShippingReceipt(IFoodShipping foodShipping)
         {
             throw new NotImplementedException();
