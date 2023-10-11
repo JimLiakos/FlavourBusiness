@@ -72,12 +72,12 @@
     <Compile Include="..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs">
       <Link>ApplicationSettings.cs</Link>
     </Compile>
-    <None Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\el.json">
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\el.json">
       <Link>WaiterApp.WPF\i18n\el.json</Link>
-    </None>
-    <None Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\en.json">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\en.json">
       <Link>WaiterApp.WPF\i18n\en.json</Link>
-    </None>
+    </EmbeddedResource>
     <None Include="..\MenuModel\JsonViewModel\Tag.cs">
       <Link>MenuModel\Tag.cs</Link>
     </None>
@@ -491,6 +491,8 @@
   <ItemGroup>
     <None Include="Resources\NotificationSound.wav" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Courier.Wpf\i18n\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UIBaseEx;
+using OOAdvantech.Json.Linq;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -40,7 +41,7 @@ namespace CourierApp.ViewModel
 
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
-    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
+    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ILocalization,ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
@@ -1097,5 +1098,134 @@ namespace CourierApp.ViewModel
 
             ObjectChangeState?.Invoke(this, nameof(FoodShipping));
         }
+
+
+
+        
+        string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+
+        public string Language { get { return lan; } }
+
+        string deflan = "en";
+        public string DefaultLanguage { get { return deflan; } }
+
+        /// <MetaDataID>{78e3b85a-cefd-4a92-aef3-66ad79121d13}</MetaDataID>
+        Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
+
+        /// <MetaDataID>{daa58ef0-acd5-443f-8fde-ebd20b3d3ec0}</MetaDataID>
+        public string GetTranslation(string langCountry)
+        {
+            if (Translations.ContainsKey(langCountry))
+                return Translations[langCountry].ToString();
+            string json = "{}";
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+#if DeviceDotNet
+            string path = "CourierApp.i18n";
+#else
+            string path = "WaiterApp.WPF.i18n";
+#endif
+
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains(path) && x.Contains(langCountry + ".json")).FirstOrDefault();
+
+            //string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(jsonName))
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName),System.Text. Encoding.UTF8))
+                {
+                    json = reader.ReadToEnd();
+                    Translations[langCountry] = JObject.Parse(json);
+                    // Do something with the value
+                }
+            }
+            return json;
+
+        }
+
+        public string GetString(string langCountry, string key)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return null;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            return (jToken as JValue).Value as string;
+                    }
+                    return null;
+                }
+
+                if (jObject.TryGetValue(member, out jToken))
+                {
+                    jObject = jToken as JObject;
+
+                }
+                else
+                    return null;
+                i++;
+            }
+
+            return null;
+        }
+
+        public void SetString(string langCountry, string key, string newValue)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            (jToken as JValue).Value = newValue;
+                    }
+                    else
+                        jObject.Add(member, new JValue(newValue));
+                }
+                else
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                        jObject = jToken as JObject;
+                    else
+                    {
+                        jObject.Add(member, new JObject());
+                        jObject = jObject[member] as JObject;
+                    }
+                }
+                i++;
+            }
+
+        }
+        public string AppIdentity => "com.microneme.courierapp";
+
+
+
     }
 }

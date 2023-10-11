@@ -47,7 +47,7 @@ namespace FlavourBusinessManager
         }
         static object MonitoringLock = new object();
         static bool InFlavoursServicesContextsMonitoring = false;
-        static DateTime FlavoursServicesContextsMonitoringTimestamp = DateTime.UtcNow;
+        static DateTime? FlavoursServicesContextsMonitoringTimestamp ;
         
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
@@ -66,8 +66,9 @@ namespace FlavourBusinessManager
                 lock (MonitoringLock)
                     InFlavoursServicesContextsMonitoring = true;
 
-                if ((DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp).TotalSeconds > 20)
+                if (FlavoursServicesContextsMonitoringTimestamp==null||(DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp.Value).TotalSeconds > 20)
                 {
+                    
                     foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
                     {
                         System.Threading.Tasks.Task.Run(() =>
