@@ -156,14 +156,14 @@ namespace FlavourBusinessManager.Shipping
                 else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
                     servingBatchChanged = true;
             }
-            if (nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member|| nameof(RoomService.MealCourse.Meal) == member)
+            if (nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member || nameof(RoomService.MealCourse.Meal) == member)
             {
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
                 this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
 
             }
-            if (servingBatchChanged|| nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
+            if (servingBatchChanged || nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
             {
                 ContextsOfPreparedItems = preparedItems;
                 ContextsOfUnderPreparationItems = underPreparationItems;
@@ -223,6 +223,61 @@ namespace FlavourBusinessManager.Shipping
         [CachingDataOnClientSide]
         public string ServicesPointIdentity { get; set; }
 
+        [CachingDataOnClientSide]
+        public IPlace Place
+        {
+            get
+            {
+                return MealCourse.Meal.Session.DeliveryPlace;
+            }
+            set
+            {
+            }
+        }
+        public string ClientFullName
+        {
+            get
+            {
+                string clientFullName = MealCourse.Meal.Session.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.Client?.FullName;
+                if (string.IsNullOrEmpty(clientFullName))
+                    clientFullName = MealCourse.Meal.Session.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.Client?.FriendlyName;
+                return clientFullName;
+            }
+            set
+            {
+            }
+        }
+        public string PhoneNumber
+        {
+            get
+            {
+                return MealCourse.Meal.Session.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.Client?.PhoneNumber;
+            }
+            set
+            {
+            }
+        }
+
+        public string DeliveryRemark
+        {
+            get
+            {
+                return MealCourse.Meal.Session.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.DeliveryComment;
+            }
+            set
+            {
+            }
+        }
+        public string NotesForClient
+        {
+            get
+            {
+                return MealCourse.Meal.Session.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery).FirstOrDefault()?.Client?.NotesForClient;
+            }
+            set
+            {
+            }
+        }
 
         public event ObjectChangeStateHandle ObjectChangeState;
         public event ItemsStateChangedHandle ItemsStateChanged;

@@ -1,4 +1,5 @@
 ﻿using DontWaitApp;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
@@ -90,6 +91,15 @@ namespace CourierApp.ViewModel
                 ServicePointIdentity = servicesContextIdentity + ";" + sessionData.ServicePointIdentity,
             };
         }
+        public IPlace Place { get => FoodShipping.Place; }
+
+        public string ClientFullName { get => FoodShipping.ClientFullName; }
+
+        public string PhoneNumber { get => FoodShipping.PhoneNumber; }
+
+        public string DeliveryRemark { get => FoodShipping.DeliveryRemark; }
+
+        public string NotesForClient { get => FoodShipping.NotesForClient; }
 
         /// <MetaDataID>{90ec5e57-2488-44b8-9665-87dbedb3de7f}</MetaDataID>
         private void FoodShipping_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)

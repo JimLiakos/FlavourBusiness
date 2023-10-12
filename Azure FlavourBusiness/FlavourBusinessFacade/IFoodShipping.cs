@@ -7,14 +7,14 @@ namespace FlavourBusinessFacade.Shipping
     [GenerateFacadeProxy]
     public interface IFoodShipping : RoomService.IServingBatch
     {
-        IPlace Place { get; set; }
+        IPlace Place { get;  }
 
-        string ClientFullName { get; set; }
+        string ClientFullName { get;  }
 
-        string PhoneNumber { get; set; }
+        string PhoneNumber { get;  }
 
-        string DeliveryRemark { get; set; }
+        string DeliveryRemark { get; }
 
-        string NotesForClient { get; set; }
+        string NotesForClient { get; }
     }
 }
