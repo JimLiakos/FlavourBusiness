@@ -16,5 +16,7 @@ namespace FlavourBusinessFacade.Shipping
         string DeliveryRemark { get; }
 
         string NotesForClient { get; }
+
+
     }
 }
