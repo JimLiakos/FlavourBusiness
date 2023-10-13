@@ -623,7 +623,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
             bool del = false;
-
+             
             if (del)
                 Simulator.DeleteSimulationData();
 
