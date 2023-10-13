@@ -27,7 +27,7 @@ namespace FlavourBusinessManager.RoomService
     public class ItemPreparation : IItemPreparation
     {
         /// <exclude>Excluded</exclude>
-        MultilingualMember<string> _FontUri=new MultilingualMember<string>();
+        MultilingualMember<string> _FontUri = new MultilingualMember<string>();
 
         /// <MetaDataID>{531f7d0d-3d0d-4b9b-a200-8aebbd742268}</MetaDataID>
         [PersistentMember(nameof(_FontUri))]
@@ -37,11 +37,11 @@ namespace FlavourBusinessManager.RoomService
             get => _FontUri;
             set
             {
-                if (_FontUri!=value)
+                if (_FontUri != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _FontUri.Value=value;
+                        _FontUri.Value = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -53,10 +53,10 @@ namespace FlavourBusinessManager.RoomService
         [BackwardCompatibilityID("+36")]
         public Multilingual MultilingualDescription
         {
-            get => new Multilingual(_Description); 
+            get => new Multilingual(_Description);
             set
             {
-                _Description=new MultilingualMember<string>(value);
+                _Description = new MultilingualMember<string>(value);
             }
         }
 
@@ -72,11 +72,11 @@ namespace FlavourBusinessManager.RoomService
             get => _Description.Value;
             set
             {
-                if (_Description!=value)
+                if (_Description != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Description.Value=value;
+                        _Description.Value = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -341,10 +341,10 @@ namespace FlavourBusinessManager.RoomService
                     }
 
 
-                  
 
-                        ObjectChangeState?.Invoke(this, nameof(State));
-                    
+
+                    ObjectChangeState?.Invoke(this, nameof(State));
+
 
 
 
@@ -912,11 +912,11 @@ namespace FlavourBusinessManager.RoomService
             get => _ModifiedItemPrice;
             set
             {
-                if (_ModifiedItemPrice!=value)
+                if (_ModifiedItemPrice != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _ModifiedItemPrice=value;
+                        _ModifiedItemPrice = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -1278,20 +1278,20 @@ namespace FlavourBusinessManager.RoomService
             }
             set
             {
-                _PaidAmounts=value;
+                _PaidAmounts = value;
             }
         }
 
-
+#if !FlavourBusinessDevice
+        [JsonIgnore]
         public bool IsPaid
         {
             get
             {
                 return Bill.IsPaid(this);
             }
-
         }
-
+#endif
         ///// <MetaDataID>{8aade568-ea01-4550-9906-4857220f756b}</MetaDataID>
         //public List<FinanceFacade.IPayment> Payments => new List<FinanceFacade.IPayment>();
 

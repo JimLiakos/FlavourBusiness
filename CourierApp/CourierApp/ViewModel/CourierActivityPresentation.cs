@@ -1096,7 +1096,7 @@ namespace CourierApp.ViewModel
                 foodShippingPresentation.Dispose();
             }
 
-            ObjectChangeState?.Invoke(this, nameof(FoodShipping));
+            ObjectChangeState?.Invoke(this, nameof(FoodShippings));
         }
 
 

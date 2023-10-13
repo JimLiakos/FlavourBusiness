@@ -165,7 +165,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
 
             try
-            {
+            { 
                 EndUsers.FoodServiceClientSession fsClientSession = null;
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
