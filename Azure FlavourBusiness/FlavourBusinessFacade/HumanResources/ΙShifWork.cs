@@ -35,6 +35,9 @@ namespace FlavourBusinessFacade.HumanResources
     {
         public static bool IsActive(this IShiftWork shiftWork)
         {
+
+            var d = (DateTime.UtcNow +TimeSpan.FromMinutes(15)).ShiftworkRound();
+
             if (shiftWork != null)
             {
                 var startedAt = shiftWork.StartsAt;
@@ -43,8 +46,8 @@ namespace FlavourBusinessFacade.HumanResources
                 var billingPayments = (shiftWork as IDebtCollection)?.BillingPayments;
                 double overtimeRation = (3.00 / 8);
                 var overtime = workingHours * overtimeRation;
-                var utcNow = DateTime.UtcNow;//.Date + TimeSpan.FromHours(hour);
-                if (utcNow.ToUniversalTime() > startedAt.ToUniversalTime() && startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours + overtime) > utcNow.ToUniversalTime()) //  utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
+                var utcNow = DateTime.UtcNow.ShiftworkRound();//.Date + TimeSpan.FromHours(hour);
+                if (utcNow.ToUniversalTime() >= startedAt.ToUniversalTime() && startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours + overtime) > utcNow.ToUniversalTime()) //  utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
                     return true;
                 else
                     return false;
@@ -54,5 +57,31 @@ namespace FlavourBusinessFacade.HumanResources
                 return false;
             }
         }
+        public static DateTime ShiftworkRound(this DateTime date)
+        {
+
+
+            double hour = date.Hour +((double)date.Minute/ 60);
+
+            hour = Math.Round(hour * 2) / 2;
+
+            //date.Millisecond.setMilliseconds(0);
+            //this.StartAt.setSeconds(0);
+            double minutes = (hour - Math.Truncate(hour)) * 60;
+            hour=Math.Truncate(hour);
+
+
+            date=  new DateTime(
+                            date.Year,
+                            date.Month,
+                            date.Day,
+                            (int)hour,
+                            (int)minutes,
+                            0,
+                            0,
+                            date.Kind);
+            return date;
+        }
+
     }
 }
