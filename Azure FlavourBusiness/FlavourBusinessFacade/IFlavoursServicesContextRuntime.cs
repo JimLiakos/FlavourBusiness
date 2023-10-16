@@ -65,8 +65,8 @@ namespace FlavourBusinessFacade
         string NewCourier();
 
 
-        /// <MetaDataID>{e22a146a-d86a-477e-a7f8-6fa9cc5a8a9b}</MetaDataID>
-        IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours);
+        ///// <MetaDataID>{e22a146a-d86a-477e-a7f8-6fa9cc5a8a9b}</MetaDataID>
+        //IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours);
 
         /// <MetaDataID>{fde5e9ed-977c-483b-b6d1-bf6b1539d2cc}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+3")]

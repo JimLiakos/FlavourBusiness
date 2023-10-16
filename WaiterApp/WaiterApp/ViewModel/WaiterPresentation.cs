@@ -1434,7 +1434,7 @@ namespace WaiterApp.ViewModel
         }
 
         /// <MetaDataID>{66534587-dc7c-4f65-8b94-4e14471f0437}</MetaDataID>
-        public void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        public void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = Waiter.NewShiftWork(startedAt, timespanInHours);
 
@@ -1656,7 +1656,7 @@ namespace WaiterApp.ViewModel
 
 
         /// <MetaDataID>{c4aab28c-46f3-45ae-9b95-fa4cd6fd1577}</MetaDataID>
-        public void ExtendSiftWorkStart(double timespanInHours)
+        public void ExtendShiftWorkStart(double timespanInHours)
         {
             throw new NotImplementedException();
         }

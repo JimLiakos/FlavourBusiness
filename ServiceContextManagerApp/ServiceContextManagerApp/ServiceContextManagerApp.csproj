@@ -11,7 +11,11 @@
     <DefineConstants>TRACE;DeviceDotNet;FlavourBusinessDevice</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Authentication\ViewModels\LoginViewModel.cs" />
+    <Compile Remove="Authentication\**" />
+    <EmbeddedResource Remove="Authentication\**" />
+    <None Remove="Authentication\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="FacebookSignIn.xaml.cs" />
     <Compile Remove="ScanPage.xaml.cs" />
   </ItemGroup>
@@ -20,7 +24,6 @@
     <EmbeddedResource Remove="ScanPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Authentication\Views\Views.7z" />
     <None Remove="Resources\Fonts\FontAwesome5Solid.otf" />
     <None Remove="Resources\Fonts\Lobster-Regular.ttf" />
     <None Remove="Resources\Fonts\vssver.scc" />
@@ -83,8 +86,6 @@
     <ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Authentication\ViewModels\" />
-    <Folder Include="Authentication\Views\" />
     <Folder Include="MenuCanvas\" />
     <Folder Include="MenuModel\" />
     <Folder Include="RestaurantHallLayoutModel\" />

@@ -1,6 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.HumanResources;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +9,7 @@ using System.Text;
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
+using FlavourBusinessManager.HumanResources;
 using MarshalByRefObject = System.MarshalByRefObject;
 #endif
 
@@ -23,23 +24,21 @@ namespace ServiceContextManagerApp
             Waiter = waiter;
             ActiveShiftWork = Waiter.ActiveShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
-            NativeUser=Waiter.NativeUser;
+            NativeUser = Waiter.NativeUser;
 
-            var DASD = Waiter.FullName;
-            var SDS = Waiter.UserName;
         }
-        public bool NativeUser { get; set ; }
+        public bool NativeUser { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string WaiterIdentity
         {
             get
-            { 
+            {
                 string rr = Waiter.Identity;
                 return Waiter.Identity;
             }
-        } 
+        }
 
         public string WorkerIdentity { get => WaiterIdentity; }
 
@@ -150,7 +149,7 @@ namespace ServiceContextManagerApp
             }
         }
 
-        
+
 
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {

@@ -112,7 +112,7 @@ namespace TakeAwayApp.ViewModel
 
         //period
         /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
-        void SiftWorkStart(DateTime startedAt, double timespanInHours);
+        void ShiftWorkStart(DateTime startedAt, double timespanInHours);
 
         /// <MetaDataID>{ef901fe7-db80-466c-9826-742e38f6623f}</MetaDataID>
         void TakeAwayOrderCommitted();
@@ -650,7 +650,7 @@ namespace TakeAwayApp.ViewModel
 
 
         /// <MetaDataID>{544700dd-b3ab-48f8-9fb9-a92603c17d3b}</MetaDataID>
-        public async void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = TakeAwayCashier.NewShiftWork(startedAt, timespanInHours);
 

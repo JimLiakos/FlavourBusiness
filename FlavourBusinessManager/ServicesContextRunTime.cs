@@ -2702,11 +2702,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
             shiftWork.Worker.ChangeSiftWork(shiftWork, startedAt, timespanInHours);
         }
 
-        /// <MetaDataID>{ad553593-59ac-4542-944d-b02f1ee008ac}</MetaDataID>
-        public IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours)
-        {
-            return worker.NewShiftWork(startedAt, timespanInHours);
-        }
+        ///// <MetaDataID>{ad553593-59ac-4542-944d-b02f1ee008ac}</MetaDataID>
+        //public IShiftWork NewShifWork(IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours)
+        //{
+        //    return worker.NewShiftWork(startedAt, timespanInHours);
+        //}
 
         /// <MetaDataID>{269aa8e6-0fb9-4925-9d4e-7eba3cdcf288}</MetaDataID>
         public IWaiter AssignWaiterUser(string waiterAssignKey, string signUpUserIdentity, string userName)

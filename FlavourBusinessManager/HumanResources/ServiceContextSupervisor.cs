@@ -138,17 +138,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             get
             {
-                if (_ServicesContextRunTime == null)
-                {
-                    var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
-                    if (objectStorage != null)
-                    {
-                        OOAdvantech.Linq.Storage linqStorage = new OOAdvantech.Linq.Storage(objectStorage);
-                        _ServicesContextRunTime = (from serviceContext in linqStorage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
-                                                   select serviceContext).FirstOrDefault();
-                    }
-                }
-                return _ServicesContextRunTime;
+                return ServicePointRunTime.ServicesContextRunTime.Current;
             }
         }
 
@@ -388,11 +378,42 @@ namespace FlavourBusinessManager.HumanResources
         [BackwardCompatibilityID("+12")]
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks.ToThreadSafeList();
 
+
+        List<ShiftWork> RecentlyShiftWorks;
+
         /// <MetaDataID>{d5055dba-e0e3-4e02-96b4-7d38e7182a2e}</MetaDataID>
         public IShiftWork ActiveShiftWork
         {
             get
             {
+                var mileStoneDate = System.DateTime.UtcNow - TimeSpan.FromDays(1);
+                var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this);
+                if (objectStorage != null)
+                {
+                    if (RecentlyShiftWorks == null)
+                    {
+                        OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+                        RecentlyShiftWorks = (from shiftWork in storage.GetObjectCollection<ShiftWork>()
+                                              where shiftWork.StartsAt > mileStoneDate && shiftWork.Worker == this
+                                              select shiftWork).ToList();
+                    }
+
+                    if (RecentlyShiftWorks.Count > 0)
+                    {
+                    }
+
+
+                    var lastShiftWork = RecentlyShiftWorks.OrderBy(x => x.StartsAt).LastOrDefault();
+                    if (lastShiftWork?.IsActive() == true)
+                        return lastShiftWork;
+                }
+                else
+                {
+                    var lastShiftWork = _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > mileStoneDate).LastOrDefault();
+                    if (lastShiftWork?.IsActive() == true)
+                        return lastShiftWork;
+
+                }
                 return null;
             }
 
@@ -405,7 +426,20 @@ namespace FlavourBusinessManager.HumanResources
         FlavourBusinessFacade.IFlavoursServicesContextRuntime IServiceContextSupervisor.ServicesContextRunTime => ServicesContextRunTime;
 
         /// <MetaDataID>{53fa5c17-a8ca-4cc4-969b-c095bf374cd3}</MetaDataID>
-        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get => FlavoursServicesContext.GetServicesContext(ServicesContextIdentity); }
+        public FlavourBusinessFacade.IFlavoursServicesContext ServicesContext
+        {
+            get
+            {
+                var serviceContext = FlavoursServicesContext.GetServicesContext(ServicesContextIdentity);
+
+                if (serviceContext.GetRunTime() != ServicesContextRunTime)
+                {
+
+                }
+
+                return FlavoursServicesContext.GetServicesContext(ServicesContextIdentity);
+            }
+        }
         public bool NativeUser { get; set; }
 
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
@@ -433,16 +467,22 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{bbc190ff-d979-456d-af43-5dff0a41cb54}</MetaDataID>
         public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours)
         {
-            ShiftWork shiftWork = null;
+
+            ShiftWork shiftWork = ActiveShiftWork as ShiftWork;
+            if (shiftWork != null)
+                return shiftWork;
             using (SystemStateTransition stateTransition = new SystemStateTransition())
             {
-                shiftWork = new ShiftWork(Name);
+                shiftWork = new ServingShiftWork(Name);
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(shiftWork);
                 shiftWork.StartsAt = startedAt;
                 shiftWork.PeriodInHours = timespanInHours;
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
+            if (RecentlyShiftWorks != null)
+                RecentlyShiftWorks.Add(shiftWork);
+
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
             return shiftWork;
         }
@@ -462,20 +502,20 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{3a57fdb9-81a1-44d3-ac1b-dbab6ccab19d}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
         {
-            if (LastThreeShiftsPeriodStart!=null)
+            if (LastThreeShiftsPeriodStart != null)
             {
                 List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
-                lastThreeSifts=lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
-                if (lastThreeSifts.Count>3)
+                lastThreeSifts = lastThreeSifts.OrderByDescending(x => x.StartsAt).ToList();
+                if (lastThreeSifts.Count > 3)
                 {
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        LastThreeShiftsPeriodStart = lastThreeSifts[2].StartsAt;
                         stateTransition.Consistent = true;
                     }
                 }
-                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                lastThreeSifts = lastThreeSifts.Take(3).ToList();
                 foreach (var shiftWork in lastThreeSifts)
                     shiftWork.RecalculateDeptData();
 
@@ -489,16 +529,16 @@ namespace FlavourBusinessManager.HumanResources
                                                           where shiftWork.Worker == this
                                                           orderby shiftWork.StartsAt descending
                                                           select shiftWork).ToList();
-                if (lastThreeSifts.Count>3)
+                if (lastThreeSifts.Count > 3)
                 {
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        LastThreeShiftsPeriodStart=lastThreeSifts[2].StartsAt;
+                        LastThreeShiftsPeriodStart = lastThreeSifts[2].StartsAt;
                         stateTransition.Consistent = true;
                     }
                 }
-                lastThreeSifts= lastThreeSifts.Take(3).ToList();
+                lastThreeSifts = lastThreeSifts.Take(3).ToList();
                 foreach (var shiftWork in lastThreeSifts)
                     shiftWork.RecalculateDeptData();
 

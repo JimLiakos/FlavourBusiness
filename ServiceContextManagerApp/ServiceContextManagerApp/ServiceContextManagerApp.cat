@@ -1,0 +1,2964 @@
+
+(object Petal
+    version    	47
+    _written   	"Rose 8.0.0303.1400"
+    charSet    	161)
+
+(object Class_Category "ServiceContextManagerApp"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"652A7DD60390"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class_Category "ViewModel"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"ServiceContextManagerApp.ViewModel"))
+	    quid       	"652A7ED50152"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "IManagerPresentation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bf7e3f02-1669-499b-97d4-b9c001d76fa4}"))
+		    quid       	"652A817A00AD"
+		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "GetNewSupervisorQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{73f283b4-db60-40fa-8fc6-5175295ee7be}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A823202FB"))
+			    quid       	"652A823202FB"
+			    parameters 	(list Parameters
+				(object Parameter "servicesContext"
+				    quid       	"652A8232030E"
+				    type       	"ServiceContextManagerApp.IServicesContextPresentation")
+				(object Parameter "color"
+				    quid       	"652A8232031D"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{192517c7-d832-4dac-84d7-993a2fabbd20}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A823203D1"))
+			    quid       	"652A823203D1"
+			    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "IsOrganizationManager"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{73740119-002c-4961-8a60-915180086a7a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A823300FD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A823300FD"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsServiceContextSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5482ddbf-74e3-4511-b86e-ad09e15cc91d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A82330170")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A82330170"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "FlavoursServiceContextDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{10930d35-8234-4c72-8e94-6a752e759566}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A823301EA")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A823301EA"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContexts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{298f0136-8365-4068-bdad-8ff538b16207}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A8233025A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A8233025A"
+			    type       	"System.Collections.Generic.List<ServiceContextManagerApp.IServicesContextPresentation>"
+			    exportControl 	"Public"))
+		    module     	"Component View::ServiceContextManagerApp:: ServiceContextManagerApp"
+		    quidu      	"652A80380011"
+		    language   	"C#")
+		(object Class "IServicesContextPresentation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ac7629ae-b6fb-4a24-9f62-f94f27f4b9d7}"))
+		    quid       	"652A857E00EB"
+		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "RemoveSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{059a02f3-5f3c-4768-84bb-681a837bfa0e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AA03D2"))
+			    quid       	"652A85AA03D2"
+			    parameters 	(list Parameters
+				(object Parameter "supervisorPresentation"
+				    quid       	"652A85AA03E1"
+				    type       	"ServiceContextManagerApp.ISupervisorPresentation"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MoveBefore"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d97fe7f6-6751-4709-99f7-86ab667f7e94}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB0028"))
+			    quid       	"652A85AB0028"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourseUri"
+				    quid       	"652A85AB003D"
+				    type       	"string")
+				(object Parameter "movedMealCourseUri"
+				    quid       	"652A85AB004D"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MoveAfter"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f01ed829-964f-41c1-8a2d-ef9ea1297fb2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB0077"))
+			    quid       	"652A85AB0077"
+			    parameters 	(list Parameters
+				(object Parameter "mealCourseUri"
+				    quid       	"652A85AB008D"
+				    type       	"string")
+				(object Parameter "movedMealCourseUri"
+				    quid       	"652A85AB009D"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "MakeSupervisorActive"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bb586ccb-551d-4d69-b2d3-d9a96081df4c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB00C3"))
+			    quid       	"652A85AB00C3"
+			    parameters 	(list Parameters
+				(object Parameter "supervisorPresentation"
+				    quid       	"652A85AB00D5"
+				    type       	"ServiceContextManagerApp.ISupervisorPresentation"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNewWaiterQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a57b4a0a-49dc-4e61-a6bd-a6a067f045d5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB0146"))
+			    quid       	"652A85AB0146"
+			    parameters 	(list Parameters
+				(object Parameter "color"
+				    quid       	"652A85AB0158"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNewTakeAwayCashierQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{96811d18-cf1f-474e-b0be-7432e88f86f3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB0348"))
+			    quid       	"652A85AB0348"
+			    parameters 	(list Parameters
+				(object Parameter "color"
+				    quid       	"652A85AB0358"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNewCourierQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{133db335-fd6c-4ecf-832d-3da1d8c3f431}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB0384"))
+			    quid       	"652A85AB0384"
+			    parameters 	(list Parameters
+				(object Parameter "color"
+				    quid       	"652A85AB0395"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNewNativeUserQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d4999189-2e89-4ba7-b5d4-0020b56dc3f2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AB03DC"))
+			    quid       	"652A85AB03DC"
+			    parameters 	(list Parameters
+				(object Parameter "worker"
+				    quid       	"652A85AC0008"
+				    type       	"ServiceContextManagerApp.ViewModel.IWorkerPresentation")
+				(object Parameter "color"
+				    quid       	"652A85AC0016"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignWaiterNativeUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{64f4f0cc-35a1-4253-b701-e32ee952fb60}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC00A8"))
+			    quid       	"652A85AC00A8"
+			    parameters 	(list Parameters
+				(object Parameter "waiterAssignKey"
+				    quid       	"652A85AC00B8"
+				    type       	"string")
+				(object Parameter "userName"
+				    quid       	"652A85AC00C5"
+				    type       	"string")
+				(object Parameter "password"
+				    quid       	"652A85AC00D3"
+				    type       	"string")
+				(object Parameter "userFullName"
+				    quid       	"652A85AC00E0"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.HumanResources.IWaiter"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignTakeAwayCashierNativeUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{de581aad-2071-4f90-9fcb-6dc3d20f5f8f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC0181"))
+			    quid       	"652A85AC0181"
+			    parameters 	(list Parameters
+				(object Parameter "takeAwayCashierAssignKey"
+				    quid       	"652A85AC0191"
+				    type       	"string")
+				(object Parameter "userName"
+				    quid       	"652A85AC019D"
+				    type       	"string")
+				(object Parameter "password"
+				    quid       	"652A85AC01A9"
+				    type       	"string")
+				(object Parameter "userFullName"
+				    quid       	"652A85AC01B6"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.HumanResources.ITakeawayCashier"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignCourierNativeUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4151f8dc-d587-48ce-9e39-c13449564d0c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC0237"))
+			    quid       	"652A85AC0237"
+			    parameters 	(list Parameters
+				(object Parameter "takeAwayCashierAssignKey"
+				    quid       	"652A85AC0249"
+				    type       	"string")
+				(object Parameter "userName"
+				    quid       	"652A85AC025C"
+				    type       	"string")
+				(object Parameter "password"
+				    quid       	"652A85AC026B"
+				    type       	"string")
+				(object Parameter "userFullName"
+				    quid       	"652A85AC0279"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.HumanResources.ICourier"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "ServicesContextName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f0774cb8-3a48-404e-806d-045980e8bf92}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC02CC")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AC02CC"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Supervisors"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8d6171c5-388e-47ad-bf6f-799f1c326bc5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC034D")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AC034D"
+			    type       	"System.Collections.Generic.List<ServiceContextManagerApp.ISupervisorPresentation>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Waiters"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b77cb491-e799-4e17-be6f-be68b760b1ea}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AC03C2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AC03C2"
+			    type       	"System.Collections.Generic.List<ServiceContextManagerApp.IWaiterPresentation>"
+			    exportControl 	"Public")
+			(object ClassAttribute "TakeawayCashiers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3ea873d4-60b0-4b09-9c56-cef23527b81a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AD004A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AD004A"
+			    type       	"System.Collections.Generic.List<ServiceContextManagerApp.ITakeawayCashierPresentation>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Couriers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{389d2beb-9076-45ff-adbe-fb0a4fe64424}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AD00E2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AD00E2"
+			    type       	"System.Collections.Generic.List<ServiceContextManagerApp.ICourierPresentation>"
+			    exportControl 	"Public")
+			(object ClassAttribute "MealCoursesInProgress"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{199ed84e-71be-47a6-9aa8-79baa01af5bd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AD015B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AD015B"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.RoomService.ViewModel.MealCourse>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Halls"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3a7f890b-c57c-4bf8-b2fd-c9ce2b82ea8d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85AD01D0")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A85AD01D0"
+			    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout>"
+			    exportControl 	"Public"))
+		    module     	"Component View::ServiceContextManagerApp:: ServiceContextManagerApp"
+		    quidu      	"652A80380011"
+		    language   	"C#")
+		(object Class "ManagerPresentation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{57c59ee6-4bcb-45a9-9635-06d1d922efea}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"652A871A036E"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"652A9F46030C"
+			    label      	"UserData"
+			    supplier   	"Logical View::FlavourBusinessFacade::UserData"
+			    quidu      	"5F72C0B3018D"))
+		    realized_interfaces 	(list realize_rel_list
+			(object Realize_Relationship
+			    quid       	"652A95890285"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::IManagerPresentation"
+			    quidu      	"652A817A00AD")
+			(object Realize_Relationship
+			    quid       	"652A958902A9"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
+		    operations 	(list Operations
+			(object Operation "ManagerPresentation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{336c5eed-616e-4844-b938-ea8acbeb0e1b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958E03B7"))
+			    quid       	"652A958E03B7"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "Auth_AuthStateChange"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{306f6042-7558-4084-8104-01b5a2f3ff31}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F017F"))
+			    quid       	"652A958F017F"
+			    parameters 	(list Parameters
+				(object Parameter "sender"
+				    quid       	"652A958F0193"
+				    type       	"object")
+				(object Parameter "e"
+				    quid       	"652A958F01A4"
+				    type       	"OOAdvantech.Authentication.AuthStateEventArgs"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "Assign"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{75663c23-6955-4a5d-b3fb-bde8b1bd38d7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F0239"))
+			    quid       	"652A958F0239"
+			    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "DeviceAuthentication_AuthStateChanged"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{83fa7a7b-086c-474b-9add-b9776f8276ea}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F0287"))
+			    quid       	"652A958F0287"
+			    parameters 	(list Parameters
+				(object Parameter "sender"
+				    quid       	"652A958F029B"
+				    type       	"object")
+				(object Parameter "user"
+				    quid       	"652A958F02AA"
+				    type       	"OOAdvantech.Remoting.RestApi.AuthUser"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "ShiftWorkStart"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2f005569-6308-4b93-8986-c6e26fddfeca}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F02C2"))
+			    quid       	"652A958F02C2"
+			    parameters 	(list Parameters
+				(object Parameter "startedAt"
+				    quid       	"652A9750020C"
+				    type       	"System.DateTime")
+				(object Parameter "timespanInHours"
+				    quid       	"652A97500220"
+				    type       	"double"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SignOut"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0c7b86e7-e55e-414a-9658-248fd799bb65}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F02F1"))
+			    quid       	"652A958F02F1"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "OnPageLoaded"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d0e5e87c-585d-40cb-82a1-944937be16c6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F030D"))
+			    quid       	"652A958F030D"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "OnPageSizeChanged"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9677066b-9054-4613-beaf-97c1127c4b2c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A958F0344"))
+			    quid       	"652A958F0344"
+			    parameters 	(list Parameters
+				(object Parameter "width"
+				    quid       	"652A958F0358"
+				    type       	"double")
+				(object Parameter "height"
+				    quid       	"652A958F0366"
+				    type       	"double"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SignUp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4fbee07a-7587-46ff-9dd0-8a5ac3c83a62}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95900259"))
+			    quid       	"652A95900259"
+			    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNewSupervisorQRCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f8606fc4-2fff-4c04-8193-d7b04b833ae4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9590026E"))
+			    quid       	"652A9590026E"
+			    parameters 	(list Parameters
+				(object Parameter "servicesContext"
+				    quid       	"652A975002B4"
+				    type       	"ServiceContextManagerApp.IServicesContextPresentation")
+				(object Parameter "color"
+				    quid       	"652A975002C6"
+				    type       	"string"))
+			    result     	"ServiceContextManagerApp.NewUserCode"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SignIn"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2471d38b-4b03-44ae-bac1-ad4faf05e0ce}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959002B7"))
+			    quid       	"652A959002B7"
+			    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsUsernameInUse"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6e691b92-7f64-489f-8927-d3ee52e41de7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959002D0"))
+			    quid       	"652A959002D0"
+			    parameters 	(list Parameters
+				(object Parameter "username"
+				    quid       	"652A959002DD"
+				    type       	"string")
+				(object Parameter "signInProvider"
+				    quid       	"652A959002EA"
+				    type       	"OOAdvantech.Authentication.SignInProvider"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetNativeUsers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cf374d65-19a1-40bf-b6ce-98ccdc65e22c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9590036A"))
+			    quid       	"652A9590036A"
+			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.UserData,a47bab0a-fd03-44d0-8cf2-f22b6618ca5c]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SignInNativeUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fff52657-d165-4775-af70-255c5ce4b7eb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95900387"))
+			    quid       	"652A95900387"
+			    parameters 	(list Parameters
+				(object Parameter "userName"
+				    quid       	"652A95900398"
+				    type       	"string")
+				(object Parameter "password"
+				    quid       	"652A959003A6"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.UserData"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFlavourBusinessAuth"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{14cd392b-59c1-4cef-96da-9ee961d180df}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910048"))
+			    quid       	"652A95910048"
+			    result     	"FlavourBusinessFacade.IAuthFlavourBusiness"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "CreateUserWithEmailAndPassword"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fedf4e72-9fe2-4730-9d53-f73b2bd9010c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9591007B"))
+			    quid       	"652A9591007B"
+			    parameters 	(list Parameters
+				(object Parameter "emailVerificationCode"
+				    quid       	"652A9591008A"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SendVerificationEmail"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fd445d7b-89d2-4383-9908-5d578190b89b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959100A4"))
+			    quid       	"652A959100A4"
+			    parameters 	(list Parameters
+				(object Parameter "emailAddress"
+				    quid       	"652A959100B4"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "SaveUserProfile"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{889910a6-0a3e-4f1e-bd94-7bbd5bb89e92}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959100CA"))
+			    quid       	"652A959100CA"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1b8248d1-e683-4862-8cbd-7834de81cc4e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959100E3"))
+			    quid       	"652A959100E3"
+			    result     	"System.Threading.Tasks.Task`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFont"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e7417b43-263c-4523-8a09-ce6fc440d180}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910131"))
+			    quid       	"652A95910131"
+			    parameters 	(list Parameters
+				(object Parameter "fontUri"
+				    quid       	"652A95910144"
+				    type       	"string"))
+			    result     	"UIBaseEx.FontData"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "AzureServerUrl"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fd05c84a-026a-4737-8109-c2cc8c54b037}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9591019A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652A9591019A"
+			    type       	"string")
+			(object ClassAttribute "ConfirmPassword"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1c54861c-2d1b-4e27-b56c-3967c760d306}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959101D3"))
+			    quid       	"652A959101D3"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "SignInProvider"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e7973798-b089-4821-962e-06c217adcf47}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959101F3"))
+			    quid       	"652A959101F3"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Email"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c0e0f36e-8bde-4897-bc4a-bccc62f90f94}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910211"))
+			    quid       	"652A95910211"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "FullName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{69c99fdd-f17f-4c08-8e54-48fbd8fdf42d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9591022B"))
+			    quid       	"652A9591022B"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Password"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{18350b7e-b963-40cc-b053-a5ffac9efefe}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910249"))
+			    quid       	"652A95910249"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "UserName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e849ba56-e073-4248-a791-24c82e8ee214}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910265"))
+			    quid       	"652A95910265"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActiveShiftWorkStartedAt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c109b363-534b-4f4f-9743-652b9c30d16e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910283"))
+			    quid       	"652A95910283"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActiveShiftWorkEndsAt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0f1c3a01-3251-4acf-befa-c015e66a53bc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959102A1"))
+			    quid       	"652A959102A1"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "InActiveShiftWork"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{98a2d3fb-2f90-4cde-9bf2-a400f08f29c0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959102BD"))
+			    quid       	"652A959102BD"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "PhoneNumber"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7f73bb48-37ca-4b22-b761-f5b9aa0948a5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959102DB"))
+			    quid       	"652A959102DB"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Address"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f45b84ec-f70e-426f-a780-a143d458ec55}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910319")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652A95910319"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "OAuthUserIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e36af3eb-2875-4bda-94b6-73ed287df617}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910355"))
+			    quid       	"652A95910355"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsOrganizationManager"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c13a180e-e632-4759-af6a-c68728530923}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910374"))
+			    quid       	"652A95910374"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsServiceContextSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a8d03ca4-910c-4e8c-b010-9c469ebc7f4a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95910392"))
+			    quid       	"652A95910392"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContexts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{569be9e0-84cc-49d1-bb9b-665d12b49059}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959103B1"))
+			    quid       	"652A959103B1"
+			    type       	"System.Collections.Generic.List`1[[ServiceContextManagerApp.IServicesContextPresentation,5ef7cdd4-337a-469e-8daa-b00b38cbd2a8]]"
+			    exportControl 	"Public")
+			(object ClassAttribute "FlavoursServiceContextDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{be5f5d18-17bb-4b96-8d73-00487b2d0f37}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959103D0"))
+			    quid       	"652A959103D0"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ScanCode"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e1874240-bd62-4eed-9a55-59f15dbb1e7f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95920081")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A95920081"
+			    type       	"DeviceUtilities.NetStandard.ScanCode"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActiveShiftWork"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{17ba4f14-257f-4b3a-9393-75998cef416f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95920315")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A95920315"
+			    type       	"FlavourBusinessFacade.HumanResources.IShiftWork")
+			(object ClassAttribute "SignInTaskLock"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a33fe5c3-fea7-4637-8e50-c1a3c4ec585d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9593007A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A9593007A"
+			    type       	"object")
+			(object ClassAttribute "UserData"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0a183e2a-369d-492a-ae23-4c06a3445445}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959300B1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A959300B1"
+			    type       	"FlavourBusinessFacade.UserData")
+			(object ClassAttribute "AuthUser"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7e769640-40f7-430b-a86c-2fb26408c5b9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959300F3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A959300F3"
+			    type       	"OOAdvantech.Remoting.RestApi.AuthUser")
+			(object ClassAttribute "OnSignIn"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d88fc483-0d3e-4809-be40-c4bfef668a20}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9593015F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A9593015F"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "UserServiceContextSupervisorRoles"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{77b6b4da-7c36-48e3-8351-565ad752e7a9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959301FF")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A959301FF"
+			    type       	"System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServiceContextSupervisor>>")
+			(object ClassAttribute "Fonts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{326542fc-2b82-4ecb-b079-9c913c3f034b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A9593027A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A9593027A"
+			    type       	"System.Collections.Generic.Dictionary<string,UIBaseEx.FontData>")
+			(object ClassAttribute "ServiceContextSupervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{6d9638e3-723b-4fd2-b8c7-e42e76a99381}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A959302C0")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A959302C0"
+			    type       	"FlavourBusinessFacade.HumanResources.IServiceContextSupervisor")
+			(object ClassAttribute "Organization"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3f24c775-eaad-46a7-8a09-1d5e68498610}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95930305")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A95930305"
+			    type       	"FlavourBusinessFacade.IOrganization")
+			(object ClassAttribute "SignInTask"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1da67023-cb0e-4988-a14f-54ecfa90ddd3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A95930347")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652A95930347"
+			    type       	"System.Threading.Tasks.Task<bool>"))
+		    module     	"Component View::ServiceContextManagerApp:: ServiceContextManagerApp"
+		    quidu      	"652A80380011"
+		    language   	"C#")
+		(object Class "UserRole"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{C7D01FE8-22E2-4804-B4A4-D9B4C8E044B8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"652AA1380355"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"652AACD30388"
+			    supplier   	"Logical View::FlavourBusinessFacade::IUser"
+			    quidu      	"5F756AF90177"))
+		    operations 	(list Operations
+			(object Operation "GetRoleType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7adefabd-cd65-49bd-b294-1fa0d06c933a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AAB3200AA"))
+			    quid       	"652AAB3200AA"
+			    parameters 	(list Parameters
+				(object Parameter "typeFullName"
+				    quid       	"652AAB3200C1"
+				    type       	"string"))
+			    result     	"FlavourBusinessFacade.RoleType"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "User"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{807dde3c-6908-4f7d-98e8-1b0ed18f63aa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AAB3200EB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AAB3200EB"
+			    type       	"FlavourBusinessFacade.IUser"
+			    exportControl 	"Public")
+			(object ClassAttribute "RoleType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0fe058ca-ad92-408c-91e9-cf035bcc8891}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AAB32013A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AAB32013A"
+			    type       	"FlavourBusinessFacade.RoleType"
+			    exportControl 	"Public"))
+		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
+		    quidu      	"5AA773E702B6"
+		    language   	"C#")
+		(object Class "ISupervisorPresentation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e508bdac-d089-4daa-9145-abc2fe318f38}"))
+		    quid       	"652AD166009C"
+		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "ExtendShiftWorkStart"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1ec5fce4-b4b9-476a-b7ee-14b0db6c99ca}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD23F0091"))
+			    quid       	"652AD23F0091"
+			    parameters 	(list Parameters
+				(object Parameter "timespanInHours"
+				    quid       	"652AD23F0092"
+				    type       	"double"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ShiftWorkStart"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0153ab81-9272-4fe9-9fca-c958c90da31b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD24300F7"))
+			    quid       	"652AD24300F7"
+			    parameters 	(list Parameters
+				(object Parameter "startedAt"
+				    quid       	"652AD24300F8"
+				    type       	"System.DateTime")
+				(object Parameter "timespanInHours"
+				    quid       	"652AD24300F9"
+				    type       	"double"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "FullName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f9330aa3-1bad-4709-ae81-e63572f423bc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B00297")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B00297"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "UserName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a43d4066-ecf3-4a87-bf30-0c30c8a8e074}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B0030A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B0030A"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Email"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{10cf6d90-36b8-421b-9c35-350a2c5f0a95}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B00377")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B00377"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PhotoUrl"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a6ab320b-225a-40d5-a44f-f582b5216a08}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B10015")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B10015"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "SupervisorIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5087ce21-b5e1-4769-a51e-326204119bf0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B1007A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B1007A"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Suspended"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5a621115-a14d-4bcc-92ce-4c65cdf9e14f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1B100F7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1B100F7"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "InActiveShiftWork"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{41a5d1a3-9a12-45fb-af72-b14bd48f1b5b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD1D503D7")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652AD1D503D7"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActiveShiftWorkEndsAt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{47584cc2-c05e-4e6d-8798-102dd8e6fa3d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2000288")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652AD2000288"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActiveShiftWorkStartedAt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a7a535cf-f3b9-4328-9b03-f7a22eb97710}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD20501E0")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"652AD20501E0"
+			    type       	"System.DateTime"
+			    exportControl 	"Public"))
+		    module     	"Component View::ServiceContextManagerApp:: ServiceContextManagerApp"
+		    quidu      	"652A80380011"
+		    language   	"C#")
+		(object Class "SupervisorPresentation"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7e25de00-a04d-4177-ad82-00eeb29302e2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityIDTransfered"
+			    value      	"True")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"BackwardCompatibilityID"
+			    value      	"")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"1"))
+		    quid       	"652AD2A3006B"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"652AD31301ED"
+			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor"
+			    quidu      	"5F59B55A023E"))
+		    realized_interfaces 	(list realize_rel_list
+			(object Realize_Relationship
+			    quid       	"652AD2D00137"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::ISupervisorPresentation"
+			    quidu      	"652AD166009C")
+			(object Realize_Relationship
+			    quid       	"652AD2D00150"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
+		    operations 	(list Operations
+			(object Operation "SupervisorPresentation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fa571c81-5ed1-47a4-a69a-cbdac0ff2c8c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D10262"))
+			    quid       	"652AD2D10262"
+			    parameters 	(list Parameters
+				(object Parameter "supervisor"
+				    quid       	"652AD2D10272"
+				    type       	"FlavourBusinessFacade.HumanResources.IServiceContextSupervisor")
+				(object Parameter "servicesContextRuntime"
+				    quid       	"652AD2D10284"
+				    type       	"FlavourBusinessFacade.IFlavoursServicesContextRuntime"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "SupervisorIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{27833946-9877-4976-8922-2f22d69cd7a7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D10297"))
+			    quid       	"652AD2D10297"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Suspended"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{94888f42-2b9f-4970-acc6-43953d6dffbf}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D102B4"))
+			    quid       	"652AD2D102B4"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "Email"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{87b82250-53e6-4008-8743-6aeecee51ebd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D102D1"))
+			    quid       	"652AD2D102D1"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "FullName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{280698f9-92ac-48d8-a7d1-8e9502fc3277}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D102EB"))
+			    quid       	"652AD2D102EB"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "UserName"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ff92134f-0d3e-46d3-bf57-d65e3f583bcc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D1030A"))
+			    quid       	"652AD2D1030A"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PhotoUrl"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9548972f-d549-4409-a57a-e0133ae3ea7a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D10324"))
+			    quid       	"652AD2D10324"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Supervisor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9d98c0c2-b07a-4d3b-a8d0-22e63b8320b2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D10369")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652AD2D10369"
+			    type       	"FlavourBusinessFacade.HumanResources.IServiceContextSupervisor"
+			    exportControl 	"Implementation")
+			(object ClassAttribute "ServicesContextRuntime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8b9db1ac-b7df-434d-ba26-b99e59da70d4}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD2D1039B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"652AD2D1039B"
+			    type       	"FlavourBusinessFacade.IFlavoursServicesContextRuntime"))
+		    module     	"Component View::ServiceContextManagerApp:: ServiceContextManagerApp"
+		    quidu      	"652A80380011"
+		    language   	"C#")
+		(object Association "$UNNAMED$0"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"652A85DD0318")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"4d6e1bae-2e97-42cf-a09c-b9013b38040e"))
+		    quid       	"652A85DD0318"
+		    roles      	(list role_list
+			(object Role "ServicesContexts"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Synchronize"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85DF0079")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cebf8912-0d6a-4cbd-ae67-9daa7fd60009}"))
+			    quid       	"652A85DF0079"
+			    label      	"ServicesContexts"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation"
+			    quidu      	"652A857E00EB"
+			    client_cardinality 	(value cardinality "0..*")
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$1"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652A85DF007C")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cc113258-38cf-4758-93f8-eb431686fa0d}"))
+			    quid       	"652A85DF007C"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::IManagerPresentation"
+			    quidu      	"652A817A00AD")))
+		(object Association "$UNNAMED$2"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"652AA1DC0384")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"61a1255e-0736-4f90-bdd4-dd157527a94e"))
+		    quid       	"652AA1DC0384"
+		    roles      	(list role_list
+			(object Role "Roles"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AA1DE009C")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0a625021-3866-46dc-bc84-1b895cb2a857}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Synchronize"
+				    value      	FALSE))
+			    quid       	"652AA1DE009C"
+			    label      	"Roles"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::UserRole"
+			    quidu      	"652AA1380355"
+			    client_cardinality 	(value cardinality "0..*")
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$3"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AA1DE009F")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a41aa0c0-f164-4d3d-8f48-0786be1ccc16}"))
+			    quid       	"652AA1DE009F"
+			    supplier   	"Logical View::FlavourBusinessFacade::UserData"
+			    quidu      	"5F72C0B3018D")))
+		(object Association "$UNNAMED$4"
+		    quid       	"652AC256023F"
+		    roles      	(list role_list
+			(object Role "Organization"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Synchronize"
+				    value      	FALSE))
+			    quid       	"652AC257019E"
+			    label      	"Organization"
+			    supplier   	"Logical View::FlavourBusinessFacade::IOrganization"
+			    quidu      	"5A71E30A0241"
+			    client_cardinality 	(value cardinality "0..1")
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$5"
+			    quid       	"652AC25701AA"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation"
+			    quidu      	"652A871A036E")))
+		(object Association "$UNNAMED$6"
+		    quid       	"652AC26E0179"
+		    roles      	(list role_list
+			(object Role "UserServiceContextSupervisorRoles"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Synchronize"
+				    value      	FALSE))
+			    quid       	"652AC27001A6"
+			    label      	"UserServiceContextSupervisorRoles"
+			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor"
+			    quidu      	"5F59B55A023E"
+			    client_cardinality 	(value cardinality "0..*")
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$7"
+			    quid       	"652AC27001B2"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation"
+			    quidu      	"652A871A036E"))
+		    AssociationClass 	"Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation")
+		(object Association "$UNNAMED$8"
+		    quid       	"652AD36C0335"
+		    roles      	(list role_list
+			(object Role "$UNNAMED$9"
+			    quid       	"652AD36E00FB"
+			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IShiftWork"
+			    quidu      	"5FC0B8490118"
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$10"
+			    quid       	"652AD36E010A"
+			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::SupervisorPresentation"
+			    quidu      	"652AD2A3006B"))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"652A7F170293"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	1838
+		    origin_y   	228
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IManagerPresentation" @1
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(359, 270)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@1
+				location   	(134, 233)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"IManagerPresentation")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652A817A00AD"
+			    width      	468
+			    height     	275
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::UserData" @2
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3508, 1633)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@2
+				location   	(3201, 1552)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	614
+				justify    	0
+				label      	"UserData")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5F72C0B3018D"
+			    width      	632
+			    height     	187
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::UserRole" @3
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(3405, 439)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@3
+				location   	(3208, 360)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	395
+				justify    	0
+				label      	"UserRole")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652AA1380355"
+			    width      	413
+			    height     	182
+			    annotation 	8)
+			(object AssociationViewNew "$UNNAMED$2" @4
+			    location   	(3453, 1034)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AA1DC0384"
+			    roleview_list 	(list RoleViews
+				(object RoleView "Roles" @5
+				    Parent_View 	@4
+				    location   	(1743, -419)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @6
+					Parent_View 	@5
+					location   	(3412, 632)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	140
+					justify    	0
+					label      	"+Roles"
+					pctDist    	0.800000
+					height     	42
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AA1DE009C"
+				    client     	@4
+				    supplier   	@3
+				    line_style 	3
+				    origin_attachment 	(3453, 1034)
+				    terminal_attachment 	(3453, 530)
+				    label      	(object SegLabel @7
+					Parent_View 	@5
+					location   	(3507, 580)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..*"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))
+				(object RoleView "$UNNAMED$3" @8
+				    Parent_View 	@4
+				    location   	(1743, -419)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AA1DE009F"
+				    client     	@4
+				    supplier   	@2
+				    line_style 	3
+				    origin_attachment 	(3453, 1034)
+				    terminal_attachment 	(3453, 1539))))
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser" @9
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(2436, 424)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@9
+				location   	(2151, 390)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	570
+				justify    	0
+				label      	"IUser")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5F756AF90177"
+			    width      	588
+			    height     	268
+			    annotation 	8)
+			(object InheritTreeView "" @10
+			    location   	(2454, 702)
+			    line_color 	3342489
+			    fill_color 	13434879
+			    supplier   	@9
+			    vertices   	(list Points
+				(2454, 702)
+				(2454, 558)))
+			(object UsesView "" @11
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AACD30388"
+			    client     	@3
+			    supplier   	@9
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IOrganization" @12
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(2058, 1038)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@12
+				location   	(1764, 1010)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	588
+				justify    	0
+				label      	"IOrganization")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5A71E30A0241"
+			    width      	606
+			    height     	256
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation" @13
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(322, 1571)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@13
+				location   	(106, 1474)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	432
+				justify    	0
+				label      	"ManagerPresentation")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652A871A036E"
+			    width      	450
+			    height     	219
+			    annotation 	8)
+			(object RealizeView "" @14
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652A95890285"
+			    client     	@13
+			    supplier   	@1
+			    line_style 	3
+			    origin_attachment 	(303, 1461)
+			    terminal_attachment 	(303, 406))
+			(object AssociationViewNew "$UNNAMED$4" @15
+			    location   	(1360, 1517)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AC256023F"
+			    roleview_list 	(list RoleViews
+				(object RoleView "Organization" @16
+				    Parent_View 	@15
+				    location   	(866, 70)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @17
+					Parent_View 	@16
+					location   	(1781, 1330)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	253
+					justify    	0
+					label      	"+Organization"
+					pctDist    	0.800000
+					height     	42
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AC257019E"
+				    client     	@15
+				    supplier   	@12
+				    vertices   	(list Points
+					(1360, 1517)
+					(1822, 1517)
+					(1822, 1166))
+				    line_style 	3
+				    origin_attachment 	(1360, 1517)
+				    terminal_attachment 	(1822, 1166)
+				    label      	(object SegLabel @18
+					Parent_View 	@16
+					location   	(1876, 1247)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..1"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))
+				(object RoleView "$UNNAMED$5" @19
+				    Parent_View 	@15
+				    location   	(866, 70)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AC25701AA"
+				    client     	@15
+				    supplier   	@13
+				    line_style 	3
+				    origin_attachment 	(1360, 1517)
+				    terminal_attachment 	(547, 1517))))
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor" @20
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(2782, 1052)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@20
+				location   	(2504, 1021)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	557
+				justify    	0
+				label      	"IServiceContextSupervisor")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5F59B55A023E"
+			    width      	575
+			    height     	262
+			    annotation 	8)
+			(object AssociationViewNew "$UNNAMED$6" @21
+			    location   	(1766, 1594)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AC26E0179"
+			    roleview_list 	(list RoleViews
+				(object RoleView "UserServiceContextSupervisorRoles" @22
+				    Parent_View 	@21
+				    location   	(1272, 147)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @23
+					Parent_View 	@22
+					location   	(2533, 1428)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	676
+					justify    	0
+					label      	"+UserServiceContextSupervisorRoles"
+					pctDist    	0.800000
+					height     	42
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AC27001A6"
+				    client     	@21
+				    supplier   	@20
+				    vertices   	(list Points
+					(1766, 1594)
+					(2574, 1594)
+					(2574, 1183))
+				    line_style 	3
+				    origin_attachment 	(1766, 1594)
+				    terminal_attachment 	(2671, 1183)
+				    label      	(object SegLabel @24
+					Parent_View 	@22
+					location   	(2628, 1305)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..*"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))
+				(object RoleView "$UNNAMED$7" @25
+				    Parent_View 	@21
+				    location   	(1272, 147)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AC27001B2"
+				    client     	@21
+				    supplier   	@13
+				    line_style 	3
+				    origin_attachment 	(1766, 1594)
+				    terminal_attachment 	(547, 1594))))
+			(object AssocConstraintView "" @26
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@21
+			    supplier   	@4
+			    line_style 	0)
+			(object InheritView "" @27
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5F756C18013C"
+			    client     	@12
+			    supplier   	@9
+			    line_style 	3
+			    origin_attachment 	(1885, 910)
+			    terminal_attachment 	(1885, 702)
+			    drawSupplier 	@10)
+			(object InheritView "" @28
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"61AD167D03D4"
+			    client     	@20
+			    supplier   	@9
+			    line_style 	3
+			    origin_attachment 	(2830, 921)
+			    terminal_attachment 	(2830, 702)
+			    drawSupplier 	@10)
+			(object AssocConstraintView "" @29
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@15
+			    supplier   	@4
+			    line_style 	0)
+			(object NoteView @30
+			    location   	(4192, 500)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@30
+				location   	(3767, 290)
+				fill_color 	13434879
+				nlines     	8
+				max_width  	815
+				label      	
+|The manager app can sign in as user with organization role and can see all restaurants in silent mode. Or can sign in as user with one or more restaurant supervisor roles one per restaurant.
+|Restaurant supervisor interact  with restaraunt throught a shift work.
+				)
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	875
+			    height     	432)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation" @31
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1438, 274)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@31
+				location   	(1128, 243)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	620
+				justify    	0
+				label      	"IServicesContextPresentation")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652A857E00EB"
+			    width      	638
+			    height     	263
+			    annotation 	8)
+			(object AssociationViewNew "$UNNAMED$0" @32
+			    location   	(856, 270)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652A85DD0318"
+			    roleview_list 	(list RoleViews
+				(object RoleView "ServicesContexts" @33
+				    Parent_View 	@32
+				    location   	(331, -114)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @34
+					Parent_View 	@33
+					location   	(873, 146)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	354
+					justify    	0
+					label      	"+ServicesContexts"
+					pctDist    	0.068536
+					height     	125
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652A85DF0079"
+				    client     	@32
+				    supplier   	@31
+				    line_style 	3
+				    origin_attachment 	(856, 270)
+				    terminal_attachment 	(1119, 270)
+				    label      	(object SegLabel @35
+					Parent_View 	@33
+					location   	(1093, 324)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..*"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))
+				(object RoleView "$UNNAMED$1" @36
+				    Parent_View 	@32
+				    location   	(331, -114)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652A85DF007C"
+				    client     	@32
+				    supplier   	@1
+				    line_style 	3
+				    origin_attachment 	(856, 270)
+				    terminal_attachment 	(593, 270))))
+			(object AssocAttachView "" @37
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@21
+			    supplier   	@31
+			    line_style 	0)
+			(object UsesView "UserData" @38
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@38
+				location   	(1869, 1659)
+				anchor_loc 	1
+				nlines     	1
+				max_width  	181
+				justify    	0
+				label      	"UserData")
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652A9F46030C"
+			    client     	@13
+			    supplier   	@2
+			    line_style 	3
+			    origin_attachment 	(547, 1659)
+			    terminal_attachment 	(3192, 1659))
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::ISupervisorPresentation" @39
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(650, 669)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@39
+				location   	(372, 641)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	557
+				justify    	0
+				label      	"ISupervisorPresentation")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652AD166009C"
+			    width      	575
+			    height     	256
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::SupervisorPresentation" @40
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(628, 1185)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@40
+				location   	(372, 1097)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	513
+				justify    	0
+				label      	"SupervisorPresentation")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652AD2A3006B"
+			    width      	531
+			    height     	200
+			    annotation 	8)
+			(object RealizeView "" @41
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AD2D00137"
+			    client     	@40
+			    supplier   	@39
+			    line_style 	3
+			    origin_attachment 	(628, 1085)
+			    terminal_attachment 	(628, 797))
+			(object UsesView "" @42
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AD31301ED"
+			    client     	@40
+			    supplier   	@20
+			    vertices   	(list Points
+				(890, 1085)
+				(890, 844)
+				(2681, 844)
+				(2681, 921))
+			    line_style 	3
+			    origin_attachment 	(890, 1085)
+			    terminal_attachment 	(2681, 921))
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IShiftWork" @43
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1387, 1163)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@43
+				location   	(1118, 1135)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	538
+				justify    	0
+				label      	"IShiftWork")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5FC0B8490118"
+			    width      	556
+			    height     	257
+			    annotation 	8)
+			(object AssociationViewNew "$UNNAMED$8" @44
+			    location   	(1001, 1185)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AD36C0335"
+			    roleview_list 	(list RoleViews
+				(object RoleView "$UNNAMED$9" @45
+				    Parent_View 	@44
+				    location   	(351, 0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AD36E00FB"
+				    client     	@44
+				    supplier   	@43
+				    line_style 	3
+				    origin_attachment 	(1001, 1185)
+				    terminal_attachment 	(1109, 1185))
+				(object RoleView "$UNNAMED$10" @46
+				    Parent_View 	@44
+				    location   	(351, 0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"652AD36E010A"
+				    client     	@44
+				    supplier   	@40
+				    line_style 	3
+				    origin_attachment 	(1001, 1185)
+				    terminal_attachment 	(893, 1185)))))))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"652A7E4D0285"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object CategoryView "Logical View::ServiceContextManagerApp::ViewModel" @47
+		    location   	(528, 300)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(281, 216)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	494
+			justify    	0
+			label      	"ViewModel")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"652A7ED50152"
+		    width      	507
+		    height     	181)))))

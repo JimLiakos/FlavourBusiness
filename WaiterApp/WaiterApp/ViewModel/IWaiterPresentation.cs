@@ -89,10 +89,10 @@ namespace WaiterApp.ViewModel
 
         //period
         /// <MetaDataID>{f10b2dc3-edf7-449e-b7da-b11abce01e4d}</MetaDataID>
-        void SiftWorkStart(DateTime startedAt, double timespanInHours);
+        void ShiftWorkStart(DateTime startedAt, double timespanInHours);
 
         /// <MetaDataID>{dd0b3e52-feec-4357-a6f5-07145aad2e21}</MetaDataID>
-        void ExtendSiftWorkStart(double timespanInHours);
+        void ExtendShiftWorkStart(double timespanInHours);
 
         [GenerateEventConsumerProxy]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;

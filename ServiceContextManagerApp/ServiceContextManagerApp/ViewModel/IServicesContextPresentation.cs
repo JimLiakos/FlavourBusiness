@@ -13,6 +13,8 @@ namespace ServiceContextManagerApp
     [HttpVisible]
     public interface IServicesContextPresentation
     {
+        
+
         /// <MetaDataID>{f0774cb8-3a48-404e-806d-045980e8bf92}</MetaDataID>
         string ServicesContextName { get; set; }
 
@@ -42,6 +44,7 @@ namespace ServiceContextManagerApp
         void MoveAfter(string mealCourseUri, string movedMealCourseUri);
 
 
+        ISupervisorPresentation SignedInSupervisor { get; }
 
         /// <MetaDataID>{bb586ccb-551d-4d69-b2d3-d9a96081df4c}</MetaDataID>
         void MakeSupervisorActive(ISupervisorPresentation supervisorPresentation);
@@ -67,6 +70,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{133db335-fd6c-4ecf-832d-3da1d8c3f431}</MetaDataID>
         NewUserCode GetNewCourierQRCode(string color);
 
+        /// <MetaDataID>{d4999189-2e89-4ba7-b5d4-0020b56dc3f2}</MetaDataID>
         NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color);
 
 
@@ -82,6 +86,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{de581aad-2071-4f90-9fcb-6dc3d20f5f8f}</MetaDataID>
         ITakeawayCashier AssignTakeAwayCashierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
+        /// <MetaDataID>{4151f8dc-d587-48ce-9e39-c13449564d0c}</MetaDataID>
         ICourier AssignCourierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
     }

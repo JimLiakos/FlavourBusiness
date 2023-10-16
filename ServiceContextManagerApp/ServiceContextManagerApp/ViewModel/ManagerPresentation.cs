@@ -18,10 +18,12 @@ using FlavourBusinessManager;
 
 
 
+
 #if DeviceDotNet
 using Xamarin.Forms;
 using ZXing;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+/// <MetaDataID>{31ffc233-6769-4a2c-bb2f-451aeab898e7}</MetaDataID>
 public interface IFontsResolver
 {
 
@@ -31,7 +33,7 @@ using QRCoder;
 using MenuPresentationModel.MenuCanvas;
 using System.Drawing.Imaging;
 using MarshalByRefObject = System.MarshalByRefObject;
-
+using FlavourBusinessManager.HumanResources;
 
 #endif
 
@@ -47,6 +49,7 @@ namespace ServiceContextManagerApp
 
 
 
+        /// <MetaDataID>{336c5eed-616e-4844-b938-ea8acbeb0e1b}</MetaDataID>
         public ManagerPresentation()
         {
 
@@ -108,6 +111,7 @@ namespace ServiceContextManagerApp
         }
 
 #if DeviceDotNet
+        /// <MetaDataID>{306f6042-7558-4084-8104-01b5a2f3ff31}</MetaDataID>
         private void Auth_AuthStateChange(object sender, OOAdvantech.Authentication.AuthStateEventArgs e)
         {
             var ssds = e.Auth.CurrentUser;
@@ -115,8 +119,10 @@ namespace ServiceContextManagerApp
         }
 
 
+        /// <MetaDataID>{e1874240-bd62-4eed-9a55-59f15dbb1e7f}</MetaDataID>
         public DeviceUtilities.NetStandard.ScanCode ScanCode = new DeviceUtilities.NetStandard.ScanCode();
 #endif
+        /// <MetaDataID>{75663c23-6955-4a5d-b3fb-bde8b1bd38d7}</MetaDataID>
         public async Task<bool> Assign()
         {
             //this.ScanPage.HeaderText = "Hold your phone up to the place Identity";
@@ -188,6 +194,7 @@ namespace ServiceContextManagerApp
 
 
         //bool OnScan = false;
+        /// <MetaDataID>{83fa7a7b-086c-474b-9add-b9776f8276ea}</MetaDataID>
         private void DeviceAuthentication_AuthStateChanged(object sender, AuthUser user)
         {
             if (user == null)
@@ -201,9 +208,11 @@ namespace ServiceContextManagerApp
         //static string _AzureServerUrl = "http://192.168.2.8:8090/api/";//org
         //static string _AzureServerUrl = "http://192.168.2.4:8090/api/";//Braxati
         //static string _AzureServerUrl = "http://10.0.0.13:8090/api/";//work
+        /// <exclude>Excluded</exclude>
         static string _AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
 
+        /// <MetaDataID>{fd05c84a-026a-4737-8109-c2cc8c54b037}</MetaDataID>
         static string AzureServerUrl
         {
             get
@@ -218,7 +227,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _ConfirmPassword;
+        /// <MetaDataID>{1c54861c-2d1b-4e27-b56c-3967c760d306}</MetaDataID>
         public string ConfirmPassword
         {
             get
@@ -233,7 +244,9 @@ namespace ServiceContextManagerApp
         }
 
 
+        /// <exclude>Excluded</exclude>
         string _SignInProvider;
+        /// <MetaDataID>{e7973798-b089-4821-962e-06c217adcf47}</MetaDataID>
         public string SignInProvider
         {
             get
@@ -245,7 +258,9 @@ namespace ServiceContextManagerApp
                 _SignInProvider = value;// ApplicationSettings.Current.SignInProvider = value;
             }
         }
+        /// <exclude>Excluded</exclude>
         string _Email;
+        /// <MetaDataID>{c0e0f36e-8bde-4897-bc4a-bccc62f90f94}</MetaDataID>
         public string Email
         {
             get
@@ -259,7 +274,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _FullName;
+        /// <MetaDataID>{69c99fdd-f17f-4c08-8e54-48fbd8fdf42d}</MetaDataID>
         public string FullName
         {
             get
@@ -273,7 +290,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _Password;
+        /// <MetaDataID>{18350b7e-b963-40cc-b053-a5ffac9efefe}</MetaDataID>
         public string Password
         {
             get
@@ -287,7 +306,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _UserName;
+        /// <MetaDataID>{e849ba56-e073-4248-a791-24c82e8ee214}</MetaDataID>
         public string UserName
         {
             get
@@ -303,7 +324,71 @@ namespace ServiceContextManagerApp
 
 
 
+
+
+        /// <MetaDataID>{17ba4f14-257f-4b3a-9393-75998cef416f}</MetaDataID>
+        IShiftWork ActiveShiftWork;
+
+
+        /// <MetaDataID>{c109b363-534b-4f4f-9743-652b9c30d16e}</MetaDataID>
+        public DateTime ActiveShiftWorkStartedAt
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                    return ActiveShiftWork.StartsAt;
+                else
+                    return DateTime.MinValue;
+            }
+        }
+
+
+        /// <MetaDataID>{0f1c3a01-3251-4acf-befa-c015e66a53bc}</MetaDataID>
+        public DateTime ActiveShiftWorkEndsAt
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                else
+                    return DateTime.MinValue;
+            }
+        }
+
+
+        /// <MetaDataID>{98a2d3fb-2f90-4cde-9bf2-a400f08f29c0}</MetaDataID>
+        public bool InActiveShiftWork
+        {
+            get
+            {
+                if (ActiveShiftWork?.IsActive() == true)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+
+
+        /// <MetaDataID>{2f005569-6308-4b93-8986-c6e26fddfeca}</MetaDataID>
+        public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
+        {
+            if (ServiceContextSupervisor != null)
+            {
+                ActiveShiftWork = ServiceContextSupervisor.NewShiftWork(startedAt, timespanInHours);
+
+                if (ActiveShiftWork != null)
+                    _ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            }
+        }
+
+
+
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
+        /// <exclude>Excluded</exclude>
         public event ObjectChangeStateHandle _ObjectChangeState;
         public event ObjectChangeStateHandle ObjectChangeState
         {
@@ -318,7 +403,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _PhoneNumber;
+        /// <MetaDataID>{7f73bb48-37ca-4b22-b761-f5b9aa0948a5}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public string PhoneNumber
         {
@@ -332,7 +419,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <exclude>Excluded</exclude>
         string _Address;
+        /// <MetaDataID>{f45b84ec-f70e-426f-a780-a143d458ec55}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public string Address
         {
@@ -350,6 +439,7 @@ namespace ServiceContextManagerApp
 
 
 
+        /// <MetaDataID>{0c7b86e7-e55e-414a-9658-248fd799bb65}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void SignOut()
         {
@@ -359,16 +449,19 @@ namespace ServiceContextManagerApp
             ServiceContextSupervisor = null;
             _ServicesContexts.Clear();
         }
+        /// <MetaDataID>{d0e5e87c-585d-40cb-82a1-944937be16c6}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void OnPageLoaded()
         {
 
         }
+        /// <MetaDataID>{9677066b-9054-4613-beaf-97c1127c4b2c}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void OnPageSizeChanged(double width, double height)
         {
         }
 
+        /// <MetaDataID>{4fbee07a-7587-46ff-9dd0-8a5ac3c83a62}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public async Task<bool> SignUp()
         {
@@ -466,7 +559,9 @@ namespace ServiceContextManagerApp
             });
         }
 
+        /// <exclude>Excluded</exclude>
         string _OAuthUserIdentity;
+        /// <MetaDataID>{e36af3eb-2875-4bda-94b6-73ed287df617}</MetaDataID>
         public string OAuthUserIdentity
         {
             get
@@ -479,6 +574,7 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <MetaDataID>{c13a180e-e632-4759-af6a-c68728530923}</MetaDataID>
         public bool IsOrganizationManager
         {
             get
@@ -487,6 +583,7 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <MetaDataID>{a8d03ca4-910c-4e8c-b010-9c469ebc7f4a}</MetaDataID>
         public bool IsServiceContextSupervisor
         {
             get
@@ -502,6 +599,7 @@ namespace ServiceContextManagerApp
 
 
 
+        /// <MetaDataID>{f8606fc4-2fff-4c04-8193-d7b04b833ae4}</MetaDataID>
         public NewUserCode GetNewSupervisorQRCode(IServicesContextPresentation servicesContext, string color)
         {
 
@@ -574,12 +672,17 @@ namespace ServiceContextManagerApp
 
 
 
+        /// <MetaDataID>{a33fe5c3-fea7-4637-8e50-c1a3c4ec585d}</MetaDataID>
         object SignInTaskLock = new object();
 
 
+        /// <MetaDataID>{0a183e2a-369d-492a-ae23-4c06a3445445}</MetaDataID>
         UserData UserData;
+        /// <MetaDataID>{7e769640-40f7-430b-a86c-2fb26408c5b9}</MetaDataID>
         AuthUser AuthUser;
+        /// <MetaDataID>{d88fc483-0d3e-4809-be40-c4bfef668a20}</MetaDataID>
         public bool OnSignIn;
+        /// <MetaDataID>{2471d38b-4b03-44ae-bac1-ad4faf05e0ce}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public async Task<bool> SignIn()
         {
@@ -659,38 +762,34 @@ namespace ServiceContextManagerApp
                         _Address = UserData.Address;
 
                         AuthUser = authUser;
-
+                        string administratorIdentity = "";
                         var role = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault();
                         if (role.RoleType == RoleType.ServiceContextSupervisor)
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
                             _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
+
+                            administratorIdentity = ServiceContextSupervisor.Identity;
+                            var flavoursServicesContext = ServiceContextSupervisor.ServicesContext; ;
+                            UserServiceContextSupervisorRoles[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
+                            ServicesContextPresentation servicesContextPresentation = new ServicesContextPresentation(flavoursServicesContext, ServiceContextSupervisor);
+                            
+                            _ServicesContexts.Add(servicesContextPresentation);
+
+                            
                         }
 
                         role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
-                        if (role.RoleType == RoleType.Organization)
+                        if (role.RoleType == RoleType.Organization && ServiceContextSupervisor == null)
                         {
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-
-
-                            string administratorIdentity = "";
-                            _OAuthUserIdentity = Organization.OAuthUserIdentity;
-
-                            if (ServiceContextSupervisor != null)
-                            {
-                                administratorIdentity = ServiceContextSupervisor.Identity;
-                                var flavoursServicesContext = Organization.GetFlavoursServicesContext(ServiceContextSupervisor.ServicesContextIdentity);
-                                ServiceContextSupervisors[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
-                            }
-                            else
-                            {
-
-                            }
                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
                             //_ObjectChangeState?.Invoke(this, null);
                         }
-                        else
-                            _ServicesContexts = new List<IServicesContextPresentation>();
+                        //else
+                        //{
+                        //    _ServicesContexts = new List<IServicesContextPresentation>();
+                        //}
 
 
                         _ObjectChangeState?.Invoke(this, null);
@@ -720,6 +819,7 @@ namespace ServiceContextManagerApp
         }
 
 
+        /// <MetaDataID>{6e691b92-7f64-489f-8927-d3ee52e41de7}</MetaDataID>
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
@@ -740,16 +840,19 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <MetaDataID>{cf374d65-19a1-40bf-b6ce-98ccdc65e22c}</MetaDataID>
         public IList<UserData> GetNativeUsers()
         {
             return new List<UserData>();
         }
 
+        /// <MetaDataID>{fff52657-d165-4775-af70-255c5ce4b7eb}</MetaDataID>
         public UserData SignInNativeUser(string userName, string password)
         {
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{14cd392b-59c1-4cef-96da-9ee961d180df}</MetaDataID>
         private static IAuthFlavourBusiness GetFlavourBusinessAuth()
         {
             IAuthFlavourBusiness pAuthFlavourBusiness;
@@ -763,6 +866,7 @@ namespace ServiceContextManagerApp
             return pAuthFlavourBusiness;
         }
 
+        /// <MetaDataID>{fedf4e72-9fe2-4730-9d53-f73b2bd9010c}</MetaDataID>
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
@@ -787,6 +891,7 @@ namespace ServiceContextManagerApp
 
         }
 
+        /// <MetaDataID>{fd445d7b-89d2-4383-9908-5d578190b89b}</MetaDataID>
         public void SendVerificationEmail(string emailAddress)
         {
             IAuthFlavourBusiness pAuthFlavourBusiness = null;
@@ -811,7 +916,9 @@ namespace ServiceContextManagerApp
 
 
 
+        /// <MetaDataID>{e0cf560b-8218-45bf-9e8e-1ab82bb8bb96}</MetaDataID>
         List<IServicesContextPresentation> _ServicesContexts = new List<IServicesContextPresentation>();
+        /// <MetaDataID>{569be9e0-84cc-49d1-bb9b-665d12b49059}</MetaDataID>
         public List<IServicesContextPresentation> ServicesContexts
         {
             get
@@ -819,9 +926,10 @@ namespace ServiceContextManagerApp
                 return _ServicesContexts.ToList();
             }
         }
+        /// <MetaDataID>{77b6b4da-7c36-48e3-8351-565ad752e7a9}</MetaDataID>
+        private Dictionary<string, List<IServiceContextSupervisor>> UserServiceContextSupervisorRoles = new Dictionary<string, List<IServiceContextSupervisor>>();
 
-        Dictionary<string, List<IServiceContextSupervisor>> ServiceContextSupervisors = new Dictionary<string, List<IServiceContextSupervisor>>();
-
+        /// <MetaDataID>{889910a6-0a3e-4f1e-bd94-7bbd5bb89e92}</MetaDataID>
         [OOAdvantech.MetaDataRepository.HttpVisible]
         public void SaveUserProfile()
         {
@@ -842,6 +950,7 @@ namespace ServiceContextManagerApp
             }
         }
 
+        /// <MetaDataID>{be5f5d18-17bb-4b96-8d73-00487b2d0f37}</MetaDataID>
         public string FlavoursServiceContextDescription
         {
             get
@@ -852,13 +961,16 @@ namespace ServiceContextManagerApp
                     return "";
             }
         }
+        /// <MetaDataID>{1b8248d1-e683-4862-8cbd-7834de81cc4e}</MetaDataID>
         public async Task<bool> AssignSupervisor()
         {
             return await Assign();
         }
 
+        /// <MetaDataID>{326542fc-2b82-4ecb-b079-9c913c3f034b}</MetaDataID>
         Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
 
+        /// <MetaDataID>{e7417b43-263c-4523-8a09-ce6fc440d180}</MetaDataID>
         public FontData GetFont(string fontUri)
         {
             FontData fontData;
@@ -878,9 +990,12 @@ namespace ServiceContextManagerApp
             return fontData;
         }
 
+        /// <MetaDataID>{6d9638e3-723b-4fd2-b8c7-e42e76a99381}</MetaDataID>
         IServiceContextSupervisor ServiceContextSupervisor;
 
+        /// <MetaDataID>{3f24c775-eaad-46a7-8a09-1d5e68498610}</MetaDataID>
         IOrganization Organization;
+        /// <MetaDataID>{1da67023-cb0e-4988-a14f-54ecfa90ddd3}</MetaDataID>
         private Task<bool> SignInTask;
     }
 

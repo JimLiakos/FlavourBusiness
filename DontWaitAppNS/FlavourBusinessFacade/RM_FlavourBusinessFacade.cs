@@ -1437,20 +1437,6 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<string>(retValue);
         }
         
-        public FlavourBusinessFacade.HumanResources.IShiftWork NewShifWork(FlavourBusinessFacade.HumanResources.IServicesContextWorker worker, System.DateTime startedAt, double timespanInHours)
-        {
-            object[] args = new object[3];
-            System.Type[] argsTypes = new System.Type[3];
-            args[0] = worker;
-            argsTypes[0] = typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker);
-            args[1] = startedAt;
-            argsTypes[1] = typeof(System.DateTime);
-            args[2] = timespanInHours;
-            argsTypes[2] = typeof(double);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "NewShifWork", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
-        }
-        
         public void LaunchCallerIDServer()
         {
             object[] args = new object[0];

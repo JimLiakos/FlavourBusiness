@@ -3532,6 +3532,11 @@
 		    name       	"LastMemberID"
 		    value      	"1"))
 	    quid       	"5F72C0B3018D"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"652A9C62030A"
+		    supplier   	"Logical View::FlavourBusinessFacade::IUser"
+		    quidu      	"5F756AF90177"))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "Email"
 		    attributes 	(list Attribute_Set
@@ -27654,8 +27659,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	19
-		    origin_y   	0
+		    origin_x   	1590
+		    origin_y   	375
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IWaiter" @459
 			    ShowCompartmentStereotypes 	TRUE
@@ -27721,7 +27726,7 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
-			    location   	(4010, 1392)
+			    location   	(4007, 1393)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -27734,7 +27739,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@461
-				location   	(3722, 1358)
+				location   	(3719, 1359)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	576
@@ -27745,6 +27750,24 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0B8490118"
+			    compartment 	(object Compartment
+				Parent_View 	@461
+				location   	(3719, 1420)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	4
+				max_width  	571)
 			    width      	594
 			    height     	269
 			    annotation 	8)
@@ -27776,6 +27799,24 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0BBC80230"
+			    compartment 	(object Compartment
+				Parent_View 	@462
+				location   	(2294, 1298)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	8
+				max_width  	1350)
 			    width      	563
 			    height     	431
 			    annotation 	8)
@@ -27788,7 +27829,7 @@
 				(2582, 1768)
 				(2582, 1567)))
 			(object AssociationViewNew "WorkerShifWork" @464
-			    location   	(3280, 1393)
+			    location   	(3278, 1393)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -27801,7 +27842,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @465
 				Parent_View 	@464
-				location   	(3280, 1334)
+				location   	(3278, 1334)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -27827,7 +27868,7 @@
 			    roleview_list 	(list RoleViews
 				(object RoleView "ShiftWorks" @466
 				    Parent_View 	@464
-				    location   	(2440, 934)
+				    location   	(2438, 934)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -27840,7 +27881,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @467
 					Parent_View 	@466
-					location   	(3625, 1352)
+					location   	(3623, 1352)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -27865,16 +27906,12 @@
 				    quidu      	"5FC0C24C0096"
 				    client     	@464
 				    supplier   	@461
-				    vertices   	(list Points
-					(3280, 1393)
-					(3280, 1384)
-					(3713, 1384))
 				    line_style 	3
-				    origin_attachment 	(3280, 1393)
-				    terminal_attachment 	(3713, 1384)
+				    origin_attachment 	(3278, 1393)
+				    terminal_attachment 	(3710, 1393)
 				    label      	(object SegLabel @468
 					Parent_View 	@466
-					location   	(3669, 1447)
+					location   	(3667, 1447)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -27896,7 +27933,7 @@
 					orientation 	1))
 				(object RoleView "Worker" @469
 				    Parent_View 	@464
-				    location   	(2440, 934)
+				    location   	(2438, 934)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -27909,7 +27946,7 @@
 					default_color 	TRUE)
 				    label      	(object SegLabel @470
 					Parent_View 	@469
-					location   	(2935, 1352)
+					location   	(2934, 1352)
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -27935,7 +27972,7 @@
 				    client     	@464
 				    supplier   	@462
 				    line_style 	3
-				    origin_attachment 	(3280, 1393)
+				    origin_attachment 	(3278, 1393)
 				    terminal_attachment 	(2847, 1393)
 				    label      	(object SegLabel @471
 					Parent_View 	@469
@@ -28169,6 +28206,24 @@
 			    line_color 	3342489
 			    fill_color 	12632256
 			    quidu      	"6009D41F0331"
+			    compartment 	(object Compartment
+				Parent_View 	@480
+				location   	(3203, 715)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	303)
 			    width      	482
 			    height     	256
 			    annotation 	8)
@@ -28187,8 +28242,8 @@
 			    client     	@461
 			    supplier   	@480
 			    line_style 	3
-			    origin_attachment 	(3938, 1258)
-			    terminal_attachment 	(3938, 1004)
+			    origin_attachment 	(3935, 1258)
+			    terminal_attachment 	(3935, 1004)
 			    drawSupplier 	@481)
 			(object InheritView "" @483
 			    stereotype 	TRUE
@@ -28916,6 +28971,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B4B225E006D"
+		    compartment 	(object Compartment
+			Parent_View 	@518
+			location   	(1277, 1812)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	67
+			max_width  	2384)
 		    width      	1006
 		    height     	443
 		    annotation 	8)
@@ -28973,6 +29046,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5BB21F630373"
+		    compartment 	(object Compartment
+			Parent_View 	@520
+			location   	(2715, 1989)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	634)
 		    width      	926
 		    height     	343
 		    annotation 	8)
@@ -29081,6 +29172,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5AB1F3B60227"
+		    compartment 	(object Compartment
+			Parent_View 	@524
+			location   	(1008, 2532)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	1128)
 		    width      	588
 		    height     	287
 		    annotation 	8)
@@ -29111,6 +29220,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F72C0B3018D"
+		    compartment 	(object Compartment
+			Parent_View 	@525
+			location   	(1947, 2451)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	1625)
 		    width      	843
 		    height     	413
 		    annotation 	8)
@@ -29260,6 +29387,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B208CEF0007"
+		    compartment 	(object Compartment
+			Parent_View 	@530
+			location   	(2781, 1269)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	346)
 		    width      	569
 		    height     	262
 		    annotation 	8)
@@ -29571,6 +29716,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B68E02DD"
+		    compartment 	(object Compartment
+			Parent_View 	@546
+			location   	(2605, 748)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	637)
 		    width      	675
 		    height     	487
 		    annotation 	8)
@@ -29741,6 +29904,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5B16B1600111"
+		    compartment 	(object Compartment
+			Parent_View 	@554
+			location   	(1514, 644)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	33
+			max_width  	2062)
 		    width      	475
 		    height     	231
 		    annotation 	8)

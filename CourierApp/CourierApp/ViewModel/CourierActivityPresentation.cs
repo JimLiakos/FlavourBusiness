@@ -41,7 +41,7 @@ namespace CourierApp.ViewModel
 
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
-    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.ViewModel.ILocalization,ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
+    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
@@ -66,7 +66,7 @@ namespace CourierApp.ViewModel
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
-        
+
 
         /// <MetaDataID>{4c90f0e2-26af-4b28-bae1-e799b9f2e5c9}</MetaDataID>
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
@@ -89,7 +89,7 @@ namespace CourierApp.ViewModel
         }
 
 
-        
+
 
         /// <MetaDataID>{7c38008c-e8cc-47cf-b413-45519af70ebc}</MetaDataID>
         IList<UserData> NativeUsers;
@@ -622,36 +622,16 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                if (ActiveShiftWork != null)
-                {
-                    var startedAt = ActiveShiftWork.StartsAt;
-                    var workingHours = ActiveShiftWork.PeriodInHours;
-
-                    var billingPayments = (ActiveShiftWork as IDebtCollection)?.BillingPayments;
-
-                    var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
-                    hour = Math.Round((hour * 2)) / 2;
-                    var utcNow = DateTime.UtcNow.Date + TimeSpan.FromHours(hour);
-                    if (utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        ActiveShiftWork = null;
-                        return false;
-                    }
-                }
+                if (ActiveShiftWork?.IsActive() == true)
+                    return true;
                 else
-                {
                     return false;
-                }
             }
         }
 
 
         /// <MetaDataID>{e0cae251-d210-41e4-9c12-e3da35bcc002}</MetaDataID>
-        public async void SiftWorkStart(DateTime startedAt, double timespanInHours)
+        public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
             ActiveShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours);
 
@@ -941,7 +921,7 @@ namespace CourierApp.ViewModel
 
 
         /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
-        public void ExtendSiftWorkStart(double timespanInHours)
+        public void ExtendShiftWorkStart(double timespanInHours)
         {
             throw new NotImplementedException();
         }
@@ -1101,7 +1081,7 @@ namespace CourierApp.ViewModel
 
 
 
-        
+
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
 
         public string Language { get { return lan; } }
@@ -1131,7 +1111,7 @@ namespace CourierApp.ViewModel
             //string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(jsonName))
             {
-                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName),System.Text. Encoding.UTF8))
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), System.Text.Encoding.UTF8))
                 {
                     json = reader.ReadToEnd();
                     Translations[langCountry] = JObject.Parse(json);
