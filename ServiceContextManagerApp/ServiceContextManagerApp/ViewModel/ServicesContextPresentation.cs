@@ -124,11 +124,13 @@ namespace ServiceContextManagerApp
                 {
                     _Supervisors = ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
 
-                    var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
-                    if (administrator != null)
+                    var signedInSupervisor = SignedInSupervisor;
+
+                    (signedInSupervisor as SupervisorPresentation)?.GetActiveShiftWork();
+                    if (signedInSupervisor != null)
                     {
-                        _Supervisors.Remove(administrator);
-                        _Supervisors.Insert(0, administrator);
+                        _Supervisors.Remove(signedInSupervisor);
+                        _Supervisors.Insert(0, signedInSupervisor);
                     }
                     return _Supervisors;
                 }
@@ -205,6 +207,19 @@ namespace ServiceContextManagerApp
         }
 
 
+        public ISupervisorPresentation SignedInSupervisor
+        {
+            get
+            {
+                
+                if (_SignedInSupervisor == null)
+                    return null;
+                var signedInSupervisor = Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).First();
+
+                return signedInSupervisor;
+
+            }
+        }
 
         /// <MetaDataID>{e16b4d6b-81e8-425f-91e2-087c50ab527f}</MetaDataID>
         public void MakeSupervisorActive(ISupervisorPresentation supervisorPresentation)
@@ -215,7 +230,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{e1567326-c4f7-4c4f-b5d3-0dc851eddec7}</MetaDataID>
-        IServiceContextSupervisor Administrator;
+        IServiceContextSupervisor _SignedInSupervisor;
 
         /// <MetaDataID>{eff5994f-4dc3-461e-8a17-a0d7a1e9a787}</MetaDataID>
         public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
@@ -235,13 +250,16 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{24fad512-b507-4fa6-809b-9a1ec434d852}</MetaDataID>
         string AdministratorIdentity;
         /// <MetaDataID>{e203631b-ddea-42fb-be21-3e7098466561}</MetaDataID>
-        public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor administrator)
+        public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor signedInSupervisor)
         {
-
+            
             AdministratorIdentity = "";
-            Administrator = administrator;
-            if (Administrator != null)
-                AdministratorIdentity = Administrator.Identity;
+            _SignedInSupervisor = signedInSupervisor;
+            if (_SignedInSupervisor != null)
+            {
+                AdministratorIdentity = _SignedInSupervisor.Identity;
+
+            }
 
             ServicesContext = servicesContext;
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
@@ -539,9 +557,9 @@ namespace ServiceContextManagerApp
 
         public NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color)
         {
-            if (worker?.NativeUser==true)
+            if (worker?.NativeUser == true)
             {
-                string codeValue = this.ServicesContext.ServicesContextIdentity+";"+worker.WorkerIdentity;
+                string codeValue = this.ServicesContext.ServicesContextIdentity + ";" + worker.WorkerIdentity;
                 string SigBase64 = "";
 #if DeviceDotNet
             var barcodeWriter = new BarcodeWriterGeneric()

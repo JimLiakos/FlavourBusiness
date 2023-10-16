@@ -52,30 +52,12 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e7461043-e364-4c73-b81b-978a1a3b3d0d}</MetaDataID>
         public bool InActiveShiftWork
         {
-            get
+        get
             {
-                if (ActiveShiftWork != null)
-                {
-                    var startedAt = ActiveShiftWork.StartsAt;
-                    var workingHours = ActiveShiftWork.PeriodInHours;
-
-                    var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
-                    hour = Math.Round((hour * 2)) / 2;
-                    var utcNow = DateTime.Today + TimeSpan.FromHours(hour);
-                    if (utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        ActiveShiftWork = null;
-                        return false;
-                    }
-                }
+                if (ActiveShiftWork?.IsActive() == true)
+                    return true;
                 else
-                {
                     return false;
-                }
             }
         }
 
