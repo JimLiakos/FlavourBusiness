@@ -128,7 +128,7 @@ namespace ServiceContextManagerApp
                     return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
-            }
+            } 
         }
         public void GetActiveShiftWork()
         {
