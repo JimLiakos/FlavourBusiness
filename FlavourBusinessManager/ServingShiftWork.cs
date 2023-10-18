@@ -240,7 +240,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
+                //OOAdvantech.PersistenceLayer.ObjectStorage.DeleteObject(servingBatch);
                 _ServingBatches.Remove(servingBatch as RoomService.ServingBatch);
 
                 stateTransition.Consistent = true;

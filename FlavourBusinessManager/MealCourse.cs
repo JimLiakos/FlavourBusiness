@@ -404,6 +404,8 @@ namespace FlavourBusinessManager.RoomService
                         PreparationState = ItemPreparationState.Serving;
                 }
             }
+
+            FoodItems.Where(x => x.State==ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct();
             //FoodItems.Where(x=>x.State==ItemPreparationState.Serving&&x.ServedInTheBatch!=null).Select(x=>x.ServedInTheBatch).Distinct().ToList();
 
 

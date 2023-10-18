@@ -14,6 +14,36 @@ namespace FlavourBusinessManager.RoomService
     [Persistent()]
     public class ServingBatch : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IServingBatch
     {
+        /// <exclude>Excluded</exclude>
+        DateTime? _CreationTime;
+
+        /// <MetaDataID>{3ae30a45-2c6d-42bb-96e3-28a51bf72b87}</MetaDataID>
+        [PersistentMember(nameof(_CreationTime))]
+
+        [BackwardCompatibilityID("+6")]
+        public DateTime? CreationTime
+        {
+            get => _CreationTime;
+            set
+            {
+                if (_CreationTime!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CreationTime=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            if (_CreationTime!=null)
+            {
+                _CreationTime=DateTime.UtcNow;
+            }
+        }
 
         /// <MetaDataID>{f7e6bbea-e018-4ed1-83a3-5814ef9c1eb7}</MetaDataID>
         public void PrintReceiptAgain()
@@ -169,6 +199,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+
         /// <MetaDataID>{2bf04da7-e667-4ae3-8268-339da1a42253}</MetaDataID>
         protected ServingBatch()
         {
@@ -231,7 +263,7 @@ namespace FlavourBusinessManager.RoomService
         private void MealCourseChangeState(object _object, string member)
         {
 
-            
+
             IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
                                                             where itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(ItemPreparationState.Serving))
                                                             select itemsPreparationContext).ToList();
@@ -271,12 +303,12 @@ namespace FlavourBusinessManager.RoomService
                 else if (existingPreparationItems.Where(x => !newPreparationItems.Contains(x)).Count() != 0)
                     servingBatchChanged = true;
             }
-            if(nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member|| nameof(RoomService.MealCourse.Meal) == member)
+            if (nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member|| nameof(RoomService.MealCourse.Meal) == member)
             {
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
                 this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
-                
+
             }
             if (servingBatchChanged|| nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
             {
@@ -286,13 +318,13 @@ namespace FlavourBusinessManager.RoomService
             }
             if (servingBatchChanged || nameof(RoomService.MealCourse.Meal) == member)
             {
-                
+
                 ContextsOfPreparedItems = preparedItems;
                 ContextsOfUnderPreparationItems = underPreparationItems;
                 ObjectChangeState?.Invoke(this, null);
             }
 
-            
+
         }
 
         /// <MetaDataID>{7ddeada1-2762-4aea-812a-6486231344be}</MetaDataID>
@@ -307,13 +339,14 @@ namespace FlavourBusinessManager.RoomService
             }
 
 
-            Transaction.RunOnTransactionCompleted(() => {
+            Transaction.RunOnTransactionCompleted(() =>
+            {
 
                 var status = Transaction.Current?.Status;
                 if (Transaction.Current?.Status==TransactionStatus.Committed)
                     ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
             });
-            
+
         }
     }
 }
