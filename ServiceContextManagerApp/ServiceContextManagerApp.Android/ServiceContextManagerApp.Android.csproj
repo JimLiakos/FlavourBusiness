@@ -125,6 +125,10 @@
       <Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
       <Name>OOAdvantech.NetStandard.Droid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+      <Project>{0B142E86-D9CD-4BB1-A17E-08A310AEC721}</Project>
+      <Name>OOAdvantech.NetStandard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServiceContextManagerApp\ServiceContextManagerApp.csproj">
       <Project>{E3B55A49-453C-444F-AEEE-DC2704D131E0}</Project>
       <Name>ServiceContextManagerApp</Name>

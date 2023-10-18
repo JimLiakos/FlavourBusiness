@@ -1,6 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.HumanResources;
+
 using OOAdvantech;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Text;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
+using FlavourBusinessManager.HumanResources;
 #endif
 
 namespace ServiceContextManagerApp
@@ -128,7 +129,7 @@ namespace ServiceContextManagerApp
                     return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
-            } 
+            }
         }
         public void GetActiveShiftWork()
         {
@@ -140,7 +141,7 @@ namespace ServiceContextManagerApp
 
             if (ActiveShiftWork != null)
             {
-             //   UpdateFoodShippings(Courier.GetFoodShippings());
+                //   UpdateFoodShippings(Courier.GetFoodShippings());
 
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
