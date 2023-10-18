@@ -6,6 +6,12 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
+#if DeviceDotNet
+using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+#else
+using MarshalByRefObject = System.MarshalByRefObject;
+#endif
+
 namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{50154c26-f1f3-479a-a182-3f3e0f14afbd}</MetaDataID>

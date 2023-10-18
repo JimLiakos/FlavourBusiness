@@ -1,6 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
-using FlavourBusinessManager.HumanResources;
+
 using OOAdvantech;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Text;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
+using FlavourBusinessManager.HumanResources;
 #endif
 
 namespace ServiceContextManagerApp
