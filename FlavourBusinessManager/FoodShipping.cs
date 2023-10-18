@@ -19,6 +19,14 @@ namespace FlavourBusinessManager.Shipping
     {
 
         /// <exclude>Excluded</exclude>
+        DateTime? _CreationTime; 
+
+        /// <MetaDataID>{836f9e8f-edf4-4c9a-8fdf-bb7a4c4418b6}</MetaDataID>
+        [PersistentMember(nameof(_CreationTime))]
+        [BackwardCompatibilityID("+5")]
+        public DateTime? CreationTime => _CreationTime;
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
@@ -46,11 +54,23 @@ namespace FlavourBusinessManager.Shipping
         /// <exclude>Excluded</exclude>
         IMealCourse _MealCourse;
 
+        /// <MetaDataID>{0d8d1c78-9a94-491b-9bf3-0b88e4b4c183}</MetaDataID>
         public FoodShipping()
         {
 
         }
 
+        /// <MetaDataID>{dc5a7887-71e5-4ba2-8b4e-db106a05d8bc}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            if (_CreationTime!=null)
+            {
+                _CreationTime=DateTime.UtcNow;
+            }
+        }
+
+        /// <MetaDataID>{124c5529-dd6b-429c-8772-17858121bb7a}</MetaDataID>
         public FoodShipping(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
 
@@ -73,6 +93,7 @@ namespace FlavourBusinessManager.Shipping
             //Description = mealCourse.Name + " " + ServicePoint.ServiceArea.Description + " / " + ServicePoint.Description;
         }
 
+        /// <MetaDataID>{f0183d98-c51d-466e-8538-e5653b30bad2}</MetaDataID>
         public ItemPreparationState State
         {
             get
@@ -90,6 +111,7 @@ namespace FlavourBusinessManager.Shipping
         }
 
 
+        /// <MetaDataID>{a2f2759f-6f41-4df8-94e4-2e4d8c4b5d03}</MetaDataID>
         internal void OnTheRoad()
         {
             var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
@@ -113,6 +135,7 @@ namespace FlavourBusinessManager.Shipping
         }
 
 
+        /// <MetaDataID>{3cd2eb19-4ee2-47f6-b6c6-8c687a775797}</MetaDataID>
         private void MealCourseChangeState(object _object, string member)
         {
 
@@ -223,6 +246,7 @@ namespace FlavourBusinessManager.Shipping
         [CachingDataOnClientSide]
         public string ServicesPointIdentity { get; set; }
 
+        /// <MetaDataID>{8b04d3b5-3066-4ac7-b863-258938fa98b8}</MetaDataID>
         [CachingDataOnClientSide]
         public IPlace Place
         {
@@ -234,6 +258,7 @@ namespace FlavourBusinessManager.Shipping
             {
             }
         }
+        /// <MetaDataID>{f7552ffa-c40a-44f4-96d5-4196cc0361df}</MetaDataID>
         public string ClientFullName
         {
             get
@@ -247,6 +272,7 @@ namespace FlavourBusinessManager.Shipping
             {
             }
         }
+        /// <MetaDataID>{1809fd16-ec0f-44e6-b1d5-336f64e9af0d}</MetaDataID>
         public string PhoneNumber
         {
             get
@@ -258,6 +284,7 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
+        /// <MetaDataID>{e07fd78f-f3f3-4bfe-ad3a-74bea31fc193}</MetaDataID>
         public string DeliveryRemark
         {
             get
@@ -268,6 +295,7 @@ namespace FlavourBusinessManager.Shipping
             {
             }
         }
+        /// <MetaDataID>{af2a9407-0611-4b59-bc64-801c3182a6aa}</MetaDataID>
         public string NotesForClient
         {
             get
@@ -330,6 +358,7 @@ namespace FlavourBusinessManager.Shipping
 
             }
         }
+        /// <MetaDataID>{a50c2381-6c9e-4359-a493-36c7640550bb}</MetaDataID>
         internal void Update(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
             var mealCourseUri = (mealCourse as MealCourse).MealCourseTypeUri;

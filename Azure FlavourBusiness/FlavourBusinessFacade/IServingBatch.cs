@@ -17,6 +17,7 @@ namespace FlavourBusinessFacade.RoomService
         HumanResources.IServingShiftWork ShiftWork { get; }
 
         /// <MetaDataID>{7a3cacaf-eaba-4fcd-a84b-e8bc312e54f5}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
         ServicePointType ServicePointType { get; set; }
 
         [Association("MealCourseServingBatches", Roles.RoleB, "be1d6d0b-5778-416c-b68f-18f019d34479")]
@@ -25,11 +26,14 @@ namespace FlavourBusinessFacade.RoomService
 
         event ObjectChangeStateHandle ObjectChangeState;
         /// <MetaDataID>{81d18623-47c4-4758-8c09-ab1f11cf5e5d}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
         bool IsAssigned { get; }
         /// <MetaDataID>{ddc19c8a-0a40-475a-82df-2e682a382e8e}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
         int SortID { get; }
 
         /// <MetaDataID>{ba252d9e-edb5-4fc7-b860-894e9542b431}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
         string MealCourseUri { get; }
 
         [Association("ServicePointServingBatch", Roles.RoleA, "48d7a02e-c7e1-4272-af2e-fb0ef5ee917b")]
@@ -47,25 +51,34 @@ namespace FlavourBusinessFacade.RoomService
         /// 
         /// </summary>
         /// <MetaDataID>{1c82234b-1265-4f06-9c61-7915cbae32c4}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
         IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; }
 
         /// <summary>
         /// Defines the prepared items
         /// </summary>
         /// <MetaDataID>{04be4909-5947-4ed7-a47f-6b881f1cb9ee}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
         IList<ItemsPreparationContext> ContextsOfPreparedItems { get; }
 
 
         /// <MetaDataID>{eb3120b1-beb4-4c33-bd96-5b861484b691}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
         string Description { get; }
 
         /// <MetaDataID>{46f36229-fd4d-4d54-b0c2-751685130bdc}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
         string ServicesPointIdentity { get; set; }
 
         event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
         /// <MetaDataID>{bc2b1779-43d0-44e6-adf2-91341b2d47b4}</MetaDataID>
         void PrintReceiptAgain();
+
+
+        /// <MetaDataID>{56fadb84-0a32-49bd-80d2-4c1555bac777}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
+        System.DateTime? CreationTime { get; }
 
     }
 
