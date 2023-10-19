@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessManager.RoomService;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -570,5 +571,9 @@ namespace FlavourBusinessManager.HumanResources
                 return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
         }
 
+        internal void CheckForDelayedMealAtTheCounter()
+        {
+            (ServicesContextRunTime.MealsController as MealsController).GetServingBatches
+        }
     }
 }

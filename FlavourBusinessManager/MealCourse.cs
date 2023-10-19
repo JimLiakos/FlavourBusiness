@@ -261,7 +261,7 @@ namespace FlavourBusinessManager.RoomService
                     {
 
                         var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                              where shiftWork.Worker is ICourier && (Meal.Session.ServicePoint as HomeDeliveryServicePoint).IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                              where shiftWork.Worker is ICourier && (Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
                                               select shiftWork.Worker).OfType<Courier>().ToList();
                         if (activeCouriers.Count > 0)
                         {
@@ -405,7 +405,14 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
 
-            FoodItems.Where(x => x.State==ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct();
+            var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
+            if (servingBatchesAtTheCounter.Count > 0)
+            {
+                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x=>x.Worker as ServiceContextSupervisor)
+                {
+                    supervisorWithActiveShiftWork.CheckForDelayedMealAtTheCounter();
+                }
+            }
             //FoodItems.Where(x=>x.State==ItemPreparationState.Serving&&x.ServedInTheBatch!=null).Select(x=>x.ServedInTheBatch).Distinct().ToList();
 
 
@@ -475,7 +482,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{6ad7a9db-e78f-4fe6-baf6-151bb81a730f}</MetaDataID>
         [PersistentMember(nameof(_ServingBatches))]
         [BackwardCompatibilityID("+10")]
-        [AssociationEndBehavior(PersistencyFlag.OnConstruction|PersistencyFlag.CascadeDelete)]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.CascadeDelete)]
         public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
 
         /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>
@@ -730,7 +737,7 @@ namespace FlavourBusinessManager.RoomService
         Dictionary<string, Action> FoodItemsChangedActions = new Dictionary<string, Action>();
         private void RunFoodItemsChanged()
         {
-            if (OOAdvantech.Transactions.Transaction.Current==null)
+            if (OOAdvantech.Transactions.Transaction.Current == null)
                 ObjectChangeState?.Invoke(this, nameof(FoodItems));
             else
             {
@@ -739,16 +746,16 @@ namespace FlavourBusinessManager.RoomService
                     if (!FoodItemsChangedActions.ContainsKey(Transaction.Current.LocalTransactionUri))
                     {
                         string localTransactionUri = Transaction.Current.LocalTransactionUri;
-                        FoodItemsChangedActions[localTransactionUri]=() =>
+                        FoodItemsChangedActions[localTransactionUri] = () =>
                         {
                             lock (FoodItemsChangedActions)
                             {
                                 FoodItemsChangedActions.Remove(localTransactionUri);
                                 ObjectChangeState?.Invoke(this, nameof(FoodItems));
-                                
+
                             }
                         };
-                        Transaction.Current.TransactionCompleted+= (Transaction transaction) =>
+                        Transaction.Current.TransactionCompleted += (Transaction transaction) =>
                         {
                             FoodItemsChangedActions[localTransactionUri]();
                         };

@@ -129,7 +129,7 @@ namespace ServiceContextManagerApp
                     return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
-            } 
+            }
         }
         public void GetActiveShiftWork()
         {
@@ -141,7 +141,7 @@ namespace ServiceContextManagerApp
 
             if (ActiveShiftWork != null)
             {
-             //   UpdateFoodShippings(Courier.GetFoodShippings());
+                //   UpdateFoodShippings(Courier.GetFoodShippings());
 
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));

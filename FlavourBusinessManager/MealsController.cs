@@ -282,7 +282,28 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        internal IList<ServingBatch> GetServingBatchesAtTheCounter()
+        {
 
+            var mealCoursesForHallServing = (from mealCourse in MealCoursesInProgress
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
+                                      (mealCourse.Meal.Session.ServicePoint is HallServicePoint) 
+                                      select mealCourse).Distinct().ToList();
+
+            var mealCoursesForShippins = (from mealCourse in MealCoursesInProgress
+                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                      from itemPreparation in itemsPreparationContext.PreparationItems
+                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
+                                      (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ActiveShiftWork)
+                                      select mealCourse).Distinct().ToList();
+
+
+
+            return null;
+
+        }
 
         ///// <MetaDataID>{cd97524c-d96b-4469-8ad1-dbc709729bb4}</MetaDataID>
         //Dictionary<IMealCourse, ServingBatch> UnassignedMealCourses = new Dictionary<IMealCourse, ServingBatch>();
@@ -306,7 +327,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint) && (mealCourse.Meal.Session.ServicePoint as HallServicePoint).IsAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint) && (mealCourse.Meal.Session.ServicePoint as HallServicePoint).CanBeAssignedTo(waiter, waiter.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -378,7 +399,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).IsAssignedTo(courier, courier.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ActiveShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -443,7 +464,7 @@ namespace FlavourBusinessManager.RoomService
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 where shiftWork.Worker is IWaiter && servicePoint.CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
             foreach (var a_Waiter in activeWaiters)
@@ -456,7 +477,7 @@ namespace FlavourBusinessManager.RoomService
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
 
             var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                 where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
+                                 where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
 
             foreach (var a_Courier in activeCouriers)
@@ -541,7 +562,7 @@ namespace FlavourBusinessManager.RoomService
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                 where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
+                                 where shiftWork.Worker is IWaiter && servicePoint.CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
             foreach (var a_Waiter in activeWaiters)
@@ -556,7 +577,7 @@ namespace FlavourBusinessManager.RoomService
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
 
             var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                  where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
+                                  where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
                                   select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
 
             foreach (var a_Courier in activeCouriers)
@@ -593,7 +614,7 @@ namespace FlavourBusinessManager.RoomService
                 var servicePoint = meal.Session.ServicePoint as HallServicePoint;
 
                 var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                     where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     where shiftWork.Worker is IWaiter && servicePoint.CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                      select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
                 foreach (var waiter in activeWaiters)
@@ -639,7 +660,7 @@ namespace FlavourBusinessManager.RoomService
                 List<HumanResources.Courier> activeCouriersForMealCoursesShipping = new List<HumanResources.Courier>();
 
                 activeCouriersForMealCoursesShipping.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                               where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                               where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
                                                                select shiftWork.Worker).OfType<Courier>());
 
                 activeCouriersForMealCoursesShipping = activeCouriersForMealCoursesShipping.Distinct().ToList();
@@ -714,7 +735,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var servicePoint in mealCoursesServicesPoints.OfType<HallServicePoint>())
             {
                 activeWaitersFormealCoursesServing.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                             where shiftWork.Worker is IWaiter && servicePoint.IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                                             where shiftWork.Worker is IWaiter && servicePoint.CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                                              select shiftWork.Worker).OfType<HumanResources.Waiter>());
             }
             activeWaitersFormealCoursesServing = activeWaitersFormealCoursesServing.Distinct().ToList();
@@ -730,7 +751,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var servicePoint in mealCoursesServicesPoints.OfType<HomeDeliveryServicePoint>())
             {
                 activeCouriersFormealCoursesShipping.AddRange((from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                               where shiftWork.Worker is ICourier && servicePoint.IsAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                               where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
                                                                select shiftWork.Worker).OfType<Courier>());
             }
             activeCouriersFormealCoursesShipping = activeCouriersFormealCoursesShipping.Distinct().ToList();

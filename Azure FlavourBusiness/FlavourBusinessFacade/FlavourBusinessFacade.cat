@@ -18456,7 +18456,9 @@
 		(object external_doc
 		    external_doc_url 	"https://medium.com/zomato-technology/the-deep-tech-behind-estimating-food-preparation-time-e5068807acb0")
 		(object external_doc
-		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\MealCoursePreparationPlaning.docx"))
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\MealCoursePreparationPlaning.docx")
+		(object external_doc
+		    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Supervisor - Meals tracking.docx"))
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "IItemPreparation"

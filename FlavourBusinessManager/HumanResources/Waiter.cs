@@ -821,15 +821,15 @@ namespace FlavourBusinessManager.HumanResources
                 var clientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
                 if (clientSession != null)
                 {
-                    if (clientSession.Caregivers.Where(x => x.Worker == this && x.Caregiving == EndUsers.Caregiver.CaregivingType.ConversationCheck).Count() == 0)
-                        clientSession.AddCaregiver(this, EndUsers.Caregiver.CaregivingType.ConversationCheck);
+                    if (clientSession.Caregivers.Where(x => x.Worker == this && x.CareGiving == EndUsers.Caregiver.CareGivingType.ConversationCheck).Count() == 0)
+                        clientSession.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.ConversationCheck);
                 }
             }
             else
             {
 
-                if (session.Caregivers.Where(x => x.Worker == this && x.Caregiving == EndUsers.Caregiver.CaregivingType.ConversationCheck).Count() == 0)
-                    session.AddCaregiver(this, EndUsers.Caregiver.CaregivingType.ConversationCheck);
+                if (session.Caregivers.Where(x => x.Worker == this && x.CareGiving == EndUsers.Caregiver.CareGivingType.ConversationCheck).Count() == 0)
+                    session.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.ConversationCheck);
             }
         }
 
