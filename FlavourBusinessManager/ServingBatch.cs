@@ -39,8 +39,8 @@ namespace FlavourBusinessManager.RoomService
         [BeforeCommitObjectStateInStorageCall]
         public void BeforeCommitObjectState()
         {
-            if (_CreationTime!=null)
-            {
+            if (_CreationTime==null)
+            { 
                 _CreationTime=DateTime.UtcNow;
             }
         }

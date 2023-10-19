@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.Shipping;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -485,6 +487,7 @@ namespace FlavourBusinessManager.HumanResources
                 RecentlyShiftWorks.Add(shiftWork);
 
             ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ServicePointRunTime.ServicesContextRunTime.Current.SupervisorSiftWorkUpdated(this);
             return shiftWork;
         }
 
@@ -573,7 +576,43 @@ namespace FlavourBusinessManager.HumanResources
 
         internal void CheckForDelayedMealAtTheCounter()
         {
-            (ServicesContextRunTime.MealsController as MealsController).GetServingBatches
+            lock (objectLock)
+            {
+                var servingBatches = (ServicesContextRunTime.MealsController as MealsController).GetServingBatchesAtTheCounter();
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foreach (var servingBatche in servingBatches.OfType<ServingBatch>())
+                    {
+                        if (servingBatche.CreationTime==null)
+                        {
+
+                            servingBatche.CreationTime=DateTime.UtcNow;
+                        }
+                    }
+
+                    foreach (var servingBatche in servingBatches.OfType<FoodShipping>())
+                    {
+                        if (servingBatche.CreationTime==null)
+                        {
+
+                            servingBatche.CreationTime=DateTime.UtcNow;
+                        }
+                    }
+                    stateTransition.Consistent = true;
+                }
+
+                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime!=null&&(DateTime.UtcNow- x.CreationTime.Value).TotalMinutes>4).ToList();
+
+                System.Diagnostics.Debug.WriteLine("delayedServiceBatches");
+            }
+
+
+
+
+
+
         }
     }
 }

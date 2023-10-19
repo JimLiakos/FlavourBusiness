@@ -1137,8 +1137,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{72cdeed6-b146-405e-97dd-d1ef21dd72fb}</MetaDataID>
         internal void WaiterSiftWorkUpdated(HumanResources.Waiter waiter)
         {
-            if (waiter.ActiveShiftWork != null && !ActiveShiftWorks.Contains(waiter.ActiveShiftWork))
-                ActiveShiftWorks.Add(waiter.ActiveShiftWork);
+            lock (ServiceContextRTLock)
+            {
+                if (waiter.ActiveShiftWork != null && !ActiveShiftWorks.Contains(waiter.ActiveShiftWork))
+                    ActiveShiftWorks.Add(waiter.ActiveShiftWork);
+            }
 
             var activeShiftWorks = GetActiveShiftWorks();
         }
@@ -1147,16 +1150,22 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{9cae1cbf-00a7-48df-8b4b-e7fd8ad6177f}</MetaDataID>
         internal void CashierSiftWorkUpdated(HumanResources.TakeawayCashier cashier)
         {
-            if (cashier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(cashier.ActiveShiftWork))
-                ActiveShiftWorks.Add(cashier.ActiveShiftWork);
+            lock (ServiceContextRTLock)
+            {
+                if (cashier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(cashier.ActiveShiftWork))
+                    ActiveShiftWorks.Add(cashier.ActiveShiftWork);
+            }
 
             var activeShiftWorks = GetActiveShiftWorks();
         }
 
         internal void CourierSiftWorkUpdated(Courier courier)
         {
-            if (courier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(courier.ActiveShiftWork))
-                ActiveShiftWorks.Add(courier.ActiveShiftWork);
+            lock (ServiceContextRTLock)
+            {
+                if (courier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(courier.ActiveShiftWork))
+                    ActiveShiftWorks.Add(courier.ActiveShiftWork);
+            }
 
             var activeShiftWorks = GetActiveShiftWorks();
         }
@@ -1929,6 +1938,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         /// <MetaDataID>{37b1908b-a3e7-4a4e-a710-8ef5a0145ae0}</MetaDataID>
         List<IShiftWork> ActiveShiftWorks;
+
+
 
         /// <MetaDataID>{a82e0e64-72d8-4c6c-bc2d-6c30c4737337}</MetaDataID>
         internal IList<IShiftWork> GetActiveShiftWorks()
@@ -3325,6 +3336,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
 
                 throw;
+            }
+        }
+
+        internal void SupervisorSiftWorkUpdated(ServiceContextSupervisor serviceContextSupervisor)
+        {
+            lock (ServiceContextRTLock)
+            {
+                if (serviceContextSupervisor.ActiveShiftWork != null && !ActiveShiftWorks.Contains(serviceContextSupervisor.ActiveShiftWork))
+                    ActiveShiftWorks.Add(serviceContextSupervisor.ActiveShiftWork);
+
+                var activeShiftWorks = GetActiveShiftWorks();
             }
         }
 

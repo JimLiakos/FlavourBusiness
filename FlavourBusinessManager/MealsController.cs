@@ -282,26 +282,130 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
-        internal IList<ServingBatch> GetServingBatchesAtTheCounter()
+        internal IList<IServingBatch> GetServingBatchesAtTheCounter()
         {
 
             var mealCoursesForHallServing = (from mealCourse in MealCoursesInProgress
-                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                                      from itemPreparation in itemsPreparationContext.PreparationItems
-                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                      (mealCourse.Meal.Session.ServicePoint is HallServicePoint) 
-                                      select mealCourse).Distinct().ToList();
+                                             from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                             from itemPreparation in itemsPreparationContext.PreparationItems
+                                             where (itemPreparation.State == ItemPreparationState.Serving) &&
+                                             (mealCourse.Meal.Session.ServicePoint is HallServicePoint)
+                                             select mealCourse).Distinct().ToList();
+
+            List<ServingBatch> servingBatches = new List<ServingBatch>();
+            foreach (var mealCourse in mealCoursesForHallServing)
+            {
+
+                IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                where itemsPreparationContext.PreparationItems.All(x => (x.State == ItemPreparationState.Serving || x.State == ItemPreparationState.OnRoad))
+                                                                select itemsPreparationContext).ToList();
+
+                IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                        where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                                        x.State == ItemPreparationState.InPreparation ||
+                                                                        x.State == ItemPreparationState.IsRoasting ||
+                                                                        x.State == ItemPreparationState.IsPrepared)
+                                                                        select itemsPreparationContext).ToList();
+
+                var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
+
+                var servingBatch = (from itemsPreparationContext in preparedItems
+                                    from itemPreparation in itemsPreparationContext.PreparationItems
+                                    where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
+                                    select itemPreparation.ServedInTheBatch).OfType<ServingBatch>().FirstOrDefault();
+                if (servingBatch == null)
+                {
+                    servingBatch = mealCourse.ServingBatches.OfType<ServingBatch>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                    if (servingBatch == null)
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                        {
+                            servingBatch = new ServingBatch(mealCourse, preparedItems, underPreparationItems);
+                            ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(servingBatch);
+                            servingBatches.Add(servingBatch);// new ServingBatch(mealCourse, preparedItems, underPreparationItems));
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                }
+                servingBatch.Update(mealCourse, preparedItems, underPreparationItems);
+                servingBatches.Add(servingBatch);
+
+
+
+            }
+
+
+            int i = 0;
+            foreach (var servingBatch in servingBatches)
+                servingBatch.SortID = i++;
+
+
+
+            List<FoodShipping> foodShipings = new List<FoodShipping>();
 
             var mealCoursesForShippins = (from mealCourse in MealCoursesInProgress
-                                      from itemsPreparationContext in mealCourse.FoodItemsInProgress
-                                      from itemPreparation in itemsPreparationContext.PreparationItems
-                                      where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                      (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ActiveShiftWork)
-                                      select mealCourse).Distinct().ToList();
+                                          from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                          from itemPreparation in itemsPreparationContext.PreparationItems
+                                          where (itemPreparation.State == ItemPreparationState.Serving) && (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint)
+                                          select mealCourse).Distinct().ToList();
 
 
+            foreach (var mealCourse in mealCoursesForShippins)
+            {
 
-            return null;
+
+                IList<ItemsPreparationContext> preparedItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                where itemsPreparationContext.PreparationItems.All(x => (x.State == ItemPreparationState.Serving || x.State == ItemPreparationState.OnRoad))
+                                                                select itemsPreparationContext).ToList();
+
+                IList<ItemsPreparationContext> underPreparationItems = (from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                                                        where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                                        x.State == ItemPreparationState.InPreparation ||
+                                                                        x.State == ItemPreparationState.IsRoasting ||
+                                                                        x.State == ItemPreparationState.IsPrepared)
+                                                                        select itemsPreparationContext).ToList();
+
+                if (underPreparationItems.Count == 0)
+                {
+
+                    var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
+
+                    var foodShipping = (from itemsPreparationContext in preparedItems
+                                        from itemPreparation in itemsPreparationContext.PreparationItems
+                                        where itemPreparation.ServedInTheBatch != null && itemPreparation.ServedInTheBatch.MealCourse == mealCourse
+                                        select itemPreparation.ServedInTheBatch).OfType<FoodShipping>().FirstOrDefault();
+                    if (foodShipping == null)
+                    {
+                        foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                        if (foodShipping == null)
+                        {
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
+                            {
+                                foodShipping = new FoodShipping(mealCourse, preparedItems, underPreparationItems);
+                                ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(foodShipping);
+
+                                foodShipings.Add(foodShipping);
+
+                                stateTransition.Consistent = true;
+                            }
+                        }
+                    }
+                    foodShipping.Update(mealCourse, preparedItems, underPreparationItems);
+                    foodShipings.Add(foodShipping);
+                }
+
+            }
+
+
+            i = 0;
+            foreach (var foodShiping in foodShipings)
+                foodShiping.SortID = i++;
+
+            var allServingBatches=servingBatches.OfType<IServingBatch>().Union(foodShipings.OfType<IServingBatch>()).ToList();
+
+
+            return allServingBatches;
+
 
         }
 
@@ -386,7 +490,7 @@ namespace FlavourBusinessManager.RoomService
 
             var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
 
-            List<FoodShipping> servingBatches = new List<FoodShipping>();
+            List<FoodShipping> foodShipings = new List<FoodShipping>();
             if (courier.ActiveShiftWork != null)
             {
 
@@ -436,24 +540,24 @@ namespace FlavourBusinessManager.RoomService
                                     foodShipping = new FoodShipping(mealCourse, preparedItems, underPreparationItems);
                                     ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(foodShipping);
 
-                                    servingBatches.Add(foodShipping);
+                                    foodShipings.Add(foodShipping);
 
                                     stateTransition.Consistent = true;
                                 }
                             }
                         }
                         foodShipping.Update(mealCourse, preparedItems, underPreparationItems);
-                        servingBatches.Add(foodShipping);
+                        foodShipings.Add(foodShipping);
                     }
 
                 }
             }
 
             int i = 0;
-            foreach (var servingBatch in servingBatches)
-                servingBatch.SortID = i++;
+            foreach (var foodShiping in foodShipings)
+                foodShiping.SortID = i++;
 
-            return servingBatches;
+            return foodShipings;
         }
 
 
@@ -477,8 +581,8 @@ namespace FlavourBusinessManager.RoomService
             var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
 
             var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                 where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
-                                 select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                                  where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) && shiftWork.Worker != courier
+                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
 
             foreach (var a_Courier in activeCouriers)
                 a_Courier.FindFoodShippingsChanges();

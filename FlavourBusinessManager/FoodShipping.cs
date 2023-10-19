@@ -24,7 +24,21 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{836f9e8f-edf4-4c9a-8fdf-bb7a4c4418b6}</MetaDataID>
         [PersistentMember(nameof(_CreationTime))]
         [BackwardCompatibilityID("+5")]
-        public DateTime? CreationTime => _CreationTime;
+        public DateTime? CreationTime
+        {
+            get => _CreationTime;
+            set
+            {
+                if (_CreationTime!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _CreationTime=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

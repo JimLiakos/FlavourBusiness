@@ -408,7 +408,7 @@ namespace FlavourBusinessManager.RoomService
             var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
             if (servingBatchesAtTheCounter.Count > 0)
             {
-                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x=>x.Worker as ServiceContextSupervisor)
+                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x=>x.Worker as ServiceContextSupervisor))
                 {
                     supervisorWithActiveShiftWork.CheckForDelayedMealAtTheCounter();
                 }
