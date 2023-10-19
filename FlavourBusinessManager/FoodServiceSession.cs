@@ -576,7 +576,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 if (ServicePoint.State == ServicePointState.Conversation)
                     (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
 
-                if (Caregivers.Where(x => x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Count() > 0)
+                if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
                 {
                     if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
                     {
@@ -648,14 +648,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{5bb24d64-6784-4f87-948f-e37b638d423c}</MetaDataID>
-        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CaregivingType caregivingType)
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType caregivingType)
         {
             lock (CaregiversLock)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, Caregiving = caregivingType });
-                    if (caregivingType == Caregiver.CaregivingType.ConversationCheck)
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType,WillTakeCareTimestamp = DateTime.UtcNow });
+                    if (caregivingType == Caregiver.CareGivingType.ConversationCheck)
                         WillTakeCareTimestamp = DateTime.UtcNow;
 
                     stateTransition.Consistent = true;

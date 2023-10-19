@@ -301,13 +301,13 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{b3869d58-92cd-4522-bf59-32c60cc7844c}</MetaDataID>
-        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CaregivingType caregivingType)
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType caregivingType)
         {
             lock (CaregiversLock)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, Caregiving = caregivingType });
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType,WillTakeCareTimestamp=DateTime.UtcNow });
                     stateTransition.Consistent = true;
                 }
             }
@@ -810,7 +810,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (ServicePoint.State == ServicePointState.Conversation)
                         (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
 
-                    if (Caregivers.Where(x => x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Count() > 0)
+                    if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
                     {
                         //When there is care giving the reminding message is sent after extra time interval from care giving time stamp   
                         if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
@@ -2930,6 +2930,7 @@ namespace FlavourBusinessManager.EndUsers
     /// <MetaDataID>{3ed1fc71-2eb7-4fc5-a41e-656823ffd9a1}</MetaDataID>
     public class Caregiver
     {
+        public Caregiver() { }
 
         /// <MetaDataID>{68f09a1a-3a1b-4ec8-915c-49679b0496de}</MetaDataID>
         [OOAdvantech.Json.JsonIgnore]
@@ -2955,17 +2956,20 @@ namespace FlavourBusinessManager.EndUsers
                 WorkerUri = ObjectStorage.GetStorageOfObject(_Worker).GetPersistentObjectUri(_Worker);
             }
         }
+        [OOAdvantech.Json.JsonProperty]
+       public  System.DateTime? WillTakeCareTimestamp { get; set; }
 
 
 
         /// <MetaDataID>{074975bc-5a6c-4890-a835-6a7c7876504f}</MetaDataID>
-        public CaregivingType Caregiving;
+        public CareGivingType CareGiving;
 
-        public enum CaregivingType
+        public enum CareGivingType
         {
             Lay,
             ConversationCheck,
-            MealConsulting
+            MealConsulting,
+            DelayedMealAtTheCounter
         }
     }
     /// <MetaDataID>{b870fcd0-671e-4ef8-abd5-d8bb26cef2fd}</MetaDataID>

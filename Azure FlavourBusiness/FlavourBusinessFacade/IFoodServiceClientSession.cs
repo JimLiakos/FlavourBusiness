@@ -304,7 +304,10 @@ namespace FlavourBusinessFacade.EndUsers
         ShareItemHasChange = 3,
         LaytheTable = 4,
         ItemsReadyToServe = 5,
-        MealConversationTimeout = 6
+        MealConversationTimeout = 6,
+        DelayedMealAtTheCounter=7
+
+
     }
 
 

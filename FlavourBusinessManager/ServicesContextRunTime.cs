@@ -1193,10 +1193,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
         internal void MealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
         {
-            var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.Caregiving == Caregiver.CaregivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
+            var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
             if (activeWaiters.Count == 0 && servicePoint is HallServicePoint)
                 activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                 where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                 where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                  select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
 
@@ -1329,7 +1329,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 //if (servicePoint.OpenClientSessions.Where(x => !x.IsWaiterSession).FirstOrDefault() != null)
                 //{
                 var activeWaiters = (from shiftWork in GetActiveShiftWorks()
-                                     where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).IsAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
                                      select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
 
                 foreach (var waiter in activeWaiters)
