@@ -78,24 +78,6 @@
 		    line_color 	3342489
 		    fill_color 	12632256
 		    quidu      	"6009D41F0331"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(3203, 759)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	303)
 		    width      	482
 		    height     	256
 		    annotation 	8)

@@ -1999,6 +1999,15 @@
 			    supplier   	"Logical View::FlavourBusinessFacade::UserData"
 			    quidu      	"5F72C0B3018D")))
 		(object Association "$UNNAMED$4"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"652AC256023F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"71d212f7-3cc9-4b7e-ad63-c5d92f174e0e"))
 		    quid       	"652AC256023F"
 		    roles      	(list role_list
 			(object Role "Organization"
@@ -2006,7 +2015,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Synchronize"
-				    value      	FALSE))
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AC257019E")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e6996372-6262-413f-968f-4baded093809}"))
 			    quid       	"652AC257019E"
 			    label      	"Organization"
 			    supplier   	"Logical View::FlavourBusinessFacade::IOrganization"
@@ -2014,10 +2031,28 @@
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
 			(object Role "$UNNAMED$5"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AC25701AA")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f8802e58-b61b-44b7-8642-cf130a15f152}"))
 			    quid       	"652AC25701AA"
 			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation"
 			    quidu      	"652A871A036E")))
 		(object Association "$UNNAMED$6"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"652AC26E0179")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"f5bb2ec3-2990-49ff-bcc1-fcdc2a827dc6"))
 		    quid       	"652AC26E0179"
 		    roles      	(list role_list
 			(object Role "UserServiceContextSupervisorRoles"
@@ -2025,7 +2060,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Synchronize"
-				    value      	FALSE))
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AC27001A6")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0ff17055-4ab9-4f40-be29-d1ba2ff524b9}"))
 			    quid       	"652AC27001A6"
 			    label      	"UserServiceContextSupervisorRoles"
 			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor"
@@ -2033,19 +2076,55 @@
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
 			(object Role "$UNNAMED$7"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AC27001B2")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{72957fa7-5fd5-40f7-b67b-dd19bf971d7f}"))
 			    quid       	"652AC27001B2"
 			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation"
 			    quidu      	"652A871A036E"))
 		    AssociationClass 	"Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation")
 		(object Association "$UNNAMED$8"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"652AD36C0335")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"aadd4dcc-c674-45f8-9832-56baa4e0902d"))
 		    quid       	"652AD36C0335"
 		    roles      	(list role_list
 			(object Role "$UNNAMED$9"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD36E00FB")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2c6b9eb5-1aed-4ed9-a106-a039efb0a4b2}"))
 			    quid       	"652AD36E00FB"
 			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IShiftWork"
 			    quidu      	"5FC0B8490118"
 			    is_navigable 	TRUE)
 			(object Role "$UNNAMED$10"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"652AD36E010A")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{93555a55-e6c8-48fa-9b4b-7c43017f5a50}"))
 			    quid       	"652AD36E010A"
 			    supplier   	"Logical View::ServiceContextManagerApp::ViewModel::SupervisorPresentation"
 			    quidu      	"652AD2A3006B"))))
@@ -2059,9 +2138,9 @@
 		    origin_x   	1838
 		    origin_y   	228
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IManagerPresentation" @1
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::UserRole" @1
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(359, 270)
+			    location   	(3405, 439)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2074,19 +2153,18 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@1
-				location   	(134, 233)
+				location   	(3208, 360)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	450
+				max_width  	395
 				justify    	0
-				label      	"IManagerPresentation")
-			    icon       	"Interface"
+				label      	"UserRole")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	13434879
-			    quidu      	"652A817A00AD"
-			    width      	468
-			    height     	275
+			    quidu      	"652AA1380355"
+			    width      	413
+			    height     	182
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::UserData" @2
 			    ShowCompartmentStereotypes 	TRUE
@@ -2116,35 +2194,7 @@
 			    width      	632
 			    height     	187
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::UserRole" @3
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(3405, 439)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@3
-				location   	(3208, 360)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	395
-				justify    	0
-				label      	"UserRole")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"652AA1380355"
-			    width      	413
-			    height     	182
-			    annotation 	8)
-			(object AssociationViewNew "$UNNAMED$2" @4
+			(object AssociationViewNew "$UNNAMED$2" @3
 			    location   	(3453, 1034)
 			    font       	(object Font
 				size       	10
@@ -2160,8 +2210,8 @@
 			    line_color 	3342489
 			    quidu      	"652AA1DC0384"
 			    roleview_list 	(list RoleViews
-				(object RoleView "Roles" @5
-				    Parent_View 	@4
+				(object RoleView "Roles" @4
+				    Parent_View 	@3
 				    location   	(1743, -419)
 				    font       	(object Font
 					size       	10
@@ -2173,8 +2223,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @6
-					Parent_View 	@5
+				    label      	(object SegLabel @5
+					Parent_View 	@4
 					location   	(3412, 632)
 					font       	(object Font
 					    size       	10
@@ -2198,13 +2248,13 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AA1DE009C"
-				    client     	@4
-				    supplier   	@3
+				    client     	@3
+				    supplier   	@1
 				    line_style 	3
 				    origin_attachment 	(3453, 1034)
 				    terminal_attachment 	(3453, 530)
-				    label      	(object SegLabel @7
-					Parent_View 	@5
+				    label      	(object SegLabel @6
+					Parent_View 	@4
 					location   	(3507, 580)
 					font       	(object Font
 					    size       	10
@@ -2225,18 +2275,18 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$3" @8
-				    Parent_View 	@4
+				(object RoleView "$UNNAMED$3" @7
+				    Parent_View 	@3
 				    location   	(1743, -419)
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AA1DE009F"
-				    client     	@4
+				    client     	@3
 				    supplier   	@2
 				    line_style 	3
 				    origin_attachment 	(3453, 1034)
 				    terminal_attachment 	(3453, 1539))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser" @9
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser" @8
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2436, 424)
 			    font       	(object Font
@@ -2250,7 +2300,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@9
+				Parent_View 	@8
 				location   	(2151, 390)
 				fill_color 	13434879
 				nlines     	1
@@ -2265,22 +2315,22 @@
 			    width      	588
 			    height     	268
 			    annotation 	8)
-			(object InheritTreeView "" @10
+			(object InheritTreeView "" @9
 			    location   	(2454, 702)
 			    line_color 	3342489
 			    fill_color 	13434879
-			    supplier   	@9
+			    supplier   	@8
 			    vertices   	(list Points
 				(2454, 702)
 				(2454, 558)))
-			(object UsesView "" @11
+			(object UsesView "" @10
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"652AACD30388"
-			    client     	@3
-			    supplier   	@9
+			    client     	@1
+			    supplier   	@8
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IOrganization" @12
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IOrganization" @11
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2058, 1038)
 			    font       	(object Font
@@ -2294,7 +2344,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@12
+				Parent_View 	@11
 				location   	(1764, 1010)
 				fill_color 	13434879
 				nlines     	1
@@ -2308,6 +2358,35 @@
 			    quidu      	"5A71E30A0241"
 			    width      	606
 			    height     	256
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor" @12
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(2782, 1052)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@12
+				location   	(2504, 1021)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	557
+				justify    	0
+				label      	"IServiceContextSupervisor")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"5F59B55A023E"
+			    width      	575
+			    height     	262
 			    annotation 	8)
 			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::ManagerPresentation" @13
 			    ShowCompartmentStereotypes 	TRUE
@@ -2337,16 +2416,7 @@
 			    width      	450
 			    height     	219
 			    annotation 	8)
-			(object RealizeView "" @14
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"652A95890285"
-			    client     	@13
-			    supplier   	@1
-			    line_style 	3
-			    origin_attachment 	(303, 1461)
-			    terminal_attachment 	(303, 406))
-			(object AssociationViewNew "$UNNAMED$4" @15
+			(object AssociationViewNew "$UNNAMED$4" @14
 			    location   	(1360, 1517)
 			    font       	(object Font
 				size       	10
@@ -2362,8 +2432,8 @@
 			    line_color 	3342489
 			    quidu      	"652AC256023F"
 			    roleview_list 	(list RoleViews
-				(object RoleView "Organization" @16
-				    Parent_View 	@15
+				(object RoleView "Organization" @15
+				    Parent_View 	@14
 				    location   	(866, 70)
 				    font       	(object Font
 					size       	10
@@ -2375,8 +2445,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @17
-					Parent_View 	@16
+				    label      	(object SegLabel @16
+					Parent_View 	@15
 					location   	(1781, 1330)
 					font       	(object Font
 					    size       	10
@@ -2400,8 +2470,8 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AC257019E"
-				    client     	@15
-				    supplier   	@12
+				    client     	@14
+				    supplier   	@11
 				    vertices   	(list Points
 					(1360, 1517)
 					(1822, 1517)
@@ -2409,8 +2479,8 @@
 				    line_style 	3
 				    origin_attachment 	(1360, 1517)
 				    terminal_attachment 	(1822, 1166)
-				    label      	(object SegLabel @18
-					Parent_View 	@16
+				    label      	(object SegLabel @17
+					Parent_View 	@15
 					location   	(1876, 1247)
 					font       	(object Font
 					    size       	10
@@ -2431,47 +2501,18 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$5" @19
-				    Parent_View 	@15
+				(object RoleView "$UNNAMED$5" @18
+				    Parent_View 	@14
 				    location   	(866, 70)
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AC25701AA"
-				    client     	@15
+				    client     	@14
 				    supplier   	@13
 				    line_style 	3
 				    origin_attachment 	(1360, 1517)
 				    terminal_attachment 	(547, 1517))))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IServiceContextSupervisor" @20
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(2782, 1052)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@20
-				location   	(2504, 1021)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	557
-				justify    	0
-				label      	"IServiceContextSupervisor")
-			    icon       	"Interface"
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"5F59B55A023E"
-			    width      	575
-			    height     	262
-			    annotation 	8)
-			(object AssociationViewNew "$UNNAMED$6" @21
+			(object AssociationViewNew "$UNNAMED$6" @19
 			    location   	(1766, 1594)
 			    font       	(object Font
 				size       	10
@@ -2487,8 +2528,8 @@
 			    line_color 	3342489
 			    quidu      	"652AC26E0179"
 			    roleview_list 	(list RoleViews
-				(object RoleView "UserServiceContextSupervisorRoles" @22
-				    Parent_View 	@21
+				(object RoleView "UserServiceContextSupervisorRoles" @20
+				    Parent_View 	@19
 				    location   	(1272, 147)
 				    font       	(object Font
 					size       	10
@@ -2500,8 +2541,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @23
-					Parent_View 	@22
+				    label      	(object SegLabel @21
+					Parent_View 	@20
 					location   	(2533, 1428)
 					font       	(object Font
 					    size       	10
@@ -2525,17 +2566,17 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AC27001A6"
-				    client     	@21
-				    supplier   	@20
+				    client     	@19
+				    supplier   	@12
 				    vertices   	(list Points
 					(1766, 1594)
 					(2574, 1594)
 					(2574, 1183))
 				    line_style 	3
 				    origin_attachment 	(1766, 1594)
-				    terminal_attachment 	(2671, 1183)
-				    label      	(object SegLabel @24
-					Parent_View 	@22
+				    terminal_attachment 	(2574, 1183)
+				    label      	(object SegLabel @22
+					Parent_View 	@20
 					location   	(2628, 1305)
 					font       	(object Font
 					    size       	10
@@ -2556,50 +2597,50 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$7" @25
-				    Parent_View 	@21
+				(object RoleView "$UNNAMED$7" @23
+				    Parent_View 	@19
 				    location   	(1272, 147)
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"652AC27001B2"
-				    client     	@21
+				    client     	@19
 				    supplier   	@13
 				    line_style 	3
 				    origin_attachment 	(1766, 1594)
 				    terminal_attachment 	(547, 1594))))
-			(object AssocConstraintView "" @26
+			(object AssocConstraintView "" @24
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@21
-			    supplier   	@4
+			    client     	@19
+			    supplier   	@3
 			    line_style 	0)
-			(object InheritView "" @27
+			(object InheritView "" @25
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5F756C18013C"
-			    client     	@12
-			    supplier   	@9
+			    client     	@11
+			    supplier   	@8
 			    line_style 	3
 			    origin_attachment 	(1885, 910)
 			    terminal_attachment 	(1885, 702)
-			    drawSupplier 	@10)
-			(object InheritView "" @28
+			    drawSupplier 	@9)
+			(object InheritView "" @26
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"61AD167D03D4"
-			    client     	@20
-			    supplier   	@9
+			    client     	@12
+			    supplier   	@8
 			    line_style 	3
 			    origin_attachment 	(2830, 921)
 			    terminal_attachment 	(2830, 702)
-			    drawSupplier 	@10)
-			(object AssocConstraintView "" @29
+			    drawSupplier 	@9)
+			(object AssocConstraintView "" @27
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@15
-			    supplier   	@4
+			    client     	@14
+			    supplier   	@3
 			    line_style 	0)
-			(object NoteView @30
+			(object NoteView @28
 			    location   	(4192, 500)
 			    font       	(object Font
 				size       	10
@@ -2612,7 +2653,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@30
+				Parent_View 	@28
 				location   	(3767, 290)
 				fill_color 	13434879
 				nlines     	8
@@ -2625,7 +2666,7 @@
 			    fill_color 	13434879
 			    width      	875
 			    height     	432)
-			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation" @31
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IServicesContextPresentation" @29
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1438, 274)
 			    font       	(object Font
@@ -2639,7 +2680,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@31
+				Parent_View 	@29
 				location   	(1128, 243)
 				fill_color 	13434879
 				nlines     	1
@@ -2654,6 +2695,44 @@
 			    width      	638
 			    height     	263
 			    annotation 	8)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::IManagerPresentation" @30
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(359, 270)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@30
+				location   	(134, 233)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"IManagerPresentation")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652A817A00AD"
+			    width      	468
+			    height     	275
+			    annotation 	8)
+			(object RealizeView "" @31
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652A95890285"
+			    client     	@13
+			    supplier   	@30
+			    line_style 	3
+			    origin_attachment 	(303, 1461)
+			    terminal_attachment 	(303, 406))
 			(object AssociationViewNew "$UNNAMED$0" @32
 			    location   	(856, 270)
 			    font       	(object Font
@@ -2709,7 +2788,7 @@
 				    line_color 	3342489
 				    quidu      	"652A85DF0079"
 				    client     	@32
-				    supplier   	@31
+				    supplier   	@29
 				    line_style 	3
 				    origin_attachment 	(856, 270)
 				    terminal_attachment 	(1119, 270)
@@ -2742,15 +2821,15 @@
 				    line_color 	3342489
 				    quidu      	"652A85DF007C"
 				    client     	@32
-				    supplier   	@1
+				    supplier   	@30
 				    line_style 	3
 				    origin_attachment 	(856, 270)
 				    terminal_attachment 	(593, 270))))
 			(object AssocAttachView "" @37
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@21
-			    supplier   	@31
+			    client     	@19
+			    supplier   	@29
 			    line_style 	0)
 			(object UsesView "UserData" @38
 			    font       	(object Font
@@ -2808,58 +2887,7 @@
 			    width      	575
 			    height     	256
 			    annotation 	8)
-			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::SupervisorPresentation" @40
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(628, 1185)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@40
-				location   	(372, 1097)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	513
-				justify    	0
-				label      	"SupervisorPresentation")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"652AD2A3006B"
-			    width      	531
-			    height     	200
-			    annotation 	8)
-			(object RealizeView "" @41
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"652AD2D00137"
-			    client     	@40
-			    supplier   	@39
-			    line_style 	3
-			    origin_attachment 	(628, 1085)
-			    terminal_attachment 	(628, 797))
-			(object UsesView "" @42
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"652AD31301ED"
-			    client     	@40
-			    supplier   	@20
-			    vertices   	(list Points
-				(890, 1085)
-				(890, 844)
-				(2681, 844)
-				(2681, 921))
-			    line_style 	3
-			    origin_attachment 	(890, 1085)
-			    terminal_attachment 	(2681, 921))
-			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IShiftWork" @43
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IShiftWork" @40
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1387, 1163)
 			    font       	(object Font
@@ -2873,7 +2901,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@43
+				Parent_View 	@40
 				location   	(1118, 1135)
 				fill_color 	13434879
 				nlines     	1
@@ -2888,6 +2916,57 @@
 			    width      	556
 			    height     	257
 			    annotation 	8)
+			(object ClassView "Class" "Logical View::ServiceContextManagerApp::ViewModel::SupervisorPresentation" @41
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(628, 1185)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@41
+				location   	(372, 1097)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	513
+				justify    	0
+				label      	"SupervisorPresentation")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"652AD2A3006B"
+			    width      	531
+			    height     	200
+			    annotation 	8)
+			(object RealizeView "" @42
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AD2D00137"
+			    client     	@41
+			    supplier   	@39
+			    line_style 	3
+			    origin_attachment 	(628, 1085)
+			    terminal_attachment 	(628, 797))
+			(object UsesView "" @43
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"652AD31301ED"
+			    client     	@41
+			    supplier   	@12
+			    vertices   	(list Points
+				(890, 1085)
+				(890, 844)
+				(2681, 844)
+				(2681, 921))
+			    line_style 	3
+			    origin_attachment 	(890, 1085)
+			    terminal_attachment 	(2681, 921))
 			(object AssociationViewNew "$UNNAMED$8" @44
 			    location   	(1001, 1185)
 			    font       	(object Font
@@ -2911,7 +2990,7 @@
 				    line_color 	3342489
 				    quidu      	"652AD36E00FB"
 				    client     	@44
-				    supplier   	@43
+				    supplier   	@40
 				    line_style 	3
 				    origin_attachment 	(1001, 1185)
 				    terminal_attachment 	(1109, 1185))
@@ -2922,7 +3001,7 @@
 				    line_color 	3342489
 				    quidu      	"652AD36E010A"
 				    client     	@44
-				    supplier   	@40
+				    supplier   	@41
 				    line_style 	3
 				    origin_attachment 	(1001, 1185)
 				    terminal_attachment 	(893, 1185)))))))))

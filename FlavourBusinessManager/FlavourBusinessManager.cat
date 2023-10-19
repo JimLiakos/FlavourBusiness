@@ -32013,7 +32013,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"5")
+			    value      	"7")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -32047,13 +32047,13 @@
 			    quid       	"619534880112"
 			    parameters 	(list Parameters
 				(object Parameter "mealCourse"
-				    quid       	"6514594503DB"
+				    quid       	"653000DC00DA"
 				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
 				(object Parameter "preparedItems"
-				    quid       	"651459460021"
+				    quid       	"653000DC00FF"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
 				(object Parameter "underPreparationItems"
-				    quid       	"65145946003F"
+				    quid       	"653000DC011C"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -32232,13 +32232,13 @@
 			    quid       	"6234C14F035C"
 			    parameters 	(list Parameters
 				(object Parameter "mealCourse"
-				    quid       	"6514594600AC"
+				    quid       	"653000DC018C"
 				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
 				(object Parameter "preparedItems"
-				    quid       	"6514594600CA"
+				    quid       	"653000DC01AF"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
 				(object Parameter "underPreparationItems"
-				    quid       	"6514594600E9"
+				    quid       	"653000DC01D0"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -32442,7 +32442,7 @@
 				    name       	"GenerateSetOperation"
 				    value      	TRUE))
 			    quid       	"61953D990011"
-			    type       	"ServicePointType"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType"
 			    exportControl 	"Public")
 			(object ClassAttribute "ServicesPointIdentity"
 			    attributes 	(list Attribute_Set
@@ -32571,9 +32571,46 @@
 				(object Attribute
 				    tool       	"Persistent"
 				    name       	"Persistent"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+5"))
 			    quid       	"651459460152"
 			    type       	"FlavourBusinessFacade.HumanResources.IServingShiftWork"
+			    exportControl 	"Public")
+			(object ClassAttribute "CreationTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3ae30a45-2c6d-42bb-96e3-28a51bf72b87}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"653000DD0201")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
+			    quid       	"653000DD0201"
+			    type       	"System.Nullable`1[[System.DateTime,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -32688,7 +32725,7 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"ContainerClass"
-				    value      	(value Text "System.Collections.Generic.List<RoomService.IServingBatch>"))
+				    value      	(value Text "System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IServingBatch>"))
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
@@ -32923,7 +32960,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -32945,7 +32982,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged( )"
+					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -32967,7 +33004,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -32989,7 +33026,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33034,7 +33071,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -36082,7 +36119,7 @@
 					pctDist    	0.803842
 					height     	74
 					orientation 	0))
-				(object RoleView "" @559
+				(object RoleView "PreparedItems" @559
 				    Parent_View 	@554
 				    location   	(627, 151)
 				    font       	(object Font
@@ -36108,13 +36145,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	291
 					justify    	0
-					label      	""
+					label      	"+PreparedItems"
 					pctDist    	0.082237
 					height     	98
 					orientation 	1)
@@ -36835,7 +36871,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -36921,7 +36957,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged( )"
+				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 				pctDist    	1.059687
 				height     	107
 				orientation 	0)
@@ -37007,7 +37043,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<string>)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -37093,7 +37129,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -37342,7 +37378,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -43420,24 +43456,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F550D3B0057"
-			    compartment 	(object Compartment
-				Parent_View 	@622
-				location   	(1488, 1117)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	2659)
 			    width      	794
 			    height     	482
 			    annotation 	8)
@@ -43467,24 +43485,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B9180030"
-			    compartment 	(object Compartment
-				Parent_View 	@623
-				location   	(99, 1694)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	388)
 			    width      	596
 			    height     	336
 			    annotation 	8
@@ -43517,24 +43517,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5F59B55A023E"
-			    compartment 	(object Compartment
-				Parent_View 	@624
-				location   	(9, 1135)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	1596)
 			    width      	806
 			    height     	481
 			    annotation 	8)
@@ -43823,24 +43805,6 @@
 			    line_color 	3342489
 			    fill_color 	5869567
 			    quidu      	"5FC0C9240018"
-			    compartment 	(object Compartment
-				Parent_View 	@638
-				location   	(3929, 1353)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	9
-				max_width  	1353)
 			    width      	713
 			    height     	494
 			    annotation 	8)
@@ -49153,7 +49117,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"5")
+			    value      	"6")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -49452,6 +49416,39 @@
 				    value      	TRUE))
 			    quid       	"651451C103D0"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "CreationTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{836f9e8f-edf4-4c9a-8fdf-bb7a4c4418b6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"653006DB00C4")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+5"))
+			    quid       	"653006DB00C4"
+			    type       	"System.Nullable`1[[System.DateTime,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
