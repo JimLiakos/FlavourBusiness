@@ -9,6 +9,9 @@ using FlavourBusinessManager.RoomService.ViewModel;
 using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using ServiceContextManagerApp.ViewModel;
+using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessManager.HumanResources;
+using CourierApp.ViewModel;
 
 
 
@@ -29,6 +32,9 @@ using System;
 
 namespace ServiceContextManagerApp
 {
+
+    
+
     /// <MetaDataID>{43d3b2e4-4576-47ec-bf5f-6ad3bb87aa57}</MetaDataID>
     public class ServicesContextPresentation : MarshalByRefObject, INotifyPropertyChanged, IServicesContextPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
@@ -265,6 +271,8 @@ namespace ServiceContextManagerApp
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
 
             signedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
+
+            Get
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
             MealsController = this.ServicesContextRuntime.MealsController;
 
@@ -282,6 +290,41 @@ namespace ServiceContextManagerApp
             });
 
         }
+
+        public event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
+        object MessagesLock = new object();
+        private void GetMessages()
+        {
+            lock (MessagesLock)
+            {
+                if (_SignedInSupervisor != null)
+                {
+                    var message = _SignedInSupervisor.PeekMessage();
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter)
+                    {
+                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                            _SignedInSupervisor.RemoveMessage(message.MessageID);
+                        else
+                        {
+                            if (message != null  && SignedInSupervisor?. InActiveShiftWork==true)
+                            {
+
+
+
+
+                                //string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+                                DelayedMealAtTheCounter?.Invoke(SignedInSupervisor, message.MessageID);
+                                //PartOfMealRequestMessageForward(message);
+                                return;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+
 
         private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
         {

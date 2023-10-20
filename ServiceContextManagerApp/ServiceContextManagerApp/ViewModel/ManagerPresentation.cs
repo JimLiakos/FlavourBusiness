@@ -768,7 +768,7 @@ namespace ServiceContextManagerApp
                         {
                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(supervisorRole.User);
                             var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
-                            if (UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
+                            if (!UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
                             {
                                 _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
 

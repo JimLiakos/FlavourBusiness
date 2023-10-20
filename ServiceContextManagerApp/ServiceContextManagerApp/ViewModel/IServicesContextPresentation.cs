@@ -89,7 +89,14 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{4151f8dc-d587-48ce-9e39-c13449564d0c}</MetaDataID>
         ICourier AssignCourierNativeUser(string takeAwayCashierAssignKey, string userName, string password, string userFullName);
 
+
+        [GenerateEventConsumerProxy]
+        event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
+
+
     }
+
+    public delegate void DelayedMealAtTheCountertHandle(ISupervisorPresentation supervisorPresentation, string messageID);
     public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
     
 }
