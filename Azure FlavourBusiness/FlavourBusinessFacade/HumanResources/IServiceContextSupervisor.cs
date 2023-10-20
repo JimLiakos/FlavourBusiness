@@ -7,9 +7,12 @@ namespace FlavourBusinessFacade.HumanResources
     /// <MetaDataID>{93d218ca-c96a-43bb-abfa-76d5c7b02d76}</MetaDataID>
     [BackwardCompatibilityID("{93d218ca-c96a-43bb-abfa-76d5c7b02d76}")]
     [GenerateFacadeProxy]
-    public interface IServiceContextSupervisor : IServicesContextWorker, IUser
+    public interface IServiceContextSupervisor : IServicesContextWorker, EndUsers.IMessageConsumer,IUser
     {
-   
+        /// <MetaDataID>{7b3512e8-8584-4d3f-b328-137d039e72ac}</MetaDataID>
+        [BackwardCompatibilityID("+10")]
+        string DeviceFirebaseToken { get; set; }
+
         /// <MetaDataID>{49119625-8e20-4fbb-92a2-8bbbe5c2762f}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         [CachingDataOnClientSide]

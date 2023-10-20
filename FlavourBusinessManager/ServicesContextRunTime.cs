@@ -609,7 +609,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         void ObjectActivation()
         {
             lock (this)
-            { 
+            {
                 var fbstorage = Storages.Where(x => x.FlavourStorageType == OrganizationStorages.OperativeRestaurantMenu).FirstOrDefault();
 
                 if (fbstorage != null)
@@ -623,7 +623,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
             bool del = false;
-             
+
             if (del)
                 Simulator.DeleteSimulationData();
 
@@ -879,6 +879,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 workersWithUnreadedMessages = WaitersWithUnreadedMessages.OfType<IMessageConsumer>().ToList();
                 workersWithUnreadedMessages.AddRange(CouriersWithUnreadedMessages.OfType<IMessageConsumer>().ToList());
+                workersWithUnreadedMessages.AddRange(SupervisorsWithUnreadedMessages.OfType<IMessageConsumer>().ToList());
             }
 
             foreach (var worker in workersWithUnreadedMessages)
@@ -903,7 +904,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
 
-                                foreach (var message in workerlayMessages.Where(x =>  !x.MessageReaded))
+                                foreach (var message in workerlayMessages.Where(x => !x.MessageReaded))
                                 {
                                     message.NotificationTimestamp = DateTime.UtcNow;
                                     message.NotificationsNum += 1;
@@ -917,7 +918,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
 
 
-                var workerServingMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe &&
+                var workerServingMessages = worker.Messages.Where(x => (x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe||x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter) &&
                                                 !x.MessageReaded && x.NotificationsNum <= 5).ToList();
                 if (workerServingMessages.Count > 0)
                 {
@@ -926,6 +927,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         deviceFirebaseToken = (worker as IWaiter).DeviceFirebaseToken;
                     if (worker is ICourier)
                         deviceFirebaseToken = (worker as ICourier).DeviceFirebaseToken;
+
+                    if (worker is IServiceContextSupervisor)
+                        deviceFirebaseToken = (worker as IServiceContextSupervisor).DeviceFirebaseToken;
+
 
                     var servingMessage = workerServingMessages[0];
                     if (!string.IsNullOrWhiteSpace(deviceFirebaseToken))
@@ -1323,6 +1328,39 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                                                  && !message.MessageReaded
                                                  select activeCourier).ToList();
+            }
+        }
+
+        List<ServiceContextSupervisor> _SupervisorsWithUnreadedMessages;
+
+
+        List<ServiceContextSupervisor> SupervisorsWithUnreadedMessages
+        {
+            get
+            {
+                lock (ServiceContextRTLock)
+                {
+                    if (_SupervisorsWithUnreadedMessages == null)
+                        UpdateSupervisorsWithUnreadedMessages();
+                    return _SupervisorsWithUnreadedMessages;
+                }
+            }
+        }
+
+        internal void UpdateSupervisorsWithUnreadedMessages()
+        {
+            lock (ServiceContextRTLock)
+            {
+
+                var activeSupervisors = (from shiftWork in GetActiveShiftWorks()
+                                         where shiftWork.Worker is IServiceContextSupervisor
+                                         select shiftWork.Worker).OfType<ServiceContextSupervisor>().ToList();
+
+                _SupervisorsWithUnreadedMessages = (from activeCourier in activeSupervisors
+                                                    from message in activeCourier.Messages
+                                                    where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter
+                                                    && !message.MessageReaded
+                                                    select activeCourier).ToList();
             }
         }
 
@@ -2868,16 +2906,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.UserName = userName;
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
-                        
+
 
 
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedWaiter.WorkerAssignKey = null;
                         (unassignedWaiter as Waiter).OAuthUserIdentity = authUser.User_ID;
-                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity = authUser.User_ID;
                         unassignedWaiter.Name = userFullName;
-                        unassignedWaiter.NativeUser=true;
+                        unassignedWaiter.NativeUser = true;
 
                         stateTransition.Consistent = true;
                     }
@@ -2960,9 +2998,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedtakeawayCashier.WorkerAssignKey = null;
                         (unassignedtakeawayCashier as TakeawayCashier).OAuthUserIdentity = authUser.User_ID;
-                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity = authUser.User_ID;
                         unassignedtakeawayCashier.Name = userFullName;
-                        unassignedtakeawayCashier.NativeUser=true;
+                        unassignedtakeawayCashier.NativeUser = true;
 
                         stateTransition.Consistent = true;
                     }
@@ -3037,15 +3075,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         authUserRef.FullName = userFullName;
                         authUserRef.Save();
 
-                        
-                         
+
+
                         var objectStorage = ObjectStorage.GetStorageOfObject(this);
                         objectStorage.CommitTransientObjectState(nativeAuthUser);
                         unassignedCourier.WorkerAssignKey = null;
                         (unassignedCourier as Courier).OAuthUserIdentity = authUser.User_ID;
-                        nativeAuthUser.OAuthUserIdentity=authUser.User_ID;
+                        nativeAuthUser.OAuthUserIdentity = authUser.User_ID;
                         unassignedCourier.Name = userFullName;
-                        unassignedCourier.NativeUser=true;
+                        unassignedCourier.NativeUser = true;
 
                         stateTransition.Consistent = true;
                     }

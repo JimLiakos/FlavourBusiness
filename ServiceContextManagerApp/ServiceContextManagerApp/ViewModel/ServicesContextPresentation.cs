@@ -264,6 +264,7 @@ namespace ServiceContextManagerApp
             ServicesContext = servicesContext;
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
 
+            signedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
             MealsController = this.ServicesContextRuntime.MealsController;
 
@@ -280,6 +281,11 @@ namespace ServiceContextManagerApp
 
             });
 
+        }
+
+        private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
+        {
+            throw new NotImplementedException();
         }
 
         /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>

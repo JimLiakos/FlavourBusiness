@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.Shipping;
+using Microsoft.ServiceBus.Messaging;
 using OOAdvantech;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -16,6 +19,38 @@ namespace FlavourBusinessManager.HumanResources
     [OOAdvantech.MetaDataRepository.Persistent()]
     public class ServiceContextSupervisor : MarshalByRefObject, IServiceContextSupervisor, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+
+        /// <exclude>Excluded</exclude>
+        string _DeviceFirebaseToken;
+
+        /// <MetaDataID>{0940634d-fd7c-4727-b678-defa7c9d4ab3}</MetaDataID>
+        [PersistentMember(nameof(_DeviceFirebaseToken))]
+        [BackwardCompatibilityID("+19")]
+        public string DeviceFirebaseToken
+        {
+            get => _DeviceFirebaseToken;
+            set
+            {
+                if (_DeviceFirebaseToken != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceFirebaseToken = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<Message> _Messages=new OOAdvantech.Collections.Generic.Set<Message>();
+
+        /// <MetaDataID>{2f0bd075-67db-4502-a8b9-0c0c9bedd227}</MetaDataID>
+        [PersistentMember(nameof(_Messages))]
+        [BackwardCompatibilityID("+18")]
+        public IList<Message> Messages => _Messages.ToThreadSafeList();
+
+
         /// <MetaDataID>{f790295a-47d5-488e-8da9-2333c35b205e}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+17")]
@@ -374,6 +409,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         public event ObjectChangeStateHandle ObjectChangeState;
+        public event MessageReceivedHandle MessageReceived;
 
 
         /// <MetaDataID>{7b7ffc20-6b0a-4d53-98bc-e24665c9e4fd}</MetaDataID>
@@ -382,6 +418,7 @@ namespace FlavourBusinessManager.HumanResources
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks.ToThreadSafeList();
 
 
+        /// <MetaDataID>{42d23f8c-7b0d-4da7-81f0-a6ecc7127796}</MetaDataID>
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{d5055dba-e0e3-4e02-96b4-7d38e7182a2e}</MetaDataID>
@@ -443,7 +480,10 @@ namespace FlavourBusinessManager.HumanResources
                 return FlavoursServicesContext.GetServicesContext(ServicesContextIdentity);
             }
         }
+        /// <MetaDataID>{d0a76f30-0a70-406d-9f20-7a08c45a4e49}</MetaDataID>
         public bool NativeUser { get; set; }
+
+    
 
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
         public void RemoveShiftWork(IShiftWork shiftWork)
@@ -574,6 +614,7 @@ namespace FlavourBusinessManager.HumanResources
                 return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
         }
 
+        /// <MetaDataID>{6011d725-57c4-4d80-9b7b-49d70c2cdbbe}</MetaDataID>
         internal void CheckForDelayedMealAtTheCounter()
         {
             lock (objectLock)
@@ -583,35 +624,139 @@ namespace FlavourBusinessManager.HumanResources
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    foreach (var servingBatche in servingBatches.OfType<ServingBatch>())
+                    foreach (var servingBatche in servingBatches.OfType<ServingBatch>().ToList())
                     {
-                        if (servingBatche.CreationTime==null)
-                        {
+                        if (servingBatche.CreationTime == null)
+                            servingBatche.CreationTime = DateTime.UtcNow;
 
-                            servingBatche.CreationTime=DateTime.UtcNow;
-                        }
+                        if (servingBatche.Caregivers.Any(x => x.CareGiving == EndUsers.Caregiver.CareGivingType.DelayedMealAtTheCounter))
+                            servingBatches.Remove(servingBatche);
                     }
 
                     foreach (var servingBatche in servingBatches.OfType<FoodShipping>())
                     {
-                        if (servingBatche.CreationTime==null)
-                        {
+                        if (servingBatche.CreationTime == null)
+                            servingBatche.CreationTime = DateTime.UtcNow;
 
-                            servingBatche.CreationTime=DateTime.UtcNow;
-                        }
+                        if (servingBatche.Caregivers.Any(x => x.CareGiving == EndUsers.Caregiver.CareGivingType.DelayedMealAtTheCounter))
+                            servingBatches.Remove(servingBatche);
                     }
                     stateTransition.Consistent = true;
                 }
 
-                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime!=null&&(DateTime.UtcNow- x.CreationTime.Value).TotalMinutes>4).ToList();
+                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value).TotalMinutes > 4).ToList();
 
-                System.Diagnostics.Debug.WriteLine("delayedServiceBatches");
+                if (delayedServiceBatches.Count > 0)
+                {
+
+                    if (ActiveShiftWork != null && DateTime.UtcNow > ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < ActiveShiftWork.EndsAt.ToUniversalTime())
+                    {
+                        var clientMessage = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        if (clientMessage == null)
+                        {
+                            clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.DelayedMealAtTheCounter;
+                            clientMessage.Notification = new Notification() { Title = "There are items read to serve", Body = "Check items ready to serve List" };
+
+                            PushMessage(clientMessage);
+
+                            if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                            {
+                                CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                                {
+                                    foreach (var message in Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter && !x.MessageReaded))
+                                    {
+                                        message.NotificationsNum += 1;
+                                        message.NotificationTimestamp = DateTime.UtcNow;
+                                    }
+                                    stateTransition.Consistent = true;
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    
+                }
+
+
+
+
             }
 
 
 
 
 
+
+        }
+
+        /// <MetaDataID>{0a614338-e506-4a86-b117-8399ecaec27c}</MetaDataID>
+        public void RemoveMessage(string messageId)
+        {
+            var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Messages.Remove(message);
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <MetaDataID>{6dccda85-f59b-46e5-9f7c-4e21b87d396e}</MetaDataID>
+        public Message GetMessage(string messageId)
+        {
+            var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();
+            return message;
+        }
+
+        /// <MetaDataID>{1dc8dff0-ab3d-4bde-9f46-5c02a866bf49}</MetaDataID>
+        public Message PeekMessage()
+        {
+            var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+            if (message != null)
+                message.MessageReaded = true;
+            return message;
+        }
+
+        /// <MetaDataID>{8839ed1d-2fc5-445c-9661-f9110ee6ba1f}</MetaDataID>
+        public Message PopMessage()
+        {
+            var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Messages.Remove(message);
+                    stateTransition.Consistent = true;
+                }
+            }
+            return message;
+        }
+
+        /// <MetaDataID>{dbe0cf0f-b1d9-4107-ab5e-172cb82e2c8f}</MetaDataID>
+        public void PushMessage(Message message)
+        {
+            if (message != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))
+                {
+
+                    message.MessageTimestamp = DateTime.UtcNow;
+                    if (!_Messages.Contains(message))
+                    {
+                        _Messages.Add(message);
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(message);
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+            }
+            MessageReceived?.Invoke(this);
 
         }
     }

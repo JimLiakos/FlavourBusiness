@@ -806,7 +806,7 @@ namespace FlavourBusinessManager.RoomService
                 }
 
 
-                ServicesContextRunTime.Current.UpdateWaitersWithUnreadedMessages();
+                ServicesContextRunTime.Current.UpdateCouriersWithUnreadedMessages();
             }
 
 

@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech.Transactions;
+using FlavourBusinessManager.EndUsers;
 
 namespace FlavourBusinessManager.Shipping
 {
@@ -17,6 +18,7 @@ namespace FlavourBusinessManager.Shipping
     [Persistent()]
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping
     {
+      
 
         /// <exclude>Excluded</exclude>
         DateTime? _CreationTime; 
@@ -82,6 +84,22 @@ namespace FlavourBusinessManager.Shipping
             {
                 _CreationTime=DateTime.UtcNow;
             }
+            lock (CaregiversLock)
+            {
+                Caregiversjson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
+            }
+        }
+
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+
+            lock (CaregiversLock)
+            {
+                if (!string.IsNullOrWhiteSpace(Caregiversjson))
+                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(Caregiversjson);
+            }
+
         }
 
         /// <MetaDataID>{124c5529-dd6b-429c-8772-17858121bb7a}</MetaDataID>
@@ -397,6 +415,44 @@ namespace FlavourBusinessManager.Shipping
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 
+        }
+
+        /// <MetaDataID>{2a2716f4-4dac-44f5-b406-1cdac06ec91f}</MetaDataID>
+        object CaregiversLock = new object();
+
+
+        /// <MetaDataID>{e088a5b2-9d6f-4522-806e-8826b1d800ba}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+6")]
+        private string Caregiversjson;
+
+        /// <MetaDataID>{8e1cc494-16a6-4da4-8bfa-2ecb3f202bef}</MetaDataID>
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType caregivingType)
+        {
+            lock (CaregiversLock)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType, WillTakeCareTimestamp = DateTime.UtcNow });
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        List<Caregiver> _Caregivers = new List<Caregiver>();
+
+
+        /// <MetaDataID>{1302b250-4bf5-4870-99b2-7b3dc9423f74}</MetaDataID>
+        public List<Caregiver> Caregivers
+        {
+            get
+            {
+                lock (CaregiversLock)
+                {
+                    return _Caregivers.ToList();
+                }
+            }
         }
 
     }

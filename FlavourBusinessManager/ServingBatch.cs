@@ -1,5 +1,7 @@
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -36,13 +38,30 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
         }
+        /// <MetaDataID>{023fdd54-ca3f-4571-9f25-70296b395aa6}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         public void BeforeCommitObjectState()
         {
-            if (_CreationTime==null)
-            { 
-                _CreationTime=DateTime.UtcNow;
+            if (_CreationTime == null)
+            {
+                _CreationTime = DateTime.UtcNow;
             }
+            lock (CaregiversLock)
+            {
+                Caregiversjson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
+            }
+        }
+        /// <MetaDataID>{5f13e7f9-1392-4b1e-8f7d-a2c494d9ad00}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+
+            lock (CaregiversLock)
+            {
+                if (!string.IsNullOrWhiteSpace(Caregiversjson))
+                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(Caregiversjson);
+            }
+
         }
 
         /// <MetaDataID>{f7e6bbea-e018-4ed1-83a3-5814ef9c1eb7}</MetaDataID>
@@ -326,6 +345,46 @@ namespace FlavourBusinessManager.RoomService
 
 
         }
+        /// <MetaDataID>{2fde4c2e-76b1-4b7d-a574-a6a7a59f4fcf}</MetaDataID>
+        object CaregiversLock = new object();
+
+
+        /// <MetaDataID>{e088a5b2-9d6f-4522-806e-8826b1d800ba}</MetaDataID>
+        [PersistentMember()]
+        [BackwardCompatibilityID("+7")]
+        string Caregiversjson;
+
+        /// <MetaDataID>{4ea761d6-3e1a-4eec-9c9a-112d792472f3}</MetaDataID>
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType caregivingType)
+        {
+            lock (CaregiversLock)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType, WillTakeCareTimestamp = DateTime.UtcNow });
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        List<Caregiver> _Caregivers = new List<Caregiver>();
+
+
+        /// <MetaDataID>{a1502d67-0540-4bb8-8760-2b80a0586d40}</MetaDataID>
+        public List<Caregiver> Caregivers
+        {
+            get
+            {
+                lock (CaregiversLock)
+                {
+                    return _Caregivers.ToList();
+                }
+            }
+        }
+
+
+
 
         /// <MetaDataID>{7ddeada1-2762-4aea-812a-6486231344be}</MetaDataID>
         internal void OnTheRoad()

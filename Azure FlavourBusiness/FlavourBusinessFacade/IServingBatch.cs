@@ -80,6 +80,9 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+1")]
         System.DateTime? CreationTime { get; }
 
+
+        
+
     }
 
     /// <summary>

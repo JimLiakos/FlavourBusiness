@@ -763,23 +763,32 @@ namespace ServiceContextManagerApp
 
                         AuthUser = authUser;
                         string administratorIdentity = "";
-                        var role = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor).FirstOrDefault();
-                        if (role.RoleType == RoleType.ServiceContextSupervisor)
+                        var roles = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor);
+                        foreach (var supervisorRole in roles)
                         {
-                            ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(role.User);
-                            _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
+                            ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(supervisorRole.User);
+                            var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
+                            if (UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
+                            {
+                                _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
 
-                            administratorIdentity = ServiceContextSupervisor.Identity;
-                            var flavoursServicesContext = ServiceContextSupervisor.ServicesContext; ;
-                            UserServiceContextSupervisorRoles[ServiceContextSupervisor.ServicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
-                            ServicesContextPresentation servicesContextPresentation = new ServicesContextPresentation(flavoursServicesContext, ServiceContextSupervisor);
-                            
-                            _ServicesContexts.Add(servicesContextPresentation);
+                                administratorIdentity = ServiceContextSupervisor.Identity;
+                                var flavoursServicesContext = ServiceContextSupervisor.ServicesContext; ;
+                                UserServiceContextSupervisorRoles[servicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
 
-                            
+                                ServicesContextPresentation servicesContextPresentation = new ServicesContextPresentation(flavoursServicesContext, ServiceContextSupervisor);
+
+#if DeviceDotNet
+                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                ServiceContextSupervisor.DeviceFirebaseToken = device.FirebaseToken;
+#endif
+                                _ServicesContexts.Add(servicesContextPresentation);
+                            }
+
+
                         }
 
-                        role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
+                        var role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
                         if (role.RoleType == RoleType.Organization && ServiceContextSupervisor == null)
                         {
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);

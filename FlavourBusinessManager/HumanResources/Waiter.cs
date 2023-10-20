@@ -161,7 +161,6 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{ef00f23c-5bfb-4499-a386-5d5e761ba66f}</MetaDataID>
         public void PushMessage(Message message)
         {
-
             if (message != null)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this, TransactionOption.RequiresNew))

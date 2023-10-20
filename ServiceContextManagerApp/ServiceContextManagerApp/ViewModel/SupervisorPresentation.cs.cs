@@ -28,6 +28,7 @@ namespace ServiceContextManagerApp
         {
             Supervisor = supervisor;
             ServicesContextRuntime = servicesContextRuntime;
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
