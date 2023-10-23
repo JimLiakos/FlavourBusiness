@@ -43,10 +43,11 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <exclude>Excluded</exclude>
-        OOAdvantech.Collections.Generic.Set<Message> _Messages=new OOAdvantech.Collections.Generic.Set<Message>();
+        OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{2f0bd075-67db-4502-a8b9-0c0c9bedd227}</MetaDataID>
         [PersistentMember(nameof(_Messages))]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         [BackwardCompatibilityID("+18")]
         public IList<Message> Messages => _Messages.ToThreadSafeList();
 
@@ -483,7 +484,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{d0a76f30-0a70-406d-9f20-7a08c45a4e49}</MetaDataID>
         public bool NativeUser { get; set; }
 
-    
+
 
         /// <MetaDataID>{9edad4d3-658b-46b1-b372-49f859fbd7b9}</MetaDataID>
         public void RemoveShiftWork(IShiftWork shiftWork)
@@ -614,6 +615,10 @@ namespace FlavourBusinessManager.HumanResources
                 return _ShiftWorks.ToThreadSafeList().Where(x => x.StartsAt > periodStartDate && x.StartsAt > periodEndDate).OfType<IServingShiftWork>().ToList();
         }
 
+
+
+        bool AllowMessage = false;
+
         /// <MetaDataID>{6011d725-57c4-4d80-9b7b-49d70c2cdbbe}</MetaDataID>
         internal void CheckForDelayedMealAtTheCounter()
         {
@@ -633,7 +638,7 @@ namespace FlavourBusinessManager.HumanResources
                             servingBatches.Remove(servingBatche);
                     }
 
-                    foreach (var servingBatche in servingBatches.OfType<FoodShipping>())
+                    foreach (var servingBatche in servingBatches.OfType<FoodShipping>().ToList())
                     {
                         if (servingBatche.CreationTime == null)
                             servingBatche.CreationTime = DateTime.UtcNow;
@@ -644,15 +649,15 @@ namespace FlavourBusinessManager.HumanResources
                     stateTransition.Consistent = true;
                 }
 
-                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value).TotalMinutes > 4).ToList();
+                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes > 4).ToList();
 
                 if (delayedServiceBatches.Count > 0)
                 {
 
                     if (ActiveShiftWork != null && DateTime.UtcNow > ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < ActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        var clientMessage = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
-                        if (clientMessage == null)
+                        var clientMessage = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        if ( clientMessage == null)
                         {
                             clientMessage = new Message();
                             clientMessage.Data["ClientMessageType"] = ClientMessages.DelayedMealAtTheCounter;
@@ -678,7 +683,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
-                    
+
                 }
 
 
@@ -704,6 +709,33 @@ namespace FlavourBusinessManager.HumanResources
                     _Messages.Remove(message);
                     stateTransition.Consistent = true;
                 }
+            }
+        }
+        public void IWillTakeCare(string messageId)
+        {
+            var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();
+            if (message != null && message.Data["ClientMessageType"].Equals(ClientMessages.DelayedMealAtTheCounter))
+            {
+                var servingBatches = (ServicesContextRunTime.MealsController as MealsController).GetServingBatchesAtTheCounter();
+                var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes > 4).ToList();
+
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    foreach (var delayedService in delayedServiceBatches.OfType<FoodShipping>())
+                    {
+                        delayedService.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.DelayedMealAtTheCounter);
+                    }
+                    foreach (var delayedService in delayedServiceBatches.OfType<ServingBatch>())
+                    {
+                        delayedService.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.DelayedMealAtTheCounter);
+                    }
+
+                    RemoveMessage(messageId);
+                    stateTransition.Consistent = true;
+                }
+
+
             }
         }
 

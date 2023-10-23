@@ -36,6 +36,8 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{059a02f3-5f3c-4768-84bb-681a837bfa0e}</MetaDataID>
         bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation);
 
+        void IWillTakeCare(string messageID);
+
 
 
         /// <MetaDataID>{d97fe7f6-6751-4709-99f7-86ab667f7e94}</MetaDataID>

@@ -10,8 +10,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using ServiceContextManagerApp.ViewModel;
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessManager.HumanResources;
-using CourierApp.ViewModel;
+
 
 
 
@@ -27,6 +26,8 @@ using System.Drawing.Imaging;
 using QRCoder;
 using System.IO;
 using System;
+using FlavourBusinessManager.HumanResources;
+using CourierApp.ViewModel;
 #endif
 
 
@@ -272,7 +273,7 @@ namespace ServiceContextManagerApp
 
             signedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
-            Get
+            
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
             MealsController = this.ServicesContextRuntime.MealsController;
 
@@ -287,9 +288,17 @@ namespace ServiceContextManagerApp
                 MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList();
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 
+                GetMessages();
+
             });
 
         }
+
+        public void IWillTakeCare(string messageID)
+        {
+            _SignedInSupervisor.IWillTakeCare(messageID);
+        }
+
 
         public event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
         object MessagesLock = new object();
@@ -302,7 +311,7 @@ namespace ServiceContextManagerApp
                     var message = _SignedInSupervisor.PeekMessage();
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter)
                     {
-                        if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                        if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
                             _SignedInSupervisor.RemoveMessage(message.MessageID);
                         else
                         {
@@ -328,7 +337,9 @@ namespace ServiceContextManagerApp
 
         private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
         {
-            throw new NotImplementedException();
+
+            GetMessages();
+            
         }
 
         /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>

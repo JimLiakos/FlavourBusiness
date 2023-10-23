@@ -7948,6 +7948,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public void IWillTakeCare(string messageID)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = messageID;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServiceContextSupervisor), "IWillTakeCare", args, argsTypes);
+        }
+        
         public void RemoveShiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shifWork)
         {
             object[] args = new object[1];
