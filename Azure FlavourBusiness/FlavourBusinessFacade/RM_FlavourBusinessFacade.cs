@@ -2714,6 +2714,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "MoveCourseAfter", args, argsTypes);
         }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation> GetDelayedServingBatchesAtTheCounter(double delayInMins)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = delayInMins;
+            argsTypes[0] = typeof(double);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "GetDelayedServingBatchesAtTheCounter", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation>>(retValue);
+        }
     }
     
     public sealed class Pr_IMealCourse : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy

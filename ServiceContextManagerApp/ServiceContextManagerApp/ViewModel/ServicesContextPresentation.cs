@@ -17,6 +17,7 @@ using FlavourBusinessFacade.EndUsers;
 
 
 
+
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using ZXing;
@@ -34,7 +35,7 @@ using CourierApp.ViewModel;
 namespace ServiceContextManagerApp
 {
 
-    
+
 
     /// <MetaDataID>{43d3b2e4-4576-47ec-bf5f-6ad3bb87aa57}</MetaDataID>
     public class ServicesContextPresentation : MarshalByRefObject, INotifyPropertyChanged, IServicesContextPresentation, OOAdvantech.Remoting.IExtMarshalByRefObject
@@ -211,6 +212,9 @@ namespace ServiceContextManagerApp
             var movedMealCourse = this.MealCoursesInProgress.Where(x => x.MealCourseUri == movedMealCourseUri).FirstOrDefault();
             var description = mealCourse.Description;
             MealsController.MoveCourseAfter(mealCourseUri, movedMealCourseUri);
+
+
+
         }
 
 
@@ -218,7 +222,7 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                
+
                 if (_SignedInSupervisor == null)
                     return null;
                 var signedInSupervisor = Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).First();
@@ -239,10 +243,11 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e1567326-c4f7-4c4f-b5d3-0dc851eddec7}</MetaDataID>
         IServiceContextSupervisor _SignedInSupervisor;
 
+
         /// <MetaDataID>{eff5994f-4dc3-461e-8a17-a0d7a1e9a787}</MetaDataID>
-        public IFlavoursServicesContextRuntime ServicesContextRuntime { get; }
+        public IFlavoursServicesContextRuntime ServicesContextRuntime { get; private set; }
         /// <MetaDataID>{f87f95f7-c34f-4baf-a972-a2e082ac98d8}</MetaDataID>
-        public IMealsController MealsController { get; }
+        public IMealsController MealsController { get; private set; }
         /// <MetaDataID>{0019d0de-61a8-45ab-9726-7fa37d0cc972}</MetaDataID>
         public List<MealCourse> MealCoursesInProgress
         {
@@ -259,7 +264,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e203631b-ddea-42fb-be21-3e7098466561}</MetaDataID>
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor signedInSupervisor)
         {
-            
+
             AdministratorIdentity = "";
             _SignedInSupervisor = signedInSupervisor;
             if (_SignedInSupervisor != null)
@@ -269,11 +274,33 @@ namespace ServiceContextManagerApp
             }
 
             ServicesContext = servicesContext;
+
+            if (_SignedInSupervisor != null)
+            {
+                var inActiveShiftWork = SignedInSupervisor.InActiveShiftWork;
+                if (inActiveShiftWork)
+                {
+                    init();
+                }
+                else
+                    SignedInSupervisor.ObjectChangeState += ServicesContextPresentation_ObjectChangeState;
+
+            }
+            else
+            {
+                init();
+
+            }
+
+        }
+
+        private void init()
+        {
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
+            if (_SignedInSupervisor!=null)
+                _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
-            signedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
-            
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
             MealsController = this.ServicesContextRuntime.MealsController;
 
@@ -284,14 +311,18 @@ namespace ServiceContextManagerApp
 
             Task.Run(() =>
             {
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(9000);
                 MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList();
+                DelayedServingBatchesAtTheCounter=MealsController.GetDelayedServingBatchesAtTheCounter(4);
+
+
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+
+                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
 
                 GetMessages();
 
             });
-
         }
 
         public void IWillTakeCare(string messageID)
@@ -315,7 +346,7 @@ namespace ServiceContextManagerApp
                             _SignedInSupervisor.RemoveMessage(message.MessageID);
                         else
                         {
-                            if (message != null  && SignedInSupervisor?. InActiveShiftWork==true)
+                            if (message != null  && SignedInSupervisor?.InActiveShiftWork==true)
                             {
 
 
@@ -339,7 +370,7 @@ namespace ServiceContextManagerApp
         {
 
             GetMessages();
-            
+
         }
 
         /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>
@@ -402,7 +433,7 @@ namespace ServiceContextManagerApp
             }
         }
 
-
+        public List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; private set; }
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
@@ -421,6 +452,16 @@ namespace ServiceContextManagerApp
 
         }
 
+        private void ServicesContextPresentation_ObjectChangeState(object _object, string member)
+        {
+            if (member=="ActiveShiftWork")
+            {
+                if ((_object as SupervisorPresentation).InActiveShiftWork)
+                    init();
+            }
+        }
+
+
         /// <MetaDataID>{084e9ed1-2d32-40f6-bf87-6d69c0c782aa}</MetaDataID>
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
@@ -438,6 +479,9 @@ namespace ServiceContextManagerApp
 
             _Couriers = serviceContextHumanResources.Couriers.Select(x => new CourierPresentation(x, ServicesContextRuntime)).OfType<ICourierPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Couriers));
+
+
+
 
         }
 

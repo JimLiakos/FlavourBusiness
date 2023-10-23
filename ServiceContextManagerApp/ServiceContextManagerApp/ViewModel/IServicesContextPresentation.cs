@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService.ViewModel;
 using OOAdvantech.MetaDataRepository;
@@ -13,7 +14,7 @@ namespace ServiceContextManagerApp
     [HttpVisible]
     public interface IServicesContextPresentation
     {
-        
+
 
         /// <MetaDataID>{f0774cb8-3a48-404e-806d-045980e8bf92}</MetaDataID>
         string ServicesContextName { get; set; }
@@ -95,10 +96,10 @@ namespace ServiceContextManagerApp
         [GenerateEventConsumerProxy]
         event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
 
-
+        List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; }
     }
 
     public delegate void DelayedMealAtTheCountertHandle(ISupervisorPresentation supervisorPresentation, string messageID);
     public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
-    
+
 }

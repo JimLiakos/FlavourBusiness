@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -114,4 +115,23 @@ namespace FlavourBusinessFacade.RoomService
         public List<IServingBatch> ServingBatches { get; }
 
     }
+
+
+    public class DelayedServingBatchAbbreviation
+    {
+        public SessionType SessionType { get; set; }
+
+
+        public IServingBatch ServingBatch { get; set; }
+
+        public double DelayTimeSpanInMins  { get; set; }
+
+        public string Description { get; set; }
+
+
+
+    }
+
+
+
 }

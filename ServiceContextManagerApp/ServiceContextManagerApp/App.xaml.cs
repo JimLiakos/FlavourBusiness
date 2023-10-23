@@ -28,7 +28,7 @@ namespace ServiceContextManagerApp
             SerializationBinder.NamesTypesDictionary["RestaurantHallLayoutModel.ShapesGroup"] = typeof(RestaurantHallLayoutModel.ShapesGroup);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.Margin"] = typeof(UIBaseEx.Margin);
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
-
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation"] = typeof(FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation);
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
@@ -40,6 +40,7 @@ namespace ServiceContextManagerApp
 
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation)] = "FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation";
             //MainPage = new FacebookSignIn();
             //MainPage = new MainPage();
             MainPage = new NavigationPage(new MainPage());

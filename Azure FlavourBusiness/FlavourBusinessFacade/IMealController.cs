@@ -22,5 +22,9 @@ namespace FlavourBusinessFacade.RoomService
 
         void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri);
         void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri);
+
+
+
+      List<  DelayedServingBatchAbbreviation> GetDelayedServingBatchesAtTheCounter(double delayInMins);
     }
 }

@@ -282,6 +282,20 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        public List<DelayedServingBatchAbbreviation> GetDelayedServingBatchesAtTheCounter(double delayInMins)
+        {
+
+            var servingBatches = GetServingBatchesAtTheCounter();
+            var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes > delayInMins)
+                .Select(x => new DelayedServingBatchAbbreviation() { Description=x.Description, SessionType=x.MealCourse.Meal.Session.SessionType, DelayTimeSpanInMins=(DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes, ServingBatch=x }).ToList();
+
+            return delayedServiceBatches;
+        }
+
+
+
+
+
         internal IList<IServingBatch> GetServingBatchesAtTheCounter()
         {
 
@@ -401,7 +415,7 @@ namespace FlavourBusinessManager.RoomService
             foreach (var foodShiping in foodShipings)
                 foodShiping.SortID = i++;
 
-            var allServingBatches=servingBatches.OfType<IServingBatch>().Union(foodShipings.OfType<IServingBatch>()).ToList();
+            var allServingBatches = servingBatches.OfType<IServingBatch>().Union(foodShipings.OfType<IServingBatch>()).ToList();
 
 
             return allServingBatches;
@@ -708,7 +722,6 @@ namespace FlavourBusinessManager.RoomService
             RebuildPreparationPlan(ActionContext);
             return ActionContext;
         }
-
 
         /// <MetaDataID>{d718d244-0e50-4ac9-b66a-495fc9f91b43}</MetaDataID>
         internal void MealItemsReadyToServe(Meal meal)
