@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade.Shipping
 
         /// <MetaDataID>{2d25c09e-e7b4-4de0-a8ab-46b69ca2a01b}</MetaDataID>
         string ClientFullName { get; }
-
+         
         /// <MetaDataID>{b9c002a5-1dbe-476d-8b2c-301a55b4e3ed}</MetaDataID>
         string PhoneNumber { get; }
 

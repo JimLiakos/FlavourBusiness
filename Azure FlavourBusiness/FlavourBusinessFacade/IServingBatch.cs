@@ -1,7 +1,9 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.Shipping;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using System;
 using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
@@ -119,6 +121,24 @@ namespace FlavourBusinessFacade.RoomService
 
     public class DelayedServingBatchAbbreviation
     {
+
+        public DelayedServingBatchAbbreviation()
+        {
+
+        }
+        public DelayedServingBatchAbbreviation(IServingBatch servingBatch)
+        {
+            //Description = servingBatch.Description;
+            SessionType = servingBatch.MealCourse.Meal.Session.SessionType; 
+            DelayTimeSpanInMins = (DateTime.UtcNow - servingBatch.CreationTime.Value.ToUniversalTime()).TotalMinutes;
+            ServingBatch = servingBatch;
+            if (servingBatch is IFoodShipping)
+                Description = (servingBatch as IFoodShipping).Place.Description;
+            else
+                Description =servingBatch.ServicePoint.Description;
+
+        }
+
         public SessionType SessionType { get; set; }
 
 

@@ -287,7 +287,7 @@ namespace FlavourBusinessManager.RoomService
 
             var servingBatches = GetServingBatchesAtTheCounter();
             var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes > delayInMins)
-                .Select(x => new DelayedServingBatchAbbreviation() { Description=x.Description, SessionType=x.MealCourse.Meal.Session.SessionType, DelayTimeSpanInMins=(DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes, ServingBatch=x }).ToList();
+                .Select(x => new DelayedServingBatchAbbreviation(x) ).ToList();
 
             return delayedServiceBatches;
         }
