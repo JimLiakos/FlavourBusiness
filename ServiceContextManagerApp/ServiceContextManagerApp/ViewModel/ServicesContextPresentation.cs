@@ -10,6 +10,9 @@ using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using ServiceContextManagerApp.ViewModel;
 using FlavourBusinessFacade.EndUsers;
+using WaiterApp.ViewModel;
+using FlavourBusinessFacade.Shipping;
+using UIBaseEx;
 
 
 
@@ -436,6 +439,19 @@ namespace ServiceContextManagerApp
         public List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; private set; }
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
+
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+
+        public FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch)
+        {
+            return _FoodShippings.GetViewModelFor(delayedServingBatch.ServingBatch as IFoodShipping, delayedServingBatch.ServingBatch); 
+        }
+        public ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch)
+        {
+            return null;
+        }
+
+         
 
         /// <MetaDataID>{9c93fbca-e49d-45f4-9077-72d58f986f89}</MetaDataID>
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint, ServicePointState newState)

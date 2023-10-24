@@ -71,7 +71,10 @@ namespace FlavourBusinessFacade.RoomService
 
         /// <MetaDataID>{46f36229-fd4d-4d54-b0c2-751685130bdc}</MetaDataID>
         [BackwardCompatibilityID("+3")]
-        string ServicesPointIdentity { get; set; }
+        string ServicesPointIdentity { get; }
+
+
+        string ServicesContextIdentity {get;}
 
         event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
@@ -84,7 +87,7 @@ namespace FlavourBusinessFacade.RoomService
         System.DateTime? CreationTime { get; }
 
 
-        
+
 
     }
 
@@ -129,7 +132,7 @@ namespace FlavourBusinessFacade.RoomService
         public DelayedServingBatchAbbreviation(IServingBatch servingBatch)
         {
             //Description = servingBatch.Description;
-            SessionType = servingBatch.MealCourse.Meal.Session.SessionType; 
+            SessionType = servingBatch.MealCourse.Meal.Session.SessionType;
             DelayTimeSpanInMins = (DateTime.UtcNow - servingBatch.CreationTime.Value.ToUniversalTime()).TotalMinutes;
             ServingBatch = servingBatch;
             if (servingBatch is IFoodShipping)
@@ -144,7 +147,7 @@ namespace FlavourBusinessFacade.RoomService
 
         public IServingBatch ServingBatch { get; set; }
 
-        public double DelayTimeSpanInMins  { get; set; }
+        public double DelayTimeSpanInMins { get; set; }
 
         public string Description { get; set; }
 

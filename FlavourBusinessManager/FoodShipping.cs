@@ -216,6 +216,7 @@ namespace FlavourBusinessManager.Shipping
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
                 this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
+                this.ServicesContextIdentity = this.ServicePoint.ServicesContextIdentity;
 
             }
             if (servingBatchChanged || nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
@@ -276,7 +277,12 @@ namespace FlavourBusinessManager.Shipping
 
         /// <MetaDataID>{effa589d-8157-44af-951c-4ca5c212dff6}</MetaDataID>
         [CachingDataOnClientSide]
-        public string ServicesPointIdentity { get; set; }
+        public string ServicesPointIdentity { get;  }
+
+        [CachingDataOnClientSide]
+        public string ServicesContextIdentity { get; set; }
+
+        
 
         /// <MetaDataID>{8b04d3b5-3066-4ac7-b863-258938fa98b8}</MetaDataID>
         [CachingDataOnClientSide]
@@ -410,8 +416,7 @@ namespace FlavourBusinessManager.Shipping
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
-
-
+            ServicesContextIdentity=ServicePoint.ServicesContextIdentity;
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 

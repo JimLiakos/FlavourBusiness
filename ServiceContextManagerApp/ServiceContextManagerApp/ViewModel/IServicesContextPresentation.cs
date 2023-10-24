@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade.HumanResources;
+﻿using CourierApp.ViewModel;
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService.ViewModel;
@@ -7,6 +8,7 @@ using ServiceContextManagerApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WaiterApp.ViewModel;
 
 namespace ServiceContextManagerApp
 {
@@ -97,6 +99,10 @@ namespace ServiceContextManagerApp
         event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
 
         List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; }
+
+        FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch);
+        ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch);
+
     }
 
     public delegate void DelayedMealAtTheCountertHandle(ISupervisorPresentation supervisorPresentation, string messageID);

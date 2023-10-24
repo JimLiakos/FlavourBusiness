@@ -88,7 +88,25 @@ namespace CourierApp.ViewModel
             }
         }
 
+        public CourierActivityPresentation()
+        {
+            _FoodShippings= new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _FoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
+            _AssignedFoodShippings=  new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _AssignedFoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
+        }
 
+        private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
+        {
+            foodShipping.ObjectChangeState+=FoodShipping_ObjectChangeState;
+
+
+        }
+
+        private void FoodShipping_ObjectChangeState(object _object, string member)
+        {
+            FoodShippingUpdated(_object as FoodShippingPresentation);
+        }
 
 
         /// <MetaDataID>{7c38008c-e8cc-47cf-b413-45519af70ebc}</MetaDataID>
@@ -455,7 +473,7 @@ namespace CourierApp.ViewModel
             var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
             foreach (var assignedFoodShipping in foodShippings)
             {
-                var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping, this);
+                var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
                 foodShippingPresentation.Update();
             }
 
@@ -463,7 +481,7 @@ namespace CourierApp.ViewModel
 
             foreach (var assignedFoodShipping in asignedServingBatches)
             {
-                var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping, this);
+                var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
                 servingBatchPresentation.Update();
             }
 
@@ -487,6 +505,7 @@ namespace CourierApp.ViewModel
                     {
                         _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
                         foodShippingPresentation.Dispose();
+                        foodShippingPresentation.ObjectChangeState-=FoodShipping_ObjectChangeState;
                     }
 
                 }
@@ -890,32 +909,34 @@ namespace CourierApp.ViewModel
 
             var foodShippings = allFoodShippings.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in foodShippings)
-                _FoodShippings.GetViewModelFor(servingBatch, servingBatch, this);
+                _FoodShippings.GetViewModelFor(servingBatch, servingBatch);
 
             var asignedFoodShippings = allFoodShippings.Where(x => x.IsAssigned).ToList();
 
             foreach (var assignedServingBatch in asignedFoodShippings)
-                _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+                _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch);
 
 
             foreach (var servingBatch in _FoodShippings.Keys.Where(x => !foodShippings.Contains(x)).ToList())
             {
                 _FoodShippings[servingBatch].Dispose();
                 _FoodShippings.Remove(servingBatch);
+                servingBatch.ObjectChangeState-=FoodShipping_ObjectChangeState;
             }
 
             foreach (var assignedFoodShippingh in _AssignedFoodShippings.Keys.Where(x => !asignedFoodShippings.Contains(x)).ToList())
             {
                 _AssignedFoodShippings[assignedFoodShippingh].Dispose();
                 _AssignedFoodShippings.Remove(assignedFoodShippingh);
+                _AssignedFoodShippings[assignedFoodShippingh].ObjectChangeState-=FoodShipping_ObjectChangeState;
             }
         }
 
-        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings;
 
         public List<FoodShippingPresentation> FoodShippings => _FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
 
-        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings;
 
         public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
 
@@ -1074,6 +1095,7 @@ namespace CourierApp.ViewModel
             {
                 _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
                 foodShippingPresentation.Dispose();
+                foodShippingPresentation.ObjectChangeState-=FoodShipping_ObjectChangeState;
             }
 
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));

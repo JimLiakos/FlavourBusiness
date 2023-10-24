@@ -3183,13 +3183,17 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesPointIdentity", args, argsTypes);
                 return this.Proxy.GetValue<string>(retValue);
             }
-            set
+        }
+        
+        // The Width property for the object.
+        public string ServicesContextIdentity
+        {
+            get
             {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicesPointIdentity", args, argsTypes);
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesContextIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -3482,13 +3486,17 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesPointIdentity", args, argsTypes);
                 return this.Proxy.GetValue<string>(retValue);
             }
-            set
+        }
+        
+        // The Width property for the object.
+        public string ServicesContextIdentity
+        {
+            get
             {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(string);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "set_ServicesPointIdentity", args, argsTypes);
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IServingBatch), "get_ServicesContextIdentity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         

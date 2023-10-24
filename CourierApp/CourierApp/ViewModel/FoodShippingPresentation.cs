@@ -3,6 +3,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
+using OOAdvantech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace CourierApp.ViewModel
             }
         }
 
+        public event ObjectChangeStateHandle ObjectChangeState;
+
         /// <MetaDataID>{e3bb24f5-160e-43d0-a8ca-9c093b07794a}</MetaDataID>
         public void Dispose()
         {
@@ -52,12 +55,12 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{3dee3162-c78f-4384-9ded-6a4d4354314c}</MetaDataID>
         public readonly IFoodShipping FoodShipping;
         /// <MetaDataID>{3eb1787b-42a7-420a-b419-9603d78540e7}</MetaDataID>
-        public readonly CourierActivityPresentation CourierActivityPresentation;
+        //public readonly CourierActivityPresentation CourierActivityPresentation;
         /// <MetaDataID>{ad9e2e1b-86c0-4ada-ba0c-fe7a19a28234}</MetaDataID>
         public FoodShippingPresentation(IFoodShipping foodShipping, CourierActivityPresentation courierActivityPresentation)
         {
-            CourierActivityPresentation = courierActivityPresentation;
-            string servicesContextIdentity = courierActivityPresentation.Courier.ServicesContextIdentity;
+            //CourierActivityPresentation = courierActivityPresentation;
+            string servicesContextIdentity = foodShipping.ServicesContextIdentity;
             FoodShipping = foodShipping;
             FoodShipping.ObjectChangeState += FoodShippingChangeState;
             FoodShipping.ItemsStateChanged += FoodShipping_ItemsStateChanged;
@@ -70,6 +73,7 @@ namespace CourierApp.ViewModel
             ContextsOfUnderPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
             allContextsOfPreparedItems.AddRange(ContextsOfUnderPreparationItems);
 
+            
             ServicePointType = foodShipping.ServicePointType;
 
             AllContextsOfPreparedItems = allContextsOfPreparedItems;
@@ -100,6 +104,7 @@ namespace CourierApp.ViewModel
         public string DeliveryRemark { get => FoodShipping.DeliveryRemark; }
 
         public string NotesForClient { get => FoodShipping.NotesForClient; }
+        
 
         /// <MetaDataID>{90ec5e57-2488-44b8-9665-87dbedb3de7f}</MetaDataID>
         private void FoodShipping_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
@@ -112,7 +117,8 @@ namespace CourierApp.ViewModel
                 preparedItem.State = newItemsState[preparedItem.uid];
             }
             var ssd = State;
-            CourierActivityPresentation.FoodShippingUpdated(this);
+            ObjectChangeState?.Invoke(this, null);
+            
         }
 
         /// <MetaDataID>{1afa1a50-8a99-4c9b-9529-f7f29ed01c3a}</MetaDataID>
