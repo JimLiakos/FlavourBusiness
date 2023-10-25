@@ -239,7 +239,7 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{ebff5c16-abe5-4d72-bcd2-dcca20ca7fa7}</MetaDataID>
         [PersistentMember(nameof(_MealCourse))]
         [BackwardCompatibilityID("+1")]
-        public FlavourBusinessFacade.RoomService.IMealCourse MealCourse => _MealCourse;
+        public IMealCourse MealCourse => _MealCourse;
 
         /// <MetaDataID>{d8834cae-2fde-4861-81b0-6be2a5c26f12}</MetaDataID>
         [CachingDataOnClientSide]

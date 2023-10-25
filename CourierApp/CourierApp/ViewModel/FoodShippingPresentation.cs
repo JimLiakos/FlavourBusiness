@@ -57,7 +57,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{3eb1787b-42a7-420a-b419-9603d78540e7}</MetaDataID>
         //public readonly CourierActivityPresentation CourierActivityPresentation;
         /// <MetaDataID>{ad9e2e1b-86c0-4ada-ba0c-fe7a19a28234}</MetaDataID>
-        public FoodShippingPresentation(IFoodShipping foodShipping, CourierActivityPresentation courierActivityPresentation)
+        public FoodShippingPresentation(IFoodShipping foodShipping )
         {
             //CourierActivityPresentation = courierActivityPresentation;
             string servicesContextIdentity = foodShipping.ServicesContextIdentity;

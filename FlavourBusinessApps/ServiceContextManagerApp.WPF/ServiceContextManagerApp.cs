@@ -43,7 +43,8 @@ namespace FlavourBusinessApps.ServiceContextManagerApp.WPF
 
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation"] = typeof(FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation);
             SerializationBinder.NamesTypesDictionary["CourierApp.ViewModel.FoodShippingPresentation"] = typeof(global::CourierApp.ViewModel.FoodShippingPresentation);
-            
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
+
 
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ItemPreparation)] = "FlavourBusinessManager.RoomService.ItemPreparation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.OptionChange)] = "FlavourBusinessManager.RoomService.OptionChange";
@@ -63,6 +64,9 @@ namespace FlavourBusinessApps.ServiceContextManagerApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation)] = "FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation";
             SerializationBinder.TypesNamesDictionary[typeof(global::WaiterApp.ViewModel.ServingBatchPresentation)] = "WaiterApp.ViewModel.ServingBatchPresentation";
             SerializationBinder.TypesNamesDictionary[typeof(global::CourierApp.ViewModel.FoodShippingPresentation)] = "CourierApp.ViewModel.FoodShippingPresentation";
+
+            SerializationBinder.TypesNamesDictionary[typeof(global::FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
+            
 
         }
     }
