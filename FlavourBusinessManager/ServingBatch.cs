@@ -239,6 +239,7 @@ namespace FlavourBusinessManager.RoomService
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
+            ServicesContextIdentity = ServicePoint.ServicesContextIdentity;
 
 
 
@@ -383,7 +384,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-
+        [CachingDataOnClientSide]
+        public string ServicesContextIdentity { get; set; }
 
 
         /// <MetaDataID>{7ddeada1-2762-4aea-812a-6486231344be}</MetaDataID>

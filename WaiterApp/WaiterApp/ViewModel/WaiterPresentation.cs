@@ -18,6 +18,8 @@ using FlavourBusinessFacade.RoomService;
 using UIBaseEx;
 using RestaurantHallLayoutModel;
 using FlavourBusinessManager;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.Shipping;
 
 
 
@@ -48,7 +50,15 @@ namespace WaiterApp.ViewModel
         protected WaiterPresentation()
         {
             this.FlavoursOrderServer = new DontWaitApp.FlavoursOrderServer(AppType.WaiterApp, false) { WaiterView = true, Halls = _Halls, EndUser = this };
+            _ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
+            _ServingBatches.OnNewViewModelWrapper += OnNewViewModelWrapper;
         }
+
+        private void OnNewViewModelWrapper(ViewModelWrappers<IServingBatch, ServingBatchPresentation> sender, IServingBatch key, ServingBatchPresentation servingBatch)
+        {
+            servingBatch.ObjectChangeState -= ServingBatchPresentation_ObjectChangeState;
+        }
+
         /// <MetaDataID>{94887bc2-fef8-4fcc-af96-24e9ef4e71c3}</MetaDataID>
         static WaiterPresentation _Current;
 
@@ -116,10 +126,17 @@ namespace WaiterApp.ViewModel
             {
                 _ServingBatches.Remove(servingBatchPresentation.ServingBatch);
                 servingBatchPresentation.Dispose();
+                servingBatchPresentation.ObjectChangeState -= ServingBatchPresentation_ObjectChangeState;
             }
 
             ObjectChangeState?.Invoke(this, nameof(ServingBatches));
         }
+
+        private void ServingBatchPresentation_ObjectChangeState(object _object, string member)
+        {
+            this.ServingBatchUpdated(_object as ServingBatchPresentation);
+        }
+
         public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity)
         {
             this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity, sessionIdentity);
@@ -706,7 +723,7 @@ namespace WaiterApp.ViewModel
             var servingBatches = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in servingBatches)
             {
-                var servingBatchPresentation = _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
+                var servingBatchPresentation = _ServingBatches.GetViewModelFor(servingBatch, servingBatch);
                 servingBatchPresentation.Update();
             }
 
@@ -714,7 +731,7 @@ namespace WaiterApp.ViewModel
 
             foreach (var assignedServingBatch in asignedServingBatches)
             {
-                var servingBatchPresentation = _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+                var servingBatchPresentation = _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch);
                 servingBatchPresentation.Update();
             }
 
@@ -738,6 +755,7 @@ namespace WaiterApp.ViewModel
                     {
                         _ServingBatches.Remove(servingBatch.ServingBatch);
                         servingBatch.Dispose();
+                        servingBatch.ObjectChangeState -= ServingBatchPresentation_ObjectChangeState;
                     }
 
                 }
@@ -751,24 +769,26 @@ namespace WaiterApp.ViewModel
 
             var servingBatches = allServingBatches.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in servingBatches)
-                _ServingBatches.GetViewModelFor(servingBatch, servingBatch, this);
+                _ServingBatches.GetViewModelFor(servingBatch, servingBatch);
 
             var asignedServingBatches = allServingBatches.Where(x => x.IsAssigned).ToList();
 
             foreach (var assignedServingBatch in asignedServingBatches)
-                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch, this);
+                _AssignedServingBatches.GetViewModelFor(assignedServingBatch, assignedServingBatch);
 
 
             foreach (var servingBatch in _ServingBatches.Keys.Where(x => !servingBatches.Contains(x)).ToList())
             {
                 _ServingBatches[servingBatch].Dispose();
                 _ServingBatches.Remove(servingBatch);
+                servingBatch.ObjectChangeState -= ServingBatchPresentation_ObjectChangeState;
             }
 
             foreach (var assignedServingBatch in _AssignedServingBatches.Keys.Where(x => !asignedServingBatches.Contains(x)).ToList())
             {
                 _AssignedServingBatches[assignedServingBatch].Dispose();
                 _AssignedServingBatches.Remove(assignedServingBatch);
+                assignedServingBatch.ObjectChangeState -= ServingBatchPresentation_ObjectChangeState;
             }
         }
 
@@ -1230,7 +1250,7 @@ namespace WaiterApp.ViewModel
         IShiftWork ActiveShiftWork;
 
         /// <MetaDataID>{4d1af4d2-ecbb-4ef9-a0ee-8a43a3a7d137}</MetaDataID>
-        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
+        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches ;
 
 
         /// <MetaDataID>{dd252805-6fb8-4285-9393-644a55911ee3}</MetaDataID>

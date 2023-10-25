@@ -292,17 +292,17 @@ namespace ServiceContextManagerApp.Proxies
             argsTypes[0] = typeof(ServiceContextManagerApp.ISupervisorPresentation);
             args[1] = messageID;
             argsTypes[1] = typeof(string);
-            object retValue = this.Invoke(typeof(ServiceContextManagerApp.DelayedMealAtTheCountertHandle), "Invoke", args, argsTypes);
+            object retValue = this.Invoke(typeof(ServiceContextManagerApp.DelayedMealAtTheCounterHandle), "Invoke", args, argsTypes);
         }
         
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
-            eventInfo.AddEventHandler(target, new ServiceContextManagerApp.DelayedMealAtTheCountertHandle(this.Invoke));
+            eventInfo.AddEventHandler(target, new ServiceContextManagerApp.DelayedMealAtTheCounterHandle(this.Invoke));
         }
         
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
-            eventInfo.RemoveEventHandler(target, new ServiceContextManagerApp.DelayedMealAtTheCountertHandle(this.Invoke));
+            eventInfo.RemoveEventHandler(target, new ServiceContextManagerApp.DelayedMealAtTheCounterHandle(this.Invoke));
         }
     }
     

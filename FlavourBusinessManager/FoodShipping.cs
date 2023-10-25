@@ -277,7 +277,7 @@ namespace FlavourBusinessManager.Shipping
 
         /// <MetaDataID>{effa589d-8157-44af-951c-4ca5c212dff6}</MetaDataID>
         [CachingDataOnClientSide]
-        public string ServicesPointIdentity { get;  }
+        public string ServicesPointIdentity { get; set; }
 
         [CachingDataOnClientSide]
         public string ServicesContextIdentity { get; set; }

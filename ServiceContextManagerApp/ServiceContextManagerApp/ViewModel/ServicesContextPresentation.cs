@@ -300,7 +300,7 @@ namespace ServiceContextManagerApp
         private void init()
         {
             ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
-            if (_SignedInSupervisor!=null)
+            if (_SignedInSupervisor != null)
                 _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
 
@@ -316,7 +316,7 @@ namespace ServiceContextManagerApp
             {
                 System.Threading.Thread.Sleep(9000);
                 MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList();
-                DelayedServingBatchesAtTheCounter=MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
 
 
                 _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
@@ -334,7 +334,7 @@ namespace ServiceContextManagerApp
         }
 
 
-        public event DelayedMealAtTheCountertHandle DelayedMealAtTheCounter;
+        public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
         object MessagesLock = new object();
         private void GetMessages()
         {
@@ -349,7 +349,7 @@ namespace ServiceContextManagerApp
                             _SignedInSupervisor.RemoveMessage(message.MessageID);
                         else
                         {
-                            if (message != null  && SignedInSupervisor?.InActiveShiftWork==true)
+                            if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
                             {
 
 
@@ -440,18 +440,24 @@ namespace ServiceContextManagerApp
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
-        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+        ViewModelWrappers<IFoodShipping, FoodShippingPresentation> FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+        ViewModelWrappers<IServingBatch, ServingBatchPresentation> ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
 
         public FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch)
         {
-            return _FoodShippings.GetViewModelFor(delayedServingBatch.ServingBatch as IFoodShipping, delayedServingBatch.ServingBatch); 
+            if (delayedServingBatch.ServingBatch is IFoodShipping && (delayedServingBatch.SessionType == SessionType.HomeDelivery || delayedServingBatch.SessionType == SessionType.HomeDeliveryGuest))
+                return FoodShippings.GetViewModelFor(delayedServingBatch.ServingBatch as IFoodShipping, delayedServingBatch.ServingBatch);
+            throw new ArgumentException("servingBatch is not food shipping");
         }
         public ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch)
         {
+            if (delayedServingBatch.SessionType == SessionType.Hall)
+                return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
+
             return null;
         }
 
-         
+
 
         /// <MetaDataID>{9c93fbca-e49d-45f4-9077-72d58f986f89}</MetaDataID>
         private void ServiceArea_ServicePointChangeState(object _object, IServicePoint servicePoint, ServicePointState newState)
@@ -470,7 +476,7 @@ namespace ServiceContextManagerApp
 
         private void ServicesContextPresentation_ObjectChangeState(object _object, string member)
         {
-            if (member=="ActiveShiftWork")
+            if (member == "ActiveShiftWork")
             {
                 if ((_object as SupervisorPresentation).InActiveShiftWork)
                     init();

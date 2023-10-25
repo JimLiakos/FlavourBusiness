@@ -1,6 +1,7 @@
 ﻿using DontWaitApp;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +46,11 @@ namespace WaiterApp.ViewModel
         public string ServiceBatchIdentity { get; set; }
 
         public readonly IServingBatch ServingBatch;
-        public readonly WaiterPresentation WaiterPresentation;
-        public ServingBatchPresentation(IServingBatch servingBatch, WaiterPresentation waiterPresentation)
+        //public readonly WaiterPresentation WaiterPresentation;
+        public ServingBatchPresentation(IServingBatch servingBatch)
         {
-            WaiterPresentation = waiterPresentation;
-            string servicesContextIdentity = waiterPresentation.Waiter.ServicesContextIdentity;
+            //WaiterPresentation = waiterPresentation;
+            string servicesContextIdentity = servingBatch.ServicesContextIdentity;
             ServingBatch = servingBatch;
             ServingBatch.ObjectChangeState += ServingBatchChangeState;
             ServingBatch.ItemsStateChanged += ServingBatch_ItemsStateChanged;
@@ -69,7 +70,7 @@ namespace WaiterApp.ViewModel
             var sessionData = servingBatch.MealCourse.SessionData;
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
-
+             
             storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
 #endif
             string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
@@ -85,6 +86,8 @@ namespace WaiterApp.ViewModel
             };
         }
 
+        public event ObjectChangeStateHandle ObjectChangeState; 
+
         private void ServingBatch_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             foreach (var preparedItem in (from preparedItemsContext in AllContextsOfPreparedItems
@@ -94,7 +97,8 @@ namespace WaiterApp.ViewModel
             {
                 preparedItem.State = newItemsState[preparedItem.uid];
             }
-            WaiterPresentation.ServingBatchUpdated(this);
+            ObjectChangeState?.Invoke(this, null);
+            
         }
 
         private void ServingBatchChangeState(object _object, string member)
@@ -112,8 +116,8 @@ namespace WaiterApp.ViewModel
             ServicePointType = ServingBatch.ServicePointType;
 
             AllContextsOfPreparedItems = allContextsOfPreparedItems;
-
-            WaiterPresentation.ServingBatchUpdated(this);
+            ObjectChangeState?.Invoke(this, null);
+            
         }
 
         public IList<ItemsPreparationContext> AllContextsOfPreparedItems { get; private set; }
