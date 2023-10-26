@@ -68,6 +68,6 @@ namespace FlavourBusinessApps.ServiceContextManagerApp.WPF
             SerializationBinder.TypesNamesDictionary[typeof(global::FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
             
 
-        }
+        } 
     }
 }
