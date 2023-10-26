@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessFacade.HumanResources;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -37,5 +38,14 @@ namespace ServiceContextManagerApp.ViewModel
         bool NativeUser { get; set; }
 
         string WorkerIdentity { get; }
+
+        [JsonIgnore]
+        [HttpInVisible]
+        IServicesContextWorker ServicesContextWorker { get; }
+
+
+        [JsonIgnore]
+        [HttpInVisible]
+        IShiftWork ActiveShiftWork { get; set; }
     }
 }

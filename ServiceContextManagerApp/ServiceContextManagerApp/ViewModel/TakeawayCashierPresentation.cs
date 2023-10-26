@@ -20,6 +20,11 @@ namespace ServiceContextManagerApp
     {
         /// <MetaDataID>{f427a271-25e9-45e1-b9b7-1561c560e3fe}</MetaDataID>
         internal ITakeawayCashier TakeawayCashier;
+
+
+        public IServicesContextWorker ServicesContextWorker => TakeawayCashier;
+
+
         /// <MetaDataID>{7d0b6644-4e8c-4bb6-b24b-37001826fa64}</MetaDataID>
         public TakeawayCashierPresentation(ITakeawayCashier takeawayCashier, IFlavoursServicesContextRuntime servicesContextRuntime)
         {
@@ -107,7 +112,8 @@ namespace ServiceContextManagerApp
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
         /// <MetaDataID>{cbe2c3df-1c68-429e-8d39-a32933a5d121}</MetaDataID>
-        IShiftWork ActiveShiftWork;
+        public IShiftWork ActiveShiftWork { get; set; }
+
         /// <MetaDataID>{d5bd6cd8-d051-4d3c-9f64-c15125131abf}</MetaDataID>
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 

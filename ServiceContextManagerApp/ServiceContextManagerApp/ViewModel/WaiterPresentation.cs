@@ -64,7 +64,7 @@ namespace ServiceContextManagerApp
             }
         }
 
-
+        public IServicesContextWorker ServicesContextWorker => Waiter;
         public string FullName
         {
             get
@@ -95,7 +95,8 @@ namespace ServiceContextManagerApp
         string _PhotoUrl;
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
-        IShiftWork ActiveShiftWork;
+        public IShiftWork ActiveShiftWork { get; set; }
+
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
         public bool InActiveShiftWork

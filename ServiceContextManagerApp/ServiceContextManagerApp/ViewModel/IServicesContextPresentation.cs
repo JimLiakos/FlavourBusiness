@@ -33,6 +33,9 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{389d2beb-9076-45ff-adbe-fb0a4fe64424}</MetaDataID>
         List<ICourierPresentation> Couriers { get; }
 
+
+        void ShiftWorkStart(IWorkerPresentation worker, DateTime startedAt, double timespanInHours);
+
         /// <MetaDataID>{199ed84e-71be-47a6-9aa8-79baa01af5bd}</MetaDataID>
         List<MealCourse> MealCoursesInProgress { get; }
 

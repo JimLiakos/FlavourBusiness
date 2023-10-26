@@ -20,7 +20,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{ad596b08-29b3-41b8-9780-bc7a1384aba0}</MetaDataID>
         private readonly ICourier Courier;
         /// <MetaDataID>{4413f7cd-0cc9-4671-8ac4-a845e032b019}</MetaDataID>
-        private IShiftWork ActiveShiftWork;
+        public IShiftWork ActiveShiftWork {get; set;}
         /// <MetaDataID>{3a590f53-8ab7-468d-9450-8704f1ce21e1}</MetaDataID>
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
@@ -98,6 +98,9 @@ namespace ServiceContextManagerApp
             NativeUser=courier.NativeUser;
         }
         public bool NativeUser { get; set; }
+
+        public IServicesContextWorker ServicesContextWorker => Courier;
+
         /// <MetaDataID>{a61fa943-0074-4c3a-b3e4-ad41903d62dd}</MetaDataID>
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {

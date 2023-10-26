@@ -420,6 +420,12 @@ namespace CourierApp.ViewModel
         {
             if (member == nameof(IServicesContextWorker.ActiveShiftWork))
             {
+                var activeShiftWork=Courier.ActiveShiftWork;
+                if(activeShiftWork!=ActiveShiftWork)
+                {
+                    UpdateFoodShippings(Courier.GetFoodShippings());
+                    ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+                }
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
                 GetMessages();
             }

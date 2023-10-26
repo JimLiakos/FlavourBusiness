@@ -10,9 +10,10 @@ using FlavourBusinessFacade.ServicesContextResources;
 using System.Threading.Tasks;
 using ServiceContextManagerApp.ViewModel;
 using FlavourBusinessFacade.EndUsers;
-using WaiterApp.ViewModel;
+
 using FlavourBusinessFacade.Shipping;
 using UIBaseEx;
+using CourierApp.ViewModel;
 
 
 
@@ -24,6 +25,7 @@ using UIBaseEx;
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using ZXing;
+using WaiterApp.ViewModel;
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
 using System.Drawing.Imaging;
@@ -153,6 +155,15 @@ namespace ServiceContextManagerApp
 
             }
         }
+
+
+        public void ShiftWorkStart(IWorkerPresentation worker, DateTime startedAt, double timespanInHours)
+        {
+            worker.ActiveShiftWork= worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+        }
+
+
+
         public event MealCoursesUpdatedHandle MealCoursesUpdated;
 
         /// <MetaDataID>{65515374-781c-4324-a6bd-6c652b62fc4f}</MetaDataID>
@@ -441,15 +452,15 @@ namespace ServiceContextManagerApp
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
-        ViewModelWrappers<IServingBatch, ServingBatchPresentation> ServingBatches = new ViewModelWrappers<IServingBatch, ServingBatchPresentation>();
+        ViewModelWrappers<IServingBatch, WaiterApp.ViewModel.ServingBatchPresentation> ServingBatches = new ViewModelWrappers<IServingBatch, WaiterApp.ViewModel.ServingBatchPresentation>();
 
         public FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch)
         {
             if (delayedServingBatch.ServingBatch is IFoodShipping && (delayedServingBatch.SessionType == SessionType.HomeDelivery || delayedServingBatch.SessionType == SessionType.HomeDeliveryGuest))
                 return FoodShippings.GetViewModelFor(delayedServingBatch.ServingBatch as IFoodShipping, delayedServingBatch.ServingBatch);
-            throw new ArgumentException("servingBatch is not food shipping");
+            throw new System.ArgumentException("servingBatch is not food shipping");
         }
-        public ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch)
+        public WaiterApp.ViewModel.ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch)
         {
             if (delayedServingBatch.SessionType == SessionType.Hall)
                 return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
