@@ -423,8 +423,9 @@ namespace CourierApp.ViewModel
                 var activeShiftWork=Courier.ActiveShiftWork;
                 if(activeShiftWork!=ActiveShiftWork)
                 {
+                    ActiveShiftWork = activeShiftWork;
                     UpdateFoodShippings(Courier.GetFoodShippings());
-                    ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+                    
                 }
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
                 GetMessages();
@@ -671,7 +672,7 @@ namespace CourierApp.ViewModel
 
 
         }
-
+ 
 
         /// <MetaDataID>{f9f3e407-f92f-4376-8ba6-96dc71a245ae}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
