@@ -7332,6 +7332,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignFoodShipping", args, argsTypes);
         }
         
+        public void AssignAndCommitFoodShipping(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodShipping;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignAndCommitFoodShipping", args, argsTypes);
+        }
+        
         public void PrintFoodShippingReceipt(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
         {
             object[] args = new object[1];

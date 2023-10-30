@@ -14,6 +14,8 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.Shipping;
 using UIBaseEx;
 using CourierApp.ViewModel;
+using FlavourBusinessManager.Shipping;
+using OOAdvantech;
 
 
 
@@ -52,6 +54,27 @@ namespace ServiceContextManagerApp
 
         /// <MetaDataID>{c30df083-03ce-4bad-93d2-54776257f64f}</MetaDataID>
         public string ServicesContextName { get => ServicesContext.Description; set { } }
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
+        {
+            get
+            {
+                return AppLifeTime.SerializeTaskScheduler;
+            }
+        }
+
+        static IAppLifeTime AppLifeTime
+        {
+            get
+            {
+#if DeviceDotNet
+                return Application.Current as IAppLifeTime;
+#else
+                return System.Windows.Application.Current as IAppLifeTime;
+#endif
+            }
+        }
+
 
         /// <exclude>Excluded</exclude>
         List<IWaiterPresentation> _Waiters;
@@ -156,6 +179,46 @@ namespace ServiceContextManagerApp
             }
         }
 
+        public bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker)
+        {
+            CourierPresentation courierPresentation=worker as CourierPresentation;
+
+
+            var foodShippings= FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+            var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping != null)
+            {
+
+
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        { 
+                            courierPresentation.Courier.AssignAndCommitFoodShipping(foodShipping.FoodShipping);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                        catch (Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
+                return true;
+            }
+
+            return false;
+        }
 
         public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
         {

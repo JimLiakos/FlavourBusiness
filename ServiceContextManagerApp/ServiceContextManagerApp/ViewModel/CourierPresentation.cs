@@ -18,7 +18,7 @@ namespace ServiceContextManagerApp
     public class CourierPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourierPresentation
     {
         /// <MetaDataID>{ad596b08-29b3-41b8-9780-bc7a1384aba0}</MetaDataID>
-        private readonly ICourier Courier;
+        public readonly ICourier Courier;
         /// <MetaDataID>{4413f7cd-0cc9-4671-8ac4-a845e032b019}</MetaDataID>
         public IShiftWork ActiveShiftWork {get; set;}
         /// <MetaDataID>{3a590f53-8ab7-468d-9450-8704f1ce21e1}</MetaDataID>

@@ -23,7 +23,7 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class Courier : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourier
     {
-     
+
         /// <MetaDataID>{9934c842-848c-4aee-9503-cae650097b4e}</MetaDataID>
         public Courier()
         {
@@ -757,6 +757,31 @@ namespace FlavourBusinessManager.HumanResources
                     }
                 }
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
+            }
+
+        }
+        public void AssignAndCommitFoodShipping(IFoodShipping foodShipping)
+        {
+            if (ActiveShiftWork is ServingShiftWork)
+            {
+                lock (this)
+                {
+                    try
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            AssignFoodShipping(foodShipping);
+                            if ((foodShipping as FoodShipping).State == ItemPreparationState.Serving && foodShipping.IsAssigned && foodShipping.ShiftWork.Worker == this)
+                                (foodShipping as FoodShipping).OnTheRoad();
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                    catch (Exception error)
+                    {
+                        throw;
+                    }
+                }
             }
 
         }
