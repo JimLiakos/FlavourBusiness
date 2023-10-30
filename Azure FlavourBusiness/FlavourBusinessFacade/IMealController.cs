@@ -1,10 +1,14 @@
+using FlavourBusinessFacade.Shipping;
 using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.RoomService
 {
 
-    public delegate void NewMealCoursesInrogressHandel(IList<IMealCourse> mealCoursers);
+    public delegate void NewMealCoursesInProgressHandel(IList<IMealCourse> mealCoursers);
+
+    public delegate void MealCourseChangeStateHandel(IMealCourse mealCourser, string memberName);
+    public delegate void MealCourseItemsStateChangedHandle(IMealCourse mealCourser, Dictionary<string, ItemPreparationState> newItemsState);
 
     /// <MetaDataID>{a078dd80-08f5-4a00-b67f-574a91f11dbe}</MetaDataID>
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
@@ -16,15 +20,19 @@ namespace FlavourBusinessFacade.RoomService
         System.Collections.Generic.List<IMealCourse> MealCoursesInProgress { get; }
 
 
-        event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
+        event NewMealCoursesInProgressHandel NewMealCoursesInProgress;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+        event MealCourseChangeStateHandel MealCourseChangeState;
+        event MealCourseItemsStateChangedHandle MealCourseItemsStateChanged;
 
         void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri);
         void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri);
 
 
 
-      List<  DelayedServingBatchAbbreviation> GetDelayedServingBatchesAtTheCounter(double delayInMins);
+        List<DelayedServingBatchAbbreviation> GetDelayedServingBatchesAtTheCounter(double delayInMins);
+        IFoodShipping GetMealCourseFoodShipping(string mealCourseUri);
     }
 }

@@ -299,12 +299,14 @@ namespace FlavourBusinessManager.RoomService
                     if (transaction.Status == TransactionStatus.Committed)
                     {
                         ObjectChangeState?.Invoke(this, nameof(Meal));
+                        (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(Meal));
                     }
                 };
             }
             else
             {
                 ObjectChangeState?.Invoke(this, nameof(Meal));
+                (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(Meal));
             }
 
         }
@@ -637,6 +639,7 @@ namespace FlavourBusinessManager.RoomService
         private void MealSession_ObjectChangeState(object _object, string member)
         {
             ObjectChangeState?.Invoke(this, member);
+            (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, member);
         }
 
 
@@ -652,6 +655,7 @@ namespace FlavourBusinessManager.RoomService
         public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             ItemsStateChanged?.Invoke(newItemsState);
+            (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseItemsChangeState(this, newItemsState);
 
             foreach (var itemsPreparationContext in this.FoodItemsInProgress)
             {
@@ -738,7 +742,10 @@ namespace FlavourBusinessManager.RoomService
         private void RunFoodItemsChanged()
         {
             if (OOAdvantech.Transactions.Transaction.Current == null)
+            {
                 ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(FoodItems));
+            }
             else
             {
                 lock (FoodItemsChangedActions)
@@ -752,6 +759,7 @@ namespace FlavourBusinessManager.RoomService
                             {
                                 FoodItemsChangedActions.Remove(localTransactionUri);
                                 ObjectChangeState?.Invoke(this, nameof(FoodItems));
+                                (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(FoodItems));
 
                             }
                         };
@@ -815,7 +823,10 @@ namespace FlavourBusinessManager.RoomService
         private void ServicesContextRunTime_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(ServicesContextRunTime.OperativeRestaurantMenu))
+            {
                 ObjectChangeState?.Invoke(this, nameof(SessionData));
+                (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(SessionData));
+            }
 
         }
 

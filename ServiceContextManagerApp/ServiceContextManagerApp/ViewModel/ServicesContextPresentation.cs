@@ -159,7 +159,7 @@ namespace ServiceContextManagerApp
 
         public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
         {
-            worker.ActiveShiftWork= worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+            worker.ActiveShiftWork = worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
         }
 
 
@@ -319,14 +319,14 @@ namespace ServiceContextManagerApp
             MealsController = this.ServicesContextRuntime.MealsController;
 
 
-            MealsController.NewMealCoursesInrogress += MealsController_NewMealCoursesInrogress;
+            MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
             MealsController.ObjectChangeState += MealsController_ObjectChangeState;
             _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
 
             Task.Run(() =>
             {
-                System.Threading.Thread.Sleep(9000);
-                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList();
+                //System.Threading.Thread.Sleep(9000);
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
 
 
@@ -412,7 +412,7 @@ namespace ServiceContextManagerApp
 
                 _MealCoursesInProgress.Clear();
 
-                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
                 _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
             }
         }
@@ -420,7 +420,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{58f876a1-ba32-41f9-9161-0aaf1efa07f8}</MetaDataID>
         private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
         {
-            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, this)).ToList();
+            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
             _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
         }
 
@@ -456,14 +456,32 @@ namespace ServiceContextManagerApp
 
         public FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch)
         {
-            if (delayedServingBatch.ServingBatch is IFoodShipping && (delayedServingBatch.SessionType == SessionType.HomeDelivery || delayedServingBatch.SessionType == SessionType.HomeDeliveryGuest))
-                return FoodShippings.GetViewModelFor(delayedServingBatch.ServingBatch as IFoodShipping, delayedServingBatch.ServingBatch);
+            if (OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFoodShipping>(delayedServingBatch.ServingBatch) is IFoodShipping && (delayedServingBatch.SessionType == SessionType.HomeDelivery || delayedServingBatch.SessionType == SessionType.HomeDeliveryGuest))
+                return FoodShippings.GetViewModelFor(OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFoodShipping>(delayedServingBatch.ServingBatch), OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFoodShipping>(delayedServingBatch.ServingBatch));
             throw new System.ArgumentException("servingBatch is not food shipping");
         }
         public WaiterApp.ViewModel.ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch)
         {
             if (delayedServingBatch.SessionType == SessionType.Hall)
                 return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
+             
+            return null;
+        }
+        public FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri)
+        {
+            var mealCourse = MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
+            if (mealCourse.SessionType == SessionType.HomeDelivery)
+            {
+                //mealCourse.ServerSideMealCourse.PreparationState
+                IFoodShipping foodShipping = MealsController.GetMealCourseFoodShipping(mealCourseUri);
+                if (foodShipping == null)
+                    return null;
+
+                return FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+
+                //return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
+            }
+
 
             return null;
         }
@@ -699,48 +717,48 @@ namespace ServiceContextManagerApp
                 string codeValue = this.ServicesContext.ServicesContextIdentity + ";" + worker.WorkerIdentity;
                 string SigBase64 = "";
 #if DeviceDotNet
-            var barcodeWriter = new BarcodeWriterGeneric()
-            {
-                Format = ZXing.BarcodeFormat.QR_CODE,
-                Options = new ZXing.Common.EncodingOptions
+                var barcodeWriter = new BarcodeWriterGeneric()
                 {
-                    Height = 400,
-                    Width = 400
-                }
-            };
+                    Format = ZXing.BarcodeFormat.QR_CODE,
+                    Options = new ZXing.Common.EncodingOptions
+                    {
+                        Height = 400,
+                        Width = 400
+                    }
+                };
 
 
-            var bitmapMatrix = barcodeWriter.Encode(codeValue);
-            var width = bitmapMatrix.Width;
-            var height = bitmapMatrix.Height;
-            int[] pixelsImage = new int[width * height];
-            SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
+                var bitmapMatrix = barcodeWriter.Encode(codeValue);
+                var width = bitmapMatrix.Width;
+                var height = bitmapMatrix.Height;
+                int[] pixelsImage = new int[width * height];
+                SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
 
-            SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
-            if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
-                fgColor = SkiaSharp.SKColors.Black;
+                SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
+                if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
+                    fgColor = SkiaSharp.SKColors.Black;
 
-            var pixels = qrCodeImage.Pixels;
-            int k = 0;
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
+                var pixels = qrCodeImage.Pixels;
+                int k = 0;
+                for (int i = 0; i < height; i++)
                 {
-                    if (bitmapMatrix[j, i])
-                        pixels[k++] = fgColor;
-                    else
-                        pixels[k++] = SkiaSharp.SKColors.White;
+                    for (int j = 0; j < width; j++)
+                    {
+                        if (bitmapMatrix[j, i])
+                            pixels[k++] = fgColor;
+                        else
+                            pixels[k++] = SkiaSharp.SKColors.White;
+                    }
                 }
-            }
-            qrCodeImage.Pixels = pixels;
+                qrCodeImage.Pixels = pixels;
 
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-            {
-                SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-                d.SaveTo(ms);
-                byte[] byteImage = ms.ToArray();
-                SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
-            }
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+                    d.SaveTo(ms);
+                    byte[] byteImage = ms.ToArray();
+                    SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
+                }
 #else
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);

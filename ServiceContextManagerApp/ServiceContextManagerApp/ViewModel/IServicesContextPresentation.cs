@@ -104,6 +104,7 @@ namespace ServiceContextManagerApp
         List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; }
 
         FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch);
+        FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri);
         ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch);
 
     }

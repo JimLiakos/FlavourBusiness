@@ -35,21 +35,23 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public string MealCourseUri { get; set; }
         public ItemPreparationState PreparationState { get; }
 
+        IMealsController MealsController;
 
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
-        public MealCourse(IMealCourse serverSideMealCourse )
+        public MealCourse(IMealCourse serverSideMealCourse, IMealsController mealsController)
         {
+            MealsController = mealsController;
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
             var sessionData = ServerSideMealCourse.SessionData;
 
             SessionType = sessionData.SessionType;
-            
-            Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
-            
 
-            
+            Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
+
+
+
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
 
@@ -67,8 +69,10 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 DefaultMealTypeUri = sessionData.DefaultMealTypeUri
             };
 
-            serverSideMealCourse.ItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
-            serverSideMealCourse.ObjectChangeState += ServerSideMealCourse_ObjectChangeState;
+            MealsController.MealCourseItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
+            MealsController.MealCourseChangeState += ServerSideMealCourse_ObjectChangeState;
+            //serverSideMealCourse.ItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
+            //serverSideMealCourse.ObjectChangeState += ServerSideMealCourse_ObjectChangeState;
 
 
             PreparationState = serverSideMealCourse.PreparationState;
@@ -80,50 +84,54 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
 
 
-        private void ServerSideMealCourse_ObjectChangeState(object _object, string member)
+        private void ServerSideMealCourse_ObjectChangeState(IMealCourse mealCourse, string member)
         {
-            if (member == nameof(IMealCourse.FoodItems))
+            if (mealCourse == this.ServerSideMealCourse)
             {
-                FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
-                var items = FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
-                MealCourseUpdated?.Invoke(this);
-            }
-            
-            if (member == nameof(IMealCourse.Meal))
-            {
-                var sessionData = ServerSideMealCourse.SessionData;
-                Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
-                SessionType = sessionData.SessionType;
-                MealCourseUpdated?.Invoke(this);
-            }
+                if (member == nameof(IMealCourse.FoodItems))
+                {
+                    FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
+                    var items = FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
+                    MealCourseUpdated?.Invoke(this);
+                }
 
-            if (member == nameof(IMealCourse.SessionData))
-            {
+                if (member == nameof(IMealCourse.Meal))
+                {
+                    var sessionData = ServerSideMealCourse.SessionData;
+                    Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
+                    SessionType = sessionData.SessionType;
+                    MealCourseUpdated?.Invoke(this);
+                }
 
-                var sessionData = ServerSideMealCourse.SessionData;
-                var storeRef = sessionData.Menu;
+                if (member == nameof(IMealCourse.SessionData))
+                {
+
+                    var sessionData = ServerSideMealCourse.SessionData;
+                    var storeRef = sessionData.Menu;
 #if !DeviceDotNet
 
-                storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
+                    storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
 #endif
-                string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
-                string menuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+                    string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
+                    string menuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
 
 
-                MenuData = new DontWaitApp.MenuData()
-                {
-                    MenuName = storeRef.Name,
-                    MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
-                    MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
-                    DefaultMealTypeUri = sessionData.DefaultMealTypeUri
-                };
+                    MenuData = new DontWaitApp.MenuData()
+                    {
+                        MenuName = storeRef.Name,
+                        MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
+                        MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                        DefaultMealTypeUri = sessionData.DefaultMealTypeUri
+                    };
 
+                }
             }
         }
 
-        private void ServerSideMealCourse_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
+        private void ServerSideMealCourse_ItemsStateChanged(IMealCourse mealCourse, Dictionary<string, ItemPreparationState> newItemsState)
         {
-            ItemsStateChanged?.Invoke(newItemsState);
+            if (mealCourse == this.ServerSideMealCourse)
+                ItemsStateChanged?.Invoke(newItemsState);
 
         }
     }

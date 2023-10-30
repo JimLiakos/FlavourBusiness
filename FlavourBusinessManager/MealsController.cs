@@ -192,8 +192,22 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2545475d-7f8d-4eb5-b7ec-12ca0dc59bfa}</MetaDataID>
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
 
-        public event NewMealCoursesInrogressHandel NewMealCoursesInrogress;
+        public event NewMealCoursesInProgressHandel NewMealCoursesInProgress;
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+        public event MealCourseChangeStateHandel MealCourseChangeState;
+        public event MealCourseItemsStateChangedHandle MealCourseItemsStateChanged;
+
+
+        internal void MealCourseStateChanged(MealCourse mealCourse, string member)
+        {
+            MealCourseChangeState?.Invoke(mealCourse, member);
+        }
+        internal void MealCourseItemsChangeState(MealCourse mealCourse, Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            MealCourseItemsStateChanged?.Invoke(mealCourse, newItemsState);
+
+        }
 
         /// <MetaDataID>{678886b6-415d-4058-8264-0847b0872a3a}</MetaDataID>
         public MealsController(ServicePointRunTime.ServicesContextRunTime servicesContextRunTime)
@@ -210,7 +224,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{287105f2-4956-4515-b8f8-a1b06d4d5092}</MetaDataID>
         internal void OnNewMealCoursesInProgress(List<IMealCourse> mealCourses)
         {
-            NewMealCoursesInrogress?.Invoke(mealCourses);
+            NewMealCoursesInProgress?.Invoke(mealCourses);
 
             //(ServicesContextRunTime.MealsController as MealsController).ReadyToServeMealcoursesCheck(mealCourses);
             //you have to  filter mealcourses by state.
@@ -287,9 +301,22 @@ namespace FlavourBusinessManager.RoomService
 
             var servingBatches = GetServingBatchesAtTheCounter();
             var delayedServiceBatches = servingBatches.Where(x => x.CreationTime != null && (DateTime.UtcNow - x.CreationTime.Value.ToUniversalTime()).TotalMinutes > delayInMins)
-                .Select(x => new DelayedServingBatchAbbreviation(x) ).ToList();
+                .Select(x => new DelayedServingBatchAbbreviation(x)).ToList();
 
             return delayedServiceBatches;
+        }
+
+        public IFoodShipping GetMealCourseFoodShipping(string mealCourseUri)
+        {
+            var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse; ;
+            
+            var foodShiping = GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
+
+            //if (foodShiping != null && foodShiping.MealCourse.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad))
+            return foodShiping;
+
+            //var mealCourse = this.MealCoursesInProgress.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseUri).FirstOrDefault();
+            //return null;
         }
 
 
@@ -768,7 +795,7 @@ namespace FlavourBusinessManager.RoomService
                 ServicesContextRunTime.Current.UpdateWaitersWithUnreadedMessages();
             }
 
-            if (meal.Session?.SessionType == SessionType.HomeDelivery&& meal.Courses.All(x => x.PreparationState == ItemPreparationState.Serving))
+            if (meal.Session?.SessionType == SessionType.HomeDelivery && meal.Courses.All(x => x.PreparationState == ItemPreparationState.Serving))
             {
 
                 var servicePoint = meal.Session.ServicePoint as HomeDeliveryServicePoint;

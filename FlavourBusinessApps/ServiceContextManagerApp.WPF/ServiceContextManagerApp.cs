@@ -38,9 +38,8 @@ namespace FlavourBusinessApps.ServiceContextManagerApp.WPF
             SerializationBinder.NamesTypesDictionary["UIBaseEx.FontData"] = typeof(UIBaseEx.FontData);
 
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ViewModel.MealCourse"] = typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse);
+
             SerializationBinder.NamesTypesDictionary["WaiterApp.ViewModel.ServingBatchPresentation"] = typeof(global::WaiterApp.ViewModel.ServingBatchPresentation);
-
-
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation"] = typeof(FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation);
             SerializationBinder.NamesTypesDictionary["CourierApp.ViewModel.FoodShippingPresentation"] = typeof(global::CourierApp.ViewModel.FoodShippingPresentation);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);

@@ -86,6 +86,7 @@
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\DeviceUtilities.NetStandard\DeviceUtilities.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
     <ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
+    <ProjectReference Include="..\..\DontWaitAppNS\FlavourOrderPresentation\FlavourOrderPresentation.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MenuCanvas\" />

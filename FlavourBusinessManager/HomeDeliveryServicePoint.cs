@@ -360,7 +360,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PlaceOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(PlaceOfDistributionJson);
 
 
-            ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInrogress+=MealsController_NewMealCoursesInrogress;
+            ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInProgress+=MealsController_NewMealCoursesInrogress;
 
 
         }
