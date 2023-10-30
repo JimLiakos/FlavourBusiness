@@ -107,6 +107,8 @@ namespace ServiceContextManagerApp
         FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri);
         ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch);
 
+        bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker);
+
     }
 
     public delegate void DelayedMealAtTheCounterHandle(ISupervisorPresentation supervisorPresentation, string messageID);
