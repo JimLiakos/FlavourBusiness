@@ -15,6 +15,8 @@ using OOAdvantech.Remoting.RestApi;
 using UIBaseEx;
 using System.Net.Mail;
 using FlavourBusinessManager;
+using FlavourBusinessFacade.RoomService;
+using System.Linq.Expressions;
 
 
 
@@ -46,13 +48,22 @@ namespace ServiceContextManagerApp
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
     public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-
-
+         
+         
 
         /// <MetaDataID>{336c5eed-616e-4844-b938-ea8acbeb0e1b}</MetaDataID>
         public ManagerPresentation()
         {
-
+           
+            Expression<Func<IMealsController, dynamic>> expression = t => t.MealCoursesInProgress.Select(x =>
+         new
+         {
+             x.Name,
+             x.Meal,
+             FoodItemsInProgress=x.FoodItemsInProgress.Select(y=>new { 
+                 y.Description,
+                 y.SessionType })
+         });
             DeviceAuthentication.AuthStateChanged += DeviceAuthentication_AuthStateChanged;
 #if DeviceDotNet
 

@@ -407,6 +407,15 @@ namespace FlavourBusinessManager.RoomService
                 }
             }
 
+            if (FoodItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == FoodItems.Count)
+            {
+                if ((System.DateTime.Now - FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
+                {
+                    if (PreparationState != ItemPreparationState.OnRoad)
+                        PreparationState = ItemPreparationState.OnRoad;
+                }
+            }
+
             var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
             if (servingBatchesAtTheCounter.Count > 0)
             {

@@ -16,6 +16,7 @@ using UIBaseEx;
 using CourierApp.ViewModel;
 using FlavourBusinessManager.Shipping;
 using OOAdvantech;
+using System.Linq.Expressions;
 
 
 
@@ -181,15 +182,15 @@ namespace ServiceContextManagerApp
 
         public bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker)
         {
-            CourierPresentation courierPresentation=worker as CourierPresentation;
+            CourierPresentation courierPresentation = worker as CourierPresentation;
 
 
-            var foodShippings= FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+            var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 
             if (foodShipping != null)
             {
-                 
+
 
                 SerializeTaskScheduler.AddTask(async () =>
                 {
@@ -197,7 +198,7 @@ namespace ServiceContextManagerApp
                     while (tries > 0)
                     {
                         try
-                        { 
+                        {
                             courierPresentation.Courier.AssignAndCommitFoodShipping(foodShipping.FoodShipping);
                             return true;
                         }
@@ -465,6 +466,8 @@ namespace ServiceContextManagerApp
         private void MealsController_ObjectChangeState(object _object, string member)
         {
 
+         
+
             if (member == nameof(IMealsController.MealCoursesInProgress))
             {
                 foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
@@ -527,7 +530,7 @@ namespace ServiceContextManagerApp
         {
             if (delayedServingBatch.SessionType == SessionType.Hall)
                 return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
-             
+
             return null;
         }
         public FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri)

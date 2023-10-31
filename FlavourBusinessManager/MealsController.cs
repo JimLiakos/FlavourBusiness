@@ -309,14 +309,12 @@ namespace FlavourBusinessManager.RoomService
         public IFoodShipping GetMealCourseFoodShipping(string mealCourseUri)
         {
             var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse; ;
-            
-            var foodShiping = GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
 
-            //if (foodShiping != null && foodShiping.MealCourse.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad))
+
+            var foodShiping = mealCourse.ServingBatches.OfType<FoodShipping>().FirstOrDefault();
+            if (foodShiping == null)
+                foodShiping = GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
             return foodShiping;
-
-            //var mealCourse = this.MealCoursesInProgress.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseUri).FirstOrDefault();
-            //return null;
         }
 
 

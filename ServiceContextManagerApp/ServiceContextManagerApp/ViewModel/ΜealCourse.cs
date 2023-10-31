@@ -131,7 +131,13 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         private void ServerSideMealCourse_ItemsStateChanged(IMealCourse mealCourse, Dictionary<string, ItemPreparationState> newItemsState)
         {
             if (mealCourse == this.ServerSideMealCourse)
+            {
+                if (newItemsState.Any(x => x.Value.IsIntheSameOrFollowingState(ItemPreparationState.OnRoad)))
+                {
+
+                }
                 ItemsStateChanged?.Invoke(newItemsState);
+            }
 
         }
     }
