@@ -54,16 +54,20 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{336c5eed-616e-4844-b938-ea8acbeb0e1b}</MetaDataID>
         public ManagerPresentation()
         {
-           
-            Expression<Func<IMealsController, dynamic>> expression = t => t.MealCoursesInProgress.Select(x =>
-         new
-         {
-             x.Name,
-             x.Meal,
-             FoodItemsInProgress=x.FoodItemsInProgress.Select(y=>new { 
-                 y.Description,
-                 y.SessionType })
-         });
+
+
+            Expression<System.Func<IMealsController, dynamic>> expression = t => t.MealCoursesInProgress.Select(x => new
+            {
+                x.Name,
+                x.Meal,
+                FoodItemsInProgress = x.FoodItemsInProgress.Select(y => new
+                {
+                    y.Description,
+                    y.SessionType
+                })
+            });
+
+
             DeviceAuthentication.AuthStateChanged += DeviceAuthentication_AuthStateChanged;
 #if DeviceDotNet
 

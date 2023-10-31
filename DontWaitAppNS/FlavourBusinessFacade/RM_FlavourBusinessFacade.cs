@@ -2717,6 +2717,16 @@ public event FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "GetDelayedServingBatchesAtTheCounter", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.DelayedServingBatchAbbreviation>>(retValue);
         }
+        
+        public FlavourBusinessFacade.Shipping.IFoodShipping GetMealCourseFoodShipping(string mealCourseUri)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = mealCourseUri;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "GetMealCourseFoodShipping", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.Shipping.IFoodShipping>(retValue);
+        }
     }
     
     public sealed class Pr_IMealCourse : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.RoomService.IMealCourse, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -5781,6 +5791,15 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[0] = foodShipping;
             argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignFoodShipping", args, argsTypes);
+        }
+        
+        public void AssignAndCommitFoodShipping(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = foodShipping;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignAndCommitFoodShipping", args, argsTypes);
         }
         
         public void PrintFoodShippingReceipt(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)

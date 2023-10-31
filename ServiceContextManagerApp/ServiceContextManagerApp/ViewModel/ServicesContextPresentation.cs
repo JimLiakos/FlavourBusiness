@@ -14,7 +14,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.Shipping;
 using UIBaseEx;
 using CourierApp.ViewModel;
-using FlavourBusinessManager.Shipping;
+
 using OOAdvantech;
 using System.Linq.Expressions;
 
@@ -30,6 +30,7 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using ZXing;
 using WaiterApp.ViewModel;
 #else
+using FlavourBusinessManager.Shipping;
 using MarshalByRefObject = System.MarshalByRefObject;
 using System.Drawing.Imaging;
 using QRCoder;
@@ -69,7 +70,7 @@ namespace ServiceContextManagerApp
             get
             {
 #if DeviceDotNet
-                return Application.Current as IAppLifeTime;
+                return Xamarin.Forms.Application.Current as IAppLifeTime;
 #else
                 return System.Windows.Application.Current as IAppLifeTime;
 #endif
@@ -204,12 +205,12 @@ namespace ServiceContextManagerApp
                         }
                         catch (System.Net.WebException commError)
                         {
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
                         }
-                        catch (Exception error)
+                        catch (System.Exception error)
                         {
                             var er = error;
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
                         }
                     }
                     return true;
@@ -343,6 +344,35 @@ namespace ServiceContextManagerApp
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor signedInSupervisor)
         {
 
+            IMealCourse mm = null;
+
+
+            IMeal m_meal = mm.Fetching(t => t.Meal.Caching(meal => new
+            {
+                meal.Name,
+                Courses = meal.Courses.Select(mealCourse => new
+                {
+                    mealCourse.SortID,
+                    mealCourse.HeaderCourse,
+                    foodItemsInProgress = mealCourse.FoodItemsInProgress.Select( itemsPreparationContext => new
+                    {
+                        itemsPreparationContext.PreparationStationDescription
+
+                    })  
+                })
+            }));
+
+            //this.Fetching(t=>t.MealCoursesInProgress.Select(x => new
+            //{
+            //    x.Name,
+            //    x.Meal,
+            //    FoodItemsInProgress = x.FoodItemsInProgress.Select(y => new
+            //    {
+            //        y.Description,
+            //        y.SessionType
+            //    })
+            //}));
+
             AdministratorIdentity = "";
             _SignedInSupervisor = signedInSupervisor;
             if (_SignedInSupervisor != null)
@@ -466,7 +496,7 @@ namespace ServiceContextManagerApp
         private void MealsController_ObjectChangeState(object _object, string member)
         {
 
-         
+
 
             if (member == nameof(IMealsController.MealCoursesInProgress))
             {
