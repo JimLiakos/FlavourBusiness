@@ -49,7 +49,7 @@ namespace ServiceContextManagerApp
     public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
          
-         
+          
 
         /// <MetaDataID>{336c5eed-616e-4844-b938-ea8acbeb0e1b}</MetaDataID>
         public ManagerPresentation()

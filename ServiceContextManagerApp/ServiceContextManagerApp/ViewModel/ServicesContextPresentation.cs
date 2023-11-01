@@ -346,6 +346,19 @@ namespace ServiceContextManagerApp
 
             IMealCourse mm = null;
 
+            
+            MealsController.Fetching(mc => mc.MealCoursesInProgress.Caching(mealCourses => mealCourses.Select(mealCourse => new { 
+                mealCourse.Name,
+                mealCourse.Meal,
+                FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
+                {
+                    itemsContext.MealCourse,
+                    itemsContext.Description,
+                    itemsContext.PreparationState,
+                    itemsContext.PreparationItems
+
+                })
+            })));
 
             IMeal m_meal = mm.Fetching(t => t.Meal.Caching(meal => new
             {
