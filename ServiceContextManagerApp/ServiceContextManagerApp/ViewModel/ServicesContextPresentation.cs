@@ -346,8 +346,9 @@ namespace ServiceContextManagerApp
 
             IMealCourse mm = null;
 
-            
-            MealsController.Fetching(mc => mc.MealCoursesInProgress.Caching(mealCourses => mealCourses.Select(mealCourse => new { 
+
+            MealsController.Fetching(mc => mc.GetMealCoursesInProgress("Lota", 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
+            {
                 mealCourse.Name,
                 mealCourse.Meal,
                 FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
@@ -367,11 +368,11 @@ namespace ServiceContextManagerApp
                 {
                     mealCourse.SortID,
                     mealCourse.HeaderCourse,
-                    foodItemsInProgress = mealCourse.FoodItemsInProgress.Select( itemsPreparationContext => new
+                    foodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsPreparationContext => new
                     {
                         itemsPreparationContext.PreparationStationDescription
 
-                    })  
+                    })
                 })
             }));
 
@@ -433,7 +434,25 @@ namespace ServiceContextManagerApp
             Task.Run(() =>
             {
                 //System.Threading.Thread.Sleep(9000);
-                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
+
+                string param = MealsController.ToString()+ "asdas";
+
+                var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
+                {
+                    mealCourse.Name,
+                    mealCourse.Meal,
+                    FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
+                    {
+                        itemsContext.MealCourse,
+                        itemsContext.Description,
+                        itemsContext.PreparationState,
+                        itemsContext.PreparationItems
+
+                    })
+                })));
+
+
+                mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
 
 

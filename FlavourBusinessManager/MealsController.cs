@@ -40,6 +40,13 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(string filter, int age)
+        {
+            return MealCoursesInProgress;
+        }
+
+
+
 
         /// <MetaDataID>{db77bf43-40ea-48ca-830f-f713e88938aa}</MetaDataID>
         object buildPreparationPlanLock = new object();

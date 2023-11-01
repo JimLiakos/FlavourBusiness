@@ -2715,6 +2715,18 @@ public event FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> GetMealCoursesInProgress(string filter, int age)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = filter;
+            argsTypes[0] = typeof(string);
+            args[1] = age;
+            argsTypes[1] = typeof(int);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "GetMealCoursesInProgress", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
+        }
+        
         public void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri)
         {
             object[] args = new object[2];
