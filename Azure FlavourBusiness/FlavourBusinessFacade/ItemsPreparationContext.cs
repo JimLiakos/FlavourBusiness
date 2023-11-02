@@ -14,7 +14,7 @@ namespace FlavourBusinessFacade.RoomService
     /// and prepared at specific preparation station or all are trade products, available for serving
     /// </summary>
     /// <MetaDataID>{d83d4466-195d-471e-be61-fdceb04c166e}</MetaDataID>
-    public class ItemsPreparationContext
+    public class ItemsPreparationContext:MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
         /// <summary>

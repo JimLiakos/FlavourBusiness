@@ -1,0 +1,1966 @@
+{
+  "__type": "System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IMealCourse, FlavourBusinessFacade]], mscorlib",
+  "type_id": "1",
+  "$values": [
+    {
+      "__type": "OOAdvantech.Remoting.RestApi.ObjRef, RestApiRemoting",
+      "type_id": "2",
+      "$value": {
+        "$id": "3",
+        "InvalidMembersValues": false,
+        "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/wvnr9a_tpj36y3_ezUofoczQ_740#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\26\\c020edb2-58cf-408b-85ef-62ede11e59d8",
+        "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+        "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+        "TypeName": "FlavourBusinessManager.RoomService.MealCourse, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "TypeMetaData": {
+          "__type": "OOAdvantech.MetaDataRepository.ProxyType, RestApiRemoting",
+          "type_id": "4",
+          "$value": {
+            "$id": "5",
+            "Paired": false,
+            "ObjectChangeStateEventName": null,
+            "Name": "MealCourse",
+            "FullName": "FlavourBusinessManager.RoomService.MealCourse",
+            "Interfaces": {
+              "__type": "System.Collections.Generic.List`1[[OOAdvantech.MetaDataRepository.ProxyType, RestApiRemoting]], mscorlib",
+              "type_id": "6",
+              "$values": [
+                {
+                  "type_ref": 4,
+                  "$value": {
+                    "$id": "7",
+                    "Paired": false,
+                    "ObjectChangeStateEventName": null,
+                    "Name": "IExtMarshalByRefObject",
+                    "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                    "Interfaces": {
+                      "type_ref": 6,
+                      "$values": []
+                    },
+                    "Methods": {
+                      "__type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                      "type_id": "8",
+                      "$values": []
+                    },
+                    "CachingClientSidePropertiesNames": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "Properties": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "Events": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                    "HasCachingClientSideProperties": false
+                  }
+                },
+                {
+                  "type_ref": 4,
+                  "$value": {
+                    "$id": "9",
+                    "Paired": false,
+                    "ObjectChangeStateEventName": null,
+                    "Name": "IMealCourse",
+                    "FullName": "FlavourBusinessFacade.RoomService.IMealCourse",
+                    "Interfaces": {
+                      "type_ref": 6,
+                      "$values": []
+                    },
+                    "Methods": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "CachingClientSidePropertiesNames": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "Properties": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "Events": {
+                      "type_ref": 8,
+                      "$values": []
+                    },
+                    "AssemblyQualifiedName": "FlavourBusinessFacade.RoomService.IMealCourse, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "HasCachingClientSideProperties": false
+                  }
+                }
+              ]
+            },
+            "Methods": {
+              "type_ref": 8,
+              "$values": []
+            },
+            "CachingClientSidePropertiesNames": {
+              "type_ref": 8,
+              "$values": []
+            },
+            "Properties": {
+              "type_ref": 8,
+              "$values": []
+            },
+            "Events": {
+              "type_ref": 8,
+              "$values": []
+            },
+            "AssemblyQualifiedName": "FlavourBusinessManager.RoomService.MealCourse, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "HasCachingClientSideProperties": false
+          }
+        },
+        "MembersValues": {
+          "__type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Object, mscorlib]], mscorlib",
+          "type_id": "10",
+          "$values": [
+            {
+              "key": "Name",
+              "value": "Κυρίως πιάτο"
+            },
+            {
+              "key": "StartsAt",
+              "value": "2023-10-01T20:10:39.498Z"
+            },
+            {
+              "key": "SessionData",
+              "value": {
+                "__type": "FlavourBusinessFacade.EndUsers.SessionData, FlavourBusinessFacade",
+                "type_id": "11",
+                "$value": {
+                  "$id": "12",
+                  "ServicePointIdentity": "9967813ee9d943db823ca97779eb9fd7",
+                  "Token": null,
+                  "FoodServiceSession": {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "13",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/V0v+J3L+ZwE1HOB2xApFmGee_710#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\10\\4971c710-2d7f-4205-829c-07dc9b0a3a6a",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "$value": {
+                          "$id": "14",
+                          "Paired": false,
+                          "ObjectChangeStateEventName": null,
+                          "Name": "FoodServiceSession",
+                          "FullName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession",
+                          "Interfaces": {
+                            "type_ref": 6,
+                            "$values": [
+                              {
+                                "type_ref": 4,
+                                "$value": {
+                                  "$id": "15",
+                                  "Paired": false,
+                                  "ObjectChangeStateEventName": null,
+                                  "Name": "IExtMarshalByRefObject",
+                                  "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                                  "Interfaces": {
+                                    "type_ref": 6,
+                                    "$values": []
+                                  },
+                                  "Methods": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "CachingClientSidePropertiesNames": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Properties": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Events": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                                  "HasCachingClientSideProperties": false
+                                }
+                              },
+                              {
+                                "type_ref": 4,
+                                "$value": {
+                                  "$id": "16",
+                                  "Paired": false,
+                                  "ObjectChangeStateEventName": null,
+                                  "Name": "IFoodServiceSession",
+                                  "FullName": "FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession",
+                                  "Interfaces": {
+                                    "type_ref": 6,
+                                    "$values": []
+                                  },
+                                  "Methods": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "CachingClientSidePropertiesNames": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Properties": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Events": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                  "HasCachingClientSideProperties": false
+                                }
+                              },
+                              {
+                                "type_ref": 4,
+                                "$value": {
+                                  "$id": "17",
+                                  "Paired": false,
+                                  "ObjectChangeStateEventName": null,
+                                  "Name": "IPaymentSubject",
+                                  "FullName": "FinanceFacade.IPaymentSubject",
+                                  "Interfaces": {
+                                    "type_ref": 6,
+                                    "$values": []
+                                  },
+                                  "Methods": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "CachingClientSidePropertiesNames": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Properties": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Events": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "AssemblyQualifiedName": "FinanceFacade.IPaymentSubject, Finance, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                  "HasCachingClientSideProperties": false
+                                }
+                              }
+                            ]
+                          },
+                          "Methods": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "CachingClientSidePropertiesNames": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "Properties": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "Events": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "AssemblyQualifiedName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                          "HasCachingClientSideProperties": false
+                        }
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "SessionID",
+                            "value": "9cbeaf2c5a46468d9aa02adb194a9c5d"
+                          },
+                          {
+                            "key": "Description",
+                            "value": "A2"
+                          },
+                          {
+                            "key": "ServicePoint",
+                            "value": {
+                              "type_ref": 2,
+                              "$value": {
+                                "$id": "18",
+                                "InvalidMembersValues": false,
+                                "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/Dhgoy2KlDeB8CtRuxurIa7Jw_728#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\12\\4a810b0b-8cd6-4230-bffd-b6e2f70c2865",
+                                "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                                "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                                "TypeName": "FlavourBusinessManager.ServicesContextResources.HallServicePoint, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                "TypeMetaData": {
+                                  "type_ref": 4,
+                                  "$value": {
+                                    "$id": "19",
+                                    "Paired": false,
+                                    "ObjectChangeStateEventName": null,
+                                    "Name": "HallServicePoint",
+                                    "FullName": "FlavourBusinessManager.ServicesContextResources.HallServicePoint",
+                                    "Interfaces": {
+                                      "type_ref": 6,
+                                      "$values": [
+                                        {
+                                          "type_ref": 4,
+                                          "$value": {
+                                            "$id": "20",
+                                            "Paired": false,
+                                            "ObjectChangeStateEventName": null,
+                                            "Name": "IServicePoint",
+                                            "FullName": "FlavourBusinessFacade.ServicesContextResources.IServicePoint",
+                                            "Interfaces": {
+                                              "type_ref": 6,
+                                              "$values": []
+                                            },
+                                            "Methods": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "CachingClientSidePropertiesNames": {
+                                              "type_ref": 8,
+                                              "$values": [
+                                                "ServesMealTypesUris",
+                                                "ServicePointType",
+                                                "ServicesPointIdentity",
+                                                "ServicesContextIdentity",
+                                                "Description"
+                                              ]
+                                            },
+                                            "Properties": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Events": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IServicePoint, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                            "HasCachingClientSideProperties": true
+                                          }
+                                        },
+                                        {
+                                          "type_ref": 4,
+                                          "$value": {
+                                            "$id": "21",
+                                            "Paired": false,
+                                            "ObjectChangeStateEventName": null,
+                                            "Name": "IHallServicePoint",
+                                            "FullName": "FlavourBusinessFacade.ServicesContextResources.IHallServicePoint",
+                                            "Interfaces": {
+                                              "type_ref": 6,
+                                              "$values": []
+                                            },
+                                            "Methods": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "CachingClientSidePropertiesNames": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Properties": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Events": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IHallServicePoint, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                            "HasCachingClientSideProperties": false
+                                          }
+                                        },
+                                        {
+                                          "type_ref": 4,
+                                          "$value": {
+                                            "$id": "22",
+                                            "Paired": false,
+                                            "ObjectChangeStateEventName": null,
+                                            "Name": "IExtMarshalByRefObject",
+                                            "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                                            "Interfaces": {
+                                              "type_ref": 6,
+                                              "$values": []
+                                            },
+                                            "Methods": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "CachingClientSidePropertiesNames": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Properties": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Events": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                                            "HasCachingClientSideProperties": false
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "Methods": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "CachingClientSidePropertiesNames": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "Properties": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "Events": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "AssemblyQualifiedName": "FlavourBusinessManager.ServicesContextResources.HallServicePoint, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                    "HasCachingClientSideProperties": true
+                                  }
+                                },
+                                "MembersValues": {
+                                  "type_ref": 10,
+                                  "$values": [
+                                    {
+                                      "key": "ServesMealTypesUris",
+                                      "value": {
+                                        "type_ref": 8,
+                                        "$values": []
+                                      }
+                                    },
+                                    {
+                                      "key": "ServicePointType",
+                                      "value": 0
+                                    },
+                                    {
+                                      "key": "ServicesPointIdentity",
+                                      "value": "9967813ee9d943db823ca97779eb9fd7"
+                                    },
+                                    {
+                                      "key": "ServicesContextIdentity",
+                                      "value": "7f9bde62e6da45dc8c5661ee2220a7b0"
+                                    },
+                                    {
+                                      "key": "Description",
+                                      "value": "A2"
+                                    },
+                                    {
+                                      "key": "ServiceArea",
+                                      "value": {
+                                        "type_ref": 2,
+                                        "$value": {
+                                          "$id": "23",
+                                          "InvalidMembersValues": false,
+                                          "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/Lj8xk2kEyLhK0MGapzMg42dG_868#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\11\\6d882022-60fe-4720-8fc3-32585d7166c9",
+                                          "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                                          "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                                          "TypeName": "FlavourBusinessManager.ServicesContextResources.ServiceArea, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                          "TypeMetaData": {
+                                            "type_ref": 4,
+                                            "$value": {
+                                              "$id": "24",
+                                              "Paired": false,
+                                              "ObjectChangeStateEventName": null,
+                                              "Name": "ServiceArea",
+                                              "FullName": "FlavourBusinessManager.ServicesContextResources.ServiceArea",
+                                              "Interfaces": {
+                                                "type_ref": 6,
+                                                "$values": [
+                                                  {
+                                                    "type_ref": 4,
+                                                    "$value": {
+                                                      "$id": "25",
+                                                      "Paired": false,
+                                                      "ObjectChangeStateEventName": null,
+                                                      "Name": "IServiceArea",
+                                                      "FullName": "FlavourBusinessFacade.ServicesContextResources.IServiceArea",
+                                                      "Interfaces": {
+                                                        "type_ref": 6,
+                                                        "$values": []
+                                                      },
+                                                      "Methods": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "CachingClientSidePropertiesNames": {
+                                                        "type_ref": 8,
+                                                        "$values": [
+                                                          "ServesMealTypesUris"
+                                                        ]
+                                                      },
+                                                      "Properties": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "Events": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IServiceArea, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                                      "HasCachingClientSideProperties": true
+                                                    }
+                                                  },
+                                                  {
+                                                    "type_ref": 4,
+                                                    "$value": {
+                                                      "$id": "26",
+                                                      "Paired": false,
+                                                      "ObjectChangeStateEventName": null,
+                                                      "Name": "IExtMarshalByRefObject",
+                                                      "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                                                      "Interfaces": {
+                                                        "type_ref": 6,
+                                                        "$values": []
+                                                      },
+                                                      "Methods": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "CachingClientSidePropertiesNames": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "Properties": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "Events": {
+                                                        "type_ref": 8,
+                                                        "$values": []
+                                                      },
+                                                      "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                                                      "HasCachingClientSideProperties": false
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              "Methods": {
+                                                "type_ref": 8,
+                                                "$values": []
+                                              },
+                                              "CachingClientSidePropertiesNames": {
+                                                "type_ref": 8,
+                                                "$values": []
+                                              },
+                                              "Properties": {
+                                                "type_ref": 8,
+                                                "$values": []
+                                              },
+                                              "Events": {
+                                                "type_ref": 8,
+                                                "$values": []
+                                              },
+                                              "AssemblyQualifiedName": "FlavourBusinessManager.ServicesContextResources.ServiceArea, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                              "HasCachingClientSideProperties": true
+                                            }
+                                          },
+                                          "MembersValues": {
+                                            "type_ref": 10,
+                                            "$values": [
+                                              {
+                                                "key": "ServesMealTypesUris",
+                                                "value": {
+                                                  "type_ref": 8,
+                                                  "$values": [
+                                                    "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\733"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "ServicesContextLogo": "Pizza Hut",
+                  "ServicesPointName": "A2",
+                  "DefaultMealTypeUri": "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\733",
+                  "ServedMealTypesUris": {
+                    "type_ref": 8,
+                    "$values": [
+                      "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\733"
+                    ]
+                  },
+                  "Menu": {
+                    "__type": "FlavourBusinessFacade.OrganizationStorageRef, FlavourBusinessFacade",
+                    "type_id": "27",
+                    "$value": {
+                      "$id": "28",
+                      "Description": "",
+                      "StorageIdentity": "0bb39514-b297-436c-8554-c5e5a52486ac",
+                      "TimeStamp": "2023-05-31T19:09:05.000Z",
+                      "StorageUrl": "http://192.168.1.146/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/v190/Marzano Phone.json",
+                      "Name": "Marzano Phone",
+                      "Version": null,
+                      "FlavourStorageType": 4,
+                      "UploadService": null,
+                      "PropertiesValues": null
+                    }
+                  },
+                  "Description": "A2",
+                  "SessionType": 0
+                }
+              }
+            },
+            {
+              "key": "Meal",
+              "value": {
+                "type_ref": 2,
+                "$value": {
+                  "$id": "29",
+                  "InvalidMembersValues": false,
+                  "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/nprR61z7PoAXPJAktGSaGZQ7_721#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\27\\59aa1868-0e14-4492-a864-f3ce5fa3e911",
+                  "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                  "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                  "TypeName": "FlavourBusinessManager.RoomService.Meal, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "TypeMetaData": {
+                    "type_ref": 4,
+                    "$value": {
+                      "$id": "30",
+                      "Paired": false,
+                      "ObjectChangeStateEventName": null,
+                      "Name": "Meal",
+                      "FullName": "FlavourBusinessManager.RoomService.Meal",
+                      "Interfaces": {
+                        "type_ref": 6,
+                        "$values": [
+                          {
+                            "type_ref": 4,
+                            "$value": {
+                              "$id": "31",
+                              "Paired": false,
+                              "ObjectChangeStateEventName": null,
+                              "Name": "IExtMarshalByRefObject",
+                              "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                              "Interfaces": {
+                                "type_ref": 6,
+                                "$values": []
+                              },
+                              "Methods": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "CachingClientSidePropertiesNames": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "Properties": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "Events": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                              "HasCachingClientSideProperties": false
+                            }
+                          },
+                          {
+                            "type_ref": 4,
+                            "$value": {
+                              "$id": "32",
+                              "Paired": false,
+                              "ObjectChangeStateEventName": null,
+                              "Name": "IMeal",
+                              "FullName": "FlavourBusinessFacade.RoomService.IMeal",
+                              "Interfaces": {
+                                "type_ref": 6,
+                                "$values": []
+                              },
+                              "Methods": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "CachingClientSidePropertiesNames": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "Properties": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "Events": {
+                                "type_ref": 8,
+                                "$values": []
+                              },
+                              "AssemblyQualifiedName": "FlavourBusinessFacade.RoomService.IMeal, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                              "HasCachingClientSideProperties": false
+                            }
+                          }
+                        ]
+                      },
+                      "Methods": {
+                        "type_ref": 8,
+                        "$values": []
+                      },
+                      "CachingClientSidePropertiesNames": {
+                        "type_ref": 8,
+                        "$values": []
+                      },
+                      "Properties": {
+                        "type_ref": 8,
+                        "$values": []
+                      },
+                      "Events": {
+                        "type_ref": 8,
+                        "$values": []
+                      },
+                      "AssemblyQualifiedName": "FlavourBusinessManager.RoomService.Meal, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "HasCachingClientSideProperties": false
+                    }
+                  },
+                  "MembersValues": {
+                    "type_ref": 10,
+                    "$values": [
+                      {
+                        "key": "Session",
+                        "value": {
+                          "type_ref": 2,
+                          "ref": 13
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "key": "FoodItemsInProgress",
+              "value": {
+                "__type": "System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade]], mscorlib",
+                "type_id": "33",
+                "$values": [
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "34",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/ygdisrqmjfeyc6ygwzm0+fwf_14.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "$value": {
+                          "$id": "35",
+                          "Paired": false,
+                          "ObjectChangeStateEventName": null,
+                          "Name": "ItemsPreparationContext",
+                          "FullName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext",
+                          "Interfaces": {
+                            "type_ref": 6,
+                            "$values": [
+                              {
+                                "type_ref": 4,
+                                "$value": {
+                                  "$id": "36",
+                                  "Paired": false,
+                                  "ObjectChangeStateEventName": null,
+                                  "Name": "IExtMarshalByRefObject",
+                                  "FullName": "OOAdvantech.Remoting.IExtMarshalByRefObject",
+                                  "Interfaces": {
+                                    "type_ref": 6,
+                                    "$values": []
+                                  },
+                                  "Methods": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "CachingClientSidePropertiesNames": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Properties": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "Events": {
+                                    "type_ref": 8,
+                                    "$values": []
+                                  },
+                                  "AssemblyQualifiedName": "OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantechFacade, Version=1.0.2.0, Culture=neutral, PublicKeyToken=3586e6bd5f986239",
+                                  "HasCachingClientSideProperties": false
+                                }
+                              }
+                            ]
+                          },
+                          "Methods": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "CachingClientSidePropertiesNames": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "Properties": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "Events": {
+                            "type_ref": 8,
+                            "$values": []
+                          },
+                          "AssemblyQualifiedName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                          "HasCachingClientSideProperties": false
+                        }
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 3
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pizza"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 80
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type_ref": 2,
+      "$value": {
+        "$id": "37",
+        "InvalidMembersValues": false,
+        "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/KvLKpoz+0rmkcwbiVTSicRzY_737#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\26\\1e71a15e-6c98-4638-8065-87ce7f7ad1b5",
+        "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+        "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+        "TypeName": "FlavourBusinessManager.RoomService.MealCourse, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "TypeMetaData": {
+          "type_ref": 4,
+          "ref": 5
+        },
+        "MembersValues": {
+          "type_ref": 10,
+          "$values": [
+            {
+              "key": "Name",
+              "value": "Κυρίως πιάτο"
+            },
+            {
+              "key": "StartsAt",
+              "value": "2023-10-01T20:09:26.094Z"
+            },
+            {
+              "key": "SessionData",
+              "value": {
+                "type_ref": 11,
+                "$value": {
+                  "$id": "38",
+                  "ServicePointIdentity": "50886542db964edf8dec5734e3f89395",
+                  "Token": null,
+                  "FoodServiceSession": {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "39",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/E2pDWv5HCTDwswIuTDO_gzwH_713#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\10\\fff62924-e5aa-4aa4-abe9-54730906126e",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 14
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "SessionID",
+                            "value": "778cfc267ae745f1bb90030922ad34e2"
+                          },
+                          {
+                            "key": "Description",
+                            "value": "A4"
+                          },
+                          {
+                            "key": "ServicePoint",
+                            "value": {
+                              "type_ref": 2,
+                              "$value": {
+                                "$id": "40",
+                                "InvalidMembersValues": false,
+                                "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/juzpiQS7JiLat_ZQzGu1UL2L_731#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\12\\5fea1760-01a2-47c4-9bea-4a7b4656900d",
+                                "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                                "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                                "TypeName": "FlavourBusinessManager.ServicesContextResources.HallServicePoint, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                "TypeMetaData": {
+                                  "type_ref": 4,
+                                  "ref": 19
+                                },
+                                "MembersValues": {
+                                  "type_ref": 10,
+                                  "$values": [
+                                    {
+                                      "key": "ServesMealTypesUris",
+                                      "value": {
+                                        "type_ref": 8,
+                                        "$values": []
+                                      }
+                                    },
+                                    {
+                                      "key": "ServicePointType",
+                                      "value": 0
+                                    },
+                                    {
+                                      "key": "ServicesPointIdentity",
+                                      "value": "50886542db964edf8dec5734e3f89395"
+                                    },
+                                    {
+                                      "key": "ServicesContextIdentity",
+                                      "value": "7f9bde62e6da45dc8c5661ee2220a7b0"
+                                    },
+                                    {
+                                      "key": "Description",
+                                      "value": "A4"
+                                    },
+                                    {
+                                      "key": "ServiceArea",
+                                      "value": {
+                                        "type_ref": 2,
+                                        "ref": 23
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "ServicesContextLogo": "Pizza Hut",
+                  "ServicesPointName": "A4",
+                  "DefaultMealTypeUri": "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\733",
+                  "ServedMealTypesUris": {
+                    "type_ref": 8,
+                    "$values": [
+                      "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\733"
+                    ]
+                  },
+                  "Menu": {
+                    "type_ref": 27,
+                    "$value": {
+                      "$id": "41",
+                      "Description": "",
+                      "StorageIdentity": "0bb39514-b297-436c-8554-c5e5a52486ac",
+                      "TimeStamp": "2023-05-31T19:09:05.000Z",
+                      "StorageUrl": "http://192.168.1.146/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/0bb39514-b297-436c-8554-c5e5a52486ac/v190/Marzano Phone.json",
+                      "Name": "Marzano Phone",
+                      "Version": null,
+                      "FlavourStorageType": 4,
+                      "UploadService": null,
+                      "PropertiesValues": null
+                    }
+                  },
+                  "Description": "A4",
+                  "SessionType": 0
+                }
+              }
+            },
+            {
+              "key": "Meal",
+              "value": {
+                "type_ref": 2,
+                "$value": {
+                  "$id": "42",
+                  "InvalidMembersValues": false,
+                  "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/cXvFo1guPRui8w_cb1izzdLu_720#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\27\\242fc9ce-2bca-4bc0-a42f-2f3bb34add06",
+                  "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                  "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                  "TypeName": "FlavourBusinessManager.RoomService.Meal, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "TypeMetaData": {
+                    "type_ref": 4,
+                    "ref": 30
+                  },
+                  "MembersValues": {
+                    "type_ref": 10,
+                    "$values": [
+                      {
+                        "key": "Session",
+                        "value": {
+                          "type_ref": 2,
+                          "ref": 39
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "key": "FoodItemsInProgress",
+              "value": {
+                "type_ref": 33,
+                "$values": [
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "43",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/w4yv4hcbuarbjym0yd5rktyy_15.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 35
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 37
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pizza"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 80
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type_ref": 2,
+      "$value": {
+        "$id": "44",
+        "InvalidMembersValues": false,
+        "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/+NJ4AgPk+Oh1Wv7CtJnU_k4Z_738#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\26\\907f814b-bae3-4ce4-9c25-3a9fa50deb40",
+        "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+        "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+        "TypeName": "FlavourBusinessManager.RoomService.MealCourse, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "TypeMetaData": {
+          "type_ref": 4,
+          "ref": 5
+        },
+        "MembersValues": {
+          "type_ref": 10,
+          "$values": [
+            {
+              "key": "Name",
+              "value": "Main course"
+            },
+            {
+              "key": "StartsAt",
+              "value": "2023-10-12T07:47:56.050Z"
+            },
+            {
+              "key": "SessionData",
+              "value": {
+                "type_ref": 11,
+                "$value": {
+                  "$id": "45",
+                  "ServicePointIdentity": "fe51ba7e30954ee08209bd89a03469a8",
+                  "Token": null,
+                  "FoodServiceSession": {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "46",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/mw8hqVZMarvIvqyp_9x5Q5Kf_711#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\10\\6f6424cc-ceaa-4eed-8107-f9bb141840ad",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 14
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "SessionID",
+                            "value": "08113b996b164daa82f38e230c36bd62"
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Λαχανά 22 Αθήνα"
+                          },
+                          {
+                            "key": "ServicePoint",
+                            "value": {
+                              "type_ref": 2,
+                              "$value": {
+                                "$id": "47",
+                                "InvalidMembersValues": false,
+                                "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/bQ44gVdgR83V2XJpI1kKSIB__725#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\43\\3607914b-85b4-4d0a-b751-18cb41628210",
+                                "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                                "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                                "TypeName": "FlavourBusinessManager.ServicesContextResources.HomeDeliveryServicePoint, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                "TypeMetaData": {
+                                  "type_ref": 4,
+                                  "$value": {
+                                    "$id": "48",
+                                    "Paired": false,
+                                    "ObjectChangeStateEventName": null,
+                                    "Name": "HomeDeliveryServicePoint",
+                                    "FullName": "FlavourBusinessManager.ServicesContextResources.HomeDeliveryServicePoint",
+                                    "Interfaces": {
+                                      "type_ref": 6,
+                                      "$values": [
+                                        {
+                                          "type_ref": 4,
+                                          "$value": {
+                                            "$id": "49",
+                                            "Paired": false,
+                                            "ObjectChangeStateEventName": null,
+                                            "Name": "IServicePoint",
+                                            "FullName": "FlavourBusinessFacade.ServicesContextResources.IServicePoint",
+                                            "Interfaces": {
+                                              "type_ref": 6,
+                                              "$values": []
+                                            },
+                                            "Methods": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "CachingClientSidePropertiesNames": {
+                                              "type_ref": 8,
+                                              "$values": [
+                                                "ServesMealTypesUris",
+                                                "ServicePointType",
+                                                "ServicesPointIdentity",
+                                                "ServicesContextIdentity",
+                                                "Description"
+                                              ]
+                                            },
+                                            "Properties": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Events": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IServicePoint, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                            "HasCachingClientSideProperties": true
+                                          }
+                                        },
+                                        {
+                                          "type_ref": 4,
+                                          "$value": {
+                                            "$id": "50",
+                                            "Paired": false,
+                                            "ObjectChangeStateEventName": null,
+                                            "Name": "IHomeDeliveryServicePoint",
+                                            "FullName": "FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint",
+                                            "Interfaces": {
+                                              "type_ref": 6,
+                                              "$values": []
+                                            },
+                                            "Methods": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "CachingClientSidePropertiesNames": {
+                                              "type_ref": 8,
+                                              "$values": [
+                                                "ServiceAreaMap",
+                                                "MapCenter",
+                                                "Zoom",
+                                                "IsPolyline"
+                                              ]
+                                            },
+                                            "Properties": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "Events": {
+                                              "type_ref": 8,
+                                              "$values": []
+                                            },
+                                            "AssemblyQualifiedName": "FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                            "HasCachingClientSideProperties": true
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "Methods": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "CachingClientSidePropertiesNames": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "Properties": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "Events": {
+                                      "type_ref": 8,
+                                      "$values": []
+                                    },
+                                    "AssemblyQualifiedName": "FlavourBusinessManager.ServicesContextResources.HomeDeliveryServicePoint, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                                    "HasCachingClientSideProperties": true
+                                  }
+                                },
+                                "MembersValues": {
+                                  "type_ref": 10,
+                                  "$values": [
+                                    {
+                                      "key": "MinimumOrderValue",
+                                      "value": 5.0
+                                    },
+                                    {
+                                      "key": "ShippingCost",
+                                      "value": 2.0
+                                    },
+                                    {
+                                      "key": "FreeShippingMinimumOrderValue",
+                                      "value": 15.0
+                                    },
+                                    {
+                                      "key": "ServesMealTypesUris",
+                                      "value": {
+                                        "__type": "System.String[], mscorlib",
+                                        "type_id": "51",
+                                        "$values": [
+                                          "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\1024"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "key": "ServicePointType",
+                                      "value": 0
+                                    },
+                                    {
+                                      "key": "ServicesPointIdentity",
+                                      "value": "fe51ba7e30954ee08209bd89a03469a8"
+                                    },
+                                    {
+                                      "key": "ServicesContextIdentity",
+                                      "value": "7f9bde62e6da45dc8c5661ee2220a7b0"
+                                    },
+                                    {
+                                      "key": "Description",
+                                      "value": "Starbucks Ευελπίδων"
+                                    },
+                                    {
+                                      "key": "ServiceAreaMap",
+                                      "value": {
+                                        "__type": "System.Collections.Generic.List`1[[FlavourBusinessFacade.EndUsers.Coordinate, FlavourBusinessFacade]], mscorlib",
+                                        "type_id": "52",
+                                        "$values": [
+                                          {
+                                            "__type": "FlavourBusinessFacade.EndUsers.Coordinate, FlavourBusinessFacade",
+                                            "type_id": "53",
+                                            "$value": {
+                                              "$id": "54",
+                                              "Longitude": 23.750453071623411,
+                                              "Latitude": 37.995243535507214
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "55",
+                                              "Longitude": 23.74808623376391,
+                                              "Latitude": 37.995983254012245
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "56",
+                                              "Longitude": 23.746118621855345,
+                                              "Latitude": 37.996469498304741
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "57",
+                                              "Longitude": 23.743919210463133,
+                                              "Latitude": 37.996055209720588
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "58",
+                                              "Longitude": 23.742213325529661,
+                                              "Latitude": 37.996097484173156
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "59",
+                                              "Longitude": 23.740226940290608,
+                                              "Latitude": 37.995901025953685
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "60",
+                                              "Longitude": 23.736054973631468,
+                                              "Latitude": 37.994913790291953
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "61",
+                                              "Longitude": 23.732074575453368,
+                                              "Latitude": 37.995556369340605
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "62",
+                                              "Longitude": 23.7332332897478,
+                                              "Latitude": 38.000138809324874
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "63",
+                                              "Longitude": 23.734713869124022,
+                                              "Latitude": 38.00538881756335
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "64",
+                                              "Longitude": 23.734955267935362,
+                                              "Latitude": 38.006652652297639
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "65",
+                                              "Longitude": 23.740719335108366,
+                                              "Latitude": 38.006483578679067
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "66",
+                                              "Longitude": 23.741502540140715,
+                                              "Latitude": 38.005760784563485
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "67",
+                                              "Longitude": 23.742610292463866,
+                                              "Latitude": 38.005756557676357
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "68",
+                                              "Longitude": 23.743995032319887,
+                                              "Latitude": 38.006542372746324
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "69",
+                                              "Longitude": 23.744778237352236,
+                                              "Latitude": 38.007391963055511
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "70",
+                                              "Longitude": 23.744831881532534,
+                                              "Latitude": 38.008140101593817
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "71",
+                                              "Longitude": 23.746637986944283,
+                                              "Latitude": 38.00805164316818
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "72",
+                                              "Longitude": 23.747614311025703,
+                                              "Latitude": 38.007451441510376
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "73",
+                                              "Longitude": 23.747743057058418,
+                                              "Latitude": 38.006656800770529
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "74",
+                                              "Longitude": 23.7491807210904,
+                                              "Latitude": 38.007299276929025
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "75",
+                                              "Longitude": 23.74970643405732,
+                                              "Latitude": 38.006538449285159
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "76",
+                                              "Longitude": 23.749975516981781,
+                                              "Latitude": 38.00627449090539
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "77",
+                                              "Longitude": 23.75049050111264,
+                                              "Latitude": 38.006502740849264
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "78",
+                                              "Longitude": 23.751327350325287,
+                                              "Latitude": 38.005302307259825
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "79",
+                                              "Longitude": 23.751627757734955,
+                                              "Latitude": 38.005361484024043
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "80",
+                                              "Longitude": 23.751928165144623,
+                                              "Latitude": 38.00283374825802
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "81",
+                                              "Longitude": 23.750258226046459,
+                                              "Latitude": 38.001926190436642
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "82",
+                                              "Longitude": 23.750526446947948,
+                                              "Latitude": 38.001655655021608
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "83",
+                                              "Longitude": 23.74972178424348,
+                                              "Latitude": 38.000776408029971
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "84",
+                                              "Longitude": 23.750377969770994,
+                                              "Latitude": 37.999766813805238
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "85",
+                                              "Longitude": 23.750809926117686,
+                                              "Latitude": 37.998640586271613
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "86",
+                                              "Longitude": 23.750842809677124,
+                                              "Latitude": 37.997963547176944
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "87",
+                                              "Longitude": 23.751909696745052,
+                                              "Latitude": 37.997531278185726
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "88",
+                                              "Longitude": 23.751604557037354,
+                                              "Latitude": 37.996272593092989
+                                            }
+                                          },
+                                          {
+                                            "type_ref": 53,
+                                            "$value": {
+                                              "$id": "89",
+                                              "Longitude": 23.75119686126709,
+                                              "Latitude": 37.995630020319034
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "key": "MapCenter",
+                                      "value": {
+                                        "type_ref": 53,
+                                        "$value": {
+                                          "$id": "90",
+                                          "Longitude": 23.772918937044516,
+                                          "Latitude": 37.98951041219528
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "key": "Zoom",
+                                      "value": 15.0
+                                    },
+                                    {
+                                      "key": "IsPolyline",
+                                      "value": true
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "ServicesContextLogo": "Pizza Hut",
+                  "ServicesPointName": "Starbucks Ευελπίδων",
+                  "DefaultMealTypeUri": "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\1024",
+                  "ServedMealTypesUris": {
+                    "type_ref": 8,
+                    "$values": [
+                      "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\1024"
+                    ]
+                  },
+                  "Menu": {
+                    "type_ref": 27,
+                    "$value": {
+                      "$id": "91",
+                      "Description": "",
+                      "StorageIdentity": "77a0ebcd-46f2-402b-bdbb-ea218692be99",
+                      "TimeStamp": "2023-05-30T06:53:06.000Z",
+                      "StorageUrl": "http://192.168.1.146/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/77a0ebcd-46f2-402b-bdbb-ea218692be99/v13/Menu.json",
+                      "Name": "Menu",
+                      "Version": null,
+                      "FlavourStorageType": 4,
+                      "UploadService": null,
+                      "PropertiesValues": null
+                    }
+                  },
+                  "Description": "Λαχανά 22 Αθήνα",
+                  "SessionType": 2
+                }
+              }
+            },
+            {
+              "key": "Meal",
+              "value": {
+                "type_ref": 2,
+                "$value": {
+                  "$id": "92",
+                  "InvalidMembersValues": false,
+                  "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/JV4MXdd2pFZ9PuR6fAJ7EOYB_722#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\27\\b5224ce7-77a7-45e2-ba54-876d7a3a6eec",
+                  "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                  "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                  "TypeName": "FlavourBusinessManager.RoomService.Meal, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "TypeMetaData": {
+                    "type_ref": 4,
+                    "ref": 30
+                  },
+                  "MembersValues": {
+                    "type_ref": 10,
+                    "$values": [
+                      {
+                        "key": "Session",
+                        "value": {
+                          "type_ref": 2,
+                          "ref": 46
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "key": "FoodItemsInProgress",
+              "value": {
+                "type_ref": 33,
+                "$values": [
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "93",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/tkzmbywbnmhy21xzfjlci8i4_16.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 35
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 44
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pasta & Rice"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 90
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "94",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/jdrennznl681dswiqxogpmra_17.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 35
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 44
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pizza"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 90
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type_ref": 2,
+      "$value": {
+        "$id": "95",
+        "InvalidMembersValues": false,
+        "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/2ACm4wm3p7+Bm7wIqgpuqHIV_739#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\26\\b58f5d4e-c143-4cac-8473-8a51566c3afd",
+        "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+        "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+        "TypeName": "FlavourBusinessManager.RoomService.MealCourse, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "TypeMetaData": {
+          "type_ref": 4,
+          "ref": 5
+        },
+        "MembersValues": {
+          "type_ref": 10,
+          "$values": [
+            {
+              "key": "Name",
+              "value": "Main course"
+            },
+            {
+              "key": "StartsAt",
+              "value": "2023-08-26T15:56:13.390Z"
+            },
+            {
+              "key": "SessionData",
+              "value": {
+                "type_ref": 11,
+                "$value": {
+                  "$id": "96",
+                  "ServicePointIdentity": "fe51ba7e30954ee08209bd89a03469a8",
+                  "Token": null,
+                  "FoodServiceSession": {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "97",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/4tpV9ABs9n6tX9z3X5Rm1s1M_712#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\10\\cac6399f-fcc1-47fd-81b2-31fc6cb42598",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessManager.ServicesContextResources.FoodServiceSession, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 14
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "SessionID",
+                            "value": "9505093c732341d8a761a21256bc3a5d"
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Λαχανά 22 Αθήνα"
+                          },
+                          {
+                            "key": "ServicePoint",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 47
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "ServicesContextLogo": "Pizza Hut",
+                  "ServicesPointName": "Starbucks Ευελπίδων",
+                  "DefaultMealTypeUri": "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\1024",
+                  "ServedMealTypesUris": {
+                    "type_ref": 8,
+                    "$values": [
+                      "7021ec91-37df-4417-8c1a-a6afb012fd09\\20\\1024"
+                    ]
+                  },
+                  "Menu": {
+                    "type_ref": 27,
+                    "$value": {
+                      "$id": "98",
+                      "Description": "",
+                      "StorageIdentity": "77a0ebcd-46f2-402b-bdbb-ea218692be99",
+                      "TimeStamp": "2023-05-30T06:53:06.000Z",
+                      "StorageUrl": "http://192.168.1.146/devstoreaccount1/usersfolder/ykCR5c6aHVUUpGJ8J7ZqpLLY97i1/Menus/77a0ebcd-46f2-402b-bdbb-ea218692be99/v13/Menu.json",
+                      "Name": "Menu",
+                      "Version": null,
+                      "FlavourStorageType": 4,
+                      "UploadService": null,
+                      "PropertiesValues": null
+                    }
+                  },
+                  "Description": "Λαχανά 22 Αθήνα",
+                  "SessionType": 2
+                }
+              }
+            },
+            {
+              "key": "Meal",
+              "value": {
+                "type_ref": 2,
+                "$value": {
+                  "$id": "99",
+                  "InvalidMembersValues": false,
+                  "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/D_ray3CyNe4rtp5RJG9L_Ksn_719#PID#3bdea2dc-3185-4331-bdb9-f17c535f2965\\27\\087ad88d-38fa-454b-9182-17a97d5f85bd",
+                  "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                  "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                  "TypeName": "FlavourBusinessManager.RoomService.Meal, FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "TypeMetaData": {
+                    "type_ref": 4,
+                    "ref": 30
+                  },
+                  "MembersValues": {
+                    "type_ref": 10,
+                    "$values": [
+                      {
+                        "key": "Session",
+                        "value": {
+                          "type_ref": 2,
+                          "ref": 97
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "key": "FoodItemsInProgress",
+              "value": {
+                "type_ref": 33,
+                "$values": [
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "100",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/6wxloyhcy2fd3wf4sz_bokuo_18.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 35
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 95
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pizza"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 40
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type_ref": 2,
+                    "$value": {
+                      "$id": "101",
+                      "InvalidMembersValues": false,
+                      "Uri": "/c189afc2_3265_4775_90d1_f09f6f3e08cb/ppj7to4jhocueljzhlrrqvuf_19.rem",
+                      "ChannelUri": "http://192.168.1.146:8090/api/(0470e076603e47b6a82556fe4c1bf335)",
+                      "InternalChannelUri": "0470e076603e47b6a82556fe4c1bf335",
+                      "TypeName": "FlavourBusinessFacade.RoomService.ItemsPreparationContext, FlavourBusinessFacade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "TypeMetaData": {
+                        "type_ref": 4,
+                        "ref": 35
+                      },
+                      "MembersValues": {
+                        "type_ref": 10,
+                        "$values": [
+                          {
+                            "key": "MealCourse",
+                            "value": {
+                              "type_ref": 2,
+                              "ref": 95
+                            }
+                          },
+                          {
+                            "key": "Description",
+                            "value": "Pasta & Rice"
+                          },
+                          {
+                            "key": "PreparationState",
+                            "value": 40
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

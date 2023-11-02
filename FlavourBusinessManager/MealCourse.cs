@@ -31,7 +31,7 @@ namespace FlavourBusinessManager.RoomService
     ///<MetaDataID>{986d1f45-2bef-4302-9d5c-b98141c24555}</MetaDataID>
     [BackwardCompatibilityID("{986d1f45-2bef-4302-9d5c-b98141c24555}")]
     [Persistent()]
-    public class MealCourse : System.MarshalByRefObject, IMealCourse
+    public class MealCourse : System.MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IMealCourse
     {
 
         /// <exclude>Excluded</exclude>
@@ -138,7 +138,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1f941000-ce6f-4ec6-85f6-736ad57cf9a6}</MetaDataID>
         [PersistentMember(nameof(_FoodItems))]
         [BackwardCompatibilityID("+1")]
-        [CachingDataOnClientSide]
+        
         public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
 
@@ -317,7 +317,6 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{65995fe0-c0a3-47e3-90a1-58523ea31b41}</MetaDataID>
         [PersistentMember(nameof(_Meal))]
-        [CachingDataOnClientSide]
         [BackwardCompatibilityID("+9")]
         public IMeal Meal => _Meal.Value;
 
@@ -336,7 +335,7 @@ namespace FlavourBusinessManager.RoomService
         /// Defines the meal course items grouped by preparation station where it prepares them.
         /// </summary>
         // <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
-        [CachingDataOnClientSide]
+        
         public IList<ItemsPreparationContext> FoodItemsInProgress
         {
             get
