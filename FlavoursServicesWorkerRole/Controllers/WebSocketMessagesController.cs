@@ -146,8 +146,13 @@ namespace FlavoursServicesWorkerRole.Controllers
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Dispose();
                         memoryStream = new System.IO.MemoryStream();
-                        if (bytes.Length > 0)
+                        if (bytes.Length > 0&& webSocketResultTuple.Item1==1)
                             handler.OnMessage(Encoding.UTF8.GetString(bytes, 0, bytes.Length));
+
+                        if (bytes.Length > 0 && webSocketResultTuple.Item1 == 2)
+                            handler.OnData(bytes);
+
+
                     }
                 }
             }
