@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FlavoursServicesWorkerRole
 {
@@ -28,6 +29,8 @@ namespace FlavoursServicesWorkerRole
         public override void Run()
         {
             
+            
+
             Trace.TraceInformation("FlavoursServicesWorkerRole is running");
             FlavoursServicesContextManagment.Init();
             System.Collections.Immutable.ImmutableStack<string> tt = null;
@@ -176,7 +179,7 @@ namespace FlavoursServicesWorkerRole
 
             Trace.TraceInformation(String.Format("Starting OWIN at {0}", baseUri),
                 "Information");
-            _publicApp = WebApp.Start<Startup>(new StartOptions(url: baseUri));
+            _publicApp = WebApp.Start<Startup>(baseUri);// new StartOptions(url: baseUri));
 
             #endregion
 
