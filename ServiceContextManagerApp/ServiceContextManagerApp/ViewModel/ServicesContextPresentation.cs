@@ -440,7 +440,7 @@ namespace ServiceContextManagerApp
                 var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
                 {
                     mealCourse.Name,
-                    mealCourse.Meal,
+                    //mealCourse.Meal,
                     FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
                     {
                         itemsContext.MealCourse,
@@ -463,6 +463,10 @@ namespace ServiceContextManagerApp
 
                     })
                 })));
+
+                
+
+
 
                 mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
