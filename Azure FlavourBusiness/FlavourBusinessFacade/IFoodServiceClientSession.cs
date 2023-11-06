@@ -357,7 +357,7 @@ namespace FlavourBusinessFacade.EndUsers
         public string Token;
 
         /// <MetaDataID>{575e68f6-b3ad-4ae7-9ca0-63d3f81d26ad}</MetaDataID>
-        [CachingOnlyReferenceOnClientSide]
+        
         public IFoodServiceSession FoodServiceSession;
 
         /// <MetaDataID>{86cd02d5-d2d1-4fc4-b4d0-becbe44500c0}</MetaDataID>
