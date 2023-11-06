@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows;
-
+using OOAdvantech.Remoting.RestApi;
 using OOAdvantech.Remoting.RestApi.Serialization;
 
 namespace ServiceContextManagerApp.WPF
@@ -30,6 +30,8 @@ namespace ServiceContextManagerApp.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            MemberValuesJsonTest();
             SerializeTaskScheduler.RunAsync();
 
             FlavourBusinessApps.ServiceContextManagerApp.WPF.ServiceContextManagerApp.Startup();
@@ -69,9 +71,9 @@ namespace ServiceContextManagerApp.WPF
         public void SendVerificationEmail(string emailAddress)
         {
 
-            string code =Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower())).Hash,0)).ToString();
-            while (code.Length<6)
-                code=code.Insert(1,"0");
+            string code = Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower())).Hash, 0)).ToString();
+            while (code.Length < 6)
+                code = code.Insert(1, "0");
             var getJsonTask = new HttpClient().GetStringAsync("http://dontwaitwaiter.com/config/EmailVerifyConfig.json");
             getJsonTask.Wait();
             var emailVerifyConfig = getJsonTask.Result;
@@ -101,9 +103,9 @@ namespace ServiceContextManagerApp.WPF
                 m.Body += verifyEmailConfig.Signature;
 
                 m.IsBodyHtml = true;
-               
 
-                sc.Host =  verifyEmailConfig.Server;// "smtp.gmail.com";
+
+                sc.Host = verifyEmailConfig.Server;// "smtp.gmail.com";
                 int port = 0;
                 int.TryParse(verifyEmailConfig.Port, out port);
                 sc.Port = port;
@@ -161,5 +163,18 @@ namespace ServiceContextManagerApp.WPF
             }
         }
 
+        void MemberValuesJsonTest()
+
+        {
+            ObjRef objRef = new ObjRef();
+            objRef.ChannelData = new ChannelData("local-device");
+            objRef.MembersValues["Name"] = "Liakos";
+            objRef.MembersValues["Childs"] = new List<string> { "Gerorge", "Anna" };
+
+            var json = OOAdvantech.Json.JsonConvert.SerializeObject(objRef);
+
+            var objrefA = OOAdvantech.Json.JsonConvert.DeserializeObject<ObjRef>(json);
+
+        }
     }
 }
