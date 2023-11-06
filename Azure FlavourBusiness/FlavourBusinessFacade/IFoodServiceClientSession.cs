@@ -356,9 +356,9 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{fc539f91-4ce9-4117-bb97-f4b033fb976f}</MetaDataID>
         public string Token;
 
-        /// <MetaDataID>{575e68f6-b3ad-4ae7-9ca0-63d3f81d26ad}</MetaDataID>
+        ///// <MetaDataID>{575e68f6-b3ad-4ae7-9ca0-63d3f81d26ad}</MetaDataID>
         
-        public IFoodServiceSession FoodServiceSession;
+        //public IFoodServiceSession FoodServiceSession;
 
         /// <MetaDataID>{86cd02d5-d2d1-4fc4-b4d0-becbe44500c0}</MetaDataID>
         public string ServicesContextLogo;

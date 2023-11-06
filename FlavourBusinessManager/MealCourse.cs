@@ -470,14 +470,14 @@ namespace FlavourBusinessManager.RoomService
                     defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
                     servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
-
+ 
                 SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData()
                 {
                     Description = Meal.Session.Description,
                     SessionType = Meal.Session.SessionType,
                     DefaultMealTypeUri = defaultMealTypeUri,
                     ServedMealTypesUris = servedMealTypesUris,
-                    FoodServiceSession = Meal.Session,
+                   // FoodServiceSession = Meal.Session,
                     ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,
                     Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu,
                     ServicesPointName = Meal.Session.ServicePoint.Description,
