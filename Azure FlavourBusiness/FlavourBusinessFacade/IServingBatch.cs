@@ -144,7 +144,7 @@ namespace FlavourBusinessFacade.RoomService
 
         public SessionType SessionType { get; set; }
 
-
+        [CachingOnlyReferenceOnClientSide]
         public IServingBatch ServingBatch { get; set; }
 
         public double DelayTimeSpanInMins { get; set; }

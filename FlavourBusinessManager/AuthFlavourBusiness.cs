@@ -20,20 +20,21 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using FlavourBusinessManager.ServicePointRunTime;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace FlavourBusinessManager
 {
     /// <MetaDataID>{7e0db2af-8db5-41a5-b7a7-68c767a4615e}</MetaDataID>
-    public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness, IExtMarshalByRefObject
+    public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness,IOAuth, IExtMarshalByRefObject
     {
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
         {
             try
             {
-                CloudNotificationManager.Init();//Force FirbaseI nitialization 
-                var getUserTask = FirebaseAuth.DefaultInstance.GetUserByEmailAsync(username);
+                //Force FirbaseI nitialization 
+                FireBase.Init().Wait();
+                var getUserTask = FireBase.FirebaseAuth.GetUserByEmailAsync(username);
                 getUserTask.Wait();
                 var userRecord = getUserTask.Result;
                 if (userRecord!=null)
@@ -85,6 +86,7 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{ed5a1afd-aa57-404a-ba84-10b0548bb57c}</MetaDataID>
         public AuthFlavourBusiness()
         {
+
             var time = System.DateTime.Now;
             var config = new Firebase.Auth.FirebaseAuthConfig
             {
@@ -112,6 +114,8 @@ namespace FlavourBusinessManager
                 //AnonymousUpgradeConflict = conflict => conflict.SignInWithPendingCredentialAsync(true)
             };
             FireBaseClient = new FirebaseAuthClient(config);
+
+            FireBase.Init();
 
             var objectStorage = OpenFlavourBusinessesStorage();
             var ss = System.DateTime.Now - time;
@@ -226,6 +230,7 @@ namespace FlavourBusinessManager
 
             if(code==verificationCode)
             {
+
                 var FireBaseAcoountTask = Task.Run(async () =>
                 {
                     user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(email, password, userData.FullName);
@@ -981,6 +986,59 @@ namespace FlavourBusinessManager
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
             return flavoursServicesContextRunTime.SignInNativeUser(userName,  password);
+        }
+        /// <summary>
+        /// Is the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT)
+        /// </summary>
+        private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static DateTime FromUnixTime(long unixTime)
+        {
+            return epoch.AddSeconds(unixTime);
+        }
+        public async Task<OOAdvantech.Remoting.RestApi.AuthUser> VerifyIdToken(string authToken)
+        {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            OOAdvantech.Remoting.RestApi.AuthUser authUser = new OOAdvantech.Remoting.RestApi.AuthUser();
+
+            await FireBase.Init();//Force FirbaseI nitialization 
+
+            var decoded = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(authToken);
+            var uid = decoded.Uid;
+
+            System.Diagnostics.Debug.WriteLine(OOAdvantech.Json.JsonConvert.SerializeObject(decoded));
+
+            authUser.IssuedAt = FromUnixTime(decoded.IssuedAtTimeSeconds).ToLocalTime();
+
+
+            authUser.ExpirationTime = FromUnixTime(decoded.ExpirationTimeSeconds).ToLocalTime();
+
+
+            // authUser.Auth_Time = FromUnixTime(decoded.Claims..au int.Parse(auth_time)).ToLocalTime();
+
+            //authUser.Audience = (from claim in tokenS.Claims where claim.Type == "aud" select claim.Value).FirstOrDefault();
+            //authUser.Email = (from claim in tokenS.Claims where claim.Type == "email" select claim.Value).FirstOrDefault();
+
+            //if ((from claim in tokenS.Claims where claim.Type == "email_verified" select claim.Value).FirstOrDefault() != null)
+            //    authUser.Email_Verified = bool.Parse((from claim in tokenS.Claims where claim.Type == "email_verified" select claim.Value).FirstOrDefault());
+            //authUser.Iss = (from claim in tokenS.Claims where claim.Type == "iss" select claim.Value).FirstOrDefault();
+            //authUser.Name = (from claim in tokenS.Claims where claim.Type == "name" select claim.Value).FirstOrDefault();
+            //authUser.Picture = (from claim in tokenS.Claims where claim.Type == "picture" select claim.Value).FirstOrDefault();
+            //authUser.Subject = (from claim in tokenS.Claims where claim.Type == "sub" select claim.Value).FirstOrDefault();
+            //authUser.User_ID = (from claim in tokenS.Claims where claim.Type == "user_id" select claim.Value).FirstOrDefault();
+
+            //var firebaseAttributes = (from claim in tokenS.Claims where claim.Type == "firebase" select JObject.Parse(claim.Value)).FirstOrDefault();
+
+            //authUser.Firebase_Sign_in_Provider = (from fireBaseProperty in firebaseAttributes.Properties()
+            //                                      where fireBaseProperty.Name == "sign_in_provider"
+            //                                      select (fireBaseProperty.Value as JValue).Value).FirstOrDefault() as string;
+            timer.Stop();
+            authUser.AuthToken = authToken;
+            
+            var elapsed = timer.ElapsedMilliseconds;
+            return authUser;
+            
         }
     }
 

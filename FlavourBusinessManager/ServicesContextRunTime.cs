@@ -2980,6 +2980,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         UserCredential user = null;
                         var FireBaseAcoountTask = Task.Run(async () =>
                         {
+
                             user = await this.FireBaseClient.CreateUserWithEmailAndPasswordAsync(nativeAuthUser.FireBaseUserName, nativeAuthUser.FireBasePasword, nativeAuthUser.UserFullName);
                         });
 

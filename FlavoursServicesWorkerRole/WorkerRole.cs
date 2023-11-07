@@ -185,8 +185,11 @@ namespace FlavoursServicesWorkerRole
 
             #region initialize internal communication
 
+           
+
             RemotingServices.InternalEndPointResolver = new InternalEndPointResolver();
-            Authentication.InitializeFirebase("demomicroneme");
+            AuthFlavourBusiness authFlavourBusiness = AuthFlavourBusiness.Current;
+            Authentication.InitializeFirebase("demomicroneme", authFlavourBusiness);
 
             //CreateServiceHost(); // server for net.tcp:// internal channel
 
@@ -528,10 +531,12 @@ namespace FlavoursServicesWorkerRole
             //ComputingCluster.ClusterObjectStorage = FlavourBusinessManagerApp.OpenFlavourBusinessesResourcesStorage("angularhost", "YxNQAvlMWX7e7Dz78w/WaV3Z9VlISStF+Xp2DGigFScQmEuC/bdtiFqKqagJhNIwhsgF9aWHZIcpnFHl4bHHKw==", "angularhost");
 
 
+            AuthFlavourBusiness authFlavourBusiness = AuthFlavourBusiness.Current;
+            Authentication.InitializeFirebase("demomicroneme", authFlavourBusiness);
 
 
 
-            Authentication.InitializeFirebase("demomicroneme");
+            Authentication.InitializeFirebase("demomicroneme", authFlavourBusiness);
 
             IsolatedComputingContext.CurrentContextID = contextID;
 
