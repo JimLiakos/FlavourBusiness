@@ -1008,6 +1008,7 @@ namespace FlavourBusinessManager.RoomService
         [PersistentMember(nameof(_ClientSession))]
         //[AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+9")]
+        [CachingOnlyReferenceOnClientSide]
         public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession ClientSession => _ClientSession.Value;
 
 

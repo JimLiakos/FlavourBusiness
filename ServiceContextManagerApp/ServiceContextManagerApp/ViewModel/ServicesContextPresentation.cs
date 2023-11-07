@@ -450,19 +450,19 @@ namespace ServiceContextManagerApp
 
                     })
                 })));
-                mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
-                {
-                    mealCourse.Name,
-                    mealCourse.Meal,
-                    FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
-                    {
-                        itemsContext.MealCourse,
-                        itemsContext.Description,
-                        itemsContext.PreparationState,
-                        itemsContext.PreparationItems
+                //mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
+                //{
+                //    mealCourse.Name,
+                //    mealCourse.Meal,
+                //    FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
+                //    {
+                //        itemsContext.MealCourse,
+                //        itemsContext.Description,
+                //        itemsContext.PreparationState,
+                //        itemsContext.PreparationItems
 
-                    })
-                })));
+                //    })
+                //})));
 
                 
 

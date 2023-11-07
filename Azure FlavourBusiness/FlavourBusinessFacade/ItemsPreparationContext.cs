@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,7 @@ namespace FlavourBusinessFacade.RoomService
         public string PreparationStationDescription { get; set; }
         public IMealCourse MealCourse { get; }
 
+        [CachingOnlyReferenceOnClientSide]
         public IServicePoint ServicePoint;
 
         public const string TradeProductsStationIdentity = "772E94BEEA1C4A64B8FE5D808A9CDC61";

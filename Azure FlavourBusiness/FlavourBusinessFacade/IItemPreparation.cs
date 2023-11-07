@@ -105,6 +105,7 @@ namespace FlavourBusinessFacade.RoomService
         IList<IFoodServiceClientSession> SharedWithClients { get; }
         [Association("ClientFlavourItems", Roles.RoleB, "913f7a7e-cd2a-4833-a0dc-dde7987eefff")]
         [RoleBMultiplicityRange(1, 1)]
+
         EndUsers.IFoodServiceClientSession ClientSession { get; }
 
 
