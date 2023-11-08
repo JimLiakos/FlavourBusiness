@@ -21,6 +21,7 @@ using Firebase.Auth.Providers;
 using FlavourBusinessManager.ServicePointRunTime;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OOAdvantech.Json.Linq;
 
 namespace FlavourBusinessManager
 {
@@ -1015,24 +1016,24 @@ namespace FlavourBusinessManager
             authUser.ExpirationTime = FromUnixTime(decoded.ExpirationTimeSeconds).ToLocalTime();
 
 
-            // authUser.Auth_Time = FromUnixTime(decoded.Claims..au int.Parse(auth_time)).ToLocalTime();
+             authUser.Auth_Time = FromUnixTime((long)decoded.Claims["auth_time"]).ToLocalTime();
 
             //authUser.Audience = (from claim in tokenS.Claims where claim.Type == "aud" select claim.Value).FirstOrDefault();
-            //authUser.Email = (from claim in tokenS.Claims where claim.Type == "email" select claim.Value).FirstOrDefault();
+            authUser.Email = (from claim in decoded.Claims where claim.Key == "email" select claim.Value as string).FirstOrDefault();
 
-            //if ((from claim in tokenS.Claims where claim.Type == "email_verified" select claim.Value).FirstOrDefault() != null)
-            //    authUser.Email_Verified = bool.Parse((from claim in tokenS.Claims where claim.Type == "email_verified" select claim.Value).FirstOrDefault());
-            //authUser.Iss = (from claim in tokenS.Claims where claim.Type == "iss" select claim.Value).FirstOrDefault();
-            //authUser.Name = (from claim in tokenS.Claims where claim.Type == "name" select claim.Value).FirstOrDefault();
-            //authUser.Picture = (from claim in tokenS.Claims where claim.Type == "picture" select claim.Value).FirstOrDefault();
-            //authUser.Subject = (from claim in tokenS.Claims where claim.Type == "sub" select claim.Value).FirstOrDefault();
-            //authUser.User_ID = (from claim in tokenS.Claims where claim.Type == "user_id" select claim.Value).FirstOrDefault();
+            if ((from claim in decoded.Claims where claim.Key == "email_verified" select claim.Value).FirstOrDefault() != null)
+                authUser.Email_Verified = bool.Parse((from claim in decoded.Claims where claim.Key == "email_verified" select claim.Value?.ToString()).FirstOrDefault());
+            authUser.Iss = decoded.Issuer;
+            authUser.Name = (from claim in decoded.Claims where claim.Key == "name" select claim.Value?.ToString()).FirstOrDefault();
+            authUser.Picture = (from claim in decoded.Claims where claim.Key == "picture" select claim.Value?.ToString()).FirstOrDefault();
+            authUser.Subject = decoded.Subject;// (from claim in tokenS.Claims where claim.Type == "sub" select claim.Value).FirstOrDefault();
+            authUser.User_ID = decoded.Uid;// (from claim in tokenS.Claims where claim.Type == "user_id" select claim.Value).FirstOrDefault();
 
-            //var firebaseAttributes = (from claim in tokenS.Claims where claim.Type == "firebase" select JObject.Parse(claim.Value)).FirstOrDefault();
+            var firebaseAttributes = (from claim in decoded.Claims where claim.Key == "firebase" select JObject.Parse(claim.Value?.ToString())).FirstOrDefault();
 
-            //authUser.Firebase_Sign_in_Provider = (from fireBaseProperty in firebaseAttributes.Properties()
-            //                                      where fireBaseProperty.Name == "sign_in_provider"
-            //                                      select (fireBaseProperty.Value as JValue).Value).FirstOrDefault() as string;
+            authUser.Firebase_Sign_in_Provider = (from fireBaseProperty in firebaseAttributes.Properties()
+                                                  where fireBaseProperty.Name == "sign_in_provider"
+                                                  select (fireBaseProperty.Value as JValue).Value).FirstOrDefault() as string;
             timer.Stop();
             authUser.AuthToken = authToken;
             

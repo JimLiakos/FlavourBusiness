@@ -19,7 +19,7 @@ using UIBaseEx;
 using RestaurantHallLayoutModel;
 using FlavourBusinessManager;
 using FlavourBusinessManager.RoomService;
-using FlavourBusinessManager.Shipping;
+
 
 
 
@@ -30,6 +30,7 @@ using Xamarin.Forms;
 using ZXing;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
+using FlavourBusinessManager.Shipping;
 using QRCoder;
 //using System.Drawing.Imaging;
 using MarshalByRefObject = System.MarshalByRefObject;
@@ -1139,7 +1140,7 @@ namespace WaiterApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
              
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3cecf8c9d2624b1f9c218602e929fa0d";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3a907b91e2a3475f8df94af5127e6342";
 
             try
             {

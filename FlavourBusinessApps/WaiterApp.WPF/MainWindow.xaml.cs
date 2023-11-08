@@ -30,7 +30,7 @@ namespace WaiterApp.WPF
             string url = @"http://192.168.2.8:4303/";//org
             url = @"http://192.168.2.5:4303/";//Braxati
             //url = @"http://10.0.0.13:4303/";//work
-            url = @"https://localhost:4303/";
+            url = @"http://localhost:4303/";
             //url = "https://angularhost.z16.web.core.windows.net/4303/";
 
 

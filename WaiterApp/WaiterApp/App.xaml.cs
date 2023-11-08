@@ -1,4 +1,5 @@
-﻿using OOAdvantech.Remoting.RestApi.Serialization;
+﻿using OOAdvantech;
+using OOAdvantech.Remoting.RestApi.Serialization;
 using System;
 using System.Net.Http;
 using Xamarin.Forms;
@@ -10,7 +11,9 @@ namespace WaiterApp
     {
         public App()
         {
+            var eee = DeviceApplication.Current.ReadLog();
 
+            DeviceApplication.Current.ClearLog();
 
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
@@ -62,7 +65,9 @@ namespace WaiterApp
         protected override async void OnStart()
         {
 
+
             
+
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
