@@ -1017,7 +1017,7 @@ namespace FlavourBusinessManager
 
 
              authUser.Auth_Time = FromUnixTime((long)decoded.Claims["auth_time"]).ToLocalTime();
-
+            authUser.Audience =decoded.Audience;
             //authUser.Audience = (from claim in tokenS.Claims where claim.Type == "aud" select claim.Value).FirstOrDefault();
             authUser.Email = (from claim in decoded.Claims where claim.Key == "email" select claim.Value as string).FirstOrDefault();
 

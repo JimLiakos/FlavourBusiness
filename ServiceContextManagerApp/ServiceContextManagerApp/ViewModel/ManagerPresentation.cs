@@ -798,6 +798,10 @@ namespace ServiceContextManagerApp
                                 ServiceContextSupervisor.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 _ServicesContexts.Add(servicesContextPresentation);
+                                if(_ServicesContexts.Count>1)
+                                {
+
+                                }
                             }
 
 
@@ -806,8 +810,15 @@ namespace ServiceContextManagerApp
                         var role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
                         if (role.RoleType == RoleType.Organization && ServiceContextSupervisor == null)
                         {
+
+                            var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
+                            if (_ServicesContexts.Count>1)
+                            {
+
+                            }
+
                             //_ObjectChangeState?.Invoke(this, null);
                         }
                         //else

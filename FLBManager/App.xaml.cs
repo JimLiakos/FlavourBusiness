@@ -1,4 +1,5 @@
-﻿using FlavourBusinessManager;
+﻿using FlavourBusinessApps.Firebase;
+using FlavourBusinessManager;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech.Json;
 using OOAdvantech.PersistenceLayer;
@@ -30,8 +31,11 @@ namespace FLBManager
     /// <MetaDataID>{8dce946e-b282-4c6a-98e2-74b5ec4baa41}</MetaDataID>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
+
+           //await FlavourBusinessManager.FireBase.Init();
+            
             string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
 
 
@@ -113,7 +117,7 @@ namespace FLBManager
             LoadRestApiTypeNamesDictionary();
             MenuPresentationModel.MenuStyles.Accent.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
             MenuPresentationModel.MenuStyles.PageStyle.ResourcesRootPath = @"C:\ProgramData\Microneme\DontWaitWater\";
-            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme" );
 
             StyleableWindow.FontDialog.InitFonts();
             List<string> mList = new List<string>() { "asd", "ASD" };

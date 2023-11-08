@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using System.Xml.Linq;
+
+using FlavourBusinessManager;
 using OOAdvantech;
 using OOAdvantech.Remoting.RestApi.Serialization;
 
@@ -32,7 +34,7 @@ namespace DontWaitApp
         protected override void OnStartup(StartupEventArgs e)
         {
             SerializeTaskScheduler.RunAsync();
-
+            FireBase.Init();
             //FlavourBusinessManager.FlavoursServicesContext ss = new FlavourBusinessManager.FlavoursServicesContext();
             //var sdf=System.Runtime.Remoting.RemotingServices.GetRealProxy(ss);
 
@@ -94,6 +96,8 @@ namespace DontWaitApp
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.Margin)] = "UIBaseEx.Margin";
             SerializationBinder.TypesNamesDictionary[typeof(UIBaseEx.FontData)] = "UIBaseEx.FontData";
 
+            
+            
 
             //XDocument doc = XDocument.Load(@"C:\Users\Jim\Google Drive\Κτηματολόγιο\GGRS87\03-02-2019.kml");
 
@@ -179,7 +183,7 @@ namespace DontWaitApp
         }
         protected override void OnActivated(EventArgs e)
         {
-            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme",new FlavourBusinessApps.FirebaseAuth());
             base.OnActivated(e);
         }
     }

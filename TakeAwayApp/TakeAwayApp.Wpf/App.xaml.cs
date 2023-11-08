@@ -26,7 +26,7 @@ namespace TakeAwayApp.Wpf
         /// <MetaDataID>{423722b5-0ce7-43a4-905c-a2df1aa4ccd0}</MetaDataID>
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            FlavourBusinessManager.FireBase.Init();
             SerializeTaskScheduler.RunAsync();
 
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
@@ -122,7 +122,7 @@ namespace TakeAwayApp.Wpf
         /// <MetaDataID>{071f269f-6ca6-455d-a0b1-e6ba28ee8acd}</MetaDataID>
         protected override void OnActivated(EventArgs e)
         {
-            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme", new FlavourBusinessApps.FirebaseAuth());
             base.OnActivated(e);
         }
 

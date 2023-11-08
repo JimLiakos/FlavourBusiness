@@ -139,15 +139,6 @@
     <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\IFoodServicesClientSessionViewModel.cs">
       <Link>IFoodServicesClientSessionViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\FlavourBusinessManager\FoodServiceClient.cs">
-      <Link>FoodServiceClient.cs</Link>
-    </Compile>
-    <Compile Include="..\..\FlavourBusinessManager\Place.cs">
-      <Link>Place.cs</Link>
-    </Compile>
-    <Compile Include="..\..\FlavourBusinessManager\PlaceData.cs">
-      <Link>PlaceData.cs</Link>
-    </Compile>
     <Compile Include="..\FlavourBusinessFacade\OpeningHours.cs">
       <Link>OpeningHours.cs</Link>
     </Compile>
@@ -185,12 +176,12 @@
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\Margin.cs">
       <Link>UIBaseEx\Margin.cs</Link>
     </Compile>
-    <Compile Include="..\..\FlavourBusinessManager\ItemPreparation.cs">
+    <None Include="..\..\FlavourBusinessManager\ItemPreparation.cs">
       <Link>ItemPreparation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\FlavourBusinessManager\OptionChange.cs">
+    </None>
+    <None Include="..\..\FlavourBusinessManager\OptionChange.cs">
       <Link>OptionChange.cs</Link>
-    </Compile>
+    </None>
     <None Include="..\..\MenuModel\JsonViewModel\CustomazedPrice.cs">
       <Link>MenuModel\CustomazedPrice.cs</Link>
     </None>
@@ -414,6 +405,10 @@
     <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
       <Project>{0A6DBBC9-D8D3-4466-9A4E-80AE0582EB0A}</Project>
       <Name>WebBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FlavourBusinessApps\FlavourBusinessApps.csproj">
+      <Project>{d58ad795-d497-4b69-a950-b0a8e107f291}</Project>
+      <Name>FlavourBusinessApps</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MenuModel\MenuModel.csproj">
       <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>

@@ -5,8 +5,6 @@ using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;
-using FlavourBusinessManager.EndUsers;
-using FlavourBusinessManager.ServicesContextResources;
 using MenuModel.JsonViewModel;
 using OOAdvantech.Json;
 using System;
@@ -25,7 +23,7 @@ namespace TakeAwayApp.Wpf
     {
         /// <MetaDataID>{0baf0495-b27f-42d3-bcea-10111dc76a57}</MetaDataID>
         FlavoursServiceOrderTakingStation FlavoursServiceOrderTakingStation;
-        private List<FoodServiceClient> ClientsForUnitTest;
+        private List<FlavourBusinessManager.EndUsers.FoodServiceClient> ClientsForUnitTest;
 
         public HomeDeliveryUnitTest(FlavoursServiceOrderTakingStation flavoursServiceOrderTakingStation)
         {
@@ -122,7 +120,7 @@ namespace TakeAwayApp.Wpf
             homeDeliverySession.DeliveryPlace = client.DeliveryPlaces[0];
             var homeDeliveryServicePoint = homeDeliverySession.GetNeighborhoodFoodServers(homeDeliverySession.DeliveryPlace.Location).FirstOrDefault();
             homeDeliverySession.HomeDeliveryServicePoint = homeDeliveryServicePoint;
-            (homeDeliverySession.SessionClient.FoodServiceClient as FoodServiceClient).Synchronize(client);
+            (homeDeliverySession.SessionClient.FoodServiceClient as FlavourBusinessManager.EndUsers.FoodServiceClient).Synchronize(client);
 
             foreach (var preparation in preparationItems)
             {

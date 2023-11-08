@@ -30,6 +30,7 @@ namespace ServiceContextManagerApp.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            FlavourBusinessManager.FireBase.Init();
 
             MemberValuesJsonTest();
             SerializeTaskScheduler.RunAsync();
@@ -50,7 +51,7 @@ namespace ServiceContextManagerApp.WPF
 
         protected override void OnActivated(EventArgs e)
         {
-            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme",new FlavourBusinessApps.FirebaseAuth());
             base.OnActivated(e);
         }
 

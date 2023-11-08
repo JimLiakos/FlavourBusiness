@@ -133,10 +133,6 @@
       <Project>{d58ad795-d497-4b69-a950-b0a8e107f291}</Project>
       <Name>FlavourBusinessApps</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FlavourBusinessManager\FlavourBusinessManager.csproj">
-      <Project>{25AEC1BF-1882-41C8-8B4A-B3B3E1EF624D}</Project>
-      <Name>FlavourBusinessManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MenuModel\MenuModel.csproj">
       <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
       <Name>MenuModel</Name>

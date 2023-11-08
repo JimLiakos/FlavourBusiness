@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using CashierStationDevice;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager;
 using NotifyIconWpf;
 
 namespace CashierStationDTDevice
@@ -26,16 +27,19 @@ namespace CashierStationDTDevice
 
         public CashierController CashierController { get; private set; }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            FireBase.Init();
+            //FireB
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             var aadeFiscalParty = CashierStationDevice.aadeUtil.aadeFiscalParty.GetPartyInfo("800696676", "800696676ARION", "800696676arion", "800696676");
 
             //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
+            
+            OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme", new FlavourBusinessApps.FirebaseAuth());
 
 
             if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.DocumentSignerType))

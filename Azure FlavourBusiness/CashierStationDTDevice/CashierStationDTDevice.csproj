@@ -386,6 +386,10 @@
       <Project>{9da0181b-bb0f-4774-a765-7f1fe4ce5646}</Project>
       <Name>CashierStationUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\FlavourBusinessApps\FlavourBusinessApps.csproj">
+      <Project>{d58ad795-d497-4b69-a950-b0a8e107f291}</Project>
+      <Name>FlavourBusinessApps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\FlavourBusinessUI\FlavourBusinessUI.csproj">
       <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
       <Name>FlavourBusinessUI</Name>
