@@ -216,7 +216,7 @@ namespace MenuItemsEditor.ViewModel
                     List<MenuModel.IPreparationOption> options = SelectedOptions.Select(x => MenuModel.JsonViewModel.Option.GetOption(x.PreparationOption, mappedObjects)).ToList();
 
 
-                    var jSetttings = new JsonSerializerSettings(JsonContractType.Serialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);// { TypeNameHandling = ServerSession.Web ? TypeNameHandling.None : TypeNameHandling.All, Binder = new OOAdvantech.Remoting.RestApi.SerializationBinder(Web), ContractResolver = new JsonContractResolver(JsonContractType.Serialize, ChannelUri, InternalChannelUri, ServerSession,Web) };
+                    var jSetttings = new JsonSerializerSettings(JsonContractType.Serialize, JsonSerializationFormat.TypeScriptJsonSerialization, null,null);// { TypeNameHandling = ServerSession.Web ? TypeNameHandling.None : TypeNameHandling.All, Binder = new OOAdvantech.Remoting.RestApi.SerializationBinder(Web), ContractResolver = new JsonContractResolver(JsonContractType.Serialize, ChannelUri, InternalChannelUri, ServerSession,Web) };
                     var json = OOAdvantech.Json.JsonConvert.SerializeObject(options, jSetttings);
 
                     //var json = JsonConvert.SerializeObject(options, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
@@ -231,7 +231,7 @@ namespace MenuItemsEditor.ViewModel
 
                 Dictionary<object, object> mappedObjects = new Dictionary<object, object>();
                 var json = Clipboard.GetData("OptionsJson") as string;
-                var jSetttings = new JsonSerializerSettings(JsonContractType.Deserialize, JsonSerializationFormat.TypeScriptJsonSerialization, null);
+                var jSetttings = new JsonSerializerSettings(JsonContractType.Deserialize, JsonSerializationFormat.TypeScriptJsonSerialization, null,null);
                 var options = OOAdvantech.Json.JsonConvert.DeserializeObject<object[]>(json, jSetttings).OfType<MenuModel.IPreparationOption>().ToList();
 
                 foreach (var option in options)

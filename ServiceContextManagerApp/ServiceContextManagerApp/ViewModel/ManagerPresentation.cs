@@ -48,8 +48,8 @@ namespace ServiceContextManagerApp
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
     public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-         
-          
+
+
 
         /// <MetaDataID>{336c5eed-616e-4844-b938-ea8acbeb0e1b}</MetaDataID>
         public ManagerPresentation()
@@ -718,133 +718,139 @@ namespace ServiceContextManagerApp
             if (AuthUser != null && authUser.User_ID == AuthUser.User_ID)
                 return true;
 
-
-            if (SignInTask == null || !OnSignIn)
+            lock (SignInTaskLock)
             {
 
-                lock (SignInTaskLock)
+                if (SignInTask == null || !OnSignIn)
                 {
+                    OnSignIn = true;
                     SignInTask = Task<bool>.Run(async () =>
-            {
-
-
-
-                OnSignIn = true;
-                try
-                {
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                    serverUrl = "http://localhost:8090/api/";
-                    serverUrl = AzureServerUrl;
-                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-                    try
                     {
-                        pAuthFlavourBusiness = GetFlavourBusinessAuth();
-                    }
-                    catch (System.Net.WebException error)
-                    {
-                        throw;
-                    }
-                    catch (Exception error)
-                    {
-                        throw;
-                    }
-
-
-                    //sds.SendTimeout
-                    //OOAdvantech.Remoting.RestApi.RemotingServices.T
-                    authUser = DeviceAuthentication.AuthUser;
-                    if (DeviceAuthentication.AuthUser == null)
-                    {
-
-                    }
-                    if (authUser == null)
-                    {
-
-                    }
-                    authUser = DeviceAuthentication.AuthUser;
-                    _OAuthUserIdentity = null;
-                    UserData = pAuthFlavourBusiness.SignIn();
-                    if (UserData != null)
-                    {
-                        _FullName = UserData.FullName;
-                        _UserName = UserData.UserName;
-                        _Email = UserData.Email;
-                        _PhoneNumber = UserData.PhoneNumber;
-                        _Address = UserData.Address;
-
-                        AuthUser = authUser;
-                        string administratorIdentity = "";
-                        var roles = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor);
-                        foreach (var supervisorRole in roles)
+                        try
                         {
-                            ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(supervisorRole.User);
-                            var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
-                            if (!UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
+                            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                            string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                            serverUrl = "http://localhost:8090/api/";
+                            serverUrl = AzureServerUrl;
+                            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+                            try
                             {
-                                _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
+                                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                            }
+                            catch (System.Net.WebException error)
+                            {
+                                throw;
+                            }
+                            catch (Exception error)
+                            {
+                                throw;
+                            }
 
-                                administratorIdentity = ServiceContextSupervisor.Identity;
-                                var flavoursServicesContext = ServiceContextSupervisor.ServicesContext; ;
-                                UserServiceContextSupervisorRoles[servicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
 
-                                ServicesContextPresentation servicesContextPresentation = new ServicesContextPresentation(flavoursServicesContext, ServiceContextSupervisor);
+                            //sds.SendTimeout
+                            //OOAdvantech.Remoting.RestApi.RemotingServices.T
+                            authUser = DeviceAuthentication.AuthUser;
+                            if (DeviceAuthentication.AuthUser == null)
+                            {
+
+                            }
+                            if (authUser == null)
+                            {
+
+                            }
+                            authUser = DeviceAuthentication.AuthUser;
+                            _OAuthUserIdentity = null;
+                            UserData = pAuthFlavourBusiness.SignIn();
+                            if (UserData != null)
+                            {
+                                _FullName = UserData.FullName;
+                                _UserName = UserData.UserName;
+                                _Email = UserData.Email;
+                                _PhoneNumber = UserData.PhoneNumber;
+                                _Address = UserData.Address;
+#if DeviceDotNet
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "ServiceContextSupervisor sign in" });
+#endif
+                                AuthUser = authUser;
+                                string administratorIdentity = "";
+                                var roles = UserData.Roles.Where(x => x.RoleType == RoleType.ServiceContextSupervisor);
+
+                                foreach (var supervisorRole in roles)
+                                {
+                                    ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(supervisorRole.User);
+                                    var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
+                                    if (!UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
+                                    {
+                                        _OAuthUserIdentity = ServiceContextSupervisor.OAuthUserIdentity;
+
+                                        administratorIdentity = ServiceContextSupervisor.Identity;
+                                        var flavoursServicesContext = ServiceContextSupervisor.ServicesContext; ;
+                                        UserServiceContextSupervisorRoles[servicesContextIdentity] = flavoursServicesContext.ServiceContextHumanResources.Supervisors.Where(x => x.OAuthUserIdentity != ServiceContextSupervisor.OAuthUserIdentity).ToList();
+
+                                        ServicesContextPresentation servicesContextPresentation = new ServicesContextPresentation(flavoursServicesContext, ServiceContextSupervisor);
 
 #if DeviceDotNet
-                                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                ServiceContextSupervisor.DeviceFirebaseToken = device.FirebaseToken;
+                                        IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                                        ServiceContextSupervisor.DeviceFirebaseToken = device.FirebaseToken;
+                                        OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "servicesContextPresentation added" });
 #endif
-                                _ServicesContexts.Add(servicesContextPresentation);
-                                if(_ServicesContexts.Count>1)
-                                {
+                                        _ServicesContexts.Add(servicesContextPresentation);
+                                        
+                                        if (_ServicesContexts.Count > 1)
+                                        {
+
+                                        }
+                                    }
+
 
                                 }
+
+
+
+                                var role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
+                                if (role.RoleType == RoleType.Organization && ServiceContextSupervisor == null)
+                                {
+
+                                    var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
+                                    Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
+                                    _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
+#if DeviceDotNet
+                                    OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "Organization servicesContextPresentations" });
+#endif
+                                    if (_ServicesContexts.Count > 1)
+                                    {
+
+                                    }
+
+                                    //_ObjectChangeState?.Invoke(this, null);
+                                }
+                                //else
+                                //{
+                                //    _ServicesContexts = new List<IServicesContextPresentation>();
+                                //}
+
+
+                                _ObjectChangeState?.Invoke(this, null);
+                                return true;
                             }
+                            else
+                                return false;
 
 
                         }
-
-                        var role = UserData.Roles.Where(x => x.RoleType == RoleType.Organization).FirstOrDefault();
-                        if (role.RoleType == RoleType.Organization && ServiceContextSupervisor == null)
+                        catch (Exception error)
                         {
 
-                            var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
-                            Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
-                            _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
-                            if (_ServicesContexts.Count>1)
-                            {
-
-                            }
-
-                            //_ObjectChangeState?.Invoke(this, null);
+                            throw;
                         }
-                        //else
-                        //{
-                        //    _ServicesContexts = new List<IServicesContextPresentation>();
-                        //}
-
-
-                        _ObjectChangeState?.Invoke(this, null);
-                        return true;
-                    }
-                    else
-                        return false;
-
-
-                }
-                catch (Exception error)
-                {
-
-                    throw;
-                }
-                finally
-                {
-                    OnSignIn = false;
-                }
-            });
+                        finally
+                        {
+                            OnSignIn = false;
+                        }
+                    });
                 }
 
 

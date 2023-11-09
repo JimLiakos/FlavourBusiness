@@ -175,9 +175,16 @@ namespace FlavoursServicesWorkerRole
             }
 
 
-            handler.OnClose();
+            try
+            {
+                handler.OnClose();
+                await closeAsync((int)websocketContext["websocket.ClientCloseStatus"], (string)websocketContext["websocket.ClientCloseDescription"], callCancelled);
+            }
+            catch (Exception error)
+            {
 
-            await closeAsync((int)websocketContext["websocket.ClientCloseStatus"], (string)websocketContext["websocket.ClientCloseDescription"], callCancelled);
+                
+            }
         }
 
 

@@ -14,6 +14,11 @@ namespace ServiceContextManagerApp
         {
             InitializeComponent();
 
+            string log = OOAdvantech.DeviceApplication.Current.ReadLog();
+
+            OOAdvantech.DeviceApplication.Current.ClearLog();
+
+
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.OptionMenuItemSpecific"] = typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific);

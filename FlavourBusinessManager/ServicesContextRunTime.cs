@@ -1453,12 +1453,13 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this));
 
-                var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
-                                              where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
-                                              select theServicePointRun).FirstOrDefault();
+                //var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
+                //                              where theServicePointRun.ServicesContextIdentity == ServicesContextIdentity
+                //                              select theServicePointRun).FirstOrDefault();
 
-                foreach (var serviceArea in (from aServiceArea in storage.GetObjectCollection<ServicesContextResources.ServiceArea>()
-                                             select aServiceArea))
+                //(from aServiceArea in storage.GetObjectCollection<ServicesContextResources.ServiceArea>()
+                // select aServiceArea))
+                foreach (var serviceArea in ServiceAreas.OfType<ServiceArea>())
                 {
                     if (!string.IsNullOrWhiteSpace(serviceArea.HallLayoutUri))
                     {
