@@ -65,6 +65,9 @@ namespace ServiceContextManagerApp
                 SigninTitleBar.IsVisible = false;
             else
                 SigninTitleBar.IsVisible = true;
+
+            OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "MainPage_Navigated :"});
+
         }
 
         private void Back_Clicked(object sender, EventArgs e)
@@ -75,6 +78,7 @@ namespace ServiceContextManagerApp
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "MainPage_OnAppearing:" });
 
             //var storageWritePermission = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.StorageWrite>();
             //if (storageWritePermission == Xamarin.Essentials.PermissionStatus.Denied)

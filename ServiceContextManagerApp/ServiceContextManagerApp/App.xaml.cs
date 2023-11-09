@@ -18,6 +18,9 @@ namespace ServiceContextManagerApp
 
             OOAdvantech.DeviceApplication.Current.ClearLog();
 
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "App ctor" });
+
+
 
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
