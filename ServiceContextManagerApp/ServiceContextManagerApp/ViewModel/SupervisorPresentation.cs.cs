@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using OOAdvantech.MetaDataRepository;
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
@@ -42,6 +43,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{94888f42-2b9f-4970-acc6-43953d6dffbf}</MetaDataID>
+        [CachingDataOnClientSide]
         public bool Suspended
         {
             get
@@ -51,6 +53,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{87b82250-53e6-4008-8743-6aeecee51ebd}</MetaDataID>
+        [CachingDataOnClientSide]
         public string Email
         {
             get
@@ -66,6 +69,7 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{280698f9-92ac-48d8-a7d1-8e9502fc3277}</MetaDataID>
+        [CachingDataOnClientSide]
         public string FullName
         {
             get
@@ -81,6 +85,7 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{ff92134f-0d3e-46d3-bf57-d65e3f583bcc}</MetaDataID>
+        [CachingDataOnClientSide]
         public string UserName
         {
             get
@@ -95,7 +100,9 @@ namespace ServiceContextManagerApp
 
         /// <exclude>Excluded</exclude>
         string _PhotoUrl;
+        
         /// <MetaDataID>{9548972f-d549-4409-a57a-e0133ae3ea7a}</MetaDataID>
+        [CachingDataOnClientSide]
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
         IShiftWork ActiveShiftWork;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Firebase.CloudMessaging;
 using Foundation;
+using OOAdvantech.Authentication;
 using UIKit;
 using UserNotifications;
 
@@ -76,8 +77,8 @@ namespace ServiceContextManagerApp.iOS
             string webClientID = "881594421690-80nqrgoqmi0r1erpnrcnqtrjqar1jsrc.apps.googleusercontent.com";
             //"apps.googleusercontent.com.241222885422-bquei744e1i8q3h0r82k7fm31fbuej7m"
 
-
-            OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase(fcmToken, webClientID);
+            var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.Apple, SignInProvider.Facebook, SignInProvider.Google, SignInProvider.Twitter ,SignInProvider.Email };
+            OOAdvantech.iOS.DeviceOOAdvantechCore.InitFirebase(fcmToken, webClientID, providers);
 
 
             //OOAdvantech.iOS.DeviceOOAdvantechCore.SetFirebaseToken(fcmToken);

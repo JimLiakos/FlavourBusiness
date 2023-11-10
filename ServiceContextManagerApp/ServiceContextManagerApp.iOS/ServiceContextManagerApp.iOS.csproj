@@ -27,6 +27,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>Apple Development: Created via API (6RRY85GDXU)</CodesignKey>
+    <CodesignProvision>VS: com.microneme.dontwaitmanager.ios Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -131,6 +133,10 @@
       <Name>OOAdvantech.NetStandard.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+      <Project>{0b142e86-d9cd-4bb1-a17e-08a310aec721}</Project>
+      <Name>OOAdvantech.NetStandard</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceContextManagerApp\ServiceContextManagerApp.csproj">
       <Project>{6C755316-DF30-437A-B20D-165732CA8816}</Project>

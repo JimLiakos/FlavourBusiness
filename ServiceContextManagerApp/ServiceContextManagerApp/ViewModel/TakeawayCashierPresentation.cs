@@ -1,6 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
-
+using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +54,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{ce464688-6c62-4ebf-8a45-9bb5939f60ca}</MetaDataID>
+        [CachingDataOnClientSide]
         public bool Suspended
         {
             get
@@ -64,6 +65,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{d1060873-5f43-486c-a68d-1d7eb9189f07}</MetaDataID>
+        [CachingDataOnClientSide]
         public string Email
         {
             get
@@ -79,6 +81,7 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{f90c4776-0704-4031-8bbc-4eca429dd42b}</MetaDataID>
+        [CachingDataOnClientSide]
         public string FullName
         {
             get
@@ -94,6 +97,7 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{c665d38b-2ec0-4cf1-8bd7-a09d7c50dda5}</MetaDataID>
+        [CachingDataOnClientSide]
         public string UserName
         {
             get
@@ -108,7 +112,9 @@ namespace ServiceContextManagerApp
 
         /// <exclude>Excluded</exclude>
         string _PhotoUrl;
+
         /// <MetaDataID>{87011970-7d69-4528-bce5-ef00c5cfec4e}</MetaDataID>
+        [CachingDataOnClientSide]
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
         /// <MetaDataID>{cbe2c3df-1c68-429e-8d39-a32933a5d121}</MetaDataID>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using OOAdvantech.MetaDataRepository;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -42,6 +43,7 @@ namespace ServiceContextManagerApp
 
         public string WorkerIdentity { get => WaiterIdentity; }
 
+        [CachingDataOnClientSide]
         public bool Suspended
         {
             get
@@ -51,6 +53,7 @@ namespace ServiceContextManagerApp
             }
         }
 
+        [CachingDataOnClientSide]
         public string Email
         {
             get
@@ -65,6 +68,8 @@ namespace ServiceContextManagerApp
         }
 
         public IServicesContextWorker ServicesContextWorker => Waiter;
+
+        [CachingDataOnClientSide]
         public string FullName
         {
             get
@@ -78,7 +83,7 @@ namespace ServiceContextManagerApp
         }
 
 
-
+        [CachingDataOnClientSide]
         public string UserName
         {
             get
@@ -93,6 +98,7 @@ namespace ServiceContextManagerApp
 
         /// <exclude>Excluded</exclude>
         string _PhotoUrl;
+        [CachingDataOnClientSide]
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
         public IShiftWork ActiveShiftWork { get; set; }

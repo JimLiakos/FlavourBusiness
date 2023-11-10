@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using OOAdvantech.MetaDataRepository;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -25,6 +26,7 @@ namespace ServiceContextManagerApp
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
         /// <MetaDataID>{7e702328-8200-4589-a10f-140dd3fa5d67}</MetaDataID>
+        [CachingDataOnClientSide]
         public string FullName
         {
             get
@@ -42,17 +44,24 @@ namespace ServiceContextManagerApp
         }
 
         public string WorkerIdentity { get => this.CourierIdentity; }
+
         /// <MetaDataID>{ed83a4f4-f975-4531-b420-1b6f51ee8ce7}</MetaDataID>
+        [CachingDataOnClientSide]
         public string UserName { get => Courier.UserName; set { } }
+
         /// <MetaDataID>{6e0fbcbf-c5b8-4145-923f-306593b3fcb6}</MetaDataID>
+        [CachingDataOnClientSide]
         public string Email { get => Courier.Email; set { } }
+
         /// <MetaDataID>{b95d622c-c188-4dcb-9e21-4a72825235a7}</MetaDataID>
+        [CachingDataOnClientSide]
         public string PhotoUrl { get => Courier.PhotoUrl; set { } }
 
         /// <MetaDataID>{1b0b930c-6cc5-448a-abef-3b37005684e6}</MetaDataID>
         public string CourierIdentity => Courier.Identity;
 
         /// <MetaDataID>{4899cf09-f060-4597-9cdf-abc439b8f407}</MetaDataID>
+        [CachingDataOnClientSide]
         public bool Suspended => false;
 
         /// <MetaDataID>{e7461043-e364-4c73-b81b-978a1a3b3d0d}</MetaDataID>
