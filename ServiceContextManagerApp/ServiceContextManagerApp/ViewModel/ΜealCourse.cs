@@ -33,10 +33,10 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         public DontWaitApp.MenuData MenuData { get; set; }
 
         public string MealCourseUri { get; set; }
-        public ItemPreparationState PreparationState { get; }
+        public ItemPreparationState PreparationState { get; set; }
 
         IMealsController MealsController;
-
+         
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
         public MealCourse(IMealCourse serverSideMealCourse, IMealsController mealsController)
         {
@@ -136,7 +136,24 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 {
 
                 }
-                ItemsStateChanged?.Invoke(newItemsState);
+
+                foreach (var preparationItem in FoodItemsInProgress.SelectMany(x => x.PreparationItems))
+                {
+                    if (newItemsState.ContainsKey(preparationItem.uid))
+                        preparationItem.State=newItemsState[preparationItem.uid];
+                }
+
+                
+
+                var preparationState = mealCourse.PreparationState;
+                if (PreparationState != preparationState)
+                {
+                    PreparationState=preparationState;
+                    this.MealCourseUpdated?.Invoke(this);
+                }
+                else
+                    ItemsStateChanged?.Invoke(newItemsState);
+
             }
 
         }

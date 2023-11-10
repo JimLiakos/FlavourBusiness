@@ -18,10 +18,10 @@ namespace FlavourBusinessManager.Shipping
     [Persistent()]
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping
     {
-      
+
 
         /// <exclude>Excluded</exclude>
-        DateTime? _CreationTime; 
+        DateTime? _CreationTime;
 
         /// <MetaDataID>{836f9e8f-edf4-4c9a-8fdf-bb7a4c4418b6}</MetaDataID>
         [PersistentMember(nameof(_CreationTime))]
@@ -159,9 +159,10 @@ namespace FlavourBusinessManager.Shipping
 
             Transaction.RunOnTransactionCompleted(() =>
             {
+                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                ItemsStateChanged?.Invoke(newItemsState);
+                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
 
-                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                ItemsStateChanged?.Invoke(PreparedItems.ToDictionary(x => x.uid, x => x.State));
             });
 
         }
@@ -282,7 +283,7 @@ namespace FlavourBusinessManager.Shipping
         [CachingDataOnClientSide]
         public string ServicesContextIdentity { get; set; }
 
-        
+
 
         /// <MetaDataID>{8b04d3b5-3066-4ac7-b863-258938fa98b8}</MetaDataID>
         [CachingDataOnClientSide]

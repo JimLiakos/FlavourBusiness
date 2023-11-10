@@ -200,6 +200,7 @@ namespace ServiceContextManagerApp
                     {
                         try
                         {
+
                             courierPresentation.Courier.AssignAndCommitFoodShipping(foodShipping.FoodShipping);
                             return true;
                         }
@@ -429,6 +430,7 @@ namespace ServiceContextManagerApp
 
             MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
             MealsController.ObjectChangeState += MealsController_ObjectChangeState;
+            MealsController.MealCourseChangeState+=MealsController_MealCourseChangeState;
             _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
 
             Task.Run(() =>
@@ -450,8 +452,8 @@ namespace ServiceContextManagerApp
 
                     })
                 })));
-     
-                
+
+
 
 
 
@@ -466,6 +468,16 @@ namespace ServiceContextManagerApp
                 GetMessages();
 
             });
+        }
+
+        private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
+        {
+
+            if (DelayedServingBatchesAtTheCounter?.Count>0==true&&memberName==nameof(MealCourse.PreparationState)&& mealCourser?.PreparationState==ItemPreparationState.OnRoad)
+            {
+                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
+            }
         }
 
         public void IWillTakeCare(string messageID)
@@ -496,6 +508,8 @@ namespace ServiceContextManagerApp
 
 
                                 //string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+
+                                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
                                 DelayedMealAtTheCounter?.Invoke(SignedInSupervisor, message.MessageID);
                                 //PartOfMealRequestMessageForward(message);
                                 return;

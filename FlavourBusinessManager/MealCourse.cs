@@ -274,6 +274,13 @@ namespace FlavourBusinessManager.RoomService
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
 
                         }
+
+                        
+                    }
+
+                    if(value== ItemPreparationState.OnRoad)
+                    {
+                        (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.PreparationState));
                     }
                 }
 

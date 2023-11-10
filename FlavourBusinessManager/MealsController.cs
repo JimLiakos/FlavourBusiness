@@ -209,6 +209,7 @@ namespace FlavourBusinessManager.RoomService
         internal void MealCourseStateChanged(MealCourse mealCourse, string member)
         {
             MealCourseChangeState?.Invoke(mealCourse, member);
+
         }
         internal void MealCourseItemsChangeState(MealCourse mealCourse, Dictionary<string, ItemPreparationState> newItemsState)
         {
