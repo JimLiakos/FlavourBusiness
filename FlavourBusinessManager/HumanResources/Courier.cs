@@ -566,7 +566,7 @@ namespace FlavourBusinessManager.HumanResources
 
         /// <MetaDataID>{03cbec0d-378b-4d10-93d5-834db2202c06}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
-        {
+        { 
             if (LastThreeShiftsPeriodStart != null)
             {
                 List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);

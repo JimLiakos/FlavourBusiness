@@ -16,8 +16,50 @@ namespace FlavourBusinessManager.Shipping
     /// <MetaDataID>{c36022d2-142c-4f52-8ca3-debd1124b925}</MetaDataID>
     [BackwardCompatibilityID("{c36022d2-142c-4f52-8ca3-debd1124b925}")]
     [Persistent()]
-    public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping
+    public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping,FinanceFacade.IPaymentGateway
     {
+
+
+        /// <summary>
+        /// Creates a pay order with assigned payment gateway 
+        /// In case where payment can be completed from refunds amount, the payment completed without pay order.  
+        /// </summary>
+        /// <param name="payment">
+        /// Payment has all data that needed for the creation of pay order   
+        /// </param>
+        /// <param name="tipAmount">
+        /// Defines the extra amount for tipping
+        /// </param>
+        /// <param name="paramsJson">
+        /// Defines some extra parameters which are necessary for payment gateway
+        /// </param>
+        /// <MetaDataID>{8cbfdfe4-c18e-407c-863f-074e5268a9c8}</MetaDataID>
+        public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+        {
+            if (payment.State != FinanceFacade.PaymentState.Completed)
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    if (!(payment as FinanceFacade.Payment).TryToCompletePaymentWithRefundAmount(tipAmount))
+                    {
+                        PaymentProviders.VivaWallet.CreatePaymentOrder(payment as FinanceFacade.Payment, tipAmount, paramsJson);
+                        (payment as FinanceFacade.Payment).TipsAmount = tipAmount;
+                    }
+
+                    stateTransition.Consistent = true;
+                }
+
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _Identity;
+
+        /// <MetaDataID>{c3f2b2b1-64f8-4f3c-b7c6-1d0156e6958b}</MetaDataID>
+        [PersistentMember(nameof(_Identity))]
+        [BackwardCompatibilityID("+7")]
+        public string Identity => _Identity;
 
 
         /// <exclude>Excluded</exclude>
@@ -83,12 +125,19 @@ namespace FlavourBusinessManager.Shipping
             {
                 _CreationTime = DateTime.UtcNow;
             }
+            if(string.IsNullOrWhiteSpace(_Identity))
+            {
+                var ticks = new DateTime(2022, 1, 1).Ticks;
+                var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                _Identity=uniqueId;
+            }
             lock (CaregiversLock)
             {
                 Caregiversjson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
             }
         }
 
+        /// <MetaDataID>{62b80657-2b59-46c6-8b79-9a871b5c9bcd}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()
         {
@@ -331,6 +380,7 @@ namespace FlavourBusinessManager.Shipping
         [CachingDataOnClientSide]
         public string ServicesPointIdentity { get; set; }
 
+        /// <MetaDataID>{063af7ed-744e-447a-8a4b-96f75450d11a}</MetaDataID>
         [CachingDataOnClientSide]
         public string ServicesContextIdentity { get; set; }
 
@@ -496,6 +546,7 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
+        /// <MetaDataID>{e4d85c11-64ac-40f3-be7a-b7ee523d75a0}</MetaDataID>
         internal void AtTheCounter()
         {
             var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);

@@ -6,6 +6,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.ServicesContextResources;
+using FlavourBusinessManager.Shipping;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -43,6 +44,7 @@ namespace FlavourBusinessManager.EndUsers
             totalAmount=decimal.Round(totalAmount, 5);
             return new PayAmount(totalAmount, flouvorItems.FirstOrDefault().ISOCurrencySymbol);
         }
+
 
         internal static List<FinanceFacade.Item> GetPayItems(FoodServiceClientSession foodServiceClientSession, List<Payment> payments, List<ItemPreparation> flavourItems)
         {
@@ -140,101 +142,103 @@ namespace FlavourBusinessManager.EndUsers
             return paymentItems;
         }
 
-        //internal static List<FinanceFacade.Item> GetPayItems(FoodServiceClientSession foodServiceClientSession, List<Payment> payments, List<ItemPreparation> flavourItems)
-        //{
+
+
+        internal static List<FinanceFacade.Item> GetPayItems(FoodShipping foodServiceClientSession, List<Payment> payments, List<ItemPreparation> flavourItems)
+        {
 
 
 
-        //    Dictionary<ItemPreparation, decimal> paidItemsAmounts = new Dictionary<ItemPreparation, decimal>();
+            Dictionary<ItemPreparation, decimal> paidItemsAmounts = new Dictionary<ItemPreparation, decimal>();
 
 
-        //    #region sort by transaction date
-        //    var tmpPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
-        //    tmpPayments.AddRange(payments.Where(x => x.State != FinanceFacade.PaymentState.Completed));
-        //    payments = tmpPayments;
-        //    #endregion
+            #region sort by transaction date
+            var tmpPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
+            tmpPayments.AddRange(payments.Where(x => x.State != FinanceFacade.PaymentState.Completed));
+            payments = tmpPayments;
+            #endregion
 
-        //    List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
-
-
-        //    foreach (var flavourItem in flavourItems)
-        //    {
-
-        //        decimal paidAmount = flavourItem.GetPaidAmount(foodServiceClientSession, payments);
-        //        paidItemsAmounts[flavourItem] = paidAmount;
-        //        FinanceFacade.Item item = null;
-
-        //        int numberOfShares = flavourItem.NumberOfShares;
-        //        if (foodServiceClientSession==null|| foodServiceClientSession.IsWaiterSession)
-        //            numberOfShares=1;
-
-        //        decimal quantity = (decimal)flavourItem.Quantity / numberOfShares;
-        //        decimal amount = (decimal)flavourItem.ModifiedItemPrice * quantity;
-
-        //        string quantityDescription = flavourItem.Quantity.ToString() + "/" + numberOfShares.ToString();
-        //        if (quantity==(int)quantity)
-        //            quantityDescription=((int)quantity).ToString();
-        //        #region remove  useless decimals
-        //        if (((decimal)(int)quantity) == quantity)
-        //            quantity = (int)quantity;
-        //        #endregion
-
-        //        if (amount - paidAmount >= 0)
-        //        {
-        //            if (numberOfShares > 1)
-        //            {
-        //                item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = paidAmount };
-        //                paymentItems.Add(item);
-        //            }
-        //            else
-        //            {
-        //                item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
-        //                paymentItems.Add(item);
-
-        //            }
-
-        //        }
-        //    }
-        //    var sessionAllFlavourItemsUids = foodServiceClientSession.FlavourItems.OfType<ItemPreparation>().Union(foodServiceClientSession.SharedItems.OfType<ItemPreparation>()).Where(x => x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
+            List<FinanceFacade.Item> paymentItems = new List<FinanceFacade.Item>();
 
 
+            foreach (var flavourItem in flavourItems)
+            {
 
-        //    List<Item> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.HasPayAmountFor(foodServiceClientSession)).ToList();
-        //    List<Item> canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !sessionAllFlavourItemsUids.Contains(x.GetItemPreparationUid())).OfType<FinanceFacade.Item>().ToList();
+                decimal paidAmount = flavourItem.GetPaidAmount(foodServiceClientSession, payments);
+                paidItemsAmounts[flavourItem] = paidAmount;
+                FinanceFacade.Item item = null;
 
-        //    //The items where canceled
-        //    foreach (var canceledItem in canceledItems)
-        //    {
-        //        if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
-        //        {
-        //            var nettingQuantity = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid ==canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity;
-        //            var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -nettingQuantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription = canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
-        //            paymentItems.Add(nettingItem);
-        //        }
-        //    }
+                int numberOfShares = flavourItem.NumberOfShares;
+                 numberOfShares=1;
 
-        //    //The items with price less than price where paid
-        //    foreach (var paidItem in paidItemsAmounts.Where(paidItemEntry => ((decimal)(paidItemEntry.Key.ModifiedItemPrice *(paidItemEntry.Key.Quantity/paidItemEntry.Key.NumberOfShares))) < paidItemEntry.Value))
-        //    {
+                decimal quantity = (decimal)flavourItem.Quantity / numberOfShares;
+                decimal amount = (decimal)flavourItem.ModifiedItemPrice * quantity;
 
-        //        decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity/paidItem.Key.NumberOfShares);
-        //        var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
-        //        string quantityDescription = nettingQuantity.ToString();// + "/" + numberOfShares.ToString();
-        //        var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = 0 };
-        //        paymentItems.Add(nettingItem); // entry with  refund amount "netting item" 
+                //string quantityDescription = flavourItem.Quantity.ToString() + "/" + numberOfShares.ToString();
+                //if (quantity==(int)quantity)
+                //    quantityDescription=((int)quantity).ToString();
+                //#region remove  useless decimals
+                //if (((decimal)(int)quantity) == quantity)
+                //    quantity = (int)quantity;
+                //#endregion
 
-        //        //Adds the paid item 
-        //        quantityDescription=FlavourBusinessToolKit.Fraction.RealToFraction(paidItem.Key.Quantity, 0.1).ToString();
-        //        var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
-        //        paymentItems.Add(item);
+                if (amount - paidAmount >= 0)
+                {
+                    //if (numberOfShares > 1)
+                    //{
+                    //    item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = paidAmount };
+                    //    paymentItems.Add(item);
+                    //}
+                    //else
+                    //{
+                        item = new Item() { Name = flavourItem.FullName, Quantity = quantity, Price = (decimal)flavourItem.ModifiedItemPrice, uid = flavourItem.GetItemUid(foodServiceClientSession), QuantityDescription = flavourItem.Quantity.ToString(), PaidAmount = paidAmount };
+                        paymentItems.Add(item);
+                   // }
+                }
+            }
+
+            //List<string> sessionAllFlavourItemsUids = foodServiceClientSession.PreparedItems.Where(x => x.State!=ItemPreparationState.Canceled).Select(x => x.uid).ToList();
+
+            //if (foodServiceClientSession.IsWaiterSession)
+            List<string> sessionAllFlavourItemsUids=sessionAllFlavourItemsUids = foodServiceClientSession.MealCourse.Meal.Session.PartialClientSessions.SelectMany(x => x.FlavourItems).Select(x => x.uid).ToList();
+
+            List<Item> paidItems = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.HasPayAmountFor(foodServiceClientSession)).ToList();
+            List<Item> canceledItems = paidItems.Where(x => x.Quantity > 0/*ignore netting items*/ && !sessionAllFlavourItemsUids.Contains(x.GetItemPreparationUid())).OfType<FinanceFacade.Item>().ToList();
+
+            //The items where canceled
+            foreach (var canceledItem in canceledItems)
+            {
+                if (payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid == canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity > 0)
+                {
+                    var nettingQuantity = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).Where(x => x.uid ==canceledItem.GetItemPreparationUid() && x.Quantity < 0 /*netting item*/).Sum(x => x.Quantity) + canceledItem.Quantity;
+                    var nettingItem = new FinanceFacade.Item() { Name = canceledItem.Name, Quantity = -nettingQuantity, Price = canceledItem.Price, uid = canceledItem.uid, QuantityDescription = canceledItem.QuantityDescription, PaidAmount = canceledItem.PaidAmount };
+                    paymentItems.Add(nettingItem);
+                }
+            }
+
+            //The items with price less than price where paid
+            foreach (var paidItem in paidItemsAmounts.Where(paidItemEntry => ((decimal)(paidItemEntry.Key.ModifiedItemPrice *(paidItemEntry.Key.Quantity/paidItemEntry.Key.NumberOfShares))) < paidItemEntry.Value))
+            {
+
+                decimal refundAmount = paidItem.Value - (decimal)(paidItem.Key.ModifiedItemPrice * paidItem.Key.Quantity/paidItem.Key.NumberOfShares);
+                var nettingQuantity = refundAmount / (decimal)paidItem.Key.ModifiedItemPrice;
+                string quantityDescription = nettingQuantity.ToString();// + "/" + numberOfShares.ToString();
+                var nettingItem = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = -nettingQuantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = 0 };
+                paymentItems.Add(nettingItem); // entry with  refund amount "netting item" 
+
+                //Adds the paid item 
+                quantityDescription=FlavourBusinessToolKit.Fraction.RealToFraction(paidItem.Key.Quantity, 0.1).ToString();
+                var item = new FinanceFacade.Item() { Name = paidItem.Key.Name, Quantity = (decimal)paidItem.Key.Quantity, Price = (decimal)paidItem.Key.ModifiedItemPrice, uid = paidItem.Key.GetItemUid(foodServiceClientSession), QuantityDescription = quantityDescription, PaidAmount = (decimal)(paidItem.Key.Quantity * paidItem.Key.ModifiedItemPrice) };
+                paymentItems.Add(item);
 
 
-        //        //paidItem.ModifiedItemPrice* paidItem.Key.Quantity
-        //        //var nettingQuantity=
-        //    }
+                //paidItem.ModifiedItemPrice* paidItem.Key.Quantity
+                //var nettingQuantity=
+            }
 
-        //    return paymentItems;
-        //}
+            return paymentItems;
+        }
+
 
 
 
@@ -446,6 +450,98 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
+
+
+        internal static IBill GetBillFor(List<SessionItemPreparationAbbreviation> itemPreparations, FoodShipping foodShipping)
+        {
+
+            List<RoomService.ItemPreparation> itemsForTransfer = new List<RoomService.ItemPreparation>();
+            //List<ItemPreparation> flavourItems = new List<ItemPreparation>();
+            string paymentIdentity = foodShipping.GetPaymentIdentity();
+
+            List<FinanceFacade.Payment> payments = foodShipping.MealCourse.Meal.Session?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
+            if (payments == null)
+                payments = new List<FinanceFacade.Payment>();
+
+            List<FinanceFacade.Item> paymentItems = new List<Item>();
+
+            
+            //}
+            var itemsUids = itemPreparations.Select(x => x.uid).ToList();
+            var flavourItems = foodShipping.MealCourse.Meal.Session.PartialClientSessions.SelectMany(x => x.FlavourItems).OfType<ItemPreparation>().Where(x => itemsUids.Contains(x.uid)).ToList();
+            foreach (var item in Bill.GetPayItems(foodShipping, payments, flavourItems))
+            {
+
+                var itemPreparation = itemPreparations.Where(x => x.uid==item.GetItemPreparationUid()).FirstOrDefault();
+                if (itemPreparation==null)
+                    continue;
+                if (itemPreparation.Quantity!=null)
+                {
+                    decimal unpaidAmount = item.Amount-item.PaidAmount;
+                    decimal billItemAmount = ((decimal)itemPreparation.Quantity.Value*item.Price);
+                    decimal billItemPaidAmount = 0;
+                    if (billItemAmount>unpaidAmount)
+                        billItemPaidAmount=billItemAmount-unpaidAmount;
+                    var newItem = new Item() { Name = item.Name, Quantity =(decimal)itemPreparation.Quantity.Value, Price = item.Price, uid = item.uid+="&"+foodShipping.Identity, QuantityDescription = FlavourBusinessToolKit.Fraction.RealToFraction(itemPreparation.Quantity.Value, 0.1).ToString(), PaidAmount = billItemPaidAmount };
+                    paymentItems.Add(newItem);
+                }
+                else
+                {
+                    item.uid+="&"+foodShipping.Identity;
+                    paymentItems.Add(item);
+                }
+            }
+
+
+
+            payments=payments.Where(x => x.State==PaymentState.Completed||x.Identity==paymentIdentity).ToList();
+            payments = payments.OrderBy(x => x.TransactionDate).ToList();
+
+            var payment = payments.Where(x => (x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress)&&x.Identity==paymentIdentity).FirstOrDefault();
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+
+                if (payment == null)
+                {
+                    payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, flavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol, foodShipping);
+
+                    ObjectStorage.GetStorageOfObject(foodShipping).CommitTransientObjectState(payment);
+
+                    foodShipping.MealCourse.Meal.Session.AddPayment(payment);
+                    payments.Add(payment);
+
+                }
+                else
+                {
+                    payment.Update(paymentItems);
+                    //move to end of list;
+                    payments.Remove(payment);
+                    payments.Add(payment);
+                }
+
+                payment.Description=foodShipping.ClientFullName+" "+foodShipping.Place.Description;
+
+                //if (waiterFoodServicesClientSession.MainSession.ServicePoint is HallServicePoint)
+                //{
+                //    if (!string.IsNullOrWhiteSpace(waiterFoodServicesClientSession.UserLanguageCode))
+                //        payment.Description=string.Format(Properties.Resources.ResourceManager.GetString("TablePaymentDescription", System.Globalization.CultureInfo.GetCultureInfo(waiterFoodServicesClientSession.UserLanguageCode)), waiterFoodServicesClientSession.MainSession.ServicePoint.Description);
+                //    else
+                //        payment.Description=string.Format(Properties.Resources.TablePaymentDescription, waiterFoodServicesClientSession.MainSession.ServicePoint.Description);
+                //}
+
+
+                stateTransition.Consistent = true;
+            }
+            payment.Subject = foodShipping.MealCourse.Meal.Session as FinanceFacade.IPaymentSubject;
+
+            return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+
+        }
+
+
+
+
         internal static IBill GetBillFor_old(List<SessionItemPreparationAbbreviation> itemPreparations, FoodServiceClientSession waiterFoodServicesClientSession)
         {
 
@@ -566,6 +662,17 @@ namespace FlavourBusinessManager.EndUsers
             return paidAmount;
         }
 
+        public static decimal GetPaidAmount(this ItemPreparation flavourItem, FoodShipping foodShipping, List<Payment> payments)
+        {
+            decimal paidAmount;
+            var itemPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).SelectMany(x => x.Items).OfType<Item>().Where(x => x.GetItemPreparationUid() == flavourItem.uid).OfType<FinanceFacade.Item>().ToList();
+
+            itemPayments= itemPayments.Where(x => x.HasPayAmountFor(foodShipping)).ToList();
+
+
+            paidAmount = itemPayments.Sum(paidItem => paidItem.Amount - paidItem.PaidAmount);
+            return paidAmount;
+        }
 
 
         public static bool HasPayAmountFor(this Item item, FoodServiceClientSession foodServiceClientSession)
@@ -574,6 +681,16 @@ namespace FlavourBusinessManager.EndUsers
                 return true;
             else
                 return item.uid.Contains(foodServiceClientSession.SessionID);
+
+            //return item.uid.Split('?')[0];
+        }
+
+        public static bool HasPayAmountFor(this Item item, FoodShipping foodShipping)
+        {
+            //if (foodServiceClientSession?.IsWaiterSession==true)
+            //    return true;
+            //else
+            return item.uid.Contains(foodShipping.Identity);
 
             //return item.uid.Split('?')[0];
         }
@@ -588,6 +705,18 @@ namespace FlavourBusinessManager.EndUsers
                 return flavourItem.uid+sessionsIDS;
             }
         }
+
+        public static string GetItemUid(this ItemPreparation flavourItem, FoodShipping foodShipping)
+        {
+
+
+            string sessionsIDS = null;
+            flavourItem.SharedInSessions.Select(x => sessionsIDS==null ? sessionsIDS="?"+foodShipping.Identity+"&"+x : sessionsIDS+="&"+x).ToList();
+            return flavourItem.uid+sessionsIDS;
+
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -603,10 +732,44 @@ namespace FlavourBusinessManager.EndUsers
             return payments.Where(x => x.Identity==paymentIdentity).ToList();
 
         }
+
+        public static List<Payment> GetPayments(this FoodShipping foodShipping)
+        {
+            
+            var itemPreparations=foodShipping.PreparedItems.OfType<ItemPreparation>().Select(x => new SessionItemPreparationAbbreviation() { IsShared=x.IsShared, Quantity=x.Quantity, SessionID=x.SessionID, StateTimestamp=x.StateTimestamp, uid=x.uid }).ToList();
+            Bill.GetBillFor(itemPreparations, foodShipping);
+            List<FinanceFacade.Payment> payments = foodShipping.MealCourse.Meal.Session.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
+            if (payments == null)
+                payments = new List<FinanceFacade.Payment>();
+            string paymentIdentity = foodShipping.GetPaymentIdentity();
+            payments=payments.Where(x => x.Identity==paymentIdentity).ToList();
+
+            //payments.AddRange( Bill.GetBillFor(itemPreparations, foodShipping).Payments.Where(x=>x.State!=PaymentState.Completed).OfType<Payment>().ToList());
+
+            //foodShipping.MealCourse.Meal
+            //List<FinanceFacade.Payment> payments = foodServiceClientSession.MainSession?.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
+            //if (payments == null)
+            //    payments = new List<FinanceFacade.Payment>();
+            //string paymentIdentity = foodServiceClientSession.GetPaymentIdentity();
+            //return payments.Where(x => x.Identity==paymentIdentity).ToList();
+
+            return payments;
+
+
+
+        }
+
+
         public static string GetPaymentIdentity(this FoodServiceClientSession foodServiceClientSession)
         {
             return foodServiceClientSession.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodServiceClientSession).GetPersistentObjectUri(foodServiceClientSession);
         }
+
+        public static string GetPaymentIdentity(this FoodShipping foodShipping)
+        {
+            return (foodShipping.MealCourse.Meal.Session as FoodServiceSession).ServicesContextRuntime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(foodShipping).GetPersistentObjectUri(foodShipping);
+        }
+
 
 
     }

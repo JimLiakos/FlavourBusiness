@@ -5,6 +5,7 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicesContextResources;
+using FlavourBusinessManager.Shipping;
 using Microsoft.Extensions.Azure;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting.RestApi;
@@ -96,26 +97,33 @@ namespace FlavourBusinessManager.HumanResources
                                        orderby payment.TransactionDate
                                        select payment).OfType<IPayment>().ToList();
 
+
+
+                billingPayments.AddRange((from foodShipping in this.ServingBatches.OfType<FoodShipping>()
+                                          from payment in foodShipping.GetPayments()
+                                          orderby payment.TransactionDate
+                                          select payment).OfType<IPayment>().ToList());
+
                 return billingPayments;
             }
         }
         public List<SessionBillingPayments> SessionsBillingPayments
         {
             get
-            { 
+            {
                 var sessionsBillingPayments = (from foodServiceClientSession in FoodServiceClientSessions
-                                       select new SessionBillingPayments()
-                                       {
-                                           Description=GetSessionBillingDescription(foodServiceClientSession),
-                                           SessionStarts=foodServiceClientSession.SessionStarts,
-                                           SessionEnds=foodServiceClientSession.SessionEnds,
-                                           SessionType=foodServiceClientSession.SessionType,
-                                           BillingPayments= (from payment in foodServiceClientSession.GetPayments()
-                                                             where payment.State==PaymentState.Completed
-                                                             orderby payment.TransactionDate
-                                                             select payment).OfType<IPayment>().ToList()
+                                               select new SessionBillingPayments()
+                                               {
+                                                   Description=GetSessionBillingDescription(foodServiceClientSession),
+                                                   SessionStarts=foodServiceClientSession.SessionStarts,
+                                                   SessionEnds=foodServiceClientSession.SessionEnds,
+                                                   SessionType=foodServiceClientSession.SessionType,
+                                                   BillingPayments= (from payment in foodServiceClientSession.GetPayments()
+                                                                     where payment.State==PaymentState.Completed
+                                                                     orderby payment.TransactionDate
+                                                                     select payment).OfType<IPayment>().ToList()
 
-                                       }).Where(x => x.BillingPayments.Count>0).ToList();
+                                               }).Where(x => x.BillingPayments.Count>0).ToList();
 
 
                 return sessionsBillingPayments;
@@ -279,6 +287,13 @@ namespace FlavourBusinessManager.HumanResources
 
                 foreach (var payment in BillingPayments)
                 {
+
+                    if (payment.PaymentType==PaymentType.None) //for foodshiping
+                    {
+                        _Cash+=payment.Amount;
+                        _CashTips+=payment.TipsAmount;
+                    }
+
                     if (payment.PaymentType==PaymentType.Cash)
                     {
                         _Cash+=payment.Amount;

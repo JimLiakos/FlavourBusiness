@@ -2645,15 +2645,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
                     this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
                 }
             }
-public event FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandel NewMealCoursesInProgress
+public event FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandler NewMealCoursesInProgress
             {
                 add
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_NewMealCoursesInProgress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandel)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_NewMealCoursesInProgress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandler)});
                 }
                 remove
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_NewMealCoursesInProgress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandel)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_NewMealCoursesInProgress",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.NewMealCoursesInProgressHandler)});
                 }
             }
 public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
@@ -2667,26 +2667,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                     this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
                 }
             }
-public event FlavourBusinessFacade.RoomService.MealCourseChangeStateHandel MealCourseChangeState
+public event FlavourBusinessFacade.RoomService.MealCourseChangeStateHandler MealCourseChangeState
             {
                 add
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_MealCourseChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseChangeStateHandel)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_MealCourseChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseChangeStateHandler)});
                 }
                 remove
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_MealCourseChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseChangeStateHandel)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_MealCourseChangeState",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseChangeStateHandler)});
                 }
             }
-public event FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle MealCourseItemsStateChanged
+public event FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandler MealCourseItemsStateChanged
             {
                 add
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_MealCourseItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "add_MealCourseItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandler)});
                 }
                 remove
                 {
-                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_MealCourseItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle)});
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "remove_MealCourseItemsStateChanged",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandler)});
                 }
             }
         
@@ -3318,6 +3318,18 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
         public Pr_IFoodShipping(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string Identity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "get_Identity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
         }
         
         // The Width property for the object.

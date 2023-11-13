@@ -74,7 +74,8 @@ namespace FlavourBusinessFacade.RoomService
         string ServicesPointIdentity { get; }
 
 
-        string ServicesContextIdentity {get;}
+        /// <MetaDataID>{66d6bb3b-c180-4c52-97ed-61b85b7c982c}</MetaDataID>
+        string ServicesContextIdentity { get; }
 
         event EndUsers.ItemsStateChangedHandle ItemsStateChanged;
 
@@ -122,6 +123,7 @@ namespace FlavourBusinessFacade.RoomService
     }
 
 
+    /// <MetaDataID>{32267179-1295-470a-8e19-31c06739e468}</MetaDataID>
     public class DelayedServingBatchAbbreviation
     {
 

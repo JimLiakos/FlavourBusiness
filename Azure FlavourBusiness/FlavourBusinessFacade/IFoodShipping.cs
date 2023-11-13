@@ -7,19 +7,19 @@ namespace FlavourBusinessFacade.Shipping
     [GenerateFacadeProxy]
     public interface IFoodShipping : RoomService.IServingBatch
     {
+        /// <MetaDataID>{1b75fcb5-7f27-419b-9fc8-17261cfac7c4}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
+        string Identity { get; }
+
         /// <MetaDataID>{e43268d5-265d-47da-9084-1bd95f4bb369}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
         IPlace Place { get; }
-
-        /// <MetaDataID>{2d25c09e-e7b4-4de0-a8ab-46b69ca2a01b}</MetaDataID>
         string ClientFullName { get; }
-         
-        /// <MetaDataID>{b9c002a5-1dbe-476d-8b2c-301a55b4e3ed}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
         string PhoneNumber { get; }
-
-        /// <MetaDataID>{c655db5e-ee48-4daa-80e2-85bc26a2e7ee}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
         string DeliveryRemark { get; }
-
-        /// <MetaDataID>{9cd91377-c2b0-42f3-9c6d-71bfee28a962}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
         string NotesForClient { get; }
 
 

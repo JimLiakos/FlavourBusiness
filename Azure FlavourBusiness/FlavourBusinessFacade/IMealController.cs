@@ -5,10 +5,10 @@ using System.Collections.Generic;
 namespace FlavourBusinessFacade.RoomService
 {
 
-    public delegate void NewMealCoursesInProgressHandel(IList<IMealCourse> mealCoursers);
+    public delegate void NewMealCoursesInProgressHandler(IList<IMealCourse> mealCoursers);
 
-    public delegate void MealCourseChangeStateHandel(IMealCourse mealCourser, string memberName);
-    public delegate void MealCourseItemsStateChangedHandle(IMealCourse mealCourser, Dictionary<string, ItemPreparationState> newItemsState);
+    public delegate void MealCourseChangeStateHandler(IMealCourse mealCourser, string memberName);
+    public delegate void MealCourseItemsStateChangedHandler(IMealCourse mealCourser, Dictionary<string, ItemPreparationState> newItemsState);
 
     /// <MetaDataID>{a078dd80-08f5-4a00-b67f-574a91f11dbe}</MetaDataID>
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
@@ -23,12 +23,12 @@ namespace FlavourBusinessFacade.RoomService
         System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(string filter, int age );
 
 
-        event NewMealCoursesInProgressHandel NewMealCoursesInProgress;
+        event NewMealCoursesInProgressHandler NewMealCoursesInProgress;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
-        event MealCourseChangeStateHandel MealCourseChangeState;
-        event MealCourseItemsStateChangedHandle MealCourseItemsStateChanged;
+        event MealCourseChangeStateHandler MealCourseChangeState;
+        event MealCourseItemsStateChangedHandler MealCourseItemsStateChanged;
 
         void MoveCourseBefore(string mealCourseAsReferenceUri, string movedMealCourseUri);
         void MoveCourseAfter(string mealCourseAsReferenceUri, string movedMealCourseUri);

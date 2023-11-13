@@ -36,10 +36,12 @@ namespace FlavourBusinessFacade.HumanResources
         void AssignFoodShipping(IFoodShipping foodShipping);
 
 
+        /// <MetaDataID>{71a003c6-49aa-435b-bef2-8aec8d26b833}</MetaDataID>
         void AssignAndCommitFoodShipping(IFoodShipping foodShipping);
 
         /// <MetaDataID>{a066838f-a33d-4ed4-a31f-1ca371f51873}</MetaDataID>
         void PrintFoodShippingReceipt(IFoodShipping foodShipping);
+        /// <MetaDataID>{b816807d-4fb9-44c0-877e-b59cd332fdf5}</MetaDataID>
         void RemoveFoodShippingAssignment(IFoodShipping foodShipping);
     }
 

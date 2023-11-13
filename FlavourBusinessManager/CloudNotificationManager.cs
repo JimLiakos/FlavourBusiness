@@ -13,6 +13,7 @@ namespace FlavourBusinessManager
 {
 
 
+    /// <MetaDataID>{de1dc115-a0b5-4a4c-a3c0-c03879ec4501}</MetaDataID>
     public class CloudNotificationManager
     {
         static CloudNotificationManager()

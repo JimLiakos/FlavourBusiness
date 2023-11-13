@@ -199,11 +199,11 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2545475d-7f8d-4eb5-b7ec-12ca0dc59bfa}</MetaDataID>
         public readonly ServicePointRunTime.ServicesContextRunTime ServicesContextRunTime;
 
-        public event NewMealCoursesInProgressHandel NewMealCoursesInProgress;
+        public event NewMealCoursesInProgressHandler NewMealCoursesInProgress;
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
-        public event MealCourseChangeStateHandel MealCourseChangeState;
-        public event MealCourseItemsStateChangedHandle MealCourseItemsStateChanged;
+        public event MealCourseChangeStateHandler MealCourseChangeState;
+        public event MealCourseItemsStateChangedHandler MealCourseItemsStateChanged;
 
 
         internal void MealCourseStateChanged(MealCourse mealCourse, string member)
