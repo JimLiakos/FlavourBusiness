@@ -6,7 +6,7 @@ using Xamarin.Forms.Xaml;
 namespace ServiceContextManagerApp
 {
     /// <MetaDataID>{447e5fcf-7144-478a-bd88-8a94667583a8}</MetaDataID>
-    public partial class App : Application
+    public partial class App : Application, OOAdvantech.IAppLifeTime
     {
         // public static string storage_path;
 
@@ -19,6 +19,7 @@ namespace ServiceContextManagerApp
             OOAdvantech.DeviceApplication.Current.ClearLog();
 
             OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "App ctor" });
+
 
 
 
@@ -95,10 +96,18 @@ namespace ServiceContextManagerApp
             //MainPage = new FacebookSignIn();
             //MainPage = new MainPage();
             MainPage = new NavigationPage(new MainPage());
+            SerializeTaskScheduler.RunAsync();
         }
+
+        public event EventHandler ApplicationResuming;
+        public event EventHandler ApplicationSleeping;
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
+        OOAdvantech.SerializeTaskScheduler OOAdvantech.IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
 
         protected override void OnStart()
         {
+
         }
 
         protected override void OnSleep()

@@ -8,6 +8,7 @@ using ServiceContextManagerApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using WaiterApp.ViewModel;
 
 namespace ServiceContextManagerApp
@@ -104,10 +105,13 @@ namespace ServiceContextManagerApp
         List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; }
 
         FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch);
-        FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri);
+        Task<FoodShippingPresentation> GetMealCourseFoodShipping(string mealCourseUri);
+
+        
         ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch);
 
         bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker);
+        bool RemoveFoodShippingAssignment(string foodShippingIdentity);
 
     }
 

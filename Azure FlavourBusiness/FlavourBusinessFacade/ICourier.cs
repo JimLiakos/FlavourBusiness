@@ -40,6 +40,7 @@ namespace FlavourBusinessFacade.HumanResources
 
         /// <MetaDataID>{a066838f-a33d-4ed4-a31f-1ca371f51873}</MetaDataID>
         void PrintFoodShippingReceipt(IFoodShipping foodShipping);
+        void RemoveFoodShippingAssignment(IFoodShipping foodShipping);
     }
 
     public delegate void FoodShippingsChangedHandler();

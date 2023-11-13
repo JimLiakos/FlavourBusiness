@@ -17,6 +17,8 @@ using CourierApp.ViewModel;
 
 using OOAdvantech;
 using System.Linq.Expressions;
+using OOAdvantech.Remoting.RestApi;
+
 
 
 
@@ -181,6 +183,9 @@ namespace ServiceContextManagerApp
             }
         }
 
+
+
+
         public bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker)
         {
             CourierPresentation courierPresentation = worker as CourierPresentation;
@@ -191,7 +196,6 @@ namespace ServiceContextManagerApp
 
             if (foodShipping != null)
             {
-
 
                 SerializeTaskScheduler.AddTask(async () =>
                 {
@@ -223,7 +227,53 @@ namespace ServiceContextManagerApp
             return false;
         }
 
-        public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
+
+        public bool RemoveFoodShippingAssignment(string foodShippingIdentity)
+        {
+            var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+            var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping != null)
+            {
+
+                SerializeTaskScheduler.AddTask(async () =>
+                {
+                    int tries = 30;
+                    while (tries > 0)
+                    {
+                        try
+                        {
+                            var courier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.FoodShipping.ShiftWork.Worker);
+                            if(courier!=null)
+                                courier.RemoveFoodShippingAssignment(foodShipping.FoodShipping);
+                            return true;
+                        }
+                        catch (System.Net.WebException commError)
+                        {
+                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
+                        }
+                        catch (System.InvalidOperationException error)
+                        {
+                            throw;
+                        }
+                        catch (System.Exception error)
+                        {
+                            var er = error;
+                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
+                        }
+                    }
+                    return true;
+
+                });
+                return true;
+            }
+
+
+            return false;
+        }
+
+
+            public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
         {
             worker.ActiveShiftWork = worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
         }
@@ -430,18 +480,19 @@ namespace ServiceContextManagerApp
 
             MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
             MealsController.ObjectChangeState += MealsController_ObjectChangeState;
-            MealsController.MealCourseChangeState+=MealsController_MealCourseChangeState;
+            MealsController.MealCourseChangeState += MealsController_MealCourseChangeState;
             _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
 
             Task.Run(() =>
             {
                 //System.Threading.Thread.Sleep(9000);
 
-                string param = MealsController.ToString()+ "asdas";
+                string param = MealsController.ToString() + "asdas";
 
                 var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
                 {
                     mealCourse.Name,
+                    mealCourse.ServingBatches,
                     //mealCourse.Meal,
                     FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
                     {
@@ -473,7 +524,7 @@ namespace ServiceContextManagerApp
         private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
         {
 
-            if (DelayedServingBatchesAtTheCounter?.Count>0==true&&memberName==nameof(MealCourse.PreparationState)&& mealCourser?.PreparationState==ItemPreparationState.OnRoad)
+            if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
             {
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
                 _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
@@ -612,23 +663,38 @@ namespace ServiceContextManagerApp
 
             return null;
         }
-        public FoodShippingPresentation GetMealCourseFoodShipping(string mealCourseUri)
+
+
+        public Task<FoodShippingPresentation> GetMealCourseFoodShipping(string mealCourseUri)
         {
-            var mealCourse = MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
-            if (mealCourse.SessionType == SessionType.HomeDelivery)
+            return Task<FoodShippingPresentation>.Run(() =>
             {
-                //mealCourse.ServerSideMealCourse.PreparationState
-                IFoodShipping foodShipping = MealsController.GetMealCourseFoodShipping(mealCourseUri);
-                if (foodShipping == null)
-                    return null;
+                var mealCourse = MealCoursesInProgress.Where(x => x.MealCourseUri == mealCourseUri).FirstOrDefault();
+                if (mealCourse.SessionType == SessionType.HomeDelivery)
+                {
+                    //mealCourse.ServerSideMealCourse.PreparationState
+                    IFoodShipping foodShipping = MealsController.GetMealCourseFoodShipping(mealCourseUri);
+                    if (foodShipping == null)
+                        return null;
 
-                return FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+                    FoodShippingPresentation foodShippingPresentation = FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+                    if (foodShipping.ShiftWork != null && foodShippingPresentation.Courier == null)
+                    {
+                        var siftWorkCourier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.ShiftWork?.Worker);
+                        foodShippingPresentation.Courier = this.Couriers.OfType<CourierPresentation>().Where(x => x.Courier == siftWorkCourier).FirstOrDefault();
 
-                //return ServingBatches.GetViewModelFor(delayedServingBatch.ServingBatch, delayedServingBatch.ServingBatch);
-            }
+                    }
+                    if (foodShipping.ShiftWork == null && foodShippingPresentation.Courier != null)
+                        foodShippingPresentation.Courier = null;
+
+                    return foodShippingPresentation;
+
+                }
+                return null;
+            });
 
 
-            return null;
+            
         }
 
 

@@ -138,7 +138,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1f941000-ce6f-4ec6-85f6-736ad57cf9a6}</MetaDataID>
         [PersistentMember(nameof(_FoodItems))]
         [BackwardCompatibilityID("+1")]
-        
+
         public IList<IItemPreparation> FoodItems => _FoodItems.ToThreadSafeList();
 
 
@@ -239,7 +239,7 @@ namespace FlavourBusinessManager.RoomService
             get => _PreparationState;
             set
             {
-
+                var previousState = _PreparationState;
                 if (_PreparationState != value)
                 {
                     if (Meal.Session.SessionType == SessionType.Hall)
@@ -253,7 +253,7 @@ namespace FlavourBusinessManager.RoomService
                                 stateTransition.Consistent = true;
                             }
 
-                            if (value == ItemPreparationState.Serving)
+                            if (value == ItemPreparationState.Serving && previousState < ItemPreparationState.OnRoad)
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
                         }
                     }
@@ -270,15 +270,15 @@ namespace FlavourBusinessManager.RoomService
                                 _PreparationState = value;
                                 stateTransition.Consistent = true;
                             }
-                            if (value == ItemPreparationState.Serving)
+                            if (value == ItemPreparationState.Serving && previousState < ItemPreparationState.OnRoad)
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
 
                         }
 
-                        
+
                     }
 
-                    if(value== ItemPreparationState.OnRoad)
+                    if (value == ItemPreparationState.OnRoad)
                     {
                         (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.PreparationState));
                     }
@@ -342,7 +342,7 @@ namespace FlavourBusinessManager.RoomService
         /// Defines the meal course items grouped by preparation station where it prepares them.
         /// </summary>
         // <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
-        
+
         public IList<ItemsPreparationContext> FoodItemsInProgress
         {
             get
@@ -425,7 +425,7 @@ namespace FlavourBusinessManager.RoomService
             var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
             if (servingBatchesAtTheCounter.Count > 0)
             {
-                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x=>x.Worker as ServiceContextSupervisor))
+                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x => x.Worker as ServiceContextSupervisor))
                 {
                     supervisorWithActiveShiftWork.CheckForDelayedMealAtTheCounter();
                 }
@@ -435,7 +435,7 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
-   
+
 
         /// <MetaDataID>{e146e6e4-9b86-429f-b4d2-171b340d8937}</MetaDataID>
         [CachingDataOnClientSide]
@@ -477,14 +477,14 @@ namespace FlavourBusinessManager.RoomService
                     defaultMealTypeUri = ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri;
                     servedMealTypesUris = new List<string>() { ServicesContextRunTime.Current.GetOneCoursesMealType().MealTypeUri };
                 }
- 
+
                 SessionData sessionData = new FlavourBusinessFacade.EndUsers.SessionData()
                 {
                     Description = Meal.Session.Description,
                     SessionType = Meal.Session.SessionType,
                     DefaultMealTypeUri = defaultMealTypeUri,
                     ServedMealTypesUris = servedMealTypesUris,
-                   // FoodServiceSession = Meal.Session,
+                    // FoodServiceSession = Meal.Session,
                     ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,
                     Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu,
                     ServicesPointName = Meal.Session.ServicePoint.Description,
@@ -500,7 +500,15 @@ namespace FlavourBusinessManager.RoomService
         [PersistentMember(nameof(_ServingBatches))]
         [BackwardCompatibilityID("+10")]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.CascadeDelete)]
-        public List<IServingBatch> ServingBatches => _ServingBatches.ToThreadSafeList();
+        [CachingOnlyReferenceOnClientSide]
+
+        public List<IServingBatch> ServingBatches
+        {
+            get
+            {
+                return _ServingBatches.ToThreadSafeList();
+            }
+        }
 
         /// <MetaDataID>{f98cfc40-f73f-4f0a-9868-566afbc8ff71}</MetaDataID>
         public bool ItsTooLateForChange(ItemPreparation itemPreparation)
@@ -669,6 +677,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{b75dd0be-1b93-4c0d-8c13-f368e2c5a980}</MetaDataID>
         public void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
+            Monitoring();
             ItemsStateChanged?.Invoke(newItemsState);
             (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseItemsChangeState(this, newItemsState);
 

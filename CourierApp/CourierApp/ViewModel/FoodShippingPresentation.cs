@@ -4,6 +4,7 @@ using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
 using OOAdvantech;
+using ServiceContextManagerApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{3eb1787b-42a7-420a-b419-9603d78540e7}</MetaDataID>
         //public readonly CourierActivityPresentation CourierActivityPresentation;
         /// <MetaDataID>{ad9e2e1b-86c0-4ada-ba0c-fe7a19a28234}</MetaDataID>
-        public FoodShippingPresentation(IFoodShipping foodShipping )
+        public FoodShippingPresentation(IFoodShipping foodShipping)
         {
             //CourierActivityPresentation = courierActivityPresentation;
             string servicesContextIdentity = foodShipping.ServicesContextIdentity;
@@ -68,12 +69,24 @@ namespace CourierApp.ViewModel
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = foodShipping.Description;
             ContextsOfPreparedItems = foodShipping.ContextsOfPreparedItems;
+           
+            if (ContextsOfPreparedItems == null)
+                ContextsOfPreparedItems = new List<ItemsPreparationContext>();
+
+            if (ContextsOfPreparedItems == null)
+                ContextsOfPreparedItems = new List<ItemsPreparationContext>();
+
             allContextsOfPreparedItems.AddRange(ContextsOfPreparedItems);
 
             ContextsOfUnderPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
+
+            if (ContextsOfUnderPreparationItems == null)
+                ContextsOfUnderPreparationItems = new List<ItemsPreparationContext>();
+
+
             allContextsOfPreparedItems.AddRange(ContextsOfUnderPreparationItems);
 
-            
+
             ServicePointType = foodShipping.ServicePointType;
 
             AllContextsOfPreparedItems = allContextsOfPreparedItems;
@@ -104,7 +117,7 @@ namespace CourierApp.ViewModel
         public string DeliveryRemark { get => FoodShipping.DeliveryRemark; }
 
         public string NotesForClient { get => FoodShipping.NotesForClient; }
-        
+
 
         /// <MetaDataID>{90ec5e57-2488-44b8-9665-87dbedb3de7f}</MetaDataID>
         private void FoodShipping_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
@@ -118,7 +131,7 @@ namespace CourierApp.ViewModel
             }
             var ssd = State;
             ObjectChangeState?.Invoke(this, null);
-            
+
         }
 
         /// <MetaDataID>{1afa1a50-8a99-4c9b-9529-f7f29ed01c3a}</MetaDataID>
@@ -155,6 +168,7 @@ namespace CourierApp.ViewModel
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
         /// <MetaDataID>{adef1576-fb9e-4488-bc00-66781b6e4fae}</MetaDataID>
         public ServicePointType ServicePointType { get; private set; }
+        public CourierPresentation Courier { get; set; }
 
         /// <MetaDataID>{27b36d5d-39e9-46d4-b705-8c8ed78a8a2a}</MetaDataID>
         internal void Update()

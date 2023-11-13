@@ -153,14 +153,14 @@ namespace FLBManager.ViewModel
             Menus.Refresh();
         }
 
-        private void OpenWaiterApp()
-        {
-            System.Windows.Window owner = System.Windows.Window.GetWindow(NewTranslatorCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+        //private void OpenWaiterApp()
+        //{
+        //    System.Windows.Window owner = System.Windows.Window.GetWindow(NewTranslatorCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
 
-            WaiterApp.WPF.MainWindow mainWindow = new WaiterApp.WPF.MainWindow();
-            mainWindow.Owner = owner;
-            mainWindow.ShowDialog();
-        }
+        //    WaiterApp.WPF.MainWindow mainWindow = new WaiterApp.WPF.MainWindow();
+        //    mainWindow.Owner = owner;
+        //    mainWindow.ShowDialog();
+        //}
 
         internal void RemoveTranslatorsNode()
         {

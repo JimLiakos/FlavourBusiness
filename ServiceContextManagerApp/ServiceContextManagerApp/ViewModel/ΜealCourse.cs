@@ -8,6 +8,8 @@ using OOAdvantech.Json;
 using UIBaseEx;
 
 using FlavourBusinessFacade.EndUsers;
+using CourierApp.ViewModel;
+using FlavourBusinessFacade.Shipping;
 
 namespace FlavourBusinessManager.RoomService.ViewModel
 {
@@ -29,14 +31,16 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
         public string Description { get; private set; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; set; }
-
+        
         public DontWaitApp.MenuData MenuData { get; set; }
 
         public string MealCourseUri { get; set; }
         public ItemPreparationState PreparationState { get; set; }
 
         IMealsController MealsController;
-         
+
+
+
         /// <MetaDataID>{f2cb7dc5-4e40-4f3a-a09a-dda9dcd27a0b}</MetaDataID>
         public MealCourse(IMealCourse serverSideMealCourse, IMealsController mealsController)
         {
@@ -44,13 +48,13 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
+     
             var sessionData = ServerSideMealCourse.SessionData;
 
             SessionType = sessionData.SessionType;
 
             Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
-
-
+         
 
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet

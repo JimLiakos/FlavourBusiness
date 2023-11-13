@@ -786,6 +786,25 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+
+        public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
+        {
+            if(foodShipping.PreparedItems.All(x=>x.State.IsIntheSameOrFollowingState(ItemPreparationState.OnRoad)))
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
+                    (foodShipping as FoodShipping).AtTheCounter();
+
+                    stateTransition.Consistent = true;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Only on the road food shipping can you deassign.");
+            }
+
+        }
         /// <MetaDataID>{62b4500f-aeaa-4663-a3dc-248c16c43d10}</MetaDataID>
         internal void FindFoodShippingsChanges()
         {

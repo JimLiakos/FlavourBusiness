@@ -31,11 +31,11 @@ namespace FlavourBusinessManager.Shipping
             get => _CreationTime;
             set
             {
-                if (_CreationTime!=value)
+                if (_CreationTime != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _CreationTime=value;
+                        _CreationTime = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -60,6 +60,7 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{9f5189cc-ab0f-41db-a31c-9e81926d4412}</MetaDataID>
         [PersistentMember(nameof(_ShiftWork))]
         [BackwardCompatibilityID("+4")]
+        [CachingOnlyReferenceOnClientSide]
         public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork => _ShiftWork.Value;
 
         /// <MetaDataID>{1494396b-fb28-4280-83ad-ee1c39c18f1b}</MetaDataID>
@@ -67,8 +68,6 @@ namespace FlavourBusinessManager.Shipping
         public ServicePointType ServicePointType { get; set; }
 
 
-        /// <exclude>Excluded</exclude>
-        IMealCourse _MealCourse;
 
         /// <MetaDataID>{0d8d1c78-9a94-491b-9bf3-0b88e4b4c183}</MetaDataID>
         public FoodShipping()
@@ -80,9 +79,9 @@ namespace FlavourBusinessManager.Shipping
         [BeforeCommitObjectStateInStorageCall]
         public void BeforeCommitObjectState()
         {
-            if (_CreationTime!=null)
+            if (_CreationTime != null)
             {
-                _CreationTime=DateTime.UtcNow;
+                _CreationTime = DateTime.UtcNow;
             }
             lock (CaregiversLock)
             {
@@ -98,6 +97,8 @@ namespace FlavourBusinessManager.Shipping
             {
                 if (!string.IsNullOrWhiteSpace(Caregiversjson))
                     _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(Caregiversjson);
+
+
             }
 
         }
@@ -107,7 +108,7 @@ namespace FlavourBusinessManager.Shipping
         {
 
             MealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
-            _MealCourse = mealCourse;
+            _MealCourse.Value = mealCourse;
 
             ContextsOfPreparedItems = preparedItems;
             ContextsOfUnderPreparationItems = underPreparationItems;
@@ -151,7 +152,7 @@ namespace FlavourBusinessManager.Shipping
             {
                 foreach (var itemPreparation in PreparedItems)
                     itemPreparation.State = ItemPreparationState.OnRoad;
-
+                
                 states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
                 stateTransition.Consistent = true;
             }
@@ -236,11 +237,13 @@ namespace FlavourBusinessManager.Shipping
 
 
         }
+        /// <exclude>Excluded</exclude>
+        Member<IMealCourse> _MealCourse = new Member<IMealCourse>();
 
         /// <MetaDataID>{ebff5c16-abe5-4d72-bcd2-dcca20ca7fa7}</MetaDataID>
         [PersistentMember(nameof(_MealCourse))]
         [BackwardCompatibilityID("+1")]
-        public IMealCourse MealCourse => _MealCourse;
+        public IMealCourse MealCourse => _MealCourse.Value;
 
         /// <MetaDataID>{d8834cae-2fde-4861-81b0-6be2a5c26f12}</MetaDataID>
         [CachingDataOnClientSide]
@@ -263,13 +266,61 @@ namespace FlavourBusinessManager.Shipping
         public IServicePoint ServicePoint { get; set; }
 
 
+        /// <exclude>Excluded</exclude>
+        private IList<ItemsPreparationContext> _ContextsOfUnderPreparationItems;
+
         /// <MetaDataID>{81c8d3f1-bdf1-422b-9c79-baf0371f329a}</MetaDataID>
         [CachingDataOnClientSide]
-        public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; set; }
+        public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems
+        {
+            get
+            {
+                if (_ContextsOfUnderPreparationItems == null)
+                {
+                    if (_MealCourse != null)
+                    {
+                        _ContextsOfUnderPreparationItems = (from itemsPreparationContext in MealCourse.FoodItemsInProgress
+                                                            where itemsPreparationContext.PreparationItems.Any(x => x.State == ItemPreparationState.PendingPreparation ||
+                                                            x.State == ItemPreparationState.InPreparation ||
+                                                            x.State == ItemPreparationState.IsRoasting ||
+                                                            x.State == ItemPreparationState.IsPrepared)
+                                                            select itemsPreparationContext).ToList();
+
+                    }
+                    else
+                        _ContextsOfUnderPreparationItems = new List<ItemsPreparationContext>();
+                }
+
+                return _ContextsOfUnderPreparationItems;
+            }
+            set
+            {
+                _ContextsOfUnderPreparationItems = value;
+            }
+        }
+        /// <exclude>Excluded</exclude>
+        IList<ItemsPreparationContext> _ContextsOfPreparedItems = null;
 
         /// <MetaDataID>{510a7954-2c31-4a10-a898-e2e1a004818d}</MetaDataID>
         [CachingDataOnClientSide]
-        public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; set; }
+        public IList<ItemsPreparationContext> ContextsOfPreparedItems
+        {
+            get
+            {
+                if (_ContextsOfPreparedItems == null)
+                {
+                    if (_MealCourse != null)
+                        _ContextsOfPreparedItems = _MealCourse.Value.FoodItemsInProgress.Where(x => x.PreparationItems.All(y => y.ServedInTheBatch == this)).ToList();
+                    else
+                        _ContextsOfPreparedItems = new List<ItemsPreparationContext>();
+                }
+                return _ContextsOfPreparedItems;
+            }
+            set
+            {
+                _ContextsOfPreparedItems = value;
+            }
+        }
 
         /// <MetaDataID>{c83578bb-5b53-459b-949d-362b78db48fd}</MetaDataID>
         [CachingDataOnClientSide]
@@ -408,7 +459,7 @@ namespace FlavourBusinessManager.Shipping
             if (MealCourse != null)
                 MealCourse.ObjectChangeState -= MealCourseChangeState;
 
-            _MealCourse = mealCourse;
+            _MealCourse.Value = mealCourse;
 
             if (MealCourse != null)
                 MealCourse.ObjectChangeState += MealCourseChangeState;
@@ -417,7 +468,7 @@ namespace FlavourBusinessManager.Shipping
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
-            ServicesContextIdentity=ServicePoint.ServicesContextIdentity;
+            ServicesContextIdentity = ServicePoint.ServicesContextIdentity;
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 
@@ -445,8 +496,30 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
+        internal void AtTheCounter()
+        {
+            var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in PreparedItems)
+                    itemPreparation.State = ItemPreparationState.Serving;
+
+                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                stateTransition.Consistent = true;
+            }
+
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                ItemsStateChanged?.Invoke(newItemsState);
+                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+            });
+        }
+
         /// <exclude>Excluded</exclude>
         List<Caregiver> _Caregivers = new List<Caregiver>();
+
 
 
         /// <MetaDataID>{1302b250-4bf5-4870-99b2-7b3dc9423f74}</MetaDataID>
