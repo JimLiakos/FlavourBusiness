@@ -88,6 +88,11 @@ namespace CourierApp.ViewModel
             }
         }
 
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping)
+        {
+            return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
+        }
+
         public CourierActivityPresentation()
         {
             _FoodShippings= new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
