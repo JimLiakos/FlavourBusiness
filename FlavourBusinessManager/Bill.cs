@@ -744,6 +744,13 @@ namespace FlavourBusinessManager.EndUsers
             string paymentIdentity = foodShipping.GetPaymentIdentity();
             payments=payments.Where(x => x.Identity==paymentIdentity).ToList();
 
+            foreach(var payment in payments)
+            {
+                if (payment.PaymentType == PaymentType.None)
+                    payment.TransactionDate = foodShipping.CreationTime;
+
+            }
+
             //payments.AddRange( Bill.GetBillFor(itemPreparations, foodShipping).Payments.Where(x=>x.State!=PaymentState.Completed).OfType<Payment>().ToList());
 
             //foodShipping.MealCourse.Meal

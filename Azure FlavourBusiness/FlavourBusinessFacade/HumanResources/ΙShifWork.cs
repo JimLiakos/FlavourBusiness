@@ -43,7 +43,7 @@ namespace FlavourBusinessFacade.HumanResources
                 var startedAt = shiftWork.StartsAt;
                 var workingHours = shiftWork.PeriodInHours;
 
-                var billingPayments = (shiftWork as IDebtCollection)?.BillingPayments;
+                //var billingPayments = (shiftWork as IDebtCollection)?.BillingPayments;
                 double overtimeRation = (3.00 / 8);
                 var overtime = workingHours * overtimeRation;
                 var utcNow = DateTime.UtcNow.ShiftworkRound();//.Date + TimeSpan.FromHours(hour);

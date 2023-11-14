@@ -93,7 +93,7 @@ namespace FlavourBusinessManager.HumanResources
                 //WaiterFoodServiceClientSessions[0].
                 var billingPayments = (from foodServiceClientSession in FoodServiceClientSessions
                                        from payment in foodServiceClientSession.GetPayments()
-                                       where payment.State==PaymentState.Completed
+                                       where payment.State == PaymentState.Completed
                                        orderby payment.TransactionDate
                                        select payment).OfType<IPayment>().ToList();
 
@@ -114,16 +114,31 @@ namespace FlavourBusinessManager.HumanResources
                 var sessionsBillingPayments = (from foodServiceClientSession in FoodServiceClientSessions
                                                select new SessionBillingPayments()
                                                {
-                                                   Description=GetSessionBillingDescription(foodServiceClientSession),
-                                                   SessionStarts=foodServiceClientSession.SessionStarts,
-                                                   SessionEnds=foodServiceClientSession.SessionEnds,
-                                                   SessionType=foodServiceClientSession.SessionType,
-                                                   BillingPayments= (from payment in foodServiceClientSession.GetPayments()
-                                                                     where payment.State==PaymentState.Completed
-                                                                     orderby payment.TransactionDate
-                                                                     select payment).OfType<IPayment>().ToList()
+                                                   Description = GetSessionBillingDescription(foodServiceClientSession),
+                                                   SessionStarts = foodServiceClientSession.SessionStarts,
+                                                   SessionEnds = foodServiceClientSession.SessionEnds,
+                                                   SessionType = foodServiceClientSession.SessionType,
+                                                   BillingPayments = (from payment in foodServiceClientSession.GetPayments()
+                                                                      where payment.State == PaymentState.Completed
+                                                                      orderby payment.TransactionDate
+                                                                      select payment).OfType<IPayment>().ToList()
 
-                                               }).Where(x => x.BillingPayments.Count>0).ToList();
+                                               }).Where(x => x.BillingPayments.Count > 0).ToList();
+
+
+
+                sessionsBillingPayments.AddRange((from foodServiceClientSession in this.ServingBatches.OfType<FoodShipping>()
+                                                  select new SessionBillingPayments()
+                                                  {
+                                                      Description = GetSessionBillingDescription(foodServiceClientSession),
+                                                      SessionStarts = foodServiceClientSession.MealCourse.Meal.Session.SessionStarts,
+                                                      SessionEnds = foodServiceClientSession.MealCourse.Meal.Session.SessionEnds,
+                                                      SessionType = foodServiceClientSession.MealCourse.Meal.Session.SessionType,
+                                                      BillingPayments = (from payment in foodServiceClientSession.GetPayments()
+                                                                         orderby payment.TransactionDate
+                                                                         select payment).OfType<IPayment>().ToList()
+
+                                                  }).Where(x => x.BillingPayments.Count > 0).ToList());
 
 
                 return sessionsBillingPayments;
@@ -154,6 +169,11 @@ namespace FlavourBusinessManager.HumanResources
                 //    return string.Format(Properties.Resources.TablePaymentDescription, foodServiceClientSession.MainSession.ServicePoint.Description);
             }
             return "";
+        }
+
+        string GetSessionBillingDescription(FoodShipping foodShipping)
+        {
+            return foodShipping.ClientFullName+" "+ foodShipping.Place.Description;
         }
 
 
@@ -240,6 +260,7 @@ namespace FlavourBusinessManager.HumanResources
                 _ServingBatches.Add(servingBatch);
                 stateTransition.Consistent = true;
             }
+            RecalculateDeptData();
         }
 
 
@@ -253,6 +274,7 @@ namespace FlavourBusinessManager.HumanResources
 
                 stateTransition.Consistent = true;
             }
+            RecalculateDeptData();
         }
 
         /// <MetaDataID>{8f53aa8b-c8e3-438d-9dc1-8faffeb597b0}</MetaDataID>
@@ -261,7 +283,7 @@ namespace FlavourBusinessManager.HumanResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _AccountIsClosed=true;
+                _AccountIsClosed = true;
                 OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                 {
                     OnObjectChangeState(this, null);
@@ -278,38 +300,38 @@ namespace FlavourBusinessManager.HumanResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                _Cash=0;
-                _CashTips=0;
-                _Cards=0;
-                _CardsTips=0;
-                _CardsUserDeclared=0;
-                _CardsTipsUserDeclared=0;
+                _Cash = 0;
+                _CashTips = 0;
+                _Cards = 0;
+                _CardsTips = 0;
+                _CardsUserDeclared = 0;
+                _CardsTipsUserDeclared = 0;
 
                 foreach (var payment in BillingPayments)
                 {
 
-                    if (payment.PaymentType==PaymentType.None) //for foodshiping
+                    if (payment.PaymentType == PaymentType.None) //for foodshiping
                     {
-                        _Cash+=payment.Amount;
-                        _CashTips+=payment.TipsAmount;
+                        _Cash += payment.Amount;
+                        _CashTips += payment.TipsAmount;
                     }
 
-                    if (payment.PaymentType==PaymentType.Cash)
+                    if (payment.PaymentType == PaymentType.Cash)
                     {
-                        _Cash+=payment.Amount;
-                        _CashTips+=payment.TipsAmount;
+                        _Cash += payment.Amount;
+                        _CashTips += payment.TipsAmount;
                     }
 
-                    if (!payment.UserDeclared &&payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
+                    if (!payment.UserDeclared && payment.PaymentType == PaymentType.CreditCard || payment.PaymentType == PaymentType.DebitCard)
                     {
-                        _Cards+=payment.Amount;
-                        _CardsTips+=payment.TipsAmount;
+                        _Cards += payment.Amount;
+                        _CardsTips += payment.TipsAmount;
                     }
 
-                    if (payment.UserDeclared &&payment.PaymentType==PaymentType.CreditCard||payment.PaymentType==PaymentType.DebitCard)
+                    if (payment.UserDeclared && payment.PaymentType == PaymentType.CreditCard || payment.PaymentType == PaymentType.DebitCard)
                     {
-                        _CardsUserDeclared +=payment.Amount;
-                        _CardsTipsUserDeclared+=payment.TipsAmount;
+                        _CardsUserDeclared += payment.Amount;
+                        _CardsTipsUserDeclared += payment.TipsAmount;
                     }
 
 

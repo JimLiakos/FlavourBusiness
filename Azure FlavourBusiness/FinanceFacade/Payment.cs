@@ -30,11 +30,11 @@ namespace FinanceFacade
             get => _PaymentGetwayRequestID;
             set
             {
-                if (_PaymentGetwayRequestID!=value)
+                if (_PaymentGetwayRequestID != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PaymentGetwayRequestID=value;
+                        _PaymentGetwayRequestID = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -67,7 +67,7 @@ namespace FinanceFacade
         public static void SetPaymentProvider(string providerName, IPaymentProvider paymentProvider)
         {
             lock (PaymentProvidersLock)
-                PaymentProviders[providerName]=paymentProvider;
+                PaymentProviders[providerName] = paymentProvider;
         }
 
         /// <MetaDataID>{7ecca2f0-e76d-4d57-8a35-9332d750d53c}</MetaDataID>
@@ -96,11 +96,11 @@ namespace FinanceFacade
             set
             {
 
-                if (_PaymentGetwayID!=value)
+                if (_PaymentGetwayID != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PaymentGetwayID=value;
+                        _PaymentGetwayID = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -119,11 +119,11 @@ namespace FinanceFacade
             get => _TipsAmount;
             set
             {
-                if (_TipsAmount!=value)
+                if (_TipsAmount != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _TipsAmount=value;
+                        _TipsAmount = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -185,7 +185,7 @@ namespace FinanceFacade
                 int count = 5;
                 do
                 {
-                    if (State==PaymentState.Completed)
+                    if (State == PaymentState.Completed)
                     {
                         return true;
                     }
@@ -194,14 +194,14 @@ namespace FinanceFacade
                         if (!string.IsNullOrWhiteSpace(PaymentGetwayID))
                         {
                             var paymentProvide = GetPaymentProvider(PaymentGetwayID);
-                            if (paymentProvide!=null)
+                            if (paymentProvide != null)
                                 paymentProvide.CheckPaymentProgress(this);
                         }
                     }
 
                     System.Threading.Thread.Sleep(1000);
                     count--;
-                    if (count<0)
+                    if (count < 0)
                         return false;
                 } while (true);
 
@@ -247,14 +247,14 @@ namespace FinanceFacade
 
 
         /// <MetaDataID>{762d1d71-4f66-4454-a3ed-b695f6ca611e}</MetaDataID>
-        public Payment(string paymentIdentity, List<Item> paymentItems, string currency,IPaymentGateway paymentGateway)
+        public Payment(string paymentIdentity, List<Item> paymentItems, string currency, IPaymentGateway paymentGateway)
         {
             Identity = paymentIdentity;
             _Items = paymentItems.OfType<IItem>().ToList();
             _Currency = currency;
-            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
-            _Amount=decimal.Round(_Amount, 5);
-            _PaymentGateway=paymentGateway;
+            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price) - x.PaidAmount);
+            _Amount = decimal.Round(_Amount, 5);
+            _PaymentGateway = paymentGateway;
 
 
         }
@@ -271,10 +271,10 @@ namespace FinanceFacade
             _Amount = amount;
             _Currency = currency;
             _Identity = Identity;
-            _TransactionDate=transactionDate;
-            _PaymentGetwayID=paymentGetwayID;
-            _PaymentGetwayRequestID=paymentGetwayRequestID;
-            _PaymentOrderUrl=paymentOrderUrl;
+            _TransactionDate = transactionDate;
+            _PaymentGetwayID = paymentGetwayID;
+            _PaymentGetwayRequestID = paymentGetwayRequestID;
+            _PaymentOrderUrl = paymentOrderUrl;
             ItemsJson = itemsJson;
             PaymentInfoFieldsJson = paymentInfoFieldsJson;
 
@@ -344,8 +344,8 @@ namespace FinanceFacade
                     {
                         _State = value;
 
-                        if (_State==PaymentState.Completed)
-                            TransactionDate= DateTime.Now;
+                        if (_State == PaymentState.Completed)
+                            _TransactionDate = DateTime.UtcNow;
 
                         stateTransition.Consistent = true;
                     }
@@ -394,15 +394,18 @@ namespace FinanceFacade
         public System.DateTime? TransactionDate
         {
             get => _TransactionDate;
-            private set
+            set
             {
 
-                if (_TransactionDate!=value)
+                if (State != PaymentState.Completed)
                 {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (_TransactionDate != value)
                     {
-                        _TransactionDate=value;
-                        stateTransition.Consistent = true;
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            _TransactionDate = value;
+                            stateTransition.Consistent = true;
+                        }
                     }
                 }
 
@@ -417,7 +420,7 @@ namespace FinanceFacade
         {
             get
             {
-                if (_Subject==null&&!string.IsNullOrWhiteSpace(SubjectUri))
+                if (_Subject == null && !string.IsNullOrWhiteSpace(SubjectUri))
                 {
 
                     _Subject = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject<IPaymentSubject>(OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl, SubjectUri);
@@ -428,15 +431,15 @@ namespace FinanceFacade
             {
                 if (_Subject != value)
                 {
-                    _Subject=value;
-                    if (_Subject==null)
-                        SubjectUri=null;
+                    _Subject = value;
+                    if (_Subject == null)
+                        SubjectUri = null;
                     else
                     {
 
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            SubjectUri= OOAdvantech.Remoting.RestApi.RemotingServices.GetComputingContextPersistentUri(_Subject);
+                            SubjectUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetComputingContextPersistentUri(_Subject);
                             stateTransition.Consistent = true;
                         }
                     }
@@ -457,11 +460,11 @@ namespace FinanceFacade
             get => _PaymentOrderUrl;
             set
             {
-                if (_PaymentOrderUrl!=value)
+                if (_PaymentOrderUrl != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _PaymentOrderUrl=value;
+                        _PaymentOrderUrl = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -486,11 +489,11 @@ namespace FinanceFacade
             protected set
             {
 
-                if (_UserDeclared!=value)
+                if (_UserDeclared != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _UserDeclared=value;
+                        _UserDeclared = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -530,8 +533,8 @@ namespace FinanceFacade
         public void Update(List<Item> paymentItems)
         {
             _Items = paymentItems.OfType<IItem>().ToList();
-            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
-            _Amount=decimal.Round(_Amount, 5);
+            _Amount = paymentItems.Sum(x => (x.Quantity * x.Price) - x.PaidAmount);
+            _Amount = decimal.Round(_Amount, 5);
         }
 
 
@@ -563,32 +566,32 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                if (cardType!=null)
+                if (cardType != null)
                     PaymentInfoFields["CardType"] = cardType;
-                if (accountNumber!=null)
+                if (accountNumber != null)
                     PaymentInfoFields["AccountNumber"] = accountNumber;
-                if (transactionID!=null)
+                if (transactionID != null)
                     PaymentInfoFields["TransactionID"] = transactionID;
-                if (tipAmount!=null)
+                if (tipAmount != null)
                     _TipsAmount = tipAmount.Value;
 
                 this.Subject.PaymentCompleted(this);
                 State = PaymentState.Completed;
-                
+
                 if (isDebit)
-                    _PaymentType=PaymentType.DebitCard;
+                    _PaymentType = PaymentType.DebitCard;
                 else
-                    _PaymentType=PaymentType.CreditCard;
-                if (transactionID!=null)
-                    UserDeclared=false;
+                    _PaymentType = PaymentType.CreditCard;
+                if (transactionID != null)
+                    UserDeclared = false;
                 else
-                    UserDeclared=true;
+                    UserDeclared = true;
 
 
                 //Normalize
                 NormalizeNettingItems();
 
-                
+
 
                 stateTransition.Consistent = true;
             }
@@ -611,7 +614,7 @@ namespace FinanceFacade
         {
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
-            if (Amount+tipAmount<=0)
+            if (Amount + tipAmount <= 0)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
@@ -623,7 +626,7 @@ namespace FinanceFacade
                     //Normalize
                     NormalizeNettingItems();
 
-                    
+
                     this.Subject.PaymentCompleted(this);
                     State = PaymentState.Completed;
                     stateTransition.Consistent = true;
@@ -638,11 +641,11 @@ namespace FinanceFacade
             if (State == PaymentState.Completed)
                 throw new Exception("Payment already completed");
 
-            if (this.Items.Where(x => x.Quantity<0).Count()>0&&Amount<=0)
+            if (this.Items.Where(x => x.Quantity < 0).Count() > 0 && Amount <= 0)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    UserDeclared=true;
+                    UserDeclared = true;
                     _TipsAmount = tipAmount;
 
                     if (!ItemsOrTipToPay)
@@ -652,25 +655,25 @@ namespace FinanceFacade
                     //Normalize
                     NormalizeNettingItems();
 
-                    
-                    _PaymentType= PaymentType.Cash;
+
+                    _PaymentType = PaymentType.Cash;
 
                     this.Subject.PaymentCompleted(this);
                     State = PaymentState.Completed;
-                    
+
                     stateTransition.Consistent = true;
                 }
 
 
             }
-            else if (Amount>0)
+            else if (Amount > 0)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     _TipsAmount = tipAmount;
-                    
-                    _PaymentType= PaymentType.Cash;
-                    
+
+                    _PaymentType = PaymentType.Cash;
+
                     State = PaymentState.Completed;
                     this.Subject.PaymentCompleted(this);
                     stateTransition.Consistent = true;
@@ -682,7 +685,7 @@ namespace FinanceFacade
         {
             get
             {
-                var amount = Items.OfType<Item>().Where(x => x.Amount-x.PaidAmount>0).Sum(x => x.Amount-x.PaidAmount)+_TipsAmount;
+                var amount = Items.OfType<Item>().Where(x => x.Amount - x.PaidAmount > 0).Sum(x => x.Amount - x.PaidAmount) + _TipsAmount;
                 return amount > 0;
             }
         }
@@ -699,12 +702,12 @@ namespace FinanceFacade
             get => _Description;
 
             set
-            {  
-                if (_Description!=value)
+            {
+                if (_Description != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Description=value;
+                        _Description = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -722,11 +725,11 @@ namespace FinanceFacade
         {
             get => _Comments; set
             {
-                if (_Comments!=value)
+                if (_Comments != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Comments=value;
+                        _Comments = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -734,31 +737,31 @@ namespace FinanceFacade
         }
         /// <exclude>Excluded</exclude>
         IPaymentGateway _PaymentGateway;
-        public IPaymentGateway PaymentGateway { get=>_PaymentGateway; }
+        public IPaymentGateway PaymentGateway { get => _PaymentGateway; }
 
         /// <MetaDataID>{3ca1eb89-c1ed-4c8d-9901-80e259cd9e15}</MetaDataID>
         private void NormalizeNettingItems()
         {
-            var itemsToPayAmount = Items.OfType<Item>().Where(x => x.Amount-x.PaidAmount>0).Sum(x => x.Amount-x.PaidAmount)+TipsAmount;
+            var itemsToPayAmount = Items.OfType<Item>().Where(x => x.Amount - x.PaidAmount > 0).Sum(x => x.Amount - x.PaidAmount) + TipsAmount;
 
-            var nettingItems = Items.OfType<Item>().Where(x => x.Amount<0).ToList();
+            var nettingItems = Items.OfType<Item>().Where(x => x.Amount < 0).ToList();
             foreach (var nettingItem in nettingItems.ToList())
             {
 
-                if ((-nettingItem.Amount)<=itemsToPayAmount)
+                if ((-nettingItem.Amount) <= itemsToPayAmount)
                 {
                     nettingItems.Remove(nettingItem);
-                    itemsToPayAmount+=nettingItem.Amount;
+                    itemsToPayAmount += nettingItem.Amount;
                 }
                 else
                 {
-                    nettingItem.Quantity=-itemsToPayAmount/nettingItem.Price;
-                    itemsToPayAmount=0;
+                    nettingItem.Quantity = -itemsToPayAmount / nettingItem.Price;
+                    itemsToPayAmount = 0;
                     nettingItems.Remove(nettingItem);
                 }
             }
-            _Amount = Items.OfType<Item>().Sum(x => (x.Quantity * x.Price)-x.PaidAmount);
-            _Amount=decimal.Round(_Amount, 5);
+            _Amount = Items.OfType<Item>().Sum(x => (x.Quantity * x.Price) - x.PaidAmount);
+            _Amount = decimal.Round(_Amount, 5);
 
 
 
@@ -783,7 +786,7 @@ namespace FinanceFacade
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                UserDeclared=true;
+                UserDeclared = true;
                 PaymentInfoFields["BankDescription"] = bankDescription;
                 PaymentInfoFields["BIC"] = bic;
                 PaymentInfoFields["IBAN"] = iban;
@@ -793,12 +796,12 @@ namespace FinanceFacade
                 PaymentInfoFields["CheckNotes"] = checkNotes;
 
                 _TipsAmount = tipAmount;
-                _PaymentType=PaymentType.Check;
+                _PaymentType = PaymentType.Check;
 
                 if (ItemsOrTipToPay)
                     throw new InvalidConstraintException("There isn't amount to pay.");
 
-                
+
                 //Normalize
                 NormalizeNettingItems();
 
