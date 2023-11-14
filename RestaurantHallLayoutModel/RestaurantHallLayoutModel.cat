@@ -1158,24 +1158,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5DEC038002C1"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1122, 1523)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	471)
 		    width      	506
 		    height     	313
 		    annotation 	8)
@@ -1206,24 +1188,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5DEBF84300B7"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(222, 757)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	10
-			max_width  	1696)
 		    width      	575
 		    height     	450
 		    annotation 	8)
@@ -1466,24 +1430,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5DEF529E01ED"
-		    compartment 	(object Compartment
-			Parent_View 	@13
-			location   	(1825, 1520)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	518)
 		    width      	556
 		    height     	331
 		    annotation 	8)
@@ -1701,24 +1647,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5DF32099019D"
-		    compartment 	(object Compartment
-			Parent_View 	@23
-			location   	(225, 283)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	621)
 		    width      	563
 		    height     	325
 		    annotation 	8)

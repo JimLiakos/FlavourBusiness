@@ -29,7 +29,11 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"MetaObjectID"
-		    value      	"{fb36f7f0-3762-4db7-9e05-40e87ba43631}"))
+		    value      	"{fb36f7f0-3762-4db7-9e05-40e87ba43631}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"6"))
 	    quid       	"6503DC710117"
 	    stereotype 	"Interface"
 	    superclasses 	(list inheritance_relationship_list
@@ -37,6 +41,173 @@
 		    quid       	"6503E4D502F6"
 		    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IServingBatch"
 		    quidu      	"6195344F038E"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Identity"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522C9E01E3")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1b75fcb5-7f27-419b-9fc8-17261cfac7c4}"))
+		    quid       	"65522C9E01E3"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Place"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e43268d5-265d-47da-9084-1bd95f4bb369}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522D1801D4")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"65522D1801D4"
+		    type       	"FlavourBusinessFacade.EndUsers.IPlace"
+		    exportControl 	"Public")
+		(object ClassAttribute "ClientFullName"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2d25c09e-e7b4-4de0-a8ab-46b69ca2a01b}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522D1802C1")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65522D1802C1"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "PhoneNumber"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b9c002a5-1dbe-476d-8b2c-301a55b4e3ed}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522D180325")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"65522D180325"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DeliveryRemark"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c655db5e-ee48-4daa-80e2-85bc26a2e7ee}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522D180385")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"65522D180385"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "NotesForClient"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9cd91377-c2b0-42f3-9c6d-71bfee28a962}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65522D1803E3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"65522D1803E3"
+		    type       	"string"
+		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 	    quidu      	"5AA773E702B6"
 	    language   	"C#"))
@@ -78,24 +249,6 @@
 		    line_color 	3342489
 		    fill_color 	12632256
 		    quidu      	"6009D41F0331"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(3203, 759)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    charSet    	161
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Decoration"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	303)
 		    width      	482
 		    height     	256
 		    annotation 	8)
