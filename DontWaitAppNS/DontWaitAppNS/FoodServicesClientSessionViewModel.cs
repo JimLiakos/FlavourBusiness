@@ -1388,6 +1388,11 @@ namespace DontWaitApp
             Bill = FoodServicesClientSession?.GetBill();
             var ss = Bill.Payments;
 
+            foreach (var payment in ss)
+            {
+                var dsd = payment.Items;
+            }
+
             var items = ss.FirstOrDefault()?.Items;
             return Bill;
 

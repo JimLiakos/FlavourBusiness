@@ -2699,7 +2699,10 @@ namespace FlavourBusinessManager.EndUsers
         public IBill GetBill()
         {
 
-            return Bill.GetBillFor(this);
+            IBill bill=  Bill.GetBillFor(this);
+
+           
+            return bill;
             //var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()).ToList();
 
             //string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
