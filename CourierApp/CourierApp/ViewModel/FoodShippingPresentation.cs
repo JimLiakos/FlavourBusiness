@@ -3,6 +3,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
+using FlavourBusinessManager.RoomService;
 using OOAdvantech;
 using ServiceContextManagerApp;
 using System;
@@ -69,7 +70,10 @@ namespace CourierApp.ViewModel
             List<ItemsPreparationContext> allContextsOfPreparedItems = new List<ItemsPreparationContext>();
             Description = foodShipping.Description;
             ContextsOfPreparedItems = foodShipping.ContextsOfPreparedItems;
-           
+
+            Identity = foodShipping.Identity;
+
+
             if (ContextsOfPreparedItems == null)
                 ContextsOfPreparedItems = new List<ItemsPreparationContext>();
 
@@ -164,6 +168,8 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{15bd9216-894a-432b-85dc-cbc669d97438}</MetaDataID>
         public IList<ItemsPreparationContext> ContextsOfPreparedItems { get; private set; }
+        public string Identity { get; set; }
+
         /// <MetaDataID>{d1c27d0e-a3f3-4184-9450-507bf20f2bdb}</MetaDataID>
         public IList<ItemsPreparationContext> ContextsOfUnderPreparationItems { get; private set; }
         /// <MetaDataID>{adef1576-fb9e-4488-bc00-66781b6e4fae}</MetaDataID>
@@ -175,5 +181,52 @@ namespace CourierApp.ViewModel
         {
             FoodShippingChangeState(FoodShipping, null);
         }
+
+
+        public List<TipOption> TipOptions
+        {
+            get
+            {
+                var isoCurrencySymbol = this.ContextsOfPreparedItems.FirstOrDefault()?.PreparationItems.OfType<ItemPreparation>().FirstOrDefault()?.ISOCurrencySymbol;
+                if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
+                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol; 
+                return new List<TipOption>() {
+                new TipOption() { Amount=0, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=0.5M, ISOCurrencySymbol= isoCurrencySymbol},
+                new TipOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=1.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=2, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=2.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=3, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=3.5M, ISOCurrencySymbol= isoCurrencySymbol },
+                new TipOption() { Amount=4M, ISOCurrencySymbol= isoCurrencySymbol }};
+            }
+        }
+
+        public List<CurrencyOption> CurrencyOptions
+        {
+            get
+            {
+                var isoCurrencySymbol = this.ContextsOfPreparedItems.FirstOrDefault()?.PreparationItems.OfType<ItemPreparation>().FirstOrDefault()?.ISOCurrencySymbol;
+                if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
+                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol; 
+                return new List<CurrencyOption>() {
+                new CurrencyOption() { Amount=0.05M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.1M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.2M, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=0.5M, ISOCurrencySymbol= isoCurrencySymbol },                new CurrencyOption() { Amount=1, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=2, ISOCurrencySymbol= isoCurrencySymbol},
+                new CurrencyOption() { Amount=5, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=10, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=20, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=50, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=100, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=200, ISOCurrencySymbol= isoCurrencySymbol },
+                new CurrencyOption() { Amount=500, ISOCurrencySymbol= isoCurrencySymbol }};
+            }
+        }
+
+
+
     }
 }
