@@ -48,12 +48,9 @@ namespace FlavourBusinessManager.EndUsers
 
         internal static List<FinanceFacade.Item> GetPayItems(FoodServiceClientSession foodServiceClientSession, List<Payment> payments, List<ItemPreparation> flavourItems)
         {
-
-
-
+             
             Dictionary<ItemPreparation, decimal> paidItemsAmounts = new Dictionary<ItemPreparation, decimal>();
-
-
+            
             #region sort by transaction date
             var tmpPayments = payments.Where(x => x.State == FinanceFacade.PaymentState.Completed).OrderBy(x => x.TransactionDate.Value).ToList();
             tmpPayments.AddRange(payments.Where(x => x.State != FinanceFacade.PaymentState.Completed));
