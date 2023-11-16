@@ -7365,6 +7365,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "AssignAndCommitFoodShipping", args, argsTypes);
         }
         
+        public FlavourBusinessFacade.RoomService.IBill GetBill(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation> itemPreparations, FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = itemPreparations;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>);
+            args[1] = foodShipping;
+            argsTypes[1] = typeof(FlavourBusinessFacade.Shipping.IFoodShipping);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "GetBill", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IBill>(retValue);
+        }
+        
         public void PrintFoodShippingReceipt(FlavourBusinessFacade.Shipping.IFoodShipping foodShipping)
         {
             object[] args = new object[1];

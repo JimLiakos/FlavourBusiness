@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
-
+using FlavourBusinessFacade.RoomService;
+using FlavourBusinessFacade.Shipping;
 using OOAdvantech.MetaDataRepository;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,9 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{34608ba4-b311-465a-aecb-ec3cd816d36f}</MetaDataID>
         void PrintFoodShippingsReceipt(string foodShippingIdentity);
+
+
+        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping);
 
     }
 }

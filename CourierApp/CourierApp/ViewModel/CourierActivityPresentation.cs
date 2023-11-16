@@ -86,11 +86,14 @@ namespace CourierApp.ViewModel
             {
                 throw;
             }
-        }
+        } 
 
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping)
         {
-            return null;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
+
+            var foodShippingPresentation = this.FoodShippings.Where(x => x==foodShipping).FirstOrDefault();
+            var bill = this.Courier.GetBill(itemPreparations, foodShippingPresentation.FoodShipping);
+            return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
 
         public CourierActivityPresentation()
@@ -425,12 +428,12 @@ namespace CourierApp.ViewModel
         {
             if (member == nameof(IServicesContextWorker.ActiveShiftWork))
             {
-                var activeShiftWork=Courier.ActiveShiftWork;
-                if(activeShiftWork!=ActiveShiftWork)
+                var activeShiftWork = Courier.ActiveShiftWork;
+                if (activeShiftWork!=ActiveShiftWork)
                 {
                     ActiveShiftWork = activeShiftWork;
                     UpdateFoodShippings(Courier.GetFoodShippings());
-                    
+
                 }
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
                 GetMessages();
@@ -677,7 +680,7 @@ namespace CourierApp.ViewModel
 
 
         }
- 
+
 
         /// <MetaDataID>{f9f3e407-f92f-4376-8ba6-96dc71a245ae}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);

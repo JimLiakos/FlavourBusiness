@@ -129,9 +129,9 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
         /// <MetaDataID>{6c8bfcfe-1032-436c-b78b-1e69e9060be2}</MetaDataID>
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping)
         {
-            return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
+            return Bill.GetBillFor(itemPreparations, foodShipping as FoodShipping);
         }
 
         public event ObjectChangeStateHandle ObjectChangeState;
@@ -760,6 +760,8 @@ namespace FlavourBusinessManager.HumanResources
             }
 
         }
+
+
         public void AssignAndCommitFoodShipping(IFoodShipping foodShipping)
         {
             if (ActiveShiftWork is ServingShiftWork)
