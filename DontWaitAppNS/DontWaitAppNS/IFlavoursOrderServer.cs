@@ -531,8 +531,9 @@ namespace DontWaitApp
 
         /// <MetaDataID>{c4829ae7-d9b3-492c-b1c4-50bebfb4ea2b}</MetaDataID>
         bool TransferPartialSession(string partialSessionID, string targetSessionID);
-        /// <MetaDataID>{e4dfe843-4932-4bd7-ac17-f542c7f0e153}</MetaDataID>
-        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation);
+
+        ///// <MetaDataID>{e4dfe843-4932-4bd7-ac17-f542c7f0e153}</MetaDataID>
+        //IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation);
     }
 
 

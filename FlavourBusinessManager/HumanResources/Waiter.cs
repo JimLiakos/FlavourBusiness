@@ -1109,10 +1109,10 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         /// <MetaDataID>{fe724308-3775-4504-a08d-f860f1249863}</MetaDataID>
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
-        {
-            return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
-        }
+        //public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
+        //{
+        //    return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);
+        //}
 
 
         /// <MetaDataID>{15f3a0ae-db69-401a-bcff-9b0659f4dab5}</MetaDataID>

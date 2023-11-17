@@ -1878,6 +1878,7 @@ namespace WaiterApp.ViewModel
 
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation)
         {
+            
             return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
 

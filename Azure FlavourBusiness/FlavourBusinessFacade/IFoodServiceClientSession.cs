@@ -263,6 +263,7 @@ namespace FlavourBusinessFacade.EndUsers
         void SetSessionServiceTime(DateTime? value);
         /// <MetaDataID>{2c79ce1f-2d6e-4179-a123-e187fba12cc1}</MetaDataID>
         void UpdateSessionUser(string userLanguageCode);
+        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
 
 
         /// <MetaDataID>{dc05706a-50a3-44ad-9dbf-5a74cad9ce7a}</MetaDataID>

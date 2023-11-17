@@ -88,10 +88,10 @@ namespace CourierApp.ViewModel
             }
         } 
 
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping)
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity)
         {
 
-            var foodShippingPresentation = this.FoodShippings.Where(x => x==foodShipping).FirstOrDefault();
+            var foodShippingPresentation = this.AssignedFoodShippings.Where(x => x.Identity== foodShippingIdentity).FirstOrDefault();
             var bill = this.Courier.GetBill(itemPreparations, foodShippingPresentation.FoodShipping);
             return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }

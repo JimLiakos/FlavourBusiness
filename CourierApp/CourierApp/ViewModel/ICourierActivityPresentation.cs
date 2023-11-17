@@ -62,7 +62,7 @@ namespace CourierApp.ViewModel
         void PrintFoodShippingsReceipt(string foodShippingIdentity);
 
 
-        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping);
+        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity);
 
     }
 }

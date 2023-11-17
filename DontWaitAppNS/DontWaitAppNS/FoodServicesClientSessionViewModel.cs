@@ -1411,6 +1411,20 @@ namespace DontWaitApp
 
 
         }
+        public async Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
+        {
+            Bill = FoodServicesClientSession?.GetBill(itemPreparations);
+            var ss = Bill.Payments;
+
+            foreach (var payment in ss)
+            {
+                var dsd = payment.Items;
+            }
+
+            var items = ss.FirstOrDefault()?.Items;
+            return Bill;
+
+        }
 
         /// <MetaDataID>{da16b8ff-3972-47e6-b92c-f1f169f54c3a}</MetaDataID>
         internal async Task<bool> Pay(FinanceFacade.IPayment payment, decimal tipAmount)

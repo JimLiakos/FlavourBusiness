@@ -2700,54 +2700,16 @@ namespace FlavourBusinessManager.EndUsers
         {
 
             IBill bill=  Bill.GetBillFor(this);
-
            
             return bill;
-            //var flavourItems = this._FlavourItems.OfType<ItemPreparation>().Union(this._SharedItems.OfType<ItemPreparation>()).ToList();
-
-            //string paymentIdentity = this.ServicesContextRunTime.ServicesContextIdentity + ";" + ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
-            //List<FinanceFacade.Payment> payments = this.MainSession?.BillingPayments.Where(x => x.Identity == paymentIdentity).OfType<FinanceFacade.Payment>().ToList();
-            //if (payments == null)
-            //    payments = new List<FinanceFacade.Payment>();
-            //List<FinanceFacade.Item> paymentItems =Bill. GetUnpaidItems(paymentIdentity, payments, flavourItems);
-
-            //payments = payments.OrderBy(x => x.TransactionDate).ToList();
-
-            ////if (paymentItems.Count > 0)
-            //{
-            //    var payment = payments.Where(x => x.State == FinanceFacade.PaymentState.New || x.State == FinanceFacade.PaymentState.InProgress).FirstOrDefault();
-
-
-            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //    {
-            //        if (payment == null)
-            //        {
-            //            payment = new FinanceFacade.Payment(paymentIdentity, paymentItems, this._FlavourItems.OfType<ItemPreparation>().First().ISOCurrencySymbol);
-
-            //            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(payment);
-            //            if (_MainSession.Value == null)
-            //                (ServicesContextRunTime.Current.MealsController as MealsController).AutoMealParticipation(this);
-
-            //            this.MainSession.AddPayment(payment);
-            //            payments.Add(payment);
-
-            //        }
-            //        else
-            //        {
-            //            payment.Update(paymentItems);
-            //            //move to end of list;
-            //            payments.Remove(payment);
-            //            payments.Add(payment);
-            //        }
-
-            //        stateTransition.Consistent = true;
-            //    }
-            //    payment.Subject = this.MainSession as FinanceFacade.IPaymentSubject;
-            //}
-            ////payments sorted by TransactionDate
-
-            //return new Bill(payments.OfType<FinanceFacade.IPayment>().ToList());
+            
         }
+
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
+        {
+            return Bill.GetBillFor(itemPreparations, this);
+        }
+
 
 
         /// <MetaDataID>{391fee95-b5be-4c9a-9118-67949d13b1fd}</MetaDataID>

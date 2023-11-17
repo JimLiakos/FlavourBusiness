@@ -77,8 +77,9 @@ namespace FlavourBusinessFacade.HumanResources
         void TransferPartialSession(string partialSessionID, string targetSessionID);
         /// <MetaDataID>{781bd75e-a110-48ad-950c-90838b2e70fd}</MetaDataID>
         void TransferItems(List<SessionItemPreparationAbbreviation> itemPreparations, string targetServicePointIdentity);
-        /// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
-        IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
+        
+        ///// <MetaDataID>{b36c8832-4ae0-49a8-b3b5-4c86eb259a1d}</MetaDataID>
+        //IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, EndUsers.IFoodServiceClientSession foodServicesClientSession);
     
     }
 
