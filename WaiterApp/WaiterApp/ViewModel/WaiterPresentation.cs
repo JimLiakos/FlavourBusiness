@@ -1876,11 +1876,11 @@ namespace WaiterApp.ViewModel
             this.Waiter.TransferItems(itemPreparations, targetServicePointIdentity);
         }
 
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation)
-        {
+        //public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation)
+        //{
             
-            return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
-        }
+        //    return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
+        //}
 
         public async Task<bool> CheckPermissionsForQRCodeScan()
         {

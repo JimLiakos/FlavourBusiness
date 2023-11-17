@@ -64,5 +64,7 @@ namespace CourierApp.ViewModel
 
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity);
 
+        Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount);
+
     }
 }

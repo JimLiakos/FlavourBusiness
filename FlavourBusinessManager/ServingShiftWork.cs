@@ -212,7 +212,7 @@ namespace FlavourBusinessManager.HumanResources
         public decimal CardsTips => _CardsTips;
 
 
-
+         
         /// <exclude>Excluded</exclude>
         decimal _CashTips;
 

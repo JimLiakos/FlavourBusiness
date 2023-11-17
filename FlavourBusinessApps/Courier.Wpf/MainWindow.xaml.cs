@@ -26,7 +26,9 @@ namespace CourierApp.Wpf
         {
             InitializeComponent();
 
-             DataContext = new ViewModel.CourierActivityPresentation();
+            bool useAssignedPaymentTerminal = false;
+
+            DataContext = new ViewModel.CourierActivityPresentation(useAssignedPaymentTerminal);
             string url = @"http://192.168.2.8:4306/";//org
             url = @"http://192.168.2.5:4306/";//Braxati
             //url = @"http://10.0.0.13:4306/";//work
@@ -37,7 +39,7 @@ namespace CourierApp.Wpf
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));
-             
+
         }
 
         public WebBrowserOverlay Browser { get; }

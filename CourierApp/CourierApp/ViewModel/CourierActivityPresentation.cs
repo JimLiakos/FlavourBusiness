@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UIBaseEx;
 using OOAdvantech.Json.Linq;
+using FinanceFacade;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -86,7 +87,59 @@ namespace CourierApp.ViewModel
             {
                 throw;
             }
-        } 
+        }
+        public bool UseAssignedPaymentTerminal { get; private set; }
+
+        public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+        {
+            if (payment.State == PaymentState.Completed)
+                return ;
+
+            if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
+            {
+#if DeviceDotNet
+                var paymentService = new PaymentService();
+                if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
+                {
+                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+                    var state = payment.State;
+                    if (state==FinanceFacade.PaymentState.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    }
+                    return ;
+                }
+
+#endif
+                return ;
+            }
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Card)
+            {
+                if (this.UseAssignedPaymentTerminal)
+                {
+
+                    var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+                    var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
+
+                    payment.CardPaymentCompleted(paymentData.CardType, paymentData.AccountNum, true, paymentData.TransactionID, tipAmount);
+                    return ;
+
+                }
+                else
+                {
+                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+                    return ;
+                }
+            }
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Cash)
+            {
+                payment.CashPaymentCompleted(tipAmount);
+                return ;
+            }
+            else
+                return ;
+
+        }
 
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity)
         {
@@ -96,12 +149,13 @@ namespace CourierApp.ViewModel
             return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
 
-        public CourierActivityPresentation()
+        public CourierActivityPresentation(bool useAssignedPaymentTerminal)
         {
             _FoodShippings= new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
             _FoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
             _AssignedFoodShippings=  new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
             _AssignedFoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
+            this.UseAssignedPaymentTerminal= useAssignedPaymentTerminal;
         }
 
         private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
