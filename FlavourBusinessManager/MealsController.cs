@@ -316,9 +316,9 @@ namespace FlavourBusinessManager.RoomService
 
         public IFoodShipping GetMealCourseFoodShipping(string mealCourseUri)
         {
-            var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse; ;
+            var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse; 
 
-
+            
             var foodShiping = mealCourse.ServingBatches.OfType<FoodShipping>().FirstOrDefault();
             if (foodShiping == null)
                 foodShiping = GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
@@ -537,7 +537,7 @@ namespace FlavourBusinessManager.RoomService
 
             var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
 
-            List<FoodShipping> foodShipings = new List<FoodShipping>();
+            List<FoodShipping> foodShippings = new List<FoodShipping>();
             if (courier.ActiveShiftWork != null)
             {
 
@@ -570,7 +570,6 @@ namespace FlavourBusinessManager.RoomService
 
                     if (underPreparationItems.Count == 0)
                     {
-
                         var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
                         var foodShipping = (from itemsPreparationContext in preparedItems
@@ -579,32 +578,40 @@ namespace FlavourBusinessManager.RoomService
                                             select itemPreparation.ServedInTheBatch).OfType<FoodShipping>().FirstOrDefault();
                         if (foodShipping == null)
                         {
-                            foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().ToList().Where(x => !x.IsAssigned).FirstOrDefault();
+                            foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().ToList().FirstOrDefault();
                             if (foodShipping == null)
                             {
+
                                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
                                 {
                                     foodShipping = new FoodShipping(mealCourse, preparedItems, underPreparationItems);
                                     ObjectStorage.GetStorageOfObject(mealCourse).CommitTransientObjectState(foodShipping);
 
-                                    foodShipings.Add(foodShipping);
+                                    foodShippings.Add(foodShipping);
 
                                     stateTransition.Consistent = true;
                                 }
                             }
                         }
                         foodShipping.Update(mealCourse, preparedItems, underPreparationItems);
-                        foodShipings.Add(foodShipping);
+                        if(foodShipping.IsAssigned)
+                        {
+                            if(foodShipping.ShiftWork.Worker == courier)
+                                foodShippings.Add(foodShipping);
+                        }
+                        else
+                            foodShippings.Add(foodShipping);
+
                     }
 
                 }
             }
 
             int i = 0;
-            foreach (var foodShiping in foodShipings)
+            foreach (var foodShiping in foodShippings)
                 foodShiping.SortID = i++;
 
-            return foodShipings;
+            return foodShippings;
         }
 
 
@@ -612,7 +619,7 @@ namespace FlavourBusinessManager.RoomService
         internal void ServingBatchDeAssigned(HumanResources.Waiter waiter, IServingBatch servingBatch)
         {
 
-            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
+            var servicePoint = servingBatch.MealCourse.Meal.Session.ServicePoint as HallServicePoint;// ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<HallServicePoint>().Where(x => x.ServicesPointIdentity == servingBatch.ServicesPointIdentity).FirstOrDefault();
 
             var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
                                  where shiftWork.Worker is IWaiter && servicePoint.CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork) && shiftWork.Worker != waiter

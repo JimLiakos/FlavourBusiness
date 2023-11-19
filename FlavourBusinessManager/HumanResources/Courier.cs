@@ -15,6 +15,8 @@ using FlavourBusinessManager.ServicePointRunTime;
 
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.Shipping;
+using OOAdvantech.Remoting.RestApi;
+
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -732,6 +734,8 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{63d19f55-e0f7-46ce-aacf-44e729404923}</MetaDataID>
         public void DeAssignFoodShipping(IFoodShipping foodShipping)
         {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            bool foodShippingAssignmentFromMe = this.OAuthUserIdentity == authUser?.User_ID;
 
             var mealCourse = foodShipping.MealCourse;
             var preparedItems = foodShipping.ContextsOfPreparedItems;
@@ -740,6 +744,8 @@ namespace FlavourBusinessManager.HumanResources
 
             (foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
             (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
+            //if (!foodShippingAssignmentFromMe)
+            //    FindFoodShippingsChanges();
         }
 
         /// <MetaDataID>{02b58641-354e-4b16-a172-95018e80f233}</MetaDataID>
@@ -747,6 +753,10 @@ namespace FlavourBusinessManager.HumanResources
         {
             if (ActiveShiftWork is ServingShiftWork)
             {
+
+                AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+                bool foodShippingAssignmentFromMe= this.OAuthUserIdentity == authUser?.User_ID;
+
                 lock (foodShipping)
                 {
                     if (!foodShipping.IsAssigned)
@@ -757,6 +767,8 @@ namespace FlavourBusinessManager.HumanResources
                     }
                 }
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
+                //if(!foodShippingAssignmentFromMe)
+                //    FindFoodShippingsChanges();
             }
 
         }
@@ -778,6 +790,7 @@ namespace FlavourBusinessManager.HumanResources
 
                             stateTransition.Consistent = true;
                         }
+                        FindFoodShippingsChanges();
                     }
                     catch (Exception error)
                     {
@@ -800,6 +813,7 @@ namespace FlavourBusinessManager.HumanResources
 
                     stateTransition.Consistent = true;
                 }
+                FindFoodShippingsChanges();
             }
             else
             {

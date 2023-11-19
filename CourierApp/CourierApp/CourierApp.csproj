@@ -13,6 +13,9 @@
     <DefineConstants>$(DefineConstants);DeviceDotNet</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\CourierPresentation.cs" Link="ViewModel\CourierPresentation.cs" />
+    <Compile Include="..\..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ICourierPresentation.cs" Link="ViewModel\ICourierPresentation.cs" />
+    <Compile Include="..\..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\IWorkerPresentation.cs" Link="ViewModel\IWorkerPresentation.cs" />
     <Compile Include="..\..\ServiceContextManagerApp\ServiceContextManagerApp\ViewModel\ΜealCourse.cs" Link="ViewModel\ΜealCourse.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +29,7 @@
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\Linq.NetStandard\Linq.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Json.NetStandard\OOAdvantech.Json.NetStandard.csproj" />
     <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay\OOAdvantech.Pay.csproj" />
     <ProjectReference Include="..\..\DontWaitAppNS\FlavourBusinessFacade\FlavourBusinessFacade.csproj" />
     <ProjectReference Include="..\..\DontWaitAppNS\FlavourOrderPresentation\FlavourOrderPresentation.csproj" />
   </ItemGroup>

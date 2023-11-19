@@ -16,7 +16,7 @@ namespace FlavourBusinessManager.Shipping
     /// <MetaDataID>{c36022d2-142c-4f52-8ca3-debd1124b925}</MetaDataID>
     [BackwardCompatibilityID("{c36022d2-142c-4f52-8ca3-debd1124b925}")]
     [Persistent()]
-    public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping,FinanceFacade.IPaymentGateway
+    public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping, FinanceFacade.IPaymentGateway
     {
 
 
@@ -105,9 +105,39 @@ namespace FlavourBusinessManager.Shipping
         [CachingOnlyReferenceOnClientSide]
         public FlavourBusinessFacade.HumanResources.IServingShiftWork ShiftWork => _ShiftWork.Value;
 
+
+        /// <exclude>Excluded</exclude>
+        ServicePointType? _ServicePointType;
+
         /// <MetaDataID>{1494396b-fb28-4280-83ad-ee1c39c18f1b}</MetaDataID>
+        [PersistentMember(nameof(_ServicePointType))]
+        [BackwardCompatibilityID("+10")]
         [CachingDataOnClientSide]
-        public ServicePointType ServicePointType { get; set; }
+        public ServicePointType ServicePointType
+        {
+            get
+            {
+                if (_ServicePointType.HasValue)
+                    return _ServicePointType.Value;
+                else
+                {
+                    ServicePointType = MealCourse.Meal.Session.ServicePoint.ServicePointType;
+                    return _ServicePointType.Value;
+                }
+            }
+
+            set
+            {
+                if (_ServicePointType != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicePointType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
 
@@ -125,11 +155,11 @@ namespace FlavourBusinessManager.Shipping
             {
                 _CreationTime = DateTime.UtcNow;
             }
-            if(string.IsNullOrWhiteSpace(_Identity))
+            if (string.IsNullOrWhiteSpace(_Identity))
             {
                 var ticks = new DateTime(2022, 1, 1).Ticks;
                 var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                _Identity=uniqueId;
+                _Identity = uniqueId;
             }
             lock (CaregiversLock)
             {
@@ -155,6 +185,11 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{124c5529-dd6b-429c-8772-17858121bb7a}</MetaDataID>
         public FoodShipping(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
+            if(mealCourse.ServingBatches.Count>0)
+            {
+                System.Diagnostics.Debug.Assert(false, "Meal course without serving batches allowed");
+                throw new ArgumentException("Meal course without serving batches allowed", nameof(mealCourse));
+            }
 
             MealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
             _MealCourse.Value = mealCourse;
@@ -201,7 +236,7 @@ namespace FlavourBusinessManager.Shipping
             {
                 foreach (var itemPreparation in PreparedItems)
                     itemPreparation.State = ItemPreparationState.OnRoad;
-                
+
                 states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
                 stateTransition.Consistent = true;
             }
@@ -267,7 +302,7 @@ namespace FlavourBusinessManager.Shipping
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
                 this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
-                this.ServicesContextIdentity = this.ServicePoint.ServicesContextIdentity;
+                
 
             }
             if (servingBatchChanged || nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
@@ -294,15 +329,52 @@ namespace FlavourBusinessManager.Shipping
         [BackwardCompatibilityID("+1")]
         public IMealCourse MealCourse => _MealCourse.Value;
 
+
+
+        /// <exclude>Excluded</exclude>
+        bool? _IsAssigned;
         /// <MetaDataID>{d8834cae-2fde-4861-81b0-6be2a5c26f12}</MetaDataID>
+        [PersistentMember(nameof(_IsAssigned))]
+        [BackwardCompatibilityID("+11")]
         [CachingDataOnClientSide]
         public bool IsAssigned
         {
             get
             {
-                return ShiftWork != null;
+                if(!_ShiftWork.UnInitialized)
+                    IsAssigned = ShiftWork != null;
+
+                if (_IsAssigned == null)
+                    IsAssigned = ShiftWork != null;
+                return _IsAssigned.Value;
+            }
+            set
+            {
+
+                if (_IsAssigned != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsAssigned = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
             }
         }
+
+        /// <MetaDataID>{b9ced204-54cb-4c4b-8eb7-5d854a577b56}</MetaDataID>
+        [ObjectsLinkCall]
+        void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
+        {
+            if (associationEnd.Name == nameof(ShiftWork))
+            {
+                if (ShiftWork != null)
+                    IsAssigned = true;
+                else
+                    IsAssigned = false;
+            }
+        }
+
 
         /// <MetaDataID>{a6d410ca-433e-4bc2-a60d-2902bbf42126}</MetaDataID>
         [CachingDataOnClientSide]
@@ -371,18 +443,62 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _Description;
+
         /// <MetaDataID>{c83578bb-5b53-459b-949d-362b78db48fd}</MetaDataID>
+        [PersistentMember(nameof(_Description))]
+        [BackwardCompatibilityID("+9")]
         [CachingDataOnClientSide]
-        public string Description { get; set; }
+        public string Description
+        {
+            get => _Description;
+            set
+            {
+                if (_Description != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Description = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
-
+        /// <exclude>Excluded</exclude>
+        string _ServicesPointIdentity;
         /// <MetaDataID>{effa589d-8157-44af-951c-4ca5c212dff6}</MetaDataID>
-        [CachingDataOnClientSide]
-        public string ServicesPointIdentity { get; set; }
+        [PersistentMember(nameof(_ServicesPointIdentity))]
+        [BackwardCompatibilityID("+8")]
+        [OnDemandCachingDataOnClientSide]
+        public string ServicesPointIdentity
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_ServicesPointIdentity))
+                {
+                    ServicesPointIdentity = MealCourse.Meal.Session.ServicePoint.ServicesPointIdentity;
+
+                }
+                return _ServicesPointIdentity;
+            }
+            set
+            {
+                if (_ServicesPointIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ServicesPointIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <MetaDataID>{063af7ed-744e-447a-8a4b-96f75450d11a}</MetaDataID>
         [CachingDataOnClientSide]
-        public string ServicesContextIdentity { get; set; }
+        public string ServicesContextIdentity { get => ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity; }
 
 
 
@@ -477,15 +593,7 @@ namespace FlavourBusinessManager.Shipping
         }
 
 
-        /// <MetaDataID>{a3dfa875-e9b1-4fae-9656-c09968bd587f}</MetaDataID>
-        [ObjectsLinkCall]
-        void ObjectsLink(object linkedObject, AssociationEnd associationEnd, bool added)
-        {
-            if (associationEnd.Name == nameof(ShiftWork))
-            {
 
-            }
-        }
 
         /// <MetaDataID>{cee036f2-fe3c-4668-ac0b-b3250d86ea33}</MetaDataID>
         public void PrintReceiptAgain()
@@ -518,7 +626,7 @@ namespace FlavourBusinessManager.Shipping
             ContextsOfUnderPreparationItems = underPreparationItems;
             ServicePoint = mealCourse.Meal.Session.ServicePoint;
             ServicesPointIdentity = ServicePoint.ServicesPointIdentity;
-            ServicesContextIdentity = ServicePoint.ServicesContextIdentity;
+            //ServicesContextIdentity = ServicePoint.ServicesContextIdentity;
 
             Description = mealCourse.Meal.Session.Description + " - " + mealCourse.Name;
 

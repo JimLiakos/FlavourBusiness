@@ -32013,7 +32013,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -32492,7 +32492,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
 			    quid       	"61953D990011"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType"
 			    exportControl 	"Public")
@@ -32517,7 +32525,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+10"))
 			    quid       	"61953D99007A"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -32542,7 +32558,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
 			    quid       	"61953D9900E3"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -32568,7 +32592,27 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
-				    value      	"6234C1500123"))
+				    value      	"6234C1500123")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
 			    quid       	"6234C1500123"
 			    type       	"bool"
 			    exportControl 	"Public")
@@ -49520,7 +49564,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8")
+			    value      	"12")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -49534,7 +49578,11 @@
 			(object Realize_Relationship
 			    quid       	"6531868401F9"
 			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
-			    quidu      	"416244F90271"))
+			    quidu      	"416244F90271")
+			(object Realize_Relationship
+			    quid       	"655871DF032E"
+			    supplier   	"Logical View::FinanceFacade::IPaymentGateway"
+			    quidu      	"64AD009303C9"))
 		    operations 	(list Operations
 			(object Operation "PrintReceiptAgain"
 			    attributes 	(list Attribute_Set
@@ -49594,13 +49642,13 @@
 			    quid       	"6531868502E2"
 			    parameters 	(list Parameters
 				(object Parameter "mealCourse"
-				    quid       	"6531868502F2"
+				    quid       	"655871E1023A"
 				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
 				(object Parameter "preparedItems"
-				    quid       	"6531868502FF"
+				    quid       	"655871E1025E"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
 				(object Parameter "underPreparationItems"
-				    quid       	"65318685030B"
+				    quid       	"655871E1027B"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -49711,13 +49759,13 @@
 			    quid       	"653186860007"
 			    parameters 	(list Parameters
 				(object Parameter "mealCourse"
-				    quid       	"653186860016"
+				    quid       	"655871E10325"
 				    type       	"FlavourBusinessFacade.RoomService.IMealCourse")
 				(object Parameter "preparedItems"
-				    quid       	"653186860021"
+				    quid       	"655871E10346"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>")
 				(object Parameter "underPreparationItems"
-				    quid       	"65318686002D"
+				    quid       	"655871E10362"
 				    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -49744,6 +49792,83 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CreatePaymentOrder"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8cbfdfe4-c18e-407c-863f-074e5268a9c8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E10148"))
+			    quid       	"655871E10148"
+			    parameters 	(list Parameters
+				(object Parameter "payment"
+				    quid       	"655871E1015F"
+				    type       	"FinanceFacade.IPayment")
+				(object Parameter "tipAmount"
+				    quid       	"655871E1016F"
+				    type       	"decimal")
+				(object Parameter "paramsJson"
+				    quid       	"655871E1017F"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ObjectActivation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{62b80657-2b59-46c6-8b79-9a871b5c9bcd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E10201"))
+			    quid       	"655871E10201"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AddCaregiver"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8e1cc494-16a6-4da4-8bfa-2ecb3f202bef}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E10399"))
+			    quid       	"655871E10399"
+			    parameters 	(list Parameters
+				(object Parameter "caregiver"
+				    quid       	"655871E103B0"
+				    type       	"FlavourBusinessFacade.HumanResources.IServicesContextWorker")
+				(object Parameter "caregivingType"
+				    quid       	"655871E103C2"
+				    type       	"FlavourBusinessManager.EndUsers.Caregiver.CareGivingType"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AtTheCounter"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e4d85c11-64ac-40f3-be7a-b7ee523d75a0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E103E3"))
+			    quid       	"655871E103E3"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "ShiftWork"
@@ -49792,7 +49917,19 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+10"))
 			    quid       	"651451C102A8"
 			    type       	"FlavourBusinessFacade.ServicesContextResources.ServicePointType"
 			    exportControl 	"Public")
@@ -49834,7 +49971,27 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"UniqueID"
-				    value      	"651451C102E9"))
+				    value      	"651451C102E9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
 			    quid       	"651451C102E9"
 			    type       	"bool"
 			    exportControl 	"Public")
@@ -49989,7 +50146,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
 			    quid       	"651451C103B8"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -50014,7 +50179,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
 			    quid       	"651451C103D0"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -50230,6 +50403,40 @@
 				    value      	"+7"))
 			    quid       	"65522DD20232"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ServicesContextIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{063af7ed-744e-447a-8a4b-96f75450d11a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E20159"))
+			    quid       	"655871E20159"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "Caregivers"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1302b250-4bf5-4870-99b2-7b3dc9423f74}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"655871E20257")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"655871E20257"
+			    type       	"System.Collections.Generic.List<FlavourBusinessManager.EndUsers.Caregiver>"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -50243,7 +50450,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	863
+		    origin_y   	544
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::ICourier" @733
 			    ShowCompartmentStereotypes 	TRUE

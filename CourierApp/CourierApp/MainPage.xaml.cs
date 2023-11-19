@@ -18,7 +18,7 @@ namespace CourierApp
             InitializeComponent();
 
             this.SizeChanged += MainPage_SizeChanged;
-            BindingContext = new ViewModel.CourierActivityPresentation();
+            BindingContext = new ViewModel.CourierActivityPresentation(false);
 
             if (string.IsNullOrWhiteSpace(hybridWebView.Uri))
             {

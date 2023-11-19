@@ -46,7 +46,7 @@ namespace CourierApp.ViewModel
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
-        /// <MetaDataID>{de9782b2-5434-43b6-8444-14465451ac48}</MetaDataID>
+        /// <MetaDataID>{de9782b2-5434-43b6-8444-14465451ac48}</MetaDataID> 
         public string OAuthUserIdentity { get; set; }
         /// <MetaDataID>{f9b39c2f-80f4-441b-953e-3bd8ea4b5977}</MetaDataID>
         public string FullName { get; set; }
@@ -98,7 +98,7 @@ namespace CourierApp.ViewModel
             if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
             {
 #if DeviceDotNet
-                var paymentService = new PaymentService();
+                var paymentService = new OOAdvantech.Pay.PaymentService();
                 if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
                 {
                     RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
@@ -295,7 +295,7 @@ namespace CourierApp.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    await Task.Delay(5000);
+                    //await Task.Delay(5000);
                     GetMessages();
                 });
 
@@ -320,6 +320,7 @@ namespace CourierApp.ViewModel
                             {
                                 _Courier.ObjectChangeState -= Courier_ObjectChangeState;
                                 _Courier.MessageReceived -= MessageReceived;
+                                _Courier.FoodShippingsChanged -= FoodShippingsChanged;
                                 //Courier.ServingBatchesChanged -= ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
@@ -332,6 +333,7 @@ namespace CourierApp.ViewModel
                                     UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
+                                _Courier.FoodShippingsChanged += FoodShippingsChanged;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -395,6 +397,7 @@ namespace CourierApp.ViewModel
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                     _Courier.MessageReceived += MessageReceived;
+                                    _Courier.FoodShippingsChanged += FoodShippingsChanged;
                                     //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                     if (_Courier is ITransparentProxy)
                                         (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -456,6 +459,13 @@ namespace CourierApp.ViewModel
                 return result;
 
             }
+
+        }
+
+        private void FoodShippingsChanged()
+        {
+            if (ActiveShiftWork != null)
+                UpdateFoodShippings(Courier.GetFoodShippings());
 
         }
 
@@ -997,8 +1007,10 @@ namespace CourierApp.ViewModel
             {
                 _AssignedFoodShippings[assignedFoodShippingh].Dispose();
                 _AssignedFoodShippings.Remove(assignedFoodShippingh);
-                _AssignedFoodShippings[assignedFoodShippingh].ObjectChangeState-=FoodShipping_ObjectChangeState;
+                assignedFoodShippingh.ObjectChangeState-=FoodShipping_ObjectChangeState;
             }
+
+            ObjectChangeState?.Invoke(this, nameof(FoodShippings));
         }
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings;
