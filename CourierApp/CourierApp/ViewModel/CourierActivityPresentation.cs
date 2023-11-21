@@ -465,7 +465,10 @@ namespace CourierApp.ViewModel
         private void FoodShippingsChanged()
         {
             if (ActiveShiftWork != null)
-                UpdateFoodShippings(Courier.GetFoodShippings());
+            {
+                GetServingUpdates();
+                //UpdateFoodShippings(Courier.GetFoodShippings());
+            }
 
         }
 
@@ -473,6 +476,8 @@ namespace CourierApp.ViewModel
         private void CourierActivityPresentation_Reconnected(object sender)
         {
             GetServingUpdates();
+
+
         }
 
         /// <MetaDataID>{d99357a4-d51b-450e-9dcb-2c2c0f96b6c8}</MetaDataID>
@@ -550,18 +555,24 @@ namespace CourierApp.ViewModel
             ServingBatchUpdates servingBatchUpdates = Courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
             var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
-            foreach (var assignedFoodShipping in foodShippings)
+            foreach (var foodShipping in foodShippings)
             {
-                var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
                 foodShippingPresentation.Update();
+                if (_AssignedFoodShippings.ContainsKey(foodShipping))
+                    _AssignedFoodShippings.Remove(foodShipping);
+
             }
 
-            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).OfType<IFoodShipping>().ToList();
+            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
 
             foreach (var assignedFoodShipping in asignedServingBatches)
             {
                 var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
                 servingBatchPresentation.Update();
+                if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    _FoodShippings.Remove(assignedFoodShipping);
+
             }
 
 

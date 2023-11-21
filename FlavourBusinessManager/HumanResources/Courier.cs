@@ -669,7 +669,7 @@ namespace FlavourBusinessManager.HumanResources
             var copy = itemsToServe.ToList();
             foreach (var itemToServe in itemsToServe.ToList())
             {
-                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid).FirstOrDefault();
+                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid&&x.StateTimestamp== itemToServe.itemPreparation.StateTimestamp).FirstOrDefault();
                 if (servingItemOnDevice != null)
                 {
                     itemsToServe.Remove(itemToServe);
