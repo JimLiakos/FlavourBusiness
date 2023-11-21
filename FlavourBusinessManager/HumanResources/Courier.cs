@@ -737,6 +737,12 @@ namespace FlavourBusinessManager.HumanResources
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             bool foodShippingAssignmentFromMe = this.OAuthUserIdentity == authUser?.User_ID;
 
+            if((foodShipping as FoodShipping).GetPayments().Where(x=>x.State!=FinanceFacade.PaymentState.New).Count()>0)
+            {
+                throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
+            }
+            
+
             var mealCourse = foodShipping.MealCourse;
             var preparedItems = foodShipping.ContextsOfPreparedItems;
             var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
@@ -746,6 +752,31 @@ namespace FlavourBusinessManager.HumanResources
             (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
             //if (!foodShippingAssignmentFromMe)
             //    FindFoodShippingsChanges();
+        }
+
+        public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
+        {
+
+            if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
+            {
+                throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
+            }
+            if (foodShipping.PreparedItems.All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.OnRoad)))
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
+                    (foodShipping as FoodShipping).AtTheCounter();
+
+                    stateTransition.Consistent = true;
+                }
+                FindFoodShippingsChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("Only on the road food shipping can you deassign.");
+            }
+
         }
 
         /// <MetaDataID>{02b58641-354e-4b16-a172-95018e80f233}</MetaDataID>
@@ -802,25 +833,7 @@ namespace FlavourBusinessManager.HumanResources
         }
 
 
-        public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
-        {
-            if(foodShipping.PreparedItems.All(x=>x.State.IsIntheSameOrFollowingState(ItemPreparationState.OnRoad)))
-            {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
-                    (foodShipping as FoodShipping).AtTheCounter();
 
-                    stateTransition.Consistent = true;
-                }
-                FindFoodShippingsChanges();
-            }
-            else
-            {
-                throw new InvalidOperationException("Only on the road food shipping can you deassign.");
-            }
-
-        }
         /// <MetaDataID>{62b4500f-aeaa-4663-a3dc-248c16c43d10}</MetaDataID>
         internal void FindFoodShippingsChanges()
         {

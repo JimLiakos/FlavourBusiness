@@ -236,7 +236,7 @@ namespace ServiceContextManagerApp
             if (foodShipping != null)
             {
 
-                SerializeTaskScheduler.AddTask(async () =>
+               var task= SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
                     while (tries > 0)
