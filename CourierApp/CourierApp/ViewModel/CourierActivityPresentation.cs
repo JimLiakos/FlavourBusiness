@@ -46,7 +46,7 @@ namespace CourierApp.ViewModel
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
-        /// <MetaDataID>{de9782b2-5434-43b6-8444-14465451ac48}</MetaDataID>
+        /// <MetaDataID>{de9782b2-5434-43b6-8444-14465451ac48}</MetaDataID> 
         public string OAuthUserIdentity { get; set; }
         /// <MetaDataID>{f9b39c2f-80f4-441b-953e-3bd8ea4b5977}</MetaDataID>
         public string FullName { get; set; }
@@ -98,7 +98,7 @@ namespace CourierApp.ViewModel
             if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
             {
 #if DeviceDotNet
-                var paymentService = new PaymentService();
+                var paymentService = new OOAdvantech.Pay.PaymentService();
                 if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
                 {
                     RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
@@ -295,7 +295,7 @@ namespace CourierApp.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    await Task.Delay(5000);
+                    //await Task.Delay(5000);
                     GetMessages();
                 });
 
@@ -320,6 +320,7 @@ namespace CourierApp.ViewModel
                             {
                                 _Courier.ObjectChangeState -= Courier_ObjectChangeState;
                                 _Courier.MessageReceived -= MessageReceived;
+                                _Courier.FoodShippingsChanged -= FoodShippingsChanged;
                                 //Courier.ServingBatchesChanged -= ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
@@ -332,6 +333,7 @@ namespace CourierApp.ViewModel
                                     UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
+                                _Courier.FoodShippingsChanged += FoodShippingsChanged;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -395,6 +397,7 @@ namespace CourierApp.ViewModel
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                     _Courier.MessageReceived += MessageReceived;
+                                    _Courier.FoodShippingsChanged += FoodShippingsChanged;
                                     //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                     if (_Courier is ITransparentProxy)
                                         (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -459,10 +462,22 @@ namespace CourierApp.ViewModel
 
         }
 
+        private void FoodShippingsChanged()
+        {
+            if (ActiveShiftWork != null)
+            {
+                GetServingUpdates();
+                //UpdateFoodShippings(Courier.GetFoodShippings());
+            }
+
+        }
+
         /// <MetaDataID>{c57f087c-6cb6-4bc6-a6b9-1b46a58a9884}</MetaDataID>
         private void CourierActivityPresentation_Reconnected(object sender)
         {
             GetServingUpdates();
+
+
         }
 
         /// <MetaDataID>{d99357a4-d51b-450e-9dcb-2c2c0f96b6c8}</MetaDataID>
@@ -540,18 +555,24 @@ namespace CourierApp.ViewModel
             ServingBatchUpdates servingBatchUpdates = Courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
             var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
-            foreach (var assignedFoodShipping in foodShippings)
+            foreach (var foodShipping in foodShippings)
             {
-                var foodShippingPresentation = _FoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
                 foodShippingPresentation.Update();
+                if (_AssignedFoodShippings.ContainsKey(foodShipping))
+                    _AssignedFoodShippings.Remove(foodShipping);
+
             }
 
-            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).OfType<IFoodShipping>().ToList();
+            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
 
             foreach (var assignedFoodShipping in asignedServingBatches)
             {
                 var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
                 servingBatchPresentation.Update();
+                if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    _FoodShippings.Remove(assignedFoodShipping);
+
             }
 
 
@@ -997,8 +1018,10 @@ namespace CourierApp.ViewModel
             {
                 _AssignedFoodShippings[assignedFoodShippingh].Dispose();
                 _AssignedFoodShippings.Remove(assignedFoodShippingh);
-                _AssignedFoodShippings[assignedFoodShippingh].ObjectChangeState-=FoodShipping_ObjectChangeState;
+                assignedFoodShippingh.ObjectChangeState-=FoodShipping_ObjectChangeState;
             }
+
+            ObjectChangeState?.Invoke(this, nameof(FoodShippings));
         }
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings;

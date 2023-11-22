@@ -737,6 +737,10 @@ namespace FlavourBusinessManager.EndUsers
         {
             
             var itemPreparations=foodShipping.PreparedItems.OfType<ItemPreparation>().Select(x => new SessionItemPreparationAbbreviation() { IsShared=x.IsShared, Quantity=x.Quantity, SessionID=x.SessionID, StateTimestamp=x.StateTimestamp, uid=x.uid }).ToList();
+
+            if (itemPreparations.Count == 0)
+                return new List<Payment>();
+
             Bill.GetBillFor(itemPreparations, foodShipping);
             List<FinanceFacade.Payment> payments = foodShipping.MealCourse.Meal.Session.BillingPayments.OfType<FinanceFacade.Payment>().ToList();
             if (payments == null)

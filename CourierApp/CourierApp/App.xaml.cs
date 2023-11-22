@@ -12,15 +12,17 @@ namespace CourierApp
         /// <MetaDataID>{f2aa7a20-355b-4754-a588-cfb9d23250e1}</MetaDataID>
         public App()
         {
-            //try
-            //{
-            //    string text = DeviceApplication.Current.ReadLog();
-            //    OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { "OnStart" });
-            //}
-            //catch
-            //{
-            //    // just suppress any error logging exceptions
-            //}
+            try
+            {
+                string text = DeviceApplication.Current.ReadLog();
+                DeviceApplication.Current.ClearLog();
+                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { "OnStart" });
+            }
+            catch
+            {
+                // just suppress any error logging exceptions
+            }
+            App.SerializeTaskScheduler.RunAsync();
 
             InitializeComponent();
 

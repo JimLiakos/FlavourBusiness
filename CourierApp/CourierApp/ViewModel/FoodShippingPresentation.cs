@@ -6,11 +6,13 @@ using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech;
 using ServiceContextManagerApp;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+#if !DeviceDotNet
+using ServiceContextManagerApp;
+using System;
+#endif
 namespace CourierApp.ViewModel
 {
     public class FoodShippingPresentation : System.IDisposable

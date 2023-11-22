@@ -49,4 +49,14 @@ namespace FlavourBusinessFacade.HumanResources
     }
 
     public delegate void FoodShippingsChangedHandler();
+
+
+    public class PaidFoodShippingException:System.Exception
+    {
+        public PaidFoodShippingException(string message) : base(message) { }
+
+        public PaidFoodShippingException(string message,System.Exception innerException) : base(message, innerException) { 
+
+        }
+    }
 }
