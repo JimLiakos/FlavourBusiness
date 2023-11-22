@@ -20,11 +20,17 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{c31eb292-1b39-4081-9516-0e0e9e97b10a}</MetaDataID>
     public class MealsController : System.MarshalByRefObject, IExtMarshalByRefObject, IMealsController
     {
+      static  public System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
         /// <MetaDataID>{0a7aeeab-712e-4d32-b84b-4de237e3192c}</MetaDataID>
         public List<IMealCourse> MealCoursesInProgress
         {
             get
             {
+               
+
+                
+
+
                 DateTime timeStamp = DateTime.UtcNow;
                 var openSessions = ServicesContextRunTime.OpenSessions;
                 TimeSpan timeSpan = (DateTime.UtcNow - timeStamp);
@@ -35,6 +41,15 @@ namespace FlavourBusinessManager.RoomService
                                    orderby mealCource.Meal.Session.ServicePoint.Description, (mealCource as MealCourse).MealCourseTypeOrder//.Courses.IndexOf(mealCource)
                                    select mealCource).ToList();
                 TimeSpan timeSpan2 = (DateTime.UtcNow - timeStamp);
+
+                if (timer.IsRunning)
+                {
+                    timer.Stop();
+
+                    var sdsd = timer.ElapsedMilliseconds;
+                 //   System.IO.File.AppendAllText(@"f:\log.txt", Environment.NewLine + "elapsed time in millisecond :" + timer.ElapsedMilliseconds.ToString());
+                }
+
 
                 return mealCourses;
             }

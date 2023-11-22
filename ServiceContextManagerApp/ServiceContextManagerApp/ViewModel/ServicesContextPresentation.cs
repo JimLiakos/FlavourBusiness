@@ -186,7 +186,7 @@ namespace ServiceContextManagerApp
 
 
 
-        public bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker)
+        public async Task<bool> AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker)
         {
             CourierPresentation courierPresentation = worker as CourierPresentation;
 
@@ -197,7 +197,7 @@ namespace ServiceContextManagerApp
             if (foodShipping != null)
             {
 
-                SerializeTaskScheduler.AddTask(async () =>
+                return await SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
                     while (tries > 0)
@@ -215,20 +215,21 @@ namespace ServiceContextManagerApp
                         catch (System.Exception error)
                         {
                             var er = error;
-                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
+                            throw;
+                            
                         }
                     }
                     return true;
 
                 });
-                return true;
+                
             }
 
             return false;
         }
 
 
-        public bool RemoveFoodShippingAssignment(string foodShippingIdentity)
+        public async Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity)
         {
             var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
@@ -236,36 +237,35 @@ namespace ServiceContextManagerApp
             if (foodShipping != null)
             {
 
-                SerializeTaskScheduler.AddTask(async () =>
-                {
-                    int tries = 30;
-                    while (tries > 0)
-                    {
-                        try
-                        {
-                            var courier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.FoodShipping.ShiftWork.Worker);
-                            if(courier!=null)
-                                courier.RemoveFoodShippingAssignment(foodShipping.FoodShipping);
-                            return true;
-                        }
-                        catch (System.Net.WebException commError)
-                        {
-                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
-                        }
-                        catch (System.InvalidOperationException error)
-                        {
-                            throw;
-                        }
-                        catch (System.Exception error)
-                        {
-                            var er = error;
-                            await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
-                        }
-                    }
-                    return true;
+                return await SerializeTaskScheduler.AddTask(async () =>
+               {
+                   int tries = 30;
+                   while (tries > 0)
+                   {
+                       try
+                       {
+                           var courier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.FoodShipping.ShiftWork.Worker);
+                           if (courier != null)
+                               courier.RemoveFoodShippingAssignment(foodShipping.FoodShipping);
+                           return true;
+                       }
+                       catch (System.Net.WebException commError)
+                       {
+                           await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
+                       }
+                       catch (System.InvalidOperationException error)
+                       {
+                           throw;
+                       }
+                       catch (System.Exception error)
+                       {
+                           var er = error;
+                           throw;
+                       }
+                   }
+                   return true;
 
-                });
-                return true;
+               });
             }
 
 
@@ -273,7 +273,7 @@ namespace ServiceContextManagerApp
         }
 
 
-            public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
+        public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
         {
             worker.ActiveShiftWork = worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
         }
@@ -694,7 +694,7 @@ namespace ServiceContextManagerApp
             });
 
 
-            
+
         }
 
 

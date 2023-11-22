@@ -1,5 +1,6 @@
 ﻿using DontWaitApp;
 using FinanceFacade;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -78,6 +79,11 @@ namespace MenuDesigner.ViewModel.Preview
 
         /// <MetaDataID>{ca0380ef-f535-49f8-9186-b19449b6d6b1}</MetaDataID>
         public Task<IBill> GetBill()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
         {
             throw new NotImplementedException();
         }

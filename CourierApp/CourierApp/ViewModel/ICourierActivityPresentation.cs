@@ -52,9 +52,9 @@ namespace CourierApp.ViewModel
 
         List<FoodShippingPresentation> AssignedFoodShippings { get; }
 
-        bool AssignFoodShipping(string foodShippingIdentity);
+        Task<bool> AssignFoodShipping(string foodShippingIdentity);
 
-        bool DeAssignFoodShipping(string foodShippingIdentity);
+        Task<bool> DeAssignFoodShipping(string foodShippingIdentity);
 
         bool CommitFoodShippings();
 

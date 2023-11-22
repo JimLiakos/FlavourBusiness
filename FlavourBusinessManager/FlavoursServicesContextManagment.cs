@@ -12,6 +12,7 @@ using FlavourBusinessManager.ServicePointRunTime;
 using System.Collections.Generic;
 using System.IO;
 using OOAdvantech.Remoting.RestApi;
+using FlavourBusinessManager.RoomService;
 
 namespace FlavourBusinessManager
 {
@@ -497,9 +498,11 @@ namespace FlavourBusinessManager
                     storagesClient.PostAsync(objectStorage.StorageMetaData, true);
 
 
-
+                
 
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
+
+                MealsController.timer.Start();
                 var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()
                                               where theServicePointRun.ServicesContextIdentity == servicesContextIdentity
                                               select theServicePointRun).FirstOrDefault();

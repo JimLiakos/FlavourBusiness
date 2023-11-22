@@ -110,8 +110,8 @@ namespace ServiceContextManagerApp
         
         ServingBatchPresentation GetServingBatch(DelayedServingBatchAbbreviation delayedServingBatch);
 
-        bool AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker);
-        bool RemoveFoodShippingAssignment(string foodShippingIdentity);
+        Task<bool> AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker);
+        Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity);
 
     }
 

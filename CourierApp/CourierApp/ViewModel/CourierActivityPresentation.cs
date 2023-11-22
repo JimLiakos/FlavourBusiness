@@ -1016,7 +1016,7 @@ namespace CourierApp.ViewModel
             throw new NotImplementedException();
         }
 
-        public bool AssignFoodShipping(string foodShippingIdentity)
+        public async Task<bool> AssignFoodShipping(string foodShippingIdentity)
         {
             var foodShipping = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 
@@ -1027,7 +1027,7 @@ namespace CourierApp.ViewModel
                 _FoodShippings.Remove(foodShipping.FoodShipping);
 
 
-                SerializeTaskScheduler.AddTask(async () =>
+              return await  SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
                     while (tries > 0)
@@ -1048,11 +1048,8 @@ namespace CourierApp.ViewModel
                         }
                     }
                     return true;
-
                 });
-                return true;
             }
-
             return false;
         }
 
@@ -1066,7 +1063,7 @@ namespace CourierApp.ViewModel
             }
         }
 
-        public bool DeAssignFoodShipping(string foodShippingIdentity)
+        public async Task<bool> DeAssignFoodShipping(string foodShippingIdentity)
         {
             var servingBatch = AssignedFoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
             if (servingBatch != null)
@@ -1077,7 +1074,7 @@ namespace CourierApp.ViewModel
 
 
 
-                SerializeTaskScheduler.AddTask(async () =>
+                return await SerializeTaskScheduler.AddTask(async () =>
                 {
                     int tries = 30;
                     while (tries > 0)
