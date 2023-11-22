@@ -568,7 +568,7 @@ namespace FlavourBusinessManager.HumanResources
 
         /// <MetaDataID>{03cbec0d-378b-4d10-93d5-834db2202c06}</MetaDataID>
         public List<IServingShiftWork> GetLastThreeSifts()
-        { 
+        {
             if (LastThreeShiftsPeriodStart != null)
             {
                 List<IServingShiftWork> lastThreeSifts = GetSifts(LastThreeShiftsPeriodStart.Value, DateTime.UtcNow);
@@ -647,9 +647,9 @@ namespace FlavourBusinessManager.HumanResources
         public IList<IFoodShipping> GetFoodShippings()
         {
             var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IFoodShipping>().ToList();
-            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned).ToList();
+            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned&&(ActiveShiftWork!=null&&x.ShiftWork==this.ActiveShiftWork)).ToList();
             FoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
-            return foodShippings;
+            return AssignedFoodShippings.Union(FoodShippings).ToList();
         }
 
         /// <MetaDataID>{706291dc-5c67-4906-b9d2-ea8072166738}</MetaDataID>
@@ -684,7 +684,9 @@ namespace FlavourBusinessManager.HumanResources
             {
 
             }
-            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().ToList();
+            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().Where(x => !x.IsAssigned||(ActiveShiftWork!=null&&x.ShiftWork==this.ActiveShiftWork)).ToList();
+
+
 
 
             return new ServingBatchUpdates(servingBatches.OfType<IServingBatch>().ToList(), servingItemsOnDevice);
@@ -737,25 +739,29 @@ namespace FlavourBusinessManager.HumanResources
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             bool foodShippingAssignmentFromMe = this.OAuthUserIdentity == authUser?.User_ID;
 
-            if((foodShipping as FoodShipping).GetPayments().Where(x=>x.State!=FinanceFacade.PaymentState.New).Count()>0)
+            if (foodShipping.PreparedItems.All(x => x.State.IsInPreviousState(ItemPreparationState.OnRoad)))
             {
-                throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
+
+                if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
+                {
+                    throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
+                }
+
+
+                var mealCourse = foodShipping.MealCourse;
+                var preparedItems = foodShipping.ContextsOfPreparedItems;
+                var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
+                ObjectStorage.DeleteObject(foodShipping);
+
+                (foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
+                (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
             }
-            
-
-            var mealCourse = foodShipping.MealCourse;
-            var preparedItems = foodShipping.ContextsOfPreparedItems;
-            var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
-            ObjectStorage.DeleteObject(foodShipping);
-
-            (foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
-            (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
             //if (!foodShippingAssignmentFromMe)
             //    FindFoodShippingsChanges();
         }
 
         public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
-        { 
+        {
 
             if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
             {
@@ -786,7 +792,7 @@ namespace FlavourBusinessManager.HumanResources
             {
 
                 AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-                bool foodShippingAssignmentFromMe= this.OAuthUserIdentity == authUser?.User_ID;
+                bool foodShippingAssignmentFromMe = this.OAuthUserIdentity == authUser?.User_ID;
 
                 lock (foodShipping)
                 {
@@ -803,7 +809,7 @@ namespace FlavourBusinessManager.HumanResources
             }
 
         }
-         
+
 
         public void AssignAndCommitFoodShipping(IFoodShipping foodShipping)
         {
