@@ -237,35 +237,43 @@ namespace ServiceContextManagerApp
             if (foodShipping != null)
             {
 
-                return await SerializeTaskScheduler.AddTask(async () =>
-               {
-                   int tries = 30;
-                   while (tries > 0)
-                   {
-                       try
+                try
+                {
+                    return await SerializeTaskScheduler.AddTask(async () =>
                        {
-                           var courier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.FoodShipping.ShiftWork.Worker);
-                           if (courier != null)
-                               courier.RemoveFoodShippingAssignment(foodShipping.FoodShipping);
+                           int tries = 30;
+                           while (tries > 0)
+                           {
+                               try
+                               {
+                                   var courier = RemotingServices.CastTransparentProxy<ICourier>(foodShipping.FoodShipping.ShiftWork.Worker);
+                                   if (courier != null)
+                                       courier.RemoveFoodShippingAssignment(foodShipping.FoodShipping);
+                                   return true;
+                               }
+                               catch (System.Net.WebException commError)
+                               {
+                                   await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
+                               }
+                               catch (System.InvalidOperationException error)
+                               {
+                                   throw;
+                               }
+                               catch (System.Exception error)
+                               {
+                                   var er = error;
+                                   throw;
+                               }
+                           }
                            return true;
-                       }
-                       catch (System.Net.WebException commError)
-                       {
-                           await System.Threading.Tasks.Task.Delay(System.TimeSpan.FromSeconds(1));
-                       }
-                       catch (System.InvalidOperationException error)
-                       {
-                           throw;
-                       }
-                       catch (System.Exception error)
-                       {
-                           var er = error;
-                           throw;
-                       }
-                   }
-                   return true;
 
-               });
+                       });
+                }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
             }
 
 

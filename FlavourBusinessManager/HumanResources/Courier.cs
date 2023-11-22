@@ -755,7 +755,7 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
-        {
+        { 
 
             if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
             {
