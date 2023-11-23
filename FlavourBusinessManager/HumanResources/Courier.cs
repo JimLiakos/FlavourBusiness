@@ -677,6 +677,10 @@ namespace FlavourBusinessManager.HumanResources
                 }
                 else
                 {
+                   var updatedServingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid ).FirstOrDefault();
+                    if(updatedServingItemOnDevice != null) //servingItemOnDevice exist
+                        servingItemsOnDevice.Remove(updatedServingItemOnDevice);
+
 
                 }
             }

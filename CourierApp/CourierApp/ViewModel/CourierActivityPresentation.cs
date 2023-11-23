@@ -1073,6 +1073,12 @@ namespace CourierApp.ViewModel
                     return true;
                 });
             }
+            else
+            {
+                var assignedFoodShipping = AssignedFoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+                if (assignedFoodShipping != null)
+                    return true;
+            }
             return false;
         }
 
