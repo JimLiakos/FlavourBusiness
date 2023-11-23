@@ -93,7 +93,7 @@ namespace CourierApp.ViewModel
         public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
             if (payment.State == PaymentState.Completed)
-                return ;
+                return;
 
             if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
             {
@@ -107,11 +107,11 @@ namespace CourierApp.ViewModel
                     {
                         System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                     }
-                    return ;
+                    return;
                 }
 
 #endif
-                return ;
+                return;
             }
             else if (paymentMethod == FinanceFacade.PaymentMethod.Card)
             {
@@ -122,22 +122,22 @@ namespace CourierApp.ViewModel
                     var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
 
                     payment.CardPaymentCompleted(paymentData.CardType, paymentData.AccountNum, true, paymentData.TransactionID, tipAmount);
-                    return ;
+                    return;
 
                 }
                 else
                 {
                     payment.CardPaymentCompleted(null, null, true, null, tipAmount);
-                    return ;
+                    return;
                 }
             }
             else if (paymentMethod == FinanceFacade.PaymentMethod.Cash)
             {
                 payment.CashPaymentCompleted(tipAmount);
-                return ;
+                return;
             }
             else
-                return ;
+                return;
 
         }
 
@@ -1044,34 +1044,34 @@ namespace CourierApp.ViewModel
             var foodShipping = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 
             if (foodShipping != null)
-            {
+            { 
 
                 _AssignedFoodShippings[foodShipping.FoodShipping] = _FoodShippings[foodShipping.FoodShipping];
                 _FoodShippings.Remove(foodShipping.FoodShipping);
 
 
-              return await  SerializeTaskScheduler.AddTask(async () =>
-                {
-                    int tries = 30;
-                    while (tries > 0)
-                    {
-                        try
-                        {
-                            this.Courier.AssignFoodShipping(foodShipping.FoodShipping);
-                            return true;
-                        }
-                        catch (System.Net.WebException commError)
-                        {
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
-                        }
-                        catch (Exception error)
-                        {
-                            var er = error;
-                            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
-                        }
-                    }
-                    return true;
-                });
+                return await SerializeTaskScheduler.AddTask(async () =>
+                  {
+                      int tries = 30;
+                      while (tries > 0)
+                      {
+                          try
+                          {
+                              this.Courier.AssignFoodShipping(foodShipping.FoodShipping);
+                              return true;
+                          }
+                          catch (System.Net.WebException commError)
+                          {
+                              await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                          }
+                          catch (Exception error)
+                          {
+                              var er = error;
+                              await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                          }
+                      }
+                      return true;
+                  });
             }
             else
             {
@@ -1132,6 +1132,45 @@ namespace CourierApp.ViewModel
 
             return false;
         }
+
+
+
+        public async void PhoneCall(string foodShippingIdentity)
+        {
+            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping==null)
+                foodShipping=FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if(foodShipping!=null)
+            {
+                PhoneDialer.Open(foodShipping.PhoneNumber);
+            }
+        }
+
+        public async void Navigate(string foodShippingIdentity)
+        {
+            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping==null)
+                foodShipping=FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping!=null)
+            {
+                try
+                {
+                    await Xamarin.Essentials.Map.OpenAsync(foodShipping.Place.Location.Latitude, foodShipping.Place.Location.Longitude, new MapLaunchOptions() { Name = foodShipping.ClientFullName, NavigationMode = NavigationMode.Driving });
+                }
+                catch (Exception error)
+                {
+
+                    
+                }
+            }
+
+
+        }
+
+
+
 
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
         {

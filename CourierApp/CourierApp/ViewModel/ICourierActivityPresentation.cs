@@ -15,7 +15,7 @@ namespace CourierApp.ViewModel
     [HttpVisible]
     public interface ICourierActivityPresentation
     {
-
+        
 
         /// <MetaDataID>{fc4f212d-57ff-417d-8b8b-ea68cb3d8c2a}</MetaDataID>
         bool InActiveShiftWork { get; }
@@ -55,6 +55,10 @@ namespace CourierApp.ViewModel
         Task<bool> AssignFoodShipping(string foodShippingIdentity);
 
         Task<bool> DeAssignFoodShipping(string foodShippingIdentity);
+
+        void PhoneCall(string foodShippingIdentity);
+
+        void Navigate(string foodShippingIdentity);
 
         bool CommitFoodShippings();
 

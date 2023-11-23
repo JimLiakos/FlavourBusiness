@@ -751,13 +751,23 @@ namespace FlavourBusinessManager.HumanResources
                     throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
                 }
 
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
+                    (foodShipping as FoodShipping).AtTheCounter();
 
-                var mealCourse = foodShipping.MealCourse;
-                var preparedItems = foodShipping.ContextsOfPreparedItems;
-                var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
-                ObjectStorage.DeleteObject(foodShipping);
+                    stateTransition.Consistent = true;
+                }
 
-                (foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
+                //FindFoodShippingsChanges();
+
+                //var mealCourse = foodShipping.MealCourse;
+                //var preparedItems = foodShipping.ContextsOfPreparedItems;
+                //var underPreparationItems = foodShipping.ContextsOfUnderPreparationItems;
+                //ObjectStorage.DeleteObject(foodShipping);
+
+                //(foodShipping as FoodShipping).Update(mealCourse, preparedItems, underPreparationItems);
+
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingDeAssigned(this, foodShipping);
             }
             //if (!foodShippingAssignmentFromMe)
