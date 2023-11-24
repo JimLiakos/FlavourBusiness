@@ -144,23 +144,23 @@ namespace CourierApp.ViewModel
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity)
         {
 
-            var foodShippingPresentation = this.AssignedFoodShippings.Where(x => x.Identity== foodShippingIdentity).FirstOrDefault();
+            var foodShippingPresentation = this.AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
             var bill = this.Courier.GetBill(itemPreparations, foodShippingPresentation.FoodShipping);
             return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         }
 
         public CourierActivityPresentation(bool useAssignedPaymentTerminal)
         {
-            _FoodShippings= new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
-            _FoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
-            _AssignedFoodShippings=  new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
-            _AssignedFoodShippings.OnNewViewModelWrapper+=OnNewViewModelWrapper;
-            this.UseAssignedPaymentTerminal= useAssignedPaymentTerminal;
+            _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _FoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
+            _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _AssignedFoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
+            this.UseAssignedPaymentTerminal = useAssignedPaymentTerminal;
         }
 
         private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
         {
-            foodShipping.ObjectChangeState+=FoodShipping_ObjectChangeState;
+            foodShipping.ObjectChangeState += FoodShipping_ObjectChangeState;
 
 
         }
@@ -498,7 +498,7 @@ namespace CourierApp.ViewModel
             if (member == nameof(IServicesContextWorker.ActiveShiftWork))
             {
                 var activeShiftWork = Courier.ActiveShiftWork;
-                if (activeShiftWork!=ActiveShiftWork)
+                if (activeShiftWork != ActiveShiftWork)
                 {
                     ActiveShiftWork = activeShiftWork;
                     UpdateFoodShippings(Courier.GetFoodShippings());
@@ -595,7 +595,7 @@ namespace CourierApp.ViewModel
                     {
                         _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
                         foodShippingPresentation.Dispose();
-                        foodShippingPresentation.ObjectChangeState-=FoodShipping_ObjectChangeState;
+                        foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
                     }
 
                 }
@@ -1011,14 +1011,14 @@ namespace CourierApp.ViewModel
             {
                 _FoodShippings[servingBatch].Dispose();
                 _FoodShippings.Remove(servingBatch);
-                servingBatch.ObjectChangeState-=FoodShipping_ObjectChangeState;
+                servingBatch.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
 
             foreach (var assignedFoodShippingh in _AssignedFoodShippings.Keys.Where(x => !asignedFoodShippings.Contains(x)).ToList())
             {
                 _AssignedFoodShippings[assignedFoodShippingh].Dispose();
                 _AssignedFoodShippings.Remove(assignedFoodShippingh);
-                assignedFoodShippingh.ObjectChangeState-=FoodShipping_ObjectChangeState;
+                assignedFoodShippingh.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
 
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));
@@ -1044,7 +1044,7 @@ namespace CourierApp.ViewModel
             var foodShipping = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 
             if (foodShipping != null)
-            { 
+            {
 
                 _AssignedFoodShippings[foodShipping.FoodShipping] = _FoodShippings[foodShipping.FoodShipping];
                 _FoodShippings.Remove(foodShipping.FoodShipping);
@@ -1138,31 +1138,35 @@ namespace CourierApp.ViewModel
         public async void PhoneCall(string foodShippingIdentity)
         {
             var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-            if (foodShipping==null)
-                foodShipping=FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping == null)
+                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
-            if(foodShipping!=null)
+            if (foodShipping != null)
             {
+#if DeviceDotNet
                 PhoneDialer.Open(foodShipping.PhoneNumber);
+#endif
             }
         }
 
         public async void Navigate(string foodShippingIdentity)
         {
             var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-            if (foodShipping==null)
-                foodShipping=FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping == null)
+                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
-            if (foodShipping!=null)
+            if (foodShipping != null)
             {
                 try
                 {
+#if DeviceDotNet
                     await Xamarin.Essentials.Map.OpenAsync(foodShipping.Place.Location.Latitude, foodShipping.Place.Location.Longitude, new MapLaunchOptions() { Name = foodShipping.ClientFullName, NavigationMode = NavigationMode.Driving });
+#endif
                 }
                 catch (Exception error)
                 {
 
-                    
+
                 }
             }
 
@@ -1229,7 +1233,7 @@ namespace CourierApp.ViewModel
             {
                 _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
                 foodShippingPresentation.Dispose();
-                foodShippingPresentation.ObjectChangeState-=FoodShipping_ObjectChangeState;
+                foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
 
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));
