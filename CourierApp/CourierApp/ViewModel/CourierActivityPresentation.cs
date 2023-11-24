@@ -1045,7 +1045,7 @@ namespace CourierApp.ViewModel
 
             if (foodShipping != null)
             {
-
+                 
                 _AssignedFoodShippings[foodShipping.FoodShipping] = _FoodShippings[foodShipping.FoodShipping];
                 _FoodShippings.Remove(foodShipping.FoodShipping);
 
