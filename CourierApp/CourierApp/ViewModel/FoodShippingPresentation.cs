@@ -39,6 +39,16 @@ namespace CourierApp.ViewModel
                 if (foodShippingItems.All(x => x.State == ItemPreparationState.OnRoad))
                     return ItemPreparationState.OnRoad;
 
+
+                if (foodShippingItems.All(x => x.State == ItemPreparationState.Served))
+                    return ItemPreparationState.Served;
+
+
+                if (foodShippingItems.All(x => x.State == ItemPreparationState.Canceled))
+                    return ItemPreparationState.Canceled;
+
+
+
                 if (foodShippingItems.All(x => x.IsInFollowingState(ItemPreparationState.OnRoad)))
                     return ItemPreparationState.Served;
 

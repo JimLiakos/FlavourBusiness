@@ -693,5 +693,49 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
+        public void FoodShippingReturn(string returnReasonIdentity)
+        {
+            var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in PreparedItems)
+                    itemPreparation.State = ItemPreparationState.Canceled;
+
+                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                stateTransition.Consistent = true;
+            }
+
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                ItemsStateChanged?.Invoke(newItemsState);
+                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+            });
+        }
+
+        public void Delivered()
+        {
+
+            var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in PreparedItems)
+                    itemPreparation.State = ItemPreparationState.Served;
+
+                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                stateTransition.Consistent = true;
+            }
+
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                ItemsStateChanged?.Invoke(newItemsState);
+                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+            });
+
+        }
+
     }
 }

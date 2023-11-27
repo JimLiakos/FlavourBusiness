@@ -30,7 +30,9 @@ namespace FlavourBusinessFacade.Shipping
         [BackwardCompatibilityID("+5")]
         string NotesForClient { get; }
 
+        void FoodShippingReturn(string returnReasonIdentity);
 
+        void Delivered();
     }
 
 

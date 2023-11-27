@@ -1030,7 +1030,7 @@ namespace CourierApp.ViewModel
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings;
 
-        public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
+        public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.Where(x=>x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)).OrderBy(x => x.FoodShipping.SortID).ToList();
 
 
         /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
@@ -1133,8 +1133,7 @@ namespace CourierApp.ViewModel
             return false;
         }
 
-
-
+    
         public async void PhoneCall(string foodShippingIdentity)
         {
             var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
@@ -1235,6 +1234,8 @@ namespace CourierApp.ViewModel
                 foodShippingPresentation.Dispose();
                 foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
+            var state = foodShippingPresentation.State;
+
 
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));
         }
@@ -1371,8 +1372,14 @@ namespace CourierApp.ViewModel
 
         public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity)
         {
-            
+            var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShippingResentation!=null)
+            {
+                foodShippingResentation.FoodShipping.FoodShippingReturn(returnReasonIdentity);
+            }
         }
+
 
         public string AppIdentity => "com.microneme.courierapp";
 

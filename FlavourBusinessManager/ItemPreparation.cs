@@ -59,7 +59,7 @@ namespace FlavourBusinessManager.RoomService
                 _Description = new MultilingualMember<string>(value);
             }
         }
-
+         
         /// <exclude>Excluded</exclude>
         MultilingualMember<string> _Description = new MultilingualMember<string>();
 

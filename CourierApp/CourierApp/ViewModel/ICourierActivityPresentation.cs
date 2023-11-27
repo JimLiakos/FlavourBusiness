@@ -56,6 +56,9 @@ namespace CourierApp.ViewModel
 
         Task<bool> DeAssignFoodShipping(string foodShippingIdentity);
 
+
+        void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity);
+
         void PhoneCall(string foodShippingIdentity);
 
         void Navigate(string foodShippingIdentity);
@@ -72,7 +75,7 @@ namespace CourierApp.ViewModel
 
         void FoodShippingDelivered(string foodShippingIdentity);
 
-        void FoodShippingReturn(string foodShippingIdentity,string returnReasonIdentity);
+        
 
 
 
