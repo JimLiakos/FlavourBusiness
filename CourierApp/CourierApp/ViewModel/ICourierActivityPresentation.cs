@@ -70,5 +70,11 @@ namespace CourierApp.ViewModel
 
         Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount);
 
+        void FoodShippingDelivered(string foodShippingIdentity);
+
+        void FoodShippingReturn(string foodShippingIdentity,string returnReasonIdentity);
+
+
+
     }
 }

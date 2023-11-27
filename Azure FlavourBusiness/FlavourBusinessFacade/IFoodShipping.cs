@@ -1,5 +1,9 @@
 using FlavourBusinessFacade.EndUsers;
+using OOAdvantech.Json;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.Shipping
 {
@@ -28,4 +32,45 @@ namespace FlavourBusinessFacade.Shipping
 
 
     }
+
+
+    public class ReturnReason
+    {
+
+        public ReturnReason(string identity, Dictionary<string, string> multilingualDescription)
+        {
+            Identity = identity;
+            foreach (var entry in multilingualDescription)
+            {
+                CultureInfo culture = CultureInfo.GetCultureInfo(entry.Key);
+                using (CultureContext context = new OOAdvantech.CultureContext(culture, true))
+                {
+                    MultilingualDescription.SetValue(entry.Value);
+                }
+            }
+        }
+
+        public ReturnReason()
+        {
+
+        }
+        public ReturnReason(string identity, Multilingual multilingualDescription)
+        {
+            Identity = identity;
+            MultilingualDescription = multilingualDescription;
+
+        }
+        [JsonProperty]
+        Multilingual MultilingualDescription = new Multilingual();
+
+
+        [JsonIgnore]
+        public string Description { get => MultilingualDescription.GetValue<string>(); set => MultilingualDescription.SetValue<string>(value); }
+
+
+        //Λάθος προϊόν,Λαθος Παραγγελία,Αργοποριμένη Παραγγελία,Κακής Ποιότητας Προϊον
+
+        public string Identity { get; set; }
+    }
+
 }

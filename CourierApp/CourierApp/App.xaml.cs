@@ -53,7 +53,7 @@ namespace CourierApp
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation);
             //SerializationBinder.NamesTypesDictionary["TakeAwayApp.ViewModel.WatchingOrderPresentation"] = typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ViewModel.MealCourse"] = typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse);
-
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.Shipping.ReturnReason"] = typeof(FlavourBusinessFacade.Shipping.ReturnReason);
 
 
 
@@ -77,8 +77,9 @@ namespace CourierApp
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation)] = "FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.Shipping.ReturnReason)] = "FlavourBusinessFacade.Shipping.ReturnReason";
 
-            
+
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse)] = "FlavourBusinessManager.RoomService.ViewModel.MealCourse";
 
 

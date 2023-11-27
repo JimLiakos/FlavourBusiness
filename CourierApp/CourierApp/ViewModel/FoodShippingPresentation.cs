@@ -9,6 +9,9 @@ using ServiceContextManagerApp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Globalization;
+using OOAdvantech.Json;
 #if !DeviceDotNet
 using ServiceContextManagerApp;
 using System;
@@ -191,7 +194,7 @@ namespace CourierApp.ViewModel
             {
                 var isoCurrencySymbol = this.ContextsOfPreparedItems.FirstOrDefault()?.PreparationItems.OfType<ItemPreparation>().FirstOrDefault()?.ISOCurrencySymbol;
                 if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
-                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol; 
+                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol;
                 return new List<TipOption>() {
                 new TipOption() { Amount=0, ISOCurrencySymbol= isoCurrencySymbol },
                 new TipOption() { Amount=0.5M, ISOCurrencySymbol= isoCurrencySymbol},
@@ -204,6 +207,22 @@ namespace CourierApp.ViewModel
                 new TipOption() { Amount=4M, ISOCurrencySymbol= isoCurrencySymbol }};
             }
         }
+        public List<ReturnReason> ReturnReasons
+        {
+            get
+            {
+                return new List<ReturnReason>() { 
+                    new ReturnReason("WRNGPROD",new Dictionary<string, string>() { { "el", "Λάθος Προϊόν" }, { "en", "Wrong Product" } }),
+                    new ReturnReason("WRNGORD",new Dictionary<string, string>() { { "el", "Λαθος Παραγγελία" }, { "en", "Wrong Order" } }),
+                    new ReturnReason("LTDLV",new Dictionary<string, string>() { { "el", "Αργοπορημένη Παραγγελία" }, { "en", "Late Delivery" } }),
+                    new ReturnReason("BDQLPROD",new Dictionary<string, string>() { { "el", "Κακής Ποιότητας Προϊον" }, { "en", "Bad Quality Product" } })
+                   
+                };
+
+            }
+
+        }
+
 
         public List<CurrencyOption> CurrencyOptions
         {
@@ -211,7 +230,7 @@ namespace CourierApp.ViewModel
             {
                 var isoCurrencySymbol = this.ContextsOfPreparedItems.FirstOrDefault()?.PreparationItems.OfType<ItemPreparation>().FirstOrDefault()?.ISOCurrencySymbol;
                 if (string.IsNullOrWhiteSpace(isoCurrencySymbol))
-                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol; 
+                    isoCurrencySymbol = System.Globalization.RegionInfo.CurrentRegion.ISOCurrencySymbol;
                 return new List<CurrencyOption>() {
                 new CurrencyOption() { Amount=0.05M, ISOCurrencySymbol= isoCurrencySymbol },
                 new CurrencyOption() { Amount=0.1M, ISOCurrencySymbol= isoCurrencySymbol },
@@ -231,4 +250,6 @@ namespace CourierApp.ViewModel
 
 
     }
+
+ 
 }

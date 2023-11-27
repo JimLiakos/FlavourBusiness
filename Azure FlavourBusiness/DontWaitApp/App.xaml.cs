@@ -57,6 +57,7 @@ namespace DontWaitApp
             SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.EndUsers.Place"] = typeof(FlavourBusinessManager.EndUsers.Place);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.EndUsers.Coordinate"] = typeof(FlavourBusinessFacade.EndUsers.Coordinate);
             SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.HomeDeliveryServicePointInfo"] = typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo);
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.Shipping.ReturnReason"] = typeof(FlavourBusinessFacade.Shipping.ReturnReason);
 
 
             //SerializationBinder.NamesTypesDictionary["MenuModel.MealType"] = typeof(MenuModel.MealType);
@@ -78,6 +79,7 @@ namespace DontWaitApp
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.EndUsers.Place)] = "FlavourBusinessManager.EndUsers.Place";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.EndUsers.Coordinate)] = "FlavourBusinessFacade.EndUsers.Coordinate";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.HomeDeliveryServicePointInfo)] = "FlavourBusinessFacade.HomeDeliveryServicePointInfo";
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.Shipping.ReturnReason)] = "FlavourBusinessFacade.Shipping.ReturnReason";
 
 
 

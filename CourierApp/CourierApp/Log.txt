@@ -1,138 +1,118 @@
-﻿21/11/2023 05:38:37 : OnStart
-21/11/2023 05:38:53 : ctor ServerSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/ieb4cn4gf4e7thpb3lgdmuwq_101.rem
-21/11/2023 05:38:53 : Opens : ws://192.168.1.101:8090/api/
-21/11/2023 05:38:53 : WebSocketClient  in :1
-21/11/2023 05:38:53 : WebSocketClient  exit :1
-21/11/2023 05:38:55 : ctor ServerSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/hv15feipe_bidqzqrzwcri7s_118.rem
-21/11/2023 05:38:55 : Opens : ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:38:55 : WebSocketClient  in :2
-21/11/2023 05:38:55 : WebSocketClient  exit :2
-21/11/2023 05:38:59 : WebSocketClient  in :3
-21/11/2023 05:38:59 : ReplaceWebSocketClient  in :3
-21/11/2023 05:38:59 : RestApp channel replace WebSocketClient :3
-21/11/2023 05:38:59 : CloseWebSocket :3
-21/11/2023 05:38:59 : ClientSessionPart.Reconnect :3
-21/11/2023 05:38:59 : replaced WebSocket state is :Open
-21/11/2023 05:38:59 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/hv15feipe_bidqzqrzwcri7s_118.rem
-21/11/2023 05:38:59 : Reconnect without channelSubscriptions. disconnectedChannel False
-21/11/2023 05:38:59 : ReplaceWebSocketClient  out :3
-21/11/2023 05:38:59 : WebSocketClient  exit :3
-21/11/2023 05:40:24 : WebSocketClient_Closed : 
-21/11/2023 05:40:24 : WebSocketClient_Closed : 
-21/11/2023 05:40:24 : WebSocketReconnect : 21/11/2023 05:40:24 - ws://192.168.1.101:8090/api/
-21/11/2023 05:40:24 : WebSocketReconnect : 21/11/2023 05:40:24 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:40:26 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
-21/11/2023 05:40:26 : NetworkAccess.Internet on line : 21/11/2023 05:40:26
-21/11/2023 05:40:59 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
-21/11/2023 05:40:59 : NetworkAccess.Internet on line : 21/11/2023 05:40:59
-21/11/2023 05:40:59 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:40:59 : 
-21/11/2023 05:40:59 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:40:59 : 
-21/11/2023 05:40:59 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:40:59 : 
-21/11/2023 05:40:59 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:40:59 : 
-21/11/2023 05:41:07 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:41:07 : WebSocketClient  in :4
-21/11/2023 05:41:07 : ReplaceWebSocketClient  in :4
-21/11/2023 05:41:07 : RestApp channel replace WebSocketClient :4
-21/11/2023 05:41:07 : CloseWebSocket :4
-21/11/2023 05:41:07 : ClientSessionPart.Reconnect :4
-21/11/2023 05:41:07 : replaced WebSocket state is :None
-21/11/2023 05:41:07 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/hv15feipe_bidqzqrzwcri7s_118.rem
-21/11/2023 05:41:07 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:41:07 : ReplaceWebSocketClient  out :4
-21/11/2023 05:41:07 : WebSocketClient  exit :4
-21/11/2023 05:41:08 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:41:08 : 
-21/11/2023 05:41:10 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:41:10 : WebSocketClient  in :5
-21/11/2023 05:41:10 : ReplaceWebSocketClient  in :5
-21/11/2023 05:41:10 : RestApp channel replace WebSocketClient :5
-21/11/2023 05:41:10 : CloseWebSocket :5
-21/11/2023 05:41:10 : ClientSessionPart.Reconnect :5
-21/11/2023 05:41:10 : replaced WebSocket state is :None
-21/11/2023 05:41:10 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/ieb4cn4gf4e7thpb3lgdmuwq_101.rem
-21/11/2023 05:41:10 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:41:10 : ReplaceWebSocketClient  out :5
-21/11/2023 05:41:10 : WebSocketClient  exit :5
-21/11/2023 05:41:14 : WebSocketClient  in :6
-21/11/2023 05:41:14 : ReplaceWebSocketClient  in :6
-21/11/2023 05:41:14 : RestApp channel replace WebSocketClient :6
-21/11/2023 05:41:14 : CloseWebSocket :6
-21/11/2023 05:41:14 : ClientSessionPart.Reconnect :6
-21/11/2023 05:41:14 : replaced WebSocket state is :Open
-21/11/2023 05:41:14 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/hv15feipe_bidqzqrzwcri7s_118.rem
-21/11/2023 05:41:14 : Reconnect without channelSubscriptions. disconnectedChannel False
-21/11/2023 05:41:14 : ReplaceWebSocketClient  out :6
-21/11/2023 05:41:14 : WebSocketClient  exit :6
-21/11/2023 05:41:27 : WebSocketClient_Closed : 
-21/11/2023 05:41:27 : WebSocketReconnect : 21/11/2023 05:41:27 - ws://192.168.1.101:8090/api/
-21/11/2023 05:41:27 : WebSocketClient_Closed : 
-21/11/2023 05:41:27 : WebSocketReconnect : 21/11/2023 05:41:27 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:41:29 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
-21/11/2023 05:41:29 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:41:29 : 
-21/11/2023 05:41:29 : NetworkAccess.Internet on line : 21/11/2023 05:41:29
-21/11/2023 05:42:29 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
-21/11/2023 05:42:29 : NetworkAccess.Internet on line : 21/11/2023 05:42:29
-21/11/2023 05:42:31 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
-21/11/2023 05:42:31 : NetworkAccess.Internet on line : 21/11/2023 05:42:31
-21/11/2023 05:43:02 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
-21/11/2023 05:43:02 : NetworkAccess.Internet on line : 21/11/2023 05:43:02
-21/11/2023 05:43:03 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:43:03 : WebSocketClient  in :7
-21/11/2023 05:43:03 : ReplaceWebSocketClient  in :7
-21/11/2023 05:43:03 : RestApp channel replace WebSocketClient :7
-21/11/2023 05:43:03 : CloseWebSocket :7
-21/11/2023 05:43:03 : ClientSessionPart.Reconnect :7
-21/11/2023 05:43:03 : replaced WebSocket state is :None
-21/11/2023 05:43:03 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/5z2atlbe1tj9i3d9jtlxudw0_105.rem
-21/11/2023 05:43:03 : Dedicated EndPoint connection  error :There is not session for ChannelUri : http://192.168.1.101:8090/api/
-21/11/2023 05:43:03 :   at OOAdvantech.Remoting.RestApi.ClientSessionPart.SetSubscriptions (System.Collections.Generic.List`1[T] channelSubscriptions, System.String sessionIdentity, System.String serverSessionPartUri, OOAdvantech.Remoting.RestApi.IEndPoint endPoint) [0x0015f] in <196a1ad066654b1898f95a174eff3e83>:0 
-  at OOAdvantech.Remoting.RestApi.ClientSessionPart.Reconnect (System.Boolean disconnectedChannel, OOAdvantech.Remoting.RestApi.IEndPoint endPoint) [0x0018c] in <196a1ad066654b1898f95a174eff3e83>:0 
-21/11/2023 05:43:03 : ReplaceWebSocketClient  error :There is not session for ChannelUri : http://192.168.1.101:8090/api/
-21/11/2023 05:43:03 :   at OOAdvantech.Remoting.RestApi.ClientSessionPart.Reconnect (System.Boolean disconnectedChannel, OOAdvantech.Remoting.RestApi.IEndPoint endPoint) [0x002eb] in <196a1ad066654b1898f95a174eff3e83>:0 
-  at (wrapper remoting-invoke-with-check) OOAdvantech.Remoting.RestApi.ClientSessionPart.Reconnect(bool,OOAdvantech.Remoting.RestApi.IEndPoint)
-  at OOAdvantech.Remoting.RestApi.WebSocketChannel+<>c__DisplayClass30_0.<ReplaceWebSocketClient>b__0 () [0x0028f] in <196a1ad066654b1898f95a174eff3e83>:0 
-21/11/2023 05:43:03 : WebSocketClient  exit :7
-21/11/2023 05:43:03 : WebSocketReconnect : 21/11/2023 05:43:03 - ws://192.168.1.101:8090/api/
-21/11/2023 05:43:06 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:43:06 : WebSocketClient  in :8
-21/11/2023 05:43:06 : ReplaceWebSocketClient  in :8
-21/11/2023 05:43:06 : RestApp channel replace WebSocketClient :8
-21/11/2023 05:43:06 : CloseWebSocket :8
-21/11/2023 05:43:06 : ClientSessionPart.Reconnect :8
-21/11/2023 05:43:06 : replaced WebSocket state is :None
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:43:06 : 
-21/11/2023 05:43:06 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/avszfyhopgr1huv_ak2kwno3_127.rem
-21/11/2023 05:43:06 : RestApp channel clientSessionPart Reconnect 05:43:06:327 :(23671) 323d3afd62f14b8c83284b357fdccfed.2e23f0e7116d4145bedf8b697d2aba2a.2b2f1c769b70e439 and Raise reconnect event
-21/11/2023 05:43:06 : ReplaceWebSocketClient  out :8
-21/11/2023 05:43:06 : WebSocketClient  exit :8
+﻿21/11/2023 05:48:07 : OnStart
+21/11/2023 05:48:24 : ctor ServerSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
+21/11/2023 05:48:24 : Opens : ws://192.168.1.101:8090/api/
+21/11/2023 05:48:24 : WebSocketClient  in :1
+21/11/2023 05:48:24 : WebSocketClient  exit :1
+21/11/2023 05:48:26 : ctor ServerSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
+21/11/2023 05:48:26 : Opens : ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+21/11/2023 05:48:26 : WebSocketClient  in :2
+21/11/2023 05:48:26 : WebSocketClient  exit :2
+21/11/2023 05:48:29 : WebSocketClient  in :3
+21/11/2023 05:48:29 : ReplaceWebSocketClient  in :3
+21/11/2023 05:48:29 : RestApp channel replace WebSocketClient :3
+21/11/2023 05:48:29 : CloseWebSocket :3
+21/11/2023 05:48:29 : ClientSessionPart.Reconnect :3
+21/11/2023 05:48:29 : replaced WebSocket state is :Open
+21/11/2023 05:48:29 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
+21/11/2023 05:48:29 : Reconnect without channelSubscriptions. disconnectedChannel False
+21/11/2023 05:48:29 : ReplaceWebSocketClient  out :3
+21/11/2023 05:48:29 : WebSocketClient  exit :3
+21/11/2023 05:49:40 : WebSocketClient_Closed : 
+21/11/2023 05:49:40 : WebSocketReconnect : 21/11/2023 05:49:40 - ws://192.168.1.101:8090/api/
+21/11/2023 05:49:40 : WebSocketClient_Closed : 
+21/11/2023 05:49:40 : WebSocketReconnect : 21/11/2023 05:49:40 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+21/11/2023 05:49:43 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
+21/11/2023 05:49:43 : NetworkAccess.Internet on line : 21/11/2023 05:49:43
+21/11/2023 05:50:17 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
+21/11/2023 05:50:17 : NetworkAccess.Internet on line : 21/11/2023 05:50:17
+21/11/2023 05:50:24 : WebSocketReconnect : replace webSocketClient
+21/11/2023 05:50:24 : WebSocketClient  in :4
+21/11/2023 05:50:24 : ReplaceWebSocketClient  in :4
+21/11/2023 05:50:24 : RestApp channel replace WebSocketClient :4
+21/11/2023 05:50:24 : CloseWebSocket :4
+21/11/2023 05:50:24 : ClientSessionPart.Reconnect :4
+21/11/2023 05:50:24 : replaced WebSocket state is :None
+21/11/2023 05:50:24 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
+21/11/2023 05:50:24 : Reconnect without channelSubscriptions. disconnectedChannel True
+21/11/2023 05:50:24 : ReplaceWebSocketClient  out :4
+21/11/2023 05:50:24 : WebSocketClient  exit :4
+21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:50:24 : 
+21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:50:24 : 
+21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:50:24 : 
+21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:50:24 : 
+21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:50:24 : 
+21/11/2023 05:50:26 : WebSocketReconnect : replace webSocketClient
+21/11/2023 05:50:26 : WebSocketClient  in :5
+21/11/2023 05:50:26 : ReplaceWebSocketClient  in :5
+21/11/2023 05:50:26 : RestApp channel replace WebSocketClient :5
+21/11/2023 05:50:26 : CloseWebSocket :5
+21/11/2023 05:50:26 : ClientSessionPart.Reconnect :5
+21/11/2023 05:50:26 : replaced WebSocket state is :None
+21/11/2023 05:50:27 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
+21/11/2023 05:50:27 : Reconnect without channelSubscriptions. disconnectedChannel True
+21/11/2023 05:50:27 : ReplaceWebSocketClient  out :5
+21/11/2023 05:50:27 : WebSocketClient  exit :5
+21/11/2023 05:50:30 : WebSocketClient  in :6
+21/11/2023 05:50:30 : ReplaceWebSocketClient  in :6
+21/11/2023 05:50:30 : RestApp channel replace WebSocketClient :6
+21/11/2023 05:50:30 : CloseWebSocket :6
+21/11/2023 05:50:30 : ClientSessionPart.Reconnect :6
+21/11/2023 05:50:30 : replaced WebSocket state is :Open
+21/11/2023 05:50:31 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
+21/11/2023 05:50:31 : Reconnect without channelSubscriptions. disconnectedChannel False
+21/11/2023 05:50:31 : ReplaceWebSocketClient  out :6
+21/11/2023 05:50:31 : WebSocketClient  exit :6
+21/11/2023 05:50:53 : WebSocketClient_Closed : 
+21/11/2023 05:50:53 : WebSocketReconnect : 21/11/2023 05:50:53 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+21/11/2023 05:50:53 : WebSocketClient_Closed : 
+21/11/2023 05:50:53 : WebSocketReconnect : 21/11/2023 05:50:53 - ws://192.168.1.101:8090/api/
+21/11/2023 05:50:55 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
+21/11/2023 05:50:55 : NetworkAccess.Internet on line : 21/11/2023 05:50:55
+21/11/2023 05:51:15 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:15 : 
+21/11/2023 05:51:15 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:15 : 
+21/11/2023 05:51:17 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
+21/11/2023 05:51:17 : NetworkAccess.Internet on line : 21/11/2023 05:51:17
+21/11/2023 05:51:23 : WebSocketReconnect : replace webSocketClient
+21/11/2023 05:51:23 : WebSocketClient  in :7
+21/11/2023 05:51:23 : ReplaceWebSocketClient  in :7
+21/11/2023 05:51:23 : RestApp channel replace WebSocketClient :7
+21/11/2023 05:51:23 : CloseWebSocket :7
+21/11/2023 05:51:23 : ClientSessionPart.Reconnect :7
+21/11/2023 05:51:23 : replaced WebSocket state is :None
+21/11/2023 05:51:23 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
+21/11/2023 05:51:23 : Reconnect without channelSubscriptions. disconnectedChannel True
+21/11/2023 05:51:23 : ReplaceWebSocketClient  out :7
+21/11/2023 05:51:23 : WebSocketClient  exit :7
+21/11/2023 05:51:26 : WebSocketReconnect : replace webSocketClient
+21/11/2023 05:51:26 : WebSocketClient  in :8
+21/11/2023 05:51:26 : ReplaceWebSocketClient  in :8
+21/11/2023 05:51:26 : RestApp channel replace WebSocketClient :8
+21/11/2023 05:51:26 : CloseWebSocket :8
+21/11/2023 05:51:26 : ClientSessionPart.Reconnect :8
+21/11/2023 05:51:26 : replaced WebSocket state is :None
+21/11/2023 05:51:26 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
+21/11/2023 05:51:26 : Reconnect without channelSubscriptions. disconnectedChannel True
+21/11/2023 05:51:26 : ReplaceWebSocketClient  out :8
+21/11/2023 05:51:26 : WebSocketClient  exit :8
+21/11/2023 05:51:26 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:26 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
+21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
+21/11/2023 05:51:33 : 
 

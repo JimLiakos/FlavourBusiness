@@ -1363,6 +1363,17 @@ namespace CourierApp.ViewModel
             }
 
         }
+
+        public void FoodShippingDelivered(string foodShippingIdentity)
+        {
+            
+        }
+
+        public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity)
+        {
+            
+        }
+
         public string AppIdentity => "com.microneme.courierapp";
 
 

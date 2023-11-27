@@ -74,7 +74,7 @@ namespace FlavourBusinessApps.Courier.Wpf
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.FixedMealType)] = "MenuModel.FixedMealType";
             SerializationBinder.TypesNamesDictionary[typeof(MenuModel.MealCourseType)] = "MenuModel.MealCourseType";
             SerializationBinder.TypesNamesDictionary[typeof(global::CourierApp.ViewModel.FoodShippingPresentation)] = "CourierApp.ViewModel.FoodShippingPresentation";
-
+            SerializationBinder.NamesTypesDictionary["FlavourBusinessFacade.Shipping.ReturnReason"] = typeof(FlavourBusinessFacade.Shipping.ReturnReason);
 
 
 
@@ -88,7 +88,7 @@ namespace FlavourBusinessApps.Courier.Wpf
 
             SerializationBinder.TypesNamesDictionary[typeof(global::TakeAwayApp.ViewModel.WatchingOrderPresentation)] = "TakeAwayApp.ViewModel.WatchingOrderPresentation";
             SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessManager.RoomService.ViewModel.MealCourse)] = "FlavourBusinessManager.RoomService.ViewModel.MealCourse";
-
+            SerializationBinder.TypesNamesDictionary[typeof(FlavourBusinessFacade.Shipping.ReturnReason)] = "FlavourBusinessFacade.Shipping.ReturnReason";
 
 
 
