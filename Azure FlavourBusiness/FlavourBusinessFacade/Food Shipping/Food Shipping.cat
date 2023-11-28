@@ -33,7 +33,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"6"))
+		    value      	"8"))
 	    quid       	"6503DC710117"
 	    stereotype 	"Interface"
 	    superclasses 	(list inheritance_relationship_list
@@ -206,6 +206,72 @@
 			    name       	"Identity"
 			    value      	"+5"))
 		    quid       	"65522D1803E3"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ReturnReasonID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6564F12B008C")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{b0e03048-d4c8-447f-a64e-c097498d2514}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"6564F12B008C"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "ReturnReason"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"6564F12B0090")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{009256bd-a668-4532-a0b4-88c5f47ad8eb}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"6564F12B0090"
 		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"

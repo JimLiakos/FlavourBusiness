@@ -221,16 +221,17 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                return new List<ReturnReason>() { 
-                    new ReturnReason("WRNGPROD",new Dictionary<string, string>() { { "el", "Λάθος Προϊόν" }, { "en", "Wrong Product" } }),
-                    new ReturnReason("WRNGORD",new Dictionary<string, string>() { { "el", "Λαθος Παραγγελία" }, { "en", "Wrong Order" } }),
-                    new ReturnReason("LTDLV",new Dictionary<string, string>() { { "el", "Αργοπορημένη Παραγγελία" }, { "en", "Late Delivery" } }),
-                    new ReturnReason("BDQLPROD",new Dictionary<string, string>() { { "el", "Κακής Ποιότητας Προϊον" }, { "en", "Bad Quality Product" } })
+                var returnReasons= (FoodShipping.ServicePoint as IHomeDeliveryServicePoint).ReturnReasons;
+                return returnReasons;
+
+                //return new List<ReturnReason>() { 
+                //    new ReturnReason("WRNGPROD",new Dictionary<string, string>() { { "el", "Λάθος Προϊόν" }, { "en", "Wrong Product" } }),
+                //    new ReturnReason("WRNGORD",new Dictionary<string, string>() { { "el", "Λαθος Παραγγελία" }, { "en", "Wrong Order" } }),
+                //    new ReturnReason("LTDLV",new Dictionary<string, string>() { { "el", "Αργοπορημένη Παραγγελία" }, { "en", "Late Delivery" } }),
+                //    new ReturnReason("BDQLPROD",new Dictionary<string, string>() { { "el", "Κακής Ποιότητας Προϊον" }, { "en", "Bad Quality Product" } })
                    
-                };
-
+                //};
             }
-
         }
 
 

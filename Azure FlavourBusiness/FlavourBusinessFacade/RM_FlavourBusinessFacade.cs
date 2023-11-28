@@ -3321,6 +3321,46 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
         }
         
         // The Width property for the object.
+        public string ReturnReason
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "get_ReturnReason", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "set_ReturnReason", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public string ReturnReasonID
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "get_ReturnReasonID", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "set_ReturnReasonID", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public string Identity
         {
             get
@@ -3576,12 +3616,14 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public void FoodShippingReturn(string returnReasonIdentity)
+        public void FoodShippingReturn(string returnReasonIdentity, string customReturnReasonDescription)
         {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
             args[0] = returnReasonIdentity;
             argsTypes[0] = typeof(string);
+            args[1] = customReturnReasonDescription;
+            argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "FoodShippingReturn", args, argsTypes);
         }
         
@@ -4141,6 +4183,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 args[0] = value;
                 argsTypes[0] = typeof(bool);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "set_IsPolyline", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.Shipping.ReturnReason> ReturnReasons
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "get_ReturnReasons", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.Shipping.ReturnReason>>(retValue);
             }
         }
         

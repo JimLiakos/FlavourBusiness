@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ComputationalResources;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.Shipping;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
 
@@ -196,6 +197,10 @@ namespace FlavourBusinessFacade
 
         [RemoteEventPublish(InvokeType.Async)]
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+
+
+        
+       
 
     }
 

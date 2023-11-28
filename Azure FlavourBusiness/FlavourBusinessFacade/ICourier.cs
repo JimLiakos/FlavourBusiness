@@ -51,11 +51,13 @@ namespace FlavourBusinessFacade.HumanResources
     public delegate void FoodShippingsChangedHandler();
 
 
-    public class PaidFoodShippingException:System.Exception
+    /// <MetaDataID>{ca6e1cc6-8c42-464f-abb8-e32a9675b204}</MetaDataID>
+    public class PaidFoodShippingException : System.Exception
     {
         public PaidFoodShippingException(string message) : base(message) { }
 
-        public PaidFoodShippingException(string message,System.Exception innerException) : base(message, innerException) { 
+        public PaidFoodShippingException(string message, System.Exception innerException) : base(message, innerException)
+        {
 
         }
     }

@@ -557,6 +557,7 @@ namespace CourierApp.ViewModel
             var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
             foreach (var foodShipping in foodShippings)
             {
+                
                 var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
                 foodShippingPresentation.Update();
                 if (_AssignedFoodShippings.ContainsKey(foodShipping))
@@ -1365,19 +1366,23 @@ namespace CourierApp.ViewModel
 
         }
 
+      
         public void FoodShippingDelivered(string foodShippingIdentity)
         {
-            
+            var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShippingResentation != null)
+                foodShippingResentation.FoodShipping.Delivered();
+
         }
 
-        public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity)
+
+        public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null)
         {
             var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
             if (foodShippingResentation!=null)
-            {
-                foodShippingResentation.FoodShipping.FoodShippingReturn(returnReasonIdentity);
-            }
+                foodShippingResentation.FoodShipping.FoodShippingReturn(returnReasonIdentity, customReturnReasonDescription);
         }
 
 

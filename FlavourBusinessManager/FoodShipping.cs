@@ -18,6 +18,49 @@ namespace FlavourBusinessManager.Shipping
     [Persistent()]
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping, FinanceFacade.IPaymentGateway
     {
+        /// <exclude>Excluded</exclude>
+        string _ReturnReason;
+
+        /// <MetaDataID>{64b865f4-304e-4e10-908e-23d6b22f6c9a}</MetaDataID>
+        [PersistentMember(nameof(_ReturnReason))]
+        [BackwardCompatibilityID("+13")]
+        public string ReturnReason
+        {
+            get => _ReturnReason;
+            set
+            {
+                if (_ReturnReason != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ReturnReason = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _ReturnReasonID;
+        /// <MetaDataID>{77047fd4-36e9-479e-97e7-df10bf2756f7}</MetaDataID>
+        [PersistentMember(nameof(_ReturnReasonID))]
+        [BackwardCompatibilityID("+12")]
+        public string ReturnReasonID
+        {
+            get => _ReturnReasonID;
+            set
+            {
+                if (_ReturnReasonID != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ReturnReasonID = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
         /// <summary>
@@ -185,7 +228,7 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{124c5529-dd6b-429c-8772-17858121bb7a}</MetaDataID>
         public FoodShipping(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
-            if(mealCourse.ServingBatches.Count>0)
+            if (mealCourse.ServingBatches.Count > 0)
             {
                 System.Diagnostics.Debug.Assert(false, "Meal course without serving batches allowed");
                 throw new ArgumentException("Meal course without serving batches allowed", nameof(mealCourse));
@@ -302,7 +345,7 @@ namespace FlavourBusinessManager.Shipping
                 this.ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 Description = MealCourse.Meal.Session.Description + " - " + MealCourse.Name;
                 this.ServicesPointIdentity = this.ServicePoint.ServicesPointIdentity;
-                
+
 
             }
             if (servingBatchChanged || nameof(ServicesContextResources.FoodServiceSession.ServicePoint) == member)
@@ -341,7 +384,7 @@ namespace FlavourBusinessManager.Shipping
         {
             get
             {
-                if(!_ShiftWork.UnInitialized)
+                if (!_ShiftWork.UnInitialized)
                     IsAssigned = ShiftWork != null;
 
                 if (_IsAssigned == null)
@@ -383,8 +426,22 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{f1770ae5-6716-476d-80cb-1542934f27e6}</MetaDataID>
         public string MealCourseUri { get; private set; }
 
+
+        /// <exclude>Excluded</exclude>
+        IServicePoint _ServicePoint;
+
         /// <MetaDataID>{c31ace5f-8e90-4682-a38c-e374a519580d}</MetaDataID>
-        public IServicePoint ServicePoint { get; set; }
+        [OnDemandCachingDataOnClientSide]
+        public IServicePoint ServicePoint
+        {
+            get
+            {
+                if (_ServicePoint == null)
+                    _ServicePoint=MealCourse?.Meal?.Session?.ServicePoint;
+                return _ServicePoint;
+            }
+            set { _ServicePoint = value; }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -693,8 +750,13 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
-        public void FoodShippingReturn(string returnReasonIdentity)
+        /// <MetaDataID>{3d10eb2d-c183-4c96-b6af-fdfe4e8e789f}</MetaDataID>
+        public void FoodShippingReturn(string returnReasonIdentity, string customReturnReasonDescription = null)
         {
+
+            var returnReason = (ServicePoint as IHomeDeliveryServicePoint).ReturnReasons.Where(x => x.Identity == returnReasonIdentity).FirstOrDefault();
+
+     
             var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
@@ -702,6 +764,22 @@ namespace FlavourBusinessManager.Shipping
                     itemPreparation.State = ItemPreparationState.Canceled;
 
                 states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+
+
+                if (returnReason != null)
+                {
+                    this.ReturnReasonID = returnReasonIdentity;
+                    if (string.IsNullOrWhiteSpace(customReturnReasonDescription))
+                        this.ReturnReason = returnReason.Description;
+                    else
+                        this.ReturnReason = customReturnReasonDescription;
+                }
+                else
+                {
+                    this.ReturnReasonID = "CSTMRTNR";
+                    this.ReturnReason = customReturnReasonDescription;
+                }
+
                 stateTransition.Consistent = true;
             }
 
@@ -714,6 +792,7 @@ namespace FlavourBusinessManager.Shipping
             });
         }
 
+        /// <MetaDataID>{173e97c3-1e9f-4dbf-a89e-97b1fe858338}</MetaDataID>
         public void Delivered()
         {
 

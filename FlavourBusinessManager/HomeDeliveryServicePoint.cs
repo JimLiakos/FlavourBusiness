@@ -3,6 +3,7 @@ using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessToolKit;
 using MenuModel;
@@ -543,6 +544,21 @@ namespace FlavourBusinessManager.ServicesContextResources
             var watchingOrders = WatchingOrders;
             var watchingOrder=watchingOrders.Where(x => x.SessionID == foodServicesClientSession.MainSession.SessionID).FirstOrDefault();
             return watchingOrder;
+        }
+
+        [OnDemandCachingDataOnClientSide]
+        public List<ReturnReason> ReturnReasons
+        {
+            get
+            {
+                return new List<ReturnReason>() {
+                    new ReturnReason("LTDLV", new Dictionary<string, string>() { { "el", "Αργοπορημένη Παραγγελία" }, { "en", "Late Delivery" } }),
+                    new ReturnReason("WRNGPROD",new Dictionary<string, string>() { { "el", "Λάθος Προϊόν" }, { "en", "Wrong Product" } }),
+                    new ReturnReason("WRNGORD",new Dictionary<string, string>() { { "el", "Λαθος Παραγγελία" }, { "en", "Wrong Order" } }),
+                    new ReturnReason("BDQLPROD", new Dictionary<string, string>() { { "el", "Κακής Ποιότητας Προϊον" }, { "en", "Bad Quality Product" } })
+
+                };
+            }
         }
     }
 }
