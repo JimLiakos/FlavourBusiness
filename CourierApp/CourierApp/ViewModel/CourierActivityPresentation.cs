@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using UIBaseEx;
 using OOAdvantech.Json.Linq;
 using FinanceFacade;
+using ServiceContextManagerApp;
+using MenuPresentationModel.MenuCanvas;
+using System.Windows.Media;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -42,7 +45,7 @@ namespace CourierApp.ViewModel
 
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
-    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
+    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, IFontsResolver,ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
@@ -267,6 +270,21 @@ namespace CourierApp.ViewModel
             throw new NotImplementedException();
         }
 
+        ICourierPresentation _CourierPresentation;
+        public ICourierPresentation CourierPresentation
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                {
+                    if (_CourierPresentation==null)
+                        _CourierPresentation= new CourierPresentation(_Courier, null);
+                    return _CourierPresentation;
+                }
+                else
+                    return null;
+            }
+        }
         /// <MetaDataID>{ba70c705-d7e0-478d-a619-a86934e80a34}</MetaDataID>
         public ICourier Courier => _Courier;
 
@@ -328,7 +346,7 @@ namespace CourierApp.ViewModel
                             if (_Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ActiveShiftWork = _Courier.ActiveShiftWork;
+                                ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
                                 if (ActiveShiftWork != null)
                                     UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
@@ -389,9 +407,14 @@ namespace CourierApp.ViewModel
                                     _Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
                                     if (_Courier == null)
                                         continue;
-                                    ActiveShiftWork = _Courier.ActiveShiftWork;
+
+
+                                    ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
                                     if (ActiveShiftWork != null)
+                                    {
+                                        _CourierPresentation=new CourierPresentation(_Courier, null);
                                         UpdateFoodShippings(Courier.GetFoodShippings());
+                                    }
 
                                     string objectRef = RemotingServices.SerializeObjectRef(_Courier);
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
@@ -425,7 +448,7 @@ namespace CourierApp.ViewModel
                                         }), serviceState);
                                     }
 #endif
-                                    ActiveShiftWork = _Courier.ActiveShiftWork;
+                                    ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
                                     GetMessages();
                                 }
                             }
@@ -500,7 +523,7 @@ namespace CourierApp.ViewModel
                 var activeShiftWork = Courier.ActiveShiftWork;
                 if (activeShiftWork != ActiveShiftWork)
                 {
-                    ActiveShiftWork = activeShiftWork;
+                    ActiveShiftWork = activeShiftWork as IServingShiftWork;
                     UpdateFoodShippings(Courier.GetFoodShippings());
 
                 }
@@ -557,7 +580,7 @@ namespace CourierApp.ViewModel
             var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
             foreach (var foodShipping in foodShippings)
             {
-                
+
                 var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
                 foodShippingPresentation.Update();
                 if (_AssignedFoodShippings.ContainsKey(foodShipping))
@@ -700,7 +723,7 @@ namespace CourierApp.ViewModel
 
 
         /// <MetaDataID>{34925387-d771-493f-8895-a673afa88129}</MetaDataID>
-        IShiftWork ActiveShiftWork;
+       public IServingShiftWork ActiveShiftWork { get; private set; }
 
         /// <MetaDataID>{a8ad8be0-6614-4c17-8f1f-db9b878796ed}</MetaDataID>
         public DateTime ActiveShiftWorkStartedAt
@@ -725,6 +748,7 @@ namespace CourierApp.ViewModel
                     return DateTime.MinValue;
             }
         }
+   
 
 
         /// <MetaDataID>{98a2d3fb-2f90-4cde-9bf2-a400f08f29c0}</MetaDataID>
@@ -743,7 +767,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{e0cae251-d210-41e4-9c12-e3da35bcc002}</MetaDataID>
         public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ActiveShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours);
+            ActiveShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours) as IServingShiftWork;
 
             if (ActiveShiftWork != null)
             {
@@ -1031,7 +1055,7 @@ namespace CourierApp.ViewModel
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings;
 
-        public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.Where(x=>x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)).OrderBy(x => x.FoodShipping.SortID).ToList();
+        public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.Where(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)).OrderBy(x => x.FoodShipping.SortID).ToList();
 
 
         /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
@@ -1046,7 +1070,7 @@ namespace CourierApp.ViewModel
 
             if (foodShipping != null)
             {
-                 
+
                 _AssignedFoodShippings[foodShipping.FoodShipping] = _FoodShippings[foodShipping.FoodShipping];
                 _FoodShippings.Remove(foodShipping.FoodShipping);
 
@@ -1134,7 +1158,7 @@ namespace CourierApp.ViewModel
             return false;
         }
 
-    
+
         public async void PhoneCall(string foodShippingIdentity)
         {
             var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
@@ -1366,7 +1390,7 @@ namespace CourierApp.ViewModel
 
         }
 
-      
+
         public void FoodShippingDelivered(string foodShippingIdentity)
         {
             var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
@@ -1388,7 +1412,27 @@ namespace CourierApp.ViewModel
 
         public string AppIdentity => "com.microneme.courierapp";
 
+        Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
 
+        public FontData GetFont(string fontUri)
+        { 
+            FontData fontData;
+            if (string.IsNullOrEmpty(fontUri))
+                return default(FontData);
+
+            if (!Fonts.TryGetValue(fontUri, out fontData))
+            {
+                string fontUrl = string.Format("http://{0}:8090/api/MenuModel/Font/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, fontUri);
+                using (System.Net.WebClient wc = new System.Net.WebClient())
+                {
+                    var json = wc.DownloadString(fontUrl);
+                    fontData = OOAdvantech.Json.JsonConvert.DeserializeObject<FontData>(json);
+                    Fonts[fontUri] = fontData;
+                }
+            }
+            return fontData;
+        }
 
     }
+
 }

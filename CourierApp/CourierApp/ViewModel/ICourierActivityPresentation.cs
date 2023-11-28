@@ -1,7 +1,10 @@
 ﻿using FlavourBusinessFacade;
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.Shipping;
+using FlavourBusinessManager.HumanResources;
 using OOAdvantech.MetaDataRepository;
+using ServiceContextManagerApp;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,10 +16,10 @@ namespace CourierApp.ViewModel
     public delegate void ItemsReadyToServeRequesttHandle(ICourierActivityPresentation courierActivityPresentation, string messageID, string servicePointIdentity);
     /// <MetaDataID>{99fe8217-2732-4d1a-b074-c88a95272563}</MetaDataID>
     [HttpVisible]
-    public interface ICourierActivityPresentation
+    public interface ICourierActivityPresentation 
     {
-        
 
+        IServingShiftWork ActiveShiftWork  { get; }
         /// <MetaDataID>{fc4f212d-57ff-417d-8b8b-ea68cb3d8c2a}</MetaDataID>
         bool InActiveShiftWork { get; }
 
@@ -32,9 +35,11 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{33205e02-25f6-40e9-bba7-908e20107a91}</MetaDataID>
         void ExtendShiftWorkStart(double timespanInHours);
 
+        ICourierPresentation CourierPresentation { get; }
 
 
-        [GenerateEventConsumerProxy]
+
+       [GenerateEventConsumerProxy]
         event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
         void ItemsReadyToServeMessageReceived(string messageID);
