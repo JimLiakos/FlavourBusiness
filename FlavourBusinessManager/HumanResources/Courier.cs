@@ -647,7 +647,7 @@ namespace FlavourBusinessManager.HumanResources
         public IList<IFoodShipping> GetFoodShippings()
         {
             var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IFoodShipping>().ToList();
-            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned&&(ActiveShiftWork!=null&&x.ShiftWork==this.ActiveShiftWork)).ToList();
+            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned && (ActiveShiftWork != null && x.ShiftWork == this.ActiveShiftWork)).ToList();
             FoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
             return AssignedFoodShippings.Union(FoodShippings).ToList();
         }
@@ -669,7 +669,7 @@ namespace FlavourBusinessManager.HumanResources
             var copy = itemsToServe.ToList();
             foreach (var itemToServe in itemsToServe.ToList())
             {
-                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid&&x.StateTimestamp== itemToServe.itemPreparation.StateTimestamp).FirstOrDefault();
+                var servingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid && x.StateTimestamp == itemToServe.itemPreparation.StateTimestamp).FirstOrDefault();
                 if (servingItemOnDevice != null)
                 {
                     itemsToServe.Remove(itemToServe);
@@ -677,8 +677,8 @@ namespace FlavourBusinessManager.HumanResources
                 }
                 else
                 {
-                   var updatedServingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid ).FirstOrDefault();
-                    if(updatedServingItemOnDevice != null) //servingItemOnDevice exist
+                    var updatedServingItemOnDevice = servingItemsOnDevice.Where(x => x.uid == itemToServe.itemPreparation.uid).FirstOrDefault();
+                    if (updatedServingItemOnDevice != null) //servingItemOnDevice exist
                         servingItemsOnDevice.Remove(updatedServingItemOnDevice);
 
 
@@ -688,7 +688,7 @@ namespace FlavourBusinessManager.HumanResources
             {
 
             }
-            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().Where(x => !x.IsAssigned||(ActiveShiftWork!=null&&x.ShiftWork==this.ActiveShiftWork)).ToList();
+            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().Where(x => !x.IsAssigned || (ActiveShiftWork != null && x.ShiftWork == this.ActiveShiftWork)).ToList();
 
 
 
@@ -746,7 +746,7 @@ namespace FlavourBusinessManager.HumanResources
             if (foodShipping.PreparedItems.All(x => x.State.IsInPreviousState(ItemPreparationState.OnRoad)))
             {
 
-                if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
+                if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State != FinanceFacade.PaymentState.New).Count() > 0)
                 {
                     throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
                 }
@@ -755,6 +755,10 @@ namespace FlavourBusinessManager.HumanResources
                 {
                     (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
                     (foodShipping as FoodShipping).AtTheCounter();
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                    });
 
                     stateTransition.Consistent = true;
                 }
@@ -777,16 +781,20 @@ namespace FlavourBusinessManager.HumanResources
         public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
         {
 
-            if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State!=FinanceFacade.PaymentState.New).Count()>0)
+            if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State != FinanceFacade.PaymentState.New).Count() > 0)
             {
                 throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
             }
-            if (foodShipping.PreparedItems.All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.OnRoad)))
+            if (foodShipping.PreparedItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)))
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
                     (foodShipping as FoodShipping).AtTheCounter();
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                    });
 
                     stateTransition.Consistent = true;
                 }
@@ -813,6 +821,10 @@ namespace FlavourBusinessManager.HumanResources
                     if (!foodShipping.IsAssigned)
                     {
                         (ActiveShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
+                        Transaction.RunOnTransactionCompleted(() =>
+                        {
+                            (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                        });
 
                         bool isAssined = foodShipping.IsAssigned;
                     }
@@ -838,6 +850,11 @@ namespace FlavourBusinessManager.HumanResources
                             AssignFoodShipping(foodShipping);
                             if ((foodShipping as FoodShipping).State == ItemPreparationState.Serving && foodShipping.IsAssigned && foodShipping.ShiftWork.Worker == this)
                                 (foodShipping as FoodShipping).OnTheRoad();
+
+                            Transaction.RunOnTransactionCompleted(() =>
+                            {
+                                (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                            });
 
                             stateTransition.Consistent = true;
                         }

@@ -31,7 +31,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
         public string Description { get; private set; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; set; }
-        
+
         public DontWaitApp.MenuData MenuData { get; set; }
 
         public string MealCourseUri { get; set; }
@@ -48,13 +48,17 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
-     
+
+            PartiallyUnderServingProcess = serverSideMealCourse.PartiallyUnderServingProcess;
+            UnderServingProcess = serverSideMealCourse.UnderServingProcess;
+
+
             var sessionData = ServerSideMealCourse.SessionData;
 
             SessionType = sessionData.SessionType;
 
             Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
-         
+
 
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
@@ -92,10 +96,22 @@ namespace FlavourBusinessManager.RoomService.ViewModel
         {
             if (mealCourse == this.ServerSideMealCourse)
             {
+
                 if (member == nameof(IMealCourse.FoodItems))
                 {
                     FoodItemsInProgress = ServerSideMealCourse.FoodItemsInProgress;
                     var items = FoodItemsInProgress.SelectMany(x => x.PreparationItems).ToList();
+                    UnderServingProcess = this.ServerSideMealCourse.UnderServingProcess;
+                    PartiallyUnderServingProcess = this.ServerSideMealCourse.PartiallyUnderServingProcess;
+                    MealCourseUpdated?.Invoke(this);
+                }
+
+                if (member == nameof(IMealCourse.ServingBatches))
+                {
+                    mealCourse.Fetching(mc => mc.Caching(x => new { x.UnderServingProcess, x.PartiallyUnderServingProcess }));
+                    UnderServingProcess = this.ServerSideMealCourse.UnderServingProcess;
+                    PartiallyUnderServingProcess = this.ServerSideMealCourse.PartiallyUnderServingProcess;
+
                     MealCourseUpdated?.Invoke(this);
                 }
 
@@ -105,6 +121,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                     Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
                     SessionType = sessionData.SessionType;
                     MealCourseUpdated?.Invoke(this);
+
                 }
 
                 if (member == nameof(IMealCourse.SessionData))
@@ -144,15 +161,15 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                 foreach (var preparationItem in FoodItemsInProgress.SelectMany(x => x.PreparationItems))
                 {
                     if (newItemsState.ContainsKey(preparationItem.uid))
-                        preparationItem.State=newItemsState[preparationItem.uid];
+                        preparationItem.State = newItemsState[preparationItem.uid];
                 }
 
-                
+
 
                 var preparationState = mealCourse.PreparationState;
                 if (PreparationState != preparationState)
                 {
-                    PreparationState=preparationState;
+                    PreparationState = preparationState;
                     this.MealCourseUpdated?.Invoke(this);
                 }
                 else
@@ -161,5 +178,17 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             }
 
         }
+
+
+        /// <summary>
+        /// Some of the items are under the process of serving / delivery
+        /// </summary>
+        public bool PartiallyUnderServingProcess { get; private set; }
+
+        /// <summary>
+        /// All items are under the process of serving / delivery
+        /// </summary>
+        public bool UnderServingProcess { get; private set; }
+
     }
 }

@@ -71,6 +71,16 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+2")]
         DateTime? ServedAtForecast { get;  }
 
+        /// <summary>
+        /// Some of the items are under the process of serving / delivery
+        /// </summary>
+        bool PartiallyUnderServingProcess { get; }
+
+        /// <summary>
+        /// All items are under the process of serving / delivery
+        /// </summary>
+        bool UnderServingProcess { get; }
+
 
         /// <summary>
         /// Defines the meal course items grouped by preparation station where it prepares them.

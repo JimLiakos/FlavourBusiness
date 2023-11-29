@@ -501,6 +501,8 @@ namespace ServiceContextManagerApp
                 {
                     mealCourse.Name,
                     mealCourse.ServingBatches,
+                    //mealCourse.PartiallyUnderServingProcess,
+                    //mealCourse.UnderServingProcess,
                     //mealCourse.Meal,
                     FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
                     {
@@ -532,6 +534,7 @@ namespace ServiceContextManagerApp
         private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
         {
 
+            
             if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
             {
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);

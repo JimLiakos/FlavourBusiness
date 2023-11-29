@@ -191,6 +191,37 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+        /// <summary>
+        /// Some of the items are under the process of serving / delivery
+        /// </summary>
+        
+        public bool PartiallyUnderServingProcess
+        {
+            get
+            {
+                if (this.FoodItems.Any(x => x.State == ItemPreparationState.OnRoad))
+                    return true;
+                return this.FoodItems.Any(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch.IsAssigned);
+            }
+        }
+
+        /// <summary>
+        /// All items are under the process of serving / delivery
+        /// </summary>
+        
+        public bool UnderServingProcess
+        {
+            get
+            {
+                if (this.FoodItems.All(x => x.State == ItemPreparationState.OnRoad))
+                    return true;
+                return this.FoodItems.All(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch.IsAssigned);
+            }
+        }
+
+
+
         /// <exclude>Excluded</exclude>
         /// <MetaDataID>{2b29e1c8-9c66-4412-96f3-cf276f528e44}</MetaDataID>
         DateTime? _PreparedAt;
@@ -286,6 +317,16 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+        internal  void ServingBatchAssigned()
+        {
+            (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
+        }
+        internal void ServingBatchDeAssigned()
+        {
+            (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
+        }
+
 
         /// <MetaDataID>{a071224d-7336-4f53-a34f-69e48fc81c43}</MetaDataID>
         object MealLock = new object();
