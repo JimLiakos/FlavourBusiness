@@ -501,8 +501,8 @@ namespace ServiceContextManagerApp
                 {
                     mealCourse.Name,
                     mealCourse.ServingBatches,
-                    //mealCourse.PartiallyUnderServingProcess,
-                    //mealCourse.UnderServingProcess,
+                    mealCourse.PartiallyUnderServingProcess,
+                    mealCourse.UnderServingProcess,
                     //mealCourse.Meal,
                     FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
                     {

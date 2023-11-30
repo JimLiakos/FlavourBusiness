@@ -108,7 +108,17 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
                 if (member == nameof(IMealCourse.ServingBatches))
                 {
-                    mealCourse.Fetching(mc => mc.Caching(x => new { x.UnderServingProcess, x.PartiallyUnderServingProcess }));
+                    var underServingProcess = this.ServerSideMealCourse.UnderServingProcess;
+                    var partiallyUnderServingProcess = this.ServerSideMealCourse.PartiallyUnderServingProcess;
+
+                    try
+                    {
+                        var dfdd=mealCourse.Fetching(mc => mc.Caching(x => new { x.UnderServingProcess, x.PartiallyUnderServingProcess }));
+                    }
+                    catch (Exception error)
+                    {
+                        
+                    }
                     UnderServingProcess = this.ServerSideMealCourse.UnderServingProcess;
                     PartiallyUnderServingProcess = this.ServerSideMealCourse.PartiallyUnderServingProcess;
 
