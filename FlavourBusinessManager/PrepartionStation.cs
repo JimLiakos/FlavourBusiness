@@ -652,10 +652,28 @@ namespace FlavourBusinessManager.ServicesContextResources
                 List <ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
-                    itemsPreparationContexts=(ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x=>x.FoodItemsInProgress).
-                        Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
-                        OrderBy(x => x.MealCourseStartsAt).ToList();
-                    
+
+                    Task.Run(() =>
+                    {
+                       var itemsPreparationContextsa=(ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
+                            Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
+                            OrderBy(x => x.MealCourseStartsAt).ToList();
+                    });
+                    Task.Run(() =>
+                    {
+                        var itemsPreparationContextsa = (ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
+                             Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
+                             OrderBy(x => x.MealCourseStartsAt).ToList();
+                    });
+                    var task= Task.Run(() =>
+                    {
+                         itemsPreparationContexts = (ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
+                             Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
+                             OrderBy(x => x.MealCourseStartsAt).ToList();
+                    });
+
+                    task.Wait();
+
                     //itemsPreparationContexts = _PreparationSessions.ToList().OrderBy(x => x.MealCourseStartsAt).ToList();
                 }
                 return itemsPreparationContexts;

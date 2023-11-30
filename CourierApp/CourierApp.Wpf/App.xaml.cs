@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOAdvantech;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -21,7 +22,43 @@ namespace CourierApp.Wpf
         {
 
             SerializeTaskScheduler.RunAsync();
+            var _this = this;
+           var task1= SerializeTaskScheduler.AddTask(()=>{
 
+
+                System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId);
+                System.Threading.Thread.Sleep(1000);
+                var ere= _this.GetType().FullName;
+                return true;
+
+            });
+
+
+            var task2 = SerializeTaskScheduler.AddTask(() => {
+
+
+                System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId);
+                System.Threading.Thread.Sleep(1000);
+                var ere = _this.GetType().FullName;
+
+                return true;
+
+            });
+            var task3 = SerializeTaskScheduler.AddTask(() => {
+
+
+                System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId);
+                System.Threading.Thread.Sleep(1000);
+                var ere = _this.GetType().FullName;
+
+                return true;
+
+            });
+            task1.Wait();
+            int rtr = 0;
+            task2.Wait();
+            rtr = 2;
+            task3.Wait();
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();
 
