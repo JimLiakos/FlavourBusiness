@@ -35,7 +35,7 @@ namespace PreparationStationDevice.WPF
             //url = @"http://192.168.2.4:4301/";//Braxati
             url = @"http://10.0.0.13:4301/";//work
 
-            url = @"https://localhost:4301/";//work
+            url = @"http://localhost:4301/";//work
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));

@@ -118,7 +118,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                if(this.ServicePoint==null)
+                if (this.ServicePoint == null)
                 {
 
                 }
@@ -307,7 +307,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType,WillTakeCareTimestamp=DateTime.UtcNow });
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType, WillTakeCareTimestamp = DateTime.UtcNow });
                     stateTransition.Consistent = true;
                 }
             }
@@ -1561,10 +1561,10 @@ namespace FlavourBusinessManager.EndUsers
         [PersistentMember(nameof(_SessionState))]
         [BackwardCompatibilityID("+22")]
         public ClientSessionState SessionState
-        { 
+        {
             get => _SessionState;
             internal set
-            { 
+            {
                 if (_SessionState != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1581,7 +1581,7 @@ namespace FlavourBusinessManager.EndUsers
                                 StartDeviceConnectionStatusCheck();
 
                         };
-                    } 
+                    }
                     ObjectChangeState?.Invoke(this, nameof(SessionState));
                 }
             }
@@ -2246,15 +2246,18 @@ namespace FlavourBusinessManager.EndUsers
                 stateTransition.Consistent = true;
             }
 
-            foreach (var clientSession in MainSession.PartialClientSessions)
-                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+            Transaction.RunOnTransactionCompleted(() =>
+             {
+                 foreach (var clientSession in MainSession.PartialClientSessions)
+                     clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
 
-            foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
-                clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+                 foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
+                     clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
-            foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
-                mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+                 foreach (var mealCourse in MainSession.Meal.Courses.OfType<MealCourse>())
+                     mealCourse.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
+             });
 
         }
 
@@ -2699,10 +2702,10 @@ namespace FlavourBusinessManager.EndUsers
         public IBill GetBill()
         {
 
-            IBill bill=  Bill.GetBillFor(this);
-           
+            IBill bill = Bill.GetBillFor(this);
+
             return bill;
-            
+
         }
 
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
@@ -2922,7 +2925,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
         [OOAdvantech.Json.JsonProperty]
-       public  System.DateTime? WillTakeCareTimestamp { get; set; }
+        public System.DateTime? WillTakeCareTimestamp { get; set; }
 
 
 

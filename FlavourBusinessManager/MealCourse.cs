@@ -914,9 +914,11 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2ff27f48-6c0e-463b-993b-34fbb35cc52a}</MetaDataID>
         public static ItemsPreparationContext FindItemsPreparationContext(this IItemPreparation itemPreparation)
         {
+            
 
             if (itemPreparation.PreparationStation != null)
-                return (itemPreparation.PreparationStation as PreparationStation).PreparationSessions.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity && x.MealCourse == itemPreparation.MealCourse).FirstOrDefault();
+                return itemPreparation.MealCourse?.FoodItemsInProgress?.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity).FirstOrDefault();
+            //return (itemPreparation.PreparationStation as PreparationStation).PreparationSessions.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity && x.MealCourse == itemPreparation.MealCourse).FirstOrDefault();
             else
                 return itemPreparation.MealCourse?.FoodItemsInProgress?.Where(x => x.PreparationStationIdentity == ItemsPreparationContext.TradeProductsStationIdentity).FirstOrDefault();
         }

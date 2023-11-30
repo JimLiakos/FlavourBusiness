@@ -135,6 +135,7 @@ namespace FlavourBusinessManager.HumanResources
                                                       SessionEnds = foodServiceClientSession.MealCourse.Meal.Session.SessionEnds,
                                                       SessionType = foodServiceClientSession.MealCourse.Meal.Session.SessionType,
                                                       BillingPayments = (from payment in foodServiceClientSession.GetPayments()
+                                                                         where payment.State == PaymentState.Completed|| payment.Amount>0
                                                                          orderby payment.TransactionDate
                                                                          select payment).OfType<IPayment>().ToList()
 

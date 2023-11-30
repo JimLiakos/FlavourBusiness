@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.RoomService;
 using OOAdvantech.Remoting.RestApi.Serialization;
+using Microsoft.Azure.Documents.SystemFunctions;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -636,7 +637,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <exclude>Excluded</exclude>
-        List<ItemsPreparationContext> _PreparationSessions = new List<ItemsPreparationContext>();
+        //List<ItemsPreparationContext> _PreparationSessions = new List<ItemsPreparationContext>();
 
         /// <MetaDataID>{7d50b4e9-05fb-460e-82e1-5e97fc810164}</MetaDataID>
         internal List<ItemsPreparationContext> PreparationSessions
@@ -644,11 +645,18 @@ namespace FlavourBusinessManager.ServicesContextResources
             get
             {
                 ObjectActivated.Task.Wait();
+
+                
+
                 //GetItemToServingtimespanPredictions();
-                List<ItemsPreparationContext> itemsPreparationContexts = null;
+                List <ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
-                    itemsPreparationContexts = _PreparationSessions.ToList().OrderBy(x => x.MealCourseStartsAt).ToList();
+                    itemsPreparationContexts=(ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x=>x.FoodItemsInProgress).
+                        Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
+                        OrderBy(x => x.MealCourseStartsAt).ToList();
+                    
+                    //itemsPreparationContexts = _PreparationSessions.ToList().OrderBy(x => x.MealCourseStartsAt).ToList();
                 }
                 return itemsPreparationContexts;
             }
@@ -706,13 +714,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                                     item.ObjectChangeState += FlavourItem_ObjectChangeState;
                                 }
                             }
-                            if (preparationItems.Count > 0)
-                            {
-                                var preparationSection = new ItemsPreparationContext(servicePointPreparationItems.Key, this, preparationItems);
-                                _PreparationSessions.Add(preparationSection);
+                            //if (preparationItems.Count > 0)
+                            //{
+                            //    var preparationSection = new ItemsPreparationContext(servicePointPreparationItems.Key, this, preparationItems);
 
-                                preparationSection.ObjectChangeState += PreparationSessionChangeState;
-                            }
+                            //    _PreparationSessions.Add(preparationSection);
+
+                            //    preparationSection.ObjectChangeState += PreparationSessionChangeState;
+                            //}
                         }
                     }
                     finally
@@ -942,9 +951,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                     flavourItem.PreparationStation = null;
                     flavourItem.ObjectChangeState -= FlavourItem_ObjectChangeState;
 
-                    var servicePointPreparationItems = PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
-                    if (servicePointPreparationItems != null)
-                        servicePointPreparationItems.RemovePreparationItem(flavourItem);
+                    //var servicePointPreparationItems = PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
+                    //if (servicePointPreparationItems != null)
+                    //    servicePointPreparationItems.RemovePreparationItem(flavourItem);
                 }
                 OnPreparationItemsChangeState();
             }
@@ -966,18 +975,18 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
-                    var servicePointPreparationItems = _PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
-                    if (servicePointPreparationItems == null)
-                    {
-                        var preparationSection = new ItemsPreparationContext(flavourItem.MealCourse, this, new List<IItemPreparation>() { flavourItem });
+                    //var servicePointPreparationItems = _PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
+                    //if (servicePointPreparationItems == null)
+                    //{
+                    //    var preparationSection = new ItemsPreparationContext(flavourItem.MealCourse, this, new List<IItemPreparation>() { flavourItem });
 
 
-                        _PreparationSessions.Add(preparationSection);
+                    //    _PreparationSessions.Add(preparationSection);
 
-                        preparationSection.ObjectChangeState += PreparationSessionChangeState;
-                    }
-                    else
-                        servicePointPreparationItems.AddPreparationItem(flavourItem);
+                    //    preparationSection.ObjectChangeState += PreparationSessionChangeState;
+                    //}
+                    //else
+                    //    servicePointPreparationItems.AddPreparationItem(flavourItem);
 
 
                     OnPreparationItemsChangeState();
@@ -1225,7 +1234,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 List<ItemsPreparationContext> preparationSections = null;
                 lock (DeviceUpdateLock)
                 {
-                    preparationSections = this._PreparationSessions.ToList();
+                    preparationSections = this.PreparationSessions.ToList();
                 }
                 var preparationStationItems = (from serviceSession in preparationSections
                                                from preparationItem in serviceSession.PreparationItems
