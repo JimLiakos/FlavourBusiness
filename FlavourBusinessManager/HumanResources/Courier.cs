@@ -902,9 +902,9 @@ namespace FlavourBusinessManager.HumanResources
         {
 
         }
-    } 
-
-
+    }
+     
+    https://stackoverflow.com/questions/51167203/android-google-login-not-working-inside-webview
     public enum CourierState
     {
         Idle = 0,
