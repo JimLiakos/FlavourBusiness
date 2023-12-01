@@ -895,5 +895,23 @@ namespace FlavourBusinessManager.HumanResources
         {
             throw new NotImplementedException();
         }
+
+        object StateMachineLock = new object();
+
+        private void StateMachineMonitoring()
+        {
+
+        }
+    } 
+
+
+    public enum CourierState
+    {
+        Idle = 0,
+        PendingForFoodShiping = 1,
+        CollectFoodShiping = 2,
+        NearDeliveryServicePoint = 3,
+        OnTheRoad = 4,
+        
     }
 }
