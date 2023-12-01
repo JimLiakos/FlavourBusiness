@@ -269,7 +269,10 @@ namespace FlavourBusinessManager.Shipping
                 return ItemPreparationState.Serving;
             }
         }
-
+        internal void OnItemsChangeState(Dictionary<string, ItemPreparationState> newItemsState)
+        {
+            ItemsStateChanged?.Invoke(newItemsState);
+        }
 
         /// <MetaDataID>{a2f2759f-6f41-4df8-94e4-2e4d8c4b5d03}</MetaDataID>
         internal void OnTheRoad()
@@ -277,8 +280,11 @@ namespace FlavourBusinessManager.Shipping
             var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                foreach (var itemPreparation in PreparedItems)
+                foreach (var itemPreparation in PreparedItems.OfType<ItemPreparation>())
+                {
                     itemPreparation.State = ItemPreparationState.OnRoad;
+                    itemPreparation.StateTimestamp = DateTime.UtcNow;
+                }
 
                 states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
                 stateTransition.Consistent = true;
@@ -816,5 +822,6 @@ namespace FlavourBusinessManager.Shipping
 
         }
 
+        
     }
 }

@@ -202,7 +202,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 if (this.FoodItems.Any(x => x.State == ItemPreparationState.OnRoad))
                     return true;
-                return this.FoodItems.Any(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch.IsAssigned);
+                return this.FoodItems.Any(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch?.IsAssigned==true);
             }
         }
 
@@ -287,6 +287,14 @@ namespace FlavourBusinessManager.RoomService
                             if (value == ItemPreparationState.Serving && previousState < ItemPreparationState.OnRoad)
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
                         }
+                        if(value.IsInPreviousState(ItemPreparationState.Serving))
+                        {
+                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                            {
+                                _PreparationState = value;
+                                stateTransition.Consistent = true;
+                            }
+                        }
                     }
                     else if (Meal.Session.SessionType == SessionType.HomeDelivery)
                     {
@@ -305,6 +313,15 @@ namespace FlavourBusinessManager.RoomService
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
 
                         }
+                        if (value.IsInPreviousState(ItemPreparationState.Serving))
+                        {
+                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                            {
+                                _PreparationState = value;
+                                stateTransition.Consistent = true;
+                            }
+                        }
+
 
 
                     }
@@ -445,32 +462,34 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{d5bb9342-16b0-4c93-8b7b-07b0c5c5eb36}</MetaDataID>
         internal void Monitoring()
         {
-            if (FoodItems.Where(x => x.State == ItemPreparationState.Serving).Count() == FoodItems.Count)
+            if (FoodItems.All(x => x.State == ItemPreparationState.Serving))
             {
                 if ((System.DateTime.Now - FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
                 {
                     if (PreparationState != ItemPreparationState.Serving)
                         PreparationState = ItemPreparationState.Serving;
                 }
-            }
-
-            if (FoodItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == FoodItems.Count)
-            {
-                if ((System.DateTime.Now - FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp).TotalMinutes > 1)
+                var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
+                if (servingBatchesAtTheCounter.Count > 0)
                 {
+                    foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x => x.Worker as ServiceContextSupervisor))
+                    {
+                        supervisorWithActiveShiftWork.CheckForDelayedMealAtTheCounter();
+                    }
+                }
+            }
+            else if (FoodItems.All(x => x.State == ItemPreparationState.OnRoad))
+            {
                     if (PreparationState != ItemPreparationState.OnRoad)
                         PreparationState = ItemPreparationState.OnRoad;
-                }
+            }
+            if (FoodItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Serving)))
+            {
+                    if (PreparationState != ItemPreparationState.InPreparation)
+                        PreparationState = ItemPreparationState.InPreparation;
             }
 
-            var servingBatchesAtTheCounter = FoodItems.Where(x => x.State == ItemPreparationState.Serving).OfType<ItemPreparation>().Select(x => x.ServedInTheBatch).Distinct().ToList();
-            if (servingBatchesAtTheCounter.Count > 0)
-            {
-                foreach (var supervisorWithActiveShiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks().Where(x => x.Worker is ServiceContextSupervisor).Select(x => x.Worker as ServiceContextSupervisor))
-                {
-                    supervisorWithActiveShiftWork.CheckForDelayedMealAtTheCounter();
-                }
-            }
+           
             //FoodItems.Where(x=>x.State==ItemPreparationState.Serving&&x.ServedInTheBatch!=null).Select(x=>x.ServedInTheBatch).Distinct().ToList();
 
 

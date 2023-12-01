@@ -230,6 +230,19 @@ namespace FlavourBusinessManager.RoomService
         {
             MealCourseItemsStateChanged?.Invoke(mealCourse, newItemsState);
 
+
+            var foodShippings = (from foodShipping in mealCourse.ServingBatches.OfType<FoodShipping>()
+                                 from preparationItem in foodShipping.PreparedItems
+                                 where newItemsState.ContainsKey(preparationItem.uid)
+                                 select foodShipping).Distinct().ToList();
+
+            foreach (var foodShipping in foodShippings)
+            {
+                var foodShippingNewItemsState = foodShipping.PreparedItems.Where(x => newItemsState.ContainsKey(x.uid)).ToDictionary(x => x.uid, x => x.State);
+
+                foodShipping.OnItemsChangeState(foodShippingNewItemsState);
+            }
+
         }
 
         /// <MetaDataID>{678886b6-415d-4058-8264-0847b0872a3a}</MetaDataID>

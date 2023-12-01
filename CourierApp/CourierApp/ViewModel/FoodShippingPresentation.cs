@@ -32,7 +32,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                var foodShippingItems = (from itemsPreprationContext in this.ContextsOfPreparedItems
+                var foodShippingItems = (from itemsPreprationContext in this.AllContextsOfPreparedItems
                                          from preparedItem in itemsPreprationContext.PreparationItems
                                          select preparedItem).OfType<FlavourBusinessManager.RoomService.ItemPreparation>().ToList();
 
@@ -51,6 +51,10 @@ namespace CourierApp.ViewModel
 
                 if (foodShippingItems.All(x => x.IsInFollowingState(ItemPreparationState.OnRoad)))
                     return ItemPreparationState.Served;
+
+
+                if (foodShippingItems.Any(x => x.IsInPreviousState(ItemPreparationState.Serving)))
+                    return ItemPreparationState.InPreparation;
 
                 return ItemPreparationState.Serving;
 
@@ -141,12 +145,13 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{90ec5e57-2488-44b8-9665-87dbedb3de7f}</MetaDataID>
         private void FoodShipping_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
-            foreach (var preparedItem in (from preparedItemsContext in AllContextsOfPreparedItems
+            foreach (var preparationItem in (from preparedItemsContext in AllContextsOfPreparedItems
                                           from preparedItem in preparedItemsContext.PreparationItems
                                           where newItemsState.ContainsKey(preparedItem.uid)
                                           select preparedItem))
             {
-                preparedItem.State = newItemsState[preparedItem.uid];
+
+                preparationItem.State = newItemsState[preparationItem.uid];
             }
             var ssd = State;
             ObjectChangeState?.Invoke(this, null);

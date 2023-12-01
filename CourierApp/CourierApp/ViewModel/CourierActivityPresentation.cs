@@ -170,6 +170,7 @@ namespace CourierApp.ViewModel
 
         private void FoodShipping_ObjectChangeState(object _object, string member)
         {
+           
             FoodShippingUpdated(_object as FoodShippingPresentation);
         }
 
@@ -1253,13 +1254,19 @@ namespace CourierApp.ViewModel
 
         internal void FoodShippingUpdated(FoodShippingPresentation foodShippingPresentation)
         {
-            if (foodShippingPresentation.ContextsOfPreparedItems == null || foodShippingPresentation.ContextsOfPreparedItems.Count == 0)
+            if (foodShippingPresentation?.State.IsInPreviousState(ItemPreparationState.Serving) == true)
             {
                 _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
                 foodShippingPresentation.Dispose();
                 foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
-            var state = foodShippingPresentation.State;
+            else if (foodShippingPresentation.ContextsOfPreparedItems == null || foodShippingPresentation.ContextsOfPreparedItems.Count == 0)
+            {
+                _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                foodShippingPresentation.Dispose();
+                foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
+            }
+            var state = foodShippingPresentation?.State;
 
 
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));

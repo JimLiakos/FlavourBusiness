@@ -646,35 +646,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 ObjectActivated.Task.Wait();
 
-                
+
 
                 //GetItemToServingtimespanPredictions();
-                List <ItemsPreparationContext> itemsPreparationContexts = null;
+                List<ItemsPreparationContext> itemsPreparationContexts = null;
                 lock (DeviceUpdateLock)
                 {
-
-                    Task.Run(() =>
-                    {
-                       var itemsPreparationContextsa=(ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
-                            Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
+                    itemsPreparationContexts = (ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
+                            Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity && x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
                             OrderBy(x => x.MealCourseStartsAt).ToList();
-                    });
-                    Task.Run(() =>
-                    {
-                        var itemsPreparationContextsa = (ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
-                             Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
-                             OrderBy(x => x.MealCourseStartsAt).ToList();
-                    });
-                    var task= Task.Run(() =>
-                    {
-                         itemsPreparationContexts = (ServicesContextRunTime.Current.MealsController as MealsController).MealCoursesInProgress.SelectMany(x => x.FoodItemsInProgress).
-                             Where(x => x.PreparationStationIdentity == this.PreparationStationIdentity&&x.PreparationState.IsInPreviousState(ItemPreparationState.OnRoad)).
-                             OrderBy(x => x.MealCourseStartsAt).ToList();
-                    });
 
-                    task.Wait();
-
-                    //itemsPreparationContexts = _PreparationSessions.ToList().OrderBy(x => x.MealCourseStartsAt).ToList();
                 }
                 return itemsPreparationContexts;
             }
@@ -1461,7 +1442,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     itemPreparationTimeSpan.OrgDurationDifPerc = (itemPreparationTimeSpan.DurationDif / itemPreparationTimeSpan.DefaultTimeSpanInMin) * 100;
 
 
-                    
+
 
 
                     ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemPreparationTimeSpan);
@@ -1655,7 +1636,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                            select new { clientSession = ClientSessionItems.Key, ClientSessionItems = ClientSessionItems.ToList() }).ToList();
 
                 foreach (var clientSessionItems in clientSessionsItems)
-                    clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems); 
+                    clientSessionItems.clientSession.ItemsServing(clientSessionItems.ClientSessionItems);
                 stateTransition.Consistent = true;
             }
 

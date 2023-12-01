@@ -498,8 +498,11 @@ namespace FlavourBusinessManager.RoomService
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                foreach (var itemPreparation in PreparedItems)
+                foreach (var itemPreparation in PreparedItems.OfType<ItemPreparation>())
+                {
                     itemPreparation.State = ItemPreparationState.OnRoad;
+                    itemPreparation.StateTimestamp = DateTime.UtcNow;
+                }
                 stateTransition.Consistent = true;
             }
 
