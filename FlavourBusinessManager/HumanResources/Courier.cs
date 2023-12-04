@@ -31,7 +31,7 @@ namespace FlavourBusinessManager.HumanResources
         public Courier()
         {
         }
-
+         
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
 
