@@ -283,7 +283,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 else
                 {
-                    payment.Update(paymentItems);
+                    payment.Update(paymentItems,foodServiceClientSession);
                     //move to end of list;
                     payments.Remove(payment);
                     payments.Add(payment);
@@ -426,7 +426,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 else
                 {
-                    payment.Update(paymentItems);
+                    payment.Update(paymentItems, waiterFoodServicesClientSession);
                     //move to end of list;
                     payments.Remove(payment);
                     payments.Add(payment);
@@ -514,7 +514,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 else
                 {
-                    payment.Update(paymentItems);
+                    payment.Update(paymentItems, foodShipping);
                     //move to end of list;
                     payments.Remove(payment);
                     payments.Add(payment);
@@ -609,7 +609,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 else
                 {
-                    payment.Update(paymentItems);
+                    payment.Update(paymentItems, waiterFoodServicesClientSession);
                     //move to end of list;
                     payments.Remove(payment);
                     payments.Add(payment);

@@ -29,7 +29,7 @@ namespace ServiceContextManagerApp
         public TakeawayCashierPresentation(ITakeawayCashier takeawayCashier, IFlavoursServicesContextRuntime servicesContextRuntime)
         {
             TakeawayCashier = takeawayCashier;
-            ActiveShiftWork = TakeawayCashier.ActiveShiftWork;
+            ShiftWork = TakeawayCashier.ShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
             NativeUser=takeawayCashier.NativeUser;
         }
@@ -118,7 +118,22 @@ namespace ServiceContextManagerApp
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
         /// <MetaDataID>{cbe2c3df-1c68-429e-8d39-a32933a5d121}</MetaDataID>
-        public IShiftWork ActiveShiftWork { get; set; }
+         IShiftWork ShiftWork { get; set; }
+
+        public IShiftWork ActiveShiftWork
+        {
+            get
+            {
+                if (ShiftWork?.IsActive() == true)
+                    return ShiftWork;
+                else
+                    return null;
+            }
+        }
+        public void NewShiftWork(DateTime startedAt, double timespanInHours)
+        {
+            ShiftWork = ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+        }
 
         /// <MetaDataID>{d5bd6cd8-d051-4d3c-9f64-c15125131abf}</MetaDataID>
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
@@ -128,28 +143,29 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                if (ActiveShiftWork != null)
-                {
-                    var startedAt = ActiveShiftWork.StartsAt;
-                    var workingHours = ActiveShiftWork.PeriodInHours;
+                return ShiftWork?.IsActive() == true;
+                //if (ShiftWork != null)
+                //{
+                //    var startedAt = ShiftWork.StartsAt;
+                //    var workingHours = ShiftWork.PeriodInHours;
 
-                    var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
-                    hour = Math.Round((hour * 2)) / 2;
-                    var utcNow = DateTime.Today + TimeSpan.FromHours(hour);
-                    if (utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        ActiveShiftWork = null;
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                //    var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
+                //    hour = Math.Round((hour * 2)) / 2;
+                //    var utcNow = DateTime.Today + TimeSpan.FromHours(hour);
+                //    if (utcNow >= startedAt.ToUniversalTime() && utcNow <= startedAt.ToUniversalTime() + TimeSpan.FromHours(workingHours))
+                //    {
+                //        return true;
+                //    }
+                //    else
+                //    {
+                //        ShiftWork = null;
+                //        return false;
+                //    }
+                //}
+                //else
+                //{
+                //    return false;
+                //}
             }
         }
 
@@ -159,7 +175,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt;
+                    return ShiftWork.StartsAt;
                 else
                     return DateTime.MinValue;
             }
@@ -171,7 +187,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return ShiftWork.StartsAt + TimeSpan.FromHours(ShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
             }
@@ -180,7 +196,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{b06f0ab8-a3fa-472f-9dc4-be98d4ec4e4b}</MetaDataID>
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {
-            ServicesContextRuntime.ChangeSiftWork(this.TakeawayCashier.ActiveShiftWork, startedAt, timespanInHours);
+            ServicesContextRuntime.ChangeSiftWork(this.TakeawayCashier.ShiftWork, startedAt, timespanInHours);
         }
         /// <MetaDataID>{d474eeea-d67c-469e-b1f2-d77d85a51cbe}</MetaDataID>
         public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)

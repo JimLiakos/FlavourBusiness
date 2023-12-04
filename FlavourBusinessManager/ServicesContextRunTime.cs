@@ -202,7 +202,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{878f062d-16a9-4852-8ab0-343a213640c4}</MetaDataID>
         private void Supervisor_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IWaiter.ActiveShiftWork))
+            if (member == nameof(IWaiter.ShiftWork))
             {
                 Task.Run(() =>
                 {
@@ -352,7 +352,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{c543c675-b069-4660-a061-3fbbe7a42b0b}</MetaDataID>
         private void TakeawayCashier_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IWaiter.ActiveShiftWork))
+            if (member == nameof(IWaiter.ShiftWork))
             {
                 Task.Run(() =>
                 {
@@ -363,7 +363,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         private void Courier_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IWaiter.ActiveShiftWork))
+            if (member == nameof(IWaiter.ShiftWork))
             {
                 Task.Run(() =>
                 {
@@ -376,7 +376,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{179a3bed-629f-4a3f-b79a-bbe334fcbed2}</MetaDataID>
         private void PaymentTerminal_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IWaiter.ActiveShiftWork))
+            if (member == nameof(IWaiter.ShiftWork))
             {
                 Task.Run(() =>
                 {
@@ -387,7 +387,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <MetaDataID>{e9759669-6bd8-4091-b318-90229918434e}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IWaiter.ActiveShiftWork))
+            if (member == nameof(IWaiter.ShiftWork))
             {
                 Task.Run(() =>
                 {
@@ -1144,8 +1144,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (ServiceContextRTLock)
             {
-                if (waiter.ActiveShiftWork != null && !ActiveShiftWorks.Contains(waiter.ActiveShiftWork))
-                    ActiveShiftWorks.Add(waiter.ActiveShiftWork);
+                if (waiter.ShiftWork != null && !ActiveShiftWorks.Contains(waiter.ShiftWork))
+                    ActiveShiftWorks.Add(waiter.ShiftWork);
             }
 
             var activeShiftWorks = GetActiveShiftWorks();
@@ -1157,8 +1157,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (ServiceContextRTLock)
             {
-                if (cashier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(cashier.ActiveShiftWork))
-                    ActiveShiftWorks.Add(cashier.ActiveShiftWork);
+                if (cashier.ShiftWork != null && !ActiveShiftWorks.Contains(cashier.ShiftWork))
+                    ActiveShiftWorks.Add(cashier.ShiftWork);
             }
 
             var activeShiftWorks = GetActiveShiftWorks();
@@ -1168,8 +1168,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (ServiceContextRTLock)
             {
-                if (courier.ActiveShiftWork != null && !ActiveShiftWorks.Contains(courier.ActiveShiftWork))
-                    ActiveShiftWorks.Add(courier.ActiveShiftWork);
+                if (courier.ShiftWork != null && !ActiveShiftWorks.Contains(courier.ShiftWork))
+                    ActiveShiftWorks.Add(courier.ShiftWork);
             }
 
             var activeShiftWorks = GetActiveShiftWorks();
@@ -1216,7 +1216,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             foreach (var waiter in activeWaiters)
             {
-                var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                var waiterActiveShiftWork = waiter.ShiftWork;
                 if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                 {
                     Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.MealConversationTimeout) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
@@ -1381,7 +1381,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 foreach (var waiter in activeWaiters)
                 {
-                    var waiterActiveShiftWork = waiter.ActiveShiftWork;
+                    var waiterActiveShiftWork = waiter.ShiftWork;
                     if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                     {
                         Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.LaytheTable) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
@@ -3383,8 +3383,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             lock (ServiceContextRTLock)
             {
-                if (serviceContextSupervisor.ActiveShiftWork != null && !ActiveShiftWorks.Contains(serviceContextSupervisor.ActiveShiftWork))
-                    ActiveShiftWorks.Add(serviceContextSupervisor.ActiveShiftWork);
+                if (serviceContextSupervisor.ShiftWork != null && !ActiveShiftWorks.Contains(serviceContextSupervisor.ShiftWork))
+                    ActiveShiftWorks.Add(serviceContextSupervisor.ShiftWork);
 
                 var activeShiftWorks = GetActiveShiftWorks();
             }

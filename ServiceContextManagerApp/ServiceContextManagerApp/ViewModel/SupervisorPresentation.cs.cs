@@ -105,13 +105,13 @@ namespace ServiceContextManagerApp
         [CachingDataOnClientSide]
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
-        IShiftWork ActiveShiftWork;
+        IShiftWork ShiftWork;
 
         public bool InActiveShiftWork
         {
             get
             {
-                if (ActiveShiftWork?.IsActive() == true)
+                if (ShiftWork?.IsActive() == true)
                     return true;
                 else
                     return false;
@@ -123,7 +123,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt;
+                    return ShiftWork.StartsAt;
                 else
                     return DateTime.MinValue;
             }
@@ -134,26 +134,26 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return ShiftWork.StartsAt + TimeSpan.FromHours(ShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
             }
         }
         public void GetActiveShiftWork()
         {
-            ActiveShiftWork = Supervisor.ActiveShiftWork;
+            ShiftWork = Supervisor.ShiftWork;
         }
         public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ActiveShiftWork = Supervisor.NewShiftWork(startedAt, timespanInHours);
+            ShiftWork = Supervisor.NewShiftWork(startedAt, timespanInHours);
 
-            if (ActiveShiftWork != null)
+            if (ShiftWork != null)
             {
                 //   UpdateFoodShippings(Courier.GetFoodShippings());
 
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
-                ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+                ObjectChangeState?.Invoke(this, nameof(ShiftWork));
             }
 
 

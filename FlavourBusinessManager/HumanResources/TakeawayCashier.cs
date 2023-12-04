@@ -228,7 +228,7 @@ namespace FlavourBusinessManager.HumanResources
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{acb9a452-7452-47e9-be6f-bd4c05a720c3}</MetaDataID>
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
@@ -420,7 +420,7 @@ namespace FlavourBusinessManager.HumanResources
                 (shiftWork as ShiftWork).PeriodInHours = timespanInHours;
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
         }
 
         /// <MetaDataID>{22cc3ca5-1bc7-43cc-b0da-f3cd5272cf48}</MetaDataID>
@@ -436,7 +436,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.CashierSiftWorkUpdated(this);
@@ -457,7 +457,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.CashierSiftWorkUpdated(this);

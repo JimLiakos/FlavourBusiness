@@ -34,6 +34,7 @@ namespace ServiceContextManagerApp.ViewModel
 
         /// <MetaDataID>{fd03d41b-d879-4d4b-965e-b5c3a84aac2f}</MetaDataID>
         List<IServingShiftWork> GetLastThreeSifts();
+        void NewShiftWork(DateTime startedAt, double timespanInHours);
 
         bool NativeUser { get; set; }
 
@@ -46,6 +47,6 @@ namespace ServiceContextManagerApp.ViewModel
 
         [JsonIgnore]
         [HttpInVisible]
-        IShiftWork ActiveShiftWork { get; set; }
+        IShiftWork ActiveShiftWork { get;  }
     }
 }

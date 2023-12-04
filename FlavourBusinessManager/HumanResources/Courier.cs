@@ -25,7 +25,8 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class Courier : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourier
     {
-
+     
+      
         /// <MetaDataID>{9934c842-848c-4aee-9503-cae650097b4e}</MetaDataID>
         public Courier()
         {
@@ -223,8 +224,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         /// <MetaDataID>{1909309d-6473-4d8d-8ec9-eaf329ef9f42}</MetaDataID>
-        [PersistentMember(nameof(_ShiftWorks))]
-        [BackwardCompatibilityID("+10")]
+                [BackwardCompatibilityID("+10")]
         public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
 
 
@@ -232,7 +232,7 @@ namespace FlavourBusinessManager.HumanResources
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{acb9a452-7452-47e9-be6f-bd4c05a720c3}</MetaDataID>
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
@@ -285,8 +285,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
-        [PersistentMember(nameof(_Messages))]
-        [BackwardCompatibilityID("+12")]
+                [BackwardCompatibilityID("+12")]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message> Messages => _Messages.ToThreadSafeList();
 
@@ -401,7 +400,7 @@ namespace FlavourBusinessManager.HumanResources
         List<UserData.UserRole> _Roles;
 
         /// <MetaDataID>{134c4f86-90e1-4f84-b602-7e13936e5a2a}</MetaDataID>
-        public List<UserData.UserRole> Roles
+        public System.Collections.Generic.List<FlavourBusinessFacade.UserData.UserRole> Roles
         {
             get
             {
@@ -427,7 +426,7 @@ namespace FlavourBusinessManager.HumanResources
                 (shiftWork as ShiftWork).PeriodInHours = timespanInHours;
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
         }
 
         /// <MetaDataID>{22cc3ca5-1bc7-43cc-b0da-f3cd5272cf48}</MetaDataID>
@@ -443,7 +442,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.CourierSiftWorkUpdated(this);
@@ -464,7 +463,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.CourierSiftWorkUpdated(this);
@@ -644,10 +643,10 @@ namespace FlavourBusinessManager.HumanResources
         List<IFoodShipping> FoodShippings = new List<IFoodShipping>();
 
         /// <MetaDataID>{351160dd-9807-4a43-8176-dc3a41933d62}</MetaDataID>
-        public IList<IFoodShipping> GetFoodShippings()
+        public System.Collections.Generic.IList<FlavourBusinessFacade.Shipping.IFoodShipping> GetFoodShippings()
         {
             var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IFoodShipping>().ToList();
-            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned && (ActiveShiftWork != null && x.ShiftWork == this.ActiveShiftWork)).ToList();
+            AssignedFoodShippings = foodShippings.Where(x => x.IsAssigned && (ShiftWork != null && x.ShiftWork == this.ShiftWork)).ToList();
             FoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
             return AssignedFoodShippings.Union(FoodShippings).ToList();
         }
@@ -688,7 +687,7 @@ namespace FlavourBusinessManager.HumanResources
             {
 
             }
-            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().Where(x => !x.IsAssigned || (ActiveShiftWork != null && x.ShiftWork == this.ActiveShiftWork)).ToList();
+            servingBatches = itemsToServe.Select(x => x.servingBatch).Distinct().Where(x => !x.IsAssigned || (ShiftWork != null && x.ShiftWork == this.ShiftWork)).ToList();
 
 
 
@@ -713,7 +712,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{ddfec1ac-825d-4e36-8fe0-76dc31bada46}</MetaDataID>
         public void CommitFoodShipings()
         {
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
                 lock (this)
                 {
@@ -727,6 +726,7 @@ namespace FlavourBusinessManager.HumanResources
 
                             stateTransition.Consistent = true;
                         }
+                        StateMachineMonitoring();
                     }
                     catch (Exception error)
                     {
@@ -753,7 +753,7 @@ namespace FlavourBusinessManager.HumanResources
 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
+                    (foodShipping.ShiftWork as ServingShiftWork)?.RemoveServingBatch(foodShipping);
                     (foodShipping as FoodShipping).AtTheCounter();
                     Transaction.RunOnTransactionCompleted(() =>
                     {
@@ -762,6 +762,7 @@ namespace FlavourBusinessManager.HumanResources
 
                     stateTransition.Consistent = true;
                 }
+                StateMachineMonitoring();
 
                 //FindFoodShippingsChanges();
 
@@ -778,6 +779,7 @@ namespace FlavourBusinessManager.HumanResources
             //    FindFoodShippingsChanges();
         }
 
+        /// <MetaDataID>{3ee99f40-a2f1-44a7-bd23-4ff54f9e3584}</MetaDataID>
         public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
         {
 
@@ -799,6 +801,8 @@ namespace FlavourBusinessManager.HumanResources
                     stateTransition.Consistent = true;
                 }
                 FindFoodShippingsChanges();
+
+                StateMachineMonitoring();
             }
             else
             {
@@ -810,7 +814,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{02b58641-354e-4b16-a172-95018e80f233}</MetaDataID>
         public void AssignFoodShipping(IFoodShipping foodShipping)
         {
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
 
                 AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -820,7 +824,7 @@ namespace FlavourBusinessManager.HumanResources
                 {
                     if (!foodShipping.IsAssigned)
                     {
-                        (ActiveShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
+                        (ShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
                         Transaction.RunOnTransactionCompleted(() =>
                         {
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
@@ -832,14 +836,17 @@ namespace FlavourBusinessManager.HumanResources
                 (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).FoodShippingAssigned(this, foodShipping);
                 //if(!foodShippingAssignmentFromMe)
                 //    FindFoodShippingsChanges();
+
+                StateMachineMonitoring();
             }
 
         }
 
 
+        /// <MetaDataID>{d1b04d2d-8219-4a1f-947f-b16de95a053a}</MetaDataID>
         public void AssignAndCommitFoodShipping(IFoodShipping foodShipping)
         {
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
                 lock (this)
                 {
@@ -859,6 +866,7 @@ namespace FlavourBusinessManager.HumanResources
                             stateTransition.Consistent = true;
                         }
                         FindFoodShippingsChanges();
+                        StateMachineMonitoring();
                     }
                     catch (Exception error)
                     {
@@ -896,22 +904,89 @@ namespace FlavourBusinessManager.HumanResources
             throw new NotImplementedException();
         }
 
+        /// <MetaDataID>{fd795163-663f-4522-8a14-9aeca43cfe50}</MetaDataID>
         object StateMachineLock = new object();
 
+        /// <MetaDataID>{9c20c023-8ddc-41f6-8534-399df325bba5}</MetaDataID>
         private void StateMachineMonitoring()
         {
 
+            if (this.ShiftWork?.IsActive() == true)
+            {
+                if (State != CourierState.OnTheRoad)
+                    State = CourierState.PendingForFoodShiping;
+                bool someAtTheCounter = (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Any(x => x.State == ItemPreparationState.Serving);
+                bool allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
+                if (someAtTheCounter)
+                    State = CourierState.CollectFoodShiping;
+                else if (allOntheRoad)
+                {
+
+                    var onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
+                    if (onTheRoadTimespan.TotalMinutes > 2)
+                    {
+                        State = CourierState.OnTheRoad;
+                    }
+                    else
+                    {
+                        State = CourierState.CollectFoodShiping;
+                        Delay.Do((TimeSpan.FromMinutes(2) - onTheRoadTimespan).TotalMilliseconds /*in ms*/, () =>
+                        {
+                            allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
+                            if (allOntheRoad)
+                                State = CourierState.OnTheRoad;
+                            onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
+                            /* Do somthing */
+                        });
+                    }
+                }
+                else
+                    State = CourierState.PendingForFoodShiping;
+            }
+            else
+            {
+                State = CourierState.Idle;
+            }
+
+
+        }
+        /// <MetaDataID>{e8881f39-2f46-4b4a-b1ca-237ecea8a5c1}</MetaDataID>
+        [ObjectActivationCall]
+        internal void OnActivated()
+        {
+            StateMachineMonitoring();
+        }
+        /// <exclude>Excluded</exclude>
+        CourierState _State;
+
+
+        /// <MetaDataID>{eedff8e1-ca31-41d6-a954-01ed1e0fbe0c}</MetaDataID>
+        [PersistentMember(nameof(_State))]
+        [BackwardCompatibilityID("+19")]
+        public CourierState State
+        {
+            get => _State;
+            private set
+            {
+
+                if (_State != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _State = value;
+                        stateTransition.Consistent = true;
+                    }
+                    Transaction.RunOnTransactionCompleted(() => {
+                        ObjectChangeState.Invoke(this, nameof(State));
+                    
+                    });
+                }
+
+            }
+
         }
     }
-     
-    https://stackoverflow.com/questions/51167203/android-google-login-not-working-inside-webview
-    public enum CourierState
-    {
-        Idle = 0,
-        PendingForFoodShiping = 1,
-        CollectFoodShiping = 2,
-        NearDeliveryServicePoint = 3,
-        OnTheRoad = 4,
-        
-    }
+
+
+
 }

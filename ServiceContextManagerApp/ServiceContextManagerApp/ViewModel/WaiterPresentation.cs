@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using OOAdvantech.MetaDataRepository;
+using System.Windows.Controls;
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
@@ -23,7 +24,7 @@ namespace ServiceContextManagerApp
         public WaiterPresentation(IWaiter waiter, IFlavoursServicesContextRuntime servicesContextRuntime)
         {
             Waiter = waiter;
-            ActiveShiftWork = Waiter.ActiveShiftWork;
+            ShiftWork = Waiter.ShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
             NativeUser = Waiter.NativeUser;
 
@@ -101,7 +102,19 @@ namespace ServiceContextManagerApp
         [CachingDataOnClientSide]
         public string PhotoUrl { get => _PhotoUrl; set { } }
 
-        public IShiftWork ActiveShiftWork { get; set; }
+
+        public IShiftWork ActiveShiftWork
+        {
+            get
+            {
+                if (ShiftWork?.IsActive() == true)
+                    return ShiftWork;
+                else
+                    return null;
+            }
+        }
+
+        public IShiftWork ShiftWork { get; set; }
 
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
@@ -109,10 +122,10 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                if (ActiveShiftWork != null)
+                if (ShiftWork != null)
                 {
-                    var startedAt = ActiveShiftWork.StartsAt;
-                    var workingHours = ActiveShiftWork.PeriodInHours;
+                    var startedAt = ShiftWork.StartsAt;
+                    var workingHours = ShiftWork.PeriodInHours;
 
                     var hour = System.DateTime.UtcNow.Hour + (((double)System.DateTime.UtcNow.Minute) / 60);
                     hour = Math.Round((hour * 2)) / 2;
@@ -123,7 +136,7 @@ namespace ServiceContextManagerApp
                     }
                     else
                     {
-                        ActiveShiftWork = null;
+                        ShiftWork = null;
                         return false;
                     }
                 }
@@ -139,7 +152,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt;
+                    return ShiftWork.StartsAt;
                 else
                     return DateTime.MinValue;
             }
@@ -150,7 +163,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return ShiftWork.StartsAt + TimeSpan.FromHours(ShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
             }
@@ -160,7 +173,7 @@ namespace ServiceContextManagerApp
 
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {
-            ServicesContextRuntime.ChangeSiftWork(this.Waiter.ActiveShiftWork, startedAt, timespanInHours);
+            ServicesContextRuntime.ChangeSiftWork(this.Waiter.ShiftWork, startedAt, timespanInHours);
         }
         public List<IServingShiftWork> GetSifts(DateTime startDate, DateTime endDate)
         {
@@ -173,5 +186,9 @@ namespace ServiceContextManagerApp
             return Waiter.GetLastThreeSifts();
         }
 
+        public void NewShiftWork(DateTime startedAt, double timespanInHours)
+        {
+            ShiftWork = ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+        }
     }
 }

@@ -1,9 +1,12 @@
+using OOAdvantech.MetaDataRepository;
+
 namespace FinanceFacade
 {
     /// <MetaDataID>{0d547eab-ccbb-4482-964e-048b8dfa9f0c}</MetaDataID>
+    [GenerateFacadeProxy]
     public interface IPaymentGateway
     {
-
+         
         /// <summary>
         /// Creates a payment order for the items o payment parameter
         /// </summary>

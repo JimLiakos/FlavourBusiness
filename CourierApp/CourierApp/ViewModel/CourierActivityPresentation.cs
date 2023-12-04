@@ -22,6 +22,7 @@ using FinanceFacade;
 using ServiceContextManagerApp;
 using MenuPresentationModel.MenuCanvas;
 using System.Windows.Media;
+using static System.Windows.Forms.AxHost;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -347,7 +348,7 @@ namespace CourierApp.ViewModel
                             if (_Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
+                                ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                 if (ActiveShiftWork != null)
                                     UpdateFoodShippings(Courier.GetFoodShippings());
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
@@ -410,7 +411,7 @@ namespace CourierApp.ViewModel
                                         continue;
 
 
-                                    ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
+                                    ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                     if (ActiveShiftWork != null)
                                     {
                                         _CourierPresentation=new CourierPresentation(_Courier, null);
@@ -449,7 +450,7 @@ namespace CourierApp.ViewModel
                                         }), serviceState);
                                     }
 #endif
-                                    ActiveShiftWork = _Courier.ActiveShiftWork as IServingShiftWork;
+                                    ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                     GetMessages();
                                 }
                             }
@@ -519,17 +520,27 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{0989d879-8309-46fc-ba3a-947448f9bfb4}</MetaDataID>
         private void Courier_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IServicesContextWorker.ActiveShiftWork))
+            if (member == nameof(IServicesContextWorker.ShiftWork))
             {
-                var activeShiftWork = Courier.ActiveShiftWork;
-                if (activeShiftWork != ActiveShiftWork)
+                var shiftWork = Courier.ShiftWork;
+                if (shiftWork != ShiftWork)
                 {
-                    ActiveShiftWork = activeShiftWork as IServingShiftWork;
-                    UpdateFoodShippings(Courier.GetFoodShippings());
+                    ShiftWork = shiftWork as IServingShiftWork;
+                    if(ActiveShiftWork!= null)
+                        UpdateFoodShippings(Courier.GetFoodShippings());
 
                 }
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
                 GetMessages();
+            }
+            if (member == nameof(ICourier.State))
+            {
+                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                if(Courier.State==CourierState.OnTheRoad)
+                    FoodShippingsChanged();
+                if (Courier.State == CourierState.PendingForFoodShiping)
+                    FoodShippingsChanged();
+
             }
         }
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
@@ -722,9 +733,20 @@ namespace CourierApp.ViewModel
             });
         }
 
+        public IServingShiftWork ActiveShiftWork
+        {
+            get
+            {
+                if(ShiftWork?.IsActive()==true)
+                    return ShiftWork;
+                else
+                    return null;
+
+            }
+        }
 
         /// <MetaDataID>{34925387-d771-493f-8895-a673afa88129}</MetaDataID>
-       public IServingShiftWork ActiveShiftWork { get; private set; }
+        public IServingShiftWork ShiftWork { get; private set; }
 
         /// <MetaDataID>{a8ad8be0-6614-4c17-8f1f-db9b878796ed}</MetaDataID>
         public DateTime ActiveShiftWorkStartedAt
@@ -757,7 +779,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                if (ActiveShiftWork?.IsActive() == true)
+                if (ShiftWork?.IsActive() == true)
                     return true;
                 else
                     return false;
@@ -768,7 +790,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{e0cae251-d210-41e4-9c12-e3da35bcc002}</MetaDataID>
         public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ActiveShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours) as IServingShiftWork;
+            ShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours) as IServingShiftWork;
 
             if (ActiveShiftWork != null)
             {

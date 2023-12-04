@@ -283,7 +283,7 @@ namespace ServiceContextManagerApp
 
         public void ShiftWorkStart(IWorkerPresentation worker, System.DateTime startedAt, double timespanInHours)
         {
-            worker.ActiveShiftWork = worker.ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+            worker.NewShiftWork(startedAt, timespanInHours);
         }
 
 

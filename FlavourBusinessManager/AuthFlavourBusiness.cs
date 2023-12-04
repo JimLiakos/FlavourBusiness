@@ -26,7 +26,7 @@ using OOAdvantech.Json.Linq;
 namespace FlavourBusinessManager
 {
     /// <MetaDataID>{7e0db2af-8db5-41a5-b7a7-68c767a4615e}</MetaDataID>
-    public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness,IOAuth, IExtMarshalByRefObject
+    public class AuthFlavourBusiness : MonoStateClass, IAuthFlavourBusiness, IOAuth, IExtMarshalByRefObject
     {
 
         public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
@@ -38,7 +38,7 @@ namespace FlavourBusinessManager
                 var getUserTask = FireBase.FirebaseAuth.GetUserByEmailAsync(username);
                 getUserTask.Wait();
                 var userRecord = getUserTask.Result;
-                if (userRecord!=null)
+                if (userRecord != null)
                     return true;
                 else
                     return false;
@@ -48,8 +48,8 @@ namespace FlavourBusinessManager
             {
 
                 return false;
-            }            
-          
+            }
+
         }
         /// <MetaDataID>{5e35f804-9b98-4c34-beea-1c00d4676c53}</MetaDataID>
         public IFoodServiceClient SignUpEndUser(EndUserData endUser)
@@ -68,9 +68,14 @@ namespace FlavourBusinessManager
                 {
                     foodServiceClient = new FoodServiceClient(userId);
                     foodServiceClient.Name = endUser.Name;
-                    foodServiceClient.FriendlyName=endUser.FriendlyName;
+                    foodServiceClient.FriendlyName = endUser.FriendlyName;
                     foodServiceClient.SIMCardData = new SIMCardData() { SIMCardDescription = endUser.SIMCard.SIMCardDescription, SIMCardIdentity = endUser.SIMCard.SIMCardIdentity, SIMCardPhoneNumber = endUser.SIMCard.SIMCardPhoneNumber };
                     foodServiceClient.Email = authUser.Email;
+                    foodServiceClient.UserName = authUser.Name;
+
+                    if (string.IsNullOrWhiteSpace(foodServiceClient.UserName))
+                        foodServiceClient.UserName = authUser.Email;
+
                     foreach (var deliveryPlace in endUser.DeliveryPlaces)
                         foodServiceClient.AddDeliveryPlace(deliveryPlace);
 
@@ -140,8 +145,8 @@ namespace FlavourBusinessManager
                         objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
                     }
 
-                    
- 
+
+
                 }
                 catch (Exception error)
                 {
@@ -168,8 +173,8 @@ namespace FlavourBusinessManager
         {
 
             string code = Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(emailAddress.ToLower())).Hash, 0)).ToString();
-            while (code.Length<6)
-                code=code.Insert(1, "0");
+            while (code.Length < 6)
+                code = code.Insert(1, "0");
             var getJsonTask = new HttpClient().GetStringAsync("http://dontwaitwaiter.com/config/EmailVerifyConfig.json");
             getJsonTask.Wait();
             var emailVerifyConfig = getJsonTask.Result;
@@ -201,7 +206,7 @@ namespace FlavourBusinessManager
                 m.IsBodyHtml = true;
 
 
-                sc.Host =  verifyEmailConfig.Server;// "smtp.gmail.com";
+                sc.Host = verifyEmailConfig.Server;// "smtp.gmail.com";
                 int port = 0;
                 int.TryParse(verifyEmailConfig.Port, out port);
                 sc.Port = port;
@@ -226,10 +231,10 @@ namespace FlavourBusinessManager
         {
             UserCredential user = null;
             string code = Math.Abs(BitConverter.ToInt16(CRCFactory.Instance.Create(CRCConfig.CRC32).ComputeHash(System.Text.Encoding.UTF8.GetBytes(email.ToLower())).Hash, 0)).ToString();
-            while (code.Length<6)
-                code=code.Insert(1, "0");
+            while (code.Length < 6)
+                code = code.Insert(1, "0");
 
-            if(code==verificationCode)
+            if (code == verificationCode)
             {
 
                 var FireBaseAcoountTask = Task.Run(async () =>
@@ -240,11 +245,12 @@ namespace FlavourBusinessManager
                 FireBaseAcoountTask.Wait(TimeSpan.FromSeconds(30));
 
                 AuthUser authUser = AuthUser.GetAuthUserFromToken(user.User.Credential.IdToken);
-                
+
                 AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, true);
-                authUserRef.FullName=userData.FullName;
-                authUserRef.PhoneNumber=userData.PhoneNumber;
-                authUserRef.Address=userData.Address;
+                authUserRef.FullName = userData.FullName;
+                authUserRef.PhoneNumber = userData.PhoneNumber;
+                authUserRef.Address = userData.Address;
+                authUserRef.UserName = userData.UserName;
                 authUserRef.Save();
 
 
@@ -324,6 +330,7 @@ namespace FlavourBusinessManager
                 authUserRef.PhoneNumber = userData.PhoneNumber;
                 authUserRef.Address = userData.Address;
                 authUserRef.Email = authUser.Email;
+                authUserRef.UserName = userData.UserName;
                 authUserRef.AddRole(menuMaker);
             }
             return menuMaker;
@@ -366,6 +373,7 @@ namespace FlavourBusinessManager
                 authUserRef.PhoneNumber = organizationData.PhoneNumber;
                 authUserRef.Address = organizationData.Address;
                 authUserRef.Email = authUser.Email;
+                authUserRef.UserName = organizationData.Email;
                 authUserRef.AddRole(organization);
             }
             return organization;
@@ -383,7 +391,7 @@ namespace FlavourBusinessManager
                 string storageName = "FlavourBusinesses";
                 string storageLocation = "DevStorage";
                 string storageType = "OOAdvantech.WindowsAzureTablesPersistenceRunTime.StorageProvider";
-                 
+
                 try
                 {
                     storageSession = ObjectStorage.OpenStorage(storageName,
@@ -527,6 +535,7 @@ namespace FlavourBusinessManager
                         authUserRef.Email = authUser.Email;
                     if (authUserRef.FullName == null)
                         authUserRef.FullName = authUser.Name;
+                    //authUserRef.UserName = userName;
 
                     authUserRef.Save();
                 }
@@ -680,7 +689,7 @@ namespace FlavourBusinessManager
         {
             try
             {
-                 
+
 
 
                 //ObjectStorageMTTest();
@@ -715,7 +724,7 @@ namespace FlavourBusinessManager
                 {
                     Identity = authUserRef.GetIdentity(),
                     Email = authUserRef.Email,
-                    UserName=authUserRef.UserName,
+                    UserName = authUserRef.UserName,
                     FullName = authUserRef.FullName,
                     PhoneNumber = authUserRef.PhoneNumber,
                     PhotoUrl = authUserRef.PhotoUrl,
@@ -724,7 +733,7 @@ namespace FlavourBusinessManager
                     Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
                 };
 
-                foreach( var role in userData.Roles)
+                foreach (var role in userData.Roles)
                 {
                     var thuser = role.User;
                 }
@@ -753,6 +762,8 @@ namespace FlavourBusinessManager
                 authUserRef.PhoneNumber = userData.PhoneNumber;
                 authUserRef.Address = userData.Address;
                 authUserRef.Email = userData.Email;
+                authUserRef.UserName = userData.UserName;
+
                 authUserRef.Save();
             }
 
@@ -937,6 +948,7 @@ namespace FlavourBusinessManager
                 authUserRef.PhoneNumber = userData.PhoneNumber;
                 authUserRef.Address = userData.Address;
                 authUserRef.Email = userData.Email;
+                authUserRef.UserName = userData.UserName;
                 authUserRef.Save();
             }
             userData = new UserData()
@@ -948,7 +960,7 @@ namespace FlavourBusinessManager
                 Address = authUserRef.Address,
                 PhotoUrl = authUserRef.PhotoUrl,
                 Roles = authUserRef.GetRoles().Where(x => x.RoleObject is IUser).Select(x => new UserData.UserRole() { User = x.RoleObject as IUser, RoleType = UserData.UserRole.GetRoleType(x.TypeFullName) }).ToList()
-            };   
+            };
 
             return userData;
         }
@@ -979,14 +991,14 @@ namespace FlavourBusinessManager
         {
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
-            return  flavoursServicesContextRunTime.GetNativeUsers(roleType);
+            return flavoursServicesContextRunTime.GetNativeUsers(roleType);
         }
 
-       public UserData SignInNativeUser(string servicesContextIdentity, string userName, string password)
+        public UserData SignInNativeUser(string servicesContextIdentity, string userName, string password)
         {
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
-            return flavoursServicesContextRunTime.SignInNativeUser(userName,  password);
+            return flavoursServicesContextRunTime.SignInNativeUser(userName, password);
         }
         /// <summary>
         /// Is the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT)
@@ -1016,8 +1028,8 @@ namespace FlavourBusinessManager
             authUser.ExpirationTime = FromUnixTime(decoded.ExpirationTimeSeconds).ToLocalTime();
 
 
-             authUser.Auth_Time = FromUnixTime((long)decoded.Claims["auth_time"]).ToLocalTime();
-            authUser.Audience =decoded.Audience;
+            authUser.Auth_Time = FromUnixTime((long)decoded.Claims["auth_time"]).ToLocalTime();
+            authUser.Audience = decoded.Audience;
             //authUser.Audience = (from claim in tokenS.Claims where claim.Type == "aud" select claim.Value).FirstOrDefault();
             authUser.Email = (from claim in decoded.Claims where claim.Key == "email" select claim.Value as string).FirstOrDefault();
 
@@ -1036,10 +1048,10 @@ namespace FlavourBusinessManager
                                                   select (fireBaseProperty.Value as JValue).Value).FirstOrDefault() as string;
             timer.Stop();
             authUser.AuthToken = authToken;
-            
+
             var elapsed = timer.ElapsedMilliseconds;
             return authUser;
-            
+
         }
     }
 

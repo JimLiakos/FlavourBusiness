@@ -191,7 +191,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         fsClientSession.UserIdentity = user.Identity;
 
 
-                    ((user as TakeawayCashier).ActiveShiftWork as ServingShiftWork).AddClientSession(fsClientSession);
+                    ((user as TakeawayCashier).ShiftWork as ServingShiftWork).AddClientSession(fsClientSession);
 
 
 
@@ -247,10 +247,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var uncommitedFoodServiceClientSession = this.OpenClientSessions.Where(x => x.ServicePoint==this&& ((int)x.FlavourItems.GetMinimumCommonItemPreparationState())<(int)ItemPreparationState.Committed).OrderBy(x => x.SessionStarts).LastOrDefault();
 
-            if (!((user as TakeawayCashier).ActiveShiftWork is ServingShiftWork))
+            if (!((user as TakeawayCashier).ShiftWork is ServingShiftWork))
                 throw new Exception("there is not active shift work");
 
-            if (uncommitedFoodServiceClientSession!=null&&uncommitedFoodServiceClientSession.SessionCreator==((user as TakeawayCashier).ActiveShiftWork as ServingShiftWork))
+            if (uncommitedFoodServiceClientSession!=null&&uncommitedFoodServiceClientSession.SessionCreator==((user as TakeawayCashier).ShiftWork as ServingShiftWork))
             {
                 uncommitedFoodServiceClientSession.ClientDeviceType= deviceType;
                 return uncommitedFoodServiceClientSession;

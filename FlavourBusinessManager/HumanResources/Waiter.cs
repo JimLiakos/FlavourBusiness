@@ -549,7 +549,7 @@ namespace FlavourBusinessManager.HumanResources
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{7943daf2-7520-4f77-a801-ce925d7f689b}</MetaDataID>
-        public IShiftWork ActiveShiftWork
+        public IShiftWork ShiftWork
         {
             get
             {
@@ -638,7 +638,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
@@ -662,7 +662,7 @@ namespace FlavourBusinessManager.HumanResources
                 AddShiftWork(shiftWork);
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
 
 
             ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
@@ -682,7 +682,7 @@ namespace FlavourBusinessManager.HumanResources
 
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
             ServicePointRunTime.ServicesContextRunTime.Current.WaiterSiftWorkUpdated(this);
         }
 
@@ -741,12 +741,12 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{16d6364d-018c-425d-808a-b663578c95b8}</MetaDataID>
         public void AssignServingBatch(IServingBatch servingBatch)
         {
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
                 lock (servingBatch)
                 {
                     if (!servingBatch.IsAssigned)
-                        (ActiveShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
+                        (ShiftWork as ServingShiftWork).AddServingBatch(servingBatch);
                 }
                 (ServicesContextRunTime.MealsController as RoomService.MealsController).ServingBatchAssigned(this, servingBatch);
             }
@@ -763,10 +763,10 @@ namespace FlavourBusinessManager.HumanResources
             var preparedItems = servingBatch.ContextsOfPreparedItems;
             var underPreparationItems = servingBatch.ContextsOfUnderPreparationItems;
 
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
                 lock (servingBatch)
-                    (ActiveShiftWork as ServingShiftWork).RemoveServingBatch(servingBatch);
+                    (ShiftWork as ServingShiftWork).RemoveServingBatch(servingBatch);
             }
 
 
@@ -851,7 +851,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{db723eb2-7265-4f9c-b34e-e3a4c41d49c7}</MetaDataID>
         public void CommitServingBatches()
         {
-            if (ActiveShiftWork is ServingShiftWork)
+            if (ShiftWork is ServingShiftWork)
             {
                 lock (this)
                 {

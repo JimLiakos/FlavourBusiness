@@ -6597,13 +6597,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
             }
         }
@@ -7100,6 +7100,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public FlavourBusinessFacade.HumanResources.CourierState State
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "get_State", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.CourierState>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string WorkerAssignKey
         {
             get
@@ -7164,13 +7176,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
             }
         }
@@ -7903,13 +7915,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
             }
         }
@@ -8526,13 +8538,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
             }
         }
@@ -8945,13 +8957,13 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
-        public FlavourBusinessFacade.HumanResources.IShiftWork ActiveShiftWork
+        public FlavourBusinessFacade.HumanResources.IShiftWork ShiftWork
         {
             get
             {
                 object[] args = new object[0];
                 System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ActiveShiftWork", args, argsTypes);
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_ShiftWork", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.IShiftWork>(retValue);
             }
         }

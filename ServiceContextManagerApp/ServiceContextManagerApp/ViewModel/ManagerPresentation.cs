@@ -342,7 +342,7 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{17ba4f14-257f-4b3a-9393-75998cef416f}</MetaDataID>
-        IShiftWork ActiveShiftWork;
+        IShiftWork ShiftWork;
 
 
         /// <MetaDataID>{c109b363-534b-4f4f-9743-652b9c30d16e}</MetaDataID>
@@ -351,7 +351,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt;
+                    return ShiftWork.StartsAt;
                 else
                     return DateTime.MinValue;
             }
@@ -364,7 +364,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return ShiftWork.StartsAt + TimeSpan.FromHours(ShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
             }
@@ -376,7 +376,7 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                if (ActiveShiftWork?.IsActive() == true)
+                if (ShiftWork?.IsActive() == true)
                     return true;
                 else
                     return false;
@@ -390,10 +390,10 @@ namespace ServiceContextManagerApp
         {
             if (ServiceContextSupervisor != null)
             {
-                ActiveShiftWork = ServiceContextSupervisor.NewShiftWork(startedAt, timespanInHours);
+                ShiftWork = ServiceContextSupervisor.NewShiftWork(startedAt, timespanInHours);
 
-                if (ActiveShiftWork != null)
-                    _ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+                if (ShiftWork != null)
+                    _ObjectChangeState?.Invoke(this, nameof(ShiftWork));
             }
         }
 

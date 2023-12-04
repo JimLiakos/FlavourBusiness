@@ -423,7 +423,7 @@ namespace FlavourBusinessManager.HumanResources
         List<ShiftWork> RecentlyShiftWorks;
 
         /// <MetaDataID>{d5055dba-e0e3-4e02-96b4-7d38e7182a2e}</MetaDataID>
-        public IShiftWork ActiveShiftWork
+        public IShiftWork ShiftWork
         {
             get
             {
@@ -512,7 +512,7 @@ namespace FlavourBusinessManager.HumanResources
         public IShiftWork NewShiftWork(DateTime startedAt, double timespanInHours)
         {
 
-            ShiftWork shiftWork = ActiveShiftWork as ShiftWork;
+            ShiftWork shiftWork = ShiftWork as ShiftWork;
             if (shiftWork != null)
                 return shiftWork;
             using (SystemStateTransition stateTransition = new SystemStateTransition())
@@ -527,7 +527,7 @@ namespace FlavourBusinessManager.HumanResources
             if (RecentlyShiftWorks != null)
                 RecentlyShiftWorks.Add(shiftWork);
 
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
             ServicePointRunTime.ServicesContextRunTime.Current.SupervisorSiftWorkUpdated(this);
             return shiftWork;
         }
@@ -541,7 +541,7 @@ namespace FlavourBusinessManager.HumanResources
                 (shiftWork as ShiftWork).PeriodInHours = timespanInHours;
                 stateTransition.Consistent = true;
             }
-            ObjectChangeState?.Invoke(this, nameof(ActiveShiftWork));
+            ObjectChangeState?.Invoke(this, nameof(ShiftWork));
         }
 
         /// <MetaDataID>{3a57fdb9-81a1-44d3-ac1b-dbab6ccab19d}</MetaDataID>
@@ -654,7 +654,7 @@ namespace FlavourBusinessManager.HumanResources
                 if (delayedServiceBatches.Count > 0)
                 {
 
-                    if (ActiveShiftWork != null && DateTime.UtcNow > ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < ActiveShiftWork.EndsAt.ToUniversalTime())
+                    if (ShiftWork != null && DateTime.UtcNow > ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < ShiftWork.EndsAt.ToUniversalTime())
                     {
                         var clientMessage = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
                         if ( clientMessage == null)

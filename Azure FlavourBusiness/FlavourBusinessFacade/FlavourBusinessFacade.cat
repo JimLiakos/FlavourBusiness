@@ -27739,7 +27739,11 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{9a46c7ba-f831-4e78-8737-9b7015f48847}"))
+			    value      	"{9a46c7ba-f831-4e78-8737-9b7015f48847}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"3"))
 		    quid       	"6503D5A30347"
 		    stereotype 	"Interface"
 		    superclasses 	(list inheritance_relationship_list
@@ -27755,6 +27759,173 @@
 			    quid       	"650535A100B6"
 			    supplier   	"Logical View::FlavourBusinessFacade::IUser"
 			    quidu      	"5F756AF90177"))
+		    operations 	(list Operations
+			(object Operation "GetFoodShippings"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5cb3c164-e95e-431e-95ee-4c188e91160c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E0127"))
+			    quid       	"656D7D1E0127"
+			    result     	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.Shipping.IFoodShipping,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFoodShippingUpdates"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2803ebe2-00a5-418d-a1f6-8a9da623f4d3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E025E"))
+			    quid       	"656D7D1E025E"
+			    parameters 	(list Parameters
+				(object Parameter "servingItemsOnDevice"
+				    quid       	"656D7D1E0277"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationAbbreviation>"))
+			    result     	"FlavourBusinessFacade.RoomService.ServingBatchUpdates"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CommitFoodShipings"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{078b7291-a5c3-4843-8eb3-2d3d579a9409}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E029B"))
+			    quid       	"656D7D1E029B"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "DeAssignFoodShipping"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9358540f-c6db-4eda-a7c3-c8026c39fc84}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E02D3"))
+			    quid       	"656D7D1E02D3"
+			    parameters 	(list Parameters
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1E02E9"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignFoodShipping"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ef363053-6811-42a3-b955-fb922d797e91}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E031C"))
+			    quid       	"656D7D1E031C"
+			    parameters 	(list Parameters
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1E032D"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "AssignAndCommitFoodShipping"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{71a003c6-49aa-435b-bef2-8aec8d26b833}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1E035B"))
+			    quid       	"656D7D1E035B"
+			    parameters 	(list Parameters
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1E036E"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetBill"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f79b75a4-bc33-483a-b07c-d6b4555143f5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1F0029"))
+			    quid       	"656D7D1F0029"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparations"
+				    quid       	"656D7D1F0044"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.SessionItemPreparationAbbreviation>")
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1F005D"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"FlavourBusinessFacade.RoomService.IBill"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "PrintFoodShippingReceipt"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a066838f-a33d-4ed4-a31f-1ca371f51873}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1F0090"))
+			    quid       	"656D7D1F0090"
+			    parameters 	(list Parameters
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1F00A4"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveFoodShippingAssignment"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b816807d-4fb9-44c0-877e-b59cd332fdf5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1F0326"))
+			    quid       	"656D7D1F0326"
+			    parameters 	(list Parameters
+				(object Parameter "foodShipping"
+				    quid       	"656D7D1F0337"
+				    type       	"FlavourBusinessFacade.Shipping.IFoodShipping"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "DeviceFirebaseToken"
 			    attributes 	(list Attribute_Set
@@ -27777,9 +27948,46 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+1"))
 			    quid       	"650535A1010C"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "State"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{eb973ca2-1979-488f-a143-f9a9c0238324}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"656D7D1F03CB")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
+			    quid       	"656D7D1F03CB"
+			    type       	"FlavourBusinessFacade.HumanResources.CourierState"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -29110,7 +29318,7 @@
 				Parent_View 	@516
 				location   	(1713, 1965)
 				fill_color 	13434879
-				nlines     	1
+				nlines     	2
 				max_width  	469
 				justify    	0
 				label      	"ICourier")

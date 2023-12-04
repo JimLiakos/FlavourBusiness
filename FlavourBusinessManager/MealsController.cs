@@ -20,15 +20,15 @@ namespace FlavourBusinessManager.RoomService
     /// <MetaDataID>{c31eb292-1b39-4081-9516-0e0e9e97b10a}</MetaDataID>
     public class MealsController : System.MarshalByRefObject, IExtMarshalByRefObject, IMealsController
     {
-      static  public System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
+        static public System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
         /// <MetaDataID>{0a7aeeab-712e-4d32-b84b-4de237e3192c}</MetaDataID>
         public List<IMealCourse> MealCoursesInProgress
         {
             get
             {
-               
 
-                
+
+
 
 
                 DateTime timeStamp = DateTime.UtcNow;
@@ -47,7 +47,7 @@ namespace FlavourBusinessManager.RoomService
                     timer.Stop();
 
                     var sdsd = timer.ElapsedMilliseconds;
-                  //  System.IO.File.AppendAllText(@"f:\log.txt", Environment.NewLine + "elapsed time in millisecond :" + timer.ElapsedMilliseconds.ToString());
+                    //  System.IO.File.AppendAllText(@"f:\log.txt", Environment.NewLine + "elapsed time in millisecond :" + timer.ElapsedMilliseconds.ToString());
                 }
 
 
@@ -344,9 +344,9 @@ namespace FlavourBusinessManager.RoomService
 
         public IFoodShipping GetMealCourseFoodShipping(string mealCourseUri)
         {
-            var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse; 
+            var mealCourse = ObjectStorage.GetObjectFromUri(mealCourseUri) as MealCourse;
 
-            
+
             var foodShiping = mealCourse.ServingBatches.OfType<FoodShipping>().FirstOrDefault();
             if (foodShiping == null)
                 foodShiping = GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
@@ -494,7 +494,7 @@ namespace FlavourBusinessManager.RoomService
             var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
 
             List<ServingBatch> servingBatches = new List<ServingBatch>();
-            if (waiter.ActiveShiftWork != null)
+            if (waiter.ShiftWork != null)
             {
 
                 //var sdsd = (from mealCourse in MealCoursesInProgress
@@ -506,7 +506,7 @@ namespace FlavourBusinessManager.RoomService
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint) && (mealCourse.Meal.Session.ServicePoint as HallServicePoint).CanBeAssignedTo(waiter, waiter.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HallServicePoint) && (mealCourse.Meal.Session.ServicePoint as HallServicePoint).CanBeAssignedTo(waiter, waiter.ShiftWork)
                                           select mealCourse).Distinct().ToList();
 
                 foreach (var mealCourse in mealCoursesToServe)
@@ -566,20 +566,35 @@ namespace FlavourBusinessManager.RoomService
             var activeShiftWork = ServicesContextRunTime.Current.GetActiveShiftWorks();
 
             List<FoodShipping> foodShippings = new List<FoodShipping>();
-            if (courier.ActiveShiftWork != null)
+            if (courier.ShiftWork != null)
             {
 
                 //var sdsd = (from mealCourse in MealCoursesInProgress
                 //            from itemsPreparationContext in mealCourse.FoodItemsInProgress
                 //            from itemPreparation in itemsPreparationContext.PreparationItems
                 //            select new { itemPreparation.Name, itemPreparation.State, itemPreparation }).ToList();
+                List<IMealCourse> mealCoursesToServe = null;
 
-                var mealCoursesToServe = (from mealCourse in MealCoursesInProgress
+                if (courier.State == CourierState.OnTheRoad || courier.State == CourierState.NearDeliveryServicePoint)
+                {
+                    mealCoursesToServe = (from mealCourse in MealCoursesInProgress
+                                          from itemsPreparationContext in mealCourse.FoodItemsInProgress
+                                          from itemPreparation in itemsPreparationContext.PreparationItems
+                                          where (itemPreparation.State == ItemPreparationState.OnRoad) &&
+                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ShiftWork)
+                                          select mealCourse).Distinct().ToList();
+
+                }
+                else
+                {
+                    mealCoursesToServe = (from mealCourse in MealCoursesInProgress
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
                                           from itemPreparation in itemsPreparationContext.PreparationItems
                                           where (itemPreparation.State == ItemPreparationState.Serving || itemPreparation.State == ItemPreparationState.OnRoad) &&
-                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ActiveShiftWork)
+                                          (mealCourse.Meal.Session.ServicePoint is HomeDeliveryServicePoint) && (mealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint).CanBeAssignedTo(courier, courier.ShiftWork)
                                           select mealCourse).Distinct().ToList();
+
+                }
 
                 foreach (var mealCourse in mealCoursesToServe)
                 {
@@ -622,9 +637,9 @@ namespace FlavourBusinessManager.RoomService
                             }
                         }
                         foodShipping.Update(mealCourse, preparedItems, underPreparationItems);
-                        if(foodShipping.IsAssigned)
+                        if (foodShipping.IsAssigned)
                         {
-                            if(foodShipping.ShiftWork.Worker == courier)
+                            if (foodShipping.ShiftWork.Worker == courier)
                                 foodShippings.Add(foodShipping);
                         }
                         else
@@ -804,7 +819,7 @@ namespace FlavourBusinessManager.RoomService
 
                 foreach (var waiter in activeWaiters)
                 {
-                    if (waiter.ActiveShiftWork != null && DateTime.UtcNow > waiter.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    if (waiter.ShiftWork != null && DateTime.UtcNow > waiter.ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ShiftWork.EndsAt.ToUniversalTime())
                     {
                         var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
                         if (clientMessage == null)
@@ -857,7 +872,7 @@ namespace FlavourBusinessManager.RoomService
 
                 foreach (var courier in activeCouriersForMealCoursesShipping)
                 {
-                    if (courier.ActiveShiftWork != null && DateTime.UtcNow > courier.ActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < courier.ActiveShiftWork.EndsAt.ToUniversalTime())
+                    if (courier.ShiftWork != null && DateTime.UtcNow > courier.ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < courier.ShiftWork.EndsAt.ToUniversalTime())
                     {
                         var clientMessage = courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
                         if (clientMessage == null)

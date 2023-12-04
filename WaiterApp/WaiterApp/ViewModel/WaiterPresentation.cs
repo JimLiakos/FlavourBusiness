@@ -430,7 +430,7 @@ namespace WaiterApp.ViewModel
                         if (Waiter != null && Waiter.OAuthUserIdentity == authUser.User_ID)
                         {
                             AuthUser = authUser;
-                            ActiveShiftWork = Waiter.ActiveShiftWork;
+                            ActiveShiftWork = Waiter.ShiftWork;
                             UpdateServingBatches(Waiter.GetServingBatches());
                             if (this._Halls != null)
                             {
@@ -551,7 +551,7 @@ namespace WaiterApp.ViewModel
                                     }), serviceState);
                                 }
 #endif
-                                ActiveShiftWork = Waiter.ActiveShiftWork;
+                                ActiveShiftWork = Waiter.ShiftWork;
                                 UpdateServingBatches(Waiter.GetServingBatches());
                                 (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = Waiter;
                                 //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
@@ -887,7 +887,7 @@ namespace WaiterApp.ViewModel
         /// <MetaDataID>{d3502416-55ad-482e-875b-f19d27f520a4}</MetaDataID>
         private void Waiter_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IServicesContextWorker.ActiveShiftWork))
+            if (member == nameof(IServicesContextWorker.ShiftWork))
             {
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
 

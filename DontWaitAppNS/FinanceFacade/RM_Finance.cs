@@ -379,6 +379,52 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
     }
     
+    public sealed class Pr_IPaymentGateway : OOAdvantech.Remoting.MarshalByRefObject, FinanceFacade.IPaymentGateway, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FinanceFacade.IPaymentGateway Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+        
+        public Pr_IPaymentGateway(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void CreatePaymentOrder(FinanceFacade.IPayment payment, decimal tipAmount, string paramsJson)
+        {
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
+            args[0] = payment;
+            argsTypes[0] = typeof(FinanceFacade.IPayment);
+            args[1] = tipAmount;
+            argsTypes[1] = typeof(decimal);
+            args[2] = paramsJson;
+            argsTypes[2] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FinanceFacade.IPaymentGateway), "CreatePaymentOrder", args, argsTypes);
+        }
+    }
+    
     public sealed class CNSPr_IPayment_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         

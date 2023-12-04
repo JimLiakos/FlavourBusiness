@@ -20,8 +20,23 @@ namespace ServiceContextManagerApp
     {
         /// <MetaDataID>{ad596b08-29b3-41b8-9780-bc7a1384aba0}</MetaDataID>
         public readonly ICourier Courier;
+
+        public IShiftWork ActiveShiftWork
+        {
+            get
+            {
+                if (ShiftWork?.IsActive() == true)
+                    return ShiftWork;
+                else
+                    return null;
+            }
+        }
+        public void NewShiftWork(DateTime startedAt, double timespanInHours)
+        {
+            ShiftWork = ServicesContextWorker.NewShiftWork(startedAt, timespanInHours);
+        }
         /// <MetaDataID>{4413f7cd-0cc9-4671-8ac4-a845e032b019}</MetaDataID>
-        public IShiftWork ActiveShiftWork {get; set;}
+        IShiftWork ShiftWork { get; set; }
         /// <MetaDataID>{3a590f53-8ab7-468d-9450-8704f1ce21e1}</MetaDataID>
         private readonly IFlavoursServicesContextRuntime ServicesContextRuntime;
 
@@ -67,9 +82,9 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e7461043-e364-4c73-b81b-978a1a3b3d0d}</MetaDataID>
         public bool InActiveShiftWork
         {
-        get
+            get
             {
-                if (ActiveShiftWork?.IsActive() == true)
+                if (ShiftWork?.IsActive() == true)
                     return true;
                 else
                     return false;
@@ -82,7 +97,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt;
+                    return ShiftWork.StartsAt;
                 else
                     return DateTime.MinValue;
             }
@@ -93,7 +108,7 @@ namespace ServiceContextManagerApp
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return ShiftWork.StartsAt + TimeSpan.FromHours(ShiftWork.PeriodInHours);
                 else
                     return DateTime.MinValue;
             }
@@ -102,9 +117,9 @@ namespace ServiceContextManagerApp
         public CourierPresentation(ICourier courier, IFlavoursServicesContextRuntime servicesContextRuntime)
         {
             Courier = courier;
-            ActiveShiftWork = courier.ActiveShiftWork;
+            ShiftWork = courier.ShiftWork;
             ServicesContextRuntime = servicesContextRuntime;
-            NativeUser=courier.NativeUser;
+            NativeUser = courier.NativeUser;
         }
         public bool NativeUser { get; set; }
 
@@ -113,7 +128,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{a61fa943-0074-4c3a-b3e4-ad41903d62dd}</MetaDataID>
         public void ChangeSiftWork(DateTime startedAt, double timespanInHours)
         {
-            ServicesContextRuntime.ChangeSiftWork(this.Courier.ActiveShiftWork, startedAt, timespanInHours);
+            ServicesContextRuntime.ChangeSiftWork(this.Courier.ShiftWork, startedAt, timespanInHours);
         }
 
         /// <MetaDataID>{fa9fcab6-6710-4cf3-8ae4-425af19b6142}</MetaDataID>
@@ -129,6 +144,6 @@ namespace ServiceContextManagerApp
             return Courier.GetLastThreeSifts();
         }
 
-   
+
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 using OOAdvantech.Json;
 
 namespace FinanceFacade
-{
+{ 
 
     /// <MetaDataID>{1efed191-267f-4beb-90d6-8ffe00bd2fa8}</MetaDataID>
     [BackwardCompatibilityID("{1efed191-267f-4beb-90d6-8ffe00bd2fa8}")]

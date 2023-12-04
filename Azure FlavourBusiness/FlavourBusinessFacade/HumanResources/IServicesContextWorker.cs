@@ -35,7 +35,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{a6830a28-86ee-436e-8df8-2d48e9731865}</MetaDataID>
         IShiftWork NewShiftWork(System.DateTime startedAt, double timespanInHours);
         /// <MetaDataID>{78a715ff-bcc3-42c4-9cb5-864e92de4bbf}</MetaDataID>
-        IShiftWork ActiveShiftWork { get; }
+        IShiftWork ShiftWork { get; }
 
         /// <MetaDataID>{8ded2820-79d2-4ae2-8508-15d1f9d7458b}</MetaDataID>
         void ChangeSiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shiftWork, System.DateTime startedAt, double timespanInHours);

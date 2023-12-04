@@ -530,11 +530,13 @@ namespace FinanceFacade
         }
 
         /// <MetaDataID>{95ef39af-d230-4d08-b6e7-16855a0941e8}</MetaDataID>
-        public void Update(List<Item> paymentItems)
+        public void Update(List<Item> paymentItems, IPaymentGateway paymentGateway)
         {
             _Items = paymentItems.OfType<IItem>().ToList();
             _Amount = paymentItems.Sum(x => (x.Quantity * x.Price) - x.PaidAmount);
             _Amount = decimal.Round(_Amount, 5);
+            if (paymentGateway != null)
+                _PaymentGateway = paymentGateway;
         }
 
 

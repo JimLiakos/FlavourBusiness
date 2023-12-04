@@ -419,7 +419,7 @@ namespace TakeAwayApp.ViewModel
                             if (TakeAwayCashier != null && TakeAwayCashier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
+                                ActiveShiftWork = TakeAwayCashier.ShiftWork;
                                 //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
                                 TakeAwayCashier.ObjectChangeState += TakeAwayCashier_ObjectChangeState;
                                 TakeAwayCashier.MessageReceived += MessageReceived;
@@ -517,7 +517,7 @@ namespace TakeAwayApp.ViewModel
                                         }), serviceState);
                                     }
 #endif
-                                    ActiveShiftWork = TakeAwayCashier.ActiveShiftWork;
+                                    ActiveShiftWork = TakeAwayCashier.ShiftWork;
                                     //UpdateServingBatches(TakeAwayCashier.GetServingBatches());
                                     (this.FlavoursOrderServer as DontWaitApp.FlavoursOrderServer).SignedInFlavourBusinessUser = TakeAwayCashier;
 
@@ -586,7 +586,7 @@ namespace TakeAwayApp.ViewModel
         /// <MetaDataID>{0989d879-8309-46fc-ba3a-947448f9bfb4}</MetaDataID>
         private void TakeAwayCashier_ObjectChangeState(object _object, string member)
         {
-            if (member == nameof(IServicesContextWorker.ActiveShiftWork))
+            if (member == nameof(IServicesContextWorker.ShiftWork))
             {
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
                 GetMessages();

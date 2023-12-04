@@ -7,9 +7,12 @@ using FlavourBusinessFacade.RoomService;
 
 namespace FlavourBusinessFacade.HumanResources
 {
-    /// <MetaDataID>{9bef8e35-06f8-4a19-962b-5d198d719468}</MetaDataID>
-    [GenerateFacadeProxy]
+
+
+
+
     /// <MetaDataID>{9a46c7ba-f831-4e78-8737-9b7015f48847}</MetaDataID>
+    [GenerateFacadeProxy]
     public interface ICourier : IServicesContextWorker, EndUsers.IMessageConsumer, IUser
     {
 
@@ -17,6 +20,7 @@ namespace FlavourBusinessFacade.HumanResources
         event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{b6a6576e-c50f-40c3-8abf-dd3889bf3414}</MetaDataID>
+        [BackwardCompatibilityID("+1")]
         string DeviceFirebaseToken { get; set; }
 
         event FoodShippingsChangedHandler FoodShippingsChanged;
@@ -40,16 +44,33 @@ namespace FlavourBusinessFacade.HumanResources
         void AssignAndCommitFoodShipping(IFoodShipping foodShipping);
 
 
+        /// <MetaDataID>{f79b75a4-bc33-483a-b07c-d6b4555143f5}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping);
 
         /// <MetaDataID>{a066838f-a33d-4ed4-a31f-1ca371f51873}</MetaDataID>
         void PrintFoodShippingReceipt(IFoodShipping foodShipping);
         /// <MetaDataID>{b816807d-4fb9-44c0-877e-b59cd332fdf5}</MetaDataID>
         void RemoveFoodShippingAssignment(IFoodShipping foodShipping);
+
+
+        /// <MetaDataID>{eb973ca2-1979-488f-a143-f9a9c0238324}</MetaDataID>
+        [BackwardCompatibilityID("+2")]
+        CourierState State { get; }
     }
 
     public delegate void FoodShippingsChangedHandler();
 
+
+    /// <MetaDataID>{6b30fbb3-87aa-4dae-8cfa-24c96c1b065b}</MetaDataID>
+    public enum CourierState
+    {
+        Idle = 0,
+        PendingForFoodShiping = 1,
+        CollectFoodShiping = 2,
+        NearDeliveryServicePoint = 3,
+        OnTheRoad = 4,
+
+    }
 
     /// <MetaDataID>{ca6e1cc6-8c42-464f-abb8-e32a9675b204}</MetaDataID>
     public class PaidFoodShippingException : System.Exception
