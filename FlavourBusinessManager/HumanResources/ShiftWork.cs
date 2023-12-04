@@ -1,7 +1,9 @@
 using FlavourBusinessFacade.HumanResources;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
+using System.Collections.Generic;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -12,7 +14,19 @@ namespace FlavourBusinessManager.HumanResources
     {
 
         /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IAuditWorkerEvents> _AuditEvents = new OOAdvantech.Collections.Generic.Set<IAuditWorkerEvents>();
+
+        /// <MetaDataID>{711c5a50-a446-4be0-80f1-6b7c6e045c56}</MetaDataID>
+        [PersistentMember(nameof(_AuditEvents))]
+        [BackwardCompatibilityID("+6")]
+        public System.Collections.Generic.List<IAuditWorkerEvents> AuditEvents 
+        {
+            get => _AuditEvents.ToThreadSafeList();
+        }
+
+        /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
+
 
         /// <exclude>Excluded</exclude>
         double _PeriodInHours;
@@ -40,6 +54,7 @@ namespace FlavourBusinessManager.HumanResources
         }
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+        /// <MetaDataID>{c8de3776-6ddf-48a8-8469-4f3d97c859cc}</MetaDataID>
         protected void OnObjectChangeState(object _object, string member)
         {
             ObjectChangeState?.Invoke(_object, member);
@@ -49,7 +64,7 @@ namespace FlavourBusinessManager.HumanResources
 
         /// <MetaDataID>{23668ad4-c8a0-410e-87de-b63ecd7ae72b}</MetaDataID>
         [OOAdvantech.MetaDataRepository.PersistentMember(nameof(_Name))]
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
+        [BackwardCompatibilityID("+1")]
         public string Name
         {
             get => _Name; set
@@ -132,5 +147,19 @@ namespace FlavourBusinessManager.HumanResources
         [PersistentMember(nameof(_Accountability))]
         [BackwardCompatibilityID("+5")]
         public IAccountability Accountability => _Accountability.Value;
+
+        
+        /// <MetaDataID>{3bd28e5d-2f79-4cc6-9a8c-3bacc7c53524}</MetaDataID>
+        public void AddAuditWorkerEvents(IAuditWorkerEvents auditEvent)
+        {
+
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _AuditEvents.Add(auditEvent); 
+                stateTransition.Consistent = true;
+            }
+
+        }
     }
 }

@@ -10,6 +10,14 @@ namespace FlavourBusinessFacade.HumanResources
 
     public interface IShiftWork : IActivity
     {
+        /// <MetaDataID>{31b38076-31ac-43c3-b77a-9836bf0faa9e}</MetaDataID>
+        void AddAuditWorkerEvents(IAuditWorkerEvents auditEvent);
+
+        [RoleAMultiplicityRange(0)]
+        [Association("ShifWorkAuditEvents", Roles.RoleA, "513a15f0-6ff4-491a-aee5-dc35796d9856")]
+        System.Collections.Generic.List<IAuditWorkerEvents> AuditEvents { get; }
+
+     
         /// <MetaDataID>{359d4451-92ac-44d8-a4a6-5345dcd8084e}</MetaDataID>
         [BackwardCompatibilityID("+4")]
         System.DateTime EndsAt { get; }
@@ -33,6 +41,7 @@ namespace FlavourBusinessFacade.HumanResources
     /// <MetaDataID>{6975b5f1-e6a6-4722-8254-a0d69770bca5}</MetaDataID>
     public static class ShiftWorkClientside
     {
+        /// <MetaDataID>{08451e6e-63f1-458b-a07d-c804df458fb1}</MetaDataID>
         public static bool IsActive(this IShiftWork shiftWork)
         {
 
@@ -57,6 +66,7 @@ namespace FlavourBusinessFacade.HumanResources
                 return false;
             }
         }
+        /// <MetaDataID>{4f631794-983d-479d-9dbc-4c5ad92d54ec}</MetaDataID>
         public static DateTime ShiftworkRound(this DateTime date)
         {
 

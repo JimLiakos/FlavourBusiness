@@ -57,6 +57,7 @@
     <Compile Include="HumanResources\IWaiter.cs" />
     <Compile Include="HumanResources\IActivity.cs" />
     <Compile Include="IAcountability.cs" />
+    <Compile Include="IAuditWorkerEvents.cs" />
     <Compile Include="IAuthFlavourBusiness.cs" />
     <Compile Include="IAzureInstancesManager.cs" />
     <Compile Include="ICallerIDLine.cs" />

@@ -8302,6 +8302,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAuditWorkerEvents> AuditEvents
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "get_AuditEvents", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAuditWorkerEvents>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.DateTime EndsAt
         {
             get
@@ -8404,6 +8416,15 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(FinanceFacade.IPayment);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServingShiftWork), "GetPaymentItemPreparations", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>>(retValue);
+        }
+        
+        public void AddAuditWorkerEvents(FlavourBusinessFacade.HumanResources.IAuditWorkerEvents auditEvent)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = auditEvent;
+            argsTypes[0] = typeof(FlavourBusinessFacade.HumanResources.IAuditWorkerEvents);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "AddAuditWorkerEvents", args, argsTypes);
         }
     }
     
@@ -9120,6 +9141,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAuditWorkerEvents> AuditEvents
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "get_AuditEvents", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IAuditWorkerEvents>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public System.DateTime EndsAt
         {
             get
@@ -9205,6 +9238,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void AddAuditWorkerEvents(FlavourBusinessFacade.HumanResources.IAuditWorkerEvents auditEvent)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = auditEvent;
+            argsTypes[0] = typeof(FlavourBusinessFacade.HumanResources.IAuditWorkerEvents);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IShiftWork), "AddAuditWorkerEvents", args, argsTypes);
         }
     }
     

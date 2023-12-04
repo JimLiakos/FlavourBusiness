@@ -25,13 +25,36 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class Courier : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ICourier
     {
-     
-      
+
+        /// <exclude>Excluded</exclude>
+        DateTime _StateTimestamp;
+        /// <MetaDataID>{3fcdfbf5-8dc7-408d-9d57-0583cddd517c}</MetaDataID>
+        [PersistentMember(nameof(_StateTimestamp))]
+        [BackwardCompatibilityID("+20")]
+        internal DateTime StateTimestamp
+        {
+            get => _StateTimestamp;
+            private set
+            {
+
+                if (_StateTimestamp!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _StateTimestamp=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
         /// <MetaDataID>{9934c842-848c-4aee-9503-cae650097b4e}</MetaDataID>
         public Courier()
         {
         }
-         
+
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
 
@@ -224,8 +247,9 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<IShiftWork> _ShiftWorks = new OOAdvantech.Collections.Generic.Set<IShiftWork>();
 
         /// <MetaDataID>{1909309d-6473-4d8d-8ec9-eaf329ef9f42}</MetaDataID>
-                [BackwardCompatibilityID("+10")]
-        public System.Collections.Generic.IList<FlavourBusinessFacade.HumanResources.IShiftWork> ShiftWorks => _ShiftWorks;
+        [PersistentMember(nameof(_ShiftWorks))]
+        [BackwardCompatibilityID("+10")]
+        public IList<IShiftWork> ShiftWorks => _ShiftWorks;
 
 
         /// <MetaDataID>{f233ab03-3b88-44a3-a035-b018afa68f5d}</MetaDataID>
@@ -285,7 +309,7 @@ namespace FlavourBusinessManager.HumanResources
         OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
         /// <MetaDataID>{b36c929d-744f-4ed1-b3c6-aee5d9d4f712}</MetaDataID>
-                [BackwardCompatibilityID("+12")]
+        [BackwardCompatibilityID("+12")]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message> Messages => _Messages.ToThreadSafeList();
 
@@ -828,6 +852,18 @@ namespace FlavourBusinessManager.HumanResources
                         Transaction.RunOnTransactionCompleted(() =>
                         {
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+
+                            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
+                            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                      where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) 
+                                                      select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                            foreach(var activeCourier in activeCouriers)
+                            {
+                                activeCourier.AuditForDelayedMealAtTheCounter(foodShipping);
+                            }
+
+
+
                         });
 
                         bool isAssined = foodShipping.IsAssigned;
@@ -840,6 +876,11 @@ namespace FlavourBusinessManager.HumanResources
                 StateMachineMonitoring();
             }
 
+        }
+
+        private void AuditForDelayedMealAtTheCounter(IFoodShipping foodShipping)
+        {
+            
         }
 
 
@@ -973,12 +1014,15 @@ namespace FlavourBusinessManager.HumanResources
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
+
+
                         _State = value;
+                        StateTimestamp = DateTime.UtcNow;
                         stateTransition.Consistent = true;
                     }
                     Transaction.RunOnTransactionCompleted(() => {
                         ObjectChangeState.Invoke(this, nameof(State));
-                    
+
                     });
                 }
 
