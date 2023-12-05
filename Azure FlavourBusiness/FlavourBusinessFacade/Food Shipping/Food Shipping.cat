@@ -33,7 +33,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8")
+		    value      	"9")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -291,7 +291,31 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{d8bade6b-debe-45da-8cc1-c29ebdf1b384}"))
+			    value      	"{d8bade6b-debe-45da-8cc1-c29ebdf1b384}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE))
 		    quid       	"656EE83B0072"
 		    type       	"string"
 		    exportControl 	"Public"))

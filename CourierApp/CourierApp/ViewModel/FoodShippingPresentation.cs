@@ -30,7 +30,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{5d4a45e0-dd81-4390-a69c-1e694cfeb85d}</MetaDataID>
         public ItemPreparationState State
         {
-            get
+            get 
             {
                 var foodShippingItems = (from itemsPreprationContext in this.AllContextsOfPreparedItems
                                          from preparedItem in itemsPreprationContext.PreparationItems
