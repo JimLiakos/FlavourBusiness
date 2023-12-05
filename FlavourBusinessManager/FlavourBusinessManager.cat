@@ -33117,7 +33117,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33139,7 +33139,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged( )"
+					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33161,7 +33161,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33183,7 +33183,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33228,7 +33228,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -37028,7 +37028,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -37114,7 +37114,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged( )"
+				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 				pctDist    	1.059687
 				height     	107
 				orientation 	0)
@@ -37200,7 +37200,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<string>)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -37286,7 +37286,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -37535,7 +37535,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -50696,7 +50696,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"15")
+			    value      	"14")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -51614,39 +51614,6 @@
 				    value      	"{64b865f4-304e-4e10-908e-23d6b22f6c9a}"))
 			    quid       	"6564EEB1013D"
 			    type       	"string"
-			    exportControl 	"Public")
-			(object ClassAttribute "DistributionIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"656EEB370276")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{227bd8d0-f43a-4d3b-b9c3-906d1a0f9f79}")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+14"))
-			    quid       	"656EEB370276"
-			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -51660,7 +51627,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	544
+		    origin_y   	388
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::ICourier" @755
 			    ShowCompartmentStereotypes 	TRUE
