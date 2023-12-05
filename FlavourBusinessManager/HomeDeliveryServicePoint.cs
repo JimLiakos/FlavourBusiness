@@ -560,5 +560,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 };
             }
         }
+
+        public TimeSpan DelayedFoodShippingAtTheCounterTimespan { get=>TimeSpan.FromMinutes(2);}
     }
 }

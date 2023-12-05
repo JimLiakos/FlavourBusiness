@@ -165,6 +165,9 @@
     <value>Waiter</value>
     <comment>Specifies the name of the 'waiter' when it is created.</comment>
   </data>
+  <data name="DelayedFoodshippingAtTheCounter" xml:space="preserve">
+    <value>Καθυστέρηση παραλαβής παραγγελίας από τον πάγκο.</value>
+  </data>
   <data name="DublicateStorageNameMessage" xml:space="preserve">
     <value>A storage named '{0}' already belongs to this storage.</value>
   </data>

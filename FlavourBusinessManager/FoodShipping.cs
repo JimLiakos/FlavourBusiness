@@ -19,6 +19,27 @@ namespace FlavourBusinessManager.Shipping
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping, FinanceFacade.IPaymentGateway
     {
         /// <exclude>Excluded</exclude>
+        string _DistributionIdentity;
+        /// <MetaDataID>{227bd8d0-f43a-4d3b-b9c3-906d1a0f9f79}</MetaDataID>
+        [PersistentMember(nameof(_DistributionIdentity))]
+        [BackwardCompatibilityID("+14")]
+        public string DistributionIdentity
+        {
+            get => _DistributionIdentity;
+            set
+            {
+                if (_DistributionIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DistributionIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         string _ReturnReason;
 
         /// <MetaDataID>{64b865f4-304e-4e10-908e-23d6b22f6c9a}</MetaDataID>
@@ -269,6 +290,7 @@ namespace FlavourBusinessManager.Shipping
                 return ItemPreparationState.Serving;
             }
         }
+        /// <MetaDataID>{f593f136-b694-4dfb-a0cd-de10527a806d}</MetaDataID>
         internal void OnItemsChangeState(Dictionary<string, ItemPreparationState> newItemsState)
         {
             ItemsStateChanged?.Invoke(newItemsState);
@@ -756,71 +778,74 @@ namespace FlavourBusinessManager.Shipping
             }
         }
 
-        /// <MetaDataID>{3d10eb2d-c183-4c96-b6af-fdfe4e8e789f}</MetaDataID>
-        public void FoodShippingReturn(string returnReasonIdentity, string customReturnReasonDescription = null)
-        {
+        ///// <MetaDataID>{3d10eb2d-c183-4c96-b6af-fdfe4e8e789f}</MetaDataID>
+        //public void FoodShippingReturn(string returnReasonIdentity, string customReturnReasonDescription = null)
+        //{
 
-            var returnReason = (ServicePoint as IHomeDeliveryServicePoint).ReturnReasons.Where(x => x.Identity == returnReasonIdentity).FirstOrDefault();
+        //    var returnReason = (ServicePoint as IHomeDeliveryServicePoint).ReturnReasons.Where(x => x.Identity == returnReasonIdentity).FirstOrDefault();
 
      
-            var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                foreach (var itemPreparation in PreparedItems)
-                    itemPreparation.State = ItemPreparationState.Canceled;
+        //    var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //    {
+        //        foreach (var itemPreparation in PreparedItems)
+        //            itemPreparation.State = ItemPreparationState.Canceled;
 
-                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-
-
-                if (returnReason != null)
-                {
-                    this.ReturnReasonID = returnReasonIdentity;
-                    if (string.IsNullOrWhiteSpace(customReturnReasonDescription))
-                        this.ReturnReason = returnReason.Description;
-                    else
-                        this.ReturnReason = customReturnReasonDescription;
-                }
-                else
-                {
-                    this.ReturnReasonID = "CSTMRTNR";
-                    this.ReturnReason = customReturnReasonDescription;
-                }
-
-                stateTransition.Consistent = true;
-            }
+        //        states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
 
 
-            Transaction.RunOnTransactionCompleted(() =>
-            {
-                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                ItemsStateChanged?.Invoke(newItemsState);
-                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
-            });
-        }
+        //        if (returnReason != null)
+        //        {
+        //            this.ReturnReasonID = returnReasonIdentity;
+        //            if (string.IsNullOrWhiteSpace(customReturnReasonDescription))
+        //                this.ReturnReason = returnReason.Description;
+        //            else
+        //                this.ReturnReason = customReturnReasonDescription;
+        //        }
+        //        else
+        //        {
+        //            this.ReturnReasonID = "CSTMRTNR";
+        //            this.ReturnReason = customReturnReasonDescription;
+        //        }
 
-        /// <MetaDataID>{173e97c3-1e9f-4dbf-a89e-97b1fe858338}</MetaDataID>
-        public void Delivered()
-        {
-
-            var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            {
-                foreach (var itemPreparation in PreparedItems)
-                    itemPreparation.State = ItemPreparationState.Served;
-
-                states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                stateTransition.Consistent = true;
-            }
+        //        stateTransition.Consistent = true;
+        //    }
 
 
-            Transaction.RunOnTransactionCompleted(() =>
-            {
-                var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                ItemsStateChanged?.Invoke(newItemsState);
-                (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
-            });
+        //    Transaction.RunOnTransactionCompleted(() =>
+        //    {
+        //        var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+        //        ItemsStateChanged?.Invoke(newItemsState);
+        //        (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+        //    });
+        //}
 
-        }
+        ///// <MetaDataID>{173e97c3-1e9f-4dbf-a89e-97b1fe858338}</MetaDataID>
+        //public void Delivered()
+        //{
+
+        //    var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+        //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //    {
+        //        foreach (var itemPreparation in PreparedItems)
+        //            itemPreparation.State = ItemPreparationState.Served;
+
+        //        states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+
+
+
+        //        stateTransition.Consistent = true;
+        //    }
+
+
+        //    Transaction.RunOnTransactionCompleted(() =>
+        //    {
+        //        var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
+        //        ItemsStateChanged?.Invoke(newItemsState);
+        //        (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+        //    });
+
+        //}
 
         
     }

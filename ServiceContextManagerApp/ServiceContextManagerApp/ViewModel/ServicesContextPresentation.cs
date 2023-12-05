@@ -727,7 +727,7 @@ namespace ServiceContextManagerApp
 
         private void ServicesContextPresentation_ObjectChangeState(object _object, string member)
         {
-            if (member == "ActiveShiftWork")
+            if (member == "ShiftWork")
             {
                 if ((_object as SupervisorPresentation).InActiveShiftWork)
                     init();

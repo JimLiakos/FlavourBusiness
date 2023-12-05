@@ -16,7 +16,8 @@ using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.Shipping;
 using OOAdvantech.Remoting.RestApi;
-
+using FlavourBusinessManager.ServicesContextResources;
+using FlavourBusinessFacade.ServicesContextResources;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -37,11 +38,11 @@ namespace FlavourBusinessManager.HumanResources
             private set
             {
 
-                if (_StateTimestamp!=value)
+                if (_StateTimestamp != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _StateTimestamp=value;
+                        _StateTimestamp = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -54,6 +55,78 @@ namespace FlavourBusinessManager.HumanResources
         public Courier()
         {
         }
+
+
+
+        /// <MetaDataID>{b509508a-b16e-46ac-b9d6-7270e5325433}</MetaDataID>
+        public void FoodShippingReturn(IFoodShipping foodShipping, string returnReasonIdentity, string customReturnReasonDescription = null)
+        {
+            var returnReason = (foodShipping.ServicePoint as IHomeDeliveryServicePoint).ReturnReasons.Where(x => x.Identity == returnReasonIdentity).FirstOrDefault();
+
+            var states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in foodShipping.PreparedItems)
+                    itemPreparation.State = ItemPreparationState.Canceled;
+
+                states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+
+
+                if (returnReason != null)
+                {
+                    foodShipping.ReturnReasonID = returnReasonIdentity;
+                    if (string.IsNullOrWhiteSpace(customReturnReasonDescription))
+                        foodShipping.ReturnReason = returnReason.Description;
+                    else
+                        foodShipping.ReturnReason = customReturnReasonDescription;
+                }
+                else
+                {
+                    foodShipping.ReturnReasonID = "CSTMRTNR";
+                    foodShipping.ReturnReason = customReturnReasonDescription;
+                }
+
+                stateTransition.Consistent = true;
+            }
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                var newItemsState = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                (foodShipping as FoodShipping).OnItemsChangeState(newItemsState);
+                (foodShipping.MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+            });
+        }
+
+
+        /// <MetaDataID>{0a5bf956-7ee4-429b-85b7-f97c68d90d83}</MetaDataID>
+        public void Delivered(IFoodShipping foodShipping)
+        {
+            var states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+            {
+                foreach (var itemPreparation in foodShipping.PreparedItems)
+                    itemPreparation.State = ItemPreparationState.Served;
+
+                states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                stateTransition.Consistent = true;
+            }
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                var newItemsState = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                (foodShipping as FoodShipping).OnItemsChangeState(newItemsState);
+                (foodShipping.MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
+            });
+
+            if(foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad).Count()==0)
+            {
+
+            }
+
+        }
+
+
+
+
 
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
@@ -853,11 +926,11 @@ namespace FlavourBusinessManager.HumanResources
                         {
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
 
-                            var servicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
-                            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                                      where shiftWork.Worker is ICourier && servicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork) 
-                                                      select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
-                            foreach(var activeCourier in activeCouriers)
+                            var homeDeliveryServicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
+                            var vf = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                  where shiftWork.Worker is ICourier && homeDeliveryServicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                            foreach (var activeCourier in activeCouriers)
                             {
                                 activeCourier.AuditForDelayedMealAtTheCounter(foodShipping);
                             }
@@ -880,7 +953,35 @@ namespace FlavourBusinessManager.HumanResources
 
         private void AuditForDelayedMealAtTheCounter(IFoodShipping foodShipping)
         {
-            
+            if (State == CourierState.PendingForFoodShiping&&this.ShiftWork?.IsActive()==true)
+            {
+                DateTime availableForshippingTimestamp = foodShipping.PreparedItems.OrderBy(x => x.StateTimestamp).LastOrDefault().StateTimestamp;
+                HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
+                TimeSpan delayedFoodshippingAtTheCounterTimespan = homeDeliveryServicePoint.DelayedFoodShippingAtTheCounterTimespan;
+
+                DateTime startOfDelayTimeStamp;
+                TimeSpan delayForCourier;
+
+                if (this.StateTimestamp.ToUniversalTime() > availableForshippingTimestamp.ToUniversalTime())
+                    startOfDelayTimeStamp = this.StateTimestamp.ToUniversalTime();
+                else
+                    startOfDelayTimeStamp = availableForshippingTimestamp.ToUniversalTime();
+
+                delayForCourier = DateTime.UtcNow - startOfDelayTimeStamp;
+
+                if (delayForCourier > delayedFoodshippingAtTheCounterTimespan)
+                {
+                    AuditCourierDalay auditCourierDalay = new AuditCourierDalay()
+                    {
+                        Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
+                        DelayInMinutes = delayForCourier.TotalMinutes,
+                        EventTimeStamp = DateTime.UtcNow,
+                        StartOfDelayTimeStamp = startOfDelayTimeStamp
+                    };
+
+                    this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                }
+            }
         }
 
 
@@ -898,6 +999,17 @@ namespace FlavourBusinessManager.HumanResources
                             AssignFoodShipping(foodShipping);
                             if ((foodShipping as FoodShipping).State == ItemPreparationState.Serving && foodShipping.IsAssigned && foodShipping.ShiftWork.Worker == this)
                                 (foodShipping as FoodShipping).OnTheRoad();
+
+                            var homeDeliveryServicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
+                            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                  where shiftWork.Worker is ICourier && homeDeliveryServicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                            foreach (var activeCourier in activeCouriers)
+                            {
+                                activeCourier.AuditForDelayedMealAtTheCounter(foodShipping);
+                            }
+
+
 
                             Transaction.RunOnTransactionCompleted(() =>
                             {
@@ -1020,7 +1132,8 @@ namespace FlavourBusinessManager.HumanResources
                         StateTimestamp = DateTime.UtcNow;
                         stateTransition.Consistent = true;
                     }
-                    Transaction.RunOnTransactionCompleted(() => {
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
                         ObjectChangeState.Invoke(this, nameof(State));
 
                     });

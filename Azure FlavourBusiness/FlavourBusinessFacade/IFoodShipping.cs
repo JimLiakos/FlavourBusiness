@@ -11,6 +11,9 @@ namespace FlavourBusinessFacade.Shipping
     [GenerateFacadeProxy]
     public interface IFoodShipping : RoomService.IServingBatch
     {
+        [BackwardCompatibilityID("+8")]
+        string DistributionIdentity { get; }
+
         /// <MetaDataID>{009256bd-a668-4532-a0b4-88c5f47ad8eb}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         string ReturnReason { get; set; }
@@ -38,11 +41,7 @@ namespace FlavourBusinessFacade.Shipping
         [BackwardCompatibilityID("+5")]
         string NotesForClient { get; }
 
-        /// <MetaDataID>{1250fa67-6240-48ef-b165-e61f680041d2}</MetaDataID>
-        void FoodShippingReturn(string returnReasonIdentity, string customReturnReasonDescription=null);
-
-        /// <MetaDataID>{eec8c85e-be73-4f6b-ae59-70d98c8f96d0}</MetaDataID>
-        void Delivered();
+     
     }
 
 

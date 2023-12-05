@@ -44,6 +44,15 @@ namespace FlavourBusinessFacade.HumanResources
         void AssignAndCommitFoodShipping(IFoodShipping foodShipping);
 
 
+
+        /// <MetaDataID>{afb21fc6-2563-4fc0-b82b-04f40bffff7b}</MetaDataID>
+        void FoodShippingReturn(IFoodShipping foodShipping, string returnReasonIdentity, string customReturnReasonDescription = null);
+
+
+        /// <MetaDataID>{d4f798a5-fd05-4d74-85cb-fb4ee037e0e7}</MetaDataID>
+        void Delivered(IFoodShipping foodShipping);
+
+
         /// <MetaDataID>{f79b75a4-bc33-483a-b07c-d6b4555143f5}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodShipping foodShipping);
 

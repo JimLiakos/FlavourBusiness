@@ -1422,20 +1422,21 @@ namespace CourierApp.ViewModel
 
         public void FoodShippingDelivered(string foodShippingIdentity)
         {
-            var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
-            if (foodShippingResentation != null)
-                foodShippingResentation.FoodShipping.Delivered();
+            if (foodShippingPresentation != null)
+                Courier.Delivered(foodShippingPresentation.FoodShipping);
 
         }
 
 
         public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null)
         {
-            var foodShippingResentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
-            if (foodShippingResentation!=null)
-                foodShippingResentation.FoodShipping.FoodShippingReturn(returnReasonIdentity, customReturnReasonDescription);
+            if (foodShippingPresentation != null)
+                Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping,returnReasonIdentity, customReturnReasonDescription);
+            
         }
 
 

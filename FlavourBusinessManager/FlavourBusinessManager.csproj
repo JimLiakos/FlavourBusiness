@@ -434,6 +434,7 @@
     <Compile Include="CloudNotificationManager.cs" />
     <Compile Include="FireBase.cs" />
     <Compile Include="FoodShipping.cs" />
+    <Compile Include="HumanResources\AuditCourierDalay.cs" />
     <Compile Include="HumanResources\Courier.cs" />
     <Compile Include="DeviceIDAbbreviation.cs" />
     <Compile Include="FisicalParty.cs" />
