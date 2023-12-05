@@ -106,7 +106,10 @@ namespace FlavourBusinessManager.HumanResources
                 foreach (var itemPreparation in foodShipping.PreparedItems)
                     itemPreparation.State = ItemPreparationState.Served;
 
-                states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+                (foodShipping as FoodShipping).DeliveryTime = DateTime.UtcNow;
+
+                this.AuditForDelayedDelivery(foodShipping);
+
                 stateTransition.Consistent = true;
             }
 
@@ -117,10 +120,29 @@ namespace FlavourBusinessManager.HumanResources
                 (foodShipping.MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
             });
 
-            if(foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad).Count()==0)
-            {
+            //if (foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad).Count()==0)
+            //{
+            //    this.AuditForDelayedDelivery(foodShipping);
+            //}
 
-            }
+        }
+
+        private void AuditForDelayedDelivery(IFoodShipping foodShipping)
+        {
+
+            //if (foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad).Count()==0)
+            //{
+            //    this.AuditForDelayedDelivery(foodShipping);
+            //}
+
+            //(foodShipping as FoodShipping).State==ItemPreparationState.Served||
+
+            var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity==foodShipping.DistributionIdentity);
+            distributionFoodShippings.All(x=>x.st)
+            if ()
+
+            foodShipping.DistributionIdentity
+
 
         }
 
@@ -818,6 +840,7 @@ namespace FlavourBusinessManager.HumanResources
                     {
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
+
                             foreach (var foodShipping in GetFoodShippings().OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.Serving && x.IsAssigned && x.ShiftWork.Worker == this))
                                 foodShipping.OnTheRoad();
 
@@ -927,9 +950,9 @@ namespace FlavourBusinessManager.HumanResources
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
 
                             var homeDeliveryServicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
-                            var vf = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                  where shiftWork.Worker is ICourier && homeDeliveryServicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
-                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                  where shiftWork.Worker is ICourier && homeDeliveryServicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
                             foreach (var activeCourier in activeCouriers)
                             {
                                 activeCourier.AuditForDelayedMealAtTheCounter(foodShipping);
@@ -966,6 +989,10 @@ namespace FlavourBusinessManager.HumanResources
                     startOfDelayTimeStamp = this.StateTimestamp.ToUniversalTime();
                 else
                     startOfDelayTimeStamp = availableForshippingTimestamp.ToUniversalTime();
+
+                var lastEventTimeStamp = this.ShiftWork.AuditEvents.OrderBy(x => x.EventTimeStamp).LastOrDefault()?.EventTimeStamp;
+                if (lastEventTimeStamp.HasValue&&lastEventTimeStamp.Value>startOfDelayTimeStamp)
+                    startOfDelayTimeStamp=lastEventTimeStamp.Value;
 
                 delayForCourier = DateTime.UtcNow - startOfDelayTimeStamp;
 
@@ -1087,7 +1114,25 @@ namespace FlavourBusinessManager.HumanResources
                         {
                             allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
                             if (allOntheRoad)
-                                State = CourierState.OnTheRoad;
+                            {
+
+
+                                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                                {
+                                    State = CourierState.OnTheRoad;
+
+                                    var ticks = new DateTime(2022, 1, 1).Ticks;
+                                    var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                                    foreach (var foodShipping in (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad&&string.IsNullOrWhiteSpace(x.DistributionIdentity)))
+                                    {
+
+                                        foodShipping.DistributionIdentity=uniqueId;
+                                    }
+                                    stateTransition.Consistent = true;
+                                }
+
+
+                            }
                             onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
                             /* Do somthing */
                         });

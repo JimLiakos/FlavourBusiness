@@ -18,6 +18,29 @@ namespace FlavourBusinessManager.Shipping
     [Persistent()]
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping, FinanceFacade.IPaymentGateway
     {
+
+        /// <exclude>Excluded</exclude>
+        DateTime? _DeliveryTime;
+        /// <MetaDataID>{b3e9e858-b3da-4308-ae57-b8ab33179300}</MetaDataID>
+        [PersistentMember(nameof(_DeliveryTime))]
+        [BackwardCompatibilityID("+15")]
+        public DateTime? DeliveryTime
+        {
+            get=>_DeliveryTime;
+            set
+            {
+                if (_DeliveryTime!=value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeliveryTime=value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <exclude>Excluded</exclude>
         string _DistributionIdentity;
         /// <MetaDataID>{227bd8d0-f43a-4d3b-b9c3-906d1a0f9f79}</MetaDataID>
@@ -284,8 +307,11 @@ namespace FlavourBusinessManager.Shipping
                 if (this.PreparedItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
                     return ItemPreparationState.OnRoad;
 
-                if (this.PreparedItems.OfType<ItemPreparation>().Where(x => x.IsInFollowingState(ItemPreparationState.Served)).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
+                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.IsInFollowingState(ItemPreparationState.Served))&& this.PreparedItems.Count > 0)
                     return ItemPreparationState.Served;
+
+                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.IsInFollowingState(ItemPreparationState.Canceled))&& this.PreparedItems.Count > 0)
+                    return ItemPreparationState.Canceled;
 
                 return ItemPreparationState.Serving;
             }

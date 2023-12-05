@@ -84,8 +84,10 @@ namespace FlavourBusinessFacade.HumanResources
     /// <MetaDataID>{ca6e1cc6-8c42-464f-abb8-e32a9675b204}</MetaDataID>
     public class PaidFoodShippingException : System.Exception
     {
+        /// <MetaDataID>{27f80ffa-a129-4f43-8cfd-851370e0ab79}</MetaDataID>
         public PaidFoodShippingException(string message) : base(message) { }
 
+        /// <MetaDataID>{fcbb4bef-c1d3-463d-bada-dea2de26f2f1}</MetaDataID>
         public PaidFoodShippingException(string message, System.Exception innerException) : base(message, innerException)
         {
 

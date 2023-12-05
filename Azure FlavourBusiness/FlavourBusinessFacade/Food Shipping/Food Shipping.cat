@@ -33,7 +33,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"8")
+		    value      	"9")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -294,6 +294,35 @@
 			    value      	"{d8bade6b-debe-45da-8cc1-c29ebdf1b384}"))
 		    quid       	"656EE83B0072"
 		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "DeliveryTime"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e7e83f87-aae7-4e11-90d8-d8a153f8befe}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"656F2D49034F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+8"))
+		    quid       	"656F2D49034F"
+		    type       	"System.Nullable<System.DateTime>"
 		    exportControl 	"Public"))
 	    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 	    quidu      	"5AA773E702B6"
@@ -305,8 +334,8 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	338
-	    origin_y   	1032
+	    origin_x   	97
+	    origin_y   	828
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FlavourBusinessFacade::HumanResources::IActivity" @1
 		    ShowCompartmentStereotypes 	TRUE
@@ -1482,7 +1511,7 @@
 		    terminal_attachment 	(3457, 1440))
 		(object ClassView "Class" "Logical View::FlavourBusinessFacade::Shipping::IFoodShipping" @56
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(2475, 2049)
+		    location   	(2475, 2048)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1495,7 +1524,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@56
-			location   	(2241, 2021)
+			location   	(2241, 2020)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	469
@@ -1516,5 +1545,5 @@
 		    client     	@56
 		    supplier   	@45
 		    line_style 	3
-		    origin_attachment 	(2481, 1920)
+		    origin_attachment 	(2481, 1919)
 		    terminal_attachment 	(2481, 1696))))))
