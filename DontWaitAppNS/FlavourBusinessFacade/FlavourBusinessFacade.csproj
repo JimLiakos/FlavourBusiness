@@ -37,6 +37,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\IWorker.cs" Link="HumanResources\IWorker.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ΙShifWork.cs" Link="HumanResources\ΙShifWork.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAcountability.cs" Link="IAcountability.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAuditWorkerEvents.cs" Link="IAuditWorkerEvents.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAuthFlavourBusiness.cs" Link="IAuthFlavourBusiness.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\IAzureInstancesManager.cs" Link="IAzureInstancesManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ICallerIDLine.cs" Link="ICallerIDLine.cs" />

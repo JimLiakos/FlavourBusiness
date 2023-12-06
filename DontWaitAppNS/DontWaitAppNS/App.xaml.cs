@@ -14,6 +14,9 @@ using OOAdvantech.Collections.Generic;
 using System.Net.Http;
 using Plugin.Connectivity;
 using System.Security.Cryptography.X509Certificates;
+using System.IO.Compression;
+using System.Net;
+using OOAdvantech.Web;
 
 namespace DontWaitApp
 {
@@ -32,17 +35,13 @@ namespace DontWaitApp
             InitializeComponent();
 
 
-
-
-
-
-
+            //HybridWebView.WebAppUpdate("http://192.168.1.147/devstoreaccount1/usersfolder//DontWaitWeb.zip");
+            
 
 
 
             OOAdvantech.Remoting.RestApi.Authentication.InitializeFirebase("demomicroneme");
             InitializeRemoteTypes();
-
 
 
 

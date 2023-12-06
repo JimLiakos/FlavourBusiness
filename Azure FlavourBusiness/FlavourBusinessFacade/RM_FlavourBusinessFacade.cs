@@ -3345,6 +3345,18 @@ public event FlavourBusinessFacade.EndUsers.ItemsStateChangedHandle ItemsStateCh
         }
         
         // The Width property for the object.
+        public System.Nullable<System.DateTime> DeliveryTime
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Shipping.IFoodShipping), "get_DeliveryTime", args, argsTypes);
+                return this.Proxy.GetValue<System.Nullable<System.DateTime>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string DistributionIdentity
         {
             get

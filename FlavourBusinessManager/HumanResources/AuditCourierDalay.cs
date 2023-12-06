@@ -12,8 +12,16 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{135c302f-bf11-4105-824d-ceb7f4d97077}</MetaDataID>
     [BackwardCompatibilityID("{135c302f-bf11-4105-824d-ceb7f4d97077}")]
     [Persistent()]
-    internal class AuditCourierDalay : IAuditWorkerEvents
+    internal class AuditCourierDelay : IAuditWorkerEvents
     {
+
+        public AuditCourierDelay()
+        {
+
+        }
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <exclude>Excluded</exclude>
         double _DelayInMinutes;

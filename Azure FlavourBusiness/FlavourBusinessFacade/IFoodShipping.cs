@@ -12,7 +12,7 @@ namespace FlavourBusinessFacade.Shipping
     public interface IFoodShipping : RoomService.IServingBatch
     {
         /// <MetaDataID>{e7e83f87-aae7-4e11-90d8-d8a153f8befe}</MetaDataID>
-        [BackwardCompatibilityID("+8")]
+        [BackwardCompatibilityID("+9")]
         System.DateTime? DeliveryTime { get; }
 
         /// <MetaDataID>{c70d2e13-c4fe-47b4-9ae9-d0592a064613}</MetaDataID>

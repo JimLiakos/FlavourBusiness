@@ -127,6 +127,7 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        /// <MetaDataID>{d8860b6a-f71c-4642-80d8-326ab9a9e0ca}</MetaDataID>
         private void AuditForDelayedDelivery(IFoodShipping foodShipping)
         {
 
@@ -137,11 +138,11 @@ namespace FlavourBusinessManager.HumanResources
 
             //(foodShipping as FoodShipping).State==ItemPreparationState.Served||
 
-            var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity==foodShipping.DistributionIdentity);
-            distributionFoodShippings.All(x=>x.st)
-            if ()
+            var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
+            //distributionFoodShippings.All(x=>x.st)
+            //if ()
 
-            foodShipping.DistributionIdentity
+            //foodShipping.DistributionIdentity
 
 
         }
@@ -974,9 +975,10 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        /// <MetaDataID>{57bd771c-e39c-4377-96f2-e686cf73ce57}</MetaDataID>
         private void AuditForDelayedMealAtTheCounter(IFoodShipping foodShipping)
         {
-            if (State == CourierState.PendingForFoodShiping&&this.ShiftWork?.IsActive()==true)
+            if (State == CourierState.PendingForFoodShiping && this.ShiftWork?.IsActive() == true)
             {
                 DateTime availableForshippingTimestamp = foodShipping.PreparedItems.OrderBy(x => x.StateTimestamp).LastOrDefault().StateTimestamp;
                 HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
@@ -991,14 +993,14 @@ namespace FlavourBusinessManager.HumanResources
                     startOfDelayTimeStamp = availableForshippingTimestamp.ToUniversalTime();
 
                 var lastEventTimeStamp = this.ShiftWork.AuditEvents.OrderBy(x => x.EventTimeStamp).LastOrDefault()?.EventTimeStamp;
-                if (lastEventTimeStamp.HasValue&&lastEventTimeStamp.Value>startOfDelayTimeStamp)
-                    startOfDelayTimeStamp=lastEventTimeStamp.Value;
+                if (lastEventTimeStamp.HasValue && lastEventTimeStamp.Value > startOfDelayTimeStamp)
+                    startOfDelayTimeStamp = lastEventTimeStamp.Value;
 
                 delayForCourier = DateTime.UtcNow - startOfDelayTimeStamp;
 
                 if (delayForCourier > delayedFoodshippingAtTheCounterTimespan)
                 {
-                    AuditCourierDalay auditCourierDalay = new AuditCourierDalay()
+                    AuditCourierDelay auditCourierDalay = new AuditCourierDelay()
                     {
                         Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
                         DelayInMinutes = delayForCourier.TotalMinutes,

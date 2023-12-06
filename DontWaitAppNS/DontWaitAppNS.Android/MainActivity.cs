@@ -110,6 +110,7 @@ namespace DontWaitAppNS.Droid
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
 
+            
 
             //this.Window.AddFlags(WindowManagerFlags.Fullscreen);
 
