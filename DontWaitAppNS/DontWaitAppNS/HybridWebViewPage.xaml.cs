@@ -54,7 +54,7 @@ namespace DontWaitApp
                 url = "http://localhost/DontWaitWeb/";
                 //hybridWebView.Uri = "http://192.168.2.3/DontWaitWeb/";
 
-
+                 
                 url = "http://192.168.2.4/DontWaitWeb/#/";
                 url = "http://192.168.2.4:4300/#/";
                 url = "http://10.0.0.13:4300/#/";

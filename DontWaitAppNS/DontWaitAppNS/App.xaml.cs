@@ -33,10 +33,29 @@ namespace DontWaitApp
         public App()
         {
             InitializeComponent();
+            //using (WebClient wc = new WebClient())
+            //{
+            //    int i = 12;
+            //    try
+            //    {
+            //        var json = wc.DownloadString("http://dontwaitwaiter.com/img/ServerAddress.json");
+            //        var webAppBundl = wc.DownloadData("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
+                    
+            //        System.Diagnostics.Debug.WriteLine(json);
+            //    }
+            //    catch (Exception error)
+            //    {
+
+            //        throw;
+            //    }
+            //    i++;
 
 
-            //HybridWebView.WebAppUpdate("http://192.168.1.147/devstoreaccount1/usersfolder//DontWaitWeb.zip");
-            
+            //}
+
+
+            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
+
 
 
 
