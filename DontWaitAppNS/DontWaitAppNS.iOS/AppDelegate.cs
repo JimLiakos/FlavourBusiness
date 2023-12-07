@@ -47,7 +47,16 @@ namespace DontWaitAppNS.iOS
             LoadApplication(new App());
             RegisterForRemoteNotifications();
 
-            return base.FinishedLaunching(app, options);
+            try
+            {
+                return base.FinishedLaunching(app, options);
+            }
+            catch (Exception error)
+            {
+                System.Diagnostics.Debug.WriteLine(error.StackTrace);
+
+                throw;
+            }
         }
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {
