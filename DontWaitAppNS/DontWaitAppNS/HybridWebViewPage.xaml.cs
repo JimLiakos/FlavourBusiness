@@ -72,7 +72,7 @@ namespace DontWaitApp
 
 
                 url= "webapp://index.html";
-                //url = "local://m-index.html";
+                url = "local://index.html";
                 //System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
