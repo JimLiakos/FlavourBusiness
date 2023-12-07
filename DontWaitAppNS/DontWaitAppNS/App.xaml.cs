@@ -35,8 +35,9 @@ namespace DontWaitApp
             InitializeComponent();
 
 
-            //HybridWebView.WebAppUpdate("http://192.168.1.147/devstoreaccount1/usersfolder//DontWaitWeb.zip");
+            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img//DontWaitWeb.zip");
             
+            bool exist = File.Exists("/data/user/0/com.microneme.dontwait.android/files/webapp/index.html");
 
 
 
