@@ -33,11 +33,29 @@ namespace DontWaitApp
         public App()
         {
             InitializeComponent();
+            //using (WebClient wc = new WebClient())
+            //{
+            //    int i = 12;
+            //    try
+            //    {
+            //        var json = wc.DownloadString("http://dontwaitwaiter.com/img/ServerAddress.json");
+            //        var webAppBundl = wc.DownloadData("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
+                    
+            //        System.Diagnostics.Debug.WriteLine(json);
+            //    }
+            //    catch (Exception error)
+            //    {
+
+            //        throw;
+            //    }
+            //    i++;
 
 
-            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img//DontWaitWeb.zip");
-            
-            bool exist = File.Exists("/data/user/0/com.microneme.dontwait.android/files/webapp/index.html");
+            //}
+
+
+            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
+
 
 
 
