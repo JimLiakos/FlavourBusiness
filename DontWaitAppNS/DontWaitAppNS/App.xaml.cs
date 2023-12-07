@@ -33,6 +33,9 @@ namespace DontWaitApp
         public App()
         {
             InitializeComponent();
+
+        
+
             //using (WebClient wc = new WebClient())
             //{
             //    int i = 12;
@@ -40,7 +43,7 @@ namespace DontWaitApp
             //    {
             //        var json = wc.DownloadString("http://dontwaitwaiter.com/img/ServerAddress.json");
             //        var webAppBundl = wc.DownloadData("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
-                    
+
             //        System.Diagnostics.Debug.WriteLine(json);
             //    }
             //    catch (Exception error)
@@ -52,6 +55,7 @@ namespace DontWaitApp
 
 
             //}
+
 
 
             HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
@@ -130,7 +134,28 @@ namespace DontWaitApp
         {
 
 
-
+            using (HttpClient wc = new HttpClient())
+            {
+                try
+                {
+                    //CrossConnectivity.Current.IsRemoteReachable("127.0.0.1", 22, 5000);
+                    string server = FlavourBusinessFacade.ComputingResources.EndPoint.Server;
+                    //var IsRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+                    
+                    
+                    string url = $"http://{FlavourBusinessFacade.ComputingResources.EndPoint.Server}:8090/api/values";
+                    var resp= await wc.GetStringAsync(url);
+                    
+                    
+                    System.Diagnostics.Debug.WriteLine(resp);
+                }
+                catch (Exception error)
+                {
+                    System.Diagnostics.Debug.WriteLine(error.Message);
+                    //                    { System.Net.Http.HttpRequestException: The Internet connection appears to be offline. --->Foundation.NSErrorException: Error Domain = NSURLErrorDomain Code = -1009 "The Internet connection appears to be offline." UserInfo ={ _kCFStreamErrorCodeKey = 50, NSUnderlyingError = 0x281d35470 { Error Domain = kCFErrorDomainCFNetwork Code = -1009 "(null)" UserInfo ={ _NSURLErrorNWPathKey = unsatisfied(Local network prohibited), interface: en0, ipv4, _kCFStreamErrorCodeKey=50, _kCFStreamErrorDomainKey=1}
+                    //}, _NSURLErrorFailingURLSessionTaskErrorKey = LocalDataTask < 6CF91F8F - 33F5 - 4F6B - B500 - D05CBEB3404D >.< 1 >, _NSURLErrorRelatedURLSessionTaskErrorKey = (\n "LocalDataTask <6CF91F8F-33F5-4F6B-B500-D05CBEB3404D>.<1>"\n), NSLocalizedDescription = The Internet connection appears to be offline., NSErrorFailingURLStringKey = http://10.0.0.13:8090/api/values, NSErrorFailingURLKey=http://10.0.0.13:8090/api/values, _kCFStreamErrorDomainKey=1}\n   --- End of inner exception stack trace ---\n  at System.Net.Http.NSUrlSessionHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x001ad] in /Library/Frameworks/Xamarin.iOS.framework/Versions/16.0.0.75/src/Xamarin.iOS/Foundation/NSUrlSessionHandler.cs:529 \n  at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered (System.Threading.Tasks.Task`1[TResult] sendTask, System.Net.Http.HttpRequestMessage request, System.Threading.CancellationTokenSource cts, System.Boolean disposeCts) [0x000b3] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:531 \n  at System.Net.Http.HttpClient.GetStringAsyncCore (System.Threading.Tasks.Task`1[TResult] getTask) [0x0002e] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:147 \n  at DontWaitApp.FlavoursOrderServer.Initialize () [0x0007d] in F:\myproject\terpo\OpenVersions\FlavourBusiness\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs:674 }
+                }
+            }
             //try
             //{
             //    OOAdvantech.FileSystem.WriteAllText(@"\Demo.log", "hello");
@@ -149,16 +174,23 @@ namespace DontWaitApp
 
 
 
+            //try
+            //{
 
-            bool isRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
-            if (isRemoteReachable)
-            {
-                System.Diagnostics.Debug.WriteLine("Yes");
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("Yes");
-            }
+            //    bool isRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+            //    if (isRemoteReachable)
+            //    {
+            //        System.Diagnostics.Debug.WriteLine("Yes");
+            //    }
+            //    else
+            //    {
+            //        System.Diagnostics.Debug.WriteLine("No");
+            //    }
+            //}
+            //catch (Exception error)
+            //{
+
+            //}
             using (HttpClient wc = new HttpClient())
             {
                 try
@@ -166,10 +198,11 @@ namespace DontWaitApp
                     //bool IsRemoteReachable=await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
                     string url = $"http://{FlavourBusinessFacade.ComputingResources.EndPoint.Server}:8090/api/values";
                     var resp = await wc.GetStringAsync(url);
-                    System.Diagnostics.Debug.WriteLine("sds");
+                    System.Diagnostics.Debug.WriteLine(resp);
                 }
                 catch (Exception error)
                 {
+                    System.Diagnostics.Debug.WriteLine(error.Message);
                     //                    { System.Net.Http.HttpRequestException: The Internet connection appears to be offline. --->Foundation.NSErrorException: Error Domain = NSURLErrorDomain Code = -1009 "The Internet connection appears to be offline." UserInfo ={ _kCFStreamErrorCodeKey = 50, NSUnderlyingError = 0x281d35470 { Error Domain = kCFErrorDomainCFNetwork Code = -1009 "(null)" UserInfo ={ _NSURLErrorNWPathKey = unsatisfied(Local network prohibited), interface: en0, ipv4, _kCFStreamErrorCodeKey=50, _kCFStreamErrorDomainKey=1}
                     //}, _NSURLErrorFailingURLSessionTaskErrorKey = LocalDataTask < 6CF91F8F - 33F5 - 4F6B - B500 - D05CBEB3404D >.< 1 >, _NSURLErrorRelatedURLSessionTaskErrorKey = (\n "LocalDataTask <6CF91F8F-33F5-4F6B-B500-D05CBEB3404D>.<1>"\n), NSLocalizedDescription = The Internet connection appears to be offline., NSErrorFailingURLStringKey = http://10.0.0.13:8090/api/values, NSErrorFailingURLKey=http://10.0.0.13:8090/api/values, _kCFStreamErrorDomainKey=1}\n   --- End of inner exception stack trace ---\n  at System.Net.Http.NSUrlSessionHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x001ad] in /Library/Frameworks/Xamarin.iOS.framework/Versions/16.0.0.75/src/Xamarin.iOS/Foundation/NSUrlSessionHandler.cs:529 \n  at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered (System.Threading.Tasks.Task`1[TResult] sendTask, System.Net.Http.HttpRequestMessage request, System.Threading.CancellationTokenSource cts, System.Boolean disposeCts) [0x000b3] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:531 \n  at System.Net.Http.HttpClient.GetStringAsyncCore (System.Threading.Tasks.Task`1[TResult] getTask) [0x0002e] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:147 \n  at DontWaitApp.FlavoursOrderServer.Initialize () [0x0007d] in F:\myproject\terpo\OpenVersions\FlavourBusiness\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs:674 }
                 }

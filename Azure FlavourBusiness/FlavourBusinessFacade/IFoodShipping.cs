@@ -25,7 +25,7 @@ namespace FlavourBusinessFacade.Shipping
 
         /// <MetaDataID>{b0e03048-d4c8-447f-a64e-c097498d2514}</MetaDataID>
         [BackwardCompatibilityID("+6")]
-        string ReturnReasonID { get; set; }
+        string ReturnReasonID { get; set; } 
 
         /// <MetaDataID>{1b75fcb5-7f27-419b-9fc8-17261cfac7c4}</MetaDataID>
         [BackwardCompatibilityID("+1")]
