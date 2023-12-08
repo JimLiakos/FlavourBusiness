@@ -50,7 +50,8 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
-    <MtouchInterpreter>-all</MtouchInterpreter>
+    <MtouchInterpreter>
+    </MtouchInterpreter>
     <CodesignProvision>VS: com.microneme.dontwaitapp.ios Development</CodesignProvision>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
@@ -71,6 +72,14 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <BundleResource Include="Content\assets\i18n\babel.babel" />
+    <BundleResource Include="Content\assets\i18n\el.json" />
+    <BundleResource Include="Content\assets\i18n\en.json" />
+    <BundleResource Include="Content\assets\images\pin.png - Shortcut.lnk" />
+    <BundleResource Include="Content\assets\images\vssver.scc" />
+    <None Include="Content\assets\signInImages\vssver.scc" />
+    <BundleResource Include="Content\assets\styles\Sidebar.scss" />
+    <BundleResource Include="Content\assets\vssver.scc" />
     <None Include="Entitlements.plist" />
     <BundleResource Include="GoogleService-Info.plist" />
     <None Include="Info.plist" />
@@ -170,5 +179,133 @@
       <Project>{61CCD2A5-5A9E-438D-9E69-464F1B692616}</Project>
       <Name>DontWaitAppNS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Content\3rdpartylicenses.txt" />
+    <BundleResource Include="Content\assets\checked %281%29.svg" />
+    <BundleResource Include="Content\assets\checked.svg" />
+    <BundleResource Include="Content\assets\images\address-poi.svg" />
+    <BundleResource Include="Content\assets\images\address-search.svg" />
+    <BundleResource Include="Content\assets\images\addtotray.svg" />
+    <BundleResource Include="Content\assets\images\addtotraym.svg" />
+    <BundleResource Include="Content\assets\images\addtotrayp.png" />
+    <BundleResource Include="Content\assets\images\addtotrayp.svg" />
+    <BundleResource Include="Content\assets\images\approval.svg" />
+    <BundleResource Include="Content\assets\images\app_key.svg" />
+    <BundleResource Include="Content\assets\images\arrow-pointing-to-down.png" />
+    <BundleResource Include="Content\assets\images\arrow-pointing-to-up.png" />
+    <BundleResource Include="Content\assets\images\available.svg" />
+    <BundleResource Include="Content\assets\images\back-arrow.svg" />
+    <BundleResource Include="Content\assets\images\back.svg" />
+    <BundleResource Include="Content\assets\images\backCommand.svg" />
+    <BundleResource Include="Content\assets\images\bell.svg" />
+    <BundleResource Include="Content\assets\images\bill.svg" />
+    <BundleResource Include="Content\assets\images\businessman.svg" />
+    <BundleResource Include="Content\assets\images\check-square.png" />
+    <BundleResource Include="Content\assets\images\check-square.svg" />
+    <BundleResource Include="Content\assets\images\checklist.svg" />
+    <BundleResource Include="Content\assets\images\checkmark.svg" />
+    <BundleResource Include="Content\assets\images\circular-arrow.svg" />
+    <BundleResource Include="Content\assets\images\close_poly_line_four.svg" />
+    <BundleResource Include="Content\assets\images\conversation.svg" />
+    <BundleResource Include="Content\assets\images\cooking.svg" />
+    <BundleResource Include="Content\assets\images\deadline.svg" />
+    <BundleResource Include="Content\assets\images\delete-x.svg" />
+    <BundleResource Include="Content\assets\images\deleteItem.svg" />
+    <BundleResource Include="Content\assets\images\delivery-bike.svg" />
+    <BundleResource Include="Content\assets\images\Drag.svg" />
+    <BundleResource Include="Content\assets\images\edit.svg" />
+    <BundleResource Include="Content\assets\images\editold.svg" />
+    <BundleResource Include="Content\assets\images\edit_hover.svg" />
+    <BundleResource Include="Content\assets\images\email.svg" />
+    <BundleResource Include="Content\assets\images\food-serving.svg" />
+    <BundleResource Include="Content\assets\images\free.svg" />
+    <BundleResource Include="Content\assets\images\group.svg" />
+    <BundleResource Include="Content\assets\images\help.svg" />
+    <BundleResource Include="Content\assets\images\homework.svg" />
+    <BundleResource Include="Content\assets\images\info.png" />
+    <BundleResource Include="Content\assets\images\info.svg" />
+    <BundleResource Include="Content\assets\images\kitchen.svg" />
+    <BundleResource Include="Content\assets\images\left-arrow old.svg" />
+    <BundleResource Include="Content\assets\images\left-arrow.svg" />
+    <BundleResource Include="Content\assets\images\logo.svg" />
+    <BundleResource Include="Content\assets\images\management.svg" />
+    <BundleResource Include="Content\assets\images\mat.svg" />
+    <BundleResource Include="Content\assets\images\matBK.svg" />
+    <BundleResource Include="Content\assets\images\maximize.svg" />
+    <BundleResource Include="Content\assets\images\MealCourse.svg" />
+    <BundleResource Include="Content\assets\images\mealInvitationTable.svg" />
+    <BundleResource Include="Content\assets\images\menu-old.svg" />
+    <BundleResource Include="Content\assets\images\menu.svg" />
+    <BundleResource Include="Content\assets\images\messmate.svg" />
+    <BundleResource Include="Content\assets\images\messmates.svg" />
+    <BundleResource Include="Content\assets\images\multiple-users-silhouette.svg" />
+    <BundleResource Include="Content\assets\images\next.svg" />
+    <BundleResource Include="Content\assets\images\oven.svg" />
+    <BundleResource Include="Content\assets\images\padlock.svg" />
+    <BundleResource Include="Content\assets\images\pan-tool.svg" />
+    <BundleResource Include="Content\assets\images\pause.svg" />
+    <BundleResource Include="Content\assets\images\Pending.svg" />
+    <BundleResource Include="Content\assets\images\pick-value-mark.svg" />
+    <BundleResource Include="Content\assets\images\pictureBK.svg" />
+    <BundleResource Include="Content\assets\images\pin.png" />
+    <BundleResource Include="Content\assets\images\plus-and-minus.svg" />
+    <BundleResource Include="Content\assets\images\poly_line_four.svg" />
+    <BundleResource Include="Content\assets\images\qr-code.svg" />
+    <BundleResource Include="Content\assets\images\quantity.svg" />
+    <BundleResource Include="Content\assets\images\redo.svg" />
+    <BundleResource Include="Content\assets\images\right-arrow.svg" />
+    <BundleResource Include="Content\assets\images\room-service-comand.svg" />
+    <BundleResource Include="Content\assets\images\room-service.svg" />
+    <BundleResource Include="Content\assets\images\rubbish-bin16.png" />
+    <BundleResource Include="Content\assets\images\search-icon.png" />
+    <BundleResource Include="Content\assets\images\search-icon.svg" />
+    <BundleResource Include="Content\assets\images\semichecked-square.svg" />
+    <BundleResource Include="Content\assets\images\send.svg" />
+    <BundleResource Include="Content\assets\images\sendOrg.svg" />
+    <BundleResource Include="Content\assets\images\ServicePoint.svg" />
+    <BundleResource Include="Content\assets\images\servingBatch.svg" />
+    <BundleResource Include="Content\assets\images\settings.svg" />
+    <BundleResource Include="Content\assets\images\share.svg" />
+    <BundleResource Include="Content\assets\images\smartphoneorder copy.svg" />
+    <BundleResource Include="Content\assets\images\smartphoneorder.svg" />
+    <BundleResource Include="Content\assets\images\sms.svg" />
+    <BundleResource Include="Content\assets\images\table.svg" />
+    <BundleResource Include="Content\assets\images\take-away.svg" />
+    <BundleResource Include="Content\assets\images\target.svg" />
+    <BundleResource Include="Content\assets\images\team.svg" />
+    <BundleResource Include="Content\assets\images\transfer.svg" />
+    <BundleResource Include="Content\assets\images\tray.svg" />
+    <BundleResource Include="Content\assets\images\uncheck-square.png" />
+    <BundleResource Include="Content\assets\images\uncheck-square.svg" />
+    <BundleResource Include="Content\assets\images\undo.svg" />
+    <BundleResource Include="Content\assets\images\updown.svg" />
+    <BundleResource Include="Content\assets\images\user.svg" />
+    <BundleResource Include="Content\assets\images\vtransfer.svg" />
+    <BundleResource Include="Content\assets\images\waiter.svg" />
+    <BundleResource Include="Content\assets\images\working-hours.svg" />
+    <BundleResource Include="Content\assets\images\working-hours24.png" />
+    <BundleResource Include="Content\assets\images\working-time.svg" />
+    <BundleResource Include="Content\assets\info.svg" />
+    <BundleResource Include="Content\assets\junction64.exe" />
+    <BundleResource Include="Content\assets\padlock.svg" />
+    <BundleResource Include="Content\assets\radio-button-checked.svg" />
+    <BundleResource Include="Content\assets\radio-button-unchecked.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_app_key-old.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_app_key.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_email.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_facebook.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_google.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_service_twitter.svg" />
+    <BundleResource Include="Content\assets\signInImages\auth_user.svg" />
+    <BundleResource Include="Content\assets\sim-card-solid.svg" />
+    <BundleResource Include="Content\assets\sounds\notificationSound.mp3" />
+    <BundleResource Include="Content\favicon.ico" />
+    <BundleResource Include="Content\index.html" />
+    <BundleResource Include="Content\main.7eae7256d54a2211c9f7.js" />
+    <BundleResource Include="Content\polyfills.9e86b32c42185429d576.js" />
+    <BundleResource Include="Content\runtime.e227d1a0e31cbccbf8ec.js" />
+    <BundleResource Include="Content\scripts.a73844de5f291be94c3b.js" />
+    <BundleResource Include="Content\styles.105cb70f1ef066a2aa00.css" />
   </ItemGroup>
 </Project>
