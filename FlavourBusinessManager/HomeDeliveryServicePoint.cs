@@ -562,5 +562,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         public TimeSpan DelayedFoodShippingAtTheCounterTimespan { get=>TimeSpan.FromMinutes(2);}
+        public TimeSpan DelayedFoodShippingDeliveryTimespan { get => TimeSpan.FromMinutes(5); }
+
+        public TimeSpan DeliveryAndCollectMoneyTimespan { get => TimeSpan.FromMinutes(4); }
+
     }
 }

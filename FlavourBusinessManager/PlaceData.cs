@@ -42,7 +42,14 @@ namespace FlavourBusinessManager.EndUsers
                 if (ExtensionPropertiesJson==null)
                     return new Dictionary<string, string>();
                 else
+                {
+                    var extensionProperties= OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+                    if (!extensionProperties.ContainsKey("RouteDurationInSeconds")&&extensionProperties.ContainsKey("RouteDurationInMinutes"))
+                        extensionProperties["RouteDurationInSeconds"]=extensionProperties["RouteDurationInMinutes"];
+
+
                     return OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+                }
             }
         }
         /// <MetaDataID>{a4f120c3-0357-43f3-b1a1-72fb360869f4}</MetaDataID>

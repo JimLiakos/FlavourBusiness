@@ -138,7 +138,52 @@ namespace FlavourBusinessManager.HumanResources
 
             //(foodShipping as FoodShipping).State==ItemPreparationState.Served||
 
+
+            var onTheRoadStateTimestamp = StateTimestamp;
+
+
+            //int delivery_collectMoney_time = 6*60;
+            HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
+
+
             var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
+
+            if (distributionFoodShippings.All(x => (x.State==ItemPreparationState.Served||x.State==ItemPreparationState.Canceled)&&
+                                            !string.IsNullOrWhiteSpace(x.Place?.GetExtensionProperty("RouteDurationInSeconds"))))
+            {
+                distributionFoodShippings=distributionFoodShippings.OrderBy(x => x.DeliveryTime).ToList();
+                int forecastDeliveryDurationInSec = 0;
+                int i = 0;
+
+                foreach (var distributionFoodShipping in distributionFoodShippings)
+                {
+                    int duration = 0;
+                    int.TryParse(distributionFoodShipping.Place?.GetExtensionProperty("RouteDurationInSeconds"), out duration);
+                    if (i==0)
+                        forecastDeliveryDurationInSec=duration+=(int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds;
+                    else
+                        forecastDeliveryDurationInSec+=(int)(duration*0.7)+(int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds; 
+                }
+                if(forecastDeliveryDurationInSec<(DateTime.UtcNow- onTheRoadStateTimestamp.ToUniversalTime()).TotalSeconds )
+                {
+
+                    var deliveryDurationOverTime = TimeSpan.FromSeconds((DateTime.UtcNow- StateTimestamp.ToUniversalTime()).TotalSeconds-forecastDeliveryDurationInSec);
+                    if (deliveryDurationOverTime.TotalMinutes>homeDeliveryServicePoint.DelayedFoodShippingDeliveryTimespan.TotalMinutes)
+                    {
+
+                        var auditCourierDalay = new AuditCourierDelay()
+                        {
+                            Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
+                            DelayInMinutes = deliveryDurationOverTime.TotalMinutes,
+                            EventTimeStamp = DateTime.UtcNow,
+                            StartOfDelayTimeStamp = onTheRoadStateTimestamp
+                        };
+                        this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                    }
+                }
+
+
+            }
             //distributionFoodShippings.All(x=>x.st)
             //if ()
 
@@ -1009,6 +1054,7 @@ namespace FlavourBusinessManager.HumanResources
                     };
 
                     this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+
                 }
             }
         }

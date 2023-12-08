@@ -78,6 +78,7 @@ namespace FlavourBusinessFacade.HumanResources
         CollectFoodShiping = 2,
         NearDeliveryServicePoint = 3,
         OnTheRoad = 4,
+        EndOfDeliveryAndReturn=5
 
     }
 
