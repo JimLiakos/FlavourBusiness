@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using OOAdvantech.MetaDataRepository;
-using System.Windows.Controls;
+
 
 #if DeviceDotNet
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #else
+using System.Windows.Controls;
 using FlavourBusinessManager.HumanResources;
 using MarshalByRefObject = System.MarshalByRefObject;
 #endif

@@ -71,8 +71,8 @@ namespace DontWaitApp
                 // long count = AssemblyMetaObject.Residents.Count;
 
 
-                url= "webapp://index.html";
-                url = "local://index.html";
+                //url= "webapp://index.html";
+                //url = "local://index.html";
                 //System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;

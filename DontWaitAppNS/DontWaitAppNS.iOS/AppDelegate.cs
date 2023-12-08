@@ -47,27 +47,20 @@ namespace DontWaitAppNS.iOS
             LoadApplication(new App());
             RegisterForRemoteNotifications();
 
-            try
-            {
-                return base.FinishedLaunching(app, options);
-            }
-            catch (Exception error)
-            {
-                System.Diagnostics.Debug.WriteLine(error.StackTrace);
 
-                throw;
-            }
+            return base.FinishedLaunching(app, options);
+
         }
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {
             var error = new Exception("TaskSchedulerOnUnobservedTaskException", unobservedTaskExceptionEventArgs.Exception);
-            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:"+ error.Message, error.StackTrace });
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unobserved Task Exception:" + error.Message, error.StackTrace });
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
         {
             var error = new Exception("CurrentDomainOnUnhandledException", unhandledExceptionEventArgs.ExceptionObject as Exception);
-            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:"+ error.Message, error.StackTrace });
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "Unhandled Exception:" + error.Message, error.StackTrace });
         }
         private void RegisterForRemoteNotifications()
         {
@@ -160,12 +153,12 @@ namespace DontWaitAppNS.iOS
         private void DoWork()
         {
 
-            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DoWork "+DateTime.UtcNow.ToString("u")+" remaining time "+UIApplication.SharedApplication.BackgroundTimeRemaining });
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "DoWork " + DateTime.UtcNow.ToString("u") + " remaining time " + UIApplication.SharedApplication.BackgroundTimeRemaining });
 
-            if (UIApplication.SharedApplication.BackgroundTimeRemaining>8)
+            if (UIApplication.SharedApplication.BackgroundTimeRemaining > 8)
                 System.Threading.Thread.Sleep(7000);
 
-            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "End DoWork "+DateTime.UtcNow.ToString("u") });
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "End DoWork " + DateTime.UtcNow.ToString("u") });
         }
 
         public override void WillTerminate(UIApplication uiApplication)
@@ -228,7 +221,7 @@ namespace DontWaitAppNS.iOS
                         //From = message.From,
                         //To = message.To,
                         Data = messageProperties,
-                        SentTime =DateTime.Parse(messageTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind)
+                        SentTime = DateTime.Parse(messageTimestamp, null, System.Globalization.DateTimeStyles.RoundtripKind)
                     };
                     OOAdvantech.iOS.DeviceOOAdvantechCore.MessageReceived(remoteMessage);
                 }

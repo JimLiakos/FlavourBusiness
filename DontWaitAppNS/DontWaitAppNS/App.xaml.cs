@@ -136,6 +136,7 @@ namespace DontWaitApp
 
             using (HttpClient wc = new HttpClient())
             {
+                string url = $"http://{FlavourBusinessFacade.ComputingResources.EndPoint.Server}:8090/api/values";
                 try
                 {
                     //CrossConnectivity.Current.IsRemoteReachable("127.0.0.1", 22, 5000);
@@ -143,7 +144,7 @@ namespace DontWaitApp
                     //var IsRemoteReachable = await CrossConnectivity.Current.IsRemoteReachable(FlavourBusinessFacade.ComputingResources.EndPoint.Server);
                     
                     
-                    string url = $"http://{FlavourBusinessFacade.ComputingResources.EndPoint.Server}:8090/api/values";
+                    
                     var resp= await wc.GetStringAsync(url);
                     
                     
