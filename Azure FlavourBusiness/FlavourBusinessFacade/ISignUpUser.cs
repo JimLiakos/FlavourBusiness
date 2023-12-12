@@ -97,7 +97,7 @@ namespace FlavourBusinessFacade.ViewModel
         void CreateUserWithEmailAndPassword(string emailVerificationCode);
 
         /// <MetaDataID>{4fe32dc1-cc74-4993-a441-f5e10dace55b}</MetaDataID>
-        IList<UserData> GetNativeUsers();
+        Task<IList<UserData>> GetNativeUsers();
 
         /// <MetaDataID>{a3ec8eff-c8ac-4898-b0a2-24c571c9082b}</MetaDataID>
         UserData SignInNativeUser(string userName, string password);

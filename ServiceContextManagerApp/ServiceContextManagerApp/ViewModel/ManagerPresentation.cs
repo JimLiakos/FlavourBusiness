@@ -889,9 +889,9 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{cf374d65-19a1-40bf-b6ce-98ccdc65e22c}</MetaDataID>
-        public IList<UserData> GetNativeUsers()
+        public Task<IList<UserData>> GetNativeUsers()
         {
-            return new List<UserData>();
+            return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData> );
         }
 
         /// <MetaDataID>{fff52657-d165-4775-af70-255c5ce4b7eb}</MetaDataID>

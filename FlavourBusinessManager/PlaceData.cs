@@ -1,6 +1,8 @@
 using FlavourBusinessFacade.EndUsers;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
 using System.Collections.Generic;
 
 namespace FlavourBusinessManager.EndUsers
@@ -18,7 +20,7 @@ namespace FlavourBusinessManager.EndUsers
             PlaceData placeData = new PlaceData(place.PlaceID, place.Location, place.Country,
                                                 place.StateProvinceRegion, place.CityTown,
                                                 place.Area, place.PostalCode, place.Street,
-                                                place.StreetNumber, place.Description,(place as Place)?.ExtensionProperties);
+                                                place.StreetNumber, place.Description, (place as Place)?.ExtensionProperties);
             return placeData;
         }
 
@@ -43,15 +45,39 @@ namespace FlavourBusinessManager.EndUsers
                     return new Dictionary<string, string>();
                 else
                 {
-                    var extensionProperties= OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+                    var extensionProperties = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
                     if (!extensionProperties.ContainsKey("RouteDurationInSeconds")&&extensionProperties.ContainsKey("RouteDurationInMinutes"))
                         extensionProperties["RouteDurationInSeconds"]=extensionProperties["RouteDurationInMinutes"];
+
+                    if (!Location.IsEmpty&&extensionProperties.ContainsKey("RouteOrigin"))
+                    {
+                        string routeOriginJson = extensionProperties["RouteOrigin"];
+                        var routeOrigin = OOAdvantech.Json.JsonConvert.DeserializeObject<Coordinate>(routeOriginJson);
+                        var angle = AngleFromCoordinate(routeOrigin, Location);
+                        extensionProperties["Angle"]=angle.ToString(System.Globalization.CultureInfo.GetCultureInfo(1033));
+                    }
 
 
                     return extensionProperties;
                 }
             }
         }
+
+        private double AngleFromCoordinate(Coordinate coordinate1, Coordinate coordinate2)
+        {
+
+            
+            var angleRadians = Math.Atan2(coordinate2.Longitude - coordinate1.Longitude, coordinate2.Latitude - coordinate1.Latitude);
+            // angle in degrees
+            var angleDeg = Math.Atan2(coordinate2.Longitude - coordinate1.Longitude, coordinate2.Latitude - coordinate1.Latitude) * 180 / Math.PI;
+            if (angleDeg<0)
+                angleDeg=360+angleDeg;
+            return angleDeg;
+
+            
+        }
+
+
         /// <MetaDataID>{a4f120c3-0357-43f3-b1a1-72fb360869f4}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+11")]
@@ -273,7 +299,7 @@ namespace FlavourBusinessManager.EndUsers
             _Street=street;
             _StreetNumber=streetNumber;
             _Description=description;
-            
+
             ExtensionPropertiesJson=OOAdvantech.Json.JsonConvert.SerializeObject(extensionProperties);
         }
 

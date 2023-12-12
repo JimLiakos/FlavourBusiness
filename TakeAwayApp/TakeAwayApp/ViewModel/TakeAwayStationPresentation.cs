@@ -467,7 +467,7 @@ namespace TakeAwayApp.ViewModel
                             UserName = UserData.UserName;
                             PhoneNumber = UserData.PhoneNumber;
                             Email = UserData.Email;
-                            
+
 
                             foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.TakeAwayCashier))
                             {
@@ -694,9 +694,12 @@ namespace TakeAwayApp.ViewModel
         }
 
         /// <MetaDataID>{3396825a-53ec-425b-9fc3-6e50ca351fdd}</MetaDataID>
-        public IList<UserData> GetNativeUsers()
+        public Task<IList<UserData>> GetNativeUsers()
         {
-            return this.TakeAwayStation.GetNativeUsers();
+            return Task<IList<UserData>>.Run(() =>
+            {
+                return this.TakeAwayStation.GetNativeUsers();
+            });
         }
 
         /// <MetaDataID>{17df1e47-7f36-4cbf-aa07-928059b6ec0f}</MetaDataID>
@@ -1085,7 +1088,7 @@ namespace TakeAwayApp.ViewModel
                     if (_HomeDeliveryCallCenterStation!=null)
                         _HomeDeliveryCallCenterStation.ObjectChangeState+=HomeDeliveryCallCenterStation_ObjectChangeState;
 
-                     
+
                 }
             }
         }
@@ -1095,15 +1098,15 @@ namespace TakeAwayApp.ViewModel
             if (_WatchingOrders!=null)
             {
                 var watchingOrders = _WatchingOrders.ToList();
-                var stationWatchingOrders= watchingOrders.Select(x => new WatchingOrderAbbreviation() { SessionID=x.SessionID, TimeStamp=x.TimeStamp }).ToList();
-                var callCenterStationWatchingOrders= _HomeDeliveryCallCenterStation.GetWatchingOrders(stationWatchingOrders);
+                var stationWatchingOrders = watchingOrders.Select(x => new WatchingOrderAbbreviation() { SessionID=x.SessionID, TimeStamp=x.TimeStamp }).ToList();
+                var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders(stationWatchingOrders);
 
                 watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.MissingWatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
                 watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.WatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
                 watchingOrders.AddRange(callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList());
                 _WatchingOrders=watchingOrders;
 
-              
+
 
             }
             ObjectChangeState?.Invoke(this, nameof(WatchingOrders));
@@ -1269,10 +1272,10 @@ namespace TakeAwayApp.ViewModel
         internal void UpdateWatchingOrder(WatchingOrder watchingOrder)
         {
 
-            if(watchingOrder!=null )
+            if (watchingOrder!=null)
             {
 
-                var existingWatchingOrder= this.WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
+                var existingWatchingOrder = this.WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
                 if (existingWatchingOrder != null)
                 {
                     var watchingOrderPresentation = new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList());

@@ -46,7 +46,7 @@ namespace CourierApp.ViewModel
 
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
-    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, IFontsResolver,ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
+    public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, IFontsResolver, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
@@ -171,7 +171,7 @@ namespace CourierApp.ViewModel
 
         private void FoodShipping_ObjectChangeState(object _object, string member)
         {
-           
+
             FoodShippingUpdated(_object as FoodShippingPresentation);
         }
 
@@ -180,34 +180,38 @@ namespace CourierApp.ViewModel
         IList<UserData> NativeUsers;
 
         /// <MetaDataID>{0fa03740-e253-41f3-8e34-43a3fb41e7b2}</MetaDataID>
-        public IList<UserData> GetNativeUsers()
+        public Task<IList<UserData>> GetNativeUsers()
         {
             lock (this)
             {
                 if (NativeUsers != null)
-                    return NativeUsers;
+                    return Task<IList<UserData>>.FromResult(NativeUsers);
             }
 
             if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.ServiceContextDevice))
-                return new List<UserData>();
+                return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData>);
+
+            return Task<IList<UserData>>.Run(() =>
+              {
+
+                  IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+                  pAuthFlavourBusiness = GetAuthFlavourBusiness();
+
+                  string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+                  List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
+
+                  lock (this)
+                  {
+                      NativeUsers = nativeUsers;
+                  }
+                  return nativeUsers as IList<UserData>;
+              });
 
 
-            IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-            pAuthFlavourBusiness = GetAuthFlavourBusiness();
-
-            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
-
-            lock (this)
-            {
-                NativeUsers = nativeUsers;
-            }
 
 
 
-
-            return nativeUsers; ;
             //return new List<UserData>();
         }
 
@@ -548,7 +552,7 @@ namespace CourierApp.ViewModel
                 if (shiftWork != ShiftWork)
                 {
                     ShiftWork = shiftWork as IServingShiftWork;
-                    if(ActiveShiftWork!= null)
+                    if (ActiveShiftWork!= null)
                         UpdateFoodShippings(Courier.GetFoodShippings());
 
                 }
@@ -587,7 +591,7 @@ namespace CourierApp.ViewModel
             }
         }
 
-        public bool CourierOnTheRoadToReturn {get;set; }
+        public bool CourierOnTheRoadToReturn { get; set; }
 
 
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
@@ -784,7 +788,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                if(ShiftWork?.IsActive()==true)
+                if (ShiftWork?.IsActive()==true)
                     return ShiftWork;
                 else
                     return null;
@@ -818,7 +822,7 @@ namespace CourierApp.ViewModel
                     return DateTime.MinValue;
             }
         }
-   
+
 
 
         /// <MetaDataID>{98a2d3fb-2f90-4cde-9bf2-a400f08f29c0}</MetaDataID>
@@ -1136,28 +1140,28 @@ namespace CourierApp.ViewModel
         public async Task ImBack()
         {
 
-             await SerializeTaskScheduler.AddTask(async () =>
-            {
-                int tries = 30;
-                while (tries > 0)
-                {
-                    try
-                    {
-                        this.Courier.ImBack();
-                        return true;
-                    }
-                    catch (System.Net.WebException commError)
-                    {
-                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
-                    }
-                    catch (Exception error)
-                    {
-                        var er = error;
-                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
-                    }
-                }
-                return true;
-            });
+            await SerializeTaskScheduler.AddTask(async () =>
+           {
+               int tries = 30;
+               while (tries > 0)
+               {
+                   try
+                   {
+                       this.Courier.ImBack();
+                       return true;
+                   }
+                   catch (System.Net.WebException commError)
+                   {
+                       await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                   }
+                   catch (Exception error)
+                   {
+                       var er = error;
+                       await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                   }
+               }
+               return true;
+           });
         }
 
 
@@ -1509,8 +1513,8 @@ namespace CourierApp.ViewModel
             var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
             if (foodShippingPresentation != null)
-                Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping,returnReasonIdentity, customReturnReasonDescription);
-            
+                Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping, returnReasonIdentity, customReturnReasonDescription);
+
         }
 
 
@@ -1519,7 +1523,7 @@ namespace CourierApp.ViewModel
         Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
 
         public FontData GetFont(string fontUri)
-        { 
+        {
             FontData fontData;
             if (string.IsNullOrEmpty(fontUri))
                 return default(FontData);

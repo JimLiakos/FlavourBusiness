@@ -1037,36 +1037,38 @@ namespace WaiterApp.ViewModel
 
         IList<UserData> NativeUsers;
 
-        public IList<UserData> GetNativeUsers()
+        public Task<IList<UserData>> GetNativeUsers()
         {
             lock (this)
             {
                 if (NativeUsers != null)
-                    return NativeUsers;
+                    return Task<IList<UserData>>.FromResult(NativeUsers);
             }
 
             if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.ServiceContextDevice))
-                return new List<UserData>();
+                return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData>);
 
-
-            IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-            pAuthFlavourBusiness = GetFlavourBusinessAuth();
-
-            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-            List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Waiter).ToList();
-
-            lock (this)
+            return Task<IList<UserData>>.Run(() =>
             {
-                NativeUsers = nativeUsers;
-            }
 
+                IAuthFlavourBusiness pAuthFlavourBusiness = null;
 
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
 
+                string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+                List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Waiter).ToList();
 
-            return nativeUsers; ;
+                lock (this)
+                {
+                    NativeUsers = nativeUsers;
+                }
+                return nativeUsers as IList<UserData>;
+            });
+
+            
             //return new List<UserData>();
         }
+
 
 
         /// <MetaDataID>{187d772f-a845-4262-9f4a-1efed97515fe}</MetaDataID>

@@ -128,6 +128,11 @@ namespace TakeAwayApp.Wpf
             }
             await homeDeliverySession.OrderCommit();
 
+            homeDeliverySession.FoodServiceClientSession.MainSession.Meal
+
+            //IPreparationStationRuntime preparationStation=null;
+
+            //preparationStation.ItemsServing()
 
             //var watchingOrder = FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.SessionID==homeDeliverySession.FoodServiceClientSession.MainSessionID).FirstOrDefault();
 

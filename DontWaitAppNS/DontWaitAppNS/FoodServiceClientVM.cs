@@ -606,9 +606,9 @@ namespace DontWaitApp
 
         [OOAdvantech.MetaDataRepository.HttpVisible]
 
-        public IList<UserData> GetNativeUsers()
+        public Task<IList<UserData>> GetNativeUsers()
         {
-            return new List<UserData>();
+            return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData>);
 
         }
 

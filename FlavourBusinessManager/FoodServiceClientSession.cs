@@ -2155,7 +2155,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 stateTransition.Consistent = true;
             }
-
+             
             foreach (var clientSession in MainSession.PartialClientSessions)
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 
