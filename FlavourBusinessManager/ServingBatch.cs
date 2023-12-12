@@ -358,7 +358,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{1dfeec9c-13a0-4b97-bd97-31914813ab66}</MetaDataID>
         internal void Update(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
-            var mealCourseUri = (mealCourse as MealCourse).MealCourseTypeUri;
+            var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse); 
             MealCourseUri = mealCourseUri;
             //if (mealCourse != MealCourse)
             //    throw new Exception("Meal course mismatch");

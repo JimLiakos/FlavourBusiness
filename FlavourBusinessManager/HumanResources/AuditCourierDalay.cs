@@ -12,9 +12,57 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{135c302f-bf11-4105-824d-ceb7f4d97077}</MetaDataID>
     [BackwardCompatibilityID("{135c302f-bf11-4105-824d-ceb7f4d97077}")]
     [Persistent()]
-    internal class AuditCourierDelay : IAuditWorkerEvents
+    public class AuditCourierDelay : IAuditWorkerEvents
     {
 
+
+        /// <exclude>Excluded</exclude>
+        CourierDelayType _TypeOfDelauy;
+
+        /// <MetaDataID>{c35a961c-c485-45d9-b05a-e06a3df0ecc3}</MetaDataID>
+        [PersistentMember(nameof(_TypeOfDelauy))]
+        [BackwardCompatibilityID("+5")]
+        public CourierDelayType TypeOfDelauy
+        {
+            get => _TypeOfDelauy;
+            set
+            {
+                if (_TypeOfDelauy != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TypeOfDelauy = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _DistributionIdentity;
+
+        /// <MetaDataID>{9aa7bbf7-8101-4a1b-84dc-d1123f32690e}</MetaDataID>
+        [PersistentMember(nameof(_DistributionIdentity))]
+        [BackwardCompatibilityID("+6")]
+        public string DistributionIdentity
+        {
+            get => _DistributionIdentity;
+            set
+            {
+                if (_DistributionIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DistributionIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+        /// <MetaDataID>{0bf0f6a4-54bd-4b87-b059-01cb56164111}</MetaDataID>
         public AuditCourierDelay()
         {
 
@@ -109,5 +157,37 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        int _TotalRouteDurationInSecs;
+
+        /// <MetaDataID>{0f70f554-3e23-4cea-a8e3-81329b8c2a17}</MetaDataID>
+        [PersistentMember(nameof(_TotalRouteDurationInSecs))]
+        [BackwardCompatibilityID("+7")]
+        public int TotalRouteDurationInSecs
+        {
+            get => _TotalRouteDurationInSecs;
+
+            internal set
+            {
+                if (_TotalRouteDurationInSecs != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TotalRouteDurationInSecs = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+    }
+
+
+    /// <MetaDataID>{89339a9a-7480-43bf-9154-cfc8e2c41d07}</MetaDataID>
+    public enum CourierDelayType
+    {
+        DelayAtTheCounter = 1,
+        DeliveryDelay = 2,
+        DelayToReturn = 3
     }
 }

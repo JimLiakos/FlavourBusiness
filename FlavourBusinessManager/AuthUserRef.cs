@@ -531,7 +531,6 @@ namespace FlavourBusinessManager
                 var objectUri = Role.GetObjectUri(roleObject);
                 return _Roles.Where(x => x.ObjectUri == objectUri).FirstOrDefault() != null;
             }
-
         }
 
         /// <MetaDataID>{99b2f5eb-477c-4661-999c-9deba6788230}</MetaDataID>
@@ -540,6 +539,12 @@ namespace FlavourBusinessManager
             //TableOperation updateOperation = TableOperation.Replace(this);
             //var result = AuthUserRefCloudTable.Execute(updateOperation);
             var result = AuthUserRefCloudTable_a.UpdateEntity(this, Azure.ETag.All, Azure.Data.Tables.TableUpdateMode.Replace);
+        }
+
+        internal bool HasRoleType(RoleType roleType)
+        {
+            return GetRoles().Any(x => UserData.UserRole.GetRoleType(x.TypeFullName) == roleType);
+            
         }
     }
 }

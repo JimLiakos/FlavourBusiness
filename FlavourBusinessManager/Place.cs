@@ -399,3 +399,125 @@ namespace FlavourBusinessManager.EndUsers
 
     }
 }
+
+namespace GoogleMap
+{
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    /// <MetaDataID>{e38cea0a-0d14-4604-8e79-fce7621b5361}</MetaDataID>
+    public class Bounds
+    {
+        public Northeast northeast { get; set; }
+        public Southwest southwest { get; set; }
+    }
+
+    /// <MetaDataID>{03e45c2e-1729-4c77-b92f-b50d4eaf7fb9}</MetaDataID>
+    public class Distance
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    /// <MetaDataID>{bf7779d4-7d6c-48d5-8a24-16252502e6bb}</MetaDataID>
+    public class Duration
+    {
+        public string text { get; set; }
+        public int value { get; set; }
+    }
+
+    /// <MetaDataID>{bfad52fc-b79a-4282-b1af-d2767862f258}</MetaDataID>
+    public class EndLocation
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    /// <MetaDataID>{46ee1067-9196-4973-944f-b5feb6fe14ec}</MetaDataID>
+    public class GeocodedWaypoint
+    {
+        public string geocoder_status { get; set; }
+        public string place_id { get; set; }
+        public List<string> types { get; set; }
+    }
+
+    /// <MetaDataID>{79833de2-7f69-405d-9e1f-cf62d1016a74}</MetaDataID>
+    public class Leg
+    {
+        public Distance distance { get; set; }
+        public Duration duration { get; set; }
+        public string end_address { get; set; }
+        public EndLocation end_location { get; set; }
+        public string start_address { get; set; }
+        public StartLocation start_location { get; set; }
+        public List<Step> steps { get; set; }
+        public List<object> traffic_speed_entry { get; set; }
+        public List<object> via_waypoint { get; set; }
+    }
+
+    /// <MetaDataID>{c9a2fcd6-5086-4c60-98a8-07633bbcbdf8}</MetaDataID>
+    public class Northeast
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    /// <MetaDataID>{24e62d30-3895-4304-aec4-d1f326977d93}</MetaDataID>
+    public class OverviewPolyline
+    {
+        public string points { get; set; }
+    }
+
+    /// <MetaDataID>{64baba09-202b-4630-b87d-3a3ad35fcf78}</MetaDataID>
+    public class Polyline
+    {
+        public string points { get; set; }
+    }
+
+    /// <MetaDataID>{6e30ef02-89c7-4125-bd36-f3d7b3ffe870}</MetaDataID>
+    public class Directions
+    {
+        public List<GeocodedWaypoint> geocoded_waypoints { get; set; }
+        public List<Route> routes { get; set; }
+        public string status { get; set; }
+    }
+
+    /// <MetaDataID>{07beb0d5-7143-409c-b8e5-6f4567be77ac}</MetaDataID>
+    public class Route
+    {
+        public Bounds bounds { get; set; }
+        public string copyrights { get; set; }
+        public List<Leg> legs { get; set; }
+        public OverviewPolyline overview_polyline { get; set; }
+        public string summary { get; set; }
+        public List<object> warnings { get; set; }
+        public List<object> waypoint_order { get; set; }
+    }
+
+    /// <MetaDataID>{5921ac52-9668-4773-baaa-93ba90f5cf65}</MetaDataID>
+    public class Southwest
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    /// <MetaDataID>{2e69fd20-7761-4fb8-9e42-782690376cc9}</MetaDataID>
+    public class StartLocation
+    {
+        public double lat { get; set; }
+        public double lng { get; set; }
+    }
+
+    /// <MetaDataID>{6a821f97-0c43-4716-a55d-482ae951d5b9}</MetaDataID>
+    public class Step
+    {
+        public Distance distance { get; set; }
+        public Duration duration { get; set; }
+        public EndLocation end_location { get; set; }
+        public string html_instructions { get; set; }
+        public Polyline polyline { get; set; }
+        public StartLocation start_location { get; set; }
+        public string travel_mode { get; set; }
+        public string maneuver { get; set; }
+    }
+
+
+}

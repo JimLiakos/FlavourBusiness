@@ -18,6 +18,10 @@ using FlavourBusinessManager.Shipping;
 using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessFacade.ServicesContextResources;
+using System.Globalization;
+using System.Net.Http;
+using GoogleMap;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.HumanResources
 {
@@ -96,25 +100,55 @@ namespace FlavourBusinessManager.HumanResources
             });
         }
 
+        /// <MetaDataID>{8a492145-2db2-44ff-8c70-31fa8e1cf7c3}</MetaDataID>
+        public void ImBack()
+        {
+            if (State == CourierState.EndOfDeliveryAndReturn)
+            {
 
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _State = CourierState.Idle;
+                    var endOfDeliveryTimeStamp = StateTimestamp;
+                    StateMachineMonitoring();
+
+                    AuditForDelayedCourierReturn(endOfDeliveryTimeStamp);
+                    stateTransition.Consistent = true;
+                }
+
+
+            }
+        }
         /// <MetaDataID>{0a5bf956-7ee4-429b-85b7-f97c68d90d83}</MetaDataID>
         public void Delivered(IFoodShipping foodShipping)
         {
             var states = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
+            var onTheRoadStateTimestamp = StateTimestamp;
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
+                EnsureCommonDistributionForOnRoadFoodShiping();// in case where delivered before on road delay time
                 foreach (var itemPreparation in foodShipping.PreparedItems)
                     itemPreparation.State = ItemPreparationState.Served;
 
                 (foodShipping as FoodShipping).DeliveryTime = DateTime.UtcNow;
 
-                this.AuditForDelayedDelivery(foodShipping);
+                var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
+                if (distributionFoodShippings.All(x => (x.State == ItemPreparationState.Served || x.State == ItemPreparationState.Canceled)))
+                    State = CourierState.EndOfDeliveryAndReturn;
 
                 stateTransition.Consistent = true;
             }
 
             Transaction.RunOnTransactionCompleted(() =>
             {
+                var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
+
+                if (distributionFoodShippings.All(x => (x.State == ItemPreparationState.Served || x.State == ItemPreparationState.Canceled)))
+                {
+
+                    if (distributionFoodShippings.All(x => x.Place?.Location.IsEmpty == false && !string.IsNullOrWhiteSpace(x.Place?.GetExtensionProperty("RouteDurationInSeconds"))))//valid geocode data
+                        this.AuditForDelayedDelivery(foodShipping, onTheRoadStateTimestamp);
+                }
                 var newItemsState = foodShipping.PreparedItems.ToDictionary(x => x.uid, x => x.State);
                 (foodShipping as FoodShipping).OnItemsChangeState(newItemsState);
                 (foodShipping.MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
@@ -127,73 +161,216 @@ namespace FlavourBusinessManager.HumanResources
 
         }
 
+        //   
+        //{"DeliveryPlaceBell":"Λιάκος Δημήτρης","RouteDistanceInMeters":"2851","RouteDurationInMinutes":"578","RouteOrigin":"{\"Longitude\":23.765026,\"Latitude\":37.9960904}","DeliveryPlaceFloor":"3ος"}
+
         /// <MetaDataID>{d8860b6a-f71c-4642-80d8-326ab9a9e0ca}</MetaDataID>
-        private void AuditForDelayedDelivery(IFoodShipping foodShipping)
+        private Task AuditForDelayedDelivery(IFoodShipping foodShipping, DateTime onTheRoadStateTimestamp)
         {
 
-            //if (foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad).Count()==0)
-            //{
-            //    this.AuditForDelayedDelivery(foodShipping);
-            //}
+            //37.946925, 22.987680
 
-            //(foodShipping as FoodShipping).State==ItemPreparationState.Served||
+            //https://maps.google.com/maps/api/directions/json?origin=37.937782,22.923665&destination=37.946925,22.987680&sensor=false&key=AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI
 
-
-            var onTheRoadStateTimestamp = StateTimestamp;
-
-
-            //int delivery_collectMoney_time = 6*60;
-            HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
-
-
-            var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
-
-            if (distributionFoodShippings.All(x => (x.State==ItemPreparationState.Served||x.State==ItemPreparationState.Canceled)&&
-                                            !string.IsNullOrWhiteSpace(x.Place?.GetExtensionProperty("RouteDurationInSeconds"))))
+            return Task.Run(() =>
             {
-                distributionFoodShippings=distributionFoodShippings.OrderBy(x => x.DeliveryTime).ToList();
-                int forecastDeliveryDurationInSec = 0;
-                int i = 0;
 
-                foreach (var distributionFoodShipping in distributionFoodShippings)
+                try
                 {
-                    int duration = 0;
-                    int.TryParse(distributionFoodShipping.Place?.GetExtensionProperty("RouteDurationInSeconds"), out duration);
-                    if (i==0)
-                        forecastDeliveryDurationInSec=duration+=(int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds;
-                    else
-                        forecastDeliveryDurationInSec+=(int)(duration*0.7)+(int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds; 
-                }
-                if(forecastDeliveryDurationInSec<(DateTime.UtcNow- onTheRoadStateTimestamp.ToUniversalTime()).TotalSeconds )
-                {
+                    HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
 
-                    var deliveryDurationOverTime = TimeSpan.FromSeconds((DateTime.UtcNow- StateTimestamp.ToUniversalTime()).TotalSeconds-forecastDeliveryDurationInSec);
-                    if (deliveryDurationOverTime.TotalMinutes>homeDeliveryServicePoint.DelayedFoodShippingDeliveryTimespan.TotalMinutes)
+                    var distributionFoodShippings = foodShipping.ShiftWork.ServingBatches.OfType<FoodShipping>().Where(x => x.DistributionIdentity == foodShipping.DistributionIdentity);
+
+                    if (distributionFoodShippings.All(x => (x.State == ItemPreparationState.Served || x.State == ItemPreparationState.Canceled) &&
+                                                    x.Place?.Location.IsEmpty == false &&
+                                                    !string.IsNullOrWhiteSpace(x.Place?.GetExtensionProperty("RouteDurationInSeconds"))))
                     {
-
-                        var auditCourierDalay = new AuditCourierDelay()
+                        distributionFoodShippings = distributionFoodShippings.OrderBy(x => x.DeliveryTime).ToList();
+                        int forecastDeliveryDurationInSecs = 0;
+                        int totalRouteDurationInSecs = 0;
+                        IPlace previousFoodShippingDeliveryPlace = null;
+                        foreach (var distributionFoodShipping in distributionFoodShippings)
                         {
-                            Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
-                            DelayInMinutes = deliveryDurationOverTime.TotalMinutes,
-                            EventTimeStamp = DateTime.UtcNow,
-                            StartOfDelayTimeStamp = onTheRoadStateTimestamp
-                        };
-                        this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                            if (previousFoodShippingDeliveryPlace?.Location.IsEmpty == false && distributionFoodShipping?.Place?.Location.IsEmpty == false)
+                            {
+                                string originLat = previousFoodShippingDeliveryPlace.Location.Latitude.ToString(CultureInfo.GetCultureInfo(1033));
+                                string originLng = previousFoodShippingDeliveryPlace.Location.Longitude.ToString(CultureInfo.GetCultureInfo(1033));
+                                string destanationLat = distributionFoodShipping.Place.Location.Latitude.ToString(CultureInfo.GetCultureInfo(1033));
+                                string destanationLng = distributionFoodShipping.Place.Location.Longitude.ToString(CultureInfo.GetCultureInfo(1033));
+
+                                string url = $"https://maps.google.com/maps/api/directions/json?origin={originLat},{originLng}&destination={destanationLat},{destanationLng}&sensor=false&key={homeDeliveryServicePoint.GeocodingApiKey}";
+                                Directions directions = null;
+                                try
+                                {
+                                    using (HttpClient httpClient = new HttpClient())
+                                    {
+                                        var directionsJsonTask = httpClient.GetStringAsync(url);
+                                        directionsJsonTask.Wait();
+                                        var directionsJson = directionsJsonTask.Result;
+                                        directions = OOAdvantech.Json.JsonConvert.DeserializeObject<Directions>(directionsJson);
+                                        if (directions.routes.Count == 0)
+                                            return;
+                                    }
+
+                                }
+                                catch (Exception error)
+                                {
+                                }
+                                if (directions?.routes.FirstOrDefault()?.legs.Count != 0)
+                                {
+                                    int duration = directions.routes[0].legs[0].duration.value;
+                                    totalRouteDurationInSecs += duration;
+                                }
+                                else
+                                    return; //missing route data to calculate the forecast delivery duration;
+
+                            }
+                            else
+                            {
+                                previousFoodShippingDeliveryPlace = distributionFoodShipping.Place;
+                                int duration = 0;
+                                int.TryParse(distributionFoodShipping.Place?.GetExtensionProperty("RouteDurationInSeconds"), out duration);
+                                totalRouteDurationInSecs += duration + (int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds;
+                            }
+                        }
+                        forecastDeliveryDurationInSecs = totalRouteDurationInSecs + (int)homeDeliveryServicePoint.DeliveryAndCollectMoneyTimespan.TotalSeconds * distributionFoodShippings.Count();
+
+                        if (forecastDeliveryDurationInSecs < (DateTime.UtcNow - onTheRoadStateTimestamp.ToUniversalTime()).TotalSeconds)
+                        {
+
+                            var deliveryDurationOverTime = TimeSpan.FromSeconds((DateTime.UtcNow - onTheRoadStateTimestamp.ToUniversalTime()).TotalSeconds - forecastDeliveryDurationInSecs);
+                            var acceptableDelayTimespan = TimeSpan.FromSeconds(forecastDeliveryDurationInSecs * (homeDeliveryServicePoint.DelayedFoodShippingDeliveryPerc / 100));
+                            if (deliveryDurationOverTime.TotalMinutes > acceptableDelayTimespan.TotalMinutes)
+                            {
+
+                                var auditCourierDalay = new AuditCourierDelay()
+                                {
+                                    Description = Properties.Resources.DelayedFoodshippingDelivery,
+                                    DelayInMinutes = deliveryDurationOverTime.TotalMinutes,
+                                    EventTimeStamp = DateTime.UtcNow,
+                                    TotalRouteDurationInSecs = totalRouteDurationInSecs,
+                                    StartOfDelayTimeStamp = onTheRoadStateTimestamp.ToUniversalTime(),
+                                    DistributionIdentity = distributionFoodShippings.First().DistributionIdentity,
+                                    TypeOfDelauy = CourierDelayType.DeliveryDelay
+
+                                };
+                                this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                            }
+                        }
                     }
+
+                }
+                catch (Exception error)
+                {
                 }
 
-
-            }
-            //distributionFoodShippings.All(x=>x.st)
-            //if ()
-
-            //foodShipping.DistributionIdentity
-
-
+            });
         }
 
 
 
+
+        /// <MetaDataID>{47b09226-4e11-4b69-8835-f4d336b59c9c}</MetaDataID>
+        private Task AuditForDelayedCourierReturn(DateTime endOfDeliveryTimeStamp)
+        {
+
+            var lastFoodShipping = (ShiftWork as ServingShiftWork)?.ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.Canceled || x.State == ItemPreparationState.Served).OrderBy(x => x.DeliveryTime).Last();
+            string routeOriginJson = lastFoodShipping?.Place.GetExtensionProperty("RouteOrigin");
+            if (lastFoodShipping != null && !string.IsNullOrWhiteSpace(routeOriginJson))
+            {
+                HomeDeliveryServicePoint homeDeliveryServicePoint = lastFoodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
+
+                int returnRouteDuration = 0;
+                {
+                    int.TryParse(lastFoodShipping.Place?.GetExtensionProperty("RouteDurationInSeconds"), out returnRouteDuration);
+                    TimeSpan returnDurationOverTime = TimeSpan.FromSeconds(((DateTime.UtcNow - endOfDeliveryTimeStamp.ToUniversalTime()).TotalSeconds) - returnRouteDuration);
+                    var acceptableDelayTimespan = TimeSpan.FromSeconds((returnRouteDuration * homeDeliveryServicePoint.DelayedCourierReturnPerc / 100));
+                    if (returnDurationOverTime.TotalMinutes > acceptableDelayTimespan.TotalMinutes)
+                    {
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            var auditCourierDalay = new AuditCourierDelay()
+                            {
+                                Description = Properties.Resources.CourierDelayedHisReturn,
+                                DelayInMinutes = returnDurationOverTime.TotalMinutes,
+                                EventTimeStamp = DateTime.UtcNow,
+                                TotalRouteDurationInSecs = returnRouteDuration,
+                                StartOfDelayTimeStamp = endOfDeliveryTimeStamp,
+                                DistributionIdentity = lastFoodShipping.DistributionIdentity,
+                                TypeOfDelauy = CourierDelayType.DelayToReturn
+
+                            };
+                            this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                            stateTransition.Consistent = true;
+                        }
+
+                    }
+
+                }
+                return Task.CompletedTask;
+                return Task.Run(() =>
+                {
+
+
+                    var routeOrigin = OOAdvantech.Json.JsonConvert.DeserializeObject<Coordinate>(routeOriginJson);
+
+                    string originLat = lastFoodShipping.Place.Location.Latitude.ToString(CultureInfo.GetCultureInfo(1033));
+                    string originLng = lastFoodShipping.Place.Location.Longitude.ToString(CultureInfo.GetCultureInfo(1033));
+                    string destanationLat = routeOrigin.Latitude.ToString(CultureInfo.GetCultureInfo(1033));
+                    string destanationLng = routeOrigin.Longitude.ToString(CultureInfo.GetCultureInfo(1033));
+
+                    string url = $"https://maps.google.com/maps/api/directions/json?origin={originLat},{originLng}&destination={destanationLat},{destanationLng}&sensor=false&key={homeDeliveryServicePoint.GeocodingApiKey}";
+                    Directions directions = null;
+                    try
+                    {
+                        using (HttpClient httpClient = new HttpClient())
+                        {
+                            var directionsJsonTask = httpClient.GetStringAsync(url);
+                            directionsJsonTask.Wait();
+                            var directionsJson = directionsJsonTask.Result;
+                            directions = OOAdvantech.Json.JsonConvert.DeserializeObject<Directions>(directionsJson);
+                            if (directions.routes.Count == 0)
+                                return;
+                        }
+
+                    }
+                    catch (Exception error)
+                    {
+                    }
+                    if (directions?.routes.FirstOrDefault()?.legs.Count != 0)
+                    {
+                        returnRouteDuration = directions.routes[0].legs[0].duration.value;
+                        TimeSpan returnDurationOverTime = TimeSpan.FromSeconds((DateTime.UtcNow - endOfDeliveryTimeStamp.ToUniversalTime()).TotalSeconds - returnRouteDuration);
+                        var acceptableDelayTimespan = TimeSpan.FromSeconds(homeDeliveryServicePoint.DelayedCourierReturnPerc * returnRouteDuration);
+                        if (returnDurationOverTime.TotalMinutes > acceptableDelayTimespan.TotalMinutes)
+                        {
+
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                            {
+                                var auditCourierDalay = new AuditCourierDelay()
+                                {
+                                    Description = Properties.Resources.CourierDelayedHisReturn,
+                                    DelayInMinutes = returnDurationOverTime.TotalMinutes,
+                                    EventTimeStamp = DateTime.UtcNow,
+                                    TotalRouteDurationInSecs = returnRouteDuration,
+                                    StartOfDelayTimeStamp = endOfDeliveryTimeStamp,
+                                    DistributionIdentity = lastFoodShipping.DistributionIdentity,
+                                    TypeOfDelauy = CourierDelayType.DelayToReturn
+
+                                };
+                                this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                                stateTransition.Consistent = true;
+                            }
+
+                        }
+                    }
+                });
+                return Task.CompletedTask;
+            }
+            else
+                return Task.CompletedTask;
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -909,6 +1086,7 @@ namespace FlavourBusinessManager.HumanResources
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             bool foodShippingAssignmentFromMe = this.OAuthUserIdentity == authUser?.User_ID;
 
+
             if (foodShipping.PreparedItems.All(x => x.State.IsInPreviousState(ItemPreparationState.OnRoad)))
             {
 
@@ -920,7 +1098,9 @@ namespace FlavourBusinessManager.HumanResources
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
                     (foodShipping.ShiftWork as ServingShiftWork)?.RemoveServingBatch(foodShipping);
+                    (foodShipping as FoodShipping).DistributionIdentity = null;
                     (foodShipping as FoodShipping).AtTheCounter();
+                    StateMachineMonitoring();
                     Transaction.RunOnTransactionCompleted(() =>
                     {
                         (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
@@ -948,31 +1128,39 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{3ee99f40-a2f1-44a7-bd23-4ff54f9e3584}</MetaDataID>
         public void RemoveFoodShippingAssignment(IFoodShipping foodShipping)
         {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            bool isSupervisor = AuthUserRef.GetAuthUserRef(authUser.User_ID)?.HasRoleType(RoleType.ServiceContextSupervisor) == true || AuthUserRef.GetAuthUserRef(authUser.User_ID)?.HasRoleType(RoleType.Organization) == true;
 
-            if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State != FinanceFacade.PaymentState.New).Count() > 0)
+
+            if (isSupervisor && foodShipping.ShiftWork != null)
             {
-                throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
-            }
-            if (foodShipping.PreparedItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)))
-            {
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                if ((foodShipping as FoodShipping).GetPayments().Where(x => x.State != FinanceFacade.PaymentState.New).Count() > 0)
                 {
-                    (foodShipping.ShiftWork as ServingShiftWork).RemoveServingBatch(foodShipping);
-                    (foodShipping as FoodShipping).AtTheCounter();
-                    Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
-                    });
-
-                    stateTransition.Consistent = true;
+                    throw new PaidFoodShippingException($"The food shipping {foodShipping.Description} has payments to courier");
                 }
-                FindFoodShippingsChanges();
+                if (foodShipping.PreparedItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)))
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        (foodShipping as FoodShipping).DistributionIdentity = null;
+                        (foodShipping.ShiftWork as ServingShiftWork)?.RemoveServingBatch(foodShipping);
+                        (foodShipping as FoodShipping).AtTheCounter();
+                        StateMachineMonitoring();
+                        Transaction.RunOnTransactionCompleted(() =>
+                        {
+                            (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                        });
 
-                StateMachineMonitoring();
-            }
-            else
-            {
-                throw new InvalidOperationException("Only on the road food shipping can you deassign.");
+                        stateTransition.Consistent = true;
+                    }
+                    FindFoodShippingsChanges();
+
+                    StateMachineMonitoring();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Only on the road food shipping can you deassign.");
+                }
             }
 
         }
@@ -991,6 +1179,7 @@ namespace FlavourBusinessManager.HumanResources
                     if (!foodShipping.IsAssigned)
                     {
                         (ShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
+                        StateMachineMonitoring();
                         Transaction.RunOnTransactionCompleted(() =>
                         {
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
@@ -1050,7 +1239,8 @@ namespace FlavourBusinessManager.HumanResources
                         Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
                         DelayInMinutes = delayForCourier.TotalMinutes,
                         EventTimeStamp = DateTime.UtcNow,
-                        StartOfDelayTimeStamp = startOfDelayTimeStamp
+                        StartOfDelayTimeStamp = startOfDelayTimeStamp,
+                        TypeOfDelauy = CourierDelayType.DelayAtTheCounter
                     };
 
                     this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
@@ -1091,6 +1281,7 @@ namespace FlavourBusinessManager.HumanResources
                                 (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
                             });
 
+                            StateMachineMonitoring();
                             stateTransition.Consistent = true;
                         }
                         FindFoodShippingsChanges();
@@ -1141,74 +1332,94 @@ namespace FlavourBusinessManager.HumanResources
 
             if (this.ShiftWork?.IsActive() == true)
             {
-                if (State != CourierState.OnTheRoad)
-                    State = CourierState.PendingForFoodShiping;
-                bool someAtTheCounter = (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Any(x => x.State == ItemPreparationState.Serving);
-                bool allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
-                if (someAtTheCounter)
-                    State = CourierState.CollectFoodShiping;
-                else if (allOntheRoad)
+                lock (StateMachineLock)
                 {
+                    if (State == CourierState.Idle || State == CourierState.CollectFoodShiping)
+                        State = CourierState.PendingForFoodShiping;
 
-                    var onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
-                    if (onTheRoadTimespan.TotalMinutes > 2)
-                    {
-                        State = CourierState.OnTheRoad;
-                    }
-                    else
-                    {
+                    if (this.ShiftWork == null || (this.ShiftWork as IServingShiftWork)?.ServingBatches.Count == 0)
+                        State = CourierState.PendingForFoodShiping;
+
+
+                    bool someAtTheCounter = (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Any(x => x.State == ItemPreparationState.Serving);
+                    bool allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
+                    if (someAtTheCounter)
                         State = CourierState.CollectFoodShiping;
-                        Delay.Do((TimeSpan.FromMinutes(2) - onTheRoadTimespan).TotalMilliseconds /*in ms*/, () =>
+                    else if (allOntheRoad)
+                    {
+
+                        var onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
+                        if (onTheRoadTimespan.TotalMinutes > 2)
                         {
-                            allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
-                            if (allOntheRoad)
+                            State = CourierState.OnTheRoad;
+                        }
+                        else
+                        {
+                            State = CourierState.CollectFoodShiping;
+                            Delay.Do((TimeSpan.FromMinutes(2) - onTheRoadTimespan).TotalMilliseconds /*in ms*/, () =>
                             {
-
-
-                                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                                allOntheRoad = (this.ShiftWork as IServingShiftWork).ServingBatches.Count() > 0 && (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().All(x => x.State == ItemPreparationState.OnRoad);
+                                if (allOntheRoad)
                                 {
-                                    State = CourierState.OnTheRoad;
 
-                                    var ticks = new DateTime(2022, 1, 1).Ticks;
-                                    var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                                    foreach (var foodShipping in (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad&&string.IsNullOrWhiteSpace(x.DistributionIdentity)))
+
+                                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                                     {
+                                        State = CourierState.OnTheRoad;
 
-                                        foodShipping.DistributionIdentity=uniqueId;
+                                        EnsureCommonDistributionForOnRoadFoodShiping();
+                                        stateTransition.Consistent = true;
                                     }
-                                    stateTransition.Consistent = true;
+
+
                                 }
-
-
-                            }
-                            onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
-                            /* Do somthing */
-                        });
+                                onTheRoadTimespan = DateTime.UtcNow - (this.ShiftWork as IServingShiftWork).ServingBatches.SelectMany(x => x.PreparedItems).OrderBy(x => x.StateTimestamp).Last().StateTimestamp.ToUniversalTime();
+                                /* Do somthing */
+                            });
+                        }
                     }
                 }
-                else
-                    State = CourierState.PendingForFoodShiping;
+
             }
             else
             {
-                State = CourierState.Idle;
+                lock (StateMachineLock)
+                    State = CourierState.Idle;
             }
 
 
         }
+
+        /// <MetaDataID>{9d292119-46ee-4b16-b185-a55a9750f602}</MetaDataID>
+        private void EnsureCommonDistributionForOnRoadFoodShiping()
+        {
+#if DEBUG
+            var foodShippingsStates = (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Select(s => s.State).ToArray();
+#endif
+
+            var ticks = new DateTime(2022, 1, 1).Ticks;
+            var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+            foreach (var foodShipping in (this.ShiftWork as IServingShiftWork).ServingBatches.OfType<FoodShipping>().Where(x => x.State == ItemPreparationState.OnRoad && string.IsNullOrWhiteSpace(x.DistributionIdentity)))
+                foodShipping.DistributionIdentity = uniqueId;
+        }
+
         /// <MetaDataID>{e8881f39-2f46-4b4a-b1ca-237ecea8a5c1}</MetaDataID>
         [ObjectActivationCall]
         internal void OnActivated()
         {
             StateMachineMonitoring();
         }
+
+
+
+
+
         /// <exclude>Excluded</exclude>
         CourierState _State;
-
-
         /// <MetaDataID>{eedff8e1-ca31-41d6-a954-01ed1e0fbe0c}</MetaDataID>
         [PersistentMember(nameof(_State))]
         [BackwardCompatibilityID("+19")]
+
         public CourierState State
         {
             get => _State;

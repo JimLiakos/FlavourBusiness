@@ -354,6 +354,8 @@ namespace CourierApp.ViewModel
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
                                 _Courier.FoodShippingsChanged += FoodShippingsChanged;
+
+                                CourierOnTheRoadToReturn = _Courier.State == CourierState.EndOfDeliveryAndReturn;
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -423,6 +425,26 @@ namespace CourierApp.ViewModel
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                     _Courier.MessageReceived += MessageReceived;
                                     _Courier.FoodShippingsChanged += FoodShippingsChanged;
+
+                                    if (_Courier.State == CourierState.EndOfDeliveryAndReturn)
+                                    {
+
+                                        if (CourierOnTheRoadToReturn != true)
+                                        {
+                                            CourierOnTheRoadToReturn = true;
+                                            ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        if (CourierOnTheRoadToReturn != false)
+                                        {
+                                            CourierOnTheRoadToReturn = false;
+                                            ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                                        }
+                                    }
+
                                     //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                     if (_Courier is ITransparentProxy)
                                         (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -536,13 +558,38 @@ namespace CourierApp.ViewModel
             if (member == nameof(ICourier.State))
             {
                 ObjectChangeState?.Invoke(this, nameof(FoodShippings));
-                if(Courier.State==CourierState.OnTheRoad)
+                var newState = Courier.State;
+                if (newState == CourierState.OnTheRoad)
                     FoodShippingsChanged();
-                if (Courier.State == CourierState.PendingForFoodShiping)
+                if (newState == CourierState.PendingForFoodShiping)
                     FoodShippingsChanged();
+
+                if (newState  == CourierState.EndOfDeliveryAndReturn)
+                {
+
+                    if (CourierOnTheRoadToReturn != true)
+                    {
+                        CourierOnTheRoadToReturn = true;
+                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                    }
+
+                }
+                else
+                {
+                    if (CourierOnTheRoadToReturn != false)
+                    {
+                        CourierOnTheRoadToReturn = false;
+                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                    }
+                }
+
 
             }
         }
+
+        public bool CourierOnTheRoadToReturn {get;set; }
+
+
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
         object MessagesLock = new object();
@@ -1086,6 +1133,33 @@ namespace CourierApp.ViewModel
         {
             throw new NotImplementedException();
         }
+        public async Task ImBack()
+        {
+
+             await SerializeTaskScheduler.AddTask(async () =>
+            {
+                int tries = 30;
+                while (tries > 0)
+                {
+                    try
+                    {
+                        this.Courier.ImBack();
+                        return true;
+                    }
+                    catch (System.Net.WebException commError)
+                    {
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception error)
+                    {
+                        var er = error;
+                        await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
+                    }
+                }
+                return true;
+            });
+        }
+
 
         public async Task<bool> AssignFoodShipping(string foodShippingIdentity)
         {

@@ -16,10 +16,10 @@ namespace CourierApp.ViewModel
     public delegate void ItemsReadyToServeRequesttHandle(ICourierActivityPresentation courierActivityPresentation, string messageID, string servicePointIdentity);
     /// <MetaDataID>{99fe8217-2732-4d1a-b074-c88a95272563}</MetaDataID>
     [HttpVisible]
-    public interface ICourierActivityPresentation 
+    public interface ICourierActivityPresentation
     {
 
-        IServingShiftWork ActiveShiftWork  { get; }
+        IServingShiftWork ActiveShiftWork { get; }
         /// <MetaDataID>{fc4f212d-57ff-417d-8b8b-ea68cb3d8c2a}</MetaDataID>
         bool InActiveShiftWork { get; }
 
@@ -37,9 +37,9 @@ namespace CourierApp.ViewModel
 
         ICourierPresentation CourierPresentation { get; }
 
+        bool CourierOnTheRoadToReturn { get; }
 
-
-       [GenerateEventConsumerProxy]
+        [GenerateEventConsumerProxy]
         event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
         void ItemsReadyToServeMessageReceived(string messageID);
@@ -57,13 +57,14 @@ namespace CourierApp.ViewModel
 
         List<FoodShippingPresentation> AssignedFoodShippings { get; }
 
+        Task ImBack();
         Task<bool> AssignFoodShipping(string foodShippingIdentity);
 
         Task<bool> DeAssignFoodShipping(string foodShippingIdentity);
 
 
         void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null);
-        void FoodShippingDelivered(string foodShippingIdentity); 
+        void FoodShippingDelivered(string foodShippingIdentity);
         void PhoneCall(string foodShippingIdentity);
 
         void Navigate(string foodShippingIdentity);
@@ -78,9 +79,9 @@ namespace CourierApp.ViewModel
 
         Task Pay(FinanceFacade.IPayment payment, FinanceFacade.PaymentMethod paymentMethod, decimal tipAmount);
 
-        
 
-        
+
+
 
 
 

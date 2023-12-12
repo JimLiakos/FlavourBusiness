@@ -61,6 +61,12 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{b816807d-4fb9-44c0-877e-b59cd332fdf5}</MetaDataID>
         void RemoveFoodShippingAssignment(IFoodShipping foodShipping);
 
+        /// <summary>
+        /// The courier informs that he has returned
+        /// </summary>
+        // <MetaDataID>{215e7bea-ba6a-4879-9368-d2b61f0422cb}</MetaDataID>
+        void ImBack();
+
 
         /// <MetaDataID>{eb973ca2-1979-488f-a143-f9a9c0238324}</MetaDataID>
         [BackwardCompatibilityID("+2")]
@@ -69,16 +75,34 @@ namespace FlavourBusinessFacade.HumanResources
 
     public delegate void FoodShippingsChangedHandler();
 
-
+    /// <summary>
+    /// Courier can be in following state like, wait for shipments,
+    /// collect shipments, on the road, he has deliver all shipment and he returning
+    /// </summary>
     /// <MetaDataID>{6b30fbb3-87aa-4dae-8cfa-24c96c1b065b}</MetaDataID>
     public enum CourierState
     {
+        /// <summary>
+        ///Courier is idle when he isn't in shift 
+        /// </summary>
         Idle = 0,
+        /// <summary>
+        /// wait for shipments,
+        /// </summary>
         PendingForFoodShiping = 1,
+        /// <summary>
+        /// Collect foodShipings 
+        /// </summary>
         CollectFoodShiping = 2,
         NearDeliveryServicePoint = 3,
+        /// <summary>
+        /// On the road to deliver shipment,
+        /// </summary>
         OnTheRoad = 4,
-        EndOfDeliveryAndReturn=5
+        /// <summary>
+        ///  He has deliver all shipment and he returning
+        /// </summary>
+        EndOfDeliveryAndReturn = 5
 
     }
 

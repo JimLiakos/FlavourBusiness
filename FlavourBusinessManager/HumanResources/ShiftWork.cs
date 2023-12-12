@@ -152,10 +152,9 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{3bd28e5d-2f79-4cc6-9a8c-3bacc7c53524}</MetaDataID>
         public void AddAuditWorkerEvents(IAuditWorkerEvents auditEvent)
         {
-
-
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(auditEvent);
                 _AuditEvents.Add(auditEvent); 
                 stateTransition.Consistent = true;
             }

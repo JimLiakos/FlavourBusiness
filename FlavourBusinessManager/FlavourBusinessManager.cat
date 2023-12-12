@@ -44624,7 +44624,7 @@
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
 		    persistence 	"Persistent")
-		(object Class "AuditCourierDalay"
+		(object Class "AuditCourierDelay"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -44641,7 +44641,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"5")
+			    value      	"7")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -44652,6 +44652,22 @@
 			    quid       	"656EBD850355"
 			    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IAuditWorkerEvents"
 			    quidu      	"656DF87F013D"))
+		    operations 	(list Operations
+			(object Operation "AuditCourierDelay"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0bf0f6a4-54bd-4b87-b059-01cb56164111}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65760D0E0232"))
+			    quid       	"65760D0E0232"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Description"
 			    attributes 	(list Attribute_Set
@@ -44784,6 +44800,101 @@
 				    value      	"+4"))
 			    quid       	"656EBFEB0057"
 			    type       	"double"
+			    exportControl 	"Public")
+			(object ClassAttribute "TypeOfDelauy"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{c35a961c-c485-45d9-b05a-e06a3df0ecc3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65760D0E02AD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+5"))
+			    quid       	"65760D0E02AD"
+			    type       	"FlavourBusinessManager.HumanResources.CourierDelayType"
+			    exportControl 	"Public")
+			(object ClassAttribute "DistributionIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9aa7bbf7-8101-4a1b-84dc-d1123f32690e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65760D0E039B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
+			    quid       	"65760D0E039B"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "TotalRouteDurationInSecs"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0f70f554-3e23-4cea-a8e3-81329b8c2a17}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65775101026B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE))
+			    quid       	"65775101026B"
+			    type       	"int"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -45324,7 +45435,7 @@
 			    line_style 	3
 			    origin_attachment 	(313, 1641)
 			    terminal_attachment 	(313, 1409))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::HumanResources::AuditCourierDalay" @659
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::HumanResources::AuditCourierDelay" @659
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1350, 2372)
 			    font       	(object Font
@@ -45341,10 +45452,10 @@
 				Parent_View 	@659
 				location   	(991, 2234)
 				fill_color 	13434879
-				nlines     	1
+				nlines     	2
 				max_width  	719
 				justify    	0
-				label      	"AuditCourierDalay")
+				label      	"AuditCourierDelay")
 			    icon_style 	"Decoration"
 			    line_color 	3342489
 			    fill_color 	4227327

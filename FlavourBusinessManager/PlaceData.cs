@@ -48,7 +48,7 @@ namespace FlavourBusinessManager.EndUsers
                         extensionProperties["RouteDurationInSeconds"]=extensionProperties["RouteDurationInMinutes"];
 
 
-                    return OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(ExtensionPropertiesJson);
+                    return extensionProperties;
                 }
             }
         }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CourierDelayedHisReturn" xml:space="preserve">
+    <value>The courier delayed his return</value>
+  </data>
   <data name="DefaultCashierStationDescription" xml:space="preserve">
     <value>Cashier Station</value>
     <comment>Specifies the description of the 'cashier station' when it is created.</comment>
@@ -171,6 +174,9 @@
   </data>
   <data name="DelayedFoodshippingAtTheCounter" xml:space="preserve">
     <value>Delay of order pick-up from the counter</value>
+  </data>
+  <data name="DelayedFoodshippingDelivery" xml:space="preserve">
+    <value>Delay in shipment delivery</value>
   </data>
   <data name="DublicateStorageNameMessage" xml:space="preserve">
     <value>A storage named '{0}' already belongs to this storage.</value>

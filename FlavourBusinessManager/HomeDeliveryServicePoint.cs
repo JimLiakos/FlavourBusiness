@@ -58,6 +58,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public string GeocodingApiKey { get => "AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI"; }
+
         /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
         internal bool CanBeAssignedTo(ICourier waiter, IShiftWork shiftWork)
         {
@@ -452,25 +454,27 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <MetaDataID>{e3e12b32-3725-48b5-bca5-7b1aecd599d3}</MetaDataID>
         private void MealsController_NewMealCoursesInrogress(IList<FlavourBusinessFacade.RoomService.IMealCourse> mealCoursers)
         {
             RunObjectChangeState(this, nameof(HomeDeliveryServicePoint.WatchingOrders));
         }
 
-        
-        public List<WatchingOrder>  WatchingOrders
+
+        /// <MetaDataID>{c5ef0e0f-e18d-4731-813f-608a051e2d8a}</MetaDataID>
+        public List<WatchingOrder> WatchingOrders
         {
             get
             {
 
-                var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery&&  x.MainSession != null&&x.MainSession.Meal!=null).Select(x => x.MainSession).Distinct().ToList();
+                var foodServicesSessions = this.ActiveFoodServiceClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery && x.MainSession != null && x.MainSession.Meal != null).Select(x => x.MainSession).Distinct().ToList();
                 var serviceAreaMapPolyGon = new MapPolyGon(ServiceAreaMap);
                 return (from foodServicesSession in foodServicesSessions
-                        where foodServicesSession.DeliveryPlace!=null
+                        where foodServicesSession.DeliveryPlace != null
                         select new WatchingOrder()
                         {
                             SessionID = foodServicesSession.SessionID,
-                            ClientPhone= foodServicesSession.PartialClientSessions.Where(x => x.SessionType==SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
+                            ClientPhone = foodServicesSession.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.PhoneNumber,
                             ClientIdentity = foodServicesSession.PartialClientSessions.Where(x => x.SessionType == SessionType.HomeDelivery)?.FirstOrDefault()?.Client?.Identity,
                             SessionType = foodServicesSession.SessionType,
                             DeliveryPlace = foodServicesSession.DeliveryPlace,
@@ -478,18 +482,20 @@ namespace FlavourBusinessManager.ServicesContextResources
                             HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },
                             MealCourses = foodServicesSession.Meal.Courses,
                             TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
-                            State= WatchingOrderState.InProggres,
-                            OrderTotal=Bill.GetTotal(foodServicesSession)
+                            State = WatchingOrderState.InProggres,
+                            OrderTotal = Bill.GetTotal(foodServicesSession)
 
                         }).ToList();
             }
         }
 
+        /// <MetaDataID>{1cb5aafb-70aa-4c3e-a71c-070a5a330be9}</MetaDataID>
         private bool IsOutOfDeliveryRange(IPlace deliveryPlace, MapPolyGon serviceAreaMapPolyGon)
         {
-          return  !serviceAreaMapPolyGon.FindPoint(deliveryPlace.Location.Latitude, deliveryPlace.Location.Longitude);
+            return !serviceAreaMapPolyGon.FindPoint(deliveryPlace.Location.Latitude, deliveryPlace.Location.Longitude);
         }
 
+        /// <MetaDataID>{0d15bff7-fe2b-45b6-853d-53aab0caa5f9}</MetaDataID>
         public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
         {
 
@@ -504,17 +510,18 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-                
-                callCenterStationWatchingOrders.WatchingOrders =  WatchingOrders.ToList();
-                return callCenterStationWatchingOrders; 
+
+                callCenterStationWatchingOrders.WatchingOrders = WatchingOrders.ToList();
+                return callCenterStationWatchingOrders;
             }
-    
+
         }
 
+        /// <MetaDataID>{0458fef5-cdd1-44f1-b0ef-01d23c88ceef}</MetaDataID>
         private double GetRouteDistanceInKm(IPlace deleiveryPlace)
         {
             double.TryParse(deleiveryPlace.GetExtensionProperty("RouteDistanceInMeters"), out var distance);
-            distance = Math.Round(distance / 100)/10;//round  to 100 meters
+            distance = Math.Round(distance / 100) / 10;//round  to 100 meters
             return distance;
 
         }
@@ -539,13 +546,15 @@ namespace FlavourBusinessManager.ServicesContextResources
             return new List<IFoodServiceClientSession>();
         }
 
+        /// <MetaDataID>{b5104872-4456-4bc8-8a36-ee77cdeefbb5}</MetaDataID>
         internal WatchingOrder GetWatchingOrder(IFoodServiceClientSession foodServicesClientSession)
         {
             var watchingOrders = WatchingOrders;
-            var watchingOrder=watchingOrders.Where(x => x.SessionID == foodServicesClientSession.MainSession.SessionID).FirstOrDefault();
+            var watchingOrder = watchingOrders.Where(x => x.SessionID == foodServicesClientSession.MainSession.SessionID).FirstOrDefault();
             return watchingOrder;
         }
 
+        /// <MetaDataID>{f2a204fe-6d7e-48ec-9896-4643f0907848}</MetaDataID>
         [OnDemandCachingDataOnClientSide]
         public List<ReturnReason> ReturnReasons
         {
@@ -561,9 +570,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        public TimeSpan DelayedFoodShippingAtTheCounterTimespan { get=>TimeSpan.FromMinutes(2);}
-        public TimeSpan DelayedFoodShippingDeliveryTimespan { get => TimeSpan.FromMinutes(5); }
+        /// <MetaDataID>{e1a28e62-dc78-49c0-a6d9-515f8c4034b8}</MetaDataID>
+        public TimeSpan DelayedFoodShippingAtTheCounterTimespan { get => TimeSpan.FromMinutes(2); }
+        //public TimeSpan DelayedFoodShippingDeliveryTimespan { get => TimeSpan.FromMinutes(5); }
 
+        /// <MetaDataID>{0f06a47c-7b63-4eb4-943c-3d7bf170b2a6}</MetaDataID>
+        public int DelayedFoodShippingDeliveryPerc { get => 10; }
+        /// <MetaDataID>{af2c33c5-e03a-43a6-aa53-8960a124331f}</MetaDataID>
+        public int DelayedCourierReturnPerc { get => 10; }
+
+        /// <MetaDataID>{5736d8b6-6ce2-4a29-8337-ee2454f4c52f}</MetaDataID>
         public TimeSpan DeliveryAndCollectMoneyTimespan { get => TimeSpan.FromMinutes(4); }
 
     }

@@ -26,14 +26,14 @@ namespace FlavourBusinessManager.Shipping
         [BackwardCompatibilityID("+15")]
         public DateTime? DeliveryTime
         {
-            get=>_DeliveryTime;
+            get => _DeliveryTime;
             set
             {
-                if (_DeliveryTime!=value)
+                if (_DeliveryTime != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _DeliveryTime=value;
+                        _DeliveryTime = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -307,10 +307,10 @@ namespace FlavourBusinessManager.Shipping
                 if (this.PreparedItems.Where(x => x.State == ItemPreparationState.OnRoad).Count() == this.PreparedItems.Count && this.PreparedItems.Count > 0)
                     return ItemPreparationState.OnRoad;
 
-                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.IsInFollowingState(ItemPreparationState.Served))&& this.PreparedItems.Count > 0)
+                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.State == ItemPreparationState.Served) && this.PreparedItems.Count > 0)
                     return ItemPreparationState.Served;
 
-                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.IsInFollowingState(ItemPreparationState.Canceled))&& this.PreparedItems.Count > 0)
+                if (this.PreparedItems.OfType<ItemPreparation>().All(x => x.State == ItemPreparationState.Canceled) && this.PreparedItems.Count > 0)
                     return ItemPreparationState.Canceled;
 
                 return ItemPreparationState.Serving;
@@ -468,7 +468,10 @@ namespace FlavourBusinessManager.Shipping
                 if (ShiftWork != null)
                     IsAssigned = true;
                 else
+                {
+                    DistributionIdentity = null;
                     IsAssigned = false;
+                }
             }
         }
 
@@ -491,7 +494,7 @@ namespace FlavourBusinessManager.Shipping
             get
             {
                 if (_ServicePoint == null)
-                    _ServicePoint=MealCourse?.Meal?.Session?.ServicePoint;
+                    _ServicePoint = MealCourse?.Meal?.Session?.ServicePoint;
                 return _ServicePoint;
             }
             set { _ServicePoint = value; }
@@ -720,8 +723,9 @@ namespace FlavourBusinessManager.Shipping
         /// <MetaDataID>{a50c2381-6c9e-4359-a493-36c7640550bb}</MetaDataID>
         internal void Update(IMealCourse mealCourse, IList<ItemsPreparationContext> preparedItems, IList<ItemsPreparationContext> underPreparationItems)
         {
-            var mealCourseUri = (mealCourse as MealCourse).MealCourseTypeUri;
+            var mealCourseUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
             MealCourseUri = mealCourseUri;
+
             //if (mealCourse != MealCourse)
             //    throw new Exception("Meal course mismatch");
 
@@ -810,7 +814,7 @@ namespace FlavourBusinessManager.Shipping
 
         //    var returnReason = (ServicePoint as IHomeDeliveryServicePoint).ReturnReasons.Where(x => x.Identity == returnReasonIdentity).FirstOrDefault();
 
-     
+
         //    var states = PreparedItems.ToDictionary(x => x.uid, x => x.State);
         //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
         //    {
@@ -873,6 +877,6 @@ namespace FlavourBusinessManager.Shipping
 
         //}
 
-        
+
     }
 }
