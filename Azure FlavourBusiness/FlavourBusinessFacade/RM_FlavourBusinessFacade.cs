@@ -1235,6 +1235,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.NativeUserSignInData>(retValue);
         }
         
+        public string AssignCourierScannerDevice(string deviceAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deviceAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignCourierScannerDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
+        
         public System.Collections.Generic.List<FlavourBusinessFacade.HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(FlavourBusinessFacade.EndUsers.Coordinate location)
         {
             object[] args = new object[1];
@@ -2094,6 +2104,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignDeviceToNativeUser", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.NativeUserSignInData>(retValue);
+        }
+        
+        public string AssignCourierScannerDevice(string deviceAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deviceAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignCourierScannerDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
         }
         
         public FlavourBusinessFacade.UserData SignInNativeUser(string userName, string password)

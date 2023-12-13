@@ -20,9 +20,6 @@ using UIBaseEx;
 using OOAdvantech.Json.Linq;
 using FinanceFacade;
 using ServiceContextManagerApp;
-using MenuPresentationModel.MenuCanvas;
-using System.Windows.Media;
-using static System.Windows.Forms.AxHost;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -31,11 +28,17 @@ using Xamarin.Forms;
 using DeviceUtilities.NetStandard;
 using Xamarin.Essentials;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
+
+
 #else
 using MarshalByRefObject = System.MarshalByRefObject;
 using WaiterApp.ViewModel;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.Shipping;
+using MenuPresentationModel.MenuCanvas;
+using System.Windows.Media;
+using static System.Windows.Forms.AxHost;
+
 
 #endif
 
@@ -43,7 +46,11 @@ using FlavourBusinessManager.Shipping;
 namespace CourierApp.ViewModel
 {
 
-
+#if DeviceDotNet
+    public interface IFontsResolver
+    {
+    }
+#endif
 
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
     public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, IFontsResolver, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
@@ -1053,6 +1060,95 @@ namespace CourierApp.ViewModel
             return null;
 #endif
 
+        }
+
+
+
+        public bool IsScannerDevice { get => !string.IsNullOrWhiteSpace(ApplicationSettings.Current.HomeDeliveryServicePointIdentity); }
+        public async Task<bool> AssignScannerDevice()
+        {
+
+#if DeviceDotNet
+            string deviceAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                deviceAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+            string serverUrl = AzureServerUrl;
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                 
+                 
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = servicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
+
+                return true;
+              
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
+
+            try
+            {
+                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                string serverUrl = AzureServerUrl;
+
+                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = servicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
+
+                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+
+
+                return true;
+            }
+            catch (Exception error)
+            {
+                return true;
+            }
+
+
+            return true;
+#endif
         }
 
 

@@ -143,6 +143,8 @@ namespace CourierApp
                 }
             }
         }
+
+        public string HomeDeliveryServicePointIdentity { get; internal set; }
     }
 }
 

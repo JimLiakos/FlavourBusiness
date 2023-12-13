@@ -48,6 +48,8 @@ namespace FlavourBusinessFacade
 
         NativeUserSignInData AssignDeviceToNativeUser(string DeviceAssignKey);
 
+        string AssignCourierScannerDevice(string deviceAssignKey);
+
 
 
 

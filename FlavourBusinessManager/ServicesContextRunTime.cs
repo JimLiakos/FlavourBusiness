@@ -2829,6 +2829,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 return unassignedCashier;
             }
         }
+
+        public string AssignCourierScannerDevice(string deviceAssignKey)
+        {
+            return DeliveryServicePoint?.ServicesPointIdentity;
+        }
         public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {
             NativeAuthUser nativeUser = null;

@@ -1,8 +1,8 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
-using FlavourBusinessFacade.Shipping;
-using FlavourBusinessManager.HumanResources;
+
+
 using OOAdvantech.MetaDataRepository;
 using ServiceContextManagerApp;
 using System;
@@ -10,6 +10,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+#if DeviceDotNet
+#else
+using FlavourBusinessManager.HumanResources;
+using FlavourBusinessFacade.Shipping;
+#endif
 
 namespace CourierApp.ViewModel
 {
@@ -50,6 +55,10 @@ namespace CourierApp.ViewModel
 
         /// <MetaDataID>{727612e2-821b-4e1c-8626-25c56b73a190}</MetaDataID>
         Task<UserData> AssignDeviceToNativeUserCourier();
+
+        Task<bool> AssignScannerDevice();
+
+        bool IsScannerDevice { get; }
 
 
 

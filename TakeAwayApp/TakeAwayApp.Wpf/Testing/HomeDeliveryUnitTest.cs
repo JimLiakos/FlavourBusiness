@@ -128,7 +128,7 @@ namespace TakeAwayApp.Wpf
             }
             await homeDeliverySession.OrderCommit();
 
-            homeDeliverySession.FoodServiceClientSession.MainSession.Meal
+            
 
             //IPreparationStationRuntime preparationStation=null;
 

@@ -209,7 +209,17 @@ namespace FlavourBusinessManager
             return flavoursServicesContextRunTime.AssignDeviceToNativeUser(deviceAssignKey);
         }
 
+        public string AssignCourierScannerDevice(string deviceAssignKey)
+        {
+            string[] servicePointIdentityParts = deviceAssignKey.Split(';');
+            string servicesContextIdentity = servicePointIdentityParts[0];
 
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            return flavoursServicesContextRunTime.AssignCourierScannerDevice(deviceAssignKey);
+        }
+
+         
 
         /// <MetaDataID>{ce23edf9-4f91-4120-9a43-7e55e8edb31b}</MetaDataID>
         public FlavourBusinessFacade.HumanResources.IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey)
