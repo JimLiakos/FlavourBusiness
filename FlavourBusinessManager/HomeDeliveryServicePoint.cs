@@ -181,7 +181,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             get => _PlaceOfDistribution;
             set
             {
-                if (_PlaceOfDistribution != value)
+                 if (_PlaceOfDistribution != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
