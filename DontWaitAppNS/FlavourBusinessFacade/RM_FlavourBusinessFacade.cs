@@ -5933,6 +5933,13 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "RemoveFoodShippingAssignment", args, argsTypes);
         }
         
+        public void ImBack()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "ImBack", args, argsTypes);
+        }
+        
         public void RemoveShiftWork(FlavourBusinessFacade.HumanResources.IShiftWork shifWork)
         {
             object[] args = new object[1];
