@@ -193,7 +193,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public System.DateTime SessionStarts
         {
             get
-            {
+            { 
                 return _SessionStarts;
             }
 

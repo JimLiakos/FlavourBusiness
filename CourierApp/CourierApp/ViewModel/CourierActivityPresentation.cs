@@ -1125,7 +1125,8 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
+            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
 
             try
             {

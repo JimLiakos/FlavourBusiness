@@ -11,12 +11,11 @@
 namespace CourierApp.ViewModel.Proxies
 {
     using System;
-
-
-    /// <MetaDataID>{c1013172-5032-44fa-837a-1be4223c7243}</MetaDataID>
+    
+    
     public sealed class CNSPr_ICourierActivityPresentation_ItemsReadyToServeRequest : OOAdvantech.Remoting.EventConsumerHandler
     {
-
+        
         public void Invoke(CourierApp.ViewModel.ICourierActivityPresentation courierActivityPresentation, string messageID, string servicePointIdentity)
         {
             object[] args = new object[3];
@@ -29,12 +28,12 @@ namespace CourierApp.ViewModel.Proxies
             argsTypes[2] = typeof(string);
             object retValue = this.Invoke(typeof(CourierApp.ViewModel.ItemsReadyToServeRequesttHandle), "Invoke", args, argsTypes);
         }
-
+        
         public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.AddEventHandler(target, new CourierApp.ViewModel.ItemsReadyToServeRequesttHandle(this.Invoke));
         }
-
+        
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new CourierApp.ViewModel.ItemsReadyToServeRequesttHandle(this.Invoke));

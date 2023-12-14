@@ -2838,7 +2838,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var courier = this.Couriers.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
             if (courier != null)
             {
-                throw new InvalidAssignmentQRCodeException("The QR code for assignment is not valid");
+                
                 return DeliveryServicePoint?.ServicesPointIdentity;
             }
             else
