@@ -211,12 +211,20 @@ namespace FlavourBusinessManager
 
         public string AssignCourierScannerDevice(string deviceAssignKey)
         {
-            string[] servicePointIdentityParts = deviceAssignKey.Split(';');
-            string servicesContextIdentity = servicePointIdentityParts[0];
+            try
+            { 
+                string[] servicePointIdentityParts = deviceAssignKey.Split(';');
+                string servicesContextIdentity = servicePointIdentityParts[0];
 
-            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
-            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
-            return flavoursServicesContextRunTime.AssignCourierScannerDevice(deviceAssignKey);
+                IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+                var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+                return flavoursServicesContextRunTime.AssignCourierScannerDevice(deviceAssignKey);
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
         }
 
          

@@ -2832,7 +2832,17 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
         public string AssignCourierScannerDevice(string deviceAssignKey)
         {
-            return DeliveryServicePoint?.ServicesPointIdentity;
+
+            NativeAuthUser nativeUser = null;
+            string wokerIdentity = deviceAssignKey.Split(';')[1];
+            var courier = this.Couriers.Where(x => x.Identity == wokerIdentity).FirstOrDefault();
+            if (courier != null)
+            {
+                throw new InvalidAssignmentQRCodeException("The QR code for assignment is not valid");
+                return DeliveryServicePoint?.ServicesPointIdentity;
+            }
+            else
+                throw new InvalidAssignmentQRCodeException("The QR code for assignment is not valid");
         }
         public NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey)
         {

@@ -18,6 +18,7 @@ using System;
 #endif
 namespace CourierApp.ViewModel
 {
+    /// <MetaDataID>{8fc5d800-f1f2-491e-a909-6264040cab63}</MetaDataID>
     public class FoodShippingPresentation : System.IDisposable
     {
         /// <MetaDataID>{1c761f26-73e0-4f22-b419-e4abfa531864}</MetaDataID>
@@ -30,7 +31,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{5d4a45e0-dd81-4390-a69c-1e694cfeb85d}</MetaDataID>
         public ItemPreparationState State
         {
-            get 
+            get
             {
                 var foodShippingItems = (from itemsPreprationContext in this.AllContextsOfPreparedItems
                                          from preparedItem in itemsPreprationContext.PreparationItems
@@ -146,9 +147,9 @@ namespace CourierApp.ViewModel
         private void FoodShipping_ItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState)
         {
             foreach (var preparationItem in (from preparedItemsContext in AllContextsOfPreparedItems
-                                          from preparedItem in preparedItemsContext.PreparationItems
-                                          where newItemsState.ContainsKey(preparedItem.uid)
-                                          select preparedItem))
+                                             from preparedItem in preparedItemsContext.PreparationItems
+                                             where newItemsState.ContainsKey(preparedItem.uid)
+                                             select preparedItem))
             {
 
                 preparationItem.State = newItemsState[preparationItem.uid];
@@ -226,7 +227,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                var returnReasons= (FoodShipping.ServicePoint as IHomeDeliveryServicePoint).ReturnReasons;
+                var returnReasons = (FoodShipping.ServicePoint as IHomeDeliveryServicePoint).ReturnReasons;
                 return returnReasons;
 
                 //return new List<ReturnReason>() { 
@@ -234,7 +235,7 @@ namespace CourierApp.ViewModel
                 //    new ReturnReason("WRNGORD",new Dictionary<string, string>() { { "el", "Λαθος Παραγγελία" }, { "en", "Wrong Order" } }),
                 //    new ReturnReason("LTDLV",new Dictionary<string, string>() { { "el", "Αργοπορημένη Παραγγελία" }, { "en", "Late Delivery" } }),
                 //    new ReturnReason("BDQLPROD",new Dictionary<string, string>() { { "el", "Κακής Ποιότητας Προϊον" }, { "en", "Bad Quality Product" } })
-                   
+
                 //};
             }
         }
@@ -267,5 +268,5 @@ namespace CourierApp.ViewModel
 
     }
 
- 
+
 }

@@ -47,6 +47,7 @@ namespace CourierApp.ViewModel
 {
 
 #if DeviceDotNet
+    /// <MetaDataID>{d741e53c-77e1-4f31-881f-db70501a5425}</MetaDataID>
     public interface IFontsResolver
     {
     }
@@ -1032,8 +1033,8 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
-
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
+            
             try
             {
                 string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
@@ -1143,7 +1144,7 @@ namespace CourierApp.ViewModel
             }
             catch (Exception error)
             {
-                return true;
+                throw;
             }
 
 

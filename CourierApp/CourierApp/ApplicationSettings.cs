@@ -144,7 +144,28 @@ namespace CourierApp
             }
         }
 
-        public string HomeDeliveryServicePointIdentity { get; internal set; }
+
+        /// <exclude>Excluded</exclude>
+        string _HomeDeliveryServicePointIdentity;
+
+        /// <MetaDataID>{55b8d0d0-769e-4f7d-8ecc-cb83b29eae0a}</MetaDataID>
+        [PersistentMember(nameof(_HomeDeliveryServicePointIdentity))]
+        [BackwardCompatibilityID("+3")]
+        public string HomeDeliveryServicePointIdentity
+        {
+            get => _HomeDeliveryServicePointIdentity;
+            set
+            {
+                if (_HomeDeliveryServicePointIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _HomeDeliveryServicePointIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }
 

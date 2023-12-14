@@ -2818,7 +2818,7 @@
 			    (object Attribute
 				tool       	"MetaData"
 				name       	"LastMemberID"
-				value      	"3"))
+				value      	"4"))
 			quid       	"6509283602E3"
 			superclasses 	(list inheritance_relationship_list
 			    (object Inheritance_Relationship
@@ -2982,6 +2982,39 @@
 					name       	"Identity"
 					value      	"+2"))
 				quid       	"65106C500319"
+				type       	"string"
+				exportControl 	"Public")
+			    (object ClassAttribute "HomeDeliveryServicePointIdentity"
+				attributes 	(list Attribute_Set
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"MetaObjectID"
+					value      	"{55b8d0d0-769e-4f7d-8ecc-cb83b29eae0a}")
+				    (object Attribute
+					tool       	"MetaData"
+					name       	"UniqueID"
+					value      	"657AB5E9009A")
+				    (object Attribute
+					tool       	"C#"
+					name       	"As Property"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateGetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"GenerateSetOperation"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"Persistent"
+					name       	"Persistent"
+					value      	TRUE)
+				    (object Attribute
+					tool       	"C#"
+					name       	"Identity"
+					value      	"+3"))
+				quid       	"657AB5E9009A"
 				type       	"string"
 				exportControl 	"Public"))
 			module     	"Component View::CourierApp::CourierApp"
