@@ -5,7 +5,9 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessManager.Shipping;
 using FlavourBusinessToolKit;
 using MenuModel;
 using OOAdvantech;
@@ -521,8 +523,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         public IFoodShipping GetFoodShippingFor(string mealIdentity)
         {
+
             var mealCourse= ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == mealIdentity).FirstOrDefault();
-            return null;
+            var foodShiping = (ServicesContextRunTime.Current.MealsController  as MealsController).GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
+            return foodShiping;
         }
 
 

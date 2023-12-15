@@ -2275,6 +2275,25 @@ namespace FlavourBusinessManager.ServicePointRunTime
         //clientDeviceID="81000000296"
         //clientName="clientName"
 
+
+        public IServicePoint GetServicePoint(string servicePointIdentity)
+        {
+
+            var servicesContextIdentity = ServicesContextIdentity;
+            servicePointIdentity = servicePointIdentity.Replace(servicesContextIdentity + ";", "");
+
+            if (DeliveryServicePoint.ServicesPointIdentity==servicePointIdentity)
+                return DeliveryServicePoint;
+
+
+                var servicePoint = (from serviceArea in ServiceAreas
+                                from aServicePoint in serviceArea.ServicePoints
+                                where aServicePoint.ServicesPointIdentity == servicePointIdentity
+                                select aServicePoint).OfType<IServicePoint>().FirstOrDefault();
+            
+            return servicePoint;
+
+        }
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
         public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
         {

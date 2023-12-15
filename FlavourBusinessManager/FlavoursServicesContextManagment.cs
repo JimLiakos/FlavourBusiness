@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.IO;
 using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessManager.RoomService;
+using System.ServiceModel;
+using System.ServiceProcess;
 
 namespace FlavourBusinessManager
 {
@@ -48,8 +50,8 @@ namespace FlavourBusinessManager
         }
         static object MonitoringLock = new object();
         static bool InFlavoursServicesContextsMonitoring = false;
-        static DateTime? FlavoursServicesContextsMonitoringTimestamp ;
-        
+        static DateTime? FlavoursServicesContextsMonitoringTimestamp;
+
         /// <MetaDataID>{c486b6cc-f89a-4623-b822-27426444c14d}</MetaDataID>
         static void OnFlavoursServicesContextsMonitoring(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -69,7 +71,7 @@ namespace FlavourBusinessManager
 
                 if (FlavoursServicesContextsMonitoringTimestamp==null||(DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp.Value).TotalSeconds > 20)
                 {
-                    
+
                     foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
                     {
                         System.Threading.Tasks.Task.Run(() =>
@@ -212,7 +214,7 @@ namespace FlavourBusinessManager
         public string AssignCourierScannerDevice(string deviceAssignKey)
         {
             try
-            { 
+            {
                 string[] servicePointIdentityParts = deviceAssignKey.Split(';');
                 string servicesContextIdentity = servicePointIdentityParts[0];
 
@@ -227,7 +229,7 @@ namespace FlavourBusinessManager
             }
         }
 
-         
+
 
         /// <MetaDataID>{ce23edf9-4f91-4120-9a43-7e55e8edb31b}</MetaDataID>
         public FlavourBusinessFacade.HumanResources.IServiceContextSupervisor AssignSupervisorUser(string supervisorAssignKey)
@@ -405,7 +407,18 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{9696eb0e-cbca-4371-af36-a7093c85dc15}</MetaDataID>
         public IServicePoint GetServicePoint(string servicePointIdentity)
         {
-            return null;
+
+            string servicesContextIdentity = null;
+            
+            string[] servicePointIdentityParts = servicePointIdentity.Split(';');
+
+
+            servicesContextIdentity = servicePointIdentityParts[0];
+            servicePointIdentity = servicePointIdentityParts[1];
+
+            IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+            var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+            return flavoursServicesContextRunTime.GetServicePoint(servicePointIdentity);
         }
 
         /// <MetaDataID>{6b140fca-b1f5-4d7c-b4ec-fd93b8565076}</MetaDataID>
@@ -516,7 +529,7 @@ namespace FlavourBusinessManager
                     storagesClient.PostAsync(objectStorage.StorageMetaData, true);
 
 
-                
+
 
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
 

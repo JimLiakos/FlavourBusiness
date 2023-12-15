@@ -2127,6 +2127,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "SignInNativeUser", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.UserData>(retValue);
         }
+        
+        public FlavourBusinessFacade.ServicesContextResources.IServicePoint GetServicePoint(string servicePointIdentity)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = servicePointIdentity;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetServicePoint", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
+        }
     }
     
     public sealed class Pr_IOrganization : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IOrganization, OOAdvantech.Remoting.RestApi.ITransparentProxy

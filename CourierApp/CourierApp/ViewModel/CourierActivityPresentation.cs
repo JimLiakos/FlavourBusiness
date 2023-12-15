@@ -20,6 +20,7 @@ using UIBaseEx;
 using OOAdvantech.Json.Linq;
 using FinanceFacade;
 using ServiceContextManagerApp;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 //using static QRCoder.PayloadGenerator;
@@ -1052,7 +1053,8 @@ namespace CourierApp.ViewModel
             {
                 if (IsScannerDevice)
                 {
-                    _HomeDeliveryServicePoint = this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity) as IHomeDeliveryServicePoint;
+                    if (_HomeDeliveryServicePoint==null)
+                        _HomeDeliveryServicePoint = this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity) as IHomeDeliveryServicePoint;
                 }
                 return _HomeDeliveryServicePoint;
 
@@ -1060,7 +1062,7 @@ namespace CourierApp.ViewModel
             }
         }
 
-        public async Task<FoodShippingPresentation> GetFoodShipping()
+        public  Task<FoodShippingPresentation> GetFoodShipping()
         {
 
 #if DeviceDotNet
@@ -1081,9 +1083,14 @@ namespace CourierApp.ViewModel
 
 #endif
             //2309bda4df754
+
+            return Task<FoodShippingPresentation>.Run(() =>
+            {
+                IFoodShipping foodShipping = this.HomeDeliveryServicePoint.GetFoodShippingFor("230c03a323a6e");
+                return _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+            });
+
             
-            IFoodShipping foodShipping=  this.HomeDeliveryServicePoint.GetFoodShippingFor("2309bda4df754");
-            return null;
         }
 
 
@@ -1156,8 +1163,8 @@ namespace CourierApp.ViewModel
 #endif
         }
 
-         IFlavoursServicesContextManagment _ServicesContextManagment;
-        private  IFlavoursServicesContextManagment ServicesContextManagment
+        IFlavoursServicesContextManagment _ServicesContextManagment;
+        private IFlavoursServicesContextManagment ServicesContextManagment
         {
             get
             {
