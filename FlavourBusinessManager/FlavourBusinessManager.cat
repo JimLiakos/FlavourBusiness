@@ -23139,7 +23139,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"15")
+			    value      	"16")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -23971,6 +23971,39 @@
 				    value      	"+14"))
 			    quid       	"6235CCE500D2"
 			    type       	"FlavourBusinessFacade.RoomService.IMealCourse"
+			    exportControl 	"Public")
+			(object ClassAttribute "Identity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"657C052A0097")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1db38381-6edd-4929-bbd7-a7b4cefb24dc}")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+15"))
+			    quid       	"657C052A0097"
+			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -34725,8 +34758,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
-		    origin_y   	427
+		    origin_x   	420
+		    origin_y   	604
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceSession" @487
 			    ShowCompartmentStereotypes 	TRUE
@@ -52275,7 +52308,7 @@
 			    terminal_attachment 	(1203, 761))
 			(object ClassView "Class" "Logical View::FlavourBusinessManager::Shipping::FoodShipping" @780
 			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1187, 1609)
+			    location   	(1187, 1610)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -52288,7 +52321,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@780
-				location   	(965, 1528)
+				location   	(965, 1529)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	445
@@ -52308,7 +52341,7 @@
 			    client     	@780
 			    supplier   	@756
 			    line_style 	3
-			    origin_attachment 	(1188, 1516)
+			    origin_attachment 	(1188, 1517)
 			    terminal_attachment 	(1188, 1241)))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"

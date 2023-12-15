@@ -5,6 +5,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessToolKit;
 using MenuModel;
 using OOAdvantech;
@@ -516,6 +517,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
         }
+
+
+        public IFoodShipping GetFoodShippingFor(string mealIdentity)
+        {
+            var mealCourse= ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == mealIdentity).FirstOrDefault();
+            return null;
+        }
+
 
         /// <MetaDataID>{0458fef5-cdd1-44f1-b0ef-01d23c88ceef}</MetaDataID>
         private double GetRouteDistanceInKm(IPlace deleiveryPlace)

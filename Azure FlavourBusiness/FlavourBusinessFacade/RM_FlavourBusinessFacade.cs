@@ -2837,6 +2837,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
         }
         
         // The Width property for the object.
+        public string Identity
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealCourse), "get_Identity", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public FlavourBusinessFacade.RoomService.IMealCourse Next
         {
             get
@@ -4467,6 +4479,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetWatchingOrders", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
+        }
+        
+        public FlavourBusinessFacade.Shipping.IFoodShipping GetFoodShippingFor(string v)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = v;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetFoodShippingFor", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.Shipping.IFoodShipping>(retValue);
         }
         
         public void AddMealType(string mealTypeUri)

@@ -60,7 +60,7 @@ namespace CourierApp.ViewModel
 
         bool IsScannerDevice { get; }
 
-
+        Task<FoodShippingPresentation> GetFoodShipping();
 
         List<FoodShippingPresentation> FoodShippings { get; }
 

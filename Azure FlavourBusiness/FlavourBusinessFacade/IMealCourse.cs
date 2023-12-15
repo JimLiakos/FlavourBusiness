@@ -15,6 +15,9 @@ namespace FlavourBusinessFacade.RoomService
     [GenerateFacadeProxy]
     public interface IMealCourse
     {
+        /// <MetaDataID>{ebee712c-4a51-40b3-afba-7dd8a84efe08}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        string Identity { get; }
         [Association("MealCourseSequence", Roles.RoleB, "3f8daafd-1296-452b-a9d6-1d9cd00f242e")]
         IMealCourse Next { get; }
 
@@ -74,11 +77,13 @@ namespace FlavourBusinessFacade.RoomService
         /// <summary>
         /// Some of the items are under the process of serving / delivery
         /// </summary>
+        /// <MetaDataID>{d69fd7e4-f8fc-4de3-bd2b-f20e5d8ed09c}</MetaDataID>
         bool PartiallyUnderServingProcess { get; }
 
         /// <summary>
         /// All items are under the process of serving / delivery
         /// </summary>
+        /// <MetaDataID>{1301e032-688e-4260-960a-ec2b9a211528}</MetaDataID>
         bool UnderServingProcess { get; }
 
 

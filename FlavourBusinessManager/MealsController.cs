@@ -42,6 +42,8 @@ namespace FlavourBusinessManager.RoomService
                                    select mealCource).ToList();
                 TimeSpan timeSpan2 = (DateTime.UtcNow - timeStamp);
 
+                var ids= mealCourses.Select(x => x.Identity).ToList();
+
                 if (timer.IsRunning)
                 {
                     timer.Stop();

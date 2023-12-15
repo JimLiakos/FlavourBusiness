@@ -115,7 +115,7 @@ namespace CourierApp.ViewModel
                 {
                     RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                     var state = payment.State;
-                    if (state==FinanceFacade.PaymentState.Completed)
+                    if (state == FinanceFacade.PaymentState.Completed)
                     {
                         System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                     }
@@ -291,8 +291,8 @@ namespace CourierApp.ViewModel
             {
                 if (InActiveShiftWork)
                 {
-                    if (_CourierPresentation==null)
-                        _CourierPresentation= new CourierPresentation(_Courier, null);
+                    if (_CourierPresentation == null)
+                        _CourierPresentation = new CourierPresentation(_Courier, null);
                     return _CourierPresentation;
                 }
                 else
@@ -428,7 +428,7 @@ namespace CourierApp.ViewModel
                                     ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                     if (ActiveShiftWork != null)
                                     {
-                                        _CourierPresentation=new CourierPresentation(_Courier, null);
+                                        _CourierPresentation = new CourierPresentation(_Courier, null);
                                         UpdateFoodShippings(Courier.GetFoodShippings());
                                     }
 
@@ -560,7 +560,7 @@ namespace CourierApp.ViewModel
                 if (shiftWork != ShiftWork)
                 {
                     ShiftWork = shiftWork as IServingShiftWork;
-                    if (ActiveShiftWork!= null)
+                    if (ActiveShiftWork != null)
                         UpdateFoodShippings(Courier.GetFoodShippings());
 
                 }
@@ -576,7 +576,7 @@ namespace CourierApp.ViewModel
                 if (newState == CourierState.PendingForFoodShiping)
                     FoodShippingsChanged();
 
-                if (newState  == CourierState.EndOfDeliveryAndReturn)
+                if (newState == CourierState.EndOfDeliveryAndReturn)
                 {
 
                     if (CourierOnTheRoadToReturn != true)
@@ -796,7 +796,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                if (ShiftWork?.IsActive()==true)
+                if (ShiftWork?.IsActive() == true)
                     return ShiftWork;
                 else
                     return null;
@@ -922,7 +922,6 @@ namespace CourierApp.ViewModel
             }
 
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
             string serverUrl = AzureServerUrl;
 
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
@@ -930,9 +929,9 @@ namespace CourierApp.ViewModel
                 authUser = DeviceAuthentication.AuthUser;
             try
             {
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                this._Courier = servicesContextManagment.AssignCourierUser(courierAssignKey);
-                type = "FlavourBusinessManager.AuthFlavourBusiness";
+
+                this._Courier = ServicesContextManagment.AssignCourierUser(courierAssignKey);
+                string type = "FlavourBusinessManager.AuthFlavourBusiness";
                 var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
                 var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
                 UserData = pAuthFlavourBusiness.SignIn();
@@ -984,25 +983,15 @@ namespace CourierApp.ViewModel
                 return null;
             }
 
-            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-            string serverUrl = AzureServerUrl;
 
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 authUser = DeviceAuthentication.AuthUser;
             try
             {
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-
-                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
-
+                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
                 ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
-                //this.Waiter = servicesContextManagment.AssignWaiterUser(waiterAssignKey);
-                //type = "FlavourBusinessManager.AuthFlavourBusiness";
-                //var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                //var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-                //UserData = pAuthFlavourBusiness.SignIn();
+
                 lock (this)
                     NativeUsers = null;
 
@@ -1034,18 +1023,10 @@ namespace CourierApp.ViewModel
 #else
 
             var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
-            
+
             try
             {
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                string serverUrl = AzureServerUrl;
-
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-
-                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
-
-
+                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
                 ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
 
                 lock (this)
@@ -1062,6 +1043,48 @@ namespace CourierApp.ViewModel
 #endif
 
         }
+        /// <exclude>Excluded</exclude>
+        IHomeDeliveryServicePoint _HomeDeliveryServicePoint = null;
+
+        IHomeDeliveryServicePoint HomeDeliveryServicePoint
+        {
+            get
+            {
+                if (IsScannerDevice)
+                {
+                    _HomeDeliveryServicePoint = this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity) as IHomeDeliveryServicePoint;
+                }
+                return _HomeDeliveryServicePoint;
+
+
+            }
+        }
+
+        public async Task<FoodShippingPresentation> GetFoodShipping()
+        {
+
+#if DeviceDotNet
+            string mealCourseIdentity = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the food shipping Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return null;
+                mealCourseIdentity = result.Text;
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+
+#endif
+            //2309bda4df754
+            
+            IFoodShipping foodShipping=  this.HomeDeliveryServicePoint.GetFoodShippingFor("2309bda4df754");
+            return null;
+        }
 
 
 
@@ -1073,7 +1096,7 @@ namespace CourierApp.ViewModel
             string deviceAssignKey = null;
             try
             {
-                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
+                var result = await ScanCode.Scan("Hold your phone up to the courier Identity", "Scanning will happen automatically");
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
                     return false;
@@ -1084,22 +1107,16 @@ namespace CourierApp.ViewModel
                 return false;
             }
 
-            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-            string serverUrl = AzureServerUrl;
 
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 authUser = DeviceAuthentication.AuthUser;
             try
             {
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                 
-                 
-                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = servicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
 
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
                 return true;
-              
+
             }
             catch (Exception error)
             {
@@ -1125,34 +1142,37 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;2418a7c2395e4d96acd7b43e34505682";
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
-
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
+            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
             try
             {
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                string serverUrl = AzureServerUrl;
-
-                IFlavoursServicesContextManagment servicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-
-                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = servicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
-
-                NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
-
-
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
                 return true;
             }
             catch (Exception error)
             {
                 throw;
             }
-
-
-            return true;
 #endif
         }
 
+         IFlavoursServicesContextManagment _ServicesContextManagment;
+        private  IFlavoursServicesContextManagment ServicesContextManagment
+        {
+            get
+            {
+                if (_ServicesContextManagment == null)
+                {
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                    string serverUrl = AzureServerUrl;
+
+                    _ServicesContextManagment = RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                }
+                return _ServicesContextManagment;
+            }
+
+        }
 
         /// <MetaDataID>{320fed93-6710-49d9-a737-cafbc9aa8e2c}</MetaDataID>
         public MarshalByRefObject GetObjectFromUri(string uri)

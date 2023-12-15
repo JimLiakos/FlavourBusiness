@@ -74,6 +74,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         IUploadSlot GetUploadSlotForLogoBackgroundImage();
         /// <MetaDataID>{705ac1ed-dbd3-49b5-9331-397ea7c34593}</MetaDataID>
         CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
+        /// <MetaDataID>{12a55af9-dcfe-4418-93d8-be4d74151e6e}</MetaDataID>
+        IFoodShipping GetFoodShippingFor(string v);
 
 
         /// <MetaDataID>{d24a60bd-6fea-4e5d-9175-21d4b59a4243}</MetaDataID>

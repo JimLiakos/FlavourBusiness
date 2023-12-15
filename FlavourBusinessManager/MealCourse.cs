@@ -35,6 +35,33 @@ namespace FlavourBusinessManager.RoomService
     {
 
         /// <exclude>Excluded</exclude>
+        string _Identity;
+
+        /// <MetaDataID>{1db38381-6edd-4929-bbd7-a7b4cefb24dc}</MetaDataID>
+        [PersistentMember(nameof(_Identity))]
+        [BackwardCompatibilityID("+15")]
+        public string Identity
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_Identity))
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        var ticks = new DateTime(2022, 1, 1).Ticks;
+                        var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                        _Identity = uniqueId; 
+                        stateTransition.Consistent = true;
+                    }
+
+                }
+
+                return _Identity;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         bool _Synchronized;
         /// <MetaDataID>{18314fb4-00f4-46d1-a89f-93b54bb013d5}</MetaDataID>
         [PersistentMember(nameof(_Synchronized))]
@@ -195,21 +222,23 @@ namespace FlavourBusinessManager.RoomService
         /// <summary>
         /// Some of the items are under the process of serving / delivery
         /// </summary>
-        
+        /// <MetaDataID>{fc696a5d-5eaa-4a8e-ab9d-f1583c0ab233}</MetaDataID>
+
         public bool PartiallyUnderServingProcess
         {
             get
             {
                 if (this.FoodItems.Any(x => x.State == ItemPreparationState.OnRoad))
                     return true;
-                return this.FoodItems.Any(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch?.IsAssigned==true);
+                return this.FoodItems.Any(x => x.State == ItemPreparationState.Serving && x.ServedInTheBatch?.IsAssigned == true);
             }
         }
 
         /// <summary>
         /// All items are under the process of serving / delivery
         /// </summary>
-        
+        /// <MetaDataID>{a2d28ef3-308e-49f0-a7d3-3508dd0dc496}</MetaDataID>
+
         public bool UnderServingProcess
         {
             get
@@ -287,7 +316,7 @@ namespace FlavourBusinessManager.RoomService
                             if (value == ItemPreparationState.Serving && previousState < ItemPreparationState.OnRoad)
                                 (ServicesContextRunTime.Current.MealsController as MealsController).MealItemsReadyToServe(Meal as Meal);
                         }
-                        if(value.IsInPreviousState(ItemPreparationState.Serving))
+                        if (value.IsInPreviousState(ItemPreparationState.Serving))
                         {
                             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                             {
@@ -335,10 +364,12 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        internal  void ServingBatchAssigned()
+        /// <MetaDataID>{d972471c-f59e-4094-b35f-1c0594d79d30}</MetaDataID>
+        internal void ServingBatchAssigned()
         {
             (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
         }
+        /// <MetaDataID>{59ce1c31-e078-43f8-bda9-99257bb01174}</MetaDataID>
         internal void ServingBatchDeAssigned()
         {
             (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
@@ -399,6 +430,7 @@ namespace FlavourBusinessManager.RoomService
         /// <summary>
         /// Defines the meal course items grouped by preparation station where it prepares them.
         /// </summary>
+        /// <MetaDataID>{07d4339f-ca68-445f-834f-002992c94cbb}</MetaDataID>
         // <MetaDataID>{95a3e0b7-a301-429b-a8fe-023518cad466}</MetaDataID>
 
         public IList<ItemsPreparationContext> FoodItemsInProgress
@@ -480,16 +512,16 @@ namespace FlavourBusinessManager.RoomService
             }
             else if (FoodItems.All(x => x.State == ItemPreparationState.OnRoad))
             {
-                    if (PreparationState != ItemPreparationState.OnRoad)
-                        PreparationState = ItemPreparationState.OnRoad;
+                if (PreparationState != ItemPreparationState.OnRoad)
+                    PreparationState = ItemPreparationState.OnRoad;
             }
             if (FoodItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Serving)))
             {
-                    if (PreparationState != ItemPreparationState.InPreparation)
-                        PreparationState = ItemPreparationState.InPreparation;
+                if (PreparationState != ItemPreparationState.InPreparation)
+                    PreparationState = ItemPreparationState.InPreparation;
             }
 
-           
+
             //FoodItems.Where(x=>x.State==ItemPreparationState.Serving&&x.ServedInTheBatch!=null).Select(x=>x.ServedInTheBatch).Distinct().ToList();
 
 
@@ -822,7 +854,9 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <MetaDataID>{5ed61513-4bc7-4a3a-9987-955a0d30cbe3}</MetaDataID>
         Dictionary<string, Action> FoodItemsChangedActions = new Dictionary<string, Action>();
+        /// <MetaDataID>{123c18f8-75ae-41d1-95f0-ebc197d85671}</MetaDataID>
         private void RunFoodItemsChanged()
         {
             if (OOAdvantech.Transactions.Transaction.Current == null)
@@ -890,6 +924,18 @@ namespace FlavourBusinessManager.RoomService
             }
 
         }
+
+        /// <MetaDataID>{4c3647d4-e265-466c-8abd-a3e9fb1e07c2}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            if (string.IsNullOrWhiteSpace(_Identity))
+            {
+                var ticks = new DateTime(2022, 1, 1).Ticks;
+                var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                _Identity = uniqueId;
+            }
+        }
         /// <MetaDataID>{ce36f3b9-7c45-48df-b766-2f622eb00589}</MetaDataID>
         [ObjectActivationCall]
         void ObjectActivation()
@@ -904,6 +950,7 @@ namespace FlavourBusinessManager.RoomService
             (_Meal.Value.Session as FoodServiceSession).ObjectChangeState += MealSession_ObjectChangeState;
         }
 
+        /// <MetaDataID>{467178fb-357e-4aed-8284-d708fa0e52a6}</MetaDataID>
         private void ServicesContextRunTime_ObjectChangeState(object _object, string member)
         {
             if (member == nameof(ServicesContextRunTime.OperativeRestaurantMenu))
@@ -933,7 +980,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{2ff27f48-6c0e-463b-993b-34fbb35cc52a}</MetaDataID>
         public static ItemsPreparationContext FindItemsPreparationContext(this IItemPreparation itemPreparation)
         {
-            
+
 
             if (itemPreparation.PreparationStation != null)
                 return itemPreparation.MealCourse?.FoodItemsInProgress?.Where(x => x.PreparationStationIdentity == itemPreparation.PreparationStation.PreparationStationIdentity).FirstOrDefault();
