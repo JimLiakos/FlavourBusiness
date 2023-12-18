@@ -1,5 +1,6 @@
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HomeDelivery;
+using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.Shipping;
 using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
@@ -75,11 +76,19 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{705ac1ed-dbd3-49b5-9331-397ea7c34593}</MetaDataID>
         CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
         /// <MetaDataID>{12a55af9-dcfe-4418-93d8-be4d74151e6e}</MetaDataID>
-        IFoodShipping GetFoodShippingFor(string v);
+        CourierShippingPair GetCourierShipping(string scannedCode);
 
 
         /// <MetaDataID>{d24a60bd-6fea-4e5d-9175-21d4b59a4243}</MetaDataID>
         List<ReturnReason> ReturnReasons { get; }
+
+    }
+
+    public class CourierShippingPair
+    {
+        public IFoodShipping FoodShipping { get; set; }
+
+        public ICourier Courier { get; set; }
 
     }
 

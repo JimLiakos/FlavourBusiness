@@ -20,7 +20,7 @@ using UIBaseEx;
 using OOAdvantech.Json.Linq;
 using FinanceFacade;
 using ServiceContextManagerApp;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 
 
 //using static QRCoder.PayloadGenerator;
@@ -169,7 +169,20 @@ namespace CourierApp.ViewModel
             _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
             _AssignedFoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
             this.UseAssignedPaymentTerminal = useAssignedPaymentTerminal;
+#if DeviceDotNet
+            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+#endif
         }
+#if DeviceDotNet
+        private void ApplicationResuming(object sender, EventArgs e)
+        {
+            _FoodShippings.Clear();
+            PairedWithCourier = null;
+            ObjectChangeState?.Invoke(this, "FoodShippings");
+
+
+        }
+#endif
 
         private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
         {
@@ -529,6 +542,10 @@ namespace CourierApp.ViewModel
                 GetServingUpdates();
                 //UpdateFoodShippings(Courier.GetFoodShippings());
             }
+            else if(PairedWithCourier!=null)
+            {
+                GetServingUpdates();
+            }
 
         }
 
@@ -600,6 +617,45 @@ namespace CourierApp.ViewModel
             }
         }
 
+
+
+        private void PairedWithCourier_ObjectChangeState(object _object, string member)
+        {
+          
+            if (member == nameof(ICourier.State))
+            {
+                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                var newState = _PairedWithCourier.Courier.State;
+                if (newState == CourierState.OnTheRoad)
+                    FoodShippingsChanged();
+                if (newState == CourierState.PendingForFoodShiping)
+                    FoodShippingsChanged();
+
+                if (newState == CourierState.EndOfDeliveryAndReturn)
+                {
+
+                    if (CourierOnTheRoadToReturn != true)
+                    {
+                        CourierOnTheRoadToReturn = true;
+                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                    }
+
+                }
+                else
+                {
+                    if (CourierOnTheRoadToReturn != false)
+                    {
+                        CourierOnTheRoadToReturn = false;
+                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
+                    }
+                }
+
+
+            }
+        }
+
+
+
         public bool CourierOnTheRoadToReturn { get; set; }
 
 
@@ -647,56 +703,63 @@ namespace CourierApp.ViewModel
                                                                       from itemPreparation in itemsContext.PreparationItems
                                                                       select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
 
-            ServingBatchUpdates servingBatchUpdates = Courier.GetFoodShippingUpdates(servingItemsOnDevice);
-
-            var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
-            foreach (var foodShipping in foodShippings)
+            var courier = Courier;
+            if (courier == null)
+                courier = _PairedWithCourier?.Courier;
+            if (courier != null)
             {
 
-                var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
-                foodShippingPresentation.Update();
-                if (_AssignedFoodShippings.ContainsKey(foodShipping))
-                    _AssignedFoodShippings.Remove(foodShipping);
+                ServingBatchUpdates servingBatchUpdates = courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
-            }
-
-            var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
-
-            foreach (var assignedFoodShipping in asignedServingBatches)
-            {
-                var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
-                servingBatchPresentation.Update();
-                if (_FoodShippings.ContainsKey(assignedFoodShipping))
-                    _FoodShippings.Remove(assignedFoodShipping);
-
-            }
-
-
-            if (servingBatchUpdates.RemovedServingItems.Count > 0)
-            {
-                foreach (var foodShippingPresentation in FoodShippings.ToList())
+                var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
+                foreach (var foodShipping in foodShippings)
                 {
-                    bool allItemsRemoved = true;
-                    foreach (var servingItem in from servingItemContext in foodShippingPresentation.AllContextsOfPreparedItems
-                                                from servingItem in servingItemContext.PreparationItems
-                                                select servingItem)
-                    {
-                        if (servingBatchUpdates.RemovedServingItems.Where(x => x.uid == servingItem.uid).Count() == 0)
-                        {
-                            allItemsRemoved = false;
-                            break;
-                        }
-                    }
-                    if (allItemsRemoved)
-                    {
-                        _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
-                        foodShippingPresentation.Dispose();
-                        foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
-                    }
+
+                    var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+                    foodShippingPresentation.Update();
+                    if (_AssignedFoodShippings.ContainsKey(foodShipping))
+                        _AssignedFoodShippings.Remove(foodShipping);
 
                 }
+
+                var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
+
+                foreach (var assignedFoodShipping in asignedServingBatches)
+                {
+                    var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                    servingBatchPresentation.Update();
+                    if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                        _FoodShippings.Remove(assignedFoodShipping);
+
+                }
+
+
+                if (servingBatchUpdates.RemovedServingItems.Count > 0)
+                {
+                    foreach (var foodShippingPresentation in FoodShippings.ToList())
+                    {
+                        bool allItemsRemoved = true;
+                        foreach (var servingItem in from servingItemContext in foodShippingPresentation.AllContextsOfPreparedItems
+                                                    from servingItem in servingItemContext.PreparationItems
+                                                    select servingItem)
+                        {
+                            if (servingBatchUpdates.RemovedServingItems.Where(x => x.uid == servingItem.uid).Count() == 0)
+                            {
+                                allItemsRemoved = false;
+                                break;
+                            }
+                        }
+                        if (allItemsRemoved)
+                        {
+                            _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                            foodShippingPresentation.Dispose();
+                            foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
+                        }
+
+                    }
+                }
+                ObjectChangeState?.Invoke(this, "FoodShippings");
             }
-            ObjectChangeState?.Invoke(this, "FoodShippings");
         }
         public void ItemsReadyToServeMessageReceived(string messageID)
         {
@@ -1053,8 +1116,8 @@ namespace CourierApp.ViewModel
             {
                 if (IsScannerDevice)
                 {
-                    if (_HomeDeliveryServicePoint==null)
-                        _HomeDeliveryServicePoint = this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity) as IHomeDeliveryServicePoint;
+                    if (_HomeDeliveryServicePoint == null)
+                        _HomeDeliveryServicePoint = RemotingServices.CastTransparentProxy<IHomeDeliveryServicePoint>(this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity));
                 }
                 return _HomeDeliveryServicePoint;
 
@@ -1062,40 +1125,80 @@ namespace CourierApp.ViewModel
             }
         }
 
-        public  Task<FoodShippingPresentation> GetFoodShipping()
+        public async Task CourierShippingPair()
         {
+            string mealCourseIdentity = null;
 
 #if DeviceDotNet
-            string mealCourseIdentity = null;
+
             try
             {
                 var result = await ScanCode.Scan("Hold your phone up to the food shipping Identity", "Scanning will happen automatically");
 
                 if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return null;
+                    return;
                 mealCourseIdentity = result.Text;
             }
             catch (Exception error)
             {
-                return null;
+                return;
             }
 
+#else
+
+            mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
+            mealCourseIdentity = "2309bda4e6c4c";
+            mealCourseIdentity = "2309bda4df754";
 
 #endif
             //2309bda4df754
 
-            return Task<FoodShippingPresentation>.Run(() =>
-            {
-                IFoodShipping foodShipping = this.HomeDeliveryServicePoint.GetFoodShippingFor("230c03a323a6e");
-                return _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
-            });
+            await Task.Run(() =>
+           {
+               var courierShippingPair = this.HomeDeliveryServicePoint.GetCourierShipping(mealCourseIdentity);
+               if (courierShippingPair.FoodShipping != null)
+               {
+                   var foodShippingPresentation = _FoodShippings.GetViewModelFor(courierShippingPair.FoodShipping, courierShippingPair.FoodShipping);
+                   ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                   return;
 
-            
+               }
+               if (courierShippingPair.Courier != null)
+               {
+
+                   PairedWithCourier = _Couriers.GetViewModelFor(courierShippingPair.Courier, courierShippingPair.Courier, null);
+
+                   ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+
+                   return;
+               }
+               return;
+           });
+
+
         }
 
 
 
-        public bool IsScannerDevice { get => !string.IsNullOrWhiteSpace(ApplicationSettings.Current.HomeDeliveryServicePointIdentity); }
+        public bool IsScannerDevice
+        {
+            get
+            {
+
+                bool isScannerDevice = !string.IsNullOrWhiteSpace(ApplicationSettings.Current.HomeDeliveryServicePointIdentity);
+                if (isScannerDevice && _HomeDeliveryServicePoint == null)
+                {
+                    Task.Run(() =>
+                    {
+                        if (_HomeDeliveryServicePoint == null)
+                            _HomeDeliveryServicePoint = RemotingServices.CastTransparentProxy<IHomeDeliveryServicePoint>(this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity));
+
+                    });
+                }
+                return isScannerDevice;
+
+            }
+        }
         public async Task<bool> AssignScannerDevice()
         {
 
@@ -1250,6 +1353,8 @@ namespace CourierApp.ViewModel
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _FoodShippings;
 
+        ViewModelWrappers<ICourier, CourierPresentation> _Couriers = new ViewModelWrappers<ICourier, CourierPresentation>();
+
         public List<FoodShippingPresentation> FoodShippings => _FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
 
         ViewModelWrappers<IFoodShipping, FoodShippingPresentation> _AssignedFoodShippings;
@@ -1384,6 +1489,17 @@ namespace CourierApp.ViewModel
             return false;
         }
 
+        public Task<bool> RemoveScannedFoodShipping(string foodShippingIdentity)
+        {
+            var foodShippingPresentation = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
+            if (foodShippingPresentation != null)
+            {
+                _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                return Task.FromResult(true);
+            }
+            else
+                return Task.FromResult(false);
+        }
 
         public async void PhoneCall(string foodShippingIdentity)
         {
@@ -1454,7 +1570,26 @@ namespace CourierApp.ViewModel
                 {
                     try
                     {
-                        Courier.CommitFoodShipings();
+                        if (IsScannerDevice)
+                        {
+                            if (PairedWithCourier != null && this.FoodShippings.Count > 0)
+                            {
+                                var foodShippings = this.FoodShippings.Select(x => x.FoodShipping).ToList();
+                                (PairedWithCourier as CourierPresentation).Courier.AssignAndCommitFoodShippings(foodShippings, ApplicationSettings.Current.HomeDeliveryServicePointIdentity);
+
+                                foreach (var foodShipping in foodShippings)
+                                {
+                                    _AssignedFoodShippings[foodShipping] = _FoodShippings[foodShipping];
+                                    _FoodShippings.Remove(foodShipping);
+                                }
+                                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+
+                            }
+                        }
+                        else
+                        {
+                            Courier.CommitFoodShipings();
+                        }
                         return true;
                     }
                     catch (System.Net.WebException commError)
@@ -1645,6 +1780,49 @@ namespace CourierApp.ViewModel
 
         public string AppIdentity => "com.microneme.courierapp";
 
+
+        public string PairedWithCourierFullName
+        {
+            get
+            {
+                return PairedWithCourier?.FullName;
+            }
+        }
+        public bool ThereIsPairedFoodShippings
+        {
+            get
+            {
+                return PairedWithCourier != null && FoodShippings.Count > 0;
+            }
+        }
+
+
+
+        CourierPresentation _PairedWithCourier;
+        ICourierPresentation PairedWithCourier
+        {
+            get => _PairedWithCourier;
+            set
+            {
+                if(_PairedWithCourier != value)
+                {
+                    if (_PairedWithCourier?.Courier != null)
+                    {
+                        _PairedWithCourier.Courier.FoodShippingsChanged -= FoodShippingsChanged;
+                        //_PairedWithCourier.Courier.ObjectChangeState -= PairedWithCourier_ObjectChangeState;
+
+                    }
+                    _PairedWithCourier = value as CourierPresentation;
+                    if (_PairedWithCourier?.Courier != null)
+                    {
+                        _PairedWithCourier.Courier.FoodShippingsChanged += FoodShippingsChanged;
+                        //_PairedWithCourier.Courier.ObjectChangeState += PairedWithCourier_ObjectChangeState;
+                    }
+
+                }
+            }
+        }
+
         Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
 
         public FontData GetFont(string fontUri)
@@ -1667,5 +1845,7 @@ namespace CourierApp.ViewModel
         }
 
     }
+
+
 
 }

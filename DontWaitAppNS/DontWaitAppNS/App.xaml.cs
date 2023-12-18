@@ -285,10 +285,8 @@ namespace DontWaitApp
 
             try
             {
-
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 device.IsinSleepMode = false;
-
                 ApplicationResuming?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception error)

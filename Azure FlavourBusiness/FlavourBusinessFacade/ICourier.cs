@@ -4,6 +4,7 @@ using OOAdvantech.MetaDataRepository;
 using System.Collections.Generic;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessFacade.RoomService;
+using OOAdvantech.Remoting.RestApi;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -43,7 +44,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{71a003c6-49aa-435b-bef2-8aec8d26b833}</MetaDataID>
         void AssignAndCommitFoodShipping(IFoodShipping foodShipping);
 
-
+        void AssignAndCommitFoodShippings(List<IFoodShipping> foodShippings,string apiKey);
 
         /// <MetaDataID>{afb21fc6-2563-4fc0-b82b-04f40bffff7b}</MetaDataID>
         void FoodShippingReturn(IFoodShipping foodShipping, string returnReasonIdentity, string customReturnReasonDescription = null);
@@ -107,7 +108,7 @@ namespace FlavourBusinessFacade.HumanResources
     }
 
     /// <MetaDataID>{ca6e1cc6-8c42-464f-abb8-e32a9675b204}</MetaDataID>
-    public class PaidFoodShippingException : System.Exception
+    public class PaidFoodShippingException : SerializableException
     {
         /// <MetaDataID>{27f80ffa-a129-4f43-8cfd-851370e0ab79}</MetaDataID>
         public PaidFoodShippingException(string message) : base(message) { }

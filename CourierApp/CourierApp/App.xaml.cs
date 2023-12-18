@@ -98,11 +98,31 @@ namespace CourierApp
         /// <MetaDataID>{b759c930-dff3-4bfc-a91c-038b6fb30d15}</MetaDataID>
         protected override void OnSleep()
         {
+            try
+            {
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                device.IsinSleepMode = true;
+                ApplicationSleeping?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception error)
+            {
+            }
         }
 
         /// <MetaDataID>{646d5d92-8d90-4ee3-9dae-6bc9fb5d590a}</MetaDataID>
         protected override void OnResume()
         {
+            try
+            {
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                device.IsinSleepMode = false;
+                
+                ApplicationResuming?.Invoke(this, EventArgs.Empty);
+                
+            }
+            catch (Exception error)
+            {
+            }
         }
 
         public event EventHandler ApplicationResuming;

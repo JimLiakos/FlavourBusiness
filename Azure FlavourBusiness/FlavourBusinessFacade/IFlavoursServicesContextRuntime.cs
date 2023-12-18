@@ -245,7 +245,7 @@ namespace FlavourBusinessFacade
 
 
     /// <MetaDataID>{da9e46da-8074-4d27-a391-9cfed191f9a4}</MetaDataID>
-    public class InvalidAssignmentQRCodeException : System.Exception
+    public class InvalidAssignmentQRCodeException : OOAdvantech.Remoting.RestApi.SerializableException
     {
         /// <MetaDataID>{27f80ffa-a129-4f43-8cfd-851370e0ab79}</MetaDataID>
         public InvalidAssignmentQRCodeException(string message) : base(message) { }

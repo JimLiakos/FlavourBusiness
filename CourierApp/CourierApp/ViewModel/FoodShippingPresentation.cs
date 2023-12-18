@@ -227,7 +227,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                var returnReasons = (FoodShipping.ServicePoint as IHomeDeliveryServicePoint).ReturnReasons;
+                var returnReasons = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IHomeDeliveryServicePoint>(FoodShipping.ServicePoint).ReturnReasons;
                 return returnReasons;
 
                 //return new List<ReturnReason>() { 

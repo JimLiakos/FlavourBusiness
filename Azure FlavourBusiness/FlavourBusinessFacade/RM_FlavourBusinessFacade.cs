@@ -4491,14 +4491,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
         }
         
-        public FlavourBusinessFacade.Shipping.IFoodShipping GetFoodShippingFor(string v)
+        public FlavourBusinessFacade.ServicesContextResources.CourierShippingPair GetCourierShipping(string scannedCode)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
-            args[0] = v;
+            args[0] = scannedCode;
             argsTypes[0] = typeof(string);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetFoodShippingFor", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.Shipping.IFoodShipping>(retValue);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetCourierShipping", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.CourierShippingPair>(retValue);
         }
         
         public void AddMealType(string mealTypeUri)

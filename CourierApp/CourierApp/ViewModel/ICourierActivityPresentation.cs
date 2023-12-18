@@ -59,8 +59,12 @@ namespace CourierApp.ViewModel
         Task<bool> AssignScannerDevice();
 
         bool IsScannerDevice { get; }
+        string PairedWithCourierFullName { get; }
 
-        Task<FoodShippingPresentation> GetFoodShipping();
+
+        bool ThereIsPairedFoodShippings { get; }
+
+        Task CourierShippingPair();
 
         List<FoodShippingPresentation> FoodShippings { get; }
 
@@ -70,6 +74,8 @@ namespace CourierApp.ViewModel
         Task<bool> AssignFoodShipping(string foodShippingIdentity);
 
         Task<bool> DeAssignFoodShipping(string foodShippingIdentity);
+
+        Task<bool> RemoveScannedFoodShipping(string foodShippingIdentity);
 
 
         void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null);
@@ -93,6 +99,15 @@ namespace CourierApp.ViewModel
 
 
 
+
+    }
+
+
+    public class CourierShippingPairPresentation
+    {
+        public FoodShippingPresentation FoodShipping { get; set; }
+
+        public ICourierPresentation CourierPresentation { get; set; }
 
     }
 }

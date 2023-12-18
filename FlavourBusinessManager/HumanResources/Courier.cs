@@ -1212,43 +1212,94 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{57bd771c-e39c-4377-96f2-e686cf73ce57}</MetaDataID>
         private void AuditForDelayedMealAtTheCounter(IFoodShipping foodShipping)
         {
-            if (State == CourierState.PendingForFoodShiping && this.ShiftWork?.IsActive() == true)
+            HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
+
+            if (homeDeliveryServicePoint.CourierAuditingEnabled)
             {
-                DateTime availableForshippingTimestamp = foodShipping.PreparedItems.OrderBy(x => x.StateTimestamp).LastOrDefault().StateTimestamp;
-                HomeDeliveryServicePoint homeDeliveryServicePoint = foodShipping.MealCourse.Meal.Session.ServicePoint as HomeDeliveryServicePoint;
-                TimeSpan delayedFoodshippingAtTheCounterTimespan = homeDeliveryServicePoint.DelayedFoodShippingAtTheCounterTimespan;
-
-                DateTime startOfDelayTimeStamp;
-                TimeSpan delayForCourier;
-
-                if (this.StateTimestamp.ToUniversalTime() > availableForshippingTimestamp.ToUniversalTime())
-                    startOfDelayTimeStamp = this.StateTimestamp.ToUniversalTime();
-                else
-                    startOfDelayTimeStamp = availableForshippingTimestamp.ToUniversalTime();
-
-                var lastEventTimeStamp = this.ShiftWork.AuditEvents.OrderBy(x => x.EventTimeStamp).LastOrDefault()?.EventTimeStamp;
-                if (lastEventTimeStamp.HasValue && lastEventTimeStamp.Value > startOfDelayTimeStamp)
-                    startOfDelayTimeStamp = lastEventTimeStamp.Value;
-
-                delayForCourier = DateTime.UtcNow - startOfDelayTimeStamp;
-
-                if (delayForCourier > delayedFoodshippingAtTheCounterTimespan)
+                if (State == CourierState.PendingForFoodShiping && this.ShiftWork?.IsActive() == true)
                 {
-                    AuditCourierDelay auditCourierDalay = new AuditCourierDelay()
+                    DateTime availableForshippingTimestamp = foodShipping.PreparedItems.OrderBy(x => x.StateTimestamp).LastOrDefault().StateTimestamp;
+                    TimeSpan delayedFoodshippingAtTheCounterTimespan = homeDeliveryServicePoint.DelayedFoodShippingAtTheCounterTimespan;
+
+                    DateTime startOfDelayTimeStamp;
+                    TimeSpan delayForCourier;
+
+                    if (this.StateTimestamp.ToUniversalTime() > availableForshippingTimestamp.ToUniversalTime())
+                        startOfDelayTimeStamp = this.StateTimestamp.ToUniversalTime();
+                    else
+                        startOfDelayTimeStamp = availableForshippingTimestamp.ToUniversalTime();
+
+                    var lastEventTimeStamp = this.ShiftWork.AuditEvents.OrderBy(x => x.EventTimeStamp).LastOrDefault()?.EventTimeStamp;
+                    if (lastEventTimeStamp.HasValue && lastEventTimeStamp.Value > startOfDelayTimeStamp)
+                        startOfDelayTimeStamp = lastEventTimeStamp.Value;
+
+                    delayForCourier = DateTime.UtcNow - startOfDelayTimeStamp;
+
+                    if (delayForCourier > delayedFoodshippingAtTheCounterTimespan)
                     {
-                        Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
-                        DelayInMinutes = delayForCourier.TotalMinutes,
-                        EventTimeStamp = DateTime.UtcNow,
-                        StartOfDelayTimeStamp = startOfDelayTimeStamp,
-                        TypeOfDelauy = CourierDelayType.DelayAtTheCounter
-                    };
+                        AuditCourierDelay auditCourierDalay = new AuditCourierDelay()
+                        {
+                            Description = Properties.Resources.DelayedFoodshippingAtTheCounter,
+                            DelayInMinutes = delayForCourier.TotalMinutes,
+                            EventTimeStamp = DateTime.UtcNow,
+                            StartOfDelayTimeStamp = startOfDelayTimeStamp,
+                            TypeOfDelauy = CourierDelayType.DelayAtTheCounter
+                        };
 
-                    this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
+                        this.ShiftWork.AddAuditWorkerEvents(auditCourierDalay);
 
+                    }
                 }
+
             }
         }
 
+        public void AssignAndCommitFoodShippings(List<IFoodShipping> foodShippings, string apiKey)
+        {
+            if (ShiftWork is ServingShiftWork)
+            {
+                lock (this)
+                {
+                    try
+                    {
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var foodShipping in foodShippings)
+                            {
+                                AssignFoodShipping(foodShipping);
+                                if ((foodShipping as FoodShipping).State == ItemPreparationState.Serving && foodShipping.IsAssigned && foodShipping.ShiftWork.Worker == this)
+                                    (foodShipping as FoodShipping).OnTheRoad();
+
+                                var homeDeliveryServicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();
+                                var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                                      where shiftWork.Worker is ICourier && homeDeliveryServicePoint.CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                                      select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+                                foreach (var activeCourier in activeCouriers)
+                                {
+                                    activeCourier.AuditForDelayedMealAtTheCounter(foodShipping);
+                                }
+                            }
+
+                            Transaction.RunOnTransactionCompleted(() =>
+                            {
+                                foreach (var foodShipping in foodShippings)
+                                    (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
+                            });
+
+                            StateMachineMonitoring();
+                            stateTransition.Consistent = true;
+                        }
+                        FindFoodShippingsChanges();
+                        StateMachineMonitoring();
+                    }
+                    catch (Exception error)
+                    {
+                        throw;
+                    }
+                }
+            }
+
+        }
 
         /// <MetaDataID>{d1b04d2d-8219-4a1f-947f-b16de95a053a}</MetaDataID>
         public void AssignAndCommitFoodShipping(IFoodShipping foodShipping)

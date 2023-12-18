@@ -94,4 +94,29 @@ namespace FlavourBusinessFacade.HumanResources
         }
 
     }
+
+
+    public class CourierOutOfShiftException : OOAdvantech.Remoting.RestApi.SerializableException
+    {
+        public CourierOutOfShiftException(string message,string courierFullName) : base(message) {
+
+            CourierFullName = courierFullName;
+        }
+
+        /// <MetaDataID>{fcbb4bef-c1d3-463d-bada-dea2de26f2f1}</MetaDataID>
+        public CourierOutOfShiftException(string message, string courierFullName, System.Exception innerException) : base(message, innerException)
+        {
+            CourierFullName = courierFullName;
+        }
+
+        public CourierOutOfShiftException(string message, System.Exception innerException) : base(message, innerException)
+        {
+            
+        }
+
+        public string CourierFullName { get; set; }
+    }
+
+
+    
 }

@@ -184,7 +184,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             get => _PlaceOfDistribution;
             set
             {
-                 if (_PlaceOfDistribution != value)
+                if (_PlaceOfDistribution != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
@@ -366,12 +366,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                 _PlaceOfDistribution = OOAdvantech.Json.JsonConvert.DeserializeObject<EndUsers.Place>(PlaceOfDistributionJson);
 
 
-            ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInProgress+=MealsController_NewMealCoursesInrogress;
+            ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
 
 
         }
 
-    
+
 
         /// <MetaDataID>{5ef13716-024b-4a7d-9d11-806aeefd906e}</MetaDataID>
         public IUploadSlot GetUploadSlotForLogoImage()
@@ -521,12 +521,30 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
-        public IFoodShipping GetFoodShippingFor(string mealIdentity)
+        public CourierShippingPair GetCourierShipping(string scannedCode)
         {
 
-            var mealCourse= ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == mealIdentity).FirstOrDefault();
-            var foodShiping = (ServicesContextRunTime.Current.MealsController  as MealsController).GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
-            return foodShiping;
+            var mealCourse = ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == scannedCode).FirstOrDefault();
+            var foodShiping = (ServicesContextRunTime.Current.MealsController as MealsController).GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
+
+            if (foodShiping != null)
+                return new CourierShippingPair() { FoodShipping = foodShiping };
+
+            var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                  where shiftWork.Worker is ICourier && CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)
+                                  select shiftWork.Worker).OfType<HumanResources.Courier>().ToList();
+
+            ICourier courier = activeCouriers.Where(x => x.Identity == scannedCode).FirstOrDefault();
+            if (courier == null)
+            {
+                courier = ServicesContextRunTime.Current.ServiceContextHumanResources.Couriers.Where(x => x.Identity == scannedCode).FirstOrDefault();
+
+                if (courier != null)
+                    throw new CourierOutOfShiftException("CourierOutOfShiftException", courier.Name);
+            }
+            return new CourierShippingPair() { Courier = courier };
+
+
         }
 
 
@@ -594,6 +612,15 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{5736d8b6-6ce2-4a29-8337-ee2454f4c52f}</MetaDataID>
         public TimeSpan DeliveryAndCollectMoneyTimespan { get => TimeSpan.FromMinutes(4); }
-
+        public bool CourierAuditingEnabled
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+            }
+        }
     }
 }
