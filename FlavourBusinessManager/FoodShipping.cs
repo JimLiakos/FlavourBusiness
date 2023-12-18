@@ -342,7 +342,7 @@ namespace FlavourBusinessManager.Shipping
             Transaction.RunOnTransactionCompleted(() =>
             {
                 var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                ItemsStateChanged?.Invoke(newItemsState);
+                
                 (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
 
             });
@@ -786,7 +786,7 @@ namespace FlavourBusinessManager.Shipping
             Transaction.RunOnTransactionCompleted(() =>
             {
                 var newItemsState = PreparedItems.ToDictionary(x => x.uid, x => x.State);
-                ItemsStateChanged?.Invoke(newItemsState);
+                
                 (MealCourse as MealCourse).RaiseItemsStateChanged(newItemsState);
             });
         }

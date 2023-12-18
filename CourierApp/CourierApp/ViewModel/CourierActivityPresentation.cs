@@ -177,6 +177,7 @@ namespace CourierApp.ViewModel
         private void ApplicationResuming(object sender, EventArgs e)
         {
             _FoodShippings.Clear();
+            _AssignedFoodShippings?.Clear();
             PairedWithCourier = null;
             ObjectChangeState?.Invoke(this, "FoodShippings");
 
@@ -542,9 +543,67 @@ namespace CourierApp.ViewModel
                 GetServingUpdates();
                 //UpdateFoodShippings(Courier.GetFoodShippings());
             }
-            else if(PairedWithCourier!=null)
+            else if (PairedWithCourier!=null)
             {
-                GetServingUpdates();
+                List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.FoodShippings
+                                                                          from itemsContext in servingBatch.AllContextsOfPreparedItems
+                                                                          from itemPreparation in itemsContext.PreparationItems
+                                                                           select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+
+                ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.GetFoodShippingUpdates(servingItemsOnDevice);
+
+                var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
+                foreach (var foodShipping in foodShippings)
+                {
+                    if (_AssignedFoodShippings.ContainsKey(foodShipping))
+                    {
+                        _AssignedFoodShippings[foodShipping].Dispose();
+                        _AssignedFoodShippings.Remove(foodShipping);
+                    }
+                }
+
+                var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
+                foreach (var assignedFoodShipping in asignedServingBatches)
+                {
+                    if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    {
+                        _AssignedFoodShippings[assignedFoodShipping]=_FoodShippings[assignedFoodShipping];
+                        _FoodShippings.Remove(assignedFoodShipping);
+                    }
+                    else
+                    {
+                        var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                        servingBatchPresentation.Update();
+                    }
+
+                }
+
+                if (servingBatchUpdates.RemovedServingItems.Count > 0)
+                {
+                    foreach (var foodShippingPresentation in FoodShippings.ToList())
+                    {
+                        bool allItemsRemoved = true;
+                        foreach (var servingItem in from servingItemContext in foodShippingPresentation.AllContextsOfPreparedItems
+                                                    from servingItem in servingItemContext.PreparationItems
+                                                    select servingItem)
+                        {
+                            if (servingBatchUpdates.RemovedServingItems.Where(x => x.uid == servingItem.uid).Count() == 0)
+                            {
+                                allItemsRemoved = false;
+                                break;
+                            }
+                        }
+                        if (allItemsRemoved)
+                        {
+                            _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+                            foodShippingPresentation.Dispose();
+                            foodShippingPresentation.ObjectChangeState -= FoodShipping_ObjectChangeState;
+                        }
+
+                    }
+                }
+                ObjectChangeState?.Invoke(this, "FoodShippings");
+
             }
 
         }
@@ -621,7 +680,7 @@ namespace CourierApp.ViewModel
 
         private void PairedWithCourier_ObjectChangeState(object _object, string member)
         {
-          
+
             if (member == nameof(ICourier.State))
             {
                 ObjectChangeState?.Invoke(this, nameof(FoodShippings));
@@ -704,8 +763,7 @@ namespace CourierApp.ViewModel
                                                                       select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
 
             var courier = Courier;
-            if (courier == null)
-                courier = _PairedWithCourier?.Courier;
+
             if (courier != null)
             {
 
@@ -714,11 +772,17 @@ namespace CourierApp.ViewModel
                 var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
                 foreach (var foodShipping in foodShippings)
                 {
-
-                    var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
-                    foodShippingPresentation.Update();
                     if (_AssignedFoodShippings.ContainsKey(foodShipping))
+                    {
+                        _FoodShippings[foodShipping]= _AssignedFoodShippings[foodShipping];
                         _AssignedFoodShippings.Remove(foodShipping);
+                    }
+                    else
+                    {
+                        var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
+                        foodShippingPresentation.Update();
+                    }
+
 
                 }
 
@@ -726,10 +790,17 @@ namespace CourierApp.ViewModel
 
                 foreach (var assignedFoodShipping in asignedServingBatches)
                 {
-                    var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
-                    servingBatchPresentation.Update();
                     if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    {
+                        _AssignedFoodShippings[assignedFoodShipping]= _FoodShippings[assignedFoodShipping];
                         _FoodShippings.Remove(assignedFoodShipping);
+                    }
+                    else
+                    {
+                        var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                        servingBatchPresentation.Update();
+                    }
+
 
                 }
 
@@ -1147,8 +1218,12 @@ namespace CourierApp.ViewModel
 #else
 
             mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
-            mealCourseIdentity = "2309bda4e6c4c";
-            mealCourseIdentity = "2309bda4df754";
+            mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
+            if (_PairedWithCourier!=null)
+            {
+                mealCourseIdentity = "230c03a32d68e";
+                mealCourseIdentity = "230c03a323a6e";
+            }
 
 #endif
             //2309bda4df754
@@ -1326,22 +1401,32 @@ namespace CourierApp.ViewModel
 
             var foodShippings = allFoodShippings.Where(x => !x.IsAssigned).ToList();
             foreach (var servingBatch in foodShippings)
-                _FoodShippings.GetViewModelFor(servingBatch, servingBatch);
+            {
+                if (_AssignedFoodShippings.ContainsKey(servingBatch))
+                    _FoodShippings[servingBatch]=_AssignedFoodShippings[servingBatch];
+                else
+                    _FoodShippings.GetViewModelFor(servingBatch, servingBatch);
+            }
 
             var asignedFoodShippings = allFoodShippings.Where(x => x.IsAssigned).ToList();
 
             foreach (var assignedServingBatch in asignedFoodShippings)
-                _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch);
+            {
+                if (_FoodShippings.ContainsKey(assignedServingBatch))
+                    _AssignedFoodShippings[assignedServingBatch] =_FoodShippings[assignedServingBatch];
+                else
+                    _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch);
+            }
 
 
-            foreach (var servingBatch in _FoodShippings.Keys.Where(x => !foodShippings.Contains(x)).ToList())
+            foreach (var servingBatch in _FoodShippings.Keys.Where(x => !allFoodShippings.Contains(x)).ToList())
             {
                 _FoodShippings[servingBatch].Dispose();
                 _FoodShippings.Remove(servingBatch);
                 servingBatch.ObjectChangeState -= FoodShipping_ObjectChangeState;
             }
 
-            foreach (var assignedFoodShippingh in _AssignedFoodShippings.Keys.Where(x => !asignedFoodShippings.Contains(x)).ToList())
+            foreach (var assignedFoodShippingh in _AssignedFoodShippings.Keys.Where(x => !allFoodShippings.Contains(x)).ToList())
             {
                 _AssignedFoodShippings[assignedFoodShippingh].Dispose();
                 _AssignedFoodShippings.Remove(assignedFoodShippingh);
@@ -1494,7 +1579,9 @@ namespace CourierApp.ViewModel
             var foodShippingPresentation = FoodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
             if (foodShippingPresentation != null)
             {
+                foodShippingPresentation.Dispose();
                 _FoodShippings.Remove(foodShippingPresentation.FoodShipping);
+
                 return Task.FromResult(true);
             }
             else
@@ -1575,13 +1662,28 @@ namespace CourierApp.ViewModel
                             if (PairedWithCourier != null && this.FoodShippings.Count > 0)
                             {
                                 var foodShippings = this.FoodShippings.Select(x => x.FoodShipping).ToList();
-                                (PairedWithCourier as CourierPresentation).Courier.AssignAndCommitFoodShippings(foodShippings, ApplicationSettings.Current.HomeDeliveryServicePointIdentity);
 
                                 foreach (var foodShipping in foodShippings)
                                 {
                                     _AssignedFoodShippings[foodShipping] = _FoodShippings[foodShipping];
                                     _FoodShippings.Remove(foodShipping);
                                 }
+                                try
+                                {
+
+                                    (PairedWithCourier as CourierPresentation).Courier.AssignAndCommitFoodShippings(foodShippings, ApplicationSettings.Current.HomeDeliveryServicePointIdentity);
+
+                                }
+                                catch (Exception error)
+                                {
+                                    foreach (var foodShipping in foodShippings)
+                                    {
+                                        _FoodShippings[foodShipping]=_AssignedFoodShippings[foodShipping];
+                                        _AssignedFoodShippings.Remove(foodShipping);
+                                    }
+                                    throw;
+                                }
+
                                 ObjectChangeState?.Invoke(this, nameof(FoodShippings));
 
                             }
@@ -1804,7 +1906,7 @@ namespace CourierApp.ViewModel
             get => _PairedWithCourier;
             set
             {
-                if(_PairedWithCourier != value)
+                if (_PairedWithCourier != value)
                 {
                     if (_PairedWithCourier?.Courier != null)
                     {
