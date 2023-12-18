@@ -1684,7 +1684,7 @@ namespace CourierApp.ViewModel
                                     throw;
                                 }
 
-                                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                                
 
                             }
                         }
