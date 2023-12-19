@@ -527,7 +527,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var mealCourse = ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == scannedCode).FirstOrDefault();
             var foodShiping = (ServicesContextRunTime.Current.MealsController as MealsController).GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
 
-            if (foodShiping != null)
+            if (foodShiping != null&&!foodShiping.IsAssigned)
                 return new CourierShippingPair() { FoodShipping = foodShiping };
             if (mealCourse != null)
             {

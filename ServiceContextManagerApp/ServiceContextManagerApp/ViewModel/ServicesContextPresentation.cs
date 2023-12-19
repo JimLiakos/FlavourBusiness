@@ -684,7 +684,16 @@ namespace ServiceContextManagerApp
                 if (mealCourse.SessionType == SessionType.HomeDelivery)
                 {
                     //mealCourse.ServerSideMealCourse.PreparationState
-                    IFoodShipping foodShipping = MealsController.GetMealCourseFoodShipping(mealCourseUri);
+                    IFoodShipping foodShipping = MealsController.Fetching(mc=>mc.GetMealCourseFoodShipping(mealCourseUri).Caching(_foodShipping=>new {
+                        _foodShipping.ClientFullName,
+                        _foodShipping.PhoneNumber,
+                        _foodShipping.MealCourseUri,
+                        _foodShipping.Identity,
+                        _foodShipping.MealCourse,
+                        _foodShipping.DeliveryRemark,
+                        _foodShipping.NotesForClient,
+                        _foodShipping.ServicePoint
+                    })) ;
                     if (foodShipping == null)
                         return null;
 

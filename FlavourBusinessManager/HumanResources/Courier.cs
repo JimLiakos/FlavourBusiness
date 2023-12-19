@@ -1182,7 +1182,7 @@ namespace FlavourBusinessManager.HumanResources
                         (ShiftWork as ServingShiftWork).AddServingBatch(foodShipping);
                         StateMachineMonitoring();
                         Transaction.RunOnTransactionCompleted(() =>
-                        {
+                        { 
                             (foodShipping.MealCourse as MealCourse)?.ServingBatchAssigned();
 
                             var homeDeliveryServicePoint = ServicesContextRunTime.Current.OpenSessions.Select(x => x.ServicePoint).OfType<ServicesContextResources.HomeDeliveryServicePoint>().Where(x => x.ServicesPointIdentity == foodShipping.ServicesPointIdentity).FirstOrDefault();

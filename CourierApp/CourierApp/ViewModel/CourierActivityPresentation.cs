@@ -377,7 +377,20 @@ namespace CourierApp.ViewModel
                                 AuthUser = authUser;
                                 ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                 if (ActiveShiftWork != null)
-                                    UpdateFoodShippings(Courier.GetFoodShippings());
+                                {
+                                    var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x =>x.Select(foodShipping=> new {
+                                        foodShipping.ClientFullName,
+                                        foodShipping.PhoneNumber,
+                                        foodShipping.MealCourseUri,
+                                        foodShipping.Identity,
+                                        foodShipping.MealCourse,
+                                        foodShipping.DeliveryRemark,
+                                        foodShipping.NotesForClient,
+                                        foodShipping.ServicePoint
+                                    })));
+
+                                    UpdateFoodShippings(foodShipings);
+                                }
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
                                 _Courier.FoodShippingsChanged += FoodShippingsChanged;
@@ -444,7 +457,18 @@ namespace CourierApp.ViewModel
                                     if (ActiveShiftWork != null)
                                     {
                                         _CourierPresentation = new CourierPresentation(_Courier, null);
-                                        UpdateFoodShippings(Courier.GetFoodShippings());
+                                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                                            foodShipping.ClientFullName,
+                                            foodShipping.PhoneNumber,
+                                            foodShipping.MealCourseUri,
+                                            foodShipping.Identity,
+                                            foodShipping.MealCourse,
+                                            foodShipping.DeliveryRemark,
+                                            foodShipping.NotesForClient,
+                                            foodShipping.ServicePoint
+                                        })));
+
+                                        UpdateFoodShippings(foodShipings);
                                     }
 
                                     string objectRef = RemotingServices.SerializeObjectRef(_Courier);
@@ -550,7 +574,20 @@ namespace CourierApp.ViewModel
                                                                           from itemPreparation in itemsContext.PreparationItems
                                                                           select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
 
-                ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.GetFoodShippingUpdates(servingItemsOnDevice);
+
+                ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new {
+                    foodShipping.ClientFullName,
+                    foodShipping.PhoneNumber,
+                    foodShipping.MealCourseUri,
+                    foodShipping.Identity,
+                    foodShipping.MealCourse,
+                    foodShipping.DeliveryRemark,
+                    foodShipping.NotesForClient,
+                    foodShipping.ServicePoint
+                })));
+
+                //ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.GetFoodShippingUpdates(servingItemsOnDevice);
+
 
                 var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
                 foreach (var foodShipping in foodShippings)
@@ -650,7 +687,20 @@ namespace CourierApp.ViewModel
                 {
                     ShiftWork = shiftWork as IServingShiftWork;
                     if (ActiveShiftWork != null)
-                        UpdateFoodShippings(Courier.GetFoodShippings());
+                    {
+                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                            foodShipping.ClientFullName,
+                            foodShipping.PhoneNumber,
+                            foodShipping.MealCourseUri,
+                            foodShipping.Identity,
+                            foodShipping.MealCourse,
+                            foodShipping.DeliveryRemark,
+                            foodShipping.NotesForClient,
+                            foodShipping.ServicePoint
+                        })));
+
+                        UpdateFoodShippings(foodShipings);
+                    }
 
                 }
                 ObjectChangeState?.Invoke(this, nameof(ActiveShiftWorkStartedAt));
@@ -779,7 +829,20 @@ namespace CourierApp.ViewModel
             if (courier != null)
             {
 
-                ServingBatchUpdates servingBatchUpdates = courier.GetFoodShippingUpdates(servingItemsOnDevice);
+                ServingBatchUpdates servingBatchUpdates = courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new {
+                    foodShipping.ClientFullName,
+                    foodShipping.PhoneNumber,
+                    foodShipping.MealCourseUri,
+                    foodShipping.Identity,
+                    foodShipping.MealCourse,
+                    foodShipping.DeliveryRemark,
+                    foodShipping.NotesForClient,
+                    foodShipping.ServicePoint
+                })));
+
+
+
+                //ServingBatchUpdates servingBatchUpdates = courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
                 var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
                 foreach (var foodShipping in foodShippings)
@@ -1011,7 +1074,18 @@ namespace CourierApp.ViewModel
 
             if (ActiveShiftWork != null)
             {
-                UpdateFoodShippings(Courier.GetFoodShippings());
+                var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                    foodShipping.ClientFullName,
+                    foodShipping.PhoneNumber,
+                    foodShipping.MealCourseUri,
+                    foodShipping.Identity,
+                    foodShipping.MealCourse,
+                    foodShipping.DeliveryRemark,
+                    foodShipping.NotesForClient,
+                    foodShipping.ServicePoint
+                })));
+
+                UpdateFoodShippings(foodShipings);
 
                 //IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
@@ -1180,7 +1254,8 @@ namespace CourierApp.ViewModel
             //return ConnectToServicePointTask.Task;
 #else
 
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
+            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;81e95927f7814a8a8134a40e3d8e19d6";
 
             try
             {
@@ -1223,7 +1298,7 @@ namespace CourierApp.ViewModel
         {
             string mealCourseIdentity = null;
 
-#if DeviceDotNet
+#if _DeviceDotNet
 
             try
             {
@@ -1241,14 +1316,14 @@ namespace CourierApp.ViewModel
 
 #else
 
-            mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
-            //mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
+            //mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
+            mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
             if (_PairedWithCourier != null)
             {
-                mealCourseIdentity = "2309bda4df754";
-                mealCourseIdentity = "2309bda4e6c4c";
-                //mealCourseIdentity = "230c03a32d68e";
-                //mealCourseIdentity = "230c03a323a6e";
+                //mealCourseIdentity = "2309bda4df754";
+                //mealCourseIdentity = "2309bda4e6c4c";
+                mealCourseIdentity = "230c03a32d68e";
+                mealCourseIdentity = "230c03a323a6e";
             }
 
 #endif
@@ -1258,7 +1333,8 @@ namespace CourierApp.ViewModel
            {
                try
                {
-                   var courierShippingPair=HomeDeliveryServicePoint.Fetching(servicePoint => servicePoint.GetCourierShipping(mealCourseIdentity).Caching(x => new {
+                   var homeDeliveryServicePoint = HomeDeliveryServicePoint;
+                   var courierShippingPair= homeDeliveryServicePoint.Fetching(servicePoint => servicePoint.GetCourierShipping(mealCourseIdentity).Caching(x => new {
                        x.FoodShipping.ClientFullName,
                        x.FoodShipping.PhoneNumber,
                        x.FoodShipping.MealCourseUri,

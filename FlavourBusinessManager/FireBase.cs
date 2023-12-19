@@ -64,7 +64,7 @@ namespace FlavourBusinessManager
                         catch (Exception error)
                         {
 
-                        }
+                        } 
 
                         try
                         {
