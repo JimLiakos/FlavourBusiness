@@ -529,6 +529,19 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (foodShiping != null)
                 return new CourierShippingPair() { FoodShipping = foodShiping };
+            if (mealCourse != null)
+            {
+
+                var preparationState = mealCourse.PreparationState;
+                var foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().FirstOrDefault();
+                if (foodShipping != null&& foodShipping.IsAssigned)
+                {
+                    var assignedCourier = (foodShipping.ShiftWork.Worker as ICourier);
+                    throw new FoodShippingAlreadyAssignedException("The food shipping is assigned to " + assignedCourier?.Name, assignedCourier?.Identity, assignedCourier?.Name);
+
+                }
+
+            }
 
             var activeCouriers = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
                                   where shiftWork.Worker is ICourier && CanBeAssignedTo(shiftWork.Worker as ICourier, shiftWork)

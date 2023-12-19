@@ -658,6 +658,7 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{aec913c7-6413-49e9-bee1-b2c52ed93245}</MetaDataID>
         [PersistentMember(nameof(_FullName))]
         [BackwardCompatibilityID("+14")]
+        [CachingDataOnClientSide]
         public string FullName
         {
             get => _FullName; set

@@ -93,6 +93,31 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
 
+    public class FoodShippingAlreadyAssignedException : OOAdvantech.Remoting.RestApi.SerializableException
+    {
+        public FoodShippingAlreadyAssignedException(string message, string courierIdentity, string courierName) : base(message)
+        {
+
+            CourierIdentity = courierIdentity;
+            CourierFullName = courierName;
+        }
+
+        /// <MetaDataID>{fcbb4bef-c1d3-463d-bada-dea2de26f2f1}</MetaDataID>
+        public FoodShippingAlreadyAssignedException(string message, System.Exception innerException, string courierIdentity,string courierName) : base(message, innerException)
+        {
+            CourierIdentity = courierIdentity;
+            CourierFullName = courierName;
+        }
+
+        public FoodShippingAlreadyAssignedException(string message, System.Exception innerException) : base(message, innerException)
+        {
+
+        }
+
+        public string CourierIdentity { get; set; }
+        public string CourierFullName { get; set; }
+    }
+
 
 
 

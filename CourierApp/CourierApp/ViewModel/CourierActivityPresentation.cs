@@ -543,12 +543,12 @@ namespace CourierApp.ViewModel
                 GetServingUpdates();
                 //UpdateFoodShippings(Courier.GetFoodShippings());
             }
-            else if (PairedWithCourier!=null)
+            else if (PairedWithCourier != null)
             {
                 List<ItemPreparationAbbreviation> servingItemsOnDevice = (from servingBatch in this.FoodShippings
                                                                           from itemsContext in servingBatch.AllContextsOfPreparedItems
                                                                           from itemPreparation in itemsContext.PreparationItems
-                                                                           select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
+                                                                          select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
 
                 ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.GetFoodShippingUpdates(servingItemsOnDevice);
 
@@ -565,15 +565,27 @@ namespace CourierApp.ViewModel
                 var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
                 foreach (var assignedFoodShipping in asignedServingBatches)
                 {
-                    if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    if (!IsScannerDevice)
                     {
-                        _AssignedFoodShippings[assignedFoodShipping]=_FoodShippings[assignedFoodShipping];
-                        _FoodShippings.Remove(assignedFoodShipping);
+                        if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                        {
+                            _AssignedFoodShippings[assignedFoodShipping] = _FoodShippings[assignedFoodShipping];
+                            _FoodShippings.Remove(assignedFoodShipping);
+                        }
+                        else
+                        {
+                            var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                            servingBatchPresentation.Update();
+                        }
                     }
                     else
                     {
-                        var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
-                        servingBatchPresentation.Update();
+                        if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                        {
+                            _FoodShippings[assignedFoodShipping].Dispose();
+                            _FoodShippings.Remove(assignedFoodShipping);
+                        }
+
                     }
 
                 }
@@ -774,7 +786,7 @@ namespace CourierApp.ViewModel
                 {
                     if (_AssignedFoodShippings.ContainsKey(foodShipping))
                     {
-                        _FoodShippings[foodShipping]= _AssignedFoodShippings[foodShipping];
+                        _FoodShippings[foodShipping] = _AssignedFoodShippings[foodShipping];
                         _AssignedFoodShippings.Remove(foodShipping);
                     }
                     else
@@ -790,15 +802,26 @@ namespace CourierApp.ViewModel
 
                 foreach (var assignedFoodShipping in asignedServingBatches)
                 {
-                    if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                    if (!IsScannerDevice)
                     {
-                        _AssignedFoodShippings[assignedFoodShipping]= _FoodShippings[assignedFoodShipping];
-                        _FoodShippings.Remove(assignedFoodShipping);
+                        if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                        {
+                            _AssignedFoodShippings[assignedFoodShipping] = _FoodShippings[assignedFoodShipping];
+                            _FoodShippings.Remove(assignedFoodShipping);
+                        }
+                        else
+                        {
+                            var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
+                            servingBatchPresentation.Update();
+                        }
                     }
                     else
                     {
-                        var servingBatchPresentation = _AssignedFoodShippings.GetViewModelFor(assignedFoodShipping, assignedFoodShipping);
-                        servingBatchPresentation.Update();
+                        if (_FoodShippings.ContainsKey(assignedFoodShipping))
+                        {
+                            _FoodShippings[assignedFoodShipping].Dispose();
+                            _FoodShippings.Remove(assignedFoodShipping);
+                        }
                     }
 
 
@@ -1214,15 +1237,18 @@ namespace CourierApp.ViewModel
             {
                 return;
             }
+            //MealCourseUri,Identity,MealCourse,DeliveryRemark,NotesForClient,ServicePoint,ReturnReasons
 
 #else
 
             mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
-            mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
-            if (_PairedWithCourier!=null)
+            //mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
+            if (_PairedWithCourier != null)
             {
-                mealCourseIdentity = "230c03a32d68e";
-                mealCourseIdentity = "230c03a323a6e";
+                mealCourseIdentity = "2309bda4df754";
+                mealCourseIdentity = "2309bda4e6c4c";
+                //mealCourseIdentity = "230c03a32d68e";
+                //mealCourseIdentity = "230c03a323a6e";
             }
 
 #endif
@@ -1230,22 +1256,45 @@ namespace CourierApp.ViewModel
 
             await Task.Run(() =>
            {
-               var courierShippingPair = this.HomeDeliveryServicePoint.GetCourierShipping(mealCourseIdentity);
-               if (courierShippingPair.FoodShipping != null)
+               try
                {
-                   var foodShippingPresentation = _FoodShippings.GetViewModelFor(courierShippingPair.FoodShipping, courierShippingPair.FoodShipping);
-                   ObjectChangeState?.Invoke(this, nameof(FoodShippings));
-                   return;
+                   var courierShippingPair=HomeDeliveryServicePoint.Fetching(servicePoint => servicePoint.GetCourierShipping(mealCourseIdentity).Caching(x => new {
+                       x.FoodShipping.ClientFullName,
+                       x.FoodShipping.PhoneNumber,
+                       x.FoodShipping.MealCourseUri,
+                       x.FoodShipping.Identity,
+                       x.FoodShipping.MealCourse,
+                       x.FoodShipping.DeliveryRemark,
+                       x.FoodShipping.NotesForClient,
+                       x.FoodShipping.ServicePoint
+                   }));
+
+                   //var courierShippingPair = this.HomeDeliveryServicePoint.GetCourierShipping(mealCourseIdentity);
+                   if (courierShippingPair.FoodShipping != null)
+                   {
+
+                       var foodShippingPresentation = _FoodShippings.GetViewModelFor(courierShippingPair.FoodShipping, courierShippingPair.FoodShipping);
+                       ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                       return;
+
+                   }
+                   if (courierShippingPair.Courier != null)
+                   {
+
+                       PairedWithCourier = _Couriers.GetViewModelFor(courierShippingPair.Courier, courierShippingPair.Courier, null);
+
+                       ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+
+                       return;
+                   }
 
                }
-               if (courierShippingPair.Courier != null)
+               catch (FoodShippingAlreadyAssignedException error)
                {
 
-                   PairedWithCourier = _Couriers.GetViewModelFor(courierShippingPair.Courier, courierShippingPair.Courier, null);
-
-                   ObjectChangeState?.Invoke(this, nameof(FoodShippings));
-
-                   return;
+                   //if (PairedWithCourier != null && _PairedWithCourier.CourierIdentity == error.CourierIdentity)
+                   //    return;
+                   throw;
                }
                return;
            });
@@ -1403,7 +1452,7 @@ namespace CourierApp.ViewModel
             foreach (var servingBatch in foodShippings)
             {
                 if (_AssignedFoodShippings.ContainsKey(servingBatch))
-                    _FoodShippings[servingBatch]=_AssignedFoodShippings[servingBatch];
+                    _FoodShippings[servingBatch] = _AssignedFoodShippings[servingBatch];
                 else
                     _FoodShippings.GetViewModelFor(servingBatch, servingBatch);
             }
@@ -1412,10 +1461,21 @@ namespace CourierApp.ViewModel
 
             foreach (var assignedServingBatch in asignedFoodShippings)
             {
-                if (_FoodShippings.ContainsKey(assignedServingBatch))
-                    _AssignedFoodShippings[assignedServingBatch] =_FoodShippings[assignedServingBatch];
+                if (!IsScannerDevice)
+                {
+                    if (_FoodShippings.ContainsKey(assignedServingBatch))
+                        _AssignedFoodShippings[assignedServingBatch] = _FoodShippings[assignedServingBatch];
+                    else
+                        _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch);
+                }
                 else
-                    _AssignedFoodShippings.GetViewModelFor(assignedServingBatch, assignedServingBatch);
+                {
+                    if (_FoodShippings.ContainsKey(assignedServingBatch))
+                    {
+                        _FoodShippings[assignedServingBatch].Dispose();
+                        _FoodShippings.Remove(assignedServingBatch);
+                    }
+                }
             }
 
 
@@ -1678,13 +1738,13 @@ namespace CourierApp.ViewModel
                                 {
                                     foreach (var foodShipping in foodShippings)
                                     {
-                                        _FoodShippings[foodShipping]=_AssignedFoodShippings[foodShipping];
+                                        _FoodShippings[foodShipping] = _AssignedFoodShippings[foodShipping];
                                         _AssignedFoodShippings.Remove(foodShipping);
                                     }
                                     throw;
                                 }
 
-                                
+
 
                             }
                         }

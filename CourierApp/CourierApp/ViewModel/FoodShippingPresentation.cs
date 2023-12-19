@@ -12,6 +12,8 @@ using System.Text;
 using System.Windows;
 using System.Globalization;
 using OOAdvantech.Json;
+using FlavourBusinessManager.RoomService.ViewModel;
+
 #if !DeviceDotNet
 using ServiceContextManagerApp;
 using System;
@@ -84,6 +86,18 @@ namespace CourierApp.ViewModel
             //CourierActivityPresentation = courierActivityPresentation;
             string servicesContextIdentity = foodShipping.ServicesContextIdentity;
             FoodShipping = foodShipping;
+
+            //foodShipping = foodShipping.Fetching(_foodShipping => _foodShipping.Caching(x => new { 
+            //    x.ClientFullName, 
+            //    x.PhoneNumber,
+            //    x.MealCourseUri,
+            //    x.Identity,
+            //    x.MealCourse,
+            //    x.DeliveryRemark,
+            //    x.NotesForClient,
+            //    x.ServicePoint
+            //}));
+
             FoodShipping.ObjectChangeState += FoodShippingChangeState;
             FoodShipping.ItemsStateChanged += FoodShipping_ItemsStateChanged;
             ServiceBatchIdentity = foodShipping.MealCourseUri;
