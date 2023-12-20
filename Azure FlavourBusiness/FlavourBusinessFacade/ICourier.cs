@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using FlavourBusinessFacade.Shipping;
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech.Remoting.RestApi;
+using FlavourBusinessFacade.ServicesContextResources;
 
 namespace FlavourBusinessFacade.HumanResources
 {
@@ -16,6 +17,8 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface ICourier : IServicesContextWorker, EndUsers.IMessageConsumer, IUser
     {
+
+        IHomeDeliveryServicePoint HomeDeliveryServicePoint { get; }
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;

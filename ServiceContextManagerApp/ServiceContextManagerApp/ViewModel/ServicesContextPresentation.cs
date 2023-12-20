@@ -477,12 +477,13 @@ namespace ServiceContextManagerApp
 
         private void init()
         {
-            ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
+            
             if (_SignedInSupervisor != null)
                 _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
 
             this.ServicesContextRuntime = ServicesContext.GetRunTime();
+            this.ServicesContextRuntime.ObjectChangeState+= ServicesContext_ObjectChangeState;
             MealsController = this.ServicesContextRuntime.MealsController;
 
 

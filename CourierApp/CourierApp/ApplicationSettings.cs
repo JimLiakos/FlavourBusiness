@@ -166,6 +166,28 @@ namespace CourierApp
                 }
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        bool _ScanShippingEnabled;
+
+        /// <MetaDataID>{b0eee72d-f3b7-4764-a268-04485b98c42e}</MetaDataID>
+        [PersistentMember(nameof(_ScanShippingEnabled))]
+        [BackwardCompatibilityID("+4")]
+        public bool ScanShippingEnabled
+        {
+            get => _ScanShippingEnabled;
+            set
+            {
+                if (_ScanShippingEnabled != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ScanShippingEnabled = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }
 

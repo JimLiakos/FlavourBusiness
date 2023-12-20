@@ -195,8 +195,8 @@ namespace FlavourBusinessFacade
         IFlavoursServicesContextRuntime GetRunTime();
 
 
-        [RemoteEventPublish(InvokeType.Async)]
-        event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+        //[RemoteEventPublish(InvokeType.Async)]
+        //event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
         

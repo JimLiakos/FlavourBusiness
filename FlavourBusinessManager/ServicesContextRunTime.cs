@@ -833,7 +833,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
         }
-
+        
         /// <MetaDataID>{be5c7298-abaf-4538-a45c-8cee3b38f9a1}</MetaDataID>
         private void SessionsMonitoringTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -863,11 +863,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
 
                 RemindWorkersForUnreadedMessages();
+
             }
             catch (Exception error)
             {
-
-
             }
             SessionsMonitoringTimer.Start();
         }
@@ -3127,8 +3126,9 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         if (!NativeUsers.Contains(nativeAuthUser))
                             NativeUsers.Add(nativeAuthUser);
                     }
-                    ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
+                    
                 }
+                ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
 
 
 

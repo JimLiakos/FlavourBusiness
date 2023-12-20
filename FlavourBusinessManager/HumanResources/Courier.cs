@@ -1498,6 +1498,8 @@ namespace FlavourBusinessManager.HumanResources
             }
 
         }
+        [OnDemandCachingDataOnClientSide]
+        public IHomeDeliveryServicePoint HomeDeliveryServicePoint=>ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint ;
     }
 
 

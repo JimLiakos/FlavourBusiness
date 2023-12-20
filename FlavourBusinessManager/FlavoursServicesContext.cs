@@ -418,7 +418,25 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{faf51a66-19f0-492c-9981-d2e0e3d1415b}</MetaDataID>
         IFlavoursServicesContextRuntime FlavoursServicesContextRuntime;
 
-        public event ObjectChangeStateHandle ObjectChangeState;
+        //ObjectChangeStateHandle _ObjectChangeState;
+        //public event ObjectChangeStateHandle ObjectChangeState
+        //{
+        //    add
+        //    {
+        //        int mCode = GetHashCode();
+        //        if (ComputingCluster.CurrentComputingResource == ComputingCluster.CurrentComputingCluster.GetComputingResourceFor(RunAtContext.ContextID))
+        //        {
+
+        //        }
+
+        //        _ObjectChangeState += value;
+        //    }
+        //    remove
+        //    {
+        //        int mCode = GetHashCode();
+        //        _ObjectChangeState -= value;
+        //    }
+        //}
 
         /// <MetaDataID>{118c775e-adb8-4234-b3cb-9637b1bd3458}</MetaDataID>
         public IFlavoursServicesContextRuntime GetRunTime()
@@ -426,7 +444,7 @@ namespace FlavourBusinessManager
 
 
 
-
+            
             lock (ServicesContextLock)
             {
                 if (FlavoursServicesContextRuntime != null)
@@ -531,8 +549,8 @@ namespace FlavourBusinessManager
 
                         //storage.GetObjectCollection<FlavoursServicesContext>
                         FlavoursServicesContextRuntime = flavoursServicesContextManagment.GetServicesContextRuntime(storageName, storageLocation, this.ServicesContextIdentity, Owner.Identity, OrganizationStorageIdentity, graphicMenuStorageRef, true);
-                        if (FlavoursServicesContextRuntime != null)
-                            FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
+                        //if (FlavoursServicesContextRuntime != null)
+                        //    FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
 
                         if (FlavoursServicesContextRuntime != null)
                             FlavoursServicesContextRuntime.Description = Description;
@@ -593,12 +611,13 @@ namespace FlavourBusinessManager
             }
         }
 
-        /// <MetaDataID>{dcac4ddf-369d-4e2d-8ebb-a730bf1683fa}</MetaDataID>
-        private void FlavoursServicesContextRuntime_ObjectChangeState(object _object, string member)
-        {
-            if (member == nameof(ServiceContextHumanResources))
-                ObjectChangeState?.Invoke(this, "ServiceContextHumanResources");
-        }
+        ///// <MetaDataID>{dcac4ddf-369d-4e2d-8ebb-a730bf1683fa}</MetaDataID>
+        //private void FlavoursServicesContextRuntime_ObjectChangeState(object _object, string member)
+        //{
+        //    int mCode = GetHashCode();
+        //    if (member == nameof(ServiceContextHumanResources))
+        //        _ObjectChangeState?.Invoke(this, "ServiceContextHumanResources");
+        //}
 
 
 
@@ -839,17 +858,17 @@ namespace FlavourBusinessManager
             get => _OrganizationStorageName;
             set
             {
-                if (_OrganizationStorageName!=value)
+                if (_OrganizationStorageName != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _OrganizationStorageName=value;
+                        _OrganizationStorageName = value;
                         stateTransition.Consistent = true;
                     }
                 }
             }
         }
 
-       
+
     }
 }

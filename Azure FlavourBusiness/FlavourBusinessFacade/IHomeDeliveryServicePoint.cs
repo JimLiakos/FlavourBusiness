@@ -84,6 +84,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     }
 
+    /// <MetaDataID>{fef2fcfc-ee9b-4e21-a43e-9de61f54c304}</MetaDataID>
     public class CourierShippingPair
     {
         public IFoodShipping FoodShipping { get; set; }
@@ -93,6 +94,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     }
 
 
+    /// <MetaDataID>{a3782d3d-5eba-46bb-b2a9-cd8a8665d4fe}</MetaDataID>
     public class FoodShippingAlreadyAssignedException : OOAdvantech.Remoting.RestApi.SerializableException
     {
         public FoodShippingAlreadyAssignedException(string message, string courierIdentity, string courierName) : base(message)
@@ -103,7 +105,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         }
 
         /// <MetaDataID>{fcbb4bef-c1d3-463d-bada-dea2de26f2f1}</MetaDataID>
-        public FoodShippingAlreadyAssignedException(string message, System.Exception innerException, string courierIdentity,string courierName) : base(message, innerException)
+        public FoodShippingAlreadyAssignedException(string message, System.Exception innerException, string courierIdentity, string courierName) : base(message, innerException)
         {
             CourierIdentity = courierIdentity;
             CourierFullName = courierName;

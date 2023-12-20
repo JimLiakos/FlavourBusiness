@@ -378,7 +378,8 @@ namespace CourierApp.ViewModel
                                 ShiftWork = _Courier.ShiftWork as IServingShiftWork;
                                 if (ActiveShiftWork != null)
                                 {
-                                    var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x =>x.Select(foodShipping=> new {
+                                    var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
+                                    {
                                         foodShipping.ClientFullName,
                                         foodShipping.PhoneNumber,
                                         foodShipping.MealCourseUri,
@@ -457,7 +458,8 @@ namespace CourierApp.ViewModel
                                     if (ActiveShiftWork != null)
                                     {
                                         _CourierPresentation = new CourierPresentation(_Courier, null);
-                                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
+                                        {
                                             foodShipping.ClientFullName,
                                             foodShipping.PhoneNumber,
                                             foodShipping.MealCourseUri,
@@ -575,7 +577,8 @@ namespace CourierApp.ViewModel
                                                                           select new ItemPreparationAbbreviation() { uid = itemPreparation.uid, StateTimestamp = itemPreparation.StateTimestamp }).ToList();
 
 
-                ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new {
+                ServingBatchUpdates servingBatchUpdates = _PairedWithCourier.Courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new
+                {
                     foodShipping.ClientFullName,
                     foodShipping.PhoneNumber,
                     foodShipping.MealCourseUri,
@@ -688,7 +691,8 @@ namespace CourierApp.ViewModel
                     ShiftWork = shiftWork as IServingShiftWork;
                     if (ActiveShiftWork != null)
                     {
-                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                        var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
+                        {
                             foodShipping.ClientFullName,
                             foodShipping.PhoneNumber,
                             foodShipping.MealCourseUri,
@@ -829,7 +833,8 @@ namespace CourierApp.ViewModel
             if (courier != null)
             {
 
-                ServingBatchUpdates servingBatchUpdates = courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new {
+                ServingBatchUpdates servingBatchUpdates = courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new
+                {
                     foodShipping.ClientFullName,
                     foodShipping.PhoneNumber,
                     foodShipping.MealCourseUri,
@@ -1074,7 +1079,8 @@ namespace CourierApp.ViewModel
 
             if (ActiveShiftWork != null)
             {
-                var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new {
+                var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
+                {
                     foodShipping.ClientFullName,
                     foodShipping.PhoneNumber,
                     foodShipping.MealCourseUri,
@@ -1197,6 +1203,16 @@ namespace CourierApp.ViewModel
 
         }
 
+        public bool ScanShippingEnabled
+        {
+            get => ApplicationSettings.Current.ScanShippingEnabled;
+            set
+            {
+                ApplicationSettings.Current.ScanShippingEnabled = value;
+            }
+        }
+
+
         /// <MetaDataID>{5cc6f81d-6009-486a-be8a-e098239a3f33}</MetaDataID>
         public async Task<UserData> AssignDeviceToNativeUserCourier()
         {
@@ -1256,6 +1272,7 @@ namespace CourierApp.ViewModel
 
             var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
             deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;81e95927f7814a8a8134a40e3d8e19d6";
+            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
 
             try
             {
@@ -1288,6 +1305,12 @@ namespace CourierApp.ViewModel
                     if (_HomeDeliveryServicePoint == null)
                         _HomeDeliveryServicePoint = RemotingServices.CastTransparentProxy<IHomeDeliveryServicePoint>(this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity));
                 }
+                else if (_Courier != null)
+                {
+                    if (_HomeDeliveryServicePoint == null)
+                        _HomeDeliveryServicePoint = _Courier.HomeDeliveryServicePoint;
+                }
+
                 return _HomeDeliveryServicePoint;
 
 
@@ -1316,14 +1339,14 @@ namespace CourierApp.ViewModel
 
 #else
 
-            //mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
+            mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
             mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
-            if (_PairedWithCourier != null)
+            if (_PairedWithCourier != null || !IsScannerDevice)
             {
-                //mealCourseIdentity = "2309bda4df754";
-                //mealCourseIdentity = "2309bda4e6c4c";
-                mealCourseIdentity = "230c03a32d68e";
-                mealCourseIdentity = "230c03a323a6e";
+                mealCourseIdentity = "2309bda4df754";
+                mealCourseIdentity = "2309bda4e6c4c";
+                //mealCourseIdentity = "230c03a32d68e";
+                //mealCourseIdentity = "230c03a323a6e";
             }
 
 #endif
@@ -1333,8 +1356,11 @@ namespace CourierApp.ViewModel
            {
                try
                {
+                   CourierShippingPair courierShippingPair = null;
+
                    var homeDeliveryServicePoint = HomeDeliveryServicePoint;
-                   var courierShippingPair= homeDeliveryServicePoint.Fetching(servicePoint => servicePoint.GetCourierShipping(mealCourseIdentity).Caching(x => new {
+                   courierShippingPair = homeDeliveryServicePoint.Fetching(servicePoint => servicePoint.GetCourierShipping(mealCourseIdentity).Caching(x => new
+                   {
                        x.FoodShipping.ClientFullName,
                        x.FoodShipping.PhoneNumber,
                        x.FoodShipping.MealCourseUri,
@@ -1350,6 +1376,11 @@ namespace CourierApp.ViewModel
                    {
 
                        var foodShippingPresentation = _FoodShippings.GetViewModelFor(courierShippingPair.FoodShipping, courierShippingPair.FoodShipping);
+                       if (!IsScannerDevice && _Courier != null)
+                           AssignFoodShipping(foodShippingPresentation.ServiceBatchIdentity);
+
+
+                       //AssignFoodShipping(courierShippingPair.FoodShipping)
                        ObjectChangeState?.Invoke(this, nameof(FoodShippings));
                        return;
 

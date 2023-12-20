@@ -56,6 +56,8 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{727612e2-821b-4e1c-8626-25c56b73a190}</MetaDataID>
         Task<UserData> AssignDeviceToNativeUserCourier();
 
+        bool ScanShippingEnabled { get;set; }
+
         Task<bool> AssignScannerDevice();
 
         bool IsScannerDevice { get; }
@@ -103,6 +105,7 @@ namespace CourierApp.ViewModel
     }
 
 
+    /// <MetaDataID>{d776ea9a-7189-4215-99f8-763e6228dae0}</MetaDataID>
     public class CourierShippingPairPresentation
     {
         public FoodShippingPresentation FoodShipping { get; set; }
