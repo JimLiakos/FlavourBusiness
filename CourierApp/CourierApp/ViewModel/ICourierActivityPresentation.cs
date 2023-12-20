@@ -44,6 +44,8 @@ namespace CourierApp.ViewModel
 
         bool CourierOnTheRoadToReturn { get; }
 
+        bool CourierOnTheRoad { get; }
+
         [GenerateEventConsumerProxy]
         event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 

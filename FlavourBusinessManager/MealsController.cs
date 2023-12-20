@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Windows.Forms.AxHost;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -577,7 +578,8 @@ namespace FlavourBusinessManager.RoomService
                 //            select new { itemPreparation.Name, itemPreparation.State, itemPreparation }).ToList();
                 List<IMealCourse> mealCoursesToServe = null;
 
-                if (courier.State == CourierState.OnTheRoad || courier.State == CourierState.NearDeliveryServicePoint)
+                var courierState = courier.State;
+                if (courierState  == CourierState.OnTheRoad || courierState  == CourierState.NearDeliveryServicePoint)
                 {
                     mealCoursesToServe = (from mealCourse in MealCoursesInProgress
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress

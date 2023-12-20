@@ -375,7 +375,7 @@ namespace CourierApp.ViewModel
                             if (_Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ShiftWork = _Courier.ShiftWork as IServingShiftWork;
+                                ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
                                 if (ActiveShiftWork != null)
                                 {
                                     var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
@@ -395,8 +395,14 @@ namespace CourierApp.ViewModel
                                 _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                 _Courier.MessageReceived += MessageReceived;
                                 _Courier.FoodShippingsChanged += FoodShippingsChanged;
-
+                                var newState = _Courier.State;
+                                if (this.CourierCurrentState!=newState)
+                                {
+                                    this.CourierCurrentState=newState;
+                                    ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
+                                }
                                 CourierOnTheRoadToReturn = _Courier.State == CourierState.EndOfDeliveryAndReturn;
+                                
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -454,7 +460,16 @@ namespace CourierApp.ViewModel
                                         continue;
 
 
-                                    ShiftWork = _Courier.ShiftWork as IServingShiftWork;
+                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
+
+                                    var newState = Courier.State;
+                                    if (this.CourierCurrentState!=newState)
+                                    {
+                                        this.CourierCurrentState=newState;
+                                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
+                                    }
+
+
                                     if (ActiveShiftWork != null)
                                     {
                                         _CourierPresentation = new CourierPresentation(_Courier, null);
@@ -478,7 +493,7 @@ namespace CourierApp.ViewModel
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                     _Courier.MessageReceived += MessageReceived;
                                     _Courier.FoodShippingsChanged += FoodShippingsChanged;
-
+                                    
                                     if (_Courier.State == CourierState.EndOfDeliveryAndReturn)
                                     {
 
@@ -525,7 +540,7 @@ namespace CourierApp.ViewModel
                                         }), serviceState);
                                     }
 #endif
-                                    ShiftWork = _Courier.ShiftWork as IServingShiftWork;
+                                    ShiftWork =RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
                                     GetMessages();
                                 }
                             }
@@ -685,10 +700,10 @@ namespace CourierApp.ViewModel
         {
             if (member == nameof(IServicesContextWorker.ShiftWork))
             {
-                var shiftWork = Courier.ShiftWork;
+                var shiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(Courier.ShiftWork);
                 if (shiftWork != ShiftWork)
                 {
-                    ShiftWork = shiftWork as IServingShiftWork;
+                    ShiftWork = shiftWork;
                     if (ActiveShiftWork != null)
                     {
                         var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
@@ -712,8 +727,15 @@ namespace CourierApp.ViewModel
             }
             if (member == nameof(ICourier.State))
             {
-                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
                 var newState = Courier.State;
+                if (this.CourierCurrentState!=newState)
+                {
+                    this.CourierCurrentState=newState;
+                    ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
+                }
+
+                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
+                
                 if (newState == CourierState.OnTheRoad)
                     FoodShippingsChanged();
                 if (newState == CourierState.PendingForFoodShiping)
@@ -782,7 +804,13 @@ namespace CourierApp.ViewModel
 
 
         public bool CourierOnTheRoadToReturn { get; set; }
-
+        public bool CourierOnTheRoad
+        {
+            get
+            { 
+                return CourierCurrentState==CourierState.OnTheRoad;
+            }
+        }
 
         public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
 
@@ -1075,7 +1103,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{e0cae251-d210-41e4-9c12-e3da35bcc002}</MetaDataID>
         public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ShiftWork = _Courier.NewShiftWork(startedAt, timespanInHours) as IServingShiftWork;
+            ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.NewShiftWork(startedAt, timespanInHours));
 
             if (ActiveShiftWork != null)
             {
@@ -1339,14 +1367,14 @@ namespace CourierApp.ViewModel
 
 #else
 
-            mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
+            //mealCourseIdentity = "bf37a3d641ac46fdbb48c013455eb370";
             mealCourseIdentity = "758f7003850241bf84bb6e8a4e936569";
             if (_PairedWithCourier != null || !IsScannerDevice)
             {
-                mealCourseIdentity = "2309bda4df754";
-                mealCourseIdentity = "2309bda4e6c4c";
-                //mealCourseIdentity = "230c03a32d68e";
-                //mealCourseIdentity = "230c03a323a6e";
+                //mealCourseIdentity = "2309bda4df754";
+                //mealCourseIdentity = "2309bda4e6c4c";
+                mealCourseIdentity = "230c03a32d68e";
+                mealCourseIdentity = "230c03a323a6e";
             }
 
 #endif
@@ -2093,6 +2121,7 @@ namespace CourierApp.ViewModel
         }
 
         Dictionary<string, FontData> Fonts = new Dictionary<string, FontData>();
+        private CourierState? CourierCurrentState;
 
         public FontData GetFont(string fontUri)
         {
