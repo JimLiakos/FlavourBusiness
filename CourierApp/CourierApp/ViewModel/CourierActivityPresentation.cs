@@ -57,6 +57,33 @@ namespace CourierApp.ViewModel
     /// <MetaDataID>{1230a8d4-5e45-4ebb-891e-af3db0b09974}</MetaDataID>
     public class CourierActivityPresentation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, ILocalization, IFontsResolver, ICourierActivityPresentation, ISecureUser, IBoundObject, IDevicePermissions
     {
+
+        public CourierActivityPresentation(bool useAssignedPaymentTerminal)
+        {
+            _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _FoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
+            _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
+            _AssignedFoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
+            this.UseAssignedPaymentTerminal = useAssignedPaymentTerminal;
+#if DeviceDotNet
+            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+#endif
+        }
+
+#if DeviceDotNet
+        private void ApplicationResuming(object sender, EventArgs e)
+        {
+            _FoodShippings.Clear();
+            _AssignedFoodShippings?.Clear();
+            PairedWithCourier = null;
+            ObjectChangeState?.Invoke(this, "FoodShippings");
+
+
+        }
+#endif
+        event ObjectChangeStateHandle ObjectChangeState;
+
+        #region User authentication
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
         public string SignInProvider { get; set; }
         /// <MetaDataID>{de9782b2-5434-43b6-8444-14465451ac48}</MetaDataID> 
@@ -78,10 +105,6 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{97a784a6-6261-4d0b-8d40-dae40ea29521}</MetaDataID>
         public string PhoneNumber { get; set; }
 
-        public event ObjectChangeStateHandle ObjectChangeState;
-
-
-
         /// <MetaDataID>{4c90f0e2-26af-4b28-bae1-e799b9f2e5c9}</MetaDataID>
         public void CreateUserWithEmailAndPassword(string emailVerificationCode)
         {
@@ -101,230 +124,238 @@ namespace CourierApp.ViewModel
                 throw;
             }
         }
-        public bool UseAssignedPaymentTerminal { get; private set; }
-
-        public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
-        {
-            if (payment.State == PaymentState.Completed)
-                return;
-
-            if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
-            {
-#if DeviceDotNet
-                var paymentService = new OOAdvantech.Pay.PaymentService();
-                if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
-                {
-                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
-                    var state = payment.State;
-                    if (state == FinanceFacade.PaymentState.Completed)
-                    {
-                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
-                    }
-                    return;
-                }
-
-#endif
-                return;
-            }
-            else if (paymentMethod == FinanceFacade.PaymentMethod.Card)
-            {
-                if (this.UseAssignedPaymentTerminal)
-                {
-
-                    var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
-                    var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
-
-                    payment.CardPaymentCompleted(paymentData.CardType, paymentData.AccountNum, true, paymentData.TransactionID, tipAmount);
-                    return;
-
-                }
-                else
-                {
-                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
-                    return;
-                }
-            }
-            else if (paymentMethod == FinanceFacade.PaymentMethod.Cash)
-            {
-                payment.CashPaymentCompleted(tipAmount);
-                return;
-            }
-            else
-                return;
-
-        }
-
-        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity)
-        {
-
-            var foodShippingPresentation = this.AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-            var bill = this.Courier.GetBill(itemPreparations, foodShippingPresentation.FoodShipping);
-            return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
-        }
-
-        public CourierActivityPresentation(bool useAssignedPaymentTerminal)
-        {
-            _FoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
-            _FoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
-            _AssignedFoodShippings = new ViewModelWrappers<IFoodShipping, FoodShippingPresentation>();
-            _AssignedFoodShippings.OnNewViewModelWrapper += OnNewViewModelWrapper;
-            this.UseAssignedPaymentTerminal = useAssignedPaymentTerminal;
-#if DeviceDotNet
-            (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
-#endif
-        }
-#if DeviceDotNet
-        private void ApplicationResuming(object sender, EventArgs e)
-        {
-            _FoodShippings.Clear();
-            _AssignedFoodShippings?.Clear();
-            PairedWithCourier = null;
-            ObjectChangeState?.Invoke(this, "FoodShippings");
-
-
-        }
-#endif
-
-        private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
-        {
-            foodShipping.ObjectChangeState += FoodShipping_ObjectChangeState;
-
-
-        }
-
-        private void FoodShipping_ObjectChangeState(object _object, string member)
-        {
-
-            FoodShippingUpdated(_object as FoodShippingPresentation);
-        }
-
-
-        /// <MetaDataID>{7c38008c-e8cc-47cf-b413-45519af70ebc}</MetaDataID>
-        IList<UserData> NativeUsers;
-
-        /// <MetaDataID>{0fa03740-e253-41f3-8e34-43a3fb41e7b2}</MetaDataID>
-        public Task<IList<UserData>> GetNativeUsers()
-        {
-            lock (this)
-            {
-                if (NativeUsers != null)
-                    return Task<IList<UserData>>.FromResult(NativeUsers);
-            }
-
-            if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.ServiceContextDevice))
-                return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData>);
-
-            return Task<IList<UserData>>.Run(() =>
-              {
-
-                  IAuthFlavourBusiness pAuthFlavourBusiness = null;
-
-                  pAuthFlavourBusiness = GetAuthFlavourBusiness();
-
-                  string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-                  List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
-
-                  lock (this)
-                  {
-                      NativeUsers = nativeUsers;
-                  }
-                  return nativeUsers as IList<UserData>;
-              });
-
-
-
-
-
-            //return new List<UserData>();
-        }
-
-        /// <MetaDataID>{159917af-601d-4c03-8efd-00ff8779e414}</MetaDataID>
-        private static IAuthFlavourBusiness GetAuthFlavourBusiness()
+         
+        /// <MetaDataID>{e3c19a77-a9d9-45d6-add9-c5b346042474}</MetaDataID>
+        private static IAuthFlavourBusiness GetFlavourBusinessAuth()
         {
             IAuthFlavourBusiness pAuthFlavourBusiness;
+            OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
             string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
             string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-            //System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-            string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-            serverUrl = "http://localhost:8090/api/";
-            serverUrl = AzureServerUrl;
-
-            try
-            {
-                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-            }
-            catch (System.Net.WebException error)
-            {
-                throw;
-            }
-            catch (Exception error)
-            {
-                throw;
-            }
-
+            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+            string serverUrl = AzureServerUrl;
+            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
             return pAuthFlavourBusiness;
         }
 
-        /// <MetaDataID>{460a1ef3-009d-4642-a527-7a835664b746}</MetaDataID>
-        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        /// <MetaDataID>{5cc6f81d-6009-486a-be8a-e098239a3f33}</MetaDataID>
+        public async Task<UserData> AssignDeviceToNativeUserCourier()
         {
-            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+#if DeviceDotNet
+            string deviceAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
 
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return null;
+                deviceAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
+
+                lock (this)
+                    NativeUsers = null;
+
+
+                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
+            }
+            catch (Exception error)
+            {
+                return null;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
+            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;81e95927f7814a8a8134a40e3d8e19d6";
+            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
 
             try
             {
-                pAuthFlavourBusiness = GetFlavourBusinessAuth();
-                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
+                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
+
+                lock (this)
+                    NativeUsers = null;
+                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
             }
-            catch (System.Net.WebException error)
+            catch (Exception error)
             {
-                throw;
+                return null;
+            }
+
+
+            return null;
+#endif
+
+        }
+
+
+        public async Task<bool> AssignScannerDevice()
+        {
+
+#if DeviceDotNet
+            string deviceAssignKey = null;
+            try
+            {
+                var result = await ScanCode.Scan("Hold your phone up to the courier Identity", "Scanning will happen automatically");
+
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                deviceAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
+                return true;
+
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
+            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
+            try
+            {
+                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
+                return true;
             }
             catch (Exception error)
             {
                 throw;
             }
+#endif
         }
 
-        /// <MetaDataID>{5a7c3ea7-ce94-40a0-8138-d9188a22ebd6}</MetaDataID>
-        public void SaveUserProfile()
-        {
-            throw new NotImplementedException();
-        }
 
-        /// <MetaDataID>{a1e8e1b1-10b2-434a-91ef-8d1262c39bd5}</MetaDataID>
-        public void SendVerificationEmail(string emailAddress)
+        /// <MetaDataID>{257f42e6-8d57-413c-9b46-aa784622b389}</MetaDataID>
+        public async Task<bool> AssignCourier()
         {
-            throw new NotImplementedException();
-        }
-
-        ICourierPresentation _CourierPresentation;
-        public ICourierPresentation CourierPresentation
-        {
-            get
+#if DeviceDotNet
+            string courierAssignKey = null;
+            try
             {
-                if (InActiveShiftWork)
-                {
-                    if (_CourierPresentation == null)
-                        _CourierPresentation = new CourierPresentation(_Courier, null);
-                    return _CourierPresentation;
-                }
-                else
-                    return null;
-            }
-        }
-        /// <MetaDataID>{ba70c705-d7e0-478d-a619-a86934e80a34}</MetaDataID>
-        public ICourier Courier => _Courier;
+                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
 
-        /// <MetaDataID>{b6d6d245-a984-4aa0-b2c2-3a9d96a39aa4}</MetaDataID>
-        ICourier _Courier;
-        /// <MetaDataID>{feb97af6-fab9-4f85-b5a9-f234ff036b54}</MetaDataID>
-        AuthUser AuthUser;
-        /// <MetaDataID>{7c356551-9dd0-4247-a6b9-3a68914d8881}</MetaDataID>
-        private Task<bool> SignInTask;
-        /// <MetaDataID>{bd780d43-f60b-4b83-92cc-38c769c2d505}</MetaDataID>
-        private bool OnSignIn;
+                if (result == null || string.IsNullOrWhiteSpace(result.Text))
+                    return false;
+                courierAssignKey = result.Text;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string serverUrl = AzureServerUrl;
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                authUser = DeviceAuthentication.AuthUser;
+            try
+            {
+
+                this._Courier = ServicesContextManagment.AssignCourierUser(courierAssignKey);
+                string type = "FlavourBusinessManager.AuthFlavourBusiness";
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                UserData = pAuthFlavourBusiness.SignIn();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+
+
+
+            //lock (this)
+            //{
+            //    if (OnScan && ConnectToServicePointTask != null)
+            //        return ConnectToServicePointTask.Task;
+
+            //    OnScan = true;
+            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
+            //}
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
+            //});
+
+
+            //return ConnectToServicePointTask.Task;
+#else
+            return false;
+#endif
+
+        }
+
+
+
+        /// <MetaDataID>{a4df9ea8-2a57-4900-b6af-224e4470e13b}</MetaDataID>
+        public UserData UserData { get; private set; }
+
 
         /// <MetaDataID>{6411a2df-99bb-4f14-bd82-26ad8e306ed2}</MetaDataID>
         public async Task<bool> SignIn()
@@ -396,13 +427,13 @@ namespace CourierApp.ViewModel
                                 _Courier.MessageReceived += MessageReceived;
                                 _Courier.FoodShippingsChanged += FoodShippingsChanged;
                                 var newState = _Courier.State;
-                                if (this.CourierCurrentState!=newState)
+                                if (this.CourierCurrentState != newState)
                                 {
-                                    this.CourierCurrentState=newState;
+                                    this.CourierCurrentState = newState;
                                     ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
                                 }
                                 CourierOnTheRoadToReturn = _Courier.State == CourierState.EndOfDeliveryAndReturn;
-                                
+
                                 //Courier.ServingBatchesChanged += ServingBatchesChanged;
                                 if (_Courier is ITransparentProxy)
                                     (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
@@ -463,9 +494,9 @@ namespace CourierApp.ViewModel
                                     ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
 
                                     var newState = Courier.State;
-                                    if (this.CourierCurrentState!=newState)
+                                    if (this.CourierCurrentState != newState)
                                     {
-                                        this.CourierCurrentState=newState;
+                                        this.CourierCurrentState = newState;
                                         ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
                                     }
 
@@ -493,7 +524,7 @@ namespace CourierApp.ViewModel
                                     _Courier.ObjectChangeState += Courier_ObjectChangeState;
                                     _Courier.MessageReceived += MessageReceived;
                                     _Courier.FoodShippingsChanged += FoodShippingsChanged;
-                                    
+
                                     if (_Courier.State == CourierState.EndOfDeliveryAndReturn)
                                     {
 
@@ -540,7 +571,7 @@ namespace CourierApp.ViewModel
                                         }), serviceState);
                                     }
 #endif
-                                    ShiftWork =RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
+                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
                                     GetMessages();
                                 }
                             }
@@ -577,6 +608,308 @@ namespace CourierApp.ViewModel
 
         }
 
+        /// <MetaDataID>{32595d88-b02e-422c-aebc-0069527fa135}</MetaDataID>
+        public void SignOut()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{1be63b02-8287-4309-8b9f-198f67aca03d}</MetaDataID>
+        public async Task<bool> SignUp()
+        {
+            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+            {
+                authUser = DeviceAuthentication.AuthUser;
+            }
+            if (DeviceAuthentication.AuthUser == null)
+            {
+
+            }
+            return await Task<bool>.Run(async () =>
+            {
+
+                OnSignIn = true;
+                try
+                {
+
+                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+                    serverUrl = "http://localhost:8090/api/";
+                    serverUrl = AzureServerUrl;
+                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
+                    try
+                    {
+                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+                    }
+                    catch (System.Net.WebException error)
+                    {
+                        throw;
+                    }
+                    catch (Exception error)
+                    {
+                        throw;
+                    }
+                    if (authUser == null)
+                    {
+                    }
+                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
+                    UserData = pAuthFlavourBusiness.SignUp(UserData);
+
+                    if (UserData != null)
+                    {
+                        FullName = UserData.FullName;
+                        UserName = UserData.UserName;
+                        PhoneNumber = UserData.PhoneNumber;
+                        //Address = UserData.Address;
+                        //OAuthUserIdentity = UserData.OAuthUserIdentity;
+                        AuthUser = authUser;
+                        ObjectChangeState?.Invoke(this, null);
+                        return true;
+                    }
+                    else
+                        return false;
+
+                }
+                catch (Exception error)
+                {
+                    throw;
+                }
+                finally
+                {
+                    OnSignIn = false;
+                }
+            });
+        }
+
+
+        /// <MetaDataID>{f946afd9-a98d-417d-911e-6c3d43fcedd2}</MetaDataID>
+        public UserData SignInNativeUser(string userName, string password)
+        {
+            var pAuthFlavourBusiness = GetAuthFlavourBusiness();
+            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+
+            return pAuthFlavourBusiness.SignInNativeUser(serviceContextIdentity, userName, password);
+        }
+
+        /// <MetaDataID>{7c38008c-e8cc-47cf-b413-45519af70ebc}</MetaDataID>
+        IList<UserData> NativeUsers;
+
+        /// <MetaDataID>{0fa03740-e253-41f3-8e34-43a3fb41e7b2}</MetaDataID>
+        public Task<IList<UserData>> GetNativeUsers()
+        {
+            lock (this)
+            {
+                if (NativeUsers != null)
+                    return Task<IList<UserData>>.FromResult(NativeUsers);
+            }
+
+            if (string.IsNullOrWhiteSpace(ApplicationSettings.Current.ServiceContextDevice))
+                return Task<IList<UserData>>.FromResult(new List<UserData>() as IList<UserData>);
+
+            return Task<IList<UserData>>.Run(() =>
+            {
+
+                IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+                pAuthFlavourBusiness = GetAuthFlavourBusiness();
+
+                string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
+                List<UserData> nativeUsers = pAuthFlavourBusiness.GetNativeUsers(serviceContextIdentity, RoleType.Courier).ToList();
+
+                lock (this)
+                {
+                    NativeUsers = nativeUsers;
+                }
+                return nativeUsers as IList<UserData>;
+            });
+
+
+
+
+
+            //return new List<UserData>();
+        }
+
+        /// <MetaDataID>{159917af-601d-4c03-8efd-00ff8779e414}</MetaDataID>
+        private static IAuthFlavourBusiness GetAuthFlavourBusiness()
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness;
+            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
+            //System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
+            string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
+            serverUrl = "http://localhost:8090/api/";
+            serverUrl = AzureServerUrl;
+
+            try
+            {
+                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
+                pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+
+            return pAuthFlavourBusiness;
+        }
+
+        /// <MetaDataID>{460a1ef3-009d-4642-a527-7a835664b746}</MetaDataID>
+        public bool IsUsernameInUse(string username, OOAdvantech.Authentication.SignInProvider signInProvider)
+        {
+            IAuthFlavourBusiness pAuthFlavourBusiness = null;
+
+
+            try
+            {
+                pAuthFlavourBusiness = GetFlavourBusinessAuth();
+                return pAuthFlavourBusiness.IsUsernameInUse(username, signInProvider);
+            }
+            catch (System.Net.WebException error)
+            {
+                throw;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+        private void FoodShipping_ObjectChangeState(object _object, string member)
+        {
+
+            FoodShippingUpdated(_object as FoodShippingPresentation);
+        }
+
+
+
+        /// <MetaDataID>{5a7c3ea7-ce94-40a0-8138-d9188a22ebd6}</MetaDataID>
+        public void SaveUserProfile()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{a1e8e1b1-10b2-434a-91ef-8d1262c39bd5}</MetaDataID>
+        public void SendVerificationEmail(string emailAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{feb97af6-fab9-4f85-b5a9-f234ff036b54}</MetaDataID>
+        AuthUser AuthUser;
+
+        #endregion
+
+
+        public bool UseAssignedPaymentTerminal { get; private set; }
+
+        public async Task Pay(FinanceFacade.IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
+        {
+            if (payment.State == PaymentState.Completed)
+                return;
+
+            if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
+            {
+#if DeviceDotNet
+                var paymentService = new OOAdvantech.Pay.PaymentService();
+                if (await paymentService.Pay(payment, tipAmount, FlavourBusinessFacade.ComputingResources.EndPoint.Server, Device.RuntimePlatform == "iOS"))
+                {
+                    RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
+                    var state = payment.State;
+                    if (state == FinanceFacade.PaymentState.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
+                    }
+                    return;
+                }
+
+#endif
+                return;
+            }
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Card)
+            {
+                if (this.UseAssignedPaymentTerminal)
+                {
+
+                    var vivaWalletPos = Xamarin.Forms.DependencyService.Get<VivaWalletPos.IPos>();
+                    var paymentData = await vivaWalletPos.ReceivePayment(payment.Amount, tipAmount);
+
+                    payment.CardPaymentCompleted(paymentData.CardType, paymentData.AccountNum, true, paymentData.TransactionID, tipAmount);
+                    return;
+
+                }
+                else
+                {
+                    payment.CardPaymentCompleted(null, null, true, null, tipAmount);
+                    return;
+                }
+            }
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Cash)
+            {
+                payment.CashPaymentCompleted(tipAmount);
+                return;
+            }
+            else
+                return;
+
+        }
+
+        public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, string foodShippingIdentity)
+        {
+
+            var foodShippingPresentation = this.AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            var bill = this.Courier.GetBill(itemPreparations, foodShippingPresentation.FoodShipping);
+            return bill;// this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
+        }
+
+
+
+        private void OnNewViewModelWrapper(ViewModelWrappers<IFoodShipping, FoodShippingPresentation> sender, IFoodShipping key, FoodShippingPresentation foodShipping)
+        {
+            foodShipping.ObjectChangeState += FoodShipping_ObjectChangeState;
+
+
+        }
+
+  
+
+  
+
+        ICourierPresentation _CourierPresentation;
+        public ICourierPresentation CourierPresentation
+        {
+            get
+            {
+                if (InActiveShiftWork)
+                {
+                    if (_CourierPresentation == null)
+                        _CourierPresentation = new CourierPresentation(_Courier, null);
+                    return _CourierPresentation;
+                }
+                else
+                    return null;
+            }
+        }
+        /// <MetaDataID>{ba70c705-d7e0-478d-a619-a86934e80a34}</MetaDataID>
+        public ICourier Courier => _Courier;
+
+        /// <MetaDataID>{b6d6d245-a984-4aa0-b2c2-3a9d96a39aa4}</MetaDataID>
+        ICourier _Courier;
+        /// <MetaDataID>{7c356551-9dd0-4247-a6b9-3a68914d8881}</MetaDataID>
+        private Task<bool> SignInTask;
+        /// <MetaDataID>{bd780d43-f60b-4b83-92cc-38c769c2d505}</MetaDataID>
+        private bool OnSignIn;
+
+  
         private void FoodShippingsChanged()
         {
             if (ActiveShiftWork != null)
@@ -766,42 +1099,6 @@ namespace CourierApp.ViewModel
 
 
 
-        private void PairedWithCourier_ObjectChangeState(object _object, string member)
-        {
-
-            if (member == nameof(ICourier.State))
-            {
-                ObjectChangeState?.Invoke(this, nameof(FoodShippings));
-                var newState = _PairedWithCourier.Courier.State;
-                if (newState == CourierState.OnTheRoad)
-                    FoodShippingsChanged();
-                if (newState == CourierState.PendingForFoodShiping)
-                    FoodShippingsChanged();
-
-                if (newState == CourierState.EndOfDeliveryAndReturn)
-                {
-
-                    if (CourierOnTheRoadToReturn != true)
-                    {
-                        CourierOnTheRoadToReturn = true;
-                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
-                    }
-
-                }
-                else
-                {
-                    if (CourierOnTheRoadToReturn != false)
-                    {
-                        CourierOnTheRoadToReturn = false;
-                        ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoadToReturn));
-                    }
-                }
-
-
-            }
-        }
-
-
 
         public bool CourierOnTheRoadToReturn { get; set; }
         public bool CourierOnTheRoad
@@ -847,6 +1144,10 @@ namespace CourierApp.ViewModel
             }
         }
 
+        public void ItemsReadyToServeMessageReceived(string messageID)
+        {
+            Courier.RemoveMessage(messageID);
+        }
 
 
         private void GetServingUpdates()
@@ -860,7 +1161,6 @@ namespace CourierApp.ViewModel
 
             if (courier != null)
             {
-
                 ServingBatchUpdates servingBatchUpdates = courier.Fetching(_courier => _courier.GetFoodShippingUpdates(servingItemsOnDevice).Caching(x => x.ServingBatches.OfType<IFoodShipping>().Select(foodShipping => new
                 {
                     foodShipping.ClientFullName,
@@ -872,11 +1172,7 @@ namespace CourierApp.ViewModel
                     foodShipping.NotesForClient,
                     foodShipping.ServicePoint
                 })));
-
-
-
                 //ServingBatchUpdates servingBatchUpdates = courier.GetFoodShippingUpdates(servingItemsOnDevice);
-
                 var foodShippings = servingBatchUpdates.ServingBatches.Where(x => !x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).OfType<IFoodShipping>().ToList();
                 foreach (var foodShipping in foodShippings)
                 {
@@ -890,10 +1186,7 @@ namespace CourierApp.ViewModel
                         var foodShippingPresentation = _FoodShippings.GetViewModelFor(foodShipping, foodShipping);
                         foodShippingPresentation.Update();
                     }
-
-
                 }
-
                 var asignedServingBatches = servingBatchUpdates.ServingBatches.Where(x => x.IsAssigned).Select(x => RemotingServices.CastTransparentProxy<IFoodShipping>(x)).ToList();
 
                 foreach (var assignedFoodShipping in asignedServingBatches)
@@ -951,101 +1244,10 @@ namespace CourierApp.ViewModel
                 ObjectChangeState?.Invoke(this, "FoodShippings");
             }
         }
-        public void ItemsReadyToServeMessageReceived(string messageID)
-        {
-            Courier.RemoveMessage(messageID);
-        }
-
-        /// <MetaDataID>{f946afd9-a98d-417d-911e-6c3d43fcedd2}</MetaDataID>
-        public UserData SignInNativeUser(string userName, string password)
-        {
+  
 
 
-            var pAuthFlavourBusiness = GetAuthFlavourBusiness();
-            string serviceContextIdentity = ApplicationSettings.Current.ServiceContextDevice;
-
-            return pAuthFlavourBusiness.SignInNativeUser(serviceContextIdentity, userName, password);
-
-        }
-
-        /// <MetaDataID>{32595d88-b02e-422c-aebc-0069527fa135}</MetaDataID>
-        public void SignOut()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <MetaDataID>{1be63b02-8287-4309-8b9f-198f67aca03d}</MetaDataID>
-        public async Task<bool> SignUp()
-        {
-            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-            {
-                authUser = DeviceAuthentication.AuthUser;
-            }
-            if (DeviceAuthentication.AuthUser == null)
-            {
-
-            }
-            return await Task<bool>.Run(async () =>
-            {
-
-                OnSignIn = true;
-                try
-                {
-
-                    string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                    string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-                    System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-                    string serverUrl = "http://localhost/FlavourBusinessWebApiRole/api/";
-                    serverUrl = "http://localhost:8090/api/";
-                    serverUrl = AzureServerUrl;
-                    IAuthFlavourBusiness pAuthFlavourBusiness = null;
-                    try
-                    {
-                        var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                        pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-                    }
-                    catch (System.Net.WebException error)
-                    {
-                        throw;
-                    }
-                    catch (Exception error)
-                    {
-                        throw;
-                    }
-                    if (authUser == null)
-                    {
-                    }
-                    UserData = new UserData() { Email = this.Email, FullName = this.FullName, PhoneNumber = this.PhoneNumber, Address = this.Address };
-                    UserData = pAuthFlavourBusiness.SignUp(UserData);
-
-                    if (UserData != null)
-                    {
-                        FullName = UserData.FullName;
-                        UserName = UserData.UserName;
-                        PhoneNumber = UserData.PhoneNumber;
-                        //Address = UserData.Address;
-                        //OAuthUserIdentity = UserData.OAuthUserIdentity;
-                        AuthUser = authUser;
-                        ObjectChangeState?.Invoke(this, null);
-                        return true;
-                    }
-                    else
-                        return false;
-
-                }
-                catch (Exception error)
-                {
-                    throw;
-                }
-                finally
-                {
-                    OnSignIn = false;
-                }
-            });
-        }
-
+  
         public IServingShiftWork ActiveShiftWork
         {
             get
@@ -1133,22 +1335,6 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{f9f3e407-f92f-4376-8ba6-96dc71a245ae}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
-        /// <MetaDataID>{a4df9ea8-2a57-4900-b6af-224e4470e13b}</MetaDataID>
-        public UserData UserData { get; private set; }
-
-        /// <MetaDataID>{e3c19a77-a9d9-45d6-add9-c5b346042474}</MetaDataID>
-        private static IAuthFlavourBusiness GetFlavourBusinessAuth()
-        {
-            IAuthFlavourBusiness pAuthFlavourBusiness;
-            OOAdvantech.Remoting.RestApi.AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as OOAdvantech.Remoting.RestApi.AuthUser;
-            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            string type = "FlavourBusinessManager.AuthFlavourBusiness";// typeof(FlavourBusinessManager.AuthFlavourBusiness).FullName;
-            System.Runtime.Remoting.Messaging.CallContext.SetData("AutUser", authUser);
-            string serverUrl = AzureServerUrl;
-            var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-            pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-            return pAuthFlavourBusiness;
-        }
         /// <MetaDataID>{24b0a336-c5ea-4555-ae0a-080a6bcac807}</MetaDataID>
         public void ShowAppPermissions()
         {
@@ -1169,68 +1355,6 @@ namespace CourierApp.ViewModel
 #if DeviceDotNet
         public ScanCode ScanCode = new ScanCode();
 #endif
-        /// <MetaDataID>{257f42e6-8d57-413c-9b46-aa784622b389}</MetaDataID>
-        public async Task<bool> AssignCourier()
-        {
-#if DeviceDotNet
-            string courierAssignKey = null;
-            try
-            {
-                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
-
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return false;
-                courierAssignKey = result.Text;
-            }
-            catch (Exception error)
-            {
-                return false;
-            }
-
-            string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-            string serverUrl = AzureServerUrl;
-
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-                authUser = DeviceAuthentication.AuthUser;
-            try
-            {
-
-                this._Courier = ServicesContextManagment.AssignCourierUser(courierAssignKey);
-                string type = "FlavourBusinessManager.AuthFlavourBusiness";
-                var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
-                var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
-                UserData = pAuthFlavourBusiness.SignIn();
-                return true;
-            }
-            catch (Exception error)
-            {
-                return false;
-            }
-
-
-
-            //lock (this)
-            //{
-            //    if (OnScan && ConnectToServicePointTask != null)
-            //        return ConnectToServicePointTask.Task;
-
-            //    OnScan = true;
-            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
-            //}
-            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
-            //{
-            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
-            //});
-
-
-            //return ConnectToServicePointTask.Task;
-#else
-            return false;
-#endif
-
-        }
-
         public bool ScanShippingEnabled
         {
             get => ApplicationSettings.Current.ScanShippingEnabled;
@@ -1240,87 +1364,6 @@ namespace CourierApp.ViewModel
             }
         }
 
-
-        /// <MetaDataID>{5cc6f81d-6009-486a-be8a-e098239a3f33}</MetaDataID>
-        public async Task<UserData> AssignDeviceToNativeUserCourier()
-        {
-#if DeviceDotNet
-            string deviceAssignKey = null;
-            try
-            {
-                var result = await ScanCode.Scan("Hold your phone up to the Waiter Identity", "Scanning will happen automatically");
-
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return null;
-                deviceAssignKey = result.Text;
-            }
-            catch (Exception error)
-            {
-                return null;
-            }
-
-
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-                authUser = DeviceAuthentication.AuthUser;
-            try
-            {
-                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
-                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
-
-                lock (this)
-                    NativeUsers = null;
-
-
-                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
-            }
-            catch (Exception error)
-            {
-                return null;
-            }
-
-
-
-            //lock (this)
-            //{
-            //    if (OnScan && ConnectToServicePointTask != null)
-            //        return ConnectToServicePointTask.Task;
-
-            //    OnScan = true;
-            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
-            //}
-            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
-            //{
-            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
-            //});
-
-
-            //return ConnectToServicePointTask.Task;
-#else
-
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
-            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;81e95927f7814a8a8134a40e3d8e19d6";
-            deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
-
-            try
-            {
-                NativeUserSignInData nativeUserData = ServicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
-                ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
-
-                lock (this)
-                    NativeUsers = null;
-                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
-            }
-            catch (Exception error)
-            {
-                return null;
-            }
-
-
-            return null;
-#endif
-
-        }
         /// <exclude>Excluded</exclude>
         IHomeDeliveryServicePoint _HomeDeliveryServicePoint = null;
 
@@ -1458,72 +1501,10 @@ namespace CourierApp.ViewModel
 
             }
         }
-        public async Task<bool> AssignScannerDevice()
-        {
-
-#if DeviceDotNet
-            string deviceAssignKey = null;
-            try
-            {
-                var result = await ScanCode.Scan("Hold your phone up to the courier Identity", "Scanning will happen automatically");
-
-                if (result == null || string.IsNullOrWhiteSpace(result.Text))
-                    return false;
-                deviceAssignKey = result.Text;
-            }
-            catch (Exception error)
-            {
-                return false;
-            }
-
-
-            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
-            if (authUser == null)
-                authUser = DeviceAuthentication.AuthUser;
-            try
-            {
-
-                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
-                return true;
-
-            }
-            catch (Exception error)
-            {
-                return false;
-            }
+   
 
 
 
-            //lock (this)
-            //{
-            //    if (OnScan && ConnectToServicePointTask != null)
-            //        return ConnectToServicePointTask.Task;
-
-            //    OnScan = true;
-            //    ConnectToServicePointTask = new TaskCompletionSource<bool>();
-            //}
-            //Xamarin.Forms.Device.BeginInvokeOnMainThread(async () =>
-            //{
-            //    await (App.Current.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(ScanPage);
-            //});
-
-
-            //return ConnectToServicePointTask.Task;
-#else
-
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;bf37a3d641ac46fdbb48c013455eb370";
-            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;758f7003850241bf84bb6e8a4e936569";
-            try
-            {
-                ApplicationSettings.Current.HomeDeliveryServicePointIdentity = ServicesContextManagment.AssignCourierScannerDevice(deviceAssignKey);
-                return true;
-            }
-            catch (Exception error)
-            {
-                throw;
-            }
-#endif
-        }
 
         IFlavoursServicesContextManagment _ServicesContextManagment;
         private IFlavoursServicesContextManagment ServicesContextManagment
