@@ -997,7 +997,8 @@ namespace FlavourBusinessManager.HumanResources
         /// <MetaDataID>{706291dc-5c67-4906-b9d2-ea8072166738}</MetaDataID>
         public ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
-
+            System.Diagnostics.Debug.WriteLine("####   GetFoodShippingUpdates : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
+            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   GetFoodShippingUpdates : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
             List<FoodShipping> servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).ToList();
 
             var itemsToServe = (from servingBatch in servingBatches
@@ -1357,13 +1358,13 @@ namespace FlavourBusinessManager.HumanResources
             var foodShippings = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).OfType<IServingBatch>().ToList();
             var assignedFoodShippings = foodShippings.Where(x => x.IsAssigned).ToList();
             var unAssignedFoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
-
+            System.Diagnostics.Debug.WriteLine("####   FindFoodShippingsChanges : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
+            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FindFoodShippingsChanges : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
             if (assignedFoodShippings.Count != AssignedFoodShippings.Count ||
                 unAssignedFoodShippings.Count != FoodShippings.Count)
             {
                 _FoodShippingsChanged?.Invoke();
-            }
-            if (AssignedFoodShippings.Count > 0 && !AssignedFoodShippings.ContainsAll(assignedFoodShippings))
+            } else  if (AssignedFoodShippings.Count > 0 && !AssignedFoodShippings.ContainsAll(assignedFoodShippings))
                 _FoodShippingsChanged?.Invoke();
             else if (FoodShippings.Count > 0 && !FoodShippings.ContainsAll(unAssignedFoodShippings))
                 _FoodShippingsChanged?.Invoke();

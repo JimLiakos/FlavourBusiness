@@ -190,6 +190,8 @@ namespace ServiceContextManagerApp
         {
             CourierPresentation courierPresentation = worker as CourierPresentation;
 
+            System.Diagnostics.Debug.WriteLine("####   AssignFoodShipping : " + System.DateTime.UtcNow.ToString());
+            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   AssignFoodShipping : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
 
             var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
@@ -231,6 +233,10 @@ namespace ServiceContextManagerApp
 
         public async Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity)
         {
+
+            System.Diagnostics.Debug.WriteLine("####   RemoveFoodShippingAssignment : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
+            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   RemoveFoodShippingAssignment : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+
             var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
 

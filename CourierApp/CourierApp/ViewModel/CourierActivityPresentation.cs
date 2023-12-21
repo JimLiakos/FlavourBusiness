@@ -124,7 +124,7 @@ namespace CourierApp.ViewModel
                 throw;
             }
         }
-         
+
         /// <MetaDataID>{e3c19a77-a9d9-45d6-add9-c5b346042474}</MetaDataID>
         private static IAuthFlavourBusiness GetFlavourBusinessAuth()
         {
@@ -316,7 +316,7 @@ namespace CourierApp.ViewModel
             try
             {
 
-                this._Courier = ServicesContextManagment.AssignCourierUser(courierAssignKey);
+                this.Courier = ServicesContextManagment.AssignCourierUser(courierAssignKey);
                 string type = "FlavourBusinessManager.AuthFlavourBusiness";
                 var remoteObject = RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData);
                 var pAuthFlavourBusiness = RemotingServices.CastTransparentProxy<IAuthFlavourBusiness>(remoteObject);
@@ -378,8 +378,8 @@ namespace CourierApp.ViewModel
                 });
 
                 ObjectChangeState?.Invoke(this, null);
-                if (_Courier != null)
-                    OAuthUserIdentity = _Courier.OAuthUserIdentity;
+                if (Courier != null)
+                    OAuthUserIdentity = Courier.OAuthUserIdentity;
                 return true;
             }
 
@@ -394,19 +394,11 @@ namespace CourierApp.ViewModel
                     {
                         if (authUser != null)
                         {
-                            if (_Courier != null)
-                            {
-                                _Courier.ObjectChangeState -= Courier_ObjectChangeState;
-                                _Courier.MessageReceived -= MessageReceived;
-                                _Courier.FoodShippingsChanged -= FoodShippingsChanged;
-                                //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                                if (_Courier is ITransparentProxy)
-                                    (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
-                            }
-                            if (_Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
+                           
+                            if (Courier != null && __Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
+                                ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(__Courier.ShiftWork);
                                 if (ActiveShiftWork != null)
                                 {
                                     var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
@@ -423,29 +415,22 @@ namespace CourierApp.ViewModel
 
                                     UpdateFoodShippings(foodShipings);
                                 }
-                                _Courier.ObjectChangeState += Courier_ObjectChangeState;
-                                _Courier.MessageReceived += MessageReceived;
-                                _Courier.FoodShippingsChanged += FoodShippingsChanged;
-                                var newState = _Courier.State;
+                                var newState = Courier.State;
                                 if (this.CourierCurrentState != newState)
                                 {
                                     this.CourierCurrentState = newState;
                                     ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
                                 }
-                                CourierOnTheRoadToReturn = _Courier.State == CourierState.EndOfDeliveryAndReturn;
-
-                                //Courier.ServingBatchesChanged += ServingBatchesChanged;
-                                if (_Courier is ITransparentProxy)
-                                    (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
+                                CourierOnTheRoadToReturn = Courier.State == CourierState.EndOfDeliveryAndReturn;
 
 #if DeviceDotNet
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                _Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                __Courier.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 //ApplicationSettings.Current.FriendlyName = Courier.FullName;
                                 GetMessages();
 
-                                OAuthUserIdentity = _Courier.OAuthUserIdentity;
+                                OAuthUserIdentity = __Courier.OAuthUserIdentity;
                                 return true;
 
                             }
@@ -478,20 +463,13 @@ namespace CourierApp.ViewModel
                             {
                                 if (role.RoleType == RoleType.Courier)
                                 {
-                                    if (_Courier != null)
-                                    {
-                                        _Courier.ObjectChangeState -= Courier_ObjectChangeState;
-                                        _Courier.MessageReceived -= MessageReceived;
-                                        //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                                        if (_Courier is ITransparentProxy)
-                                            (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
-                                    }
-                                    _Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
-                                    if (_Courier == null)
+                                   
+                                    Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
+                                    if (Courier == null)
                                         continue;
 
 
-                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
+                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(Courier.ShiftWork);
 
                                     var newState = Courier.State;
                                     if (this.CourierCurrentState != newState)
@@ -503,7 +481,7 @@ namespace CourierApp.ViewModel
 
                                     if (ActiveShiftWork != null)
                                     {
-                                        _CourierPresentation = new CourierPresentation(_Courier, null);
+                                        _CourierPresentation = new CourierPresentation(Courier, null);
                                         var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
                                         {
                                             foodShipping.ClientFullName,
@@ -519,13 +497,10 @@ namespace CourierApp.ViewModel
                                         UpdateFoodShippings(foodShipings);
                                     }
 
-                                    string objectRef = RemotingServices.SerializeObjectRef(_Courier);
+                                    string objectRef = RemotingServices.SerializeObjectRef(Courier);
                                     ApplicationSettings.Current.CourierObjectRef = objectRef;
-                                    _Courier.ObjectChangeState += Courier_ObjectChangeState;
-                                    _Courier.MessageReceived += MessageReceived;
-                                    _Courier.FoodShippingsChanged += FoodShippingsChanged;
 
-                                    if (_Courier.State == CourierState.EndOfDeliveryAndReturn)
+                                    if (Courier.State == CourierState.EndOfDeliveryAndReturn)
                                     {
 
                                         if (CourierOnTheRoadToReturn != true)
@@ -544,34 +519,30 @@ namespace CourierApp.ViewModel
                                         }
                                     }
 
-                                    //Courier.ServingBatchesChanged += ServingBatchesChanged;
-                                    if (_Courier is ITransparentProxy)
-                                        (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
-
 
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                    _Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                    __Courier.DeviceFirebaseToken = device.FirebaseToken;
                                     if (!device.IsBackgroundServiceStarted)
                                     {
                                         BackgroundServiceState serviceState = new BackgroundServiceState();
                                         device.RunInBackground(new Action(async () =>
                                         {
-                                            var message = _Courier.PeekMessage();
-                                            _Courier.MessageReceived += MessageReceived;
-                                            do
-                                            {
-                                                System.Threading.Thread.Sleep(1000);
+                                            var message = __Courier.PeekMessage();
+                                            //__Courier.MessageReceived += MessageReceived;
+                                            //do
+                                            //{
+                                            //    System.Threading.Thread.Sleep(1000);
 
-                                            } while (!serviceState.Terminate);
+                                            //} while (!serviceState.Terminate);
 
-                                            _Courier.MessageReceived -= MessageReceived;
+                                            //__Courier.MessageReceived -= MessageReceived;
                                             //if (Waiter is ITransparentProxy)
                                             //    (Waiter as ITransparentProxy).Reconnected -= WaiterPresentation_Reconnected;
                                         }), serviceState);
                                     }
 #endif
-                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
+                                    ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(Courier.ShiftWork);
                                     GetMessages();
                                 }
                             }
@@ -579,8 +550,8 @@ namespace CourierApp.ViewModel
 
 
                             AuthUser = authUser;
-                            if (_Courier != null)
-                                OAuthUserIdentity = _Courier.OAuthUserIdentity;
+                            if (Courier != null)
+                                OAuthUserIdentity = Courier.OAuthUserIdentity;
                             ObjectChangeState?.Invoke(this, null);
                             return true;
                         }
@@ -880,9 +851,9 @@ namespace CourierApp.ViewModel
 
         }
 
-  
 
-  
+
+
 
         ICourierPresentation _CourierPresentation;
         public ICourierPresentation CourierPresentation
@@ -892,7 +863,7 @@ namespace CourierApp.ViewModel
                 if (InActiveShiftWork)
                 {
                     if (_CourierPresentation == null)
-                        _CourierPresentation = new CourierPresentation(_Courier, null);
+                        _CourierPresentation = new CourierPresentation(Courier, null);
                     return _CourierPresentation;
                 }
                 else
@@ -900,20 +871,56 @@ namespace CourierApp.ViewModel
             }
         }
         /// <MetaDataID>{ba70c705-d7e0-478d-a619-a86934e80a34}</MetaDataID>
-        public ICourier Courier => _Courier;
+        public ICourier Courier
+        {
+            get
+            {
+                return __Courier;
+            }
+            set
+            {
+                if (__Courier!=null)
+                {
+                    __Courier.ObjectChangeState -= Courier_ObjectChangeState;
+                    __Courier.MessageReceived -= MessageReceived;
+                    __Courier.FoodShippingsChanged -= FoodShippingsChanged;
+                    //Courier.ServingBatchesChanged -= ServingBatchesChanged;
+                    if (__Courier is ITransparentProxy)
+                        (__Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
+
+                }
+                __Courier=value;
+                if (__Courier!=null)
+                {
+                    __Courier.ObjectChangeState += Courier_ObjectChangeState;
+                    __Courier.MessageReceived += MessageReceived;
+                    __Courier.FoodShippingsChanged += FoodShippingsChanged;
+                    //Courier.ServingBatchesChanged -= ServingBatchesChanged;
+                    if (__Courier is ITransparentProxy)
+                        (__Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
+
+                }
+
+            }
+        }
 
         /// <MetaDataID>{b6d6d245-a984-4aa0-b2c2-3a9d96a39aa4}</MetaDataID>
-        ICourier _Courier;
+        ICourier __Courier;
         /// <MetaDataID>{7c356551-9dd0-4247-a6b9-3a68914d8881}</MetaDataID>
         private Task<bool> SignInTask;
         /// <MetaDataID>{bd780d43-f60b-4b83-92cc-38c769c2d505}</MetaDataID>
         private bool OnSignIn;
 
-  
+
         private void FoodShippingsChanged()
         {
             if (ActiveShiftWork != null)
             {
+
+                System.Diagnostics.Debug.WriteLine("####   FoodShippingsChanged : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
+#if !DeviceDotNet
+                System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FoodShippingsChanged : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+#endif
                 GetServingUpdates();
                 //UpdateFoodShippings(Courier.GetFoodShippings());
             }
@@ -1002,6 +1009,8 @@ namespace CourierApp.ViewModel
 
                     }
                 }
+
+                System.Diagnostics.Debug.WriteLine("####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
                 ObjectChangeState?.Invoke(this, "FoodShippings");
 
             }
@@ -1011,9 +1020,11 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{c57f087c-6cb6-4bc6-a6b9-1b46a58a9884}</MetaDataID>
         private void CourierActivityPresentation_Reconnected(object sender)
         {
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { " CourierActivityPresentation_Reconnected" });
+#endif
             GetServingUpdates();
-
-
         }
 
         /// <MetaDataID>{d99357a4-d51b-450e-9dcb-2c2c0f96b6c8}</MetaDataID>
@@ -1068,11 +1079,11 @@ namespace CourierApp.ViewModel
                 }
 
                 ObjectChangeState?.Invoke(this, nameof(FoodShippings));
-                
-                if (newState == CourierState.OnTheRoad)
-                    FoodShippingsChanged();
-                if (newState == CourierState.PendingForFoodShiping)
-                    FoodShippingsChanged();
+
+                //if (newState == CourierState.OnTheRoad)
+                //    FoodShippingsChanged();
+                //if (newState == CourierState.PendingForFoodShiping)
+                //    FoodShippingsChanged();
 
                 if (newState == CourierState.EndOfDeliveryAndReturn)
                 {
@@ -1104,7 +1115,7 @@ namespace CourierApp.ViewModel
         public bool CourierOnTheRoad
         {
             get
-            { 
+            {
                 return CourierCurrentState==CourierState.OnTheRoad;
             }
         }
@@ -1241,6 +1252,10 @@ namespace CourierApp.ViewModel
 
                     }
                 }
+                System.Diagnostics.Debug.WriteLine("####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
+#if !DeviceDotNet
+                System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+#endif
                 ObjectChangeState?.Invoke(this, "FoodShippings");
             }
         }
@@ -1306,7 +1321,7 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{e0cae251-d210-41e4-9c12-e3da35bcc002}</MetaDataID>
         public async void ShiftWorkStart(DateTime startedAt, double timespanInHours)
         {
-            ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.NewShiftWork(startedAt, timespanInHours));
+            ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(Courier.NewShiftWork(startedAt, timespanInHours));
 
             if (ActiveShiftWork != null)
             {
@@ -1404,10 +1419,10 @@ namespace CourierApp.ViewModel
                     if (_HomeDeliveryServicePoint == null)
                         _HomeDeliveryServicePoint = RemotingServices.CastTransparentProxy<IHomeDeliveryServicePoint>(this.ServicesContextManagment.GetServicePoint(ApplicationSettings.Current.HomeDeliveryServicePointIdentity));
                 }
-                else if (_Courier != null)
+                else if (Courier != null)
                 {
                     if (_HomeDeliveryServicePoint == null)
-                        _HomeDeliveryServicePoint = _Courier.HomeDeliveryServicePoint;
+                        _HomeDeliveryServicePoint = Courier.HomeDeliveryServicePoint;
                 }
 
                 return _HomeDeliveryServicePoint;
@@ -1475,7 +1490,7 @@ namespace CourierApp.ViewModel
                    {
 
                        var foodShippingPresentation = _FoodShippings.GetViewModelFor(courierShippingPair.FoodShipping, courierShippingPair.FoodShipping);
-                       if (!IsScannerDevice && _Courier != null)
+                       if (!IsScannerDevice && Courier != null)
                            AssignFoodShipping(foodShippingPresentation.ServiceBatchIdentity);
 
 
@@ -1878,7 +1893,7 @@ namespace CourierApp.ViewModel
             if (foodShippingPresentation != null)
                 Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping, returnReasonIdentity, customReturnReasonDescription);
 
-        } 
+        }
         #endregion
 
 
@@ -2071,7 +2086,7 @@ namespace CourierApp.ViewModel
 
         #endregion
 
-     
+
         public string AppIdentity => "com.microneme.courierapp";
 
 
