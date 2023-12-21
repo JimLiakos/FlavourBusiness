@@ -81,7 +81,7 @@ namespace CourierApp.ViewModel
 
         }
 #endif
-        event ObjectChangeStateHandle ObjectChangeState;
+        public event ObjectChangeStateHandle ObjectChangeState;
 
         #region User authentication
         /// <MetaDataID>{097f34b0-62a3-4cc2-9836-290ed314d154}</MetaDataID>
@@ -1244,10 +1244,11 @@ namespace CourierApp.ViewModel
                 ObjectChangeState?.Invoke(this, "FoodShippings");
             }
         }
-  
 
 
-  
+
+
+        #region Courier shift work
         public IServingShiftWork ActiveShiftWork
         {
             get
@@ -1332,9 +1333,19 @@ namespace CourierApp.ViewModel
         }
 
 
+        /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
+        public void ExtendShiftWorkStart(double timespanInHours)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+
         /// <MetaDataID>{f9f3e407-f92f-4376-8ba6-96dc71a245ae}</MetaDataID>
         static string AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
 
+        #region Permissions
         /// <MetaDataID>{24b0a336-c5ea-4555-ae0a-080a6bcac807}</MetaDataID>
         public void ShowAppPermissions()
         {
@@ -1351,6 +1362,23 @@ namespace CourierApp.ViewModel
             return true;
 #endif
         }
+
+        /// <MetaDataID>{5be6b1d5-82d9-4cd6-b0c7-afa7da2a2c26}</MetaDataID>
+        public async Task<bool> CheckPermissionsForQRCodeScan()
+        {
+#if DeviceDotNet
+
+            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+#else
+            return false;
+#endif
+
+        }
+
+        #endregion
+
+
+
 
 #if DeviceDotNet
         public ScanCode ScanCode = new ScanCode();
@@ -1480,8 +1508,6 @@ namespace CourierApp.ViewModel
 
         }
 
-
-
         public bool IsScannerDevice
         {
             get
@@ -1501,11 +1527,11 @@ namespace CourierApp.ViewModel
 
             }
         }
-   
 
 
 
 
+        /// <exclude>Excluded</exclude>
         IFlavoursServicesContextManagment _ServicesContextManagment;
         private IFlavoursServicesContextManagment ServicesContextManagment
         {
@@ -1545,21 +1571,8 @@ namespace CourierApp.ViewModel
         }
 
 
-        /// <MetaDataID>{5be6b1d5-82d9-4cd6-b0c7-afa7da2a2c26}</MetaDataID>
-        public async Task<bool> CheckPermissionsForQRCodeScan()
-        {
-#if DeviceDotNet
 
-            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
-#else
-            return false;
-#endif
-
-        }
-
-
-
-
+        #region Food shipping 
 
         private void UpdateFoodShippings(IList<IFoodShipping> allFoodShippings)
         {
@@ -1623,11 +1636,7 @@ namespace CourierApp.ViewModel
         public List<FoodShippingPresentation> AssignedFoodShippings => _AssignedFoodShippings.Values.Where(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.OnRoad)).OrderBy(x => x.FoodShipping.SortID).ToList();
 
 
-        /// <MetaDataID>{90227b57-2da0-4165-85c8-518932ba9c49}</MetaDataID>
-        public void ExtendShiftWorkStart(double timespanInHours)
-        {
-            throw new NotImplementedException();
-        }
+
         public async Task ImBack()
         {
 
@@ -1764,65 +1773,7 @@ namespace CourierApp.ViewModel
                 return Task.FromResult(false);
         }
 
-        public async void PhoneCall(string foodShippingIdentity)
-        {
-            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-            if (foodShipping == null)
-                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
 
-            if (foodShipping != null)
-            {
-#if DeviceDotNet
-                PhoneDialer.Open(foodShipping.PhoneNumber);
-#endif
-            }
-        }
-
-        public async void Navigate(string foodShippingIdentity)
-        {
-            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-            if (foodShipping == null)
-                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-
-            if (foodShipping != null)
-            {
-                try
-                {
-#if DeviceDotNet
-                    await Xamarin.Essentials.Map.OpenAsync(foodShipping.Place.Location.Latitude, foodShipping.Place.Location.Longitude, new MapLaunchOptions() { Name = foodShipping.ClientFullName, NavigationMode = NavigationMode.Driving });
-#endif
-                }
-                catch (Exception error)
-                {
-
-
-                }
-            }
-
-
-        }
-
-
-
-
-        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
-        {
-            get
-            {
-                return AppLifeTime.SerializeTaskScheduler;
-            }
-        }
-        static IAppLifeTime AppLifeTime
-        {
-            get
-            {
-#if DeviceDotNet
-                return Application.Current as IAppLifeTime;
-#else
-                return System.Windows.Application.Current as IAppLifeTime;
-#endif
-            }
-        }
 
         public bool CommitFoodShippings()
         {
@@ -1910,8 +1861,91 @@ namespace CourierApp.ViewModel
             ObjectChangeState?.Invoke(this, nameof(FoodShippings));
         }
 
+        public void FoodShippingDelivered(string foodShippingIdentity)
+        {
+            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShippingPresentation != null)
+                Courier.Delivered(foodShippingPresentation.FoodShipping);
+
+        }
 
 
+        public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null)
+        {
+            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShippingPresentation != null)
+                Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping, returnReasonIdentity, customReturnReasonDescription);
+
+        } 
+        #endregion
+
+
+
+        public async void PhoneCall(string foodShippingIdentity)
+        {
+            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping == null)
+                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping != null)
+            {
+#if DeviceDotNet
+                PhoneDialer.Open(foodShipping.PhoneNumber);
+#endif
+            }
+        }
+
+
+        public async void Navigate(string foodShippingIdentity)
+        {
+            var foodShipping = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+            if (foodShipping == null)
+                foodShipping = FoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
+
+            if (foodShipping != null)
+            {
+                try
+                {
+#if DeviceDotNet
+                    await Xamarin.Essentials.Map.OpenAsync(foodShipping.Place.Location.Latitude, foodShipping.Place.Location.Longitude, new MapLaunchOptions() { Name = foodShipping.ClientFullName, NavigationMode = NavigationMode.Driving });
+#endif
+                }
+                catch (Exception error)
+                {
+
+
+                }
+            }
+
+
+        }
+
+
+
+
+        public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler
+        {
+            get
+            {
+                return AppLifeTime.SerializeTaskScheduler;
+            }
+        }
+        static IAppLifeTime AppLifeTime
+        {
+            get
+            {
+#if DeviceDotNet
+                return Application.Current as IAppLifeTime;
+#else
+                return System.Windows.Application.Current as IAppLifeTime;
+#endif
+            }
+        }
+
+
+        #region Multilingual string table
 
         string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
 
@@ -2035,27 +2069,9 @@ namespace CourierApp.ViewModel
 
         }
 
+        #endregion
 
-        public void FoodShippingDelivered(string foodShippingIdentity)
-        {
-            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-
-            if (foodShippingPresentation != null)
-                Courier.Delivered(foodShippingPresentation.FoodShipping);
-
-        }
-
-
-        public void FoodShippingReturn(string foodShippingIdentity, string returnReasonIdentity, string customReturnReasonDescription = null)
-        {
-            var foodShippingPresentation = AssignedFoodShippings.Where(x => x.Identity == foodShippingIdentity).FirstOrDefault();
-
-            if (foodShippingPresentation != null)
-                Courier.FoodShippingReturn(foodShippingPresentation.FoodShipping, returnReasonIdentity, customReturnReasonDescription);
-
-        }
-
-
+     
         public string AppIdentity => "com.microneme.courierapp";
 
 
@@ -2073,8 +2089,6 @@ namespace CourierApp.ViewModel
                 return PairedWithCourier != null && FoodShippings.Count > 0;
             }
         }
-
-
 
         CourierPresentation _PairedWithCourier;
         ICourierPresentation PairedWithCourier

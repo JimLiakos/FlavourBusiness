@@ -78,7 +78,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{12a55af9-dcfe-4418-93d8-be4d74151e6e}</MetaDataID>
         CourierShippingPair GetCourierShipping(string scannedCode);
 
-
+         
         /// <MetaDataID>{d24a60bd-6fea-4e5d-9175-21d4b59a4243}</MetaDataID>
         List<ReturnReason> ReturnReasons { get; }
 
