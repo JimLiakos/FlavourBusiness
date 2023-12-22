@@ -3,6 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CourierApp.App">
     <Application.Resources>
-
+        <!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <!-- Pallete -->
+            <Color x:Key="primary-back-title-color">#4a148c</Color>
+            <Color x:Key="primary-title-color">#FFFFFF</Color>
+            <!-- Pallete-end -->
+            <Style ApplyToDerivedTypes="true" TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Key=primary-back-title-color}"/>
+                <Setter Property="BarTextColor" Value="{StaticResource Key=primary-title-color}"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

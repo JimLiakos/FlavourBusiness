@@ -25,8 +25,9 @@ namespace CourierApp
             App.SerializeTaskScheduler.RunAsync();
 
             InitializeComponent();
-
-            MainPage = new NavigationPage(new MainPage());
+            var navigationPage = new NavigationPage(new MainPage());
+            MainPage = navigationPage;
+            //navigationPage.BarBackgroundColor = Color.Black;
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuFoodItem"] = typeof(MenuModel.JsonViewModel.MenuFoodItem);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.MenuItemPrice"] = typeof(MenuModel.JsonViewModel.MenuItemPrice);
             SerializationBinder.NamesTypesDictionary["MenuModel.JsonViewModel.OptionMenuItemSpecific"] = typeof(MenuModel.JsonViewModel.OptionMenuItemSpecific);

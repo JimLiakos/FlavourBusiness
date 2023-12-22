@@ -31,7 +31,15 @@ namespace CourierApp
 
                 hybridWebView.Uri = url;
             }
+            hybridWebView.Navigated += HybridWebView_Navigated;
         }
+
+        private void HybridWebView_Navigated(object sender, NavigatedEventArgs e)
+        {
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.SetStatusBarColor(Color.BlueViolet);
+        }
+
         private void MainPage_SizeChanged(object sender, EventArgs e)
         {
 

@@ -111,7 +111,11 @@ namespace DontWaitApp
         bool Refresh;
         private void HybridWebView_Navigated(object sender, OOAdvantech.Web.NavigatedEventArgs e)
         {
-            if(Refresh)
+
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.SetStatusBarColor(Color.BlueViolet);
+
+            if (Refresh)
             {
                 Refresh=false;
                 hybridWebView.RefreshPage();
