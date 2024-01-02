@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="Service Context Manager App"  Height="900" Width="434">
     <Grid  >
-        <Border  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="WebBrowserHost">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Name="Conectivit"></Grid>
+        <Border Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="WebBrowserHost">
             <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
         </Border>
     </Grid>

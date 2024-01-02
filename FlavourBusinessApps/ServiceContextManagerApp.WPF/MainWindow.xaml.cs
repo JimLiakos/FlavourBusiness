@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GenWebBrowser;
+using OOAdvantech.Net;
 
 namespace ServiceContextManagerApp.WPF
 {
@@ -20,11 +21,13 @@ namespace ServiceContextManagerApp.WPF
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// <MetaDataID>{ca6e5961-399b-48f5-a455-f2d918df846e}</MetaDataID>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IWindowCaption
     {
+        
         WebBrowserOverlay Browser;
         public MainWindow()
         {
+
             InitializeComponent();
 
             DataContext = new ManagerPresentation();
@@ -40,6 +43,11 @@ namespace ServiceContextManagerApp.WPF
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.Navigate(new Uri(url));
 
+        }
+
+        public void SetCaptionBarColor(System.Drawing.Color color)
+        {
+            Conectivit.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
         }
     }
 }

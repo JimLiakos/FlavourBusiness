@@ -122,8 +122,10 @@ namespace TakeAwayApp.ViewModel
 
 
 
-        ///// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
-        //Task<IHomeDeliverySession> NewHomeDeliverySession { get; }
+        /// <MetaDataID>{67460b8d-e957-43c3-b964-e03155b16fda}</MetaDataID>
+        Task<IHomeDeliverySession> NewHomeDeliverySession();
+
+
 
         /// <MetaDataID>{fa6aaa89-c9c7-469b-934c-4b690d736f49}</MetaDataID>
         Task<IHomeDeliverySession> GetHomeDeliverSession(string sessionID);

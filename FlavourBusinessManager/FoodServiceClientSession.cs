@@ -148,7 +148,10 @@ namespace FlavourBusinessManager.EndUsers
                 //string param1 =HttpUtility.ParseQueryString(myUri.Query).Get("sc");
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
-                return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
+                if (ServicePoint is IHomeDeliveryServicePoint)
+                    return new ClientSessionData() { ServicesContextLogo = ServicePoint.Description, ServicesPointName = "", SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
+                else
+                    return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
 
             }
         }
@@ -2155,7 +2158,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 stateTransition.Consistent = true;
             }
-             
+
             foreach (var clientSession in MainSession.PartialClientSessions)
                 clientSession.RaiseItemsStateChanged(clientSessionItems.ToDictionary(x => x.uid, x => x.State));
 

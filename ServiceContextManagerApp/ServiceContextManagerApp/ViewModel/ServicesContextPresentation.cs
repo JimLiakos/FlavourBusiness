@@ -18,6 +18,7 @@ using CourierApp.ViewModel;
 using OOAdvantech;
 using System.Linq.Expressions;
 using OOAdvantech.Remoting.RestApi;
+using Xamarin.Forms;
 
 
 
@@ -191,7 +192,7 @@ namespace ServiceContextManagerApp
             CourierPresentation courierPresentation = worker as CourierPresentation;
 
             System.Diagnostics.Debug.WriteLine("####   AssignFoodShipping : " + System.DateTime.UtcNow.ToString());
-            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   AssignFoodShipping : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+            //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   AssignFoodShipping : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
 
             var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
@@ -218,13 +219,13 @@ namespace ServiceContextManagerApp
                         {
                             var er = error;
                             throw;
-                            
+
                         }
                     }
                     return true;
 
                 });
-                
+
             }
 
             return false;
@@ -235,7 +236,7 @@ namespace ServiceContextManagerApp
         {
 
             System.Diagnostics.Debug.WriteLine("####   RemoveFoodShippingAssignment : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
-            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   RemoveFoodShippingAssignment : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+            //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   RemoveFoodShippingAssignment : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
 
             var foodShippings = FoodShippings.Values.OrderBy(x => x.FoodShipping.SortID).ToList();
             var foodShipping = foodShippings.Where(x => x.ServiceBatchIdentity == foodShippingIdentity).FirstOrDefault();
@@ -408,106 +409,126 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e203631b-ddea-42fb-be21-3e7098466561}</MetaDataID>
         public ServicesContextPresentation(IFlavoursServicesContext servicesContext, IServiceContextSupervisor signedInSupervisor)
         {
-
-            IMealCourse mm = null;
-
-
-            MealsController.Fetching(mc => mc.GetMealCoursesInProgress("Lota", 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
-            {
-                mealCourse.Name,
-                mealCourse.Meal,
-                FoodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsContext => new
-                {
-                    itemsContext.MealCourse,
-                    itemsContext.Description,
-                    itemsContext.PreparationState,
-                    //itemsContext.PreparationItems
-
-                })
-            })));
-
-            IMeal m_meal = mm.Fetching(t => t.Meal.Caching(meal => new
-            {
-                meal.Name,
-                Courses = meal.Courses.Select(mealCourse => new
-                {
-                    mealCourse.SortID,
-                    mealCourse.HeaderCourse,
-                    foodItemsInProgress = mealCourse.FoodItemsInProgress.Select(itemsPreparationContext => new
-                    {
-                        itemsPreparationContext.PreparationStationDescription
-
-                    })
-                })
-            }));
-
-            //this.Fetching(t=>t.MealCoursesInProgress.Select(x => new
-            //{
-            //    x.Name,
-            //    x.Meal,
-            //    FoodItemsInProgress = x.FoodItemsInProgress.Select(y => new
-            //    {
-            //        y.Description,
-            //        y.SessionType
-            //    })
-            //}));
-
             AdministratorIdentity = "";
             _SignedInSupervisor = signedInSupervisor;
             if (_SignedInSupervisor != null)
-            {
                 AdministratorIdentity = _SignedInSupervisor.Identity;
-
-            }
-
             ServicesContext = servicesContext;
-
             if (_SignedInSupervisor != null)
             {
                 var inActiveShiftWork = SignedInSupervisor.InActiveShiftWork;
                 if (inActiveShiftWork)
-                {
                     init();
-                }
                 else
                     SignedInSupervisor.ObjectChangeState += ServicesContextPresentation_ObjectChangeState;
+            }
+            else
+                init();
+
+
+        }
+
+
+        string SupervisorComunicationChannelUri;
+        private void MonitorSupervisorComunicationChannel()
+        {
+            if (_SignedInSupervisor != null)
+            {
+                var supervisorComunicationChannelUri = OOAdvantech.Remoting.RemotingServices.GetChannelUri(_SignedInSupervisor);
+                if (SupervisorComunicationChannelUri != supervisorComunicationChannelUri)
+                {
+                    if (!string.IsNullOrWhiteSpace(SupervisorComunicationChannelUri))
+                        OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(SupervisorComunicationChannelUri).ConnectivityChanged -= ServicesContextPresentation_ConnectivityChanged;
+
+                    SupervisorComunicationChannelUri = supervisorComunicationChannelUri;
+                    if (!string.IsNullOrWhiteSpace(SupervisorComunicationChannelUri))
+                        OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(SupervisorComunicationChannelUri).ConnectivityChanged += ServicesContextPresentation_ConnectivityChanged;
+
+                }
+            }
+        }
+
+        private void ServicesContextPresentation_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            var networkAccess = e.ToString();
+            var channelState = e.ComunicationChannelConectivity?.ChannelState;
+#if DeviceDotNet
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#endif
+            if (channelState == ChannelState.Connecting)
+            {
+#if DeviceDotNet
+                if (device.StatusBarColor == Color.DarkViolet)
+                    device.StatusBarColor = Color.LightSalmon;
+#endif
+            }
+            else if (channelState == ChannelState.Open)
+            {
+#if DeviceDotNet
+                device.StatusBarColor = Color.LightGreen;
+#endif
 
             }
             else
             {
-                init();
+#if DeviceDotNet
+                device.StatusBarColor = Color.DarkViolet;
+#endif
 
             }
-
         }
 
         private void init()
         {
-            
+
             if (_SignedInSupervisor != null)
                 _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
+            if (ServicesContextRuntime == null)
+            {
+               // using (var remoteCallContext = new RemoteCallContext(System.TimeSpan.FromMinutes(5), System.TimeSpan.FromMinutes(5)))
+                {
 
-            this.ServicesContextRuntime = ServicesContext.GetRunTime();
-            this.ServicesContextRuntime.ObjectChangeState+= ServicesContext_ObjectChangeState;
-            MealsController = this.ServicesContextRuntime.MealsController;
+
+                    try
+                    {
+                        ServicesContextRuntime = ServicesContext.GetRunTime();
+                        (ServicesContextRuntime as ITransparentProxy).Reconnected += ServicesContextPresentation_Reconnected;
+                        this.ServicesContextRuntime.ObjectChangeState += ServicesContext_ObjectChangeState;
+                        MealsController = this.ServicesContextRuntime.MealsController;
+
+                        _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
+                        GetServiceContextPresentationData();
+                    }
+                    catch (System.Exception error)
+                    {
+                        throw;
+                    }
+
+                }
+
+            }
+        }
 
 
+        private void GetServiceContextPresentationData(bool reconnectedToServer = false)
+        {
             MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
             MealsController.ObjectChangeState += MealsController_ObjectChangeState;
             MealsController.MealCourseChangeState += MealsController_MealCourseChangeState;
-            _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
-
             Task.Run(() =>
             {
                 //System.Threading.Thread.Sleep(9000);
 
                 string param = MealsController.ToString() + "asdas";
 
-                var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(param, 12).Caching(mealCourses => mealCourses.Select(mealCourse => new
+                var clientSideMealCourses = _MealCoursesInProgress.Keys.Select(x => new MealCourseAbbreviation() { Identity = x.Identity, TimeStamp = x.StateTimestamp }).ToList();
+
+                var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(clientSideMealCourses).Caching(mealCourses => mealCourses.Select(mealCourse => new
                 {
                     mealCourse.Name,
                     mealCourse.ServingBatches,
+                    mealCourse.StateTimestamp,
                     mealCourse.PartiallyUnderServingProcess,
                     mealCourse.UnderServingProcess,
                     //mealCourse.Meal,
@@ -522,26 +543,42 @@ namespace ServiceContextManagerApp
                 })));
 
 
+                //MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
 
+                var mealCoursePresentations = mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).Where(x => x.StateTimestamp != x.ServerSideMealCourse.StateTimestamp).Select(x => x.MealCourseUpdate(x.ServerSideMealCourse)).ToList();
 
+                if (reconnectedToServer)
+                    MealCoursesUpdated?.Invoke(mealCoursePresentations);
+                else
+                    _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 
-                mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-
-
-                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
-
                 _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
-
                 GetMessages();
 
             });
         }
 
+        private void ServicesContextPresentation_Reconnected(object sender)
+        {
+
+            MealsController.NewMealCoursesInProgress -= MealsController_NewMealCoursesInrogress;
+            MealsController.ObjectChangeState -= MealsController_ObjectChangeState;
+            MealsController.MealCourseChangeState -= MealsController_MealCourseChangeState;
+
+            MealsController = ServicesContextRuntime.MealsController;
+            _Waiters = null;
+            _Couriers = null;
+            _Supervisors = null;
+            _TakeawayCashiers = null;
+            _Supervisors = null;
+            GetServiceContextPresentationData(true);
+        }
+
         private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
         {
 
-            
+
             if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
             {
                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
@@ -691,7 +728,8 @@ namespace ServiceContextManagerApp
                 if (mealCourse.SessionType == SessionType.HomeDelivery)
                 {
                     //mealCourse.ServerSideMealCourse.PreparationState
-                    IFoodShipping foodShipping = MealsController.Fetching(mc=>mc.GetMealCourseFoodShipping(mealCourseUri).Caching(_foodShipping=>new {
+                    IFoodShipping foodShipping = MealsController.Fetching(mc => mc.GetMealCourseFoodShipping(mealCourseUri).Caching(_foodShipping => new
+                    {
                         _foodShipping.ClientFullName,
                         _foodShipping.PhoneNumber,
                         _foodShipping.MealCourseUri,
@@ -700,7 +738,7 @@ namespace ServiceContextManagerApp
                         _foodShipping.DeliveryRemark,
                         _foodShipping.NotesForClient,
                         _foodShipping.ServicePoint
-                    })) ;
+                    }));
                     if (foodShipping == null)
                         return null;
 

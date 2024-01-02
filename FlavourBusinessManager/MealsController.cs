@@ -58,9 +58,11 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(string filter, int age)
+        public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(List<MealCourseAbbreviation> mealCoursesAtClientSide)
         {
-            return MealCoursesInProgress;
+            var mealCourseInProgress= MealCoursesInProgress.Where(x => !mealCoursesAtClientSide.Any(y => y.Identity == x.Identity && y.TimeStamp == x.StateTimestamp)).ToList();
+
+            return mealCourseInProgress;
         }
 
 

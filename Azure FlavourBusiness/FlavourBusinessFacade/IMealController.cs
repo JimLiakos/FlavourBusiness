@@ -20,7 +20,7 @@ namespace FlavourBusinessFacade.RoomService
         System.Collections.Generic.List<IMealCourse> MealCoursesInProgress { get; }
 
 
-        System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(string filter, int age );
+        System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(List<MealCourseAbbreviation> mealCoursesAtClientSide);
 
 
         event NewMealCoursesInProgressHandler NewMealCoursesInProgress;

@@ -15045,7 +15045,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(          )"
+					(object Message "GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15067,7 +15067,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15089,7 +15089,7 @@
 				    supplier   	"$UNNAMED$30"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15120,7 +15120,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -17777,7 +17777,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(          )"
+				label      	"GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -17864,7 +17864,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -17951,7 +17951,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -18246,7 +18246,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -19452,8 +19452,16 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"6"))
+			    value      	"7"))
 		    quid       	"6073C95302E6"
+		    documentation 	
+|
+|A meal consisting of multiple dishes (meal courses)
+|Most Western-world multicourse meals follow a standard sequence.
+|MealCourse class defines the food items where belongs to the same course 
+|for instance hors d'oeuvre or appetizer,main dish , dessert
+|
+		    
 		    stereotype 	"Interface"
 		    used_nodes 	(list uses_relationship_list
 			(object Uses_Relationship
@@ -19666,7 +19674,7 @@
 			    quid       	"6140195E0032"
 			    documentation 	
 |
-|Defines the meal course items grouped by state of items
+|Defines the meal course items grouped by preparation station where it prepares them.
 |
 			    
 			    type       	"System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.ItemsPreparationContext>"
@@ -19778,6 +19786,108 @@
 				    value      	"+7"))
 			    quid       	"657C0541000E"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "SortID"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{eb256350-044b-46d4-b050-a6863ed5b7af}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA7730000")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"658AA7730000"
+			    type       	"int"
+			    exportControl 	"Public")
+			(object ClassAttribute "StateTimestamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fc3c2bd0-e1c0-4ae1-9ceb-274759d79ab6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA7740002")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
+			    quid       	"658AA7740002"
+			    type       	"long"
+			    exportControl 	"Public")
+			(object ClassAttribute "PartiallyUnderServingProcess"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d69fd7e4-f8fc-4de3-bd2b-f20e5d8ed09c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA77400A4")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"658AA77400A4"
+			    documentation 	
+|
+|Some of the items are under the process of serving / delivery
+|
+			    
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "UnderServingProcess"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1301e032-688e-4260-960a-ec2b9a211528}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA774015A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"658AA774015A"
+			    documentation 	
+|
+|All items are under the process of serving / delivery
+|
+			    
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -20801,12 +20911,12 @@
 			    value      	"170a4e1d-1241-4efd-a037-01a2c2a3456b"))
 		    quid       	"5CDA6C650089"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$31"
+			(object Role "FoodItems"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
 				    name       	"As Property"
-				    value      	FALSE)
+				    value      	TRUE)
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
@@ -20826,11 +20936,13 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"Indexer"
-				    value      	FALSE))
+				    value      	TRUE))
 			    quid       	"5CDA6C6600C2"
+			    label      	"FoodItems"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IItemPreparation"
 			    quidu      	"5D024DF603A6"
-			    client_cardinality 	(value cardinality "1..*"))
+			    client_cardinality 	(value cardinality "1..*")
+			    is_navigable 	TRUE)
 			(object Role "MealCourse"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -20959,7 +21071,7 @@
 			    value      	"d3f8b87e-0f43-4373-939e-950dd9db19b2"))
 		    quid       	"5D4696C80399"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$32"
+			(object Role "$UNNAMED$31"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21061,7 +21173,7 @@
 			    quidu      	"5D024DF603A6"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$33"
+			(object Role "$UNNAMED$32"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21150,6 +21262,11 @@
 				    name       	"Indexer"
 				    value      	FALSE))
 			    quid       	"609FF0B30307"
+			    documentation 	
+|
+|Defines the meal of meal course
+|
+			    
 			    label      	"Meal"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMeal"
 			    quidu      	"609FE471004D"
@@ -21167,7 +21284,7 @@
 			    value      	"e7e482f4-cfba-45a5-8270-8346af757d7a"))
 		    quid       	"60E0180B00F8"
 		    roles      	(list role_list
-			(object Role "$UNNAMED$34"
+			(object Role "$UNNAMED$33"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"C#"
@@ -21261,7 +21378,7 @@
 			    quidu      	"6073C95302E6"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$35"
+			(object Role "$UNNAMED$34"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21387,7 +21504,7 @@
 			    quidu      	"5B8BB60401E2"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$36"
+			(object Role "$UNNAMED$35"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21525,7 +21642,7 @@
 			    quidu      	"616950830001"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$37"
+			(object Role "$UNNAMED$36"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21590,7 +21707,7 @@
 			    quidu      	"635CB39B0177"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$38"
+			(object Role "$UNNAMED$37"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21656,7 +21773,7 @@
 			    quidu      	"5C6BBDA2021E"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$39"
+			(object Role "$UNNAMED$38"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21714,7 +21831,7 @@
 			    quidu      	"635CB39B0177"
 			    client_cardinality 	(value cardinality "1..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$40"
+			(object Role "$UNNAMED$39"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -21809,8 +21926,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	1606
-		    origin_y   	81
+		    origin_x   	1532
+		    origin_y   	653
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::ServicesContextResources::IPreparationStationRuntime" @269
 			    ShowCompartmentStereotypes 	TRUE
@@ -21909,6 +22026,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
+			    compartment 	(object Compartment
+				Parent_View 	@271
+				location   	(22, 599)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	15
+				max_width  	1587)
 			    width      	668
 			    height     	487
 			    annotation 	8)
@@ -21969,6 +22104,24 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
+			    compartment 	(object Compartment
+				Parent_View 	@273
+				location   	(1409, 712)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	56
+				max_width  	1400)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -22837,7 +22990,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$33" @315
+				(object RoleView "$UNNAMED$32" @315
 				    Parent_View 	@310
 				    location   	(322, -809)
 				    font       	(object Font
@@ -23735,7 +23888,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$35" @355
+				(object RoleView "$UNNAMED$34" @355
 				    Parent_View 	@350
 				    location   	(760, -298)
 				    font       	(object Font
@@ -24117,7 +24270,7 @@
 					pctDist    	0.718232
 					height     	56
 					orientation 	0))
-				(object RoleView "$UNNAMED$31" @374
+				(object RoleView "FoodItems" @374
 				    Parent_View 	@369
 				    location   	(-416, 196)
 				    font       	(object Font
@@ -24143,13 +24296,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	228
 					justify    	0
-					label      	""
+					label      	"+FoodItems"
 					pctDist    	0.702929
 					height     	156
 					orientation 	0)
@@ -24419,7 +24571,7 @@
 			    line_color 	3342489
 			    quidu      	"60E0180B00F8"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$34" @388
+				(object RoleView "$UNNAMED$33" @388
 				    Parent_View 	@386
 				    location   	(1690, 104)
 				    font       	(object Font
@@ -24876,7 +25028,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$37" @409
+				(object RoleView "$UNNAMED$36" @409
 				    Parent_View 	@404
 				    location   	(587, 4)
 				    stereotype 	TRUE
@@ -25391,7 +25543,7 @@
 			    line_color 	3342489
 			    quidu      	"5D4696C80399"
 			    roleview_list 	(list RoleViews
-				(object RoleView "$UNNAMED$32" @432
+				(object RoleView "$UNNAMED$31" @432
 				    Parent_View 	@430
 				    location   	(649, 113)
 				    font       	(object Font
@@ -25625,7 +25777,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$31" @443
+				(object RoleView "FoodItems" @443
 				    Parent_View 	@438
 				    location   	(495, -19)
 				    font       	(object Font
@@ -25651,13 +25803,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	228
 					justify    	0
-					label      	""
+					label      	"+FoodItems"
 					pctDist    	0.611573
 					height     	42
 					orientation 	0)
@@ -28291,7 +28442,7 @@
 			    quidu      	"656DF87F013D"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$41"
+			(object Role "$UNNAMED$40"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -29881,7 +30032,7 @@
 					pctDist    	0.816193
 					height     	47
 					orientation 	1))
-				(object RoleView "$UNNAMED$41" @534
+				(object RoleView "$UNNAMED$40" @534
 				    Parent_View 	@529
 				    location   	(638, 0)
 				    stereotype 	TRUE

@@ -516,8 +516,6 @@ namespace FlavourBusinessManager
                 }
 
 
-
-
                 System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
                 string serverUrl = OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.Substring(0, OOAdvantech.Remoting.RestApi.RemotingServices.ServerPublicUrl.IndexOf("/api"));
                 var storagesClient = new OOAdvantech.PersistenceLayer.StoragesClient(httpClient);

@@ -51,7 +51,7 @@ namespace FlavourBusinessManager.RoomService
                     {
                         var ticks = new DateTime(2022, 1, 1).Ticks;
                         var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
-                        _Identity = uniqueId; 
+                        _Identity = uniqueId;
                         stateTransition.Consistent = true;
                     }
 
@@ -218,6 +218,38 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        long _StateTimestamp;
+
+        /// <MetaDataID>{9513ba98-432e-4a77-863e-e2d1207e6c1e}</MetaDataID>
+        [PersistentMember(nameof(_StateTimestamp))]
+        [BackwardCompatibilityID("+16")]
+        [CachingDataOnClientSide]
+        public long StateTimestamp
+        {
+
+            get
+            {
+                var lastChangedStateTimestamp = FoodItems.OrderBy(x => x.StateTimestamp).Last().StateTimestamp;
+
+                if(lastChangedStateTimestamp.Ticks> _StateTimestamp)
+                {
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _StateTimestamp = lastChangedStateTimestamp.Ticks; 
+                        stateTransition.Consistent = true;
+                    }
+
+                }
+                
+
+
+                return _StateTimestamp;
+            }
+
+        }
+
 
         /// <summary>
         /// Some of the items are under the process of serving / delivery
@@ -367,11 +399,26 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{d972471c-f59e-4094-b35f-1c0594d79d30}</MetaDataID>
         internal void ServingBatchAssigned()
         {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _StateTimestamp = DateTime.UtcNow.Ticks; 
+                stateTransition.Consistent = true;
+            }
+
             (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
         }
         /// <MetaDataID>{59ce1c31-e078-43f8-bda9-99257bb01174}</MetaDataID>
         internal void ServingBatchDeAssigned()
         {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _StateTimestamp = DateTime.UtcNow.Ticks;
+                stateTransition.Consistent = true;
+            }
+
+
             (ServicesContextRunTime.Current.MealsController as MealsController).MealCourseStateChanged(this, nameof(MealCourse.ServingBatches));
         }
 
@@ -490,6 +537,9 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+
+
+
 
         /// <MetaDataID>{d5bb9342-16b0-4c93-8b7b-07b0c5c5eb36}</MetaDataID>
         internal void Monitoring()

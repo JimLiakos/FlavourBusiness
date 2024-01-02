@@ -68,15 +68,55 @@ namespace CourierApp.ViewModel
 #if DeviceDotNet
             (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
 #endif
+
+
+            OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(AzureServerUrl).ConnectivityChanged += CourierActivityPresentation_ConnectivityChanged;
+
+        }
+
+        private void CourierActivityPresentation_ConnectivityChanged(object sender, OOAdvantech.Remoting.RestApi.ConnectivityChangedEventArgs e)
+        {
+            var networkAccess = e.ToString();
+            var channelState = e.ComunicationChannelConectivity?.ChannelState;
+#if DeviceDotNet
+            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+#endif
+            if (channelState == ChannelState.Connecting)
+            {
+#if DeviceDotNet
+                if (device.StatusBarColor == Color.DarkViolet)
+                    device.StatusBarColor = Color.LightSalmon;
+#endif
+            }
+            else if (channelState == ChannelState.Open)
+            {
+#if DeviceDotNet
+                device.StatusBarColor = Color.LightGreen;
+#endif
+
+            }
+            else
+            {
+#if DeviceDotNet
+                device.StatusBarColor = Color.DarkViolet;
+#endif
+
+            }
+
+
         }
 
 #if DeviceDotNet
         private void ApplicationResuming(object sender, EventArgs e)
         {
-            _FoodShippings.Clear();
-            _AssignedFoodShippings?.Clear();
-            PairedWithCourier = null;
-            ObjectChangeState?.Invoke(this, "FoodShippings");
+            if (IsScannerDevice)
+            {
+                _FoodShippings.Clear();
+                _AssignedFoodShippings?.Clear();
+                PairedWithCourier = null;
+
+                ObjectChangeState?.Invoke(this, "FoodShippings");
+            }
 
 
         }
@@ -360,9 +400,12 @@ namespace CourierApp.ViewModel
         /// <MetaDataID>{6411a2df-99bb-4f14-bd82-26ad8e306ed2}</MetaDataID>
         public async Task<bool> SignIn()
         {
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { "public async Task< bool> SignIn()" });
+#endif
 
             //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
-            System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
+            //System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
                 authUser = DeviceAuthentication.AuthUser;
@@ -394,11 +437,11 @@ namespace CourierApp.ViewModel
                     {
                         if (authUser != null)
                         {
-                           
-                            if (Courier != null && __Courier.OAuthUserIdentity == authUser.User_ID)
+
+                            if (Courier != null && _Courier.OAuthUserIdentity == authUser.User_ID)
                             {
                                 AuthUser = authUser;
-                                ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(__Courier.ShiftWork);
+                                ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(_Courier.ShiftWork);
                                 if (ActiveShiftWork != null)
                                 {
                                     var foodShipings = Courier.Fetching(courier => courier.GetFoodShippings().Caching(x => x.Select(foodShipping => new
@@ -425,12 +468,12 @@ namespace CourierApp.ViewModel
 
 #if DeviceDotNet
                                 IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                __Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                _Courier.DeviceFirebaseToken = device.FirebaseToken;
 #endif
                                 //ApplicationSettings.Current.FriendlyName = Courier.FullName;
                                 GetMessages();
 
-                                OAuthUserIdentity = __Courier.OAuthUserIdentity;
+                                OAuthUserIdentity = _Courier.OAuthUserIdentity;
                                 return true;
 
                             }
@@ -451,20 +494,29 @@ namespace CourierApp.ViewModel
                         }
 
                         this.UserData = pAuthFlavourBusiness.SignIn();
+
                         if (UserData != null)
                         {
                             FullName = UserData.FullName;
                             UserName = UserData.UserName;
                             PhoneNumber = UserData.PhoneNumber;
                             Email = UserData.Email;
+
+#if DeviceDotNet
+                            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { $"user {FullName} SignedIn" });
+#endif
+
                             //OAuthUserIdentity = UserData.OAuthUserIdentity;
 
                             foreach (var role in UserData.Roles.Where(x => x.RoleType == RoleType.Courier))
                             {
                                 if (role.RoleType == RoleType.Courier)
                                 {
-                                   
+
                                     Courier = RemotingServices.CastTransparentProxy<ICourier>(role.User);
+
+
+
                                     if (Courier == null)
                                         continue;
 
@@ -522,13 +574,13 @@ namespace CourierApp.ViewModel
 
 #if DeviceDotNet
                                     IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                                    __Courier.DeviceFirebaseToken = device.FirebaseToken;
+                                    _Courier.DeviceFirebaseToken = device.FirebaseToken;
                                     if (!device.IsBackgroundServiceStarted)
                                     {
                                         BackgroundServiceState serviceState = new BackgroundServiceState();
                                         device.RunInBackground(new Action(async () =>
                                         {
-                                            var message = __Courier.PeekMessage();
+                                            var message = _Courier.PeekMessage();
                                             //__Courier.MessageReceived += MessageReceived;
                                             //do
                                             //{
@@ -544,6 +596,10 @@ namespace CourierApp.ViewModel
 #endif
                                     ShiftWork = RemotingServices.CastTransparentProxy<IServingShiftWork>(Courier.ShiftWork);
                                     GetMessages();
+
+#if DeviceDotNet
+                                    OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { $"end of user {FullName} SignedIn" });
+#endif
                                 }
                             }
                             //https://angularhost.z16.web.core.windows.net/halllayoutsresources/Shapes/DiningTableChairs020.svg
@@ -694,6 +750,7 @@ namespace CourierApp.ViewModel
 
                 lock (this)
                 {
+
                     NativeUsers = nativeUsers;
                 }
                 return nativeUsers as IList<UserData>;
@@ -875,37 +932,60 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                return __Courier;
+                return _Courier;
             }
             set
             {
-                if (__Courier!=null)
+                if (_Courier != null)
                 {
-                    __Courier.ObjectChangeState -= Courier_ObjectChangeState;
-                    __Courier.MessageReceived -= MessageReceived;
-                    __Courier.FoodShippingsChanged -= FoodShippingsChanged;
+                    _Courier.ObjectChangeState -= Courier_ObjectChangeState;
+                    _Courier.MessageReceived -= MessageReceived;
+                    _Courier.FoodShippingsChanged -= FoodShippingsChanged;
                     //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                    if (__Courier is ITransparentProxy)
-                        (__Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
+                    if (_Courier is ITransparentProxy)
+                        (_Courier as ITransparentProxy).Reconnected -= CourierActivityPresentation_Reconnected;
 
                 }
-                __Courier=value;
-                if (__Courier!=null)
+                _Courier = value;
+                if (_Courier != null)
                 {
-                    __Courier.ObjectChangeState += Courier_ObjectChangeState;
-                    __Courier.MessageReceived += MessageReceived;
-                    __Courier.FoodShippingsChanged += FoodShippingsChanged;
+                    MonitorCourierComunicationChannel();
+                    _Courier.ObjectChangeState += Courier_ObjectChangeState;
+                    _Courier.MessageReceived += MessageReceived;
+                    _Courier.FoodShippingsChanged += FoodShippingsChanged;
                     //Courier.ServingBatchesChanged -= ServingBatchesChanged;
-                    if (__Courier is ITransparentProxy)
-                        (__Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
+                    if (_Courier is ITransparentProxy)
+                        (_Courier as ITransparentProxy).Reconnected += CourierActivityPresentation_Reconnected;
 
                 }
+
+
+
 
             }
         }
 
+        string CourierComunicationChannelUri;
+        private void MonitorCourierComunicationChannel()
+        {
+            if (_Courier != null)
+            {
+                var courierComunicationChannelUri = OOAdvantech.Remoting.RemotingServices.GetChannelUri(_Courier);
+                if(CourierComunicationChannelUri!= courierComunicationChannelUri)
+                {
+                    if(!string.IsNullOrWhiteSpace(CourierComunicationChannelUri))
+                        OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(CourierComunicationChannelUri).ConnectivityChanged -= CourierActivityPresentation_ConnectivityChanged;
+
+                    CourierComunicationChannelUri = courierComunicationChannelUri;
+                    if (!string.IsNullOrWhiteSpace(CourierComunicationChannelUri))
+                        OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(CourierComunicationChannelUri).ConnectivityChanged += CourierActivityPresentation_ConnectivityChanged;
+
+                }
+            }
+        }
+
         /// <MetaDataID>{b6d6d245-a984-4aa0-b2c2-3a9d96a39aa4}</MetaDataID>
-        ICourier __Courier;
+        ICourier _Courier;
         /// <MetaDataID>{7c356551-9dd0-4247-a6b9-3a68914d8881}</MetaDataID>
         private Task<bool> SignInTask;
         /// <MetaDataID>{bd780d43-f60b-4b83-92cc-38c769c2d505}</MetaDataID>
@@ -919,7 +999,7 @@ namespace CourierApp.ViewModel
 
                 System.Diagnostics.Debug.WriteLine("####   FoodShippingsChanged : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
 #if !DeviceDotNet
-                System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FoodShippingsChanged : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+                //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FoodShippingsChanged : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
 #endif
                 GetServingUpdates();
                 //UpdateFoodShippings(Courier.GetFoodShippings());
@@ -1025,6 +1105,10 @@ namespace CourierApp.ViewModel
             OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { " CourierActivityPresentation_Reconnected" });
 #endif
             GetServingUpdates();
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { " CourierActivityPresentation_Reconnected end" });
+#endif
         }
 
         /// <MetaDataID>{d99357a4-d51b-450e-9dcb-2c2c0f96b6c8}</MetaDataID>
@@ -1072,9 +1156,9 @@ namespace CourierApp.ViewModel
             if (member == nameof(ICourier.State))
             {
                 var newState = Courier.State;
-                if (this.CourierCurrentState!=newState)
+                if (this.CourierCurrentState != newState)
                 {
-                    this.CourierCurrentState=newState;
+                    this.CourierCurrentState = newState;
                     ObjectChangeState?.Invoke(this, nameof(CourierOnTheRoad));
                 }
 
@@ -1116,7 +1200,7 @@ namespace CourierApp.ViewModel
         {
             get
             {
-                return CourierCurrentState==CourierState.OnTheRoad;
+                return CourierCurrentState == CourierState.OnTheRoad;
             }
         }
 
@@ -1254,7 +1338,7 @@ namespace CourierApp.ViewModel
                 }
                 System.Diagnostics.Debug.WriteLine("####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
 #if !DeviceDotNet
-                System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+                //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   ObjectChangeState?.Invoke(this, \"FoodShippings\") : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
 #endif
                 ObjectChangeState?.Invoke(this, "FoodShippings");
             }

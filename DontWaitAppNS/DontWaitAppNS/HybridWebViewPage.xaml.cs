@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DontWaitApp;
 using static System.Net.WebRequestMethods;
 using System.Linq;
+using OOAdvantech.Remoting.RestApi;
 
 namespace DontWaitApp
 {
@@ -96,13 +97,66 @@ namespace DontWaitApp
 
                 hybridWebView.Navigated += HybridWebView_Navigated;
 
-                
+                OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(AzureServerUrl).ConnectivityChanged += ConnectivityChanged;
 
             }
 
 
         }
 
+        private void ConnectivityChanged(object sender, OOAdvantech.Remoting.RestApi.ConnectivityChangedEventArgs e)
+        {
+            try
+            {
+                var networkAccess = e.ToString();
+                var channelState = e.ComunicationChannelConectivity?.ChannelState;
+
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+                if (channelState == ChannelState.Connecting)
+                {
+
+                    if (device.StatusBarColor == System.Drawing.Color.DarkViolet)
+                        device.StatusBarColor = System.Drawing.Color.LightSalmon;
+
+                }
+                else if (channelState == ChannelState.Open)
+                {
+
+                    device.StatusBarColor = System.Drawing.Color.LightGreen;
+                }
+                else
+                {
+
+                    device.StatusBarColor = System.Drawing.Color.DarkViolet;
+
+
+                }
+            }
+            catch (Exception error)
+            {
+
+                
+            }
+        }
+
+        static string _AzureServerUrl = string.Format("http://{0}:8090/api/", FlavourBusinessFacade.ComputingResources.EndPoint.Server);
+
+
+        /// <MetaDataID>{fd05c84a-026a-4737-8109-c2cc8c54b037}</MetaDataID>
+        static string AzureServerUrl
+        {
+            get
+            {
+                string azureStorageUrl = null;// OOAdvantech.Remoting.RestApi.RemotingServices.GetLocalIPAddress();
+                if (azureStorageUrl == null)
+                    azureStorageUrl = _AzureServerUrl;
+                else
+                    azureStorageUrl = "http://" + azureStorageUrl + ":8090/api/";
+
+                return azureStorageUrl;
+            }
+        }
         private void HybridWebViewPage_SizeChanged(object sender, EventArgs e)
         {
             
@@ -112,8 +166,8 @@ namespace DontWaitApp
         private void HybridWebView_Navigated(object sender, OOAdvantech.Web.NavigatedEventArgs e)
         {
 
-            OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            device.SetStatusBarColor(Color.BlueViolet);
+            //OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            //device.SetStatusBarColor(Color.BlueViolet);
 
             if (Refresh)
             {

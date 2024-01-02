@@ -2096,6 +2096,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         FlavourBusinessFacade.RoomService.IMealsController _MealsController;
 
         /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
+        
         public IMealsController MealsController
         {
             get

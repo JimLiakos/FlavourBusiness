@@ -1,118 +1,93 @@
-﻿21/11/2023 05:48:07 : OnStart
-21/11/2023 05:48:24 : ctor ServerSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
-21/11/2023 05:48:24 : Opens : ws://192.168.1.101:8090/api/
-21/11/2023 05:48:24 : WebSocketClient  in :1
-21/11/2023 05:48:24 : WebSocketClient  exit :1
-21/11/2023 05:48:26 : ctor ServerSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
-21/11/2023 05:48:26 : Opens : ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:48:26 : WebSocketClient  in :2
-21/11/2023 05:48:26 : WebSocketClient  exit :2
-21/11/2023 05:48:29 : WebSocketClient  in :3
-21/11/2023 05:48:29 : ReplaceWebSocketClient  in :3
-21/11/2023 05:48:29 : RestApp channel replace WebSocketClient :3
-21/11/2023 05:48:29 : CloseWebSocket :3
-21/11/2023 05:48:29 : ClientSessionPart.Reconnect :3
-21/11/2023 05:48:29 : replaced WebSocket state is :Open
-21/11/2023 05:48:29 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
-21/11/2023 05:48:29 : Reconnect without channelSubscriptions. disconnectedChannel False
-21/11/2023 05:48:29 : ReplaceWebSocketClient  out :3
-21/11/2023 05:48:29 : WebSocketClient  exit :3
-21/11/2023 05:49:40 : WebSocketClient_Closed : 
-21/11/2023 05:49:40 : WebSocketReconnect : 21/11/2023 05:49:40 - ws://192.168.1.101:8090/api/
-21/11/2023 05:49:40 : WebSocketClient_Closed : 
-21/11/2023 05:49:40 : WebSocketReconnect : 21/11/2023 05:49:40 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:49:43 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
-21/11/2023 05:49:43 : NetworkAccess.Internet on line : 21/11/2023 05:49:43
-21/11/2023 05:50:17 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
-21/11/2023 05:50:17 : NetworkAccess.Internet on line : 21/11/2023 05:50:17
-21/11/2023 05:50:24 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:50:24 : WebSocketClient  in :4
-21/11/2023 05:50:24 : ReplaceWebSocketClient  in :4
-21/11/2023 05:50:24 : RestApp channel replace WebSocketClient :4
-21/11/2023 05:50:24 : CloseWebSocket :4
-21/11/2023 05:50:24 : ClientSessionPart.Reconnect :4
-21/11/2023 05:50:24 : replaced WebSocket state is :None
-21/11/2023 05:50:24 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
-21/11/2023 05:50:24 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:50:24 : ReplaceWebSocketClient  out :4
-21/11/2023 05:50:24 : WebSocketClient  exit :4
-21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:50:24 : 
-21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:50:24 : 
-21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:50:24 : 
-21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:50:24 : 
-21/11/2023 05:50:24 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:50:24 : 
-21/11/2023 05:50:26 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:50:26 : WebSocketClient  in :5
-21/11/2023 05:50:26 : ReplaceWebSocketClient  in :5
-21/11/2023 05:50:26 : RestApp channel replace WebSocketClient :5
-21/11/2023 05:50:26 : CloseWebSocket :5
-21/11/2023 05:50:26 : ClientSessionPart.Reconnect :5
-21/11/2023 05:50:26 : replaced WebSocket state is :None
-21/11/2023 05:50:27 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
-21/11/2023 05:50:27 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:50:27 : ReplaceWebSocketClient  out :5
-21/11/2023 05:50:27 : WebSocketClient  exit :5
-21/11/2023 05:50:30 : WebSocketClient  in :6
-21/11/2023 05:50:30 : ReplaceWebSocketClient  in :6
-21/11/2023 05:50:30 : RestApp channel replace WebSocketClient :6
-21/11/2023 05:50:30 : CloseWebSocket :6
-21/11/2023 05:50:30 : ClientSessionPart.Reconnect :6
-21/11/2023 05:50:30 : replaced WebSocket state is :Open
-21/11/2023 05:50:31 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
-21/11/2023 05:50:31 : Reconnect without channelSubscriptions. disconnectedChannel False
-21/11/2023 05:50:31 : ReplaceWebSocketClient  out :6
-21/11/2023 05:50:31 : WebSocketClient  exit :6
-21/11/2023 05:50:53 : WebSocketClient_Closed : 
-21/11/2023 05:50:53 : WebSocketReconnect : 21/11/2023 05:50:53 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
-21/11/2023 05:50:53 : WebSocketClient_Closed : 
-21/11/2023 05:50:53 : WebSocketReconnect : 21/11/2023 05:50:53 - ws://192.168.1.101:8090/api/
-21/11/2023 05:50:55 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular]
-21/11/2023 05:50:55 : NetworkAccess.Internet on line : 21/11/2023 05:50:55
-21/11/2023 05:51:15 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:15 : 
-21/11/2023 05:51:15 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:15 : 
-21/11/2023 05:51:17 : NetworkAccess NetworkAccess: Internet, ConnectionProfiles: [Cellular, WiFi]
-21/11/2023 05:51:17 : NetworkAccess.Internet on line : 21/11/2023 05:51:17
-21/11/2023 05:51:23 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:51:23 : WebSocketClient  in :7
-21/11/2023 05:51:23 : ReplaceWebSocketClient  in :7
-21/11/2023 05:51:23 : RestApp channel replace WebSocketClient :7
-21/11/2023 05:51:23 : CloseWebSocket :7
-21/11/2023 05:51:23 : ClientSessionPart.Reconnect :7
-21/11/2023 05:51:23 : replaced WebSocket state is :None
-21/11/2023 05:51:23 : serverSessionPartUri  : /738c8f05_f31f_498e_a974_3d4877d94b65/2ogzm0efhuwnemq1pnshahye_107.rem
-21/11/2023 05:51:23 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:51:23 : ReplaceWebSocketClient  out :7
-21/11/2023 05:51:23 : WebSocketClient  exit :7
-21/11/2023 05:51:26 : WebSocketReconnect : replace webSocketClient
-21/11/2023 05:51:26 : WebSocketClient  in :8
-21/11/2023 05:51:26 : ReplaceWebSocketClient  in :8
-21/11/2023 05:51:26 : RestApp channel replace WebSocketClient :8
-21/11/2023 05:51:26 : CloseWebSocket :8
-21/11/2023 05:51:26 : ClientSessionPart.Reconnect :8
-21/11/2023 05:51:26 : replaced WebSocket state is :None
-21/11/2023 05:51:26 : serverSessionPartUri  : /fb38f34a_0576_429d_8434_01636981624e/x23mntmo6dopvjee5gelhda7_129.rem
-21/11/2023 05:51:26 : Reconnect without channelSubscriptions. disconnectedChannel True
-21/11/2023 05:51:26 : ReplaceWebSocketClient  out :8
-21/11/2023 05:51:26 : WebSocketClient  exit :8
-21/11/2023 05:51:26 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:26 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
-21/11/2023 05:51:33 : Unobserved Task Exception:TaskSchedulerOnUnobservedTaskException
-21/11/2023 05:51:33 : 
+﻿25/12/2023 13:16:02 : OnStart
+25/12/2023 13:16:17 : ctor ServerSessionPartUri  : /be30e3d9_71f8_43e6_a72a_514f406402d0/i6aqofobjrqgicvc2j_xgoq1_17.rem
+25/12/2023 13:16:17 : Opens : ws://192.168.1.101:8090/api/
+25/12/2023 13:16:17 : WebSocketClient  in :1
+25/12/2023 13:16:17 : WebSocketClient  exit :1
+25/12/2023 13:16:19 : public async Task< bool> SignIn()
+25/12/2023 13:16:20 : ctor ServerSessionPartUri  : /8c3a1ad0_3178_4f6e_8149_076827c9496c/o+ccaecnvrlqqxqepozevf_h_20.rem
+25/12/2023 13:16:20 : Opens : ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+25/12/2023 13:16:20 : WebSocketClient  in :2
+25/12/2023 13:16:20 : WebSocketClient  exit :2
+25/12/2023 13:16:20 : user Jack k. Dragon SignedIn
+25/12/2023 13:16:23 : end of user Jack k. Dragon SignedIn
+25/12/2023 13:16:23 : WebSocketClient  in :3
+25/12/2023 13:16:23 : ReplaceWebSocketClient  in :3
+25/12/2023 13:16:23 : RestApp channel replace WebSocketClient :3
+25/12/2023 13:16:23 : CloseWebSocket :3
+25/12/2023 13:16:23 : ClientSessionPart.Reconnect :3
+25/12/2023 13:16:23 : replaced WebSocket state is :Open
+25/12/2023 13:16:23 : serverSessionPartUri  : /8c3a1ad0_3178_4f6e_8149_076827c9496c/o+ccaecnvrlqqxqepozevf_h_20.rem
+25/12/2023 13:16:23 : 
+
+25/12/2023 13:16:23 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:16:23:866 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.374d4f0d36484870ae03b686bb2743fc.2b2f1c769b70e439 and Raise reconnect event
+25/12/2023 13:16:23 : 
+
+25/12/2023 13:16:23 : ReplaceWebSocketClient  out :3
+25/12/2023 13:16:23 : WebSocketClient  exit :3
+25/12/2023 13:17:03 : Native WebSocket Receive error : The remote party closed the WebSocket connection without completing the close handshake.
+25/12/2023 13:17:03 : Native WebSocket Receive error : The remote party closed the WebSocket connection without completing the close handshake.
+25/12/2023 13:17:03 : WebSocketClient_Closed : 
+25/12/2023 13:17:03 : WebSocketClient_Closed : 
+25/12/2023 13:17:03 : WebSocketReconnect : 25/12/2023 13:17:03 - ws://192.168.1.101:8090/api/
+25/12/2023 13:17:03 : WebSocketReconnect : 25/12/2023 13:17:03 - ws://192.168.1.101:8090/api/(0470e076603e47b6a82556fe4c1bf335)
+25/12/2023 13:17:59 : WebSocketReconnect : replace webSocketClient
+25/12/2023 13:17:59 : WebSocketClient  in :4
+25/12/2023 13:17:59 : ReplaceWebSocketClient  in :4
+25/12/2023 13:17:59 : RestApp channel replace WebSocketClient :4
+25/12/2023 13:17:59 : CloseWebSocket :4
+25/12/2023 13:17:59 : ClientSessionPart.Reconnect :4
+25/12/2023 13:17:59 : replaced WebSocket state is :None
+25/12/2023 13:18:00 : serverSessionPartUri  : /8c3a1ad0_3178_4f6e_8149_076827c9496c/o+ccaecnvrlqqxqepozevf_h_20.rem
+25/12/2023 13:18:00 : 
+
+25/12/2023 13:18:00 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:17:59:909 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.374d4f0d36484870ae03b686bb2743fc.2b2f1c769b70e439 and Raise reconnect event
+25/12/2023 13:18:00 : 
+
+25/12/2023 13:18:00 : ReplaceWebSocketClient  out :4
+25/12/2023 13:18:00 : WebSocketClient  exit :4
+25/12/2023 13:18:00 :  CourierActivityPresentation_Reconnected
+25/12/2023 13:18:00 : serverSessionPartUri  : /8c3a1ad0_3178_4f6e_8149_076827c9496c/o+ccaecnvrlqqxqepozevf_h_20.rem
+25/12/2023 13:18:00 : 
+
+25/12/2023 13:18:00 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:18:00:252 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.374d4f0d36484870ae03b686bb2743fc.2b2f1c769b70e439 and Raise reconnect event
+25/12/2023 13:18:00 : 
+
+25/12/2023 13:18:00 :  CourierActivityPresentation_Reconnected
+25/12/2023 13:18:01 :  CourierActivityPresentation_Reconnected end
+25/12/2023 13:18:01 :  CourierActivityPresentation_Reconnected end
+25/12/2023 13:18:02 : WebSocketReconnect : replace webSocketClient
+25/12/2023 13:18:02 : WebSocketClient  in :5
+25/12/2023 13:18:02 : ReplaceWebSocketClient  in :5
+25/12/2023 13:18:02 : RestApp channel replace WebSocketClient :5
+25/12/2023 13:18:02 : CloseWebSocket :5
+25/12/2023 13:18:02 : ClientSessionPart.Reconnect :5
+25/12/2023 13:18:02 : replaced WebSocket state is :None
+25/12/2023 13:18:03 : serverSessionPartUri  : /be30e3d9_71f8_43e6_a72a_514f406402d0/i6aqofobjrqgicvc2j_xgoq1_17.rem
+25/12/2023 13:18:03 : 
+
+25/12/2023 13:18:03 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:18:02:680 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.cec94c4b264445a1b580eb1293f05d9d.2006edc743fe9164 and Raise reconnect event
+25/12/2023 13:18:03 : 
+
+25/12/2023 13:18:03 : ReplaceWebSocketClient  out :5
+25/12/2023 13:18:03 : WebSocketClient  exit :5
+25/12/2023 13:18:03 : serverSessionPartUri  : /be30e3d9_71f8_43e6_a72a_514f406402d0/i6aqofobjrqgicvc2j_xgoq1_17.rem
+25/12/2023 13:18:03 : 
+
+25/12/2023 13:18:03 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:18:03:38 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.cec94c4b264445a1b580eb1293f05d9d.2006edc743fe9164 and Raise reconnect event
+25/12/2023 13:18:03 : 
+
+25/12/2023 13:18:06 : WebSocketClient  in :6
+25/12/2023 13:18:06 : ReplaceWebSocketClient  in :6
+25/12/2023 13:18:06 : RestApp channel replace WebSocketClient :6
+25/12/2023 13:18:06 : CloseWebSocket :6
+25/12/2023 13:18:06 : ClientSessionPart.Reconnect :6
+25/12/2023 13:18:06 : replaced WebSocket state is :Open
+25/12/2023 13:18:06 : serverSessionPartUri  : /8c3a1ad0_3178_4f6e_8149_076827c9496c/o+ccaecnvrlqqxqepozevf_h_20.rem
+25/12/2023 13:18:06 : 
+
+25/12/2023 13:18:06 : RestApp channel clientSessionPart Reconnected without channelSubscriptions 13:18:06:764 :(28465) 0212445e29a64b76bbf9faa11e4f2af1.374d4f0d36484870ae03b686bb2743fc.2b2f1c769b70e439 and Raise reconnect event
+25/12/2023 13:18:06 : 
+
+25/12/2023 13:18:06 : ReplaceWebSocketClient  out :6
+25/12/2023 13:18:06 : WebSocketClient  exit :6
 

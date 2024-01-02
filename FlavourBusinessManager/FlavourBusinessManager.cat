@@ -23139,7 +23139,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"16")
+			    value      	"17")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -23147,14 +23147,21 @@
 		    quid       	"5CDA657D02A2"
 		    documentation 	
 |
-|Defines a service section with time constraints and includes the preparation of the food-coffee items, the serving - takeaway - home delivery.
+| A meal consisting of multiple dishes (meal courses)
+| Most Western-world multicourse meals follow a standard sequence.
+| MealCourse class defines the food items where belongs to the same course 
+| for instance hors d'oeuvre or appetizer,main dish , dessert
 | 
 		    
 		    realized_interfaces 	(list realize_rel_list
 			(object Realize_Relationship
 			    quid       	"6073C9A5000C"
 			    supplier   	"Logical View::FlavourBusinessFacade::RoomService::IMealCourse"
-			    quidu      	"6073C95302E6"))
+			    quidu      	"6073C95302E6")
+			(object Realize_Relationship
+			    quid       	"658AA7DE014A"
+			    supplier   	"Logical View::OOAdvantech::Remoting::IExtMarshalByRefObject"
+			    quidu      	"416244F90271"))
 		    operations 	(list Operations
 			(object Operation "AddItem"
 			    attributes 	(list Attribute_Set
@@ -23169,7 +23176,7 @@
 			    quid       	"6073E0F9034C"
 			    parameters 	(list Parameters
 				(object Parameter "itemPreparation"
-				    quid       	"6235CCE40175"
+				    quid       	"658AA80D0156"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23188,7 +23195,7 @@
 			    quid       	"6073E0F9037B"
 			    parameters 	(list Parameters
 				(object Parameter "itemPreparation"
-				    quid       	"6235CCE40190"
+				    quid       	"658AA80D01AD"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23278,13 +23285,13 @@
 			    quid       	"60E2912103C7"
 			    parameters 	(list Parameters
 				(object Parameter "mealCourseType"
-				    quid       	"6235CCE400C2"
+				    quid       	"658AA80D0084"
 				    type       	"MenuModel.MealCourseType")
 				(object Parameter "itemPreparations"
-				    quid       	"6235CCE400E2"
+				    quid       	"658AA80D00A6"
 				    type       	"System.Collections.Generic.List<FlavourBusinessManager.RoomService.ItemPreparation>")
 				(object Parameter "meal"
-				    quid       	"6235CCE400F0"
+				    quid       	"658AA80D00BA"
 				    type       	"FlavourBusinessManager.RoomService.Meal"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -23401,6 +23408,88 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ServingBatchAssigned"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d972471c-f59e-4094-b35f-1c0594d79d30}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA8090326"))
+			    quid       	"658AA8090326"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "ServingBatchDeAssigned"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{59ce1c31-e078-43f8-bda9-99257bb01174}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA8090382"))
+			    quid       	"658AA8090382"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "RunFoodItemsChanged"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{123c18f8-75ae-41d1-95f0-ebc197d85671}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80D0189"))
+			    quid       	"658AA80D0189"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "BeforeCommitObjectState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4c3647d4-e265-466c-8abd-a3e9fb1e07c2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80D01E7"))
+			    quid       	"658AA80D01E7"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ServicesContextRunTime_ObjectChangeState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{467178fb-357e-4aed-8284-d708fa0e52a6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80D0273"))
+			    quid       	"658AA80D0273"
+			    parameters 	(list Parameters
+				(object Parameter "_object"
+				    quid       	"658AA80D0291"
+				    type       	"object")
+				(object Parameter "member"
+				    quid       	"658AA80D02A6"
+				    type       	"string"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "FoodItems"
@@ -23901,6 +23990,11 @@
 				    name       	"As Property"
 				    value      	FALSE))
 			    quid       	"62132DAF004F"
+			    documentation 	
+|
+|Multi thread synchronization object
+|
+			    
 			    type       	"object")
 			(object ClassAttribute "SortID"
 			    attributes 	(list Attribute_Set
@@ -24004,7 +24098,91 @@
 				    value      	"+15"))
 			    quid       	"657C052A0097"
 			    type       	"string"
-			    exportControl 	"Public"))
+			    exportControl 	"Public")
+			(object ClassAttribute "StateTimestamp"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9513ba98-432e-4a77-863e-e2d1207e6c1e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80E0267")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+16"))
+			    quid       	"658AA80E0267"
+			    type       	"long"
+			    exportControl 	"Public")
+			(object ClassAttribute "PartiallyUnderServingProcess"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{fc696a5d-5eaa-4a8e-ab9d-f1583c0ab233}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80E02A1"))
+			    quid       	"658AA80E02A1"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "UnderServingProcess"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a2d28ef3-308e-49f0-a7d3-3508dd0dc496}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80E02D5"))
+			    quid       	"658AA80E02D5"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "FoodItemsInProgress"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{07d4339f-ca68-445f-834f-002992c94cbb}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA80F0130"))
+			    quid       	"658AA80F0130"
+			    type       	"System.Collections.Generic.IList`1[[FlavourBusinessFacade.RoomService.ItemsPreparationContext,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    exportControl 	"Public")
+			(object ClassAttribute "FoodItemsChangedActions"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5ed61513-4bc7-4a3a-9987-955a0d30cbe3}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"658AA8100019")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"658AA8100019"
+			    type       	"System.Collections.Generic.Dictionary<string,System.Action>"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"
@@ -33150,7 +33328,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33172,7 +33350,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged( )"
+					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33194,7 +33372,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33216,7 +33394,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33261,7 +33439,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -34031,7 +34209,7 @@
 			    line_color 	3342489
 			    quidu      	"5CDA6C650089"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @451
+				(object RoleView "FoodItems" @451
 				    Parent_View 	@449
 				    location   	(2433, 232)
 				    font       	(object Font
@@ -34057,13 +34235,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	331
 					justify    	0
-					label      	""
+					label      	"+FoodItems"
 					pctDist    	0.264605
 					height     	140
 					orientation 	0)
@@ -36052,7 +36229,7 @@
 			    line_color 	3342489
 			    quidu      	"5CDA6C650089"
 			    roleview_list 	(list RoleViews
-				(object RoleView "" @547
+				(object RoleView "FoodItems" @547
 				    Parent_View 	@545
 				    location   	(2310, 228)
 				    font       	(object Font
@@ -36078,13 +36255,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	331
 					justify    	0
-					label      	""
+					label      	"+FoodItems"
 					pctDist    	0.264605
 					height     	140
 					orientation 	0)
@@ -37061,7 +37237,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -37147,7 +37323,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged( )"
+				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 				pctDist    	1.059687
 				height     	107
 				orientation 	0)
@@ -37233,7 +37409,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<string>)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -37319,7 +37495,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -37568,7 +37744,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)

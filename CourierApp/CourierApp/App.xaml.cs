@@ -24,6 +24,8 @@ namespace CourierApp
             }
             App.SerializeTaskScheduler.RunAsync();
 
+            
+
             InitializeComponent();
             var navigationPage = new NavigationPage(new MainPage());
             MainPage = navigationPage;

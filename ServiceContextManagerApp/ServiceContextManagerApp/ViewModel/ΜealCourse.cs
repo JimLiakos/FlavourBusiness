@@ -10,6 +10,7 @@ using UIBaseEx;
 using FlavourBusinessFacade.EndUsers;
 using CourierApp.ViewModel;
 using FlavourBusinessFacade.Shipping;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace FlavourBusinessManager.RoomService.ViewModel
 {
@@ -31,7 +32,7 @@ namespace FlavourBusinessManager.RoomService.ViewModel
 
         public string Description { get; private set; }
         public IList<ItemsPreparationContext> FoodItemsInProgress { get; set; }
-
+        public long StateTimestamp { get; private set; }
         public DontWaitApp.MenuData MenuData { get; set; }
 
         public string MealCourseUri { get; set; }
@@ -48,6 +49,8 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             MealCourseUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentUri(serverSideMealCourse);
             ServerSideMealCourse = serverSideMealCourse;
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
+
+            StateTimestamp = serverSideMealCourse.StateTimestamp;
 
             PartiallyUnderServingProcess = serverSideMealCourse.PartiallyUnderServingProcess;
             UnderServingProcess = serverSideMealCourse.UnderServingProcess;
@@ -186,6 +189,55 @@ namespace FlavourBusinessManager.RoomService.ViewModel
                     ItemsStateChanged?.Invoke(newItemsState);
 
             }
+
+        }
+
+        internal MealCourse MealCourseUpdate(IMealCourse serverSideMealCourse)
+        {
+
+            if(StateTimestamp != serverSideMealCourse.StateTimestamp)
+            {
+                
+                FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
+
+                StateTimestamp = serverSideMealCourse.StateTimestamp;
+
+                PartiallyUnderServingProcess = serverSideMealCourse.PartiallyUnderServingProcess;
+                UnderServingProcess = serverSideMealCourse.UnderServingProcess;
+
+
+                var sessionData = ServerSideMealCourse.SessionData;
+
+                SessionType = sessionData.SessionType;
+
+                Description = sessionData.Description + " - " + ServerSideMealCourse.Name;
+
+
+                var storeRef = sessionData.Menu;
+#if !DeviceDotNet
+
+            storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
+#endif
+                string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
+                string menuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+
+
+                MenuData = new DontWaitApp.MenuData()
+                {
+                    MenuName = storeRef.Name,
+                    MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1),
+                    MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1),
+                    DefaultMealTypeUri = sessionData.DefaultMealTypeUri
+                };
+
+                MealsController.MealCourseItemsStateChanged += ServerSideMealCourse_ItemsStateChanged;
+                MealsController.MealCourseChangeState += ServerSideMealCourse_ObjectChangeState;
+                PreparationState = serverSideMealCourse.PreparationState;
+
+                //MealCourseUpdated?.Invoke(this);
+            }
+
+            return this;
 
         }
 

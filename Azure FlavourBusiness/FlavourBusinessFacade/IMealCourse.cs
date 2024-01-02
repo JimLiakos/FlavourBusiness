@@ -74,6 +74,11 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+2")]
         DateTime? ServedAtForecast { get;  }
 
+
+        /// <MetaDataID>{fc3c2bd0-e1c0-4ae1-9ceb-274759d79ab6}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
+        long StateTimestamp { get; }
+
         /// <summary>
         /// Some of the items are under the process of serving / delivery
         /// </summary>
@@ -104,5 +109,15 @@ namespace FlavourBusinessFacade.RoomService
         event ItemsStateChangedHandle ItemsStateChanged;
 
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
+    }
+
+
+    /// <MetaDataID>{ec1c52d4-dc9f-4cf0-b612-b26db5e0268f}</MetaDataID>
+    public class MealCourseAbbreviation
+    {
+        /// <MetaDataID>{fa7ffe02-3acc-4df7-9056-33d0a5da14a4}</MetaDataID>
+        public string Identity { get; set; }
+        /// <MetaDataID>{0887af1e-be02-4513-9ef6-b02fd12d79b6}</MetaDataID>
+        public long TimeStamp { get; set; }
     }
 }

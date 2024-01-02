@@ -998,7 +998,7 @@ namespace FlavourBusinessManager.HumanResources
         public ServingBatchUpdates GetFoodShippingUpdates(List<ItemPreparationAbbreviation> servingItemsOnDevice)
         {
             System.Diagnostics.Debug.WriteLine("####   GetFoodShippingUpdates : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
-            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   GetFoodShippingUpdates : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+            //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   GetFoodShippingUpdates : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
             List<FoodShipping> servingBatches = (ServicesContextRunTime.Current.MealsController as RoomService.MealsController).GetFoodShippings(this).ToList();
 
             var itemsToServe = (from servingBatch in servingBatches
@@ -1359,7 +1359,7 @@ namespace FlavourBusinessManager.HumanResources
             var assignedFoodShippings = foodShippings.Where(x => x.IsAssigned).ToList();
             var unAssignedFoodShippings = foodShippings.Where(x => !x.IsAssigned).ToList();
             System.Diagnostics.Debug.WriteLine("####   FindFoodShippingsChanges : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff"));
-            System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FindFoodShippingsChanges : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
+            //System.IO.File.AppendAllText(@"f:\debugOut.txt", "####   FindFoodShippingsChanges : " + System.DateTime.UtcNow.ToString("hh.mm.ss.fffffff")+Environment.NewLine);
             if (assignedFoodShippings.Count != AssignedFoodShippings.Count ||
                 unAssignedFoodShippings.Count != FoodShippings.Count)
             {
@@ -1491,7 +1491,7 @@ namespace FlavourBusinessManager.HumanResources
                     }
                     Transaction.RunOnTransactionCompleted(() =>
                     {
-                        ObjectChangeState.Invoke(this, nameof(State));
+                        ObjectChangeState?.Invoke(this, nameof(State));
 
                     });
                 }

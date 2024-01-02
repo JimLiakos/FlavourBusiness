@@ -42,7 +42,7 @@ namespace ServiceContextManagerApp.WPF
 
         public int SelectedIndex { get; set; }
 
-
+        
 
         protected override void OnClosing(CancelEventArgs e)
         {
