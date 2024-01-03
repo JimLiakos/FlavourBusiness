@@ -403,7 +403,7 @@ namespace CourierApp.ViewModel
 #if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string> { "public async Task< bool> SignIn()" });
 #endif
-
+             
             //System.IO.File.AppendAllLines(App.storage_path, new string[] { "SignIn " });
             //System.Diagnostics.Debug.WriteLine("public async Task< bool> SignIn()");
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;

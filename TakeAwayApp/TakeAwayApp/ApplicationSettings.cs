@@ -14,6 +14,7 @@ namespace TakeAwayApp
     public class ApplicationSettings : DontWaitApp.ApplicationSettings
     {
 
+        
 
         /// <exclude>Excluded</exclude>
         string _TakeAwayStationCredentialKey;
@@ -121,7 +122,7 @@ namespace TakeAwayApp
 
                     if (!System.IO.Directory.Exists(appDataPath))
                         System.IO.Directory.CreateDirectory(appDataPath);
-                    string storageLocation = appDataPath + "\\PreparationStationAppSettings.xml";
+                    string storageLocation = appDataPath + "\\OrderTakingAppSettings.xml";
 #endif
 
                     try
