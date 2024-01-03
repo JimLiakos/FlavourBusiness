@@ -121,7 +121,7 @@ namespace TakeAwayApp
 
                     if (!System.IO.Directory.Exists(appDataPath))
                         System.IO.Directory.CreateDirectory(appDataPath);
-                    string storageLocation = appDataPath + "\\PreparationStationAppSettings.xml";
+                    string storageLocation = appDataPath + "\\TakeAwayAppSettings.xml";
 #endif
 
                     try

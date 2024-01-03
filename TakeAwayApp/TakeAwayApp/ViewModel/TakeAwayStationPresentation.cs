@@ -702,8 +702,8 @@ namespace TakeAwayApp.ViewModel
             {
                 return this.TakeAwayStation.GetNativeUsers();
             });
-        }
-
+        } 
+         
         /// <MetaDataID>{17df1e47-7f36-4cbf-aa07-928059b6ec0f}</MetaDataID>
         public UserData SignInNativeUser(string userName, string password)
         {

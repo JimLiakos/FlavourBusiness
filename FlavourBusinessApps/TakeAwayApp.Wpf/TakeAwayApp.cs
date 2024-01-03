@@ -17,7 +17,7 @@ namespace FlavourBusinessApps.TakeAwayApp.WPF
         {
 
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = deviceID;
-            ApplicationSettings.ExtraStoragePath = deviceID;
+            global::TakeAwayApp.ApplicationSettings.ExtraStoragePath = deviceID;
 
             //List<Tesa> col = new List<Tesa>() { new Tesa() { Name = "las" }, new Tesa() { Name = "las" ,torder=0}, new Tesa() { Name = "las" }, new Tesa() { Name = "las" } };
             
