@@ -112,7 +112,7 @@ namespace ServiceContextManagerApp
 
         /// <MetaDataID>{17dd7c37-a140-43ec-b66e-365b5bd675ed}</MetaDataID>
         public List<ITakeawayCashierPresentation> TakeawayCashiers
-        {
+        { 
             get
             {
                 if (_TakeawayCashiers == null && ServicesContext != null)
@@ -155,7 +155,8 @@ namespace ServiceContextManagerApp
 
 
         /// <MetaDataID>{6ff67af0-81de-49b0-895d-4ec537422ea4}</MetaDataID>
-        List<ISupervisorPresentation> _Supervisors;
+        ViewModelWrappers<IServiceContextSupervisor, SupervisorPresentation> _Supervisors = new ViewModelWrappers<IServiceContextSupervisor, SupervisorPresentation>();
+
         /// <MetaDataID>{627e4712-a41e-489e-8677-d82d25ad0fda}</MetaDataID>
         public List<ISupervisorPresentation> Supervisors
         {
@@ -163,20 +164,15 @@ namespace ServiceContextManagerApp
             {
                 if (_Supervisors == null && ServicesContext != null)
                 {
-                    _Supervisors = ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
+                    ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => _Supervisors.GetViewModelFor(x, x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
 
                     var signedInSupervisor = SignedInSupervisor;
 
-                    (signedInSupervisor as SupervisorPresentation)?.GetActiveShiftWork();
-                    if (signedInSupervisor != null)
-                    {
-                        _Supervisors.Remove(signedInSupervisor);
-                        _Supervisors.Insert(0, signedInSupervisor);
-                    }
-                    return _Supervisors;
+
+                    return _Supervisors.Values.OfType<ISupervisorPresentation>().ToList();
                 }
                 else if (_Supervisors != null)
-                    return _Supervisors;
+                    return _Supervisors.Values.OfType<ISupervisorPresentation>().ToList();
                 else
                     return new List<ISupervisorPresentation>();
 
@@ -331,13 +327,16 @@ namespace ServiceContextManagerApp
         public bool RemoveSupervisor(ISupervisorPresentation supervisorPresentation)
         {
 
-            var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
+            var administrator = _Supervisors.Values.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation == administrator)
-
                 return false;
 
-            return ServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
+            bool removed = ServicesContextRuntime.RemoveSupervisor((supervisorPresentation as SupervisorPresentation).Supervisor);
 
+            if (removed)
+                _Supervisors.Remove((supervisorPresentation as SupervisorPresentation).Supervisor);
+
+            return removed;
 
         }
 
@@ -380,7 +379,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{e16b4d6b-81e8-425f-91e2-087c50ab527f}</MetaDataID>
         public void MakeSupervisorActive(ISupervisorPresentation supervisorPresentation)
         {
-            var administrator = _Supervisors.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
+            var administrator = _Supervisors.Values.Where(x => x.SupervisorIdentity == AdministratorIdentity).FirstOrDefault();
             if (supervisorPresentation != administrator)
                 ServicesContextRuntime.MakeSupervisorActive((supervisorPresentation as SupervisorPresentation).Supervisor);
         }
@@ -403,7 +402,7 @@ namespace ServiceContextManagerApp
         }
 
         /// <MetaDataID>{0a39cf32-9393-4efe-b375-1d09a0dd1ba6}</MetaDataID>
-        UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> _MealCoursesInProgress = new UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse>();
+        ViewModelWrappers<IMealCourse, MealCourse> _MealCoursesInProgress = new UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse>();
         /// <MetaDataID>{24fad512-b507-4fa6-809b-9a1ec434d852}</MetaDataID>
         string AdministratorIdentity;
         /// <MetaDataID>{e203631b-ddea-42fb-be21-3e7098466561}</MetaDataID>
@@ -414,8 +413,12 @@ namespace ServiceContextManagerApp
             if (_SignedInSupervisor != null)
                 AdministratorIdentity = _SignedInSupervisor.Identity;
             ServicesContext = servicesContext;
+
+            ServicesContextRuntime = ServicesContext.GetRunTime();
+            _Supervisors.GetViewModelFor(signedInSupervisor, signedInSupervisor, ServicesContextRuntime);
             if (_SignedInSupervisor != null)
             {
+                (SignedInSupervisor as SupervisorPresentation).GetActiveShiftWork();
                 var inActiveShiftWork = SignedInSupervisor.InActiveShiftWork;
                 if (inActiveShiftWork)
                     init();
@@ -477,6 +480,7 @@ namespace ServiceContextManagerApp
 
             }
         }
+        bool ServicesContextPresentationInittialized = false;
 
         private void init()
         {
@@ -484,21 +488,23 @@ namespace ServiceContextManagerApp
             if (_SignedInSupervisor != null)
                 _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
 
-            if (ServicesContextRuntime == null)
+            if (!ServicesContextPresentationInittialized)
             {
-               // using (var remoteCallContext = new RemoteCallContext(System.TimeSpan.FromMinutes(5), System.TimeSpan.FromMinutes(5)))
+                // using (var remoteCallContext = new RemoteCallContext(System.TimeSpan.FromMinutes(5), System.TimeSpan.FromMinutes(5)))
                 {
 
 
                     try
                     {
-                        ServicesContextRuntime = ServicesContext.GetRunTime();
+                        if (ServicesContextRuntime==null)
+                            ServicesContextRuntime = ServicesContext.GetRunTime();
                         (ServicesContextRuntime as ITransparentProxy).Reconnected += ServicesContextPresentation_Reconnected;
                         this.ServicesContextRuntime.ObjectChangeState += ServicesContext_ObjectChangeState;
                         MealsController = this.ServicesContextRuntime.MealsController;
 
                         _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
                         GetServiceContextPresentationData();
+                        ServicesContextPresentationInittialized=true;
                     }
                     catch (System.Exception error)
                     {
@@ -793,9 +799,12 @@ namespace ServiceContextManagerApp
         private void ServicesContext_ObjectChangeState(object _object, string member)
         {
 
-
             var serviceContextHumanResources = ServicesContext.ServiceContextHumanResources;
-            _Supervisors = serviceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
+            //_Supervisors = serviceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
+
+           
+            
+            serviceContextHumanResources.Supervisors.Select(x => _Supervisors.GetViewModelFor(x, x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Supervisors));
 
             _Waiters = serviceContextHumanResources.Waiters.Select(x => new WaiterPresentation(x, ServicesContextRuntime)).OfType<IWaiterPresentation>().ToList();
