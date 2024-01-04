@@ -113,7 +113,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{17dd7c37-a140-43ec-b66e-365b5bd675ed}</MetaDataID>
         public List<ITakeawayCashierPresentation> TakeawayCashiers
         {
-            get
+            get 
             {
                 if (_TakeawayCashiers == null && ServicesContext != null)
                 {
