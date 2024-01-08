@@ -114,7 +114,7 @@ namespace ServiceContextManagerApp
         public List<ITakeawayCashierPresentation> TakeawayCashiers
         {
             get 
-            {
+            { 
                 if (_TakeawayCashiers == null && ServicesContext != null)
                 {
                     _TakeawayCashiers = ServicesContext.ServiceContextHumanResources.TakeawayCashiers.Select(x => new TakeawayCashierPresentation(x, ServicesContextRuntime)).OfType<ITakeawayCashierPresentation>().ToList();
