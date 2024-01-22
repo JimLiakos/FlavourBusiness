@@ -622,7 +622,7 @@ namespace TakeAwayApp.ViewModel
         public bool InActiveShiftWork
         {
             get
-            {
+            {  
                 if (ActiveShiftWork != null)
                 {
                     var startedAt = ActiveShiftWork.StartsAt;

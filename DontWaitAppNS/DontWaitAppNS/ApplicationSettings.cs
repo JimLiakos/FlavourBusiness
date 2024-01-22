@@ -391,9 +391,10 @@ namespace DontWaitApp
 
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                     {
-                        OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(AppSettingsStorage);
+                
                         try
                         {
+                            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(AppSettingsStorage);
                             _Current = (from appSetting in storage.GetObjectCollection<ApplicationSettings>() select appSetting).FirstOrDefault();
                             if (_Current == null)
                             {
