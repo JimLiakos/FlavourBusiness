@@ -417,4 +417,8 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="PredefinedTooltip" xml:space="preserve">
     <value>Predefined</value>
   </data>
+  <data name="ItemExtraInfoLabel" xml:space="preserve">
+    <value>Extra info :</value>
+    <comment>Defines the label for menu item infos editor</comment>
+  </data>
 </root>

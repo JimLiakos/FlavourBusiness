@@ -22,7 +22,7 @@ using WPFUIElementObjectBind;
 namespace FLBManager.ViewModel
 {
     /// <MetaDataID>{0d1d707a-9f9c-473c-a556-daedf99c71b2}</MetaDataID>
-    public class FlavoursServicesContextPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaTreeNodeOwner,IGraphicMenusOwner
+    public class FlavoursServicesContextPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaTreeNodeOwner, IGraphicMenusOwner
     {
         /// <MetaDataID>{bbb2d3bf-b421-4173-a6ed-16cc837e6d9a}</MetaDataID>
         public override void RemoveChild(FBResourceTreeNode treeNode)
@@ -34,7 +34,7 @@ namespace FLBManager.ViewModel
         Dictionary<IServiceArea, ServiceAreaPresentation> ServiceAreas = new Dictionary<IServiceArea, ServiceAreaPresentation>();
 
         /// <MetaDataID>{a9bc3a17-19fb-46e4-b77f-ea6ceb25dabd}</MetaDataID>
-       public  IFlavoursServicesContextRuntime FlavoursServicesContextRuntime;
+        public IFlavoursServicesContextRuntime FlavoursServicesContextRuntime;
 
 
         /// <MetaDataID>{06fd7155-b404-42fd-aa4d-32a7f752a640}</MetaDataID>
@@ -43,7 +43,7 @@ namespace FLBManager.ViewModel
 
 
         /// <MetaDataID>{8ce87a1f-4913-48ae-b6e4-1825b468414d}</MetaDataID>
-        internal CompanyPresentation  Company;
+        internal CompanyPresentation Company;
 
         /// <MetaDataID>{4243ee6f-aaf7-42d5-897e-02f4d68dee48}</MetaDataID>
         internal void RemoveGraphicMenu(OrganizationStorageRef graphicMenuStorageRef)
@@ -60,10 +60,10 @@ namespace FLBManager.ViewModel
 
 
                 if (MenusTreeNode == null && graphicMenus.Count > 0)
-                    MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this,this);
+                    MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
 
                 foreach (var graphicMenu in FlavoursServicesContextRuntime.GraphicMenus)
-                    _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode,this, false);
+                    _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode, this, false);
 
 
                 if (GraphicMenus.Count == 0)
@@ -102,7 +102,12 @@ namespace FLBManager.ViewModel
         public FlavoursServicesContextPresentation(IFlavoursServicesContext servicesContext, CompanyPresentation company) : base(company)
         {
             ServicesContext = servicesContext;
-            ServicesContext.ObjectChangeState += ServicesContext_ObjectChangeState;
+
+            if (FlavoursServicesContextRuntime == null)
+                FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+
+            FlavoursServicesContextRuntime.ObjectChangeState += ServicesContext_ObjectChangeState;
+
             IsNodeExpanded = true;
 
             Company = company;
@@ -112,7 +117,7 @@ namespace FLBManager.ViewModel
 
 
             if (GraphicMenus.Count > 0)
-                MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this,this);
+                MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
 
 
 
@@ -140,7 +145,7 @@ namespace FLBManager.ViewModel
 
                 try
                 {
-                    FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
+
                     ServiceContextResources = FlavoursServicesContextRuntime.ServiceContextResources;
                     ServiceContextHumanResources = FlavoursServicesContextRuntime.ServiceContextHumanResources;
 
@@ -150,7 +155,7 @@ namespace FLBManager.ViewModel
 
 
                     foreach (var serviceArea in ServiceContextResources.ServiceAreas)
-                        ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this,this));
+                        ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this, this));
                     while (this.Company.RestaurantMenus == null)
                     {
                         System.Threading.Thread.Sleep(1000);
@@ -160,7 +165,7 @@ namespace FLBManager.ViewModel
 
                     //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
 
-                    
+
 
                     //FlavoursServicesContextRuntime.ObjectChangeState += FlavoursServicesContextRuntime_ObjectChangeState;
                     FlavoursServicesContextRuntime.Description = FlavoursServicesContextRuntime.Description;
@@ -176,9 +181,9 @@ namespace FLBManager.ViewModel
 
 
                         if (MenusTreeNode == null && graphicMenus.Count > 0)
-                            MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this,this);
+                            MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
                         foreach (var graphicMenu in FlavoursServicesContextRuntime.GraphicMenus)
-                            _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode,this, false);
+                            _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode, this, false);
 
 
 
@@ -263,7 +268,7 @@ namespace FLBManager.ViewModel
             {
                 var serviceArea = ServicesContext.NewServiceArea();
                 serviceArea.Description = Properties.Resources.DefaultServiceAreaDescription;
-                ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this,this));
+                ServiceAreas.Add(serviceArea, new ServiceAreaPresentation(serviceArea, this, this));
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Members)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
@@ -355,7 +360,7 @@ namespace FLBManager.ViewModel
                     _ContextMenuItems.Add(menuItem);
                     if (HomeDeliveryServiceTreeNode == null)
                     {
-                        menuItem = new MenuCommand(); 
+                        menuItem = new MenuCommand();
                         imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/delivery-bike16.png"));
                         menuItem.Header = Properties.Resources.LaunchHomeDeliveryService;
                         menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
@@ -403,7 +408,7 @@ namespace FLBManager.ViewModel
                 if (MenusTreeNode != null)
                     members.Add(MenusTreeNode);
 
-             
+
                 if (StaffTreeNode != null)
                     members.Add(StaffTreeNode);
 
@@ -597,5 +602,5 @@ namespace FLBManager.ViewModel
 
         }
     }
-       
+
 }

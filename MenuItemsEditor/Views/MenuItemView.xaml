@@ -351,169 +351,179 @@
                 </Border>
                 <GridSplitter Grid.Column="1" Margin="0,0,0,0" />
 
-                <Grid  Grid.Column="2" Grid.ColumnSpan="1" Margin="3,-12,5,0">
+                <Grid  Grid.Column="2" Grid.ColumnSpan="1" Margin="3,0,5,0">
 
+                    <TabControl>
+                        <TabItem Header="{x:Static resx:Resources.OptionsLabel}" >
+                           
 
-                    <GroupBox>
-                        <GroupBox.Header>
-                            <StackPanel DataContext="{Binding EditableMenuItemType}"  Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,4">
-                                <Label Content="{x:Static resx:Resources.OptionsLabel}" ></Label>
-                                <Label DockPanel.Dock="Left"    FontWeight="SemiBold" Margin="10,0,0,0"                                                                                  
+                            <GroupBox>
+                                <GroupBox.Header>
+                                    <StackPanel DataContext="{Binding EditableMenuItemType}"  Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,4">
+                                        <!--<Label Content="{x:Static resx:Resources.OptionsLabel}" ></Label>-->
+                                        <Label DockPanel.Dock="Left"    FontWeight="SemiBold" Margin="10,0,0,0"                                                                                  
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Stretch"
                                         Foreground="{StaticResource TitleBarForeColor}">
-                                    <Label.Content>
-                                        <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
-                                    </Label.Content>
+                                            <Label.Content>
+                                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                                            </Label.Content>
 
-                                </Label>
+                                        </Label>
 
-                            </StackPanel>
-                        </GroupBox.Header>
-                        <Grid MinHeight="400" MinWidth="430">
-                            <Grid.RowDefinitions >
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid Margin="0,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="27"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="35"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="4"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <Grid MinHeight="400" MinWidth="430">
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="27"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="35"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="4"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="Description for default:"    />
-                                <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedPromptForDefault }" Grid.Row="1"    Translator="{Binding Translator}"   Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding PromptForDefault, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"     HorizontalAlignment="Stretch" IsEnabled="{Binding AllowCustom}"  />
-                                <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="Description for custom:"    />
-                                <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedPromptForCustom }" Grid.Row="1" Grid.Column="2"   Translator="{Binding Translator}"   Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding PromptForCustom, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    HorizontalAlignment="Stretch" IsEnabled="{Binding EditPromptForCustom}"/>
-                                <CheckBox Grid.Column="0" Grid.Row="2"  Content="{x:Static resx:Resources.CustomMenuItemCheckBoxLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding AllowCustom}" ></CheckBox>
-                                <CheckBox Grid.Column="3" Grid.Row="2"  Content="{x:Static resx:Resources.StepperCheckBoxLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Stepper}" ></CheckBox>
-                            </Grid>
-                            <Grid Grid.Row="1" DataContext="{Binding EditableMenuItemType}"  IsEnabled="{Binding IsEnableEditMenuType}" >
-                                <Grid.RowDefinitions >
-                                    <RowDefinition/>
-                                    <RowDefinition Height="44"/>
-                                </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="Description for default:"    />
+                                        <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedPromptForDefault }" Grid.Row="1"    Translator="{Binding Translator}"   Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding PromptForDefault, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"     HorizontalAlignment="Stretch" IsEnabled="{Binding AllowCustom}"  />
+                                        <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="Description for custom:"    />
+                                        <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedPromptForCustom }" Grid.Row="1" Grid.Column="2"   Translator="{Binding Translator}"   Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding PromptForCustom, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"    HorizontalAlignment="Stretch" IsEnabled="{Binding EditPromptForCustom}"/>
+                                        <CheckBox Grid.Column="0" Grid.Row="2"  Content="{x:Static resx:Resources.CustomMenuItemCheckBoxLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding AllowCustom}" ></CheckBox>
+                                        <CheckBox Grid.Column="3" Grid.Row="2"  Content="{x:Static resx:Resources.StepperCheckBoxLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Stepper}" ></CheckBox>
+                                    </Grid>
+                                    <Grid Grid.Row="1" DataContext="{Binding EditableMenuItemType}"  IsEnabled="{Binding IsEnableEditMenuType}" >
+                                        <Grid.RowDefinitions >
+                                            <RowDefinition/>
+                                            <RowDefinition Height="44"/>
+                                        </Grid.RowDefinitions>
 
-                                <ListBox x:Name="List" SelectedValue="{Binding SelectedOption}"  
+                                        <ListBox x:Name="List" SelectedValue="{Binding SelectedOption}"  
                              ScrollViewer.CanContentScroll="False"
                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                              Grid.Row="0" ItemsSource="{Binding Options}"
                              ConnectableCtrl:ListBoxBehavior.ScrollSelectedIntoView="True">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
 
-                                            <Grid  >
-                                                <!--<TextBlock  Text="sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf "></TextBlock>-->
-                                                <local:PreparationOptionView ViewType="{Binding ViewType}"></local:PreparationOptionView>
-                                                <!--<ControlsEx:EditableTextBlock  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />-->
-                                            </Grid>
+                                                    <Grid  >
+                                                        <!--<TextBlock  Text="sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf sdfsd sdfsdfsdf "></TextBlock>-->
+                                                        <local:PreparationOptionView ViewType="{Binding ViewType}"></local:PreparationOptionView>
+                                                        <!--<ControlsEx:EditableTextBlock  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay}" />-->
+                                                    </Grid>
 
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                                <Grid Grid.Row="3"  Background="WhiteSmoke" Margin="0,0,0,0">
-                                    <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                        <Grid Grid.Row="3"  Background="WhiteSmoke" Margin="0,0,0,0">
+                                            <Border Grid.Row="2" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
-                                        <Grid Visibility="{Binding OptionsListViewButtonsVisible}" >
-                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                                                <Grid Visibility="{Binding OptionsListViewButtonsVisible}" >
+                                                    <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                                <Grid>
-                                                    <Popup Placement="Top" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="AddPopup"  StaysOpen="False"   >
-                                                        <Popup.Resources>
-                                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ListViewBarButtonStyle}" >
-                                                                <Setter Property="ConnectableCtrl:ButtonClosePopupBehavior.ClosePopupOnClick" Value="True" />
-                                                            </Style>
-                                                        </Popup.Resources>
-                                                        <Grid Background="WhiteSmoke">
-                                                            <StackPanel Margin="2">
-                                                                <Grid HorizontalAlignment="Stretch" Visibility="{Binding AddOptionVisibility}"  >
-                                                                    <Button Command="{Binding AddOptionCommand}" HorizontalContentAlignment="Left"  Margin="1" >
-                                                                        <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png"></Image>
-                                                                            <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionLabel}" ></Label>
-                                                                        </StackPanel>
-                                                                    </Button>
+                                                        <Grid>
+                                                            <Popup Placement="Top" AllowsTransparency="True"  PopupAnimation="Fade" x:Name="AddPopup"  StaysOpen="False"   >
+                                                                <Popup.Resources>
+                                                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ListViewBarButtonStyle}" >
+                                                                        <Setter Property="ConnectableCtrl:ButtonClosePopupBehavior.ClosePopupOnClick" Value="True" />
+                                                                    </Style>
+                                                                </Popup.Resources>
+                                                                <Grid Background="WhiteSmoke">
+                                                                    <StackPanel Margin="2">
+                                                                        <Grid HorizontalAlignment="Stretch" Visibility="{Binding AddOptionVisibility}"  >
+                                                                            <Button Command="{Binding AddOptionCommand}" HorizontalContentAlignment="Left"  Margin="1" >
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/option16.png"></Image>
+                                                                                    <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionLabel}" ></Label>
+                                                                                </StackPanel>
+                                                                            </Button>
+                                                                        </Grid>
+                                                                        <Button Visibility="{Binding AddOptionsGroupVisibility}" Command="{Binding AddOptionsGroupCommand}" HorizontalContentAlignment="Left" Margin="1"  >
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/optionsGroup16.png"></Image>
+                                                                                <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionsGoupLabel}" ></Label>
+                                                                            </StackPanel>
+                                                                        </Button>
+                                                                        <Button Visibility="{Binding AddStepperOptionsGroupVisibility}" Command="{Binding AddStepperOptionsGroupCommand}" HorizontalContentAlignment="Left" Margin="1"  >
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/steps16.png"></Image>
+                                                                                <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddStepperOtionsGoupLabel}" ></Label>
+                                                                            </StackPanel>
+                                                                        </Button>
+                                                                    </StackPanel>
                                                                 </Grid>
-                                                                <Button Visibility="{Binding AddOptionsGroupVisibility}" Command="{Binding AddOptionsGroupCommand}" HorizontalContentAlignment="Left" Margin="1"  >
-                                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/optionsGroup16.png"></Image>
-                                                                        <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddPreparationOtionsGoupLabel}" ></Label>
-                                                                    </StackPanel>
-                                                                </Button>
-                                                                <Button Visibility="{Binding AddStepperOptionsGroupVisibility}" Command="{Binding AddStepperOptionsGroupCommand}" HorizontalContentAlignment="Left" Margin="1"  >
-                                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/steps16.png"></Image>
-                                                                        <Label Margin="5,0,0,0" Content="{x:Static resx:Resources.AddStepperOtionsGoupLabel}" ></Label>
-                                                                    </StackPanel>
-                                                                </Button>
-                                                            </StackPanel>
+                                                            </Popup>
+                                                            <ToggleButton IsEnabled="{Binding IsEditable}" Style="{StaticResource ListViewBarToggleButtonStyle}" IsChecked="{Binding ElementName=AddPopup, Path=IsOpen, Mode=TwoWay}" Width="36" Height="36"  Margin="1,0,1,3" VerticalAlignment="Bottom" >
+
+                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                            </ToggleButton >
                                                         </Grid>
-                                                    </Popup>
-                                                    <ToggleButton IsEnabled="{Binding IsEditable}" Style="{StaticResource ListViewBarToggleButtonStyle}" IsChecked="{Binding ElementName=AddPopup, Path=IsOpen, Mode=TwoWay}" Width="36" Height="36"  Margin="1,0,1,3" VerticalAlignment="Bottom" >
 
-                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                                    </ToggleButton >
-                                                </Grid>
+                                                        <Button Margin="10,1,1,1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Cut.png"></Image>
+                                                        </Button>
+                                                        <Button Margin="1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Copy.png"></Image>
+                                                        </Button>
+                                                        <Button Margin="1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Paste.png"></Image>
+                                                        </Button>
 
-                                                <Button Margin="10,1,1,1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Cut.png"></Image>
-                                                </Button>
-                                                <Button Margin="1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Copy.png"></Image>
-                                                </Button>
-                                                <Button Margin="1"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" >
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Paste.png"></Image>
-                                                </Button>
-
-                                                <Button IsEnabled="{Binding IsEditable}" Command="{Binding DeleteSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="10,1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                                </Button>
+                                                        <Button IsEnabled="{Binding IsEditable}" Command="{Binding DeleteSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="10,1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                        </Button>
 
 
-                                            </StackPanel>
+                                                    </StackPanel>
 
 
-                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button  Command="{Binding Path=SetSelectedOptionHideShowCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                                    <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                        <Button  Command="{Binding Path=SetSelectedOptionHideShowCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
                                             ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedOptionHideShowCommand}">
-                                                    <Image Width="16" Height="16" Source="{Binding Path=OptionShowImagePath}"></Image>
-                                                </Button>
+                                                            <Image Width="16" Height="16" Source="{Binding Path=OptionShowImagePath}"></Image>
+                                                        </Button>
 
-                                                <Button  Command="{Binding Path=SetSelectedOptionCheckUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
+                                                        <Button  Command="{Binding Path=SetSelectedOptionCheckUncheckCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1"
                                             ToolTipService.ShowOnDisabled="True"  ToolTip="{Binding Path=SetSelectedScaleTypeLevelUncheckTooltip}">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
-                                                </Button>
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/CheckRed16.png"></Image>
+                                                        </Button>
 
-                                                <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveUpSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
-                                                </Button>
-                                                <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveDownSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/movedown16.png"></Image>
-                                                </Button>
-                                                <Button IsEnabled="{Binding IsEditable}" Command="{Binding RenameSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
-                                                </Button>
+                                                        <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveUpSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/moveup16.png"></Image>
+                                                        </Button>
+                                                        <Button IsEnabled="{Binding IsEditable}" Command="{Binding Path=MoveDownSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/movedown16.png"></Image>
+                                                        </Button>
+                                                        <Button IsEnabled="{Binding IsEditable}" Command="{Binding RenameSelectedOptionCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                        </Button>
 
-                                                <Button Command="{Binding EditSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                                                </Button>
-                                            </StackPanel>
+                                                        <Button Command="{Binding EditSelectedOptionCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                            <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
                                         </Grid>
-                                    </Border>
+                                    </Grid>
+
+
                                 </Grid>
-                            </Grid>
+                            </GroupBox>
 
 
-                        </Grid>
-                    </GroupBox>
+                        </TabItem>
+
+                        <TabItem  Header="{x:Static resx:Resources.ItemExtraInfoLabel}" >
+                        </TabItem>
+                    </TabControl>
 
 
                 </Grid>
