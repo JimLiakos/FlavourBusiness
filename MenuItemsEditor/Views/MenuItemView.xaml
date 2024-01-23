@@ -59,135 +59,135 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" Margin="0,0,13,0" BorderThickness="1" >
                     <ScrollViewer>
-                    <Grid MinHeight="400" MinWidth="180" Grid.Column="1" Margin="5,0,5,10" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="200*"/>
-                            <RowDefinition Height="170*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Column="1">
+                        <Grid MinHeight="400" MinWidth="180" Grid.Column="1" Margin="5,0,5,10" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="38*"/>
-                                <RowDefinition Height="27"/>
-                                <RowDefinition Height="38*"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="200*"/>
+                                <RowDefinition Height="170*"/>
                             </Grid.RowDefinitions>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="27"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="27"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="27"/>
+                                    <RowDefinition Height="38*"/>
+                                    <RowDefinition Height="27"/>
+                                    <RowDefinition Height="38*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
 
-                            <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemNameLabel}"    />
-                            <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedName }" Grid.Row="1"    Translator="{Binding Translator}"  Watermark="{x:Static resx:Resources.WriteNamePrompt}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"     HorizontalAlignment="Stretch" />
+                                <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemNameLabel}"    />
+                                <ControlsEx:MultiligualWatermarkTextBox UnTranslated="{Binding UnTranslatedName }" Grid.Row="1"    Translator="{Binding Translator}"  Watermark="{x:Static resx:Resources.WriteNamePrompt}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"     HorizontalAlignment="Stretch" />
 
-                            <Label Grid.Row="2" HorizontalAlignment="Left"   VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemFullNameLabel}"    />
-                            <ControlsEx:MultiligualWatermarkTextBox Grid.Row="3" Watermark="{x:Static resx:Resources.WriteFullNamePrompt}" Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedFullName }" Translator="{Binding Translator}"    HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden"/>
+                                <Label Grid.Row="2" HorizontalAlignment="Left"   VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemFullNameLabel}"    />
+                                <ControlsEx:MultiligualWatermarkTextBox Grid.Row="3" Watermark="{x:Static resx:Resources.WriteFullNamePrompt}" Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedFullName }" Translator="{Binding Translator}"    HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden"/>
 
-                            <Label Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemDescriptionLabel}"    />
-                            <ControlsEx:MultiligualWatermarkTextBox Grid.Row="5"    AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedDescription }" Translator="{Binding Translator}"    VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"   />
+                                <Label Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemDescriptionLabel}"    />
+                                <ControlsEx:MultiligualWatermarkTextBox Grid.Row="5"    AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" Watermark="{x:Static resx:Resources.WriteDescriptionPrompt}" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedDescription }" Translator="{Binding Translator}"    VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"   />
 
-                            <Label Grid.Row="6"   HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemExtrasDescriptionLabel}"    />
-                            <ControlsEx:MultiligualWatermarkTextBox Grid.Row="7"  AcceptsReturn="True" TextWrapping="Wrap"  Watermark="{x:Static resx:Resources.WriteExtrasDescriptionPrompt}" Text="{Binding ExtrasDescription, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedExtrasDescription }" Translator="{Binding Translator}"    VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" />
+                                <Label Grid.Row="6"   HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.MenuItemExtrasDescriptionLabel}"    />
+                                <ControlsEx:MultiligualWatermarkTextBox Grid.Row="7"  AcceptsReturn="True" TextWrapping="Wrap"  Watermark="{x:Static resx:Resources.WriteExtrasDescriptionPrompt}" Text="{Binding ExtrasDescription, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  UnTranslated="{Binding UnTranslatedExtrasDescription }" Translator="{Binding Translator}"    VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" />
 
 
-                            <Grid Grid.Row="8" Margin="0,10,0,10">
+                                <Grid Grid.Row="8" Margin="0,10,0,10">
 
-                                <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="30"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="{x:Static resx:Resources.MealPartLabel}" />
-                                    <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding PartsOfMealText}" TextTrimming="CharacterEllipsis"/>
-                                </Grid>
-                                <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding PartsOfMealExpanded, Mode=TwoWay}" />
+                                    <Rectangle  x:Name="normal" Fill="{StaticResource ComboBoxBackgroundBrush}" Stroke="{StaticResource ComboBoxBorderBrush}" StrokeThickness="1" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="30"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Label  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0" Content="{x:Static resx:Resources.MealPartLabel}" />
+                                        <TextBlock Grid.Column="1"  HorizontalAlignment="Left"   VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding PartsOfMealText}" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                    <ToggleButton BorderBrush="Gray"  Grid.ColumnSpan="2" Name="PartOfMealToggle"  Style="{StaticResource ComboBoxToggleButtonStyle}" IsChecked="{Binding PartsOfMealExpanded, Mode=TwoWay}" />
 
-                                <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" IsOpen="{Binding Path=IsChecked , ElementName=PartOfMealToggle }"   Panel.ZIndex="10"  >
-                                    <Border >
-                                        <Grid MaxHeight="100"  >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <ListBox MinHeight="80" ItemsSource="{Binding PartsOfMeals}" SelectedItem="{Binding SelectedPartOfMeal}">
-                                                <ListBox.ItemTemplate>
-                                                    <DataTemplate>
+                                    <Popup  Placement="Bottom" AllowsTransparency="True" StaysOpen="True" PopupAnimation="Slide"  Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" IsOpen="{Binding Path=IsChecked , ElementName=PartOfMealToggle }"   Panel.ZIndex="10"  >
+                                        <Border >
+                                            <Grid MaxHeight="100"  >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <ListBox MinHeight="80" ItemsSource="{Binding PartsOfMeals}" SelectedItem="{Binding SelectedPartOfMeal}">
+                                                    <ListBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0" Text="{Binding PartofMeal.MealType.Name}"></TextBlock>
+                                                                <TextBlock Grid.Column="1"  Text="{Binding PartofMeal.MealCourseType.Name}"></TextBlock>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ListBox.ItemTemplate>
+                                                </ListBox>
+
+                                                <Grid  Grid.Row="1" Style="{DynamicResource ListViewButtonsBarStyle}" Margin="0,0,0,0">
+                                                    <Popup Panel.ZIndex="20" Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" AllowsTransparency="True"  IsOpen="{Binding NewPartOfMeal}" Placement="Top">
                                                         <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </Grid.ColumnDefinitions>
-                                                            <TextBlock Grid.Column="0" Text="{Binding PartofMeal.MealType.Name}"></TextBlock>
-                                                            <TextBlock Grid.Column="1"  Text="{Binding PartofMeal.MealCourseType.Name}"></TextBlock>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ListBox.ItemTemplate>
-                                            </ListBox>
 
-                                            <Grid  Grid.Row="1" Style="{DynamicResource ListViewButtonsBarStyle}" Margin="0,0,0,0">
-                                                <Popup Panel.ZIndex="20" Width="{Binding Path=ActualWidth , ElementName=PartOfMealToggle }" AllowsTransparency="True"  IsOpen="{Binding NewPartOfMeal}" Placement="Top">
-                                                    <Grid>
+                                                            <Grid Margin="1,2,1,2" Style="{DynamicResource ListViewButtonsBarStyle}"  >
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="3" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="48" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <GridSplitter Width="2" Grid.Column="1" HorizontalAlignment="Center" ></GridSplitter>
+                                                                <ComboBox ItemsSource="{Binding MealTypes}"  SelectedItem="{Binding SelectedMealTypeViewModel}" >
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
 
-                                                        <Grid Margin="1,2,1,2" Style="{DynamicResource ListViewButtonsBarStyle}"  >
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="3" />
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="48" />
-                                                            </Grid.ColumnDefinitions>
-                                                            <GridSplitter Width="2" Grid.Column="1" HorizontalAlignment="Center" ></GridSplitter>
-                                                            <ComboBox ItemsSource="{Binding MealTypes}"  SelectedItem="{Binding SelectedMealTypeViewModel}" >
-                                                                <ComboBox.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                                                                    </DataTemplate>
-                                                                </ComboBox.ItemTemplate>
-
-                                                            </ComboBox>
-                                                            <ComboBox Grid.Column="2" ItemsSource="{Binding SelectedMealTypeCourses}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMealCourseType}"  ></ComboBox>
-                                                            <Button Grid.Column="3"   Style="{StaticResource ListViewBarButtonStyle}" 
+                                                                </ComboBox>
+                                                                <ComboBox Grid.Column="2" ItemsSource="{Binding SelectedMealTypeCourses}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMealCourseType}"  ></ComboBox>
+                                                                <Button Grid.Column="3"   Style="{StaticResource ListViewBarButtonStyle}" 
                                                                     Command="{Binding SavePartofMealCommand}"
                                                                 Width="30" 
                                                                 Height="30"   Margin="1">
-                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Save.png"></Image>
-                                                            </Button>
+                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Save.png"></Image>
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                    </Grid>
-                                                </Popup>
-                                                <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+                                                    </Popup>
+                                                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
-                                                    <Grid>
-                                                        <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <Grid>
+                                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                                            <Button Command="{Binding DeletePartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                                            </Button>
+                                                                <Button Command="{Binding DeletePartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                                </Button>
 
-                                                            <Button Command="{Binding AddPartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                                            </Button>
-                                                        </StackPanel>
-                                                        <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <Button Command="{Binding AddPartofMealCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                                </Button>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
 
-                                                            <Button Command="{Binding OpenMealTypesCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/MealCoursesClock16.png"></Image>
-                                                            </Button>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </Border>
+                                                                <Button Command="{Binding OpenMealTypesCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/MealCoursesClock16.png"></Image>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
                                             </Grid>
 
-                                        </Grid>
+                                        </Border>
+                                    </Popup>
 
-                                    </Border>
-                                </Popup>
+                                </Grid>
 
-                            </Grid>
-
-                            <!--<sw:ComboBoxEx Grid.Row="9" DisplayMemberPath="Description" Text="sss" >
+                                <!--<sw:ComboBoxEx Grid.Row="9" DisplayMemberPath="Description" Text="sss" >
                                 <sw:ComboBoxEx.PopUpFooter>
                                     <ContentControl>
                                         <Grid  Background="WhiteSmoke" Margin="0,0,0,0">
@@ -224,129 +224,129 @@
 
 
 
-                        </Grid>
-                        <Grid Grid.Column="1" Grid.Row="1" >
-                            <Grid.RowDefinitions>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="1" >
+                                <Grid.RowDefinitions>
 
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="42"/>
-                            </Grid.RowDefinitions>
-                            <DockPanel   LastChildFill="True" >
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="42"/>
+                                </Grid.RowDefinitions>
+                                <DockPanel   LastChildFill="True" >
 
-                                <Grid DockPanel.Dock="Top">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="49*"/>
-                                        <ColumnDefinition Width="303*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.SaleTaxesLabel}" Grid.ColumnSpan="2"/>
-                                    <sw:ComboBoxEx Grid.Row="1" DisplayMemberPath="Description" SelectedItem="{Binding SelectedTaxableType}" ItemsSource="{Binding TaxableTypes}" Grid.ColumnSpan="2">
-                                        <sw:ComboBoxEx.PopUpFooter>
-                                            <ContentControl>
-                                                <Grid  Background="WhiteSmoke" Margin="0,0,0,0">
-                                                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+                                    <Grid DockPanel.Dock="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="49*"/>
+                                            <ColumnDefinition Width="303*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.SaleTaxesLabel}" Grid.ColumnSpan="2"/>
+                                        <sw:ComboBoxEx Grid.Row="1" DisplayMemberPath="Description" SelectedItem="{Binding SelectedTaxableType}" ItemsSource="{Binding TaxableTypes}" Grid.ColumnSpan="2">
+                                            <sw:ComboBoxEx.PopUpFooter>
+                                                <ContentControl>
+                                                    <Grid  Background="WhiteSmoke" Margin="0,0,0,0">
+                                                        <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
-                                                        <Grid>
-                                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                                                            <Grid>
+                                                                <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
 
-                                                                <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                                                </Button>
+                                                                    <Button Command="{Binding DeleteSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                                    </Button>
 
-                                                                <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                                                </Button>
-                                                            </StackPanel>
-                                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
-                                                                </Button>
-                                                                <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                                                                </Button>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </Border>
-                                                </Grid>
+                                                                    <Button Command="{Binding AddTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                                    </Button>
+                                                                </StackPanel>
+                                                                <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                    <Button Command="{Binding RenameSelectedTaxableTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                                    </Button>
+                                                                    <Button Command="{Binding EditSelectedTaxableTypeCommand}" Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                                        <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                                    </Button>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
 
-                                            </ContentControl>
+                                                </ContentControl>
 
-                                        </sw:ComboBoxEx.PopUpFooter>
-                                    </sw:ComboBoxEx>
-                                </Grid>
-                                <Grid  DockPanel.Dock="Top" Margin="0,0,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="91*"/>
-                                        <ColumnDefinition Width="201*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="30" />
-                                    </Grid.RowDefinitions>
-                                    <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.PriceLabel}"/>
-
-                                    <local:ContextPriceTextBox OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2"></local:ContextPriceTextBox>
-                                </Grid>
-
-                                <Grid DockPanel.Dock="Top" Visibility="{Binding PriceContextsVisibility}"  Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="30" />
-                                    </Grid.RowDefinitions>
-                                    <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.PriceContextLabel}"/>
-
-                                    <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                  ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
-                                </Grid>
-
-                                <!--<CheckBox FlowDirection="RightToLeft"  Grid.Row="0"  Content="Use item dedicated type" HorizontalAlignment="Left"  />-->
-                                <Label DockPanel.Dock="Top" Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.OptionsTypesLabel}"></Label>
-                                <ListBox  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" ItemsSource="{Binding MenuItemTypes}"  SelectedValue="{Binding SelectedMenuType}" Margin="0,0,0,1">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <TextBlock Text="{Binding Name}"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </DockPanel>
-                            <Grid Grid.Row="1" Background="WhiteSmoke" Margin="0,0,0,0">
-                                <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
-
-                                    <Grid>
-                                        <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
-
-                                            <Button Command="{Binding AddOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
-                                            </Button>
-
-                                            <Button Command="{Binding DeleteSelectedOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
-                                            </Button>
-
-
-                                        </StackPanel>
-                                        <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Command="{Binding RenameSelectedOptionsTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
-                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
-                                            </Button>
-                                            <Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
-                                                <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
-                                            </Button>
-                                        </StackPanel>
+                                            </sw:ComboBoxEx.PopUpFooter>
+                                        </sw:ComboBoxEx>
                                     </Grid>
-                                </Border>
+                                    <Grid  DockPanel.Dock="Top" Margin="0,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="91*"/>
+                                            <ColumnDefinition Width="201*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.PriceLabel}"/>
+
+                                        <local:ContextPriceTextBox OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2"></local:ContextPriceTextBox>
+                                    </Grid>
+
+                                    <Grid DockPanel.Dock="Top" Visibility="{Binding PriceContextsVisibility}"  Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.PriceContextLabel}"/>
+
+                                        <ComboBox Grid.Row="1"    VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                  ItemsSource="{Binding PricingContexts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPriceContext}" Grid.ColumnSpan="2"  />
+                                    </Grid>
+
+                                    <!--<CheckBox FlowDirection="RightToLeft"  Grid.Row="0"  Content="Use item dedicated type" HorizontalAlignment="Left"  />-->
+                                    <Label DockPanel.Dock="Top" Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,4" Content="{x:Static resx:Resources.OptionsTypesLabel}"></Label>
+                                    <ListBox  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" ItemsSource="{Binding MenuItemTypes}"  SelectedValue="{Binding SelectedMenuType}" Margin="0,0,0,1">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Name}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </DockPanel>
+                                <Grid Grid.Row="1" Background="WhiteSmoke" Margin="0,0,0,0">
+                                    <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
+
+                                        <Grid>
+                                            <StackPanel Margin="2,0,2,0" HorizontalAlignment="Left" Orientation="Horizontal">
+
+                                                <Button Command="{Binding AddOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/add16.png"></Image>
+                                                </Button>
+
+                                                <Button Command="{Binding DeleteSelectedOptionsTypeCommand}"  Style="{DynamicResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Delete.png"></Image>
+                                                </Button>
+
+
+                                            </StackPanel>
+                                            <StackPanel Margin="2,0,2,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Command="{Binding RenameSelectedOptionsTypeCommand}"  Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36"  Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Rename16.png"></Image>
+                                                </Button>
+                                                <Button Command="{Binding EditSelectedOptionsTypeCommand}" Style="{StaticResource ListViewBarButtonStyle}" Width="36" Height="36" Margin="1">
+                                                    <Image Width="16" Height="16" Source="pack://application:,,,/MenuItemsEditor;Component/Image/Edit16.png"></Image>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+
                             </Grid>
 
-
                         </Grid>
-
-                    </Grid>
                     </ScrollViewer>
                 </Border>
                 <GridSplitter Grid.Column="1" Margin="0,0,0,0" />
@@ -355,7 +355,7 @@
 
                     <TabControl>
                         <TabItem Header="{x:Static resx:Resources.OptionsLabel}" >
-                           
+
 
                             <GroupBox>
                                 <GroupBox.Header>
@@ -522,6 +522,15 @@
                         </TabItem>
 
                         <TabItem  Header="{x:Static resx:Resources.ItemExtraInfoLabel}" >
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Brown">
+                                <Border BorderThickness="2"    x:Name="ExtraInfoWebBrowserHost">
+
+
+                                    <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
+
+                                </Border>
+
+                            </Grid>
                         </TabItem>
                     </TabControl>
 

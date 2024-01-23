@@ -41,6 +41,8 @@ namespace MenuItemsEditor.Views
 
 
         WebBrowserOverlay Browser;
+
+        WebBrowserOverlay ExtraInfoWebView;
         private void Browser_Navigated(object sender, EventArgs e)
         {
 
@@ -74,6 +76,11 @@ namespace MenuItemsEditor.Views
                 Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
                 Browser.Navigated += Browser_Navigated;
 
+                 
+                ExtraInfoWebView= new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
+                ExtraInfoWebView.Navigated+=ExtraInfoWebView_Navigated;
+
+
                 ExpandBtn.Checked += ExpandBtn_Checked;
                 ExpandBtn.Unchecked += ExpandBtn_Unchecked;
 
@@ -105,6 +112,7 @@ namespace MenuItemsEditor.Views
                 // uri = "http://localhost/FlavourBusinessWebRole/PublicMenu/TransitionHtmlPage.html";
                 Browser.Navigate(uri);
                 Browser.SuppressScriptErrors = true;
+                ExtraInfoWebView.Navigate("http://localhost:4300/#/EditItemExtraInfo");
 
                 //this.GetDataContextObject<ViewModel.MenuItemViewModel>().SetHtmlView(Browser);
             }));
@@ -113,6 +121,10 @@ namespace MenuItemsEditor.Views
 
         }
 
+        private void ExtraInfoWebView_Navigated(object sender, NavigatedEventArgs e)
+        {
+            
+        }
 
         private void WebBrowser_SizeChanged(object sender, SizeChangedEventArgs e)
         {
