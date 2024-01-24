@@ -77,7 +77,7 @@ namespace MenuItemsEditor.Views
                 Browser.Navigated += Browser_Navigated;
 
                  
-                ExtraInfoWebView= new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
+                ExtraInfoWebView= new WebBrowserOverlay(ExtraInfoWebBrowserHost, BrowserType.Chrome, true);
                 ExtraInfoWebView.Navigated+=ExtraInfoWebView_Navigated;
 
 
