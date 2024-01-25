@@ -50,6 +50,51 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
+
+        MenuCommand _FontsMenu;
+        public MenuCommand FontsMenu
+        {
+            get
+            {
+                if (_FontsMenu == null)
+                {
+                    HeadingFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.HeadingFonts(); });
+                    ParagraphFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.ParagraphFonts(); });
+
+                    _FontsMenu = new WPFUIElementObjectBind.MenuCommand()
+                    {
+                        Header = Properties.Resources.FontsMenuItemHeader,
+                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                            new MenuCommand()
+                            {
+                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
+                                Command = HeadingFontsCommand,
+                            },
+                            new MenuCommand()
+                            {
+                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
+                                Command = ParagraphFontsCommand,
+                            }
+                        
+                    }
+                    };
+                }
+                return _FontsMenu;
+            }
+        }
+
+        private void ParagraphFonts()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HeadingFonts()
+        {
+            throw new NotImplementedException();
+        }
+
+
         //public MenuItemViewModel()
         //{
         //}
@@ -1449,6 +1494,9 @@ namespace MenuItemsEditor.ViewModel
                 return Visibility.Visible;
             }
         }
+
+        public RoutedCommand HeadingFontsCommand { get; private set; }
+        public RoutedCommand ParagraphFontsCommand { get; private set; }
     }
 
 

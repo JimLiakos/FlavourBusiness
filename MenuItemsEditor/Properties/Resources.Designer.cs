@@ -169,6 +169,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fonts.
+        /// </summary>
+        public static string FontsMenuItemHeader {
+            get {
+                return ResourceManager.GetString("FontsMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full name : .
         /// </summary>
         public static string FullNameLabel {
@@ -183,6 +192,15 @@ namespace MenuItemsEditor.Properties {
         public static string GroupOtionsIngredientCheckBoxLabel {
             get {
                 return ResourceManager.GetString("GroupOtionsIngredientCheckBoxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heading.
+        /// </summary>
+        public static string HeadingFontsMenuItemHeader {
+            get {
+                return ResourceManager.GetString("HeadingFontsMenuItemHeader", resourceCulture);
             }
         }
         
@@ -516,6 +534,15 @@ namespace MenuItemsEditor.Properties {
         public static string OrgPriceLabel {
             get {
                 return ResourceManager.GetString("OrgPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paragraph.
+        /// </summary>
+        public static string ParagraphFontsMenuItemHeader {
+            get {
+                return ResourceManager.GetString("ParagraphFontsMenuItemHeader", resourceCulture);
             }
         }
         

@@ -421,4 +421,13 @@ There are preaparation oprtions with wrang, scale type.</value>
     <value>Extra info :</value>
     <comment>Defines the label for menu item infos editor</comment>
   </data>
+  <data name="FontsMenuItemHeader" xml:space="preserve">
+    <value>Fonts</value>
+  </data>
+  <data name="HeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Heading</value>
+  </data>
+  <data name="ParagraphFontsMenuItemHeader" xml:space="preserve">
+    <value>Paragraph</value>
+  </data>
 </root>

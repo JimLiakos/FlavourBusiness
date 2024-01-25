@@ -17,6 +17,6 @@
 
     <Grid>
 
-        <local:MenuItemView DataContext="{Binding Value}"></local:MenuItemView>
+        <local:MenuItemView x:Name="MenuItemView" x:FieldModifier="public" DataContext="{Binding Value}"></local:MenuItemView>
     </Grid>
 </sw:PageDialogViewEmulator>

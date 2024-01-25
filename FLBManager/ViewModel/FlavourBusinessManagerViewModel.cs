@@ -23,6 +23,8 @@ using OOAdvantech.PersistenceLayer;
 using MenuItemsEditor;
 using FLBManager.ViewModel.Taxes;
 
+using MenuItemsEditor.Views;
+
 namespace FLBManager.ViewModel
 {
 
@@ -141,6 +143,10 @@ namespace FLBManager.ViewModel
                 return _MenuItems;
 
             }
+        }
+        public void UpdateCurrentMenuItemEditorMenus()
+        {
+
         }
 
         private void ShowProductAndServices()
@@ -309,6 +315,11 @@ namespace FLBManager.ViewModel
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
+
+                MenuItemPage menuItemPage = (_object as StyleableWindow.PageDialogFrame).Pages.Last() as MenuItemPage;
+
+                
+
                 UpdateMenuAndToolBar();
                 if (RootPageGraphicMenu == null)
                     MenuData.GraphicMenu = null;
@@ -350,6 +361,11 @@ namespace FLBManager.ViewModel
             if (pages.Count > 0 && pages.Last() is MenuDesigner.Views.MenuDesignerPage)
                 menuDesignerPage = pages.Last() as MenuDesigner.Views.MenuDesignerPage;
 
+            MenuItemPage menuItemPage = null;
+            if (pages.Count > 0 && pages.Last() is MenuItemPage)
+                menuItemPage = pages.Last() as MenuItemPage;
+
+
             if (MenuDesignerToolBarVisibility == Visibility.Visible)
             {
                 if (ActivePageGraphicMenu != null)
@@ -365,6 +381,20 @@ namespace FLBManager.ViewModel
                     }
                 }
             }
+            if(menuItemPage!=null)
+            {
+                MenuItemsEditor.ViewModel.MenuItemViewModel menuItemViewModel =  menuItemPage.MenuItemView.GetDataContextObject() as MenuItemsEditor.ViewModel.MenuItemViewModel;
+
+                if (menuItemViewModel  != null)
+                {
+                    var menuItem = menuItemViewModel.FontsMenu;
+                    _MenuItems.Add(menuItem);
+                    ActivePageMenuItems.Add(menuItem);
+                    
+                }
+            }
+
+
 
             if (HallLayoutDesignerToolBarVisibility == Visibility.Visible)
             {
