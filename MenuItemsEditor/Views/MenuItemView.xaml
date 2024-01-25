@@ -522,7 +522,7 @@
                         </TabItem>
 
                         <TabItem  Header="{x:Static resx:Resources.ItemExtraInfoLabel}" >
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding MenuItemTSViewModel}" >
                                 <Border BorderThickness="2"    x:Name="ExtraInfoWebBrowserHost">
 
 

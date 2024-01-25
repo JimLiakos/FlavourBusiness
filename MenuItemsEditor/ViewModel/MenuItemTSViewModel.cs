@@ -35,6 +35,8 @@ namespace MenuItemsEditor.ViewModel
 
         MealType MealType { get; }
 
+        string ExtraInfoJson { get; set; }
+
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
@@ -46,6 +48,8 @@ namespace MenuItemsEditor.ViewModel
         {
             this.MenuItemViewModel = menuItemViewModel;
         }
+
+        public string ExtraInfoJson { get; set; }
 
         public ItemPreparation PreparationItem
         {
