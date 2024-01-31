@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FlavourBusinessManager.RoomService;
 using MenuModel;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Remoting;
 
 namespace MenuItemsEditor.ViewModel
 {
@@ -35,21 +36,43 @@ namespace MenuItemsEditor.ViewModel
 
         MealType MealType { get; }
 
-        string ExtraInfoJson { get; set; }
+        string ExtraInfoHtml { get; set; }
+
+        List<IMenuStyleSheet> MenusStyleSheets { get; }
 
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
-    public class MenuItemTSViewModel : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IMenuItemTSViewModel
+    public class MenuItemTSViewModel : ExtMarshalByRefObject, IMenuItemTSViewModel
     {
         private MenuItemViewModel MenuItemViewModel;
 
         public MenuItemTSViewModel(MenuItemViewModel menuItemViewModel)
         {
             this.MenuItemViewModel = menuItemViewModel;
+
+            _ExtraInfoJson= menuItemViewModel.MenuItem.ItemInfo;
+
         }
 
-        public string ExtraInfoJson { get; set; }
+        public List<IMenuStyleSheet> MenusStyleSheets
+        {
+            get
+            {
+                return MenuItemViewModel.OrganizationMenusStyleSheets.StyleSheets;
+            }
+        }
+
+        string _ExtraInfoJson;
+        public string ExtraInfoHtml
+        {
+            get => _ExtraInfoJson;// MenuItemViewModel.MenuItem.ItemInfo; 
+            set
+            {
+                _ExtraInfoJson = value;
+                MenuItemViewModel.MenuItem.ItemInfo = value;
+            }
+        }
 
         public ItemPreparation PreparationItem
         {
@@ -97,7 +120,7 @@ namespace MenuItemsEditor.ViewModel
                     return null;
             }
         }
-        public MealType MealType 
+        public MealType MealType
         {
             get => MenuItemViewModel?.SelectedMealTypeViewModel?.MealType;
         }

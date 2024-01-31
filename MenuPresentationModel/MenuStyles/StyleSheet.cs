@@ -368,8 +368,11 @@ namespace MenuPresentationModel.MenuStyles
             {
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage);
 
-                return (from styleSheet in storage.GetObjectCollection<IStyleSheet>()
-                        select styleSheet).ToList();
+                var styleSheets = (from styleSheet in storage.GetObjectCollection<IStyleSheet>()
+                                   select styleSheet).ToList();
+
+
+                return styleSheets;
             }
 
         }

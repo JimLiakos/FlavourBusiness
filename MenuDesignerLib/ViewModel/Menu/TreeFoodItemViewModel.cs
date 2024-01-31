@@ -168,7 +168,10 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
                 var menuItemPage = new MenuItemsEditor.Views.MenuItemPage();
-                MenuItemsEditor.ViewModel.MenuItemViewModel itemViewModel = new MenuItemsEditor.ViewModel.MenuItemViewModel(MenuCanvasFoodItem.MenuItem);
+                
+                var sd = (this.Parent as ItemsCategoryViewModel).OrganizationMenusStyleSheets;
+                
+                MenuItemsEditor.ViewModel.MenuItemViewModel itemViewModel = new MenuItemsEditor.ViewModel.MenuItemViewModel(MenuCanvasFoodItem.MenuItem, (Parent as ItemsCategoryViewModel).OrganizationMenusStyleSheets);
                 menuItemPage.GetObjectContext().SetContextInstance(itemViewModel);
 
 

@@ -8,7 +8,7 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{efe4e65a-7af9-40a6-baff-c02b437d57c1}</MetaDataID>
     [BackwardCompatibilityID("{efe4e65a-7af9-40a6-baff-c02b437d57c1}")]
     [Persistent()]
-    public class MenuDesignActivity : MarshalByRefObject, FlavourBusinessFacade.HumanResources.IMenuDesignActivity
+    public class MenuDesignActivity : OOAdvantech.Remoting.ExtMarshalByRefObject, FlavourBusinessFacade.HumanResources.IMenuDesignActivity
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

@@ -24,6 +24,7 @@ using MenuItemsEditor;
 using FLBManager.ViewModel.Taxes;
 
 using MenuItemsEditor.Views;
+using MenuPresentationModel.MenuStyles;
 
 namespace FLBManager.ViewModel
 {
@@ -31,7 +32,7 @@ namespace FLBManager.ViewModel
 
 
     /// <MetaDataID>{9754d9d6-effc-4d7b-8aef-53d891afe61b}</MetaDataID>
-    public class FlavourBusinessManagerViewModel : MarshalByRefObject, INotifyPropertyChanged
+    public class FlavourBusinessManagerViewModel : MarshalByRefObject, INotifyPropertyChanged, MenuItemsEditor.ViewModel.IMenusStyleSheets
     {
 
 
@@ -316,9 +317,6 @@ namespace FLBManager.ViewModel
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
 
-                MenuItemPage menuItemPage = (_object as StyleableWindow.PageDialogFrame).Pages.Last() as MenuItemPage;
-
-                
 
                 UpdateMenuAndToolBar();
                 if (RootPageGraphicMenu == null)
@@ -689,7 +687,9 @@ namespace FLBManager.ViewModel
 
             RestaurantMenus = new MenuItemsEditor.RestaurantMenus(storageData);
             _BusinessResources.RestaurantMenus = RestaurantMenus;
-            MenuData = new RestaurantMenuItemsPresentation((RestaurantMenus.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, null);
+
+            
+            MenuData = new RestaurantMenuItemsPresentation((RestaurantMenus.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, this, null);
             MenuData.ShowMenuTaxes += MenuData_ShowMenuTaxes;
             OrganizationStorageRef styleSeetStorageRef = resourceManager.GetStorage(OrganizationStorages.StyleSheets);
             temporaryStorageLocation = appDataPath + "\\StyleSheets.xml";
@@ -837,6 +837,14 @@ namespace FLBManager.ViewModel
         }
 
         public WPFUIElementObjectBind.RoutedCommand ProductAndServicesCommand { get; private set; }
+
+        public List<MenuItemsEditor.ViewModel.IMenuStyleSheet> StyleSheets
+        {
+            get
+            {
+                return GraphicMenus.GraphicMenus.OfType<MenuItemsEditor.ViewModel.IMenuStyleSheet>().ToList();
+            }
+        }
 
         public class MenuDesignerHost : MenuDesigner.ViewModel.Menu.MenuDesignerHost
         {

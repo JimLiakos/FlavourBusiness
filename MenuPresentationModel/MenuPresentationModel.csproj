@@ -66,6 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMenuItemInfo.cs" />
     <Compile Include="JsonMenuPresentation\MenuCanvasItem.cs" />
     <Compile Include="MenuCanvas\IMenuCanvasColumn.cs" />
     <Compile Include="JsonMenuPresentation\PageImage.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="MenuCanvas\MenuCanvasLine.cs" />
     <Compile Include="MenuCanvas\IMenuCanvasLine.cs" />
     <Compile Include="MenuCanvas\ΙMenuCanvasPageColumn.cs" />
+    <Compile Include="MenuItemInfoStyle.cs" />
     <Compile Include="MenuStyles\IOrderPadStyle.cs" />
     <Compile Include="MenuStyles\IPageImage.cs" />
     <Compile Include="MenuCanvas\ItemRelativePos.cs" />

@@ -17,7 +17,7 @@ namespace MenuModel.JsonViewModel
         public MenuFoodItem()
         {
         }
-        
+
 
 
         /// <MetaDataID>{7d896d84-3ce1-4ee7-ab0c-c19232d93533}</MetaDataID>
@@ -32,10 +32,13 @@ namespace MenuModel.JsonViewModel
             _FullName = new Multilingual(menuItem.MultilingualFullName);
             _PromptForDefault = new Multilingual(menuItem.MultilingualPromptForDefault);
             _PromptForCustom = new Multilingual(menuItem.MultilingualPromptForCustom);
+            _ExtrasDescription = new Multilingual(menuItem.MultilingualExtrasDescription);
+            _ItemInfo= new Multilingual(menuItem.MultilingualItemInfo);
             AllowCustom = menuItem.AllowCustom;
             Stepper = menuItem.Stepper;
             Description = menuItem.Description;
             ExtrasDescription = menuItem.ExtrasDescription;
+
 
             SelectorAlwaysInDescription = menuItem.SelectorAlwaysInDescription;
 
@@ -159,6 +162,16 @@ namespace MenuModel.JsonViewModel
 
 
 
+        /// <exclude>Excluded</exclude>
+        Multilingual _ItemInfo = new Multilingual();
+
+
+        [JsonIgnore]
+        public string ItemInfo { get => _ItemInfo.GetValue<string>(); set => _ItemInfo.SetValue<string>(value); }
+
+
+
+
         /// <MetaDataID>{5c85c373-a932-4543-9466-96a817d0a23a}</MetaDataID>
         public List<OptionGroup> ItemOptions { set; get; }
 
@@ -232,6 +245,9 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{16ea71a6-be2d-4798-969a-3768fb00bcbb}</MetaDataID>
         public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { _ExtrasDescription = value; } }
 
+        public Multilingual MultilingualItemInfo { get { return new Multilingual(_ItemInfo); } set { _ItemInfo = value; } }
+        
+
         /// <MetaDataID>{7764429b-4b51-45b6-8257-1dbad77f6509}</MetaDataID>
         public bool Stepper { get; set; }
 
@@ -239,6 +255,8 @@ namespace MenuModel.JsonViewModel
         public IList<IPartofMeal> PartofMeals { get; set; }
         /// <MetaDataID>{31dbf330-3556-459f-8418-fd93f915aa70}</MetaDataID>
         public bool SelectorAlwaysInDescription { get; set; }
+
+        
 
 
 

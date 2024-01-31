@@ -46,13 +46,13 @@
 
     <Grid Margin="0,10,0,0"   d:DataContext="{StaticResource SampleMenuItemViewModel}">
 
-        <sw:DialogContentControl x:Name="DialogContentControl"  BeforeTransactionCommit="{Binding BeforeSaveCommand}" Icon="/MenuItemsEditor;component/Image/MenuItem16.png" Title="Menu Item" InitialHeight="710" InitialWidth="1270" >
+        <sw:DialogContentControl x:Name="DialogContentControl"  BeforeTransactionCommit="{Binding BeforeSaveCommand}" Icon="/MenuItemsEditor;component/Image/MenuItem16.png" Title="Menu Item" InitialHeight="710" InitialWidth="1370" >
 
 
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="263*"/>
+                    <ColumnDefinition Width="253*"/>
 
                     <ColumnDefinition Width="601*"/>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>

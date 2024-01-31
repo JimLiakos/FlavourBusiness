@@ -14,6 +14,7 @@ using MenuItemsEditor;
 using StyleableWindow;
 using MenuPresentationModel.MenuCanvas;
 using UIBaseEx;
+using MenuItemsEditor.ViewModel;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -67,6 +68,26 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 //RootCategory.gr
             }
         }
+        //Avalable
+        internal  IMenusStyleSheets _OrganizationMenusStyleSheets;
+        public ItemsCategoryViewModel(MenuModel.IItemsCategory itemsCategory, MenuItemsEditor.IMenusTreeNode parent, MenuPresentationModel.RestaurantMenu graphicMenu, IMenusStyleSheets menuStyleSheets):
+            this(itemsCategory, parent, graphicMenu)
+        {
+            _OrganizationMenusStyleSheets= menuStyleSheets;
+        }
+
+        public IMenusStyleSheets OrganizationMenusStyleSheets
+        {
+            get
+            {
+                if (_OrganizationMenusStyleSheets != null)
+                    return _OrganizationMenusStyleSheets;
+
+                return (Parent as ItemsCategoryViewModel)?.OrganizationMenusStyleSheets;
+
+            }
+        }
+
         public ItemsCategoryViewModel(MenuModel.IItemsCategory itemsCategory, MenuItemsEditor.IMenusTreeNode parent, MenuPresentationModel.RestaurantMenu graphicMenu)
         {
             _GraphicMenu = graphicMenu;

@@ -1,4 +1,6 @@
 ﻿using FlavourBusinessFacade;
+using MenuItemsEditor.ViewModel;
+using MenuPresentationModel.MenuStyles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +12,7 @@ using System.Windows;
 namespace MenuDesigner.ViewModel
 {
     /// <MetaDataID>{1905b81e-e30b-494b-9bd7-7b37ae25a820}</MetaDataID>
-    public class GraphicMenusPresentation : MarshalByRefObject, INotifyPropertyChanged
+    public class GraphicMenusPresentation : MarshalByRefObject, INotifyPropertyChanged 
     {
         public event PropertyChangedEventHandler PropertyChanged;
         /// <MetaDataID>{d47baec1-d1e1-4156-bd20-45aee6080701}</MetaDataID>
@@ -98,7 +100,7 @@ namespace MenuDesigner.ViewModel
 
 
     /// <MetaDataID>{45fdc89f-754b-45eb-9876-efbe82d6c386}</MetaDataID>
-    public class GraphicMenuPresentation : MarshalByRefObject, INotifyPropertyChanged
+    public class GraphicMenuPresentation : OOAdvantech.Remoting.ExtMarshalByRefObject, INotifyPropertyChanged, IMenuStyleSheet
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -149,5 +151,12 @@ namespace MenuDesigner.ViewModel
             }
         }
 
+        public IStyleSheet StyleSheet
+        {
+            get
+            {
+                return null;
+            }
+        }
     }
 }

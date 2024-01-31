@@ -14,13 +14,14 @@ using OOAdvantech;
 using FlavourBusinessFacade;
 using System.Data;
 using System.Security.Authentication;
+using OOAdvantech.Remoting;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{680d7ca1-c381-4be1-890b-e1b21451126e}</MetaDataID>
     [BackwardCompatibilityID("{680d7ca1-c381-4be1-890b-e1b21451126e}")]
     [Persistent()]
-    public class ServicePoint : MarshalByRefObject, IServicePoint
+    public class ServicePoint : ExtMarshalByRefObject, IServicePoint
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;

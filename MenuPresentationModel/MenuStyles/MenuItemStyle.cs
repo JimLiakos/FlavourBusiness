@@ -14,6 +14,77 @@ namespace MenuPresentationModel.MenuStyles
     {
 
 
+        /// <exclude>Excluded</exclude>
+        FontData? _ItemInfoParagraphFont;
+
+        /// <MetaDataID>{7064515a-37e9-45fb-8061-71a23cdba058}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoParagraphFont))]
+        [BackwardCompatibilityID("+13")]
+        public FontData ItemInfoParagraphFont
+        {
+            get
+            {
+                using (CultureContext cultureContext = new CultureContext(CultureContext.CurrentCultureInfo, true))
+                {
+                    if (OrgMenuItemStyle != null && !_ItemInfoParagraphFont.HasValue)
+                        return OrgMenuItemStyle.ItemInfoParagraphFont;
+                    if (!_ItemInfoParagraphFont.HasValue)
+                        return default(FontData);
+                    return _ItemInfoParagraphFont.Value;
+                }
+            }
+            set
+            {
+                if (_ItemInfoParagraphFont != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoParagraphFont = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(_ItemInfoParagraphFont));
+                }
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        FontData? _ItemInfoHeadingFont;
+
+
+
+        /// <MetaDataID>{9df4468b-2521-4707-afdf-04d821320866}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoHeadingFont))]
+        [BackwardCompatibilityID("+12")]
+        public FontData ItemInfoHeadingFont
+        {
+            get
+            {
+                using (CultureContext cultureContext = new CultureContext(CultureContext.CurrentCultureInfo, true))
+                {
+                    if (OrgMenuItemStyle != null && !_ItemInfoHeadingFont.HasValue)
+                        return OrgMenuItemStyle.ItemInfoHeadingFont;
+                    if (!_ItemInfoHeadingFont.HasValue)
+                        return default(FontData);
+                    return _ItemInfoHeadingFont.Value;
+                }
+            }
+            set
+            {
+                if (_ItemInfoHeadingFont != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoHeadingFont = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ItemInfoHeadingFont));
+                }
+            }
+        }
+
+
         /// <MetaDataID>{37733b2d-efc4-4435-82f3-60d7fa11ab3e}</MetaDataID>
         public MenuItemStyle()
         {
@@ -28,6 +99,7 @@ namespace MenuPresentationModel.MenuStyles
             _Name = OrgMenuItemStyle.Name;
         }
 
+        /// <MetaDataID>{71385d06-95f4-41fa-ae08-cf247af393e2}</MetaDataID>
         public bool IsDerivedStyle
         {
             get
@@ -89,6 +161,7 @@ namespace MenuPresentationModel.MenuStyles
 
         }
 
+        /// <MetaDataID>{916cda78-1d63-4f53-b821-9f48f8de8139}</MetaDataID>
         public void UseDefaultValues()
         {
 
@@ -103,7 +176,7 @@ namespace MenuPresentationModel.MenuStyles
                 _Alignment = null;
                 _BeforeSpacing = null;
                 _Indent = null;
-                _NewLineForDescription = null; 
+                _NewLineForDescription = null;
                 stateTransition.Consistent = true;
             }
 

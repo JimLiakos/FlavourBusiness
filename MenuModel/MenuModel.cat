@@ -36,7 +36,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"13"))
+		    value      	"14"))
 	    quid       	"5721EC2D00C7"
 	    stereotype 	"Interface"
 	    used_nodes 	(list uses_relationship_list
@@ -551,6 +551,39 @@
 			    value      	"+12"))
 		    quid       	"623184690057"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfo"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{befa463c-cd86-40cc-8e18-585b593f3b74}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65B7F98E03DF")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+13"))
+		    quid       	"65B7F98E03DF"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModelFacade"
 	    quidu      	"5D03255500E1"
@@ -1967,12 +2000,13 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"21")
+		    value      	"22")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
 		    value      	"{5c1aac35-2956-4ead-a424-435a5781c314}"))
 	    quid       	"57C3085B02F3"
+	    documentation 	"ItemInfo"
 	    realized_interfaces 	(list realize_rel_list
 		(object Realize_Relationship
 		    quid       	"57C308A500A0"
@@ -2890,6 +2924,39 @@
 			    value      	"+20"))
 		    quid       	"62318A6F0348"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfo"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{03bc534d-f20f-43be-aaba-4fc30470527e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65B7FA0E003E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+21"))
+		    quid       	"65B7FA0E003E"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuModel::MenuModel"
 	    quidu      	"5721E69F03B9"
@@ -9704,6 +9771,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C3085B02F3"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(80, 1738)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	16
+			max_width  	690)
 		    width      	581
 		    height     	406
 		    annotation 	8)
@@ -11988,7 +12073,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	1130
+	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::ICustomizedPrice" @116
 		    ShowCompartmentStereotypes 	TRUE
@@ -12067,6 +12152,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2DA260099"
+		    compartment 	(object Compartment
+			Parent_View 	@117
+			location   	(2353, 809)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	331)
 		    width      	613
 		    height     	362
 		    annotation 	8)
@@ -12097,6 +12200,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2E556007B"
+		    compartment 	(object Compartment
+			Parent_View 	@118
+			location   	(834, 858)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
 		    width      	456
 		    height     	339
 		    annotation 	8)
@@ -13071,6 +13192,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57221D830252"
+		    compartment 	(object Compartment
+			Parent_View 	@162
+			location   	(3804, 1709)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	937)
 		    width      	588
 		    height     	312
 		    annotation 	8)
@@ -13479,6 +13618,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57C2E556007B"
+		    compartment 	(object Compartment
+			Parent_View 	@183
+			location   	(4785, 2077)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
 		    width      	456
 		    height     	339
 		    annotation 	8)
@@ -13573,14 +13730,14 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	1856
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::IClassified" @193
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(3383, 406)
+		    location   	(3133, 431)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13593,7 +13750,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@193
-			location   	(3061, 356)
+			location   	(2811, 381)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	645
@@ -13611,7 +13768,7 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(2112, 405)
+		    location   	(2046, 421)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13624,7 +13781,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@194
-			location   	(1919, 394)
+			location   	(1853, 410)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	386
@@ -13639,7 +13796,7 @@
 		    height     	222
 		    annotation 	8)
 		(object AssociationViewNew "ClassifiedItem" @195
-		    location   	(2683, 391)
+		    location   	(2525, 407)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13652,7 +13809,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @196
 			Parent_View 	@195
-			location   	(2683, 332)
+			location   	(2525, 348)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -13678,7 +13835,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "ClassifiedItems" @197
 			    Parent_View 	@195
-			    location   	(2405, -265)
+			    location   	(2247, -249)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13691,7 +13848,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @198
 				Parent_View 	@197
-				location   	(2874, 429)
+				location   	(2669, 445)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13717,11 +13874,11 @@
 			    client     	@195
 			    supplier   	@193
 			    line_style 	3
-			    origin_attachment 	(2683, 391)
-			    terminal_attachment 	(3052, 391))
+			    origin_attachment 	(2525, 407)
+			    terminal_attachment 	(2802, 407))
 			(object RoleView "Class" @199
 			    Parent_View 	@195
-			    location   	(2405, -265)
+			    location   	(2247, -249)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -13734,7 +13891,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @200
 				Parent_View 	@199
-				location   	(2389, 350)
+				location   	(2303, 366)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13760,11 +13917,11 @@
 			    client     	@195
 			    supplier   	@194
 			    line_style 	3
-			    origin_attachment 	(2683, 391)
-			    terminal_attachment 	(2314, 391)
+			    origin_attachment 	(2525, 407)
+			    terminal_attachment 	(2248, 407)
 			    label      	(object SegLabel @201
 				Parent_View 	@199
-				location   	(2351, 445)
+				location   	(2277, 461)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -13786,7 +13943,7 @@
 				orientation 	0))))
 		(object ClassView "Class" "Logical View::MenuModel::MenuItem" @202
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3964, 1187)
+		    location   	(3714, 1212)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13799,7 +13956,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@202
-			location   	(3664, 1068)
+			location   	(3414, 1093)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	601
@@ -13846,7 +14003,7 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(2175, 1592)
+		    location   	(2109, 1608)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13859,7 +14016,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@204
-			location   	(1828, 1410)
+			location   	(1762, 1426)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	695
@@ -13874,7 +14031,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::MenuModel::MenuItemType" @205
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3275, 1197)
+		    location   	(3025, 1222)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13887,7 +14044,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@205
-			location   	(3015, 1078)
+			location   	(2765, 1103)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	520
@@ -13904,7 +14061,7 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(2134, 975)
+		    location   	(2068, 991)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -13917,7 +14074,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@206
-			location   	(1868, 900)
+			location   	(1802, 916)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	532
@@ -13993,7 +14150,7 @@
 		    height     	222
 		    annotation 	8)
 		(object AssociationViewNew "MenuRootCategory" @209
-		    location   	(1579, 978)
+		    location   	(1546, 978)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -14006,7 +14163,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @210
 			Parent_View 	@209
-			location   	(1573, 857)
+			location   	(1540, 858)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -14032,7 +14189,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "RootCategory" @211
 			    Parent_View 	@209
-			    location   	(1231, -236)
+			    location   	(1198, -236)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -14045,7 +14202,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @212
 				Parent_View 	@211
-				location   	(1700, 942)
+				location   	(1654, 942)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14071,11 +14228,11 @@
 			    client     	@209
 			    supplier   	@206
 			    line_style 	3
-			    origin_attachment 	(1579, 978)
-			    terminal_attachment 	(1859, 978)
+			    origin_attachment 	(1546, 978)
+			    terminal_attachment 	(1793, 978)
 			    label      	(object SegLabel @213
 				Parent_View 	@211
-				location   	(1830, 1032)
+				location   	(1767, 1032)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -14097,14 +14254,14 @@
 				orientation 	1))
 			(object RoleView "$UNNAMED$5" @214
 			    Parent_View 	@209
-			    location   	(1231, -236)
+			    location   	(1198, -236)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5802FC3E02C7"
 			    client     	@209
 			    supplier   	@208
 			    line_style 	3
-			    origin_attachment 	(1579, 978)
+			    origin_attachment 	(1546, 978)
 			    terminal_attachment 	(1299, 978))))
 		(object AssociationViewNew "MenuTaxes" @215
 		    location   	(714, 953)
@@ -14234,11 +14391,11 @@
 		    client     	@204
 		    supplier   	@206
 		    line_style 	3
-		    origin_attachment 	(2106, 1398)
-		    terminal_attachment 	(2106, 1150))
+		    origin_attachment 	(2040, 1413)
+		    terminal_attachment 	(2040, 1166))
 		(object ClassView "Class" "Logical View::MenuModel::IMenuItem" @223
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(4233, 406)
+		    location   	(3943, 437)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -14251,7 +14408,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@223
-			location   	(3961, 366)
+			location   	(3671, 397)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	544
@@ -14264,7 +14421,7 @@
 		    quidu      	"5721EC2D00C7"
 		    compartment 	(object Compartment
 			Parent_View 	@223
-			location   	(3961, 427)
+			location   	(3671, 458)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -14299,13 +14456,13 @@
 		    client     	@223
 		    supplier   	@208
 		    vertices   	(list Points
-			(4198, 266)
-			(4198, 84)
-			(1081, 84)
-			(1081, 844))
+			(3906, 297)
+			(3906, 109)
+			(896, 109)
+			(896, 844))
 		    line_style 	3
-		    origin_attachment 	(4198, 266)
-		    terminal_attachment 	(1081, 844))
+		    origin_attachment 	(3906, 297)
+		    terminal_attachment 	(896, 844))
 		(object RealizeView "" @226
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -14313,8 +14470,8 @@
 		    client     	@205
 		    supplier   	@193
 		    line_style 	3
-		    origin_attachment 	(3219, 1066)
-		    terminal_attachment 	(3219, 556))
+		    origin_attachment 	(2969, 1091)
+		    terminal_attachment 	(2969, 580))
 		(object InheritView "" @227
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -14322,8 +14479,8 @@
 		    client     	@206
 		    supplier   	@194
 		    line_style 	3
-		    origin_attachment 	(2068, 800)
-		    terminal_attachment 	(2068, 516))
+		    origin_attachment 	(2002, 816)
+		    terminal_attachment 	(2002, 532))
 		(object InheritView "" @228
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -14455,7 +14612,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	905
+	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::MenuModel::MealCourseType" @235

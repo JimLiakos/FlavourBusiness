@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using FLBManager.ViewModel;
+using MenuItemsEditor.ViewModel;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
@@ -49,7 +50,7 @@ namespace MenuDesigner.ViewModel
             }
         }
         public MenuCanvas.ItemsCategoryViewModel RootCategory { get; set; }
-        public RestaurantMenuItemsPresentation(MenuModel.IMenu menu, MenuPresentationModel.RestaurantMenu graphicMenu)
+        public RestaurantMenuItemsPresentation(MenuModel.IMenu menu,IMenusStyleSheets menuStyleSheets, MenuPresentationModel.RestaurantMenu graphicMenu)
         {
             _GraphicMenu = graphicMenu;
             Menu = menu;
@@ -58,7 +59,7 @@ namespace MenuDesigner.ViewModel
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
-                    RootCategory = new MenuCanvas.ItemsCategoryViewModel(Menu.RootCategory, null, graphicMenu);
+                    RootCategory = new MenuCanvas.ItemsCategoryViewModel(Menu.RootCategory, null, graphicMenu, menuStyleSheets);
                     stateTransition.Consistent = true;
                 }
                 suppressStateTransition.Consistent = true;

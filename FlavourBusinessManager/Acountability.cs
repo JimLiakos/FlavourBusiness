@@ -9,7 +9,7 @@ namespace FlavourBusinessManager.HumanResources
     /// <MetaDataID>{7b3f0d4b-2343-4dbd-94bf-af1b56401419}</MetaDataID>
     [BackwardCompatibilityID("{7b3f0d4b-2343-4dbd-94bf-af1b56401419}")]
     [Persistent()]
-    public class Accountability : System.MarshalByRefObject, FlavourBusinessFacade.HumanResources.IAccountability
+    public class Accountability : OOAdvantech.Remoting.ExtMarshalByRefObject, FlavourBusinessFacade.HumanResources.IAccountability
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IActivity> _Activities = new OOAdvantech.Collections.Generic.Set<IActivity>();

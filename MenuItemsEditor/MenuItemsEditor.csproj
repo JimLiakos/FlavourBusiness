@@ -121,6 +121,7 @@
     <Compile Include="Translator.cs" />
     <Compile Include="ViewModel\DragItemsCategory.cs" />
     <Compile Include="ViewModel\EditableMenuItemType.cs" />
+    <Compile Include="ViewModel\IMenuStyleSheet.cs" />
     <Compile Include="ViewModel\ItemsCategoryViewModel.cs" />
     <Compile Include="ViewModel\ItemSelectorViewModel.cs" />
     <Compile Include="ViewModel\LevelViewModel.cs" />
@@ -345,6 +346,10 @@
     <ProjectReference Include="..\MenuModel\MenuModelFacade\MenuModelFacade.csproj">
       <Project>{d85be368-8c63-4bac-a287-b111a5d25eff}</Project>
       <Name>MenuModelFacade</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuPresentationModel\MenuPresentationModel.csproj">
+      <Project>{5C51FA19-E5E2-493D-84C8-2CD88567F908}</Project>
+      <Name>MenuPresentationModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

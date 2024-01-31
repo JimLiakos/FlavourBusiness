@@ -225,6 +225,7 @@ namespace MenuPresentationModel.MenuStyles
 
         }
 
+        /// <MetaDataID>{28d3c3b5-9dcb-4e8b-933b-3804ff141f86}</MetaDataID>
         public void UseDefaultValues()
         {
             _DisplayCurrencySymbol = null;
@@ -244,7 +245,7 @@ namespace MenuPresentationModel.MenuStyles
                 _PriceHeadingsBottomMargin = null;
                 _PriceHeadingTransformOrigin = null;
                 _PriceLeader = null;
-                _ShowMultiplePrices = null; 
+                _ShowMultiplePrices = null;
                 stateTransition.Consistent = true;
             }
 

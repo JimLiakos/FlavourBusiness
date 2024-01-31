@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Finance.ViewModel;
 using FinanceFacade;
 using GenWebBrowser;
+using MenuModel;
 using Newtonsoft.Json;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -560,6 +561,11 @@ namespace MenuItemsEditor.ViewModel
             //    objectStorage.CommitTransientObjectState(menuItem);
             //    ItemsCategory.AddClassifiedItem(menuItem);
             //});
+        }
+
+        public MenuItemViewModel(IMenuItem menuItem, IMenusStyleSheets organizationMenusStyleSheets) : this(menuItem)
+        {
+            this.OrganizationMenusStyleSheets = organizationMenusStyleSheets;
         }
 
         /// <MetaDataID>{c931d554-e783-43b4-acc2-ff26b1ef69df}</MetaDataID>
@@ -1458,6 +1464,7 @@ namespace MenuItemsEditor.ViewModel
 
         /// <exclude>Excluded</exclude>
         PreparationOptionViewModel _SelectedOption;
+        internal IMenusStyleSheets OrganizationMenusStyleSheets;
 
         /// <MetaDataID>{6cd25218-dfd5-4a35-83ba-74e9e5808958}</MetaDataID>
         public PreparationOptionViewModel SelectedOption

@@ -145,7 +145,11 @@
 		(object Realize_Relationship
 		    quid       	"6474AA430041"
 		    supplier   	"Logical View::MenuPresentationModel::MenuStyles::IOrderPadStyle"
-		    quidu      	"6474A93B0230"))
+		    quidu      	"6474A93B0230")
+		(object Realize_Relationship
+		    quid       	"65B33E6B03CD"
+		    supplier   	"Logical View::MenuPresentationModel::MenuStyles::IMenuItemInfoStyle"
+		    quidu      	"65B33E190163"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -1236,4 +1240,36 @@
 		    quidu      	"6474AA430041"
 		    client     	@1
 		    supplier   	@62
+		    line_style 	0)
+		(object InterfaceView "Logical View::MenuPresentationModel::MenuStyles::IMenuItemInfoStyle" @64
+		    location   	(659, 2643)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@64
+			location   	(658, 2751)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IMenuItemInfoStyle")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65B33E190163")
+		(object RealizeView "" @65
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65B33E6B03CD"
+		    client     	@1
+		    supplier   	@64
 		    line_style 	0)))))

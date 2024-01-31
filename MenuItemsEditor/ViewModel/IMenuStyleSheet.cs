@@ -1,0 +1,26 @@
+﻿using MenuPresentationModel.MenuStyles;
+using OOAdvantech.MetaDataRepository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MenuItemsEditor.ViewModel
+{
+    public interface IMenusStyleSheets
+    {
+
+        List<IMenuStyleSheet> StyleSheets { get; }
+    }
+
+    [HttpVisible]
+    public interface IMenuStyleSheet
+    {
+
+        
+        string Name { get; }
+        IStyleSheet StyleSheet { get; }
+
+    }
+}

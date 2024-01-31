@@ -5,6 +5,12 @@ namespace MenuPresentationModel.MenuStyles
     /// <MetaDataID>{276e0657-e957-48cb-8a03-8b3980d810a6}</MetaDataID>
     public interface IMenuItemStyle : IStyleRule
     {
+        /// <MetaDataID>{7cf01b8b-5777-4977-8809-fc61cdff6133}</MetaDataID>
+        FontData ItemInfoParagraphFont { get; set; }
+
+        /// <MetaDataID>{fa42585b-2a63-4570-b692-3e1b838a9487}</MetaDataID>
+        FontData ItemInfoHeadingFont { get; set; }
+
         /// <MetaDataID>{2d6618c8-bcbf-48b7-9ea5-4b7f7cb5ab5e}</MetaDataID>
         bool NewLineForDescription { get; set; }
 

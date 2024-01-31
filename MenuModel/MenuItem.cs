@@ -15,8 +15,32 @@ namespace MenuModel
     [Persistent()]
     public class MenuItem : FinanceFacade.ITaxable, IClassified, IMenuItem, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.MultilingualMember<string> _ItemInfo=new MultilingualMember<string>();
 
-        
+        /// <MetaDataID>{03bc534d-f20f-43be-aaba-4fc30470527e}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfo))]
+        [BackwardCompatibilityID("+21")]
+        public string ItemInfo
+        {
+            get => _ItemInfo;
+            set
+            {
+
+                if (_ItemInfo != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfo.Value = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+
+        /// <MetaDataID>{202d5a6f-6b24-4f78-af4a-056c39a8b24a}</MetaDataID>
         public bool SelectorAlwaysInDescriptionOverriden
         {
             get
@@ -243,6 +267,7 @@ namespace MenuModel
             }
         }
 
+        /// <MetaDataID>{d170a10c-05d0-488c-9937-1e2e7c5b2d8f}</MetaDataID>
         public void ClearSelectorAlwaysInDescription()
         {
             _SelectorAlwaysInDescription = null;
@@ -364,7 +389,9 @@ namespace MenuModel
         /// <MetaDataID>{860c08a3-498d-4db4-ae20-dd7ac897361c}</MetaDataID>
         public Multilingual MultilingualExtrasDescription => new Multilingual(_ExtrasDescription);
 
+        public Multilingual MultilingualItemInfo => new Multilingual(_ItemInfo);
 
+        
 
 
         ///// <exclude>Excluded</exclude>
