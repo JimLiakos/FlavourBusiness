@@ -8,6 +8,7 @@ using FlavourBusinessManager.RoomService;
 using MenuModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
+using UIBaseEx;
 
 namespace MenuItemsEditor.ViewModel
 {
@@ -71,6 +72,8 @@ namespace MenuItemsEditor.ViewModel
             {
                 _ExtraInfoJson = value;
                 MenuItemViewModel.MenuItem.ItemInfo = value;
+                ItemChanged();
+
             }
         }
 
@@ -136,5 +139,12 @@ namespace MenuItemsEditor.ViewModel
             var itemPreparation = new ItemPreparation(MenuItemViewModel.MenuItem);
             PreparationItemChanged?.Invoke(itemPreparation, itemPreparation.MenuItem);
         }
+    }
+
+    class ExtraInfoStyleSheet
+    {
+        FontData HeadingFont { get; set; }
+
+        FontData ParagraphFont { get; set; }
     }
 }
