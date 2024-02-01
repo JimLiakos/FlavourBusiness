@@ -20,7 +20,7 @@ namespace MenuItemsEditor.ViewModel
 
         
         string Name { get; }
-        IStyleSheet StyleSheet { get; }
+        Task<IStyleSheet> StyleSheet { get; }
 
     }
 }

@@ -118,7 +118,7 @@ namespace MenuDesigner.Views
             if (graphicMenusForm.ShowDialog().Value)
             {
                 var graphicMenu = ViewModel.Menu.MenuDesignerHost.Current.GraphicMenus.SelectedMenu;
-                await ViewModel.Menu.MenuDesignerHost.OpenGrephicMenu(graphicMenu.StorageRef, null);
+                await ViewModel.Menu.MenuDesignerHost.OpenGraphicMenu(graphicMenu.StorageRef, null);
             }
         }
 

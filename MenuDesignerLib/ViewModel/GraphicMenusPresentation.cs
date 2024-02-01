@@ -1,4 +1,6 @@
 ﻿using FlavourBusinessFacade;
+using MenuDesigner.ViewModel.Menu;
+using MenuDesigner.ViewModel.MenuCanvas;
 using MenuItemsEditor.ViewModel;
 using MenuPresentationModel.MenuStyles;
 using System;
@@ -12,7 +14,7 @@ using System.Windows;
 namespace MenuDesigner.ViewModel
 {
     /// <MetaDataID>{1905b81e-e30b-494b-9bd7-7b37ae25a820}</MetaDataID>
-    public class GraphicMenusPresentation : MarshalByRefObject, INotifyPropertyChanged 
+    public class GraphicMenusPresentation : MarshalByRefObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         /// <MetaDataID>{d47baec1-d1e1-4156-bd20-45aee6080701}</MetaDataID>
@@ -32,10 +34,10 @@ namespace MenuDesigner.ViewModel
 
         public readonly IResourceManager ResourceManager;
         /// <MetaDataID>{5604d668-6db5-4e35-a240-a0d177563250}</MetaDataID>
-        public GraphicMenusPresentation(List<OrganizationStorageRef> graphicMenus,IResourceManager resourceManager)
+        public GraphicMenusPresentation(List<OrganizationStorageRef> graphicMenus, IResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
-            _GraphicMenus = (from storageRef in graphicMenus select new GraphicMenuPresentation(storageRef,resourceManager)).ToList();
+            _GraphicMenus = (from storageRef in graphicMenus select new GraphicMenuPresentation(storageRef, resourceManager)).ToList();
 
             if (_GraphicMenus.Count > 0)
                 _SelectedMenu = _GraphicMenus[0];
@@ -47,7 +49,7 @@ namespace MenuDesigner.ViewModel
 
             NewCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
              {
-              NewGraphicMenu();
+                 NewGraphicMenu();
              });
         }
 
@@ -151,12 +153,38 @@ namespace MenuDesigner.ViewModel
             }
         }
 
-        public IStyleSheet StyleSheet
+        BookViewModel BookViewModel;
+
+        object styleSheerLock = new object();
+        async Task<IStyleSheet> GetStyleSheet()
+        {
+            lock (styleSheerLock)
+            {
+                if (BookViewModel == null)
+                {
+                    if (OpenGraphicMenuTask == null)
+                        OpenGraphicMenuTask = MenuDesignerHost.OpenGraphicMenu(_StorageRef, null);
+                }
+                else
+                {
+                    return BookViewModel.MenuStylesheet;
+                }
+            }
+            BookViewModel = await OpenGraphicMenuTask;
+
+            return BookViewModel.MenuStylesheet;
+
+
+        }
+        public Task<IStyleSheet> StyleSheet
         {
             get
             {
-                return null;
+
+                return GetStyleSheet();
             }
         }
+
+        public Task<BookViewModel> OpenGraphicMenuTask { get; private set; }
     }
 }

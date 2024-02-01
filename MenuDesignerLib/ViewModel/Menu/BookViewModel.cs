@@ -19,6 +19,7 @@ using RoutedCommand = WPFUIElementObjectBind.RoutedCommand;
 using System.IO;
 using SvgAccentModifier;
 using OOAdvantech.Json;
+using System.Threading.Tasks;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -2212,28 +2213,33 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LineSpacing)));
         }
 
+        static Dictionary<string, BookViewModel> LoadedBookViewModels = new Dictionary<string, BookViewModel>();
+
+        static Dictionary<string, Task<RestaurantMenu>> LoadRestaurantMenuTasks = new Dictionary<string, Task<RestaurantMenu>>();
+
         static public BookViewModel OpenMenu(RawStorageData graphicMenuStorageData, bool publishAllowed = false)
         {
 
-            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+
+            Task<RestaurantMenu> loadRestaurantMenuTask = null;
+            lock (LoadRestaurantMenuTasks)
+            {
+                if(!LoadRestaurantMenuTasks.TryGetValue(graphicMenuStorageData.StorageRef.StorageIdentity, out loadRestaurantMenuTask))
+                {
+                    loadRestaurantMenuTask=Task<RestaurantMenu>.Run(() =>
+                    {
+                        OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+                        MenuPresentationModel.RestaurantMenu restaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
+                                                                               select menu).FirstOrDefault();
+                        return restaurantMenu;
+                    });
+                    LoadRestaurantMenuTasks[graphicMenuStorageData.StorageRef.StorageIdentity] = loadRestaurantMenuTask;
 
 
-            MenuPresentationModel.RestaurantMenu restaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
-                                                                   select menu).FirstOrDefault();
-
-
-            //using (SystemStateTransition suppressStateTransition = new SystemStateTransition(TransactionOption.Suppress))
-            //{
-
-            //    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-            //    {
-            //        restaurantMenu.Name = menuName;
-            //        stateTransition.Consistent = true;
-            //    }
-
-            //    suppressStateTransition.Consistent = true;
-            //}
-
+                }
+            }
+            loadRestaurantMenuTask.Wait();
+            var restaurantMenu = loadRestaurantMenuTask.Result;
 
             int pageCount = restaurantMenu.Pages.Count;
             return new BookViewModel(restaurantMenu, graphicMenuStorageData.StorageRef);

@@ -108,7 +108,7 @@ namespace MenuDesigner.ViewModel
                     }
                 }
 
-                await MenuDesignerHost.OpenGrephicMenu(GraphicMenuStorageRef, MenuItemsStorageRef);
+                await MenuDesignerHost.OpenGraphicMenu(GraphicMenuStorageRef, MenuItemsStorageRef);
             }
         }
 

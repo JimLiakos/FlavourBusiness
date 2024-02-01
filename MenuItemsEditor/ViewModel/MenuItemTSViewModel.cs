@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlavourBusinessManager.RoomService;
 using MenuModel;
+using MenuPresentationModel.MenuStyles;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
 using UIBaseEx;
@@ -41,6 +42,8 @@ namespace MenuItemsEditor.ViewModel
 
         List<IMenuStyleSheet> MenusStyleSheets { get; }
 
+        Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet);
+
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
@@ -60,7 +63,7 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                return MenuItemViewModel.OrganizationMenusStyleSheets.StyleSheets;
+                return MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets;
             }
         }
 
@@ -76,6 +79,21 @@ namespace MenuItemsEditor.ViewModel
 
             }
         }
+
+        public async Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet)
+        {
+            if(menuStyleSheet == null)
+                return null;
+            var styleSheet = await menuStyleSheet?.StyleSheet;
+
+            IMenuItemStyle menuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
+            
+            var extraInfoStyleSheet =new ExtraInfoStyleSheet() { HeadingFont = menuItemStyle.ItemInfoHeadingFont, ParagraphFont = menuItemStyle.ItemInfoParagraphFont };
+
+
+            return extraInfoStyleSheet;
+        }
+
 
         public ItemPreparation PreparationItem
         {
@@ -141,10 +159,10 @@ namespace MenuItemsEditor.ViewModel
         }
     }
 
-    class ExtraInfoStyleSheet
+    public class ExtraInfoStyleSheet
     {
-        FontData HeadingFont { get; set; }
+        public FontData HeadingFont { get; set; }
 
-        FontData ParagraphFont { get; set; }
+        public FontData ParagraphFont { get; set; }
     }
 }
