@@ -20,6 +20,8 @@ using System.IO;
 using SvgAccentModifier;
 using OOAdvantech.Json;
 using System.Threading.Tasks;
+using FlavourBusinessFacade;
+using System.Net.Http;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -1898,7 +1900,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 }
                 return 700;
             }
-        } 
+        }
         public double PreviewWidth
         {
             get
@@ -2217,34 +2219,83 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         static Dictionary<string, Task<RestaurantMenu>> LoadRestaurantMenuTasks = new Dictionary<string, Task<RestaurantMenu>>();
 
-        static public BookViewModel OpenMenu(RawStorageData graphicMenuStorageData, bool publishAllowed = false)
+        static public BookViewModel OpenMenu(OrganizationStorageRef graphicMenuStorageRef, bool publishAllowed = false)
         {
 
+            string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Microneme\\DontWaitWater";
+            lock (LoadedBookViewModels)
+            {
+                if (LoadedBookViewModels.ContainsKey(graphicMenuStorageRef.StorageIdentity))
+                    return LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity];
+            }
 
             Task<RestaurantMenu> loadRestaurantMenuTask = null;
             lock (LoadRestaurantMenuTasks)
             {
-                if(!LoadRestaurantMenuTasks.TryGetValue(graphicMenuStorageData.StorageRef.StorageIdentity, out loadRestaurantMenuTask))
+                if (!LoadRestaurantMenuTasks.TryGetValue(graphicMenuStorageRef.StorageIdentity, out loadRestaurantMenuTask))
                 {
                     loadRestaurantMenuTask=Task<RestaurantMenu>.Run(() =>
                     {
+                        RawStorageData graphicMenuStorageData = GetGraphicMenuStorageData(graphicMenuStorageRef, appDataPath);
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
-                        MenuPresentationModel.RestaurantMenu restaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
+                        MenuPresentationModel.RestaurantMenu theRestaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
                                                                                select menu).FirstOrDefault();
-                        return restaurantMenu;
+                        return theRestaurantMenu;
                     });
-                    LoadRestaurantMenuTasks[graphicMenuStorageData.StorageRef.StorageIdentity] = loadRestaurantMenuTask;
+                    LoadRestaurantMenuTasks[graphicMenuStorageRef.StorageIdentity] = loadRestaurantMenuTask;
 
 
                 }
             }
             loadRestaurantMenuTask.Wait();
             var restaurantMenu = loadRestaurantMenuTask.Result;
+            var bookViewModel = new BookViewModel(restaurantMenu, graphicMenuStorageRef);
 
             int pageCount = restaurantMenu.Pages.Count;
-            return new BookViewModel(restaurantMenu, graphicMenuStorageData.StorageRef);
+
+            lock (LoadedBookViewModels)
+            {
+                if (LoadedBookViewModels.ContainsKey(graphicMenuStorageRef.StorageIdentity))
+                    return LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity];
+                else
+                {
+                    LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity]=bookViewModel;
+                    return bookViewModel;
+                }
+
+            }
+
+            
         }
 
+        private static RawStorageData GetGraphicMenuStorageData(OrganizationStorageRef graphicMenuStorageRef, string appDataPath)
+        {
+
+            string path = null;
+            foreach (var dir in appDataPath.Split('\\'))
+            {
+                if (path != null)
+                    path += "\\"+dir;
+                else
+                    path= dir;
+
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(path);
+
+                //if (!System.IO.Directory.Exists(appDataPath))
+                //    System.IO.Directory.CreateDirectory(appDataPath);
+            }
+
+            string temporaryStorageLocation = appDataPath + string.Format("\\{0}RestaurantMenuData.xml", graphicMenuStorageRef.StorageIdentity.Replace("-", ""));
+            HttpClient httpClient = new HttpClient();
+            //graphicMenuStorageRef.UploadService = null;
+            var dataStreamTask = httpClient.GetStreamAsync(graphicMenuStorageRef.StorageUrl);
+            dataStreamTask.Wait();
+            var dataStream = dataStreamTask.Result;
+            RawStorageData graphicMenuStorageData = new RawStorageData(XDocument.Load(dataStream), temporaryStorageLocation, graphicMenuStorageRef, graphicMenuStorageRef.UploadService);
+            return graphicMenuStorageData;
+
+        }
 
     }
 }

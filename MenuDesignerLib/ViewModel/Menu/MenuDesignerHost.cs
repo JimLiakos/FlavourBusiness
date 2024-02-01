@@ -49,8 +49,8 @@ namespace MenuDesigner.ViewModel.Menu
                 
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 {
-                    RawStorageData graphicMenuStorageData = GetGraphicMenuStorageData(graphicMenuStorageRef, appDataPath);
-                    bookViewModel = BookViewModel.OpenMenu(graphicMenuStorageData);
+                    
+                    bookViewModel = BookViewModel.OpenMenu(graphicMenuStorageRef);
 
                     stateTransition.Consistent = true;
                 }
@@ -81,35 +81,7 @@ namespace MenuDesigner.ViewModel.Menu
             }
         }
 
-        private static RawStorageData GetGraphicMenuStorageData(OrganizationStorageRef graphicMenuStorageRef, string appDataPath)
-        {
-
-            string path = null;
-            foreach (var dir in appDataPath.Split('\\'))
-            {
-                if (path != null)
-                    path += "\\"+dir;
-                else
-                path= dir;
-
-                if (!System.IO.Directory.Exists(path))
-                    System.IO.Directory.CreateDirectory(path);
-
-                //if (!System.IO.Directory.Exists(appDataPath))
-                //    System.IO.Directory.CreateDirectory(appDataPath);
-            }
-
-            string temporaryStorageLocation = appDataPath + string.Format("\\{0}RestaurantMenuData.xml", graphicMenuStorageRef.StorageIdentity.Replace("-", ""));
-            HttpClient httpClient = new HttpClient();
-            //graphicMenuStorageRef.UploadService = null;
-            var dataStreamTask =  httpClient.GetStreamAsync(graphicMenuStorageRef.StorageUrl);
-            dataStreamTask.Wait();
-            var dataStream = dataStreamTask.Result;
-            RawStorageData graphicMenuStorageData = new RawStorageData(XDocument.Load(dataStream), temporaryStorageLocation, graphicMenuStorageRef, graphicMenuStorageRef.UploadService);
-            return graphicMenuStorageData;
-
-        }
-
+  
         public static async Task<BookViewModel> NewGraphicMenu()
         {
             return await OpenGraphicMenu(Current.GraphicMenus.NewGraphicMenu().StorageRef, null);

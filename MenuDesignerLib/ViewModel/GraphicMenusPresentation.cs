@@ -3,6 +3,7 @@ using MenuDesigner.ViewModel.Menu;
 using MenuDesigner.ViewModel.MenuCanvas;
 using MenuItemsEditor.ViewModel;
 using MenuPresentationModel.MenuStyles;
+using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -104,6 +105,7 @@ namespace MenuDesigner.ViewModel
     /// <MetaDataID>{45fdc89f-754b-45eb-9876-efbe82d6c386}</MetaDataID>
     public class GraphicMenuPresentation : OOAdvantech.Remoting.ExtMarshalByRefObject, INotifyPropertyChanged, IMenuStyleSheet
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         OrganizationStorageRef _StorageRef;
@@ -163,14 +165,30 @@ namespace MenuDesigner.ViewModel
                 if (BookViewModel == null)
                 {
                     if (OpenGraphicMenuTask == null)
-                        OpenGraphicMenuTask = MenuDesignerHost.OpenGraphicMenu(_StorageRef, null);
+                    {
+                        OpenGraphicMenuTask=Task<BookViewModel>.Run(() =>
+                        {
+                            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                            {
+
+                                var bookViewModel = BookViewModel.OpenMenu(_StorageRef);
+                                stateTransition.Consistent = true;
+                                return bookViewModel;
+
+                            }
+                        });
+
+                         
+                    }
                 }
                 else
                 {
                     return BookViewModel.MenuStylesheet;
                 }
             }
-            BookViewModel = await OpenGraphicMenuTask;
+            BookViewModel=await OpenGraphicMenuTask;
+
+
 
             return BookViewModel.MenuStylesheet;
 

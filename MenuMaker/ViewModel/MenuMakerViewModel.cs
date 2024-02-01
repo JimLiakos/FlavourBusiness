@@ -339,7 +339,7 @@ namespace MenuMaker.ViewModel
     }
 
 
-    public class MenuDesignerHost : MenuDesigner.ViewModel.Menu.MenuDesignerHost
+    public class MenuDesignerHost : MenuDesigner.ViewModel.Menu.MenuDesignerHost, MenuItemsEditor.ViewModel.IMenusStyleSheets
     {
         MenuMakerViewModel MenuMakerViewModel;
         public MenuDesignerHost(MenuMakerViewModel menuMakerViewModel)
@@ -350,6 +350,14 @@ namespace MenuMaker.ViewModel
         public override BookViewModel Menu { get => OOAdvantech.UserInterface.Runtime.UIProxy.GetRealObject<BookViewModel>(MenuMakerViewModel.ActivePageGraphicMenu); set { } }
 
         public override GraphicMenusPresentation GraphicMenus => null;
+
+        public List<MenuItemsEditor.ViewModel.IMenuStyleSheet> StyleSheets
+        {
+            get
+            {
+                return GraphicMenus.GraphicMenus.OfType<MenuItemsEditor.ViewModel.IMenuStyleSheet>().ToList();
+            }
+        }
 
         public override Task SaveAndPublish(OrganizationStorageRef graphicMenuStorageRef)
         {
@@ -365,7 +373,7 @@ namespace MenuMaker.ViewModel
             menuDesignerPage.GetObjectContext().SetContextInstance(bookViewModel);
             //bookViewModel.RunUnderTransaction = menuDesignerPage.GetObjectContextConnection().Transaction;
             MenuMakerViewModel.RestaurantMenus = restaurantMenuData;
-            MenuMakerViewModel.MenuData = new RestaurantMenuItemsPresentation((restaurantMenuData.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, null);
+            MenuMakerViewModel.MenuData = new RestaurantMenuItemsPresentation((restaurantMenuData.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu,this, null);
             pageDialogFrame.ShowDialogPage(menuDesignerPage);
             MenuMakerViewModel.MenuData.GraphicMenu = bookViewModel.RealObject;
 
