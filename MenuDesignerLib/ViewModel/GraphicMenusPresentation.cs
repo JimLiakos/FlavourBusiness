@@ -155,7 +155,7 @@ namespace MenuDesigner.ViewModel
             }
         }
 
-        BookViewModel BookViewModel;
+       public BookViewModel BookViewModel;
 
         object styleSheerLock = new object();
         async Task<IStyleSheet> GetStyleSheet()

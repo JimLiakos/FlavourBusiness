@@ -46,6 +46,8 @@ namespace MenuItemsEditor.ViewModel
 
         IMenuStyleSheet ActiveMenuStyleSheet { get; set; }
 
+        Task<ExtraInfoStyleSheet> MenuItemStyleSheet { get; }
+
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
@@ -65,7 +67,17 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                return MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets;
+                var styleSheets= MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets;
+                if (styleSheets != null&&ActiveMenuStyleSheet==null)
+                {
+                    ActiveMenuStyleSheet=MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets.FirstOrDefault();
+                }
+                else if(ActiveMenuStyleSheet!=null&&(styleSheets==null||styleSheets.Contains(ActiveMenuStyleSheet)))
+                {
+                    ActiveMenuStyleSheet=styleSheets?.FirstOrDefault();
+                }
+                return styleSheets;
+
             }
         }
 
@@ -87,15 +99,22 @@ namespace MenuItemsEditor.ViewModel
         IMenuStyleSheet _ActiveMenuStyleSheet;
         public IMenuStyleSheet ActiveMenuStyleSheet
         {
-            get => _ActiveMenuStyleSheet; 
+            get => _ActiveMenuStyleSheet;
             set
             {
-                _ActiveMenuStyleSheet = value;
+                if (_ActiveMenuStyleSheet!=value )
+                    _ActiveMenuStyleSheet = value;
             }
         }
 
 
-
+        public Task<ExtraInfoStyleSheet> MenuItemStyleSheet
+        {
+            get
+            {
+                return GetExtraInfoStyleSheet(ActiveMenuStyleSheet);
+            }
+        }
         public async Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet)
         {
             if (menuStyleSheet == null)
@@ -104,7 +123,15 @@ namespace MenuItemsEditor.ViewModel
 
             IMenuItemStyle menuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
 
-            var extraInfoStyleSheet = new ExtraInfoStyleSheet() { HeadingFont = menuItemStyle.ItemInfoHeadingFont, ParagraphFont = menuItemStyle.ItemInfoParagraphFont };
+            IPriceStyle priceStyle = (styleSheet?.Styles["price-options"] as IPriceStyle);
+
+            var extraInfoStyleSheet = new ExtraInfoStyleSheet()
+            {
+                HeadingFont = menuItemStyle.ItemInfoHeadingFont,
+                ParagraphFont = menuItemStyle.ItemInfoParagraphFont,
+                ItemNameFont = menuItemStyle.Font,
+                ItemPriceFont=priceStyle.Font
+            };
 
 
             return extraInfoStyleSheet;
@@ -180,5 +207,7 @@ namespace MenuItemsEditor.ViewModel
         public FontData HeadingFont { get; set; }
 
         public FontData ParagraphFont { get; set; }
+        public FontData ItemNameFont { get; set; }
+        public FontData ItemPriceFont { get; set; }
     }
 }

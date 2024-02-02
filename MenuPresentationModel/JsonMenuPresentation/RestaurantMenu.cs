@@ -54,8 +54,12 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
 
             
+            if((menu.Style.Styles["order-pad"] as IOrderPadStyle)?.Background!=null)
+                OrderPadBackground = new PageImage((menu.Style.Styles["order-pad"] as IOrderPadStyle).Background); 
+            else
+            {
 
-            OrderPadBackground = new PageImage((menu.Style.Styles["order-pad"] as IOrderPadStyle).Background); 
+            }
             OrderPadBackgroundMargin = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundMargin;
             OrderPadBackgroundStretch = (menu.Style.Styles["order-pad"] as IOrderPadStyle).BackgroundStretch;
 
