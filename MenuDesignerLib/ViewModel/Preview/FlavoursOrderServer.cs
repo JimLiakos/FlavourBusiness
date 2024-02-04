@@ -80,13 +80,13 @@ namespace MenuDesigner.ViewModel.Preview
         internal FoodServicesClientSessionViewModel FoodServicesClientSessionViewModel { get; private set; } = new FoodServicesClientSessionViewModel();
         IFoodServicesClientSessionViewModel IFlavoursOrderServer.CurrentFoodServicesClientSession => FoodServicesClientSessionViewModel;
 
-        public List<IFoodServicesClientSessionViewModel> ActiveSessions => FoodServicesClientSessionViewModel != null ? new List<IFoodServicesClientSessionViewModel>() { FoodServicesClientSessionViewModel } : new List<IFoodServicesClientSessionViewModel>();
+        //public List<IFoodServicesClientSessionViewModel> ActiveSessions => FoodServicesClientSessionViewModel != null ? new List<IFoodServicesClientSessionViewModel>() { FoodServicesClientSessionViewModel } : new List<IFoodServicesClientSessionViewModel>();
 
-        Task<List<IFoodServicesClientSessionViewModel>> IFlavoursOrderServer.ActiveSessions => throw new NotImplementedException();
+        public Task<List<IFoodServicesClientSessionViewModel>> ActiveSessions => FoodServicesClientSessionViewModel != null ? Task<List<IFoodServicesClientSessionViewModel>>.FromResult(new List<IFoodServicesClientSessionViewModel>() { FoodServicesClientSessionViewModel }) : Task<List<IFoodServicesClientSessionViewModel>>.FromResult(new List<IFoodServicesClientSessionViewModel>());
 
         ISecureUser IFlavoursOrderServer.EndUser{ get => null; set { } }
 
-        public AppType AppType => throw new NotImplementedException();
+        public AppType AppType => AppType.GraphicPreview;
 
         public event PartOfMealRequestHandle PartOfMealRequest;
         public event MenuItemProposalHandle MenuItemProposal;
@@ -139,13 +139,13 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{850f6586-3991-418a-9e8b-eae0a102ad89}</MetaDataID>
         public Task<bool> CheckPermissionsForServicePointScan()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         /// <MetaDataID>{11890a9b-d496-434b-a493-9d0907c2f68d}</MetaDataID>
         public Task<bool> CheckPermissionsPassivePushNotification()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         /// <MetaDataID>{b52aa855-4b50-4c35-ae56-ad555a080df1}</MetaDataID>

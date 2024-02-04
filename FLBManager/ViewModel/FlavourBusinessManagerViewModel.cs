@@ -193,7 +193,7 @@ namespace FLBManager.ViewModel
         HallLayoutDesignerHost HallLayoutDesigner;
         public RelayCommand ClickPseudoCommand { get; protected set; }
 
-        string _DesignAreaHeader = Properties. Resources.GraphicMenuTitle;
+        string _DesignAreaHeader = Properties.Resources.GraphicMenuTitle;
         public string DesignAreaHeader
         {
             get
@@ -341,6 +341,10 @@ namespace FLBManager.ViewModel
         /// </summary>
         internal void UpdateMenuAndToolBar()
         {
+
+            if (ActivePageMenuItemViewModel != null)
+                ActivePageMenuItemViewModel.PropertyChanged -= MenuItemViewModel_PropertyChanged;
+
             if (_MenuItems != null)
             {
                 foreach (var menuItem in ActivePageMenuItems)
@@ -355,13 +359,14 @@ namespace FLBManager.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ToolBarVisibility)));
 
             var pages = PageDialogFrame.Pages;
+        
+      
+            #region graphic menu page menu command
+
+
             MenuDesigner.Views.MenuDesignerPage menuDesignerPage = null;
             if (pages.Count > 0 && pages.Last() is MenuDesigner.Views.MenuDesignerPage)
                 menuDesignerPage = pages.Last() as MenuDesigner.Views.MenuDesignerPage;
-
-            MenuItemPage menuItemPage = null;
-            if (pages.Count > 0 && pages.Last() is MenuItemPage)
-                menuItemPage = pages.Last() as MenuItemPage;
 
 
             if (MenuDesignerToolBarVisibility == Visibility.Visible)
@@ -379,21 +384,38 @@ namespace FLBManager.ViewModel
                     }
                 }
             }
-            if(menuItemPage!=null)
-            {
-                MenuItemsEditor.ViewModel.MenuItemViewModel menuItemViewModel =  menuItemPage.MenuItemView.GetDataContextObject() as MenuItemsEditor.ViewModel.MenuItemViewModel;
+            #endregion
 
-                if (menuItemViewModel  != null)
+
+            #region Menu Item Page menu command
+
+            MenuItemPage menuItemPage = null;
+            if (pages.Count > 0 && pages.Last() is MenuItemPage)
+                menuItemPage = pages.Last() as MenuItemPage;
+
+
+            if (menuItemPage != null)
+            {
+                ActivePageMenuItemViewModel = menuItemPage.MenuItemView.GetDataContextObject() as MenuItemsEditor.ViewModel.MenuItemViewModel;
+
+
+                if (ActivePageMenuItemViewModel != null)
                 {
-                    var menuItem = menuItemViewModel.FontsMenu;
-                    _MenuItems.Add(menuItem);
-                    ActivePageMenuItems.Add(menuItem);
-                    
+                    ActivePageMenuItemViewModel.PropertyChanged += MenuItemViewModel_PropertyChanged;
+                    var menuItem = ActivePageMenuItemViewModel.FontsMenu;
+                    if (menuItem != null)
+                    {
+                        _MenuItems.Add(menuItem);
+                        ActivePageMenuItems.Add(menuItem);
+                    }
+
                 }
             }
+            #endregion
 
 
 
+            #region hall layout page menu command
             if (HallLayoutDesignerToolBarVisibility == Visibility.Visible)
             {
                 if (ActivePageHallLayout != null)
@@ -410,6 +432,10 @@ namespace FLBManager.ViewModel
                 }
             }
 
+            #endregion
+
+
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MenuItems)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MenuDesignerToolBarVisibility)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ToolBarVisibility)));
@@ -421,6 +447,21 @@ namespace FLBManager.ViewModel
 
 
 
+        }
+
+        private void MenuItemViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "FontsMenu")
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    UpdateMenuAndToolBar();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MenuItems))); 
+                    stateTransition.Consistent = true;
+                }
+
+            }
         }
 
         Visibility _MenuDesignerVisibility = Visibility.Visible;
@@ -688,7 +729,7 @@ namespace FLBManager.ViewModel
             RestaurantMenus = new MenuItemsEditor.RestaurantMenus(storageData);
             _BusinessResources.RestaurantMenus = RestaurantMenus;
 
-            
+
             MenuData = new RestaurantMenuItemsPresentation((RestaurantMenus.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, this, null);
             MenuData.ShowMenuTaxes += MenuData_ShowMenuTaxes;
             OrganizationStorageRef styleSeetStorageRef = resourceManager.GetStorage(OrganizationStorages.StyleSheets);
@@ -845,6 +886,8 @@ namespace FLBManager.ViewModel
                 return GraphicMenus.GraphicMenus.OfType<MenuItemsEditor.ViewModel.IMenuStyleSheet>().ToList();
             }
         }
+
+        public MenuItemsEditor.ViewModel.MenuItemViewModel ActivePageMenuItemViewModel { get; private set; }
 
         public class MenuDesignerHost : MenuDesigner.ViewModel.Menu.MenuDesignerHost
         {

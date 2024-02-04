@@ -4,9 +4,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinanceFacade;
 using FlavourBusinessManager.RoomService;
 using MenuModel;
 using MenuPresentationModel.MenuStyles;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Remoting;
 using UIBaseEx;
@@ -32,6 +34,9 @@ namespace MenuItemsEditor.ViewModel
         [GenerateEventConsumerProxy]
         event PreparationItemChangedHandle PreparationItemChanged;
 
+        [GenerateEventConsumerProxy]
+        event ObjectChangeStateHandle ObjectChangeState;
+
         string CurrentLanguage { get; }
 
         MenuModel.IMenuItem MenuItem { get; }
@@ -47,6 +52,8 @@ namespace MenuItemsEditor.ViewModel
         IMenuStyleSheet ActiveMenuStyleSheet { get; set; }
 
         Task<ExtraInfoStyleSheet> MenuItemStyleSheet { get; }
+
+        string FontsLink { get; }
 
     }
 
@@ -67,14 +74,14 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                var styleSheets= MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets;
-                if (styleSheets != null&&ActiveMenuStyleSheet==null)
+                var styleSheets = MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets;
+                if (styleSheets != null && ActiveMenuStyleSheet == null)
                 {
-                    ActiveMenuStyleSheet=MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets.FirstOrDefault();
+                    ActiveMenuStyleSheet = MenuItemViewModel.OrganizationMenusStyleSheets?.StyleSheets.FirstOrDefault();
                 }
-                else if(ActiveMenuStyleSheet!=null&&(styleSheets==null||styleSheets.Contains(ActiveMenuStyleSheet)))
+                else if (ActiveMenuStyleSheet != null && (styleSheets == null || styleSheets.Contains(ActiveMenuStyleSheet)))
                 {
-                    ActiveMenuStyleSheet=styleSheets?.FirstOrDefault();
+                    ActiveMenuStyleSheet = styleSheets?.FirstOrDefault();
                 }
                 return styleSheets;
 
@@ -102,8 +109,22 @@ namespace MenuItemsEditor.ViewModel
             get => _ActiveMenuStyleSheet;
             set
             {
-                if (_ActiveMenuStyleSheet!=value )
+                if (_ActiveMenuStyleSheet != value)
+                {
                     _ActiveMenuStyleSheet = value;
+
+                    OOAdvantech.Transactions.Transaction.RunAsynch(new Action(async () =>
+                        {
+                            
+                            await GetExtraInfoStyleSheet(ActiveMenuStyleSheet);
+
+                            MenuItemViewModel.CurrentMenuStyleSheet = value;
+                        }));
+
+                }
+
+
+
             }
         }
 
@@ -115,28 +136,47 @@ namespace MenuItemsEditor.ViewModel
                 return GetExtraInfoStyleSheet(ActiveMenuStyleSheet);
             }
         }
+
+
         public async Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet)
         {
             if (menuStyleSheet == null)
                 return null;
             var styleSheet = await menuStyleSheet?.StyleSheet;
 
-            IMenuItemStyle menuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
+            if (CurrentMenuItemStyle != null)
+                CurrentMenuItemStyle.ObjectChangeState -= CurrentMenuItemStyle_ObjectChangeState;
 
-            IPriceStyle priceStyle = (styleSheet?.Styles["price-options"] as IPriceStyle);
+            CurrentMenuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
+            CurrentMenuItemStyle.ObjectChangeState += CurrentMenuItemStyle_ObjectChangeState;
+
+            if (CurrentPriceStyle != null)
+                CurrentPriceStyle.ObjectChangeState -= CurrentPriceStyle_ObjectChangeState;
+
+            CurrentPriceStyle = (styleSheet?.Styles["price-options"] as IPriceStyle);
+            CurrentPriceStyle.ObjectChangeState += CurrentPriceStyle_ObjectChangeState;
 
             var extraInfoStyleSheet = new ExtraInfoStyleSheet()
             {
-                HeadingFont = menuItemStyle.ItemInfoHeadingFont,
-                ParagraphFont = menuItemStyle.ItemInfoParagraphFont,
-                ItemNameFont = menuItemStyle.Font,
-                ItemPriceFont=priceStyle.Font
+                HeadingFont = CurrentMenuItemStyle.ItemInfoHeadingFont,
+                ParagraphFont = CurrentMenuItemStyle.ItemInfoParagraphFont,
+                ItemNameFont = CurrentMenuItemStyle.Font,
+                ItemPriceFont = CurrentPriceStyle.Font
             };
 
 
             return extraInfoStyleSheet;
         }
 
+        private void CurrentPriceStyle_ObjectChangeState(object _object, string member)
+        {
+            ObjectChangeState?.Invoke(this, nameof(MenuItemStyleSheet));
+        }
+
+        private void CurrentMenuItemStyle_ObjectChangeState(object _object, string member)
+        {
+            ObjectChangeState?.Invoke(this, nameof(MenuItemStyleSheet));
+        }
 
         public ItemPreparation PreparationItem
         {
@@ -191,15 +231,21 @@ namespace MenuItemsEditor.ViewModel
 
         public IMenuItem MenuItem => new ItemPreparation(MenuItemViewModel.MenuItem).MenuItem;
 
+        public IMenuItemStyle CurrentMenuItemStyle { get; private set; }
+        public IPriceStyle CurrentPriceStyle { get; private set; }
+
         public event CultureChangeHandle CultureChange;
 
         public event PreparationItemChangedHandle PreparationItemChanged;
+        public event ObjectChangeStateHandle ObjectChangeState;
 
         internal void ItemChanged()
         {
             var itemPreparation = new ItemPreparation(MenuItemViewModel.MenuItem);
             PreparationItemChanged?.Invoke(itemPreparation, itemPreparation.MenuItem);
         }
+
+        public string FontsLink { get; set; } = "https://angularhost.z16.web.core.windows.net/graphicmenusresources/Fonts/Fonts.css";
     }
 
     public class ExtraInfoStyleSheet

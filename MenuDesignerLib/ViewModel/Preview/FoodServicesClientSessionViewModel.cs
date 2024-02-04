@@ -38,7 +38,7 @@ namespace MenuDesigner.ViewModel.Preview
         public PayOptions? PayOption { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string DeliveryComment { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public List<TipOption> TipOptions => throw new NotImplementedException();
+        public List<TipOption> TipOptions =>new List<TipOption>();
         public List<CurrencyOption> CurrencyOptions { get; }
 
         public IFoodServiceClientSession FoodServicesClientSession => throw new NotImplementedException();

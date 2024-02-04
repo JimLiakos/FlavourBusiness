@@ -661,4 +661,10 @@
   <data name="GraphicMenuDefaultLanguageLabel" xml:space="preserve">
     <value>Default '{0}'</value>
   </data>
+  <data name="HeadingFontsMenuItemHeader" xml:space="preserve">
+    <value>Paragraph heading</value>
+  </data>
+  <data name="ParagraphFontsMenuItemHeader" xml:space="preserve">
+    <value>Paragraph</value>
+  </data>
 </root>

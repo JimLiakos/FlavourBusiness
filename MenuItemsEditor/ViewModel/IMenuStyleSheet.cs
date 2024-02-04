@@ -22,5 +22,7 @@ namespace MenuItemsEditor.ViewModel
         string Name { get; }
         Task<IStyleSheet> StyleSheet { get; }
 
+        WPFUIElementObjectBind.MenuCommand ItemFontsMenu { get; }
+
     }
 }

@@ -37,7 +37,8 @@ namespace FlavourBusinessFacade.ComputingResources
                         {
                             using (WebClient wc = new WebClient())
                             {
-                                var json = wc.DownloadString("http://dontwaitwaiter.com/img/ServerAddress.json");//https://angularhost.z16.web.core.windows.net/usersfolder/ServerAddress.json");
+                                //var json = wc.DownloadString("http://dontwaitwaiter.com/img/ServerAddress.json");
+                                var json = wc.DownloadString("https://angularhost.z16.web.core.windows.net/ServerAddress.json");
                                 _Server = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
                                 return _Server;
                             }

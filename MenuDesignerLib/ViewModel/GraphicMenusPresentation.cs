@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPFUIElementObjectBind;
 
 namespace MenuDesigner.ViewModel
 {
@@ -155,7 +156,7 @@ namespace MenuDesigner.ViewModel
             }
         }
 
-       public BookViewModel BookViewModel;
+        public BookViewModel BookViewModel;
 
         object styleSheerLock = new object();
         async Task<IStyleSheet> GetStyleSheet()
@@ -166,7 +167,7 @@ namespace MenuDesigner.ViewModel
                 {
                     if (OpenGraphicMenuTask == null)
                     {
-                        OpenGraphicMenuTask=Task<BookViewModel>.Run(() =>
+                        OpenGraphicMenuTask = Task<BookViewModel>.Run(() =>
                         {
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                             {
@@ -178,7 +179,7 @@ namespace MenuDesigner.ViewModel
                             }
                         });
 
-                         
+
                     }
                 }
                 else
@@ -186,7 +187,7 @@ namespace MenuDesigner.ViewModel
                     return BookViewModel.MenuStylesheet;
                 }
             }
-            BookViewModel=await OpenGraphicMenuTask;
+            BookViewModel = await OpenGraphicMenuTask;
 
 
 
@@ -204,5 +205,25 @@ namespace MenuDesigner.ViewModel
         }
 
         public Task<BookViewModel> OpenGraphicMenuTask { get; private set; }
+
+        MenuCommand _ItemFontsMenu;
+        public MenuCommand ItemFontsMenu
+        {
+            get
+            {
+                if (BookViewModel != null)
+                    return BookViewModel.ItemFontsMenu;
+
+                if (_ItemFontsMenu == null)
+                {
+                    _ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
+                    {
+                        Header = Properties.Resources.FontsMenuItemHeader
+                    };
+                }
+
+                return _ItemFontsMenu;
+            }
+        }
     }
 }

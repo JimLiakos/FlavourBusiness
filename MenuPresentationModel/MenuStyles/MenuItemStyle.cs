@@ -4,6 +4,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System.ComponentModel;
 using UIBaseEx;
+using FlavourBusinessFacade.RoomService;
 
 namespace MenuPresentationModel.MenuStyles
 {
@@ -43,6 +44,11 @@ namespace MenuPresentationModel.MenuStyles
                         stateTransition.Consistent = true;
                     }
                     ObjectChangeState?.Invoke(this, nameof(_ItemInfoParagraphFont));
+
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        ObjectChangeState?.Invoke(this, nameof(_ItemInfoParagraphFont));
+                    });
                 }
             }
         }
@@ -80,6 +86,10 @@ namespace MenuPresentationModel.MenuStyles
                         stateTransition.Consistent = true;
                     }
                     ObjectChangeState?.Invoke(this, nameof(ItemInfoHeadingFont));
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        ObjectChangeState?.Invoke(this, nameof(_ItemInfoParagraphFont));
+                    });
                 }
             }
         }

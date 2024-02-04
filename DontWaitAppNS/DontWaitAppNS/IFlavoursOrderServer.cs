@@ -550,7 +550,9 @@ namespace DontWaitApp
     {
         DontWaitApp = 1,
         WaiterApp = 2,
-        OrderTaking = 3
+        OrderTaking = 3,
+        GraphicPreview=4
+
     }
 }
 

@@ -57,30 +57,9 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                if (_FontsMenu == null)
-                {
-                    HeadingFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.HeadingFonts(); });
-                    ParagraphFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.ParagraphFonts(); });
+                if (_CurrentMenuStyleSheet != null)
+                    return _CurrentMenuStyleSheet.ItemFontsMenu;
 
-                    _FontsMenu = new WPFUIElementObjectBind.MenuCommand()
-                    {
-                        Header = Properties.Resources.FontsMenuItemHeader,
-                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
-                        {
-                            new MenuCommand()
-                            {
-                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
-                                Command = HeadingFontsCommand,
-                            },
-                            new MenuCommand()
-                            {
-                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
-                                Command = ParagraphFontsCommand,
-                            }
-                        
-                    }
-                    };
-                }
                 return _FontsMenu;
             }
         }
@@ -466,14 +445,14 @@ namespace MenuItemsEditor.ViewModel
 
                 var taxableType = SelectedTaxableType.TaxableType;
                 SelectedTaxableType = null;
-               
-                if( (MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.RemoveTaxableType(taxableType))
+
+                if ((MenuItem as MenuModel.MenuItem).Menu.TaxAuthority.RemoveTaxableType(taxableType))
                     _TaxableTypes.Remove(taxableType);
-              
+
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaxableTypes)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedTaxableType)));
-                
+
                 //}
             }, (object sender) => CanDeleteSelectedTaxableType());
 
@@ -510,7 +489,7 @@ namespace MenuItemsEditor.ViewModel
         bool CanDeleteSelectedTaxableType()
         {
             if (SelectedTaxableType != null)
-                return SelectedTaxableType.TaxableType.TaxableSubjects.Count == 1 && SelectedTaxableType.TaxableType.TaxableSubjects.Contains(_MenuItem)|| SelectedTaxableType.TaxableType.TaxableSubjects.Count==0;
+                return SelectedTaxableType.TaxableType.TaxableSubjects.Count == 1 && SelectedTaxableType.TaxableType.TaxableSubjects.Contains(_MenuItem) || SelectedTaxableType.TaxableType.TaxableSubjects.Count == 0;
             else
                 return false;
         }
@@ -1502,8 +1481,27 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
-        public RoutedCommand HeadingFontsCommand { get; private set; }
-        public RoutedCommand ParagraphFontsCommand { get; private set; }
+
+        IMenuStyleSheet _CurrentMenuStyleSheet;
+
+
+        public IMenuStyleSheet CurrentMenuStyleSheet
+        {
+            get
+            {
+
+                return _CurrentMenuStyleSheet;
+            }
+            internal set
+            {
+
+                _CurrentMenuStyleSheet = value;
+
+                Application.Current.Dispatcher.Invoke(new Action(() => { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FontsMenu))); }));
+
+
+            }
+        }
     }
 
 

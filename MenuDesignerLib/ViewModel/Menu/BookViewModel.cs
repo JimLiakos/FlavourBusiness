@@ -1825,6 +1825,19 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             }
         }
 
+
+        /// <exclude>Excluded</exclude>
+        MenuCommand _ItemFontsMenu;
+        public MenuCommand ItemFontsMenu
+        {
+            get
+            {
+                var header = FontsMenu.Header;//force to load  FontsMenu and ItemFontsMenu;
+                return _ItemFontsMenu;
+
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         MenuCommand _FontsMenu;
         public MenuCommand FontsMenu
@@ -1841,6 +1854,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     FoodItemDescriptionFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemDescriptionFonts(); });
                     FoodItemExtrasFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemExtrasFonts(); });
                     FoodItemPriceFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemPriceFonts(); });
+
+
+                    FoodItemInfoHeadingFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoHeadingFonts(); });
+                    FoodItemInfoParagraphFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoParagraphFonts(); });
+
                     _FontsMenu = new WPFUIElementObjectBind.MenuCommand()
                     {
                         Header = Properties.Resources.FontsMenuItemHeader,
@@ -1881,8 +1899,46 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                             {
                                 Header=Properties.Resources.FoodItemPriceMenuItemHeader,
                                 Command = FoodItemPriceFontsCommand,
+                            },
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.FoodItemPriceMenuItemHeader,
+                                Command = FoodItemPriceFontsCommand,
+                            },
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
+                                Command = FoodItemInfoHeadingFontsCommand,
+                            },
+                            new MenuCommand()
+                            {
+                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
+                                Command = FoodItemInfoParagraphFontsCommand,
                             }
-                    }
+                        }
+
+
+                    };
+
+
+                    _ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
+                    {
+                        Header = Properties.Resources.FontsMenuItemHeader,
+                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
+                                Command = FoodItemInfoHeadingFontsCommand,
+                            },
+                            new MenuCommand()
+                            {
+                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
+                                Command = FoodItemInfoParagraphFontsCommand,
+                            }
+                        }
+
+
                     };
                 }
                 return _FontsMenu;
@@ -1895,7 +1951,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var pageStyle = EditStyleSheet.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle;
                 if (pageStyle != null)
                 {
-                    if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
+                    if (pageStyle.PageSize.Width > pageStyle.PageSize.Height)
                         return 600;
                 }
                 return 700;
@@ -1908,7 +1964,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var pageStyle = EditStyleSheet.Styles["page"] as MenuPresentationModel.MenuStyles.PageStyle;
                 if (pageStyle != null)
                 {
-                    if (pageStyle.PageSize.Width>pageStyle.PageSize.Height)
+                    if (pageStyle.PageSize.Width > pageStyle.PageSize.Height)
                         return 1080;
                 }
 
@@ -2063,7 +2119,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var book = this;
                 var headingStyle = (book.EditStyleSheet.Styles["heading"] as MenuPresentationModel.MenuStyles.IHeadingStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(headingStyle, new StyleableWindow.FontPresantation() { Font = headingStyle.Font, TitlebarText = Properties.Resources.NormalHeadingFontsMenuItemHeader + " Fonts" }, "Font");
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
@@ -2077,7 +2133,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 StyleableWindow.FontDialog fontDialog = new StyleableWindow.FontDialog();
                 var headingStyle = (EditStyleSheet.Styles["small-heading"] as MenuPresentationModel.MenuStyles.IHeadingStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(headingStyle, new StyleableWindow.FontPresantation() { Font = headingStyle.Font, TitlebarText = Properties.Resources.SubheadingFontsMenuItemHeader + " Fonts" }, "Font");
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
@@ -2093,7 +2149,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var headingStyle = (EditStyleSheet.Styles["title-heading"] as MenuPresentationModel.MenuStyles.IHeadingStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(headingStyle, new StyleableWindow.FontPresantation() { Font = headingStyle.Font, TitlebarText = Properties.Resources.TitleHeadingFontsMenuItemHeader + " Fonts" }, "Font");
 
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
@@ -2110,7 +2166,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.Font, TitlebarText = Properties.Resources.FoodItemNameFontsMenuItemHeader + " Fonts" }, "Font");
 
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 // fontDialog.Font = (book.EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font;
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
@@ -2126,7 +2182,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.DescriptionFont, TitlebarText = Properties.Resources.FoodItemDescriptionFontsMenuItemHeader + " Fonts" }, "DescriptionFont");
 
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 // fontDialog.Font = (book.EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font;
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
@@ -2142,12 +2198,43 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ExtrasFont, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ExtrasFont");
 
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
             }
         }
+
+        internal void FoodItemInfoHeadingFonts()
+        {
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+            {
+                StyleableWindow.FontDialog fontDialog = new StyleableWindow.FontDialog();
+                var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
+                StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ItemInfoHeadingFont, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ItemInfoHeadingFont");
+
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
+                fontDialog.Owner = fontDialog.Owner = Window.GetWindow(FoodItemInfoHeadingFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject); ;
+                if (fontDialog.ShowDialog().Value)
+                    stateTransition.Consistent = true;
+            }
+        }
+
+        internal void FoodItemInfoParagraphFonts()
+        {
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+            {
+                StyleableWindow.FontDialog fontDialog = new StyleableWindow.FontDialog();
+                var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
+                StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ItemInfoParagraphFont, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ItemInfoParagraphFont");
+
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
+                fontDialog.Owner = Window.GetWindow(FoodItemInfoParagraphFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject); 
+                if (fontDialog.ShowDialog().Value)
+                    stateTransition.Consistent = true;
+            }
+        }
+
         internal void FoodItemPriceFonts()
         {
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
@@ -2156,7 +2243,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 var menuItemStyle = (EditStyleSheet.Styles["price-options"] as MenuPresentationModel.MenuStyles.IPriceStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.Font, TitlebarText = Properties.Resources.FoodItemPriceMenuItemHeader + " Fonts" }, "Font");
 
-                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresantation);
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
                 // fontDialog.Font = (book.EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font;
                 fontDialog.Owner = OwnerWin;
                 if (fontDialog.ShowDialog().Value)
@@ -2195,6 +2282,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         public RoutedCommand FoodItemDescriptionFontsCommand { get; private set; }
         public RoutedCommand FoodItemExtrasFontsCommand { get; private set; }
         public RoutedCommand FoodItemPriceFontsCommand { get; private set; }
+        public RoutedCommand FoodItemInfoHeadingFontsCommand { get; private set; }
+        public RoutedCommand FoodItemInfoParagraphFontsCommand { get; private set; }
+
         public Transaction RunUnderTransaction
         {
             get
@@ -2234,12 +2324,14 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             {
                 if (!LoadRestaurantMenuTasks.TryGetValue(graphicMenuStorageRef.StorageIdentity, out loadRestaurantMenuTask))
                 {
-                    loadRestaurantMenuTask=Task<RestaurantMenu>.Run(() =>
+                    loadRestaurantMenuTask = Task<RestaurantMenu>.Run(() =>
                     {
                         RawStorageData graphicMenuStorageData = GetGraphicMenuStorageData(graphicMenuStorageRef, appDataPath);
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+
+               
                         MenuPresentationModel.RestaurantMenu theRestaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
-                                                                               select menu).FirstOrDefault();
+                                                                                  select menu).FirstOrDefault();
                         return theRestaurantMenu;
                     });
                     LoadRestaurantMenuTasks[graphicMenuStorageRef.StorageIdentity] = loadRestaurantMenuTask;
@@ -2259,13 +2351,13 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     return LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity];
                 else
                 {
-                    LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity]=bookViewModel;
+                    LoadedBookViewModels[graphicMenuStorageRef.StorageIdentity] = bookViewModel;
                     return bookViewModel;
                 }
 
             }
 
-            
+
         }
 
         private static RawStorageData GetGraphicMenuStorageData(OrganizationStorageRef graphicMenuStorageRef, string appDataPath)
@@ -2275,9 +2367,9 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             foreach (var dir in appDataPath.Split('\\'))
             {
                 if (path != null)
-                    path += "\\"+dir;
+                    path += "\\" + dir;
                 else
-                    path= dir;
+                    path = dir;
 
                 if (!System.IO.Directory.Exists(path))
                     System.IO.Directory.CreateDirectory(path);

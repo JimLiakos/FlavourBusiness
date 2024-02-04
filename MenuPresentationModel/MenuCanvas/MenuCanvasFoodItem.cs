@@ -2269,6 +2269,7 @@ namespace MenuPresentationModel.MenuCanvas
         /// <MetaDataID>{a5209a7d-4d7f-413c-9996-88fbf7526601}</MetaDataID>
         [PersistentMember(nameof(_MenuItem))]
         [BackwardCompatibilityID("+12")]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public MenuModel.IMenuItem MenuItem
         {
             get

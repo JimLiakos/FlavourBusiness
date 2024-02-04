@@ -402,14 +402,14 @@ namespace MenuDesigner.Views
     public class StyleFontUpdater
     {
         public readonly MenuPresentationModel.MenuStyles.IStyleRule Style;
-        public readonly StyleableWindow.FontPresantation FontPresantation;
+        public readonly StyleableWindow.FontPresantation FontPresentation;
         public readonly string FontProperty;
-        public StyleFontUpdater(MenuPresentationModel.MenuStyles.IStyleRule style, StyleableWindow.FontPresantation fontPresantation, string fontProperty)
+        public StyleFontUpdater(MenuPresentationModel.MenuStyles.IStyleRule style, StyleableWindow.FontPresantation fontPresentation, string fontProperty)
         {
             FontProperty = fontProperty;
-            FontPresantation = fontPresantation;
+            FontPresentation = fontPresentation;
             Style = style;
-            fontPresantation.PropertyChanged += FontPropertyChanged;
+            fontPresentation.PropertyChanged += FontPropertyChanged;
         }
 
         private void FontPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -417,17 +417,22 @@ namespace MenuDesigner.Views
             if (Style is MenuPresentationModel.MenuStyles.IMenuItemStyle)
             {
                 if (FontProperty == "DescriptionFont")
-                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).DescriptionFont = FontPresantation.Font;
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).DescriptionFont = FontPresentation.Font;
                 else if (FontProperty == "ExtrasFont")
-                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ExtrasFont = FontPresantation.Font;
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ExtrasFont = FontPresentation.Font;
+                else if (FontProperty == "ItemInfoHeadingFont")
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ItemInfoHeadingFont = FontPresentation.Font;
+                else if (FontProperty == "ItemInfoParagraphFont")
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ItemInfoParagraphFont = FontPresentation.Font;
+
                 else
-                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font = FontPresantation.Font;
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font = FontPresentation.Font;
             }
 
             if (Style is MenuPresentationModel.MenuStyles.IHeadingStyle)
-                (Style as MenuPresentationModel.MenuStyles.IHeadingStyle).Font = FontPresantation.Font;
+                (Style as MenuPresentationModel.MenuStyles.IHeadingStyle).Font = FontPresentation.Font;
             if (Style is MenuPresentationModel.MenuStyles.IPriceStyle)
-                (Style as MenuPresentationModel.MenuStyles.IPriceStyle).Font = FontPresantation.Font;
+                (Style as MenuPresentationModel.MenuStyles.IPriceStyle).Font = FontPresentation.Font;
         }
     }
 }
