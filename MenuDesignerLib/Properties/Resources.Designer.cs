@@ -286,6 +286,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item info view .
+        /// </summary>
+        public static string DesignItem_infoVieMenuItemHeader {
+            get {
+                return ResourceManager.GetString("DesignItem/infoVieMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Design.
         /// </summary>
         public static string DesignMenuTitle {

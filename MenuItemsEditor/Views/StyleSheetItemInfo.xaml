@@ -1,0 +1,55 @@
+﻿<sw:Window  x:Class="MenuItemsEditor.Views.StyleSheetItemInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ContrοlsEx="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"    
+        xmlns:MenuItemsEditorViewModel="clr-namespace:MenuItemsEditor.ViewModel"
+        xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+        xmlns:local="clr-namespace:MenuItemsEditor.Views"
+        mc:Ignorable="d"
+            WindowStartupLocation="CenterScreen"
+            ShowInTaskbar="False" MinimizeBox="False" MaximizeBox="False"
+        Title="StyleSheetItemInfo" Height="450" Width="710">
+    <Window.DataContext>
+        <ConnectableCtrl:ObjectContext ViewControlObjectType="{x:Type MenuItemsEditorViewModel:StyleSheetItemInfoViewModel}"    Name="Connection" TransactionOption="Required"  RollbackOnExitWithoutAnswer="False" RollbackOnNegativeAnswer="False"></ConnectableCtrl:ObjectContext>
+    </Window.DataContext>
+    <Grid>
+        <sw:DialogContentControl  DataContext="{Binding Value, Mode=OneWay}" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="121*"/>
+                    <RowDefinition Height="251*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+                    <Label>Pargraph first letter</Label>
+                    <TextBlock Grid.Row="1">First letter lines span </TextBlock>
+                    <Button Grid.Row="2" x:Name="HeadingFont" Content="Heading font" HorizontalAlignment="Center" VerticalAlignment="Top" Width="99" Height="30"/>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,16,0,0"  >
+                    <Border BorderThickness="2"     x:Name="ItemInfoStyleWebBrowserHost" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+
+                        <!--<cefSharp:ChromiumWebBrowser x:Name="browser" />-->
+
+                    </Border>
+                </Grid>
+
+            </Grid>
+
+        </sw:DialogContentControl>
+    </Grid>
+</sw:Window>

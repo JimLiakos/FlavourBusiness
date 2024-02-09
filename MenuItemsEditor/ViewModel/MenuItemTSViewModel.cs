@@ -34,8 +34,7 @@ namespace MenuItemsEditor.ViewModel
         [GenerateEventConsumerProxy]
         event PreparationItemChangedHandle PreparationItemChanged;
 
-        [GenerateEventConsumerProxy]
-        event ObjectChangeStateHandle ObjectChangeState;
+       
 
         string CurrentLanguage { get; }
 
@@ -43,22 +42,12 @@ namespace MenuItemsEditor.ViewModel
 
         MealType MealType { get; }
 
-        string ExtraInfoHtml { get; set; }
-
-        List<IMenuStyleSheet> MenusStyleSheets { get; }
-
-        Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet);
-
-        IMenuStyleSheet ActiveMenuStyleSheet { get; set; }
-
-        Task<ExtraInfoStyleSheet> MenuItemStyleSheet { get; }
-
-        string FontsLink { get; }
+      
 
     }
 
     /// <MetaDataID>{81ddc8c1-f978-4cdd-a091-4816f29760a0}</MetaDataID>
-    public class MenuItemTSViewModel : ExtMarshalByRefObject, IMenuItemTSViewModel
+    public class MenuItemTSViewModel : ExtMarshalByRefObject, IMenuItemTSViewModel, IStyleSheetItemInfo
     {
         private MenuItemViewModel MenuItemViewModel;
 
@@ -177,6 +166,8 @@ namespace MenuItemsEditor.ViewModel
         {
             ObjectChangeState?.Invoke(this, nameof(MenuItemStyleSheet));
         }
+
+        public bool IsEditToolBarVisible => true;
 
         public ItemPreparation PreparationItem
         {

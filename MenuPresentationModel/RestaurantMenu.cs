@@ -459,6 +459,7 @@ namespace MenuPresentationModel
         /// <MetaDataID>{710a59a4-c75b-40f0-98ea-69926edf3b05}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         [PersistentMember(nameof(_MenuCanvasItems))]
+        [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         public System.Collections.Generic.IList<MenuCanvas.IMenuCanvasItem> MenuCanvasItems
         {
             get

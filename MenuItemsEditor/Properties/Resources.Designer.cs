@@ -151,6 +151,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Design.
+        /// </summary>
+        public static string DesignMenuItemHeader {
+            get {
+                return ResourceManager.GetString("DesignMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string EditObject {
@@ -237,6 +246,16 @@ namespace MenuItemsEditor.Properties {
         public static string ItemExtraInfoLabel {
             get {
                 return ResourceManager.GetString("ItemExtraInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;A millennium ago, the amatriciana originated in fields that bordered the Lazio town of Amatrice. Working shepherds would take cheese and pieces of guanciale into the pastures, cooking them over fire as they worked far distances from home. In an outdoor culinary feat, they also made fresh pasta for their dish, combining them all to make a delicious meal to sustain themselves as they worked.&lt;/p&gt;
+        ///&lt;p style=&quot;text-align:start&quot;&gt;But you may have noticed one of the ingredients is missing. Before the tomatoes bec [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ItemInfoViewSampleHtml {
+            get {
+                return ResourceManager.GetString("ItemInfoViewSampleHtml", resourceCulture);
             }
         }
         

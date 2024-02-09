@@ -2,6 +2,7 @@
 using MenuDesigner.ViewModel.Menu;
 using MenuDesigner.ViewModel.MenuCanvas;
 using MenuItemsEditor.ViewModel;
+using MenuItemsEditor.Views;
 using MenuPresentationModel.MenuStyles;
 using OOAdvantech.Transactions;
 using System;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WPFUIElementObjectBind;
 
 namespace MenuDesigner.ViewModel
@@ -118,11 +120,50 @@ namespace MenuDesigner.ViewModel
             }
         }
         public readonly IResourceManager ResourceManager;
+        public WPFUIElementObjectBind.RoutedCommand FoodItemInfoViewDesignCommand { get; private set; }
         public GraphicMenuPresentation(OrganizationStorageRef organizationStorageRef, IResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
             _StorageRef = organizationStorageRef;
+
+            FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); });
+
+            _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+            {
+                Header = Properties.Resources.DesignMenuTitle,
+                SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.DesignItem_infoVieMenuItemHeader,
+                                Command = FoodItemInfoViewDesignCommand
+                            },
+
+                        }
+
+
+            };
         }
+
+        internal void FoodItemInfoViewDesign()
+        {
+            MenuPresentationModel.MenuStyles.StyleSheet styleSheet =BookViewModel.MenuStylesheet;
+            Window win = Window.GetWindow(FoodItemInfoViewDesignCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+            StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
+            try
+            {
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel(this);
+                styleSheetItemInfo.Owner = win;
+                styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
+            }
+            finally
+            {
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+            }
+            styleSheetItemInfo.ShowDialog();
+        }
+
         public string Name
         {
             get
@@ -206,6 +247,7 @@ namespace MenuDesigner.ViewModel
 
         public Task<BookViewModel> OpenGraphicMenuTask { get; private set; }
 
+        /// <exclude>Excluded</exclude>
         MenuCommand _ItemFontsMenu;
         public MenuCommand ItemFontsMenu
         {
@@ -225,5 +267,31 @@ namespace MenuDesigner.ViewModel
                 return _ItemFontsMenu;
             }
         }
+
+
+
+        /// <exclude>Excluded</exclude>
+        MenuCommand _DesignItemInfoViewMenu;
+        public MenuCommand DesignItemInfoViewMenu
+        {
+            get
+            {
+                //if (BookViewModel != null)
+                //    return BookViewModel.DesignItemInfoViewMenu;
+
+                //if (_DesignItemInfoViewMenu == null)
+                //{
+                //    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+                //    {
+                //        Header = Properties.Resources.DesignMenuTitle
+                //    };
+                //}
+
+                return _DesignItemInfoViewMenu;
+            }
+        }
+
+
+
     }
 }

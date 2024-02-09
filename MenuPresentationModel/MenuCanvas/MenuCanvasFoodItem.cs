@@ -1470,7 +1470,7 @@ namespace MenuPresentationModel.MenuCanvas
                 if (PriceLeader == null)
                 {
                     PriceLeader = new MenuCanvasPriceLeader();
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(PriceLeader);
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.CommitTransientObjectState(PriceLeader);
                 }
                 if (priceStyle.PriceLeader == "dots")
                     PriceLeader.Description = "...";

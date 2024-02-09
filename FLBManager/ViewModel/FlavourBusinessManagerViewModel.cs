@@ -408,6 +408,12 @@ namespace FLBManager.ViewModel
                         _MenuItems.Add(menuItem);
                         ActivePageMenuItems.Add(menuItem);
                     }
+                     menuItem = ActivePageMenuItemViewModel.DesignMenu;
+                    if (menuItem != null)
+                    {
+                        _MenuItems.Add(menuItem);
+                        ActivePageMenuItems.Add(menuItem);
+                    }
 
                 }
             }

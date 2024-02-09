@@ -22,6 +22,8 @@ using OOAdvantech.Json;
 using System.Threading.Tasks;
 using FlavourBusinessFacade;
 using System.Net.Http;
+using MenuItemsEditor.Views;
+using MenuItemsEditor.ViewModel;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -1837,6 +1839,18 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
             }
         }
+        /// <exclude>Excluded</exclude>
+        MenuCommand _DesignItemInfoViewMenu;
+        //public MenuCommand DesignItemInfoViewMenu
+        //{
+        //    get
+        //    {
+        //        var header = FontsMenu.Header;//force to load  FontsMenu and ItemFontsMenu;
+        //        return _DesignItemInfoViewMenu;
+
+        //    }
+        //}
+
 
         /// <exclude>Excluded</exclude>
         MenuCommand _FontsMenu;
@@ -1858,6 +1872,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
                     FoodItemInfoHeadingFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoHeadingFonts(); });
                     FoodItemInfoParagraphFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoParagraphFonts(); });
+
+                    FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); });
 
                     _FontsMenu = new WPFUIElementObjectBind.MenuCommand()
                     {
@@ -1936,6 +1952,22 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                                 Header=Properties.Resources.ParagraphFontsMenuItemHeader,
                                 Command = FoodItemInfoParagraphFontsCommand,
                             }
+                        }
+
+
+                    };
+
+                    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+                    {
+                        Header = Properties.Resources.DesignMenuTitle,
+                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.DesignItem_infoVieMenuItemHeader,
+                                Command = FoodItemInfoViewDesignCommand
+                            },
+                           
                         }
 
 
@@ -2219,7 +2251,24 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     stateTransition.Consistent = true;
             }
         }
-
+        internal void FoodItemInfoViewDesign()
+        {
+            //MenuPresentationModel.MenuStyles.StyleSheet styleSheet = MenuStylesheet;
+            //Window win = Window.GetWindow(FoodItemInfoViewDesignCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+            //StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
+            //try
+            //{
+            //    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+            //    StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel();
+            //    styleSheetItemInfo.Owner = win;
+            //    styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
+            //}
+            //finally
+            //{
+            //    Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+            //}
+            //styleSheetItemInfo.ShowDialog();
+        }
         internal void FoodItemInfoParagraphFonts()
         {
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
@@ -2284,6 +2333,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         public RoutedCommand FoodItemPriceFontsCommand { get; private set; }
         public RoutedCommand FoodItemInfoHeadingFontsCommand { get; private set; }
         public RoutedCommand FoodItemInfoParagraphFontsCommand { get; private set; }
+        public RoutedCommand FoodItemInfoViewDesignCommand { get; private set; }
+
 
         public Transaction RunUnderTransaction
         {
@@ -2329,7 +2380,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                         RawStorageData graphicMenuStorageData = GetGraphicMenuStorageData(graphicMenuStorageRef, appDataPath);
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
-               
+
+                        //var menuCanvasFoodItems = (from menu in storage.GetObjectCollection<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>()
+                        //                                                          select menu).ToList();
+
+
                         MenuPresentationModel.RestaurantMenu theRestaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
                                                                                   select menu).FirstOrDefault();
                         return theRestaurantMenu;

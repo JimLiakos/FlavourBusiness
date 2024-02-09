@@ -91,7 +91,7 @@ namespace MenuPresentationModel.MenuCanvas
                         while (ItemsGroupHeading != null && _Columns.Count < ItemsGroupHeading.NumberOfFoodColumns)
                         {
                             MenuCanvas.FoodItemsGroupColumn column = new FoodItemsGroupColumn();
-                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(column);
+                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.CommitTransientObjectState(column);
                             _Columns.Add(column);
                         }
                     }

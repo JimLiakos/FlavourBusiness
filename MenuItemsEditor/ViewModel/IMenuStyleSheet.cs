@@ -24,5 +24,7 @@ namespace MenuItemsEditor.ViewModel
 
         WPFUIElementObjectBind.MenuCommand ItemFontsMenu { get; }
 
+        WPFUIElementObjectBind.MenuCommand DesignItemInfoViewMenu { get; }
+
     }
 }

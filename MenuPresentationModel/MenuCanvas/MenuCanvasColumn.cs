@@ -372,7 +372,7 @@ namespace MenuPresentationModel.MenuCanvas
                                     //else
                                     //    foodItemsGroop = new MenuCanvas.MenuCanvasFoodItemsGroup(this) { ItemsGroupHeading = foodItemsFormatHeading };
 
-                                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(foodItemsGroop);
+                                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.CommitTransientObjectState(foodItemsGroop);
                                     _FoodItemsGroup.Add(foodItemsGroop);
                                     foodItemsFormatHeading.AddHostingArea(foodItemsGroop);
                                     foodItemsGroop.Width = Width;

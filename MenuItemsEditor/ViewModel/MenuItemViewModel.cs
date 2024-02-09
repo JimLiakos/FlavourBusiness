@@ -51,7 +51,7 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
-
+        /// <exclude>Excluded</exclude>
         MenuCommand _FontsMenu;
         public MenuCommand FontsMenu
         {
@@ -63,6 +63,22 @@ namespace MenuItemsEditor.ViewModel
                 return _FontsMenu;
             }
         }
+
+
+
+        /// <exclude>Excluded</exclude>
+        MenuCommand _DesignMenu;
+        public MenuCommand DesignMenu
+        {
+            get
+            {
+                if (_CurrentMenuStyleSheet != null)
+                    return _CurrentMenuStyleSheet.DesignItemInfoViewMenu;
+
+                return _FontsMenu;
+            }
+        }
+
 
         private void ParagraphFonts()
         {

@@ -667,4 +667,7 @@
   <data name="ParagraphFontsMenuItemHeader" xml:space="preserve">
     <value>Paragraph</value>
   </data>
+  <data name="DesignItem/infoVieMenuItemHeader" xml:space="preserve">
+    <value>Item info view </value>
+  </data>
 </root>

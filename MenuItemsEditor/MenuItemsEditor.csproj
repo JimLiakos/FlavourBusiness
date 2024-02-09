@@ -142,6 +142,7 @@
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="ViewModel\ScaleTypesViewModel.cs" />
     <Compile Include="ViewModel\ScaleTypeViewModel.cs" />
+    <Compile Include="ViewModel\StyleSheetItemInfoViewModel.cs" />
     <Compile Include="ViewModel\TagViewModel.cs" />
     <Compile Include="ViewModel\TreeViewMenuItemViewModel.cs" />
     <Compile Include="Views\CategoryMenuItemTypesWindow.xaml.cs">
@@ -182,6 +183,9 @@
     </Compile>
     <Compile Include="Views\ScaleTypesWindow.xaml.cs">
       <DependentUpon>ScaleTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StyleSheetItemInfo.xaml.cs">
+      <DependentUpon>StyleSheetItemInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TagView.xaml.cs">
       <DependentUpon>TagView.xaml</DependentUpon>
@@ -235,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScaleTypesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StyleSheetItemInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
