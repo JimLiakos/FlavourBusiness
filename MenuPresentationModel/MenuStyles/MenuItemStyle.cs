@@ -202,7 +202,7 @@ namespace MenuPresentationModel.MenuStyles
                 {
                     _Font.ClearValue();
                     _DescriptionFont.ClearValue();
-                    _ExtrasFont.ClearValue(); 
+                    _ExtrasFont.ClearValue();
                     stateTransition.Consistent = true;
                 }
 
@@ -522,5 +522,125 @@ namespace MenuPresentationModel.MenuStyles
                 }
             }
         }
+        /// <exclude>Excluded</exclude>
+        FontData? _ItemInfoParagraphFirstLetterFont;
+
+        /// <MetaDataID>{acf2b8d0-74c9-4fd5-b7e3-78de06bcd295}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoParagraphFirstLetterFont))]
+        [BackwardCompatibilityID("+14")]
+        public FontData? ItemInfoParagraphFirstLetterFont
+        {
+            get => _ItemInfoParagraphFirstLetterFont; set
+            {
+                if (_ItemInfoParagraphFirstLetterFont != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoParagraphFirstLetterFont = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ItemInfoFirstLetterLeftIndent));
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        int? _ItemInfoFirstLetterLeftIndent;
+
+        /// <MetaDataID>{7e9038af-14c2-44ce-aa5a-58e40f94e5ce}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoFirstLetterLeftIndent))]
+        [BackwardCompatibilityID("+15")]
+        public int? ItemInfoFirstLetterLeftIndent
+        {
+            get
+            {
+                if (OrgMenuItemStyle != null && !_ItemInfoFirstLetterLeftIndent.HasValue)
+                    return OrgMenuItemStyle.ItemInfoFirstLetterLeftIndent;
+                if (!_ItemInfoFirstLetterLeftIndent.HasValue)
+                    return default(int);
+                return _ItemInfoFirstLetterLeftIndent.Value;
+            }
+
+            set
+            {
+                if (_ItemInfoFirstLetterLeftIndent != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoFirstLetterLeftIndent = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ItemInfoFirstLetterLeftIndent));
+
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        int? _ItemInfoFirstLetterRightIndent;
+
+        /// <MetaDataID>{d92a9ff7-0db3-42a8-8edd-3a7071fd0133}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoFirstLetterRightIndent))]
+        [BackwardCompatibilityID("+17")]
+        public int? ItemInfoFirstLetterRightIndent
+        {
+            get
+            {
+                if (OrgMenuItemStyle != null && !_ItemInfoFirstLetterRightIndent.HasValue)
+                    return OrgMenuItemStyle.ItemInfoFirstLetterRightIndent;
+                if (!_ItemInfoFirstLetterRightIndent.HasValue)
+                    return default(int);
+                return _ItemInfoFirstLetterRightIndent.Value;
+            }
+
+            set
+            {
+                if (_ItemInfoFirstLetterRightIndent != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoFirstLetterRightIndent = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ItemInfoFirstLetterRightIndent));
+
+                }
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        int? _ItemInfoFirstLetterLinesSpan;
+        /// <MetaDataID>{73e69a58-59c2-418f-a0a0-f2a2d92da7e2}</MetaDataID>
+        [PersistentMember(nameof(_ItemInfoFirstLetterLinesSpan))]
+        [BackwardCompatibilityID("+16")]
+        public int? ItemInfoFirstLetterLinesSpan
+        {
+            get
+            {
+                if (OrgMenuItemStyle != null && !_ItemInfoFirstLetterLinesSpan.HasValue)
+                    return OrgMenuItemStyle.ItemInfoFirstLetterLinesSpan;
+                if (!_ItemInfoFirstLetterLinesSpan.HasValue)
+                    return 1;
+                return _ItemInfoFirstLetterLinesSpan.Value;
+            }
+
+            set
+            {
+                if (_ItemInfoFirstLetterLinesSpan != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemInfoFirstLetterLinesSpan = value;
+                        stateTransition.Consistent = true;
+                    }
+                    ObjectChangeState?.Invoke(this, nameof(ItemInfoFirstLetterLinesSpan));
+
+                }
+            }
+        }
+    
     }
 }

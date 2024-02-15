@@ -122,39 +122,54 @@ namespace MenuItemsEditor.ViewModel
         {
             get
             {
-                return GetExtraInfoStyleSheet(ActiveMenuStyleSheet);
+               
+
+                    
+                var menuItemStyleSheet=  GetExtraInfoStyleSheet(ActiveMenuStyleSheet);
+
+                return menuItemStyleSheet;
+
+               
             }
         }
 
 
         public async Task<ExtraInfoStyleSheet> GetExtraInfoStyleSheet(IMenuStyleSheet menuStyleSheet)
         {
-            if (menuStyleSheet == null)
-                return null;
-            var styleSheet = await menuStyleSheet?.StyleSheet;
 
-            if (CurrentMenuItemStyle != null)
-                CurrentMenuItemStyle.ObjectChangeState -= CurrentMenuItemStyle_ObjectChangeState;
-
-            CurrentMenuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
-            CurrentMenuItemStyle.ObjectChangeState += CurrentMenuItemStyle_ObjectChangeState;
-
-            if (CurrentPriceStyle != null)
-                CurrentPriceStyle.ObjectChangeState -= CurrentPriceStyle_ObjectChangeState;
-
-            CurrentPriceStyle = (styleSheet?.Styles["price-options"] as IPriceStyle);
-            CurrentPriceStyle.ObjectChangeState += CurrentPriceStyle_ObjectChangeState;
-
-            var extraInfoStyleSheet = new ExtraInfoStyleSheet()
+            using (CultureContext cultureContext = new CultureContext(MenuItemViewModel.AddPartofMealCommand.UserInterfaceObjectConnection.Culture, MenuItemViewModel.AddPartofMealCommand.UserInterfaceObjectConnection.UseDefaultCultureWhenValueMissing))
             {
-                HeadingFont = CurrentMenuItemStyle.ItemInfoHeadingFont,
-                ParagraphFont = CurrentMenuItemStyle.ItemInfoParagraphFont,
-                ItemNameFont = CurrentMenuItemStyle.Font,
-                ItemPriceFont = CurrentPriceStyle.Font
-            };
+                if (menuStyleSheet == null)
+                    return null;
+                var styleSheet = await menuStyleSheet?.StyleSheet;
+
+                if (CurrentMenuItemStyle != null)
+                    CurrentMenuItemStyle.ObjectChangeState -= CurrentMenuItemStyle_ObjectChangeState;
+
+                CurrentMenuItemStyle = (styleSheet?.Styles["menu-item"] as IMenuItemStyle);
+                CurrentMenuItemStyle.ObjectChangeState += CurrentMenuItemStyle_ObjectChangeState;
+
+                if (CurrentPriceStyle != null)
+                    CurrentPriceStyle.ObjectChangeState -= CurrentPriceStyle_ObjectChangeState;
+
+                CurrentPriceStyle = (styleSheet?.Styles["price-options"] as IPriceStyle);
+                CurrentPriceStyle.ObjectChangeState += CurrentPriceStyle_ObjectChangeState;
 
 
-            return extraInfoStyleSheet;
+
+                var extraInfoStyleSheet = new ExtraInfoStyleSheet()
+                {
+                    HeadingFont = CurrentMenuItemStyle.ItemInfoHeadingFont,
+                    ParagraphFont = CurrentMenuItemStyle.ItemInfoParagraphFont,
+                    ItemNameFont = CurrentMenuItemStyle.Font,
+                    ItemPriceFont = CurrentPriceStyle.Font
+                };
+
+                menuStyleSheet.UpdateItemExtraInfoStyling();
+
+
+                return extraInfoStyleSheet;
+            }
         }
 
         private void CurrentPriceStyle_ObjectChangeState(object _object, string member)
@@ -246,5 +261,13 @@ namespace MenuItemsEditor.ViewModel
         public FontData ParagraphFont { get; set; }
         public FontData ItemNameFont { get; set; }
         public FontData ItemPriceFont { get; set; }
+
+        public int FirstLetterLines { get; set; }
+
+        public FontData? ParagraphFirstLetterFont { get; set; }
+        public int? ItemInfoFirstLetterLeftIndent { get; set; }
+
+        public int? ItemInfoFirstLetterRightIndent { get; set; }
+        public int? ItemInfoFirstLetterLinesSpan { get; set; }
     }
 }

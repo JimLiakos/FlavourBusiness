@@ -6,6 +6,15 @@ namespace MenuPresentationModel.MenuCanvas
     /// <MetaDataID>{96919c6e-eb1e-401a-a1af-4c2efea34e0a}</MetaDataID>
     public interface IRestaurantMenu
     {
+        
+        [Association("ItemsExtraInfoStyling", Roles.RoleA, "453b6e29-e018-42cb-a83a-abe8f38b83df")]
+        [RoleAMultiplicityRange(1, 1)]
+        [RoleBMultiplicityRange(1, 1)]
+        IItemExtraInfoStyleSheet ItemExtraInfoStyleSheet {get; }
+        void GetItemExtraInfoStylingData();
+
+
+
         [Association("MenuStyle", Roles.RoleA, "d0d8fa48-b643-4d17-aa7e-df449e985844")]
         
         MenuStyles.IStyleSheet Style { get; set; }

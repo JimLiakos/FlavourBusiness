@@ -11,6 +11,15 @@ namespace MenuPresentationModel.MenuStyles
         /// <MetaDataID>{fa42585b-2a63-4570-b692-3e1b838a9487}</MetaDataID>
         FontData ItemInfoHeadingFont { get; set; }
 
+        /// <MetaDataID>{cfcb02a4-933a-4853-9b63-7c28209cacd5}</MetaDataID>
+        FontData? ItemInfoParagraphFirstLetterFont { get; set; }
+        /// <MetaDataID>{003de667-6bd7-4c63-901a-74cced8d870a}</MetaDataID>
+        int? ItemInfoFirstLetterLeftIndent { get; set; }
+        /// <MetaDataID>{7cf01a2b-a34f-4cc4-b511-8e8e618e942f}</MetaDataID>
+        int? ItemInfoFirstLetterRightIndent { get; set; }
+        /// <MetaDataID>{1aacd165-acb4-4234-ab08-37b3805e243e}</MetaDataID>
+        int? ItemInfoFirstLetterLinesSpan { get; set; }
+
         /// <MetaDataID>{2d6618c8-bcbf-48b7-9ea5-4b7f7cb5ab5e}</MetaDataID>
         bool NewLineForDescription { get; set; }
 

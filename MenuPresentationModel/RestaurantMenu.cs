@@ -15,6 +15,8 @@ using SvgAccentModifier;
 using System.Globalization;
 using FlavourBusinessFacade;
 using System.Net.Http;
+using OOAdvantech.Remoting;
+
 
 namespace MenuPresentationModel
 {
@@ -29,7 +31,7 @@ namespace MenuPresentationModel
     /// <MetaDataID>{a5e33434-afd5-4612-8375-01d50a7e7cfb}</MetaDataID>
     [BackwardCompatibilityID("{a5e33434-afd5-4612-8375-01d50a7e7cfb}")]
     [Persistent()]
-    public class RestaurantMenu : MarshalByRefObject, IRestaurantMenu, IRestaurantMenuPublisher, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
+    public class RestaurantMenu : ExtMarshalByRefObject, IRestaurantMenu, IRestaurantMenuPublisher, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer
     {
         /// <MetaDataID>{a22edac9-3678-4ff1-9de4-3d224c7ad58e}</MetaDataID>
         public void RemoveAvailableHeading(FoodItemsHeading heading)
@@ -81,6 +83,9 @@ namespace MenuPresentationModel
         /// <MetaDataID>{8b7c0f36-b4f4-4311-beb2-ec2dec9125fe}</MetaDataID>
         public void PublishMenu(string serverStorageFolder, string previousVersionServerStorageFolder, string menuResourcesPrefix, IFileManager fileManager, string menuName)
         {
+
+            if(ItemExtraInfoStyleSheet==null)
+                GetItemExtraInfoStylingData();
             string rootUri = "http://localhost/devstoreaccount1";
             if (fileManager != null)
                 rootUri = fileManager.RootUri;
@@ -488,6 +493,7 @@ namespace MenuPresentationModel
         /// <exclude>Excluded</exclude>
         Member<MenuStyles.IStyleSheet> _Style = new Member<MenuStyles.IStyleSheet>();
 
+        /// <MetaDataID>{08ec045c-b5ee-42ba-b8fa-e64def45d02f}</MetaDataID>
         [AssociationEndBehavior(PersistencyFlag.OnConstruction)]
         [PersistentMember(nameof(_Style))]
         public MenuPresentationModel.MenuStyles.IStyleSheet Style
@@ -572,6 +578,22 @@ namespace MenuPresentationModel
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        Member<IItemExtraInfoStyleSheet> _ItemExtraInfoStyleSheet = new Member<IItemExtraInfoStyleSheet>();
+
+        /// <MetaDataID>{f554f52c-d76b-4fe2-b8de-fafa7eb081ee}</MetaDataID>
+        [PersistentMember(nameof(_ItemExtraInfoStyleSheet))]
+        [BackwardCompatibilityID("+5")]
+        public MenuPresentationModel.IItemExtraInfoStyleSheet ItemExtraInfoStyleSheet { get => _ItemExtraInfoStyleSheet.Value; }
+
+
+        public void GetItemExtraInfoStylingData()
+        {
+            var menuItemStyle = this.Style.Styles["menu-item"] as MenuStyles.IMenuItemStyle;
+            string culName = CultureContext.CurrentNeutralCultureInfo.Name;
+            ItemExtraInfoStyleSheet.HeadingFont = menuItemStyle.ItemInfoHeadingFont;
+            ItemExtraInfoStyleSheet.ParagraphFont = menuItemStyle.ItemInfoParagraphFont;
+        }
 
         /// <MetaDataID>{4952e0dd-c560-4bd5-8f69-930e8faa101d}</MetaDataID>
         public void AddPage(IMenuPageCanvas page)
@@ -676,6 +698,21 @@ namespace MenuPresentationModel
         {
             foreach (var menuCanvasItem in _MenuCanvasItems)
                 menuCanvasItem.ObjectChangeState += ManuCanvasItemChangeState;
+
+            if(_ItemExtraInfoStyleSheet.Value==null)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    if (!OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).IsReadonly)
+                    {
+                        _ItemExtraInfoStyleSheet.Value = new ItemExtraInfoStyleSheet();
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this)?.CommitTransientObjectState(_ItemExtraInfoStyleSheet.Value);
+                    }
+                    stateTransition.Consistent = true;
+                }
+
+            }
         }
 
         /// <exclude>Excluded</exclude>

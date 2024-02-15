@@ -22,9 +22,16 @@ namespace MenuItemsEditor.ViewModel
         string Name { get; }
         Task<IStyleSheet> StyleSheet { get; }
 
-        WPFUIElementObjectBind.MenuCommand ItemFontsMenu { get; }
+        //WPFUIElementObjectBind.MenuCommand ItemFontsMenu { get; }
 
-        WPFUIElementObjectBind.MenuCommand DesignItemInfoViewMenu { get; }
+        //WPFUIElementObjectBind.MenuCommand DesignItemInfoViewMenu { get; }
+
+        void UpdateItemExtraInfoStyling();
+
+        void ChangeItemInfoHeadingFont();
+
+        void ChangeItemInfoParagraphFont();
+        void ChangeItemInfoParagraphFirstLetterFont();
 
     }
 }

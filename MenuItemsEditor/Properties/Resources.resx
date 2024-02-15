@@ -434,7 +434,12 @@ There are preaparation oprtions with wrang, scale type.</value>
     <value>Design</value>
   </data>
   <data name="ItemInfoViewSampleHtml" xml:space="preserve">
-    <value>&lt;p&gt;A millennium ago, the amatriciana originated in fields that bordered the Lazio town of Amatrice. Working shepherds would take cheese and pieces of guanciale into the pastures, cooking them over fire as they worked far distances from home. In an outdoor culinary feat, they also made fresh pasta for their dish, combining them all to make a delicious meal to sustain themselves as they worked.&lt;/p&gt;
-&lt;p style="text-align:start"&gt;But you may have noticed one of the ingredients is missing. Before the tomatoes became an integral part of the dish around the 1700s, the &lt;a href="https://issimoissimo.com/prodotto/lazzari-pomodoro-basilico-e-capperi/"&gt;&lt;em&gt;&lt;u&gt;sugo&lt;/u&gt;&lt;/em&gt;&lt;/a&gt;, or sauce, was white, not red. The original amatriciana is now considered ‘amatriciana bianca’ and during the dish’s first era, the amatriciana more closely resembled the modern-day gricia pasta recipe. The history of the two classics are intertwined. In truth, the pasta alla gricia became the amatriciana over time.&lt;/p&gt;</value>
+    <value>&lt;p&gt;&lt;/p&gt;&lt;h6&gt;amatriciana&lt;/h6&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;A millennium ago, the amatriciana originated in fields that bordered the Lazio town of Amatrice. Working shepherds would take cheese and pieces of guanciale into the pastures, cooking them over fire as they worked far distances from home. In an outdoor culinary feat, they also made fresh pasta for their dish, combining them all to make a delicious meal to sustain themselves as they worked.&lt;/p&gt;&lt;p style="text-align:start"&gt;But you may have noticed one of the ingredients is missing. Before the tomatoes became an integral part of the dish around the 1700s, the &lt;a href="https://issimoissimo.com/prodotto/lazzari-pomodoro-basilico-e-capperi/"&gt;&lt;em&gt;&lt;u&gt;sugo&lt;/u&gt;&lt;/em&gt;&lt;/a&gt;, or sauce, was white, not red. The original amatriciana is now considered ‘amatriciana bianca’ and during the dish’s first era, the amatriciana more closely resembled the modern-day gricia pasta recipe. The history of the two classics are intertwined. In truth, the pasta alla gricia became the amatriciana over time.&lt;/p&gt;</value>
+  </data>
+  <data name="DesignIteminfoVieMenuItemHeader" xml:space="preserve">
+    <value>Item info view </value>
+  </data>
+  <data name="DesignMenuTitle" xml:space="preserve">
+    <value>Design</value>
   </data>
 </root>

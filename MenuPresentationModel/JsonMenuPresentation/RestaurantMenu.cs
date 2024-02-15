@@ -43,6 +43,10 @@ namespace MenuPresentationModel.JsonMenuPresentation
         /// <MetaDataID>{53164ae7-d190-4e72-bdca-28baf5febb4a}</MetaDataID>
         public RestaurantMenu(IRestaurantMenu menu)
         {
+
+            ItemExtraInfoStyleSheet = new ItemExtraInfoStyleSheet(this, menu.ItemExtraInfoStyleSheet);
+
+            //ItemExtraInfoStyleSheet= new ItemExtraInfoStyleSheet(this, menu.Style.Styles["menu-item"] as MenuPresentationModel.MenuStyles.MenuItemStyle);
             Dictionary<object, object> mappedObject = new Dictionary<object, object>();
             _MenuCanvasItems = new List<IMenuCanvasItem>();
             if (!string.IsNullOrWhiteSpace(OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menu).StorageMetaData.Culture))
@@ -67,6 +71,8 @@ namespace MenuPresentationModel.JsonMenuPresentation
             {
                 using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(languageEntry.Key), false))
                 {
+
+
                     List<IMenuPageCanvas> pages = (languageEntry.Value as System.Collections.IList).OfType<IMenuPageCanvas>().ToList();
                     List<IMenuPageCanvas> jsonPages = new List<IMenuPageCanvas>();
 
@@ -109,6 +115,8 @@ namespace MenuPresentationModel.JsonMenuPresentation
         /// <MetaDataID>{76d231f2-08d2-441e-aa09-3314e26a4010}</MetaDataID>
         public List<MenuModel.IMealType> MealTypes { get; set; }
 
+       
+
         /// <MetaDataID>{84b040cb-32c2-4079-b6d1-c238395a1960}</MetaDataID>
         public List<FontData> MenuFonts { get; set; } = new List<FontData>();
         /// <MetaDataID>{440178af-19d4-422f-ae64-ccaf8a162d92}</MetaDataID>
@@ -150,6 +158,7 @@ namespace MenuPresentationModel.JsonMenuPresentation
 
         /// <MetaDataID>{fca0ece9-69a2-4660-8620-d5499bc3cade}</MetaDataID>
         public IPageImage OrderPadBackground { get; set; }
+        /// <MetaDataID>{e696c9bc-10b5-450d-946a-b7b2e7b7f258}</MetaDataID>
         public Margin OrderPadBackgroundMargin { get; set; }
         /// <MetaDataID>{0d2c5d81-e777-4735-9867-7f57d437a0e5}</MetaDataID>
         public ImageStretch OrderPadBackgroundStretch { get; set; }
@@ -274,7 +283,11 @@ namespace MenuPresentationModel.JsonMenuPresentation
             }
         }
 
+        /// <MetaDataID>{58d46375-02ce-464d-bd4b-3979ee3825d2}</MetaDataID>
         public IStyleSheet Style { get; set; }
+
+        /// <MetaDataID>{6ebc7bf5-f0b2-46f2-8a28-1c926b72be1b}</MetaDataID>
+        public IItemExtraInfoStyleSheet ItemExtraInfoStyleSheet { get; set; }
 
         /// <MetaDataID>{da319689-b8dc-4c45-bd80-a935edeb05af}</MetaDataID>
         public void AddPage(IMenuPageCanvas page)
@@ -302,6 +315,11 @@ namespace MenuPresentationModel.JsonMenuPresentation
                         select menuCanvasItem).ToList();
 
             return this.MenuCanvasItems.OfType<IMenuCanvasFoodItem>().Where(x => (x.MenuItem as MenuFoodItem)?.Uri == menuItemUri).FirstOrDefault();
+        }
+
+        public void GetItemExtraInfoStylingData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

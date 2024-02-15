@@ -27,16 +27,33 @@ namespace MenuItemsEditor.Views
         }
 
         WebBrowserOverlay ItemInfoStyleWebBrowser;
-
+        
         private void StyleSheetItemInfo_Loaded(object sender, RoutedEventArgs e)
         {
+     
             this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
             {
                 ItemInfoStyleWebBrowser = new WebBrowserOverlay(ItemInfoStyleWebBrowserHost, BrowserType.Chrome, true);
                 ItemInfoStyleWebBrowser.Navigate("http://localhost:4300/#/EditItemExtraInfo");
+
+                ItemInfoStyleWebBrowser.Navigated += ItemInfoStyleWebBrowser_Navigated;
+                //ItemInfoStyleWebBrowser.Navigate("https://www.w3docs.com/tools/editor/8652");
             }));
 
         }
 
+        private async void ItemInfoStyleWebBrowser_Navigated(object sender, NavigatedEventArgs e)
+        {
+           await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(2000);
+
+            });
+
+            WaitCursorview.Visibility = Visibility.Collapsed;
+            WaitCursorBk.Visibility = Visibility.Collapsed;
+
+            //  Cursor = OrgCursor;
+        }
     }
 }

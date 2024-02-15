@@ -41,13 +41,17 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4"))
+		    value      	"6"))
 	    quid       	"57B330EF0061"
 	    realized_interfaces 	(list realize_rel_list
 		(object Realize_Relationship
 		    quid       	"59EED48E01F2"
 		    supplier   	"Logical View::MenuPresentationModel::MenuCanvas::IRestaurantMenu"
-		    quidu      	"59EED42603D4"))
+		    quidu      	"59EED42603D4")
+		(object Realize_Relationship
+		    quid       	"65C70AA803A2"
+		    supplier   	"Logical View::OOAdvantech::PersistenceLayer::IObjectStateEventsConsumer"
+		    quidu      	"53F489FD0166"))
 	    operations 	(list Operations
 		(object Operation "AddPage"
 		    attributes 	(list Attribute_Set
@@ -241,11 +245,11 @@
 		    quid       	"59EEDE4600C7"
 		    parameters 	(list Parameters
 			(object Parameter "newPos"
-			    quid       	"59EEDE460105"
+			    quid       	"65C70AAC02AD"
 			    type       	"int")
 			(object Parameter "page"
-			    quid       	"59EEDE460153"
-			    type       	"MenuPresentationModel.MenuPage"))
+			    quid       	"65C70AAC02F3"
+			    type       	"MenuPresentationModel.MenuCanvas.IMenuPageCanvas"))
 		    result     	"void"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -304,6 +308,124 @@
 			    quid       	"5E4E39D00002"
 			    type       	"FoodItemsHeading"
 			    quidu      	"59247FAC0358"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "PublishMenu"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8b7c0f36-b4f4-4311-beb2-ec2dec9125fe}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAB02E8"))
+		    quid       	"65C70AAB02E8"
+		    parameters 	(list Parameters
+			(object Parameter "serverStorageFolder"
+			    quid       	"65C70AAB031F"
+			    type       	"string")
+			(object Parameter "menuResourcesPrefix"
+			    quid       	"65C70AAB0380"
+			    type       	"string")
+			(object Parameter "previousVersionServerStorageFolder"
+			    quid       	"65C70AAB03C3"
+			    type       	"string")
+			(object Parameter "fileManager"
+			    quid       	"65C70AAC0022"
+			    type       	"FlavourBusinessToolKit.IFileManager")
+			(object Parameter "menuName"
+			    quid       	"65C70AAC006E"
+			    type       	"string"))
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CheckMenuCanvasItemsIndexes"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{89d139e3-b25f-43ad-b3ae-1e0ddccade64}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAC0205"))
+		    quid       	"65C70AAC0205"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BeforeCommitObjectState"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7d6e57f7-565d-4c84-ade5-ee47eedcf14a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAC0382"))
+		    quid       	"65C70AAC0382"
+		    result     	"void"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "GetMenuCanvasFoodItem"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{4aa8d191-d05e-4835-a59a-bd56b25f7b55}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAD004E"))
+		    quid       	"65C70AAD004E"
+		    parameters 	(list Parameters
+			(object Parameter "menuItemUri"
+			    quid       	"65C74E13029C"
+			    type       	"string"))
+		    result     	"MenuPresentationModel.MenuCanvas.IMenuCanvasFoodItem"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsLandscape"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7b52ff92-c72e-4af4-b442-b411796f73dd}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAD010E"))
+		    quid       	"65C70AAD010E"
+		    parameters 	(list Parameters
+			(object Parameter "graphicMenu"
+			    quid       	"65C70AAD013A"
+			    type       	"FlavourBusinessFacade.OrganizationStorageRef"))
+		    result     	"bool"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "IsPortrait"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c40451a6-e3ae-4e91-8999-bda8d857ab9a}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAD019B"))
+		    quid       	"65C70AAD019B"
+		    parameters 	(list Parameters
+			(object Parameter "graphicMenu"
+			    quid       	"65C70AAD01C5"
+			    type       	"FlavourBusinessFacade.OrganizationStorageRef"))
+		    result     	"bool"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -419,6 +541,69 @@
 			    value      	FALSE))
 		    quid       	"59EEDF340161"
 		    type       	"MenuPresentationModel.MenuStyles.IStyleSheet"
+		    exportControl 	"Public")
+		(object ClassAttribute "Style"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{08ec045c-b5ee-42ba-b8fa-e64def45d02f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAD022E"))
+		    quid       	"65C70AAD022E"
+		    type       	"MenuPresentationModel.MenuStyles.IStyleSheet"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualPages"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{677a98ed-2d48-4c2b-bd57-9bb3808c9e08}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C70AAD0297")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65C70AAD0297"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemExtraInfoStyleSheet"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f554f52c-d76b-4fe2-b8de-fafa7eb081ee}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C74E1303CA")
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"65C74E1303CA"
+		    type       	"MenuPresentationModel.IItemExtraInfoStyleSheet"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 	    quidu      	"57ACBFCE02D6"
@@ -1628,6 +1813,324 @@
 	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 	    quidu      	"57ACBFCE02D6"
 	    language   	"C#")
+	(object Class "ItemExtraInfoStyleSheet"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{9e1dd6ca-1019-4f6d-8da5-413944f09a64}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityIDTransfered"
+		    value      	"True")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"BackwardCompatibilityID"
+		    value      	"")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"4")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{9e1dd6ca-1019-4f6d-8da5-413944f09a64}"))
+	    quid       	"65C64B810311"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"65C676F70214"
+		    supplier   	"Logical View::MenuPresentationModel::IItemExtraInfoStyleSheet"
+		    quidu      	"65C671F20337"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "HeadingFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{89c6a493-f3d9-471a-9465-d9599b1ab631}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C670C600FF")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"65C670C600FF"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "ParagraphFirstLetterFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9055d43d-2368-493a-b4f3-d4ff8ceccb61}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C670C60159")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"65C670C60159"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "ParagraphFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f20e80a7-2fee-459e-a5fa-a0fd35daf5f2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C671C3029D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"65C671C3029D"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
+	    quidu      	"57ACBFCE02D6"
+	    language   	"C#"
+	    persistence 	"Persistent")
+	(object Class "IItemExtraInfoStyleSheet"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Generate Backward ID"
+		    value      	TRUE)
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"{9b36a7a9-8d83-4ecd-8bf7-4715b01af545}")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"{9b36a7a9-8d83-4ecd-8bf7-4715b01af545}")
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"LastMemberID"
+		    value      	"4"))
+	    quid       	"65C671F20337"
+	    stereotype 	"Interface"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "HeadingFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9d6a87bf-84d8-4f83-9e8f-1d807f6b626f}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6723B0143")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+1"))
+		    quid       	"65C6723B0143"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "ParagraphFirstLetterFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7f227e0d-fce9-473c-a5ad-37c85936a8ff}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6723B0148")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+2"))
+		    quid       	"65C6723B0148"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "ParagraphFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{8fc8209a-2e27-4b55-8dda-82afdb105a29}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6723B014D")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"65C6723B014D"
+		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualHeadingFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c6ce4167-58d2-4a1f-adf8-89819a7c4f54}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6FFA30301")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65C6FFA30301"
+		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualParagraphFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f218c9e6-d88b-4858-af2e-dbae1a1e2f6d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6FFA30342")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65C6FFA30342"
+		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualParagraphFirstLetterFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{c42b2fcd-9edf-4129-8fc5-0e14d4a374d7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6FFA30382")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65C6FFA30382"
+		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    exportControl 	"Public"))
+	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
+	    quidu      	"57ACBFCE02D6"
+	    language   	"C#")
 	(object Association "PagePresentationItem"
 	    attributes 	(list Attribute_Set
 		(object Attribute
@@ -2230,7 +2733,7 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"ContainerClass"
-			    value      	(value Text "IList<FoodItemsHeading>"))
+			    value      	(value Text "System.Collections.Generic.IList<MenuPresentationModel.MenuCanvas.FoodItemsHeading>"))
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"UniqueID"
@@ -2254,7 +2757,11 @@
 			(object Attribute
 			    tool       	"Persistent"
 			    name       	"Cascade Delete"
-			    value      	TRUE))
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"5E4E3810033F"
 		    label      	"AvailableHeadings"
 		    supplier   	"Logical View::MenuPresentationModel::MenuCanvas::FoodItemsHeading"
@@ -2270,10 +2777,68 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{8ec41c13-4331-4f84-8fff-716bb389f57f}"))
+			    value      	"{8ec41c13-4331-4f84-8fff-716bb389f57f}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"5E4E38100345"
 		    supplier   	"Logical View::MenuPresentationModel::RestaurantMenu"
 		    quidu      	"57B330EF0061"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "ItemsExtraInfoStyling"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"65C6FEAF0385")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"453b6e29-e018-42cb-a83a-abe8f38b83df"))
+	    quid       	"65C6FEAF0385"
+	    roles      	(list role_list
+		(object Role "ItemExtraInfoStyleSheet  "
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6FEB002E9")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5518f3ae-45e7-4603-bf0c-6dcfcbe00a4f}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65C6FEB002E9"
+		    label      	"ItemExtraInfoStyleSheet  "
+		    supplier   	"Logical View::MenuPresentationModel::IItemExtraInfoStyleSheet"
+		    quidu      	"65C671F20337"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$5"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65C6FEB002F1")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bdca9157-b6f3-4e1b-8ed4-a67c3786cee8}"))
+		    quid       	"65C6FEB002F1"
+		    supplier   	"Logical View::MenuPresentationModel::MenuCanvas::IRestaurantMenu"
+		    quidu      	"59EED42603D4"
 		    client_cardinality 	(value cardinality "1"))))
 	(object Class_Category "MenuCanvas"
 	    attributes 	(list Attribute_Set
@@ -12281,6 +12846,25 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetMenuCanvasFoodItem"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{470ea473-dc65-4fdc-b476-301078c94a8d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C64CAF02D4"))
+			    quid       	"65C64CAF02D4"
+			    parameters 	(list Parameters
+				(object Parameter "menuItemUri"
+				    quid       	"65C64CAF0316"
+				    type       	"string"))
+			    result     	"MenuPresentationModel.MenuCanvas.IMenuCanvasFoodItem"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Name"
@@ -12311,6 +12895,27 @@
 				    value      	"+1"))
 			    quid       	"59EED4DC0236"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MultilingualPages"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{713feaf3-7061-4219-8bd9-d06722ae872f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C64CB0002A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"65C64CB0002A"
+			    type       	"OOAdvantech.OOAdvantech.Multilingual"
 			    exportControl 	"Public"))
 		    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 		    quidu      	"57ACBFCE02D6"
@@ -12672,7 +13277,7 @@
 			    quidu      	"5935AF0702B0"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$5"
+			(object Role "$UNNAMED$6"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13042,7 +13647,7 @@
 			    quidu      	"5721EC2D00C7"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$6"
+			(object Role "$UNNAMED$7"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13203,7 +13808,7 @@
 			    quidu      	"5923B17A03C7"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$7"
+			(object Role "$UNNAMED$8"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13394,7 +13999,7 @@
 			    quidu      	"59461D390037"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$8"
+			(object Role "$UNNAMED$9"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13443,7 +14048,7 @@
 			    quidu      	"589B43920268"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$9"
+			(object Role "$UNNAMED$10"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13662,7 +14267,7 @@
 			    quidu      	"589B43920268"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$10"
+			(object Role "$UNNAMED$11"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13727,7 +14332,7 @@
 			    quidu      	"589AA4870331"
 			    client_cardinality 	(value cardinality "1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$11"
+			(object Role "$UNNAMED$12"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13777,7 +14382,11 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"59EED4560203"
 			    label      	"Menu"
 			    supplier   	"Logical View::MenuPresentationModel::MenuCanvas::IRestaurantMenu"
@@ -13869,7 +14478,7 @@
 			    quidu      	"5935AF0702B0"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$12"
+			(object Role "$UNNAMED$13"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13930,7 +14539,7 @@
 			    quidu      	"59C9DF74021E"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$13"
+			(object Role "$UNNAMED$14"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -13991,7 +14600,7 @@
 			    quidu      	"5935AF0702B0"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$14"
+			(object Role "$UNNAMED$15"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -14610,7 +15219,7 @@
 					pctDist    	0.960389
 					height     	39
 					orientation 	0))
-				(object RoleView "$UNNAMED$7" @22
+				(object RoleView "$UNNAMED$8" @22
 				    Parent_View 	@17
 				    location   	(1531, 162)
 				    stereotype 	TRUE
@@ -16184,7 +16793,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$13" @98
+				(object RoleView "$UNNAMED$14" @98
 				    Parent_View 	@93
 				    location   	(-734, -14)
 				    stereotype 	TRUE
@@ -16332,7 +16941,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$12" @105
+				(object RoleView "$UNNAMED$13" @105
 				    Parent_View 	@100
 				    location   	(1415, 87)
 				    stereotype 	TRUE
@@ -16450,7 +17059,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$14" @111
+				(object RoleView "$UNNAMED$15" @111
 				    Parent_View 	@106
 				    location   	(2034, 24)
 				    stereotype 	TRUE
@@ -16794,7 +17403,7 @@
 					pctDist    	0.726415
 					height     	51
 					orientation 	1))
-				(object RoleView "$UNNAMED$5" @127
+				(object RoleView "$UNNAMED$6" @127
 				    Parent_View 	@122
 				    location   	(1286, 911)
 				    stereotype 	TRUE
@@ -18050,7 +18659,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$6" @190
+				(object RoleView "$UNNAMED$7" @190
 				    Parent_View 	@185
 				    location   	(-455, 284)
 				    stereotype 	TRUE
@@ -18397,7 +19006,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$8" @207
+				(object RoleView "$UNNAMED$9" @207
 				    Parent_View 	@202
 				    location   	(585, 10)
 				    stereotype 	TRUE
@@ -18520,7 +19129,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$9" @214
+				(object RoleView "$UNNAMED$10" @214
 				    Parent_View 	@209
 				    location   	(621, -207)
 				    stereotype 	TRUE
@@ -19413,7 +20022,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$10" @252
+				(object RoleView "$UNNAMED$11" @252
 				    Parent_View 	@247
 				    location   	(472, 463)
 				    stereotype 	TRUE
@@ -19780,7 +20389,7 @@
 					pctDist    	0.756250
 					height     	69
 					orientation 	1))
-				(object RoleView "$UNNAMED$11" @271
+				(object RoleView "$UNNAMED$12" @271
 				    Parent_View 	@266
 				    location   	(688, 497)
 				    stereotype 	TRUE
@@ -25290,6 +25899,22 @@
 			    quid       	"5942D12E0097"
 			    supplier   	"Logical View::MenuPresentationModel::MenuStyles::IStyleRule"
 			    quidu      	"59100BAE010D"))
+		    operations 	(list Operations
+			(object Operation "RestFont"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2ff558a4-e673-44cf-80fa-171d649ffd3b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C90FE10386"))
+			    quid       	"65C90FE10386"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "BeforeSpacing"
 			    attributes 	(list Attribute_Set
@@ -25389,7 +26014,7 @@
 				    name       	"GenerateSetOperation"
 				    value      	TRUE))
 			    quid       	"5942D1410264"
-			    type       	"MenuPresentationModel.MenuStyles.FontData"
+			    type       	"UIBaseEx.FontData"
 			    exportControl 	"Public")
 			(object ClassAttribute "Indent"
 			    attributes 	(list Attribute_Set
@@ -25439,7 +26064,7 @@
 				    name       	"GenerateSetOperation"
 				    value      	TRUE))
 			    quid       	"59436123014C"
-			    type       	"MenuPresentationModel.MenuStyles.FontData"
+			    type       	"UIBaseEx.FontData"
 			    exportControl 	"Public")
 			(object ClassAttribute "ExtrasFont"
 			    attributes 	(list Attribute_Set
@@ -25464,7 +26089,7 @@
 				    name       	"GenerateSetOperation"
 				    value      	TRUE))
 			    quid       	"5943615C0202"
-			    type       	"MenuPresentationModel.MenuStyles.FontData"
+			    type       	"UIBaseEx.FontData"
 			    exportControl 	"Public")
 			(object ClassAttribute "NewLineForDescription"
 			    attributes 	(list Attribute_Set
@@ -25522,8 +26147,7 @@
 				    name       	"Identity"
 				    value      	"+1"))
 			    quid       	"65B40832002E"
-			    type       	"FontData"
-			    quidu      	"590EB6FE022A"
+			    type       	"UIBaseEx.FontData"
 			    exportControl 	"Public")
 			(object ClassAttribute "ItemInfoParagraphFont"
 			    attributes 	(list Attribute_Set
@@ -25556,8 +26180,182 @@
 				    name       	"Identity"
 				    value      	"+2"))
 			    quid       	"65B408320033"
-			    type       	"FontData"
-			    quidu      	"590EB6FE022A"
+			    type       	"UIBaseEx.FontData"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoParagraphFirstLetterFont"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{cfcb02a4-933a-4853-9b63-7c28209cacd5}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C90FE202E9")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65C90FE202E9"
+			    type       	"System.Nullable<UIBaseEx.FontData>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLeftIndent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7ed9b957-be23-495b-97cb-c956f15e7ce7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C90FE3007C")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65C90FE3007C"
+			    type       	"System.Nullable<int>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLinesSpan"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{13988420-ed46-4633-a45d-c53668cb0635}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C90FE30134")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65C90FE30134"
+			    type       	"int?"
+			    exportControl 	"Public")
+			(object ClassAttribute "NewLineForDescription"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2d6618c8-bcbf-48b7-9ea5-4b7f7cb5ab5e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C90FE30222")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65C90FE30222"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLeftIndent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{003de667-6bd7-4c63-901a-74cced8d870a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65CD137301A1")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65CD137301A1"
+			    type       	"System.Nullable<int>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterRightIndent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7cf01a2b-a34f-4cc4-b511-8e8e618e942f}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65CD13730341")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65CD13730341"
+			    type       	"System.Nullable<int>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLinesSpan"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1aacd165-acb4-4234-ab08-37b3805e243e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65CD137303BA")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65CD137303BA"
+			    type       	"System.Nullable<int>"
 			    exportControl 	"Public"))
 		    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 		    quidu      	"57ACBFCE02D6"
@@ -25579,7 +26377,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"14")
+			    value      	"18")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -25759,6 +26557,21 @@
 				    name       	"UniqueID"
 				    value      	"596CAC7C00F9"))
 			    quid       	"596CAC7C00F9"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "UseDefaultValues"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{916cda78-1d63-4f53-b821-9f48f8de8139}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C9105100FD"))
+			    quid       	"65C9105100FD"
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -26175,6 +26988,151 @@
 				    value      	"+13"))
 			    quid       	"65B40A4B005A"
 			    type       	"MenuPresentationModel.MenuStyles.FontData"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsDerivedStyle"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{71385d06-95f4-41fa-ae08-cf247af393e2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C91051012F"))
+			    quid       	"65C91051012F"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoParagraphFirstLetterFont"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{acf2b8d0-74c9-4fd5-b7e3-78de06bcd295}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C9105101D3")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+14"))
+			    quid       	"65C9105101D3"
+			    type       	"FontData?"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLeftIndent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7e9038af-14c2-44ce-aa5a-58e40f94e5ce}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C9105101FD")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+15"))
+			    quid       	"65C9105101FD"
+			    type       	"int?"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterLinesSpan"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{73e69a58-59c2-418f-a0a0-f2a2d92da7e2}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65C910510223")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+16"))
+			    quid       	"65C910510223"
+			    type       	"System.Nullable<int>"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemInfoFirstLetterRightIndent"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d92a9ff7-0db3-42a8-8edd-3a7071fd0133}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65CD138200BC")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+17"))
+			    quid       	"65CD138200BC"
+			    type       	"System.Nullable<int>"
 			    exportControl 	"Public"))
 		    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 		    quidu      	"57ACBFCE02D6"
@@ -29896,7 +30854,7 @@
 			    quidu      	"5935AF0702B0"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$15"
+			(object Role "$UNNAMED$16"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -29961,7 +30919,7 @@
 			    quidu      	"593F5FF2013C"
 			    client_cardinality 	(value cardinality "0..*")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$16"
+			(object Role "$UNNAMED$17"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -30030,7 +30988,7 @@
 			    quidu      	"599D71710098"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$17"
+			(object Role "$UNNAMED$18"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -30099,7 +31057,7 @@
 			    quidu      	"599D71710098"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$18"
+			(object Role "$UNNAMED$19"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -30164,7 +31122,7 @@
 			    quidu      	"599D71710098"
 			    client_cardinality 	(value cardinality "0..1")
 			    is_navigable 	TRUE)
-			(object Role "$UNNAMED$19"
+			(object Role "$UNNAMED$20"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -30193,7 +31151,7 @@
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
-		    origin_y   	13
+		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::MenuPresentationModel::MenuStyles::FontData" @292
 			    ShowCompartmentStereotypes 	TRUE
@@ -30261,6 +31219,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"59113C3502AC"
+			    compartment 	(object Compartment
+				Parent_View 	@293
+				location   	(47, 1626)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	17
+				max_width  	1946)
 			    width      	500
 			    height     	394
 			    annotation 	8)
@@ -30322,6 +31298,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"59100BAE010D"
+			    compartment 	(object Compartment
+				Parent_View 	@295
+				location   	(2500, 1229)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	303)
 			    width      	469
 			    height     	394
 			    annotation 	8)
@@ -30353,6 +31347,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5910BEB602AA"
+			    compartment 	(object Compartment
+				Parent_View 	@296
+				location   	(40, 1083)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	528)
 			    width      	494
 			    height     	456
 			    annotation 	8)
@@ -30568,6 +31580,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FBD5A022C"
+			    compartment 	(object Compartment
+				Parent_View 	@306
+				location   	(34, 2236)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	628)
 			    width      	494
 			    height     	281
 			    annotation 	8)
@@ -30607,6 +31637,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FC11802B8"
+			    compartment 	(object Compartment
+				Parent_View 	@307
+				location   	(68, 2646)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	5
+				max_width  	468)
 			    width      	482
 			    height     	375
 			    annotation 	8)
@@ -30637,6 +31685,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FC3410108"
+			    compartment 	(object Compartment
+				Parent_View 	@308
+				location   	(3127, 2407)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	27
+				max_width  	1806)
 			    width      	488
 			    height     	244
 			    annotation 	8)
@@ -30929,7 +31995,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$15" @323
+				(object RoleView "$UNNAMED$16" @323
 				    Parent_View 	@318
 				    location   	(2238, 107)
 				    stereotype 	TRUE
@@ -31043,7 +32109,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "$UNNAMED$16" @329
+				(object RoleView "$UNNAMED$17" @329
 				    Parent_View 	@324
 				    location   	(2678, 97)
 				    stereotype 	TRUE
@@ -31082,6 +32148,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5942D0F2031F"
+			    compartment 	(object Compartment
+				Parent_View 	@330
+				location   	(2284, 1976)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	19
+				max_width  	1393)
 			    width      	525
 			    height     	288
 			    annotation 	8)
@@ -31122,6 +32206,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5942D1B80278"
+			    compartment 	(object Compartment
+				Parent_View 	@332
+				location   	(2265, 2363)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	30
+				max_width  	2700)
 			    width      	488
 			    height     	188
 			    annotation 	8)
@@ -31161,6 +32263,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5947AF24032C"
+			    compartment 	(object Compartment
+				Parent_View 	@334
+				location   	(1822, 2354)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	30
+				max_width  	1215)
 			    width      	400
 			    height     	169
 			    annotation 	8)
@@ -31392,6 +32512,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591F141503DC"
+			    compartment 	(object Compartment
+				Parent_View 	@345
+				location   	(3081, 1951)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	13
+				max_width  	1912)
 			    width      	531
 			    height     	319
 			    annotation 	8)
@@ -31555,7 +32693,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$17" @355
+				(object RoleView "$UNNAMED$18" @355
 				    Parent_View 	@350
 				    location   	(1704, 421)
 				    stereotype 	TRUE
@@ -31673,7 +32811,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$18" @361
+				(object RoleView "$UNNAMED$19" @361
 				    Parent_View 	@356
 				    location   	(191, 278)
 				    stereotype 	TRUE
@@ -31824,7 +32962,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$19" @368
+				(object RoleView "$UNNAMED$20" @368
 				    Parent_View 	@363
 				    location   	(276, 694)
 				    stereotype 	TRUE
@@ -31914,6 +33052,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"65B33E190163"
+			    compartment 	(object Compartment
+				Parent_View 	@372
+				location   	(706, 1973)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Decoration"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	3
+				max_width  	528)
 			    width      	444
 			    height     	232
 			    annotation 	8)
@@ -31971,7 +33127,7 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	1520
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "ClassUtility" "Logical View::MenuPresentationModel::PageContentType" @376
@@ -32182,7 +33338,7 @@
 		    SuppressOperation 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(4251, 456)
+		    location   	(4488, 418)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32195,7 +33351,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@385
-			location   	(4070, 427)
+			location   	(4307, 389)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	363
@@ -32203,7 +33359,7 @@
 			label      	"Alignment")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@385
-			location   	(4070, 377)
+			location   	(4307, 339)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -32218,7 +33374,7 @@
 		    height     	182
 		    annotation 	8)
 		(object CategoryView "Logical View::MenuPresentationModel::MenuStyles" @386
-		    location   	(4232, 969)
+		    location   	(4349, 944)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32231,7 +33387,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@386
-			location   	(3895, 878)
+			location   	(4012, 853)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	674
@@ -32658,7 +33814,7 @@
 				height     	49
 				orientation 	1))))
 		(object CategoryView "Logical View::MenuPresentationModel::MenuCanvas" @407
-		    location   	(4246, 1319)
+		    location   	(4363, 1294)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32671,7 +33827,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@407
-			location   	(3896, 1203)
+			location   	(4013, 1178)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	700
@@ -32685,7 +33841,7 @@
 		    height     	244)
 		(object ClassView "Class" "Logical View::MenuPresentationModel::MenuCanvas::FoodItemsHeading" @408
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3135, 1644)
+		    location   	(3197, 2049)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32698,7 +33854,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@408
-			location   	(2853, 1538)
+			location   	(2915, 1943)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	564
@@ -32713,7 +33869,7 @@
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::MenuPresentationModel::RestaurantMenu" @409
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(2400, 1004)
+		    location   	(2462, 1409)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32726,7 +33882,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@409
-			location   	(2143, 923)
+			location   	(2205, 1328)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	514
@@ -32738,7 +33894,7 @@
 		    quidu      	"57B330EF0061"
 		    compartment 	(object Compartment
 			Parent_View 	@409
-			location   	(2143, 984)
+			location   	(2205, 1389)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -32753,7 +33909,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	456
+			max_width  	434
 			compartmentItems 	(list Compartment
 			    "+ Name : System.string"))
 		    width      	532
@@ -32761,7 +33917,7 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "MenuAvailableHeadings" @410
-		    location   	(2752, 1311)
+		    location   	(2814, 1716)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32774,7 +33930,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @411
 			Parent_View 	@410
-			location   	(2752, 1252)
+			location   	(2814, 1657)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -32800,7 +33956,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "AvailableHeadings" @412
 			    Parent_View 	@410
-			    location   	(352, 307)
+			    location   	(414, 712)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -32813,7 +33969,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @413
 				Parent_View 	@412
-				location   	(3149, 1417)
+				location   	(3211, 1822)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -32841,7 +33997,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @414
 				Parent_View 	@412
-				location   	(3008, 1463)
+				location   	(3070, 1868)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -32863,7 +34019,7 @@
 				orientation 	0))
 			(object RoleView "$UNNAMED$4" @415
 			    Parent_View 	@410
-			    location   	(352, 307)
+			    location   	(414, 712)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -32882,7 +34038,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @416
 				Parent_View 	@415
-				location   	(2566, 1079)
+				location   	(2628, 1484)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -32902,9 +34058,11 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))))
-		(object ClassView "Class" "Logical View::MenuPresentationModel::MenuStyles::IStyleSheet" @417
+		(object ClassView "Class" "Logical View::MenuPresentationModel::ItemExtraInfoStyleSheet" @417
 		    ShowCompartmentStereotypes 	TRUE
-		    location   	(3550, 459)
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3276, 1343)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32917,7 +34075,35 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@417
-			location   	(3244, 403)
+			location   	(2982, 1258)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	588
+			justify    	0
+			label      	"ItemExtraInfoStyleSheet")
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65C64B810311"
+		    width      	606
+		    height     	194
+		    annotation 	8)
+		(object ClassView "Class" "Logical View::MenuPresentationModel::MenuStyles::IStyleSheet" @418
+		    ShowCompartmentStereotypes 	TRUE
+		    location   	(3905, 309)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@418
+			location   	(3599, 253)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	613
@@ -32931,10 +34117,11 @@
 		    width      	631
 		    height     	312
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::MenuPresentationModel::MenuCanvas::IRestaurantMenu" @418
+		(object ClassView "Class" "Logical View::MenuPresentationModel::IItemExtraInfoStyleSheet" @419
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
-		    location   	(2416, 334)
+		    IncludeOperation 	TRUE
+		    location   	(3264, 756)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32946,8 +34133,45 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@418
-			location   	(2135, 250)
+			Parent_View 	@419
+			location   	(2973, 740)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	582
+			justify    	0
+			label      	"IItemExtraInfoStyleSheet")
+		    icon       	"Interface"
+		    icon_style 	"Decoration"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65C671F20337"
+		    width      	600
+		    height     	232
+		    annotation 	8)
+		(object RealizeView "" @420
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65C676F70214"
+		    client     	@417
+		    supplier   	@419
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::MenuPresentationModel::MenuCanvas::IRestaurantMenu" @421
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    location   	(2415, 343)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@421
+			location   	(2134, 259)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	563
@@ -32961,15 +34185,15 @@
 		    width      	581
 		    height     	369
 		    annotation 	8)
-		(object RealizeView "" @419
+		(object RealizeView "" @422
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"59EED48E01F2"
 		    client     	@409
-		    supplier   	@418
+		    supplier   	@421
 		    line_style 	0)
-		(object AssociationViewNew "MenuStyle" @420
-		    location   	(2970, 375)
+		(object AssociationViewNew "MenuStyle" @423
+		    location   	(3147, 341)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -32980,9 +34204,9 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @421
-			Parent_View 	@420
-			location   	(2966, 285)
+		    label      	(object SegLabel @424
+			Parent_View 	@423
+			location   	(3143, 251)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -33006,9 +34230,9 @@
 		    line_color 	3342489
 		    quidu      	"596C379203B7"
 		    roleview_list 	(list RoleViews
-			(object RoleView "Style" @422
-			    Parent_View 	@420
-			    location   	(551, 0)
+			(object RoleView "Style" @425
+			    Parent_View 	@423
+			    location   	(728, -34)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -33019,9 +34243,9 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @423
-				Parent_View 	@422
-				location   	(3182, 334)
+			    label      	(object SegLabel @426
+				Parent_View 	@425
+				location   	(3500, 300)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -33044,14 +34268,14 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"596C37940165"
-			    client     	@420
-			    supplier   	@417
+			    client     	@423
+			    supplier   	@418
 			    line_style 	3
-			    origin_attachment 	(2970, 375)
-			    terminal_attachment 	(3235, 375)
-			    label      	(object SegLabel @424
-				Parent_View 	@422
-				location   	(3178, 432)
+			    origin_attachment 	(3147, 341)
+			    terminal_attachment 	(3590, 341)
+			    label      	(object SegLabel @427
+				Parent_View 	@425
+				location   	(3493, 398)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -33071,14 +34295,156 @@
 				pctDist    	0.784038
 				height     	57
 				orientation 	1))
-			(object RoleView "$UNNAMED$3" @425
-			    Parent_View 	@420
-			    location   	(551, 0)
+			(object RoleView "$UNNAMED$3" @428
+			    Parent_View 	@423
+			    location   	(728, -34)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"596C3794016C"
-			    client     	@420
-			    supplier   	@418
+			    client     	@423
+			    supplier   	@421
 			    line_style 	3
-			    origin_attachment 	(2970, 375)
-			    terminal_attachment 	(2706, 375))))))))
+			    origin_attachment 	(3147, 341)
+			    terminal_attachment 	(2705, 341))))
+		(object AssociationViewNew "ItemsExtraInfoStyling" @429
+		    location   	(2865, 561)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @430
+			Parent_View 	@429
+			location   	(2865, 502)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	389
+			justify    	0
+			label      	"ItemsExtraInfoStyling"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65C6FEAF0385"
+		    roleview_list 	(list RoleViews
+			(object RoleView "ItemExtraInfoStyleSheet  " @431
+			    Parent_View 	@429
+			    location   	(449, 218)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @432
+				Parent_View 	@431
+				location   	(2976, 661)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	487
+				justify    	0
+				label      	"+ItemExtraInfoStyleSheet  "
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"65C6FEB002E9"
+			    client     	@429
+			    supplier   	@419
+			    line_style 	0
+			    label      	(object SegLabel @433
+				Parent_View 	@431
+				location   	(3034, 583)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "$UNNAMED$5" @434
+			    Parent_View 	@429
+			    location   	(449, 218)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"65C6FEB002F1"
+			    client     	@429
+			    supplier   	@421
+			    line_style 	0
+			    label      	(object SegLabel @435
+				Parent_View 	@434
+				location   	(2698, 540)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))))))

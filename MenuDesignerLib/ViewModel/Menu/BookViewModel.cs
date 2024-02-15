@@ -24,6 +24,8 @@ using FlavourBusinessFacade;
 using System.Net.Http;
 using MenuItemsEditor.Views;
 using MenuItemsEditor.ViewModel;
+using MenuPresentationModel.MenuStyles;
+using OOAdvantech.Remoting;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -1828,19 +1830,19 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         }
 
 
-        /// <exclude>Excluded</exclude>
-        MenuCommand _ItemFontsMenu;
-        public MenuCommand ItemFontsMenu
-        {
-            get
-            {
-                var header = FontsMenu.Header;//force to load  FontsMenu and ItemFontsMenu;
-                return _ItemFontsMenu;
+        ///// <exclude>Excluded</exclude>
+        //MenuCommand _ItemFontsMenu;
+        //public MenuCommand ItemFontsMenu
+        //{
+        //    get
+        //    {
+        //        var header = FontsMenu.Header;//force to load  FontsMenu and ItemFontsMenu;
+        //        return _ItemFontsMenu;
 
-            }
-        }
+        //    }
+        //}
         /// <exclude>Excluded</exclude>
-        MenuCommand _DesignItemInfoViewMenu;
+        //MenuCommand _DesignItemInfoViewMenu;
         //public MenuCommand DesignItemInfoViewMenu
         //{
         //    get
@@ -1872,8 +1874,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
                     FoodItemInfoHeadingFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoHeadingFonts(); });
                     FoodItemInfoParagraphFontsCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoParagraphFonts(); });
-
                     FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); });
+
 
                     _FontsMenu = new WPFUIElementObjectBind.MenuCommand()
                     {
@@ -1930,6 +1932,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                             {
                                 Header=Properties.Resources.ParagraphFontsMenuItemHeader,
                                 Command = FoodItemInfoParagraphFontsCommand,
+                            },
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.DesignIteminfoVieMenuItemHeader,
+                                Command = FoodItemInfoViewDesignCommand,
                             }
                         }
 
@@ -1937,41 +1944,42 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     };
 
 
-                    _ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
-                    {
-                        Header = Properties.Resources.FontsMenuItemHeader,
-                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
-                        {
-                             new MenuCommand()
-                            {
-                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
-                                Command = FoodItemInfoHeadingFontsCommand,
-                            },
-                            new MenuCommand()
-                            {
-                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
-                                Command = FoodItemInfoParagraphFontsCommand,
-                            }
-                        }
+                    //_ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
+                    //{
+                    //    Header = Properties.Resources.FontsMenuItemHeader,
+                    //    SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                    //    {
+                    //         new MenuCommand()
+                    //        {
+                    //            Header=Properties.Resources.HeadingFontsMenuItemHeader,
+                    //            Command = FoodItemInfoHeadingFontsCommand,
+                    //        },
+                    //        new MenuCommand()
+                    //        {
+                    //            Header=Properties.Resources.ParagraphFontsMenuItemHeader,
+                    //            Command = FoodItemInfoParagraphFontsCommand,
+                    //        }
+                    //    }
 
 
-                    };
+                    //};
 
-                    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
-                    {
-                        Header = Properties.Resources.DesignMenuTitle,
-                        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
-                        {
-                             new MenuCommand()
-                            {
-                                Header=Properties.Resources.DesignItem_infoVieMenuItemHeader,
-                                Command = FoodItemInfoViewDesignCommand
-                            },
-                           
-                        }
+                    //_DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+                    //{
+                    //    Header = Properties.Resources.DesignMenuTitle,
+                    //    SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                    //    {
+                    //         new MenuCommand()
+                    //        {
+                    //            Header=Properties.Resources.DesignIteminfoVieMenuItemHeader,
+                    //            Command = FoodItemInfoViewDesignCommand
+                    //        },
+
+                    //    }
 
 
-                    };
+                    //};
+                
                 }
                 return _FontsMenu;
             }
@@ -2136,7 +2144,13 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         Window OwnerWin
         {
-            get => Window.GetWindow(ClickPseudoCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+
+            get
+            {
+                if (ClickPseudoCommand?.UserInterfaceObjectConnection?.ContainerControl != null)
+                    return Window.GetWindow(ClickPseudoCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+                return Application.Current.MainWindow;
+            }
         }
 
 
@@ -2246,39 +2260,68 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ItemInfoHeadingFont, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ItemInfoHeadingFont");
 
                 fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
-                fontDialog.Owner = fontDialog.Owner = Window.GetWindow(FoodItemInfoHeadingFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject); ;
+                fontDialog.Owner = OwnerWin;// fontDialog.Owner = Window.GetWindow(FoodItemInfoHeadingFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject); ;
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
             }
         }
         internal void FoodItemInfoViewDesign()
         {
-            //MenuPresentationModel.MenuStyles.StyleSheet styleSheet = MenuStylesheet;
+            MenuPresentationModel.MenuStyles.StyleSheet styleSheet = MenuStylesheet;
             //Window win = Window.GetWindow(FoodItemInfoViewDesignCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
-            //StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
-            //try
-            //{
-            //    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
-            //    StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel();
-            //    styleSheetItemInfo.Owner = win;
-            //    styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
-            //}
-            //finally
-            //{
-            //    Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
-            //}
-            //styleSheetItemInfo.ShowDialog();
+
+            Window win = OwnerWin;
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+            {
+                StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
+                try
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                    StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel(new MenuItemStylingViewModel(this));
+                    styleSheetItemInfo.Owner = win;
+                    styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+                }
+                styleSheetItemInfo.ShowDialog();
+
+                stateTransition.Consistent = true;
+            }
         }
         internal void FoodItemInfoParagraphFonts()
         {
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
             {
+
                 StyleableWindow.FontDialog fontDialog = new StyleableWindow.FontDialog();
                 var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
                 StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ItemInfoParagraphFont, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ItemInfoParagraphFont");
 
                 fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
-                fontDialog.Owner = Window.GetWindow(FoodItemInfoParagraphFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject); 
+                fontDialog.Owner = OwnerWin;
+                if (fontDialog.ShowDialog().Value)
+                    stateTransition.Consistent = true;
+            }
+        }
+        internal void FoodItemInfoParagraphFirstLetterFonts()
+        {
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiredNested))
+            {
+
+
+
+                StyleableWindow.FontDialog fontDialog = new StyleableWindow.FontDialog();
+                var menuItemStyle = (EditStyleSheet.Styles["menu-item"] as MenuPresentationModel.MenuStyles.IMenuItemStyle);
+
+                if (menuItemStyle.ItemInfoParagraphFirstLetterFont == null)
+                    menuItemStyle.ItemInfoParagraphFirstLetterFont = menuItemStyle.ItemInfoParagraphFont;
+
+                StyleFontUpdater styleFontUpdater = new StyleFontUpdater(menuItemStyle, new StyleableWindow.FontPresantation() { Font = menuItemStyle.ItemInfoParagraphFirstLetterFont.Value, TitlebarText = Properties.Resources.FoodItemExtrasMenuItemHeader + " Fonts" }, "ItemInfoParagraphFirstLetterFont");
+
+                fontDialog.GetObjectContext().SetContextInstance(styleFontUpdater.FontPresentation);
+                fontDialog.Owner = OwnerWin;// Window.GetWindow(FoodItemInfoParagraphFontsCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
                 if (fontDialog.ShowDialog().Value)
                     stateTransition.Consistent = true;
             }
@@ -2444,5 +2487,38 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         }
 
+    }
+
+
+    class MenuItemStylingViewModel:ExtMarshalByRefObject, IMenuStyleSheet
+    {
+        BookViewModel BookViewModel;
+
+        public string Name => BookViewModel.MenuName;
+
+        public Task<IStyleSheet> StyleSheet => Task < IStyleSheet >.FromResult(this.BookViewModel.MenuStylesheet as IStyleSheet);
+
+        public MenuItemStylingViewModel(BookViewModel bookViewModel) 
+        {
+            BookViewModel = bookViewModel;
+        }
+        public void ChangeItemInfoHeadingFont()
+        {
+            BookViewModel.FoodItemInfoHeadingFonts();
+        }
+
+        public void ChangeItemInfoParagraphFont()
+        {
+            BookViewModel.FoodItemInfoParagraphFonts();
+        }
+        public void ChangeItemInfoParagraphFirstLetterFont()
+        {
+            BookViewModel.FoodItemInfoParagraphFirstLetterFonts();
+        }
+
+        public void UpdateItemExtraInfoStyling()
+        {
+            BookViewModel.RestaurantMenu.GetItemExtraInfoStylingData();
+        }
     }
 }

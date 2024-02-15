@@ -5,11 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Finance.ViewModel;
 using FinanceFacade;
 using GenWebBrowser;
+using MenuItemsEditor.Views;
 using MenuModel;
 using Newtonsoft.Json;
 using OOAdvantech.PersistenceLayer;
@@ -51,31 +53,37 @@ namespace MenuItemsEditor.ViewModel
             }
         }
 
-        /// <exclude>Excluded</exclude>
+        ///// <exclude>Excluded</exclude>
         MenuCommand _FontsMenu;
         public MenuCommand FontsMenu
         {
             get
             {
-                if (_CurrentMenuStyleSheet != null)
-                    return _CurrentMenuStyleSheet.ItemFontsMenu;
+                return ItemFontsMenu;
+                //if (_CurrentMenuStyleSheet != null)
+                //    return _CurrentMenuStyleSheet.ItemFontsMenu;
 
-                return _FontsMenu;
+                //return _FontsMenu;
             }
         }
 
 
 
-        /// <exclude>Excluded</exclude>
+        ///// <exclude>Excluded</exclude>
         MenuCommand _DesignMenu;
         public MenuCommand DesignMenu
         {
             get
             {
-                if (_CurrentMenuStyleSheet != null)
-                    return _CurrentMenuStyleSheet.DesignItemInfoViewMenu;
 
-                return _FontsMenu;
+
+                return DesignItemInfoViewMenu;
+                //else
+                //{
+                //    if (_CurrentMenuStyleSheet != null)
+                //        return _CurrentMenuStyleSheet.DesignItemInfoViewMenu;
+                //}
+                //return _FontsMenu;
             }
         }
 
@@ -238,7 +246,83 @@ namespace MenuItemsEditor.ViewModel
 
             _MenuItem = menuItem as MenuModel.MenuItem;
 
+            HeadingFontChangeCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) =>
+            {
+                var editItemTransaction = RefreshWebItemViewCommand.UserInterfaceObjectConnection.Transaction;
+
+                string uiLocalTransactionUri = editItemTransaction.LocalTransactionUri;
+                string localTransactionUri = OOAdvantech.Transactions.Transaction.Current?.LocalTransactionUri;
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(editItemTransaction))
+                {
+                    CurrentMenuStyleSheet.ChangeItemInfoHeadingFont();
+                    stateTransition.Consistent = true;
+                }
+                
+            });
+
+            ParagraphFontChangeCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) =>
+            {
+                var editItemTransaction = RefreshWebItemViewCommand.UserInterfaceObjectConnection.Transaction;
+
+                string uiLocalTransactionUri = editItemTransaction.LocalTransactionUri;
+                string localTransactionUri = OOAdvantech.Transactions.Transaction.Current?.LocalTransactionUri;
+
+
+                using (SystemStateTransition suppresStateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(editItemTransaction))
+                    {
+                        CurrentMenuStyleSheet.ChangeItemInfoParagraphFont();
+                        stateTransition.Consistent = true;
+                    } 
+                    suppresStateTransition.Consistent = true;
+                }
+
+
+            });
+            ParagraphFirstLetterFontChangeCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) =>
+            {
+
+                var editItemTransaction = RefreshWebItemViewCommand.UserInterfaceObjectConnection.Transaction;
+
+                string uiLocalTransactionUri = editItemTransaction.LocalTransactionUri;
+                string localTransactionUri = OOAdvantech.Transactions.Transaction.Current?.LocalTransactionUri;
+
+
+
+                using (SystemStateTransition suppresStateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(editItemTransaction))
+                    {
+                        CurrentMenuStyleSheet.ChangeItemInfoParagraphFirstLetterFont();
+                        stateTransition.Consistent = true;
+                    }
+                    suppresStateTransition.Consistent = true;
+                }
+
+            });
+            FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) =>
+            {
+                var editItemTransaction = RefreshWebItemViewCommand.UserInterfaceObjectConnection.Transaction;
+
+                string uiLocalTransactionUri = editItemTransaction.LocalTransactionUri;
+                string localTransactionUri = OOAdvantech.Transactions.Transaction.Current?.LocalTransactionUri;
+
+
+                using (SystemStateTransition suppresStateTransition = new SystemStateTransition(TransactionOption.Suppress))
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(editItemTransaction))
+                    {
+                        FoodItemInfoViewDesign();
+                        stateTransition.Consistent = true;
+                    }
+                    suppresStateTransition.Consistent = true;
+                }
+            });
+
             var menu = (_MenuItem as MenuModel.MenuItem).Menu;
+
             EditSelectedOptionsTypeCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
 
@@ -501,7 +585,71 @@ namespace MenuItemsEditor.ViewModel
 
             }, (object sender) => CanEditTaxableType());
 
+
+            ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
+            {
+                Header = Properties.Resources.FontsMenuItemHeader,
+                SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                             new MenuCommand()
+                            {
+                                Header=Properties.Resources.HeadingFontsMenuItemHeader,
+                                Command = HeadingFontChangeCommand,
+                            },
+                            new MenuCommand()
+                            {
+                                Header=Properties.Resources.ParagraphFontsMenuItemHeader,
+                                Command = ParagraphFontChangeCommand,
+                            }
+                        }
+
+
+            };
+
+
+
+            DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+            {
+                Header = Properties.Resources.DesignMenuTitle,
+                SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+                        {
+                             new WPFUIElementObjectBind.MenuCommand()
+                            {
+                                Header=Properties.Resources.DesignIteminfoVieMenuItemHeader,
+                                Command = FoodItemInfoViewDesignCommand
+                            },
+
+                        }
+            };
+
+
+
+
+
+
         }
+
+        private void FoodItemInfoViewDesign()
+        {
+
+                Window win = Window.GetWindow(RefreshWebItemViewCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+                StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
+                try
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                    StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel(CurrentMenuStyleSheet);
+                    styleSheetItemInfo.Owner = win;
+                    styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+                }
+                styleSheetItemInfo.ShowDialog();
+           
+
+        }
+
         bool CanDeleteSelectedTaxableType()
         {
             if (SelectedTaxableType != null)
@@ -1132,6 +1280,15 @@ namespace MenuItemsEditor.ViewModel
 
         /// <MetaDataID>{9a34c0ee-7d2b-4d05-b0f4-41267e1b7ac0}</MetaDataID>
         public RelayCommand EditSelectedTaxableTypeCommand { get; protected set; }
+        public MenuCommand ItemFontsMenu { get; private set; }
+
+        public WPFUIElementObjectBind.MenuCommand DesignItemInfoViewMenu { get; private set; }
+
+        public WPFUIElementObjectBind.RoutedCommand HeadingFontChangeCommand { get; }
+        public WPFUIElementObjectBind.RoutedCommand ParagraphFontChangeCommand { get; private set; }
+        public WPFUIElementObjectBind.RoutedCommand ParagraphFirstLetterFontChangeCommand { get; private set; }
+        public WPFUIElementObjectBind.RoutedCommand FoodItemInfoViewDesignCommand { get; private set; }
+
         /// <MetaDataID>{50a25739-a329-4358-be0e-b61f130a8205}</MetaDataID>
         public RelayCommand DeleteSelectedTaxableTypeCommand { get; protected set; }
         /// <MetaDataID>{9174515a-3173-4590-a5c8-8f8b81afe4d5}</MetaDataID>

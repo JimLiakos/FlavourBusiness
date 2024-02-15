@@ -4,6 +4,7 @@ using MenuDesigner.ViewModel.MenuCanvas;
 using MenuItemsEditor.ViewModel;
 using MenuItemsEditor.Views;
 using MenuPresentationModel.MenuStyles;
+using OOAdvantech;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace MenuDesigner.ViewModel
                 SelectedMenu.Edit = true;
             }, (object sender) => SelectedMenu != null);
 
-            NewCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            NewCommand = new RelayCommand((object sender) =>
              {
                  NewGraphicMenu();
              });
@@ -97,7 +98,7 @@ namespace MenuDesigner.ViewModel
         }
 
         /// <MetaDataID>{d28f1907-2695-4e1b-acd8-e3b3ec362de7}</MetaDataID>
-        public WPFUIElementObjectBind.RelayCommand RenameSelectedMenuCommand { get; protected set; }
+        public RelayCommand RenameSelectedMenuCommand { get; protected set; }
 
         /// <MetaDataID>{59fddcec-708c-45ed-8ca9-61cdf415b3af}</MetaDataID>
         public WPFUIElementObjectBind.RelayCommand NewCommand { get; protected set; }
@@ -120,49 +121,49 @@ namespace MenuDesigner.ViewModel
             }
         }
         public readonly IResourceManager ResourceManager;
-        public WPFUIElementObjectBind.RoutedCommand FoodItemInfoViewDesignCommand { get; private set; }
+        //public WPFUIElementObjectBind.RoutedCommand FoodItemInfoViewDesignCommand { get; private set; }
         public GraphicMenuPresentation(OrganizationStorageRef organizationStorageRef, IResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
             _StorageRef = organizationStorageRef;
 
-            FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); });
+            //FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); },null,"FoodItemInfoViewDesignCommand");
 
-            _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
-            {
-                Header = Properties.Resources.DesignMenuTitle,
-                SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
-                        {
-                             new MenuCommand()
-                            {
-                                Header=Properties.Resources.DesignItem_infoVieMenuItemHeader,
-                                Command = FoodItemInfoViewDesignCommand
-                            },
+            //    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+            //    {
+            //        Header = Properties.Resources.DesignMenuTitle,
+            //        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
+            //                {
+            //                     new MenuCommand()
+            //                    {
+            //                        Header=Properties.Resources.DesignIteminfoVieMenuItemHeader,
+            //                        Command = FoodItemInfoViewDesignCommand
+            //                    },
 
-                        }
+            //                }
 
 
-            };
+            //    };
         }
 
-        internal void FoodItemInfoViewDesign()
-        {
-            MenuPresentationModel.MenuStyles.StyleSheet styleSheet =BookViewModel.MenuStylesheet;
-            Window win = Window.GetWindow(FoodItemInfoViewDesignCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
-            StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
-            try
-            {
-                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
-                StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel(this);
-                styleSheetItemInfo.Owner = win;
-                styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
-            }
-            finally
-            {
-                Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
-            }
-            styleSheetItemInfo.ShowDialog();
-        }
+        //internal void FoodItemInfoViewDesign()
+        //{
+        //    MenuPresentationModel.MenuStyles.StyleSheet styleSheet = BookViewModel.MenuStylesheet;
+        //    Window win = Window.GetWindow(FoodItemInfoViewDesignCommand.UserInterfaceObjectConnection.ContainerControl as DependencyObject);
+        //    StyleSheetItemInfo styleSheetItemInfo = new StyleSheetItemInfo();
+        //    try
+        //    {
+        //        Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+        //        StyleSheetItemInfoViewModel styleSheetItemInfoViewModel = new StyleSheetItemInfoViewModel(this);
+        //        styleSheetItemInfo.Owner = win;
+        //        styleSheetItemInfo.GetObjectContext().SetContextInstance(styleSheetItemInfoViewModel);
+        //    }
+        //    finally
+        //    {
+        //        Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+        //    }
+        //    styleSheetItemInfo.ShowDialog();
+        //}
 
         public string Name
         {
@@ -230,12 +231,28 @@ namespace MenuDesigner.ViewModel
             }
             BookViewModel = await OpenGraphicMenuTask;
 
-
-
             return BookViewModel.MenuStylesheet;
-
-
         }
+
+        public void ChangeItemInfoHeadingFont()
+        {
+            BookViewModel.FoodItemInfoHeadingFonts();
+        }
+
+        public void ChangeItemInfoParagraphFont()
+        {
+            BookViewModel.FoodItemInfoParagraphFonts();
+        }
+        public void ChangeItemInfoParagraphFirstLetterFont()
+        {
+            BookViewModel.FoodItemInfoParagraphFirstLetterFonts();
+        }
+
+        public void UpdateItemExtraInfoStyling()
+        {
+            BookViewModel.RestaurantMenu.GetItemExtraInfoStylingData();
+        }
+
         public Task<IStyleSheet> StyleSheet
         {
             get
@@ -247,49 +264,49 @@ namespace MenuDesigner.ViewModel
 
         public Task<BookViewModel> OpenGraphicMenuTask { get; private set; }
 
-        /// <exclude>Excluded</exclude>
-        MenuCommand _ItemFontsMenu;
-        public MenuCommand ItemFontsMenu
-        {
-            get
-            {
-                if (BookViewModel != null)
-                    return BookViewModel.ItemFontsMenu;
+        ///// <exclude>Excluded</exclude>
+        //MenuCommand _ItemFontsMenu;
+        //public MenuCommand ItemFontsMenu
+        //{
+        //    get
+        //    {
+        //        if (BookViewModel != null)
+        //            return BookViewModel.ItemFontsMenu;
 
-                if (_ItemFontsMenu == null)
-                {
-                    _ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
-                    {
-                        Header = Properties.Resources.FontsMenuItemHeader
-                    };
-                }
+        //        if (_ItemFontsMenu == null)
+        //        {
+        //            _ItemFontsMenu = new WPFUIElementObjectBind.MenuCommand()
+        //            {
+        //                Header = Properties.Resources.FontsMenuItemHeader
+        //            };
+        //        }
 
-                return _ItemFontsMenu;
-            }
-        }
+        //        return _ItemFontsMenu;
+        //    }
+        //}
 
 
 
-        /// <exclude>Excluded</exclude>
-        MenuCommand _DesignItemInfoViewMenu;
-        public MenuCommand DesignItemInfoViewMenu
-        {
-            get
-            {
-                //if (BookViewModel != null)
-                //    return BookViewModel.DesignItemInfoViewMenu;
+        ///// <exclude>Excluded</exclude>
+        //MenuCommand _DesignItemInfoViewMenu;
+        //public MenuCommand DesignItemInfoViewMenu
+        //{
+        //    get
+        //    {
+        //        //if (BookViewModel != null)
+        //        //    return BookViewModel.DesignItemInfoViewMenu;
 
-                //if (_DesignItemInfoViewMenu == null)
-                //{
-                //    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
-                //    {
-                //        Header = Properties.Resources.DesignMenuTitle
-                //    };
-                //}
+        //        //if (_DesignItemInfoViewMenu == null)
+        //        //{
+        //        //    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
+        //        //    {
+        //        //        Header = Properties.Resources.DesignMenuTitle
+        //        //    };
+        //        //}
 
-                return _DesignItemInfoViewMenu;
-            }
-        }
+        //        return _DesignItemInfoViewMenu;
+        //    }
+        //}
 
 
 

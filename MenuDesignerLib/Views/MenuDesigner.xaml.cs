@@ -424,6 +424,8 @@ namespace MenuDesigner.Views
                     (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ItemInfoHeadingFont = FontPresentation.Font;
                 else if (FontProperty == "ItemInfoParagraphFont")
                     (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ItemInfoParagraphFont = FontPresentation.Font;
+                else if (FontProperty == "ItemInfoParagraphFirstLetterFont")
+                    (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).ItemInfoParagraphFirstLetterFont= FontPresentation.Font;
 
                 else
                     (Style as MenuPresentationModel.MenuStyles.IMenuItemStyle).Font = FontPresentation.Font;
