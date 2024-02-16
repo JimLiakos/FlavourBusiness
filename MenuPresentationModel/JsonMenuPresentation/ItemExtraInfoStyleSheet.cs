@@ -37,6 +37,41 @@ namespace MenuPresentationModel.JsonMenuPresentation
                     ParagraphFontID = restaurantMenu.GetFontID(ParagraphFont);
                 }
             }
+            foreach (var languageEntry in itemExtraInfoStyleSheet.MultilingualParagraphFirstLetterFont.Values)
+            {
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(languageEntry.Key), false))
+                {
+                    ParagraphFirstLetterFont = itemExtraInfoStyleSheet.ParagraphFirstLetterFont;
+                    if (ParagraphFirstLetterFont.HasValue)
+                        ParagraphFirstLetterFontID = restaurantMenu.GetFontID(ParagraphFirstLetterFont.Value);
+                    else
+                        ParagraphFirstLetterFontID=null;
+                }
+            }
+
+            foreach (var languageEntry in itemExtraInfoStyleSheet.MultilingualItemInfoFirstLetterLinesSpan.Values)
+            {
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(languageEntry.Key), false))
+                {
+                    ItemInfoFirstLetterLinesSpan = itemExtraInfoStyleSheet.ItemInfoFirstLetterLinesSpan;
+                }
+            }
+
+            foreach (var languageEntry in itemExtraInfoStyleSheet.MultilingualItemInfoFirstLetterLeftIndent.Values)
+            {
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(languageEntry.Key), false))
+                {
+                    ItemInfoFirstLetterLeftIndent = itemExtraInfoStyleSheet.ItemInfoFirstLetterLeftIndent;
+                }
+            }
+
+            foreach (var languageEntry in itemExtraInfoStyleSheet.MultilingualItemInfoFirstLetterRightIndent.Values)
+            {
+                using (OOAdvantech.CultureContext context = new OOAdvantech.CultureContext(System.Globalization.CultureInfo.GetCultureInfo(languageEntry.Key), false))
+                {
+                    ItemInfoFirstLetterRightIndent = itemExtraInfoStyleSheet.ItemInfoFirstLetterRightIndent;
+                }
+            }
             //menuItemStyle.ItemInfoHeadingFont.
 
         }
@@ -56,16 +91,20 @@ namespace MenuPresentationModel.JsonMenuPresentation
 
 
         [JsonIgnore]
-        public FontData ParagraphFirstLetterFont
+        public FontData? ParagraphFirstLetterFont
         {
-            get => MultilingualParagraphFirstLetterFont.GetValue<FontData>();
-            set => MultilingualParagraphFirstLetterFont.SetValue<FontData>(value);
+            get => MultilingualParagraphFirstLetterFont.GetValue<FontData?>();
+            set => MultilingualParagraphFirstLetterFont.SetValue<FontData?>(value);
         }
 
         [JsonIgnore]
         public Multilingual MultilingualParagraphFirstLetterFont { get; set; } = new Multilingual();
 
-        public int ParagraphFirstLetterFontID { get => MultilingualParagraphFirstLetterFontID.GetValue<int>(); set => MultilingualParagraphFirstLetterFontID.SetValue<int>(value); }
+        public int? ParagraphFirstLetterFontID
+        {
+            get => MultilingualParagraphFirstLetterFontID.GetValue<int?>();
+            set => MultilingualParagraphFirstLetterFontID.SetValue<int?>(value);
+        }
         public Multilingual MultilingualParagraphFirstLetterFontID = new Multilingual();
 
 
@@ -73,10 +112,21 @@ namespace MenuPresentationModel.JsonMenuPresentation
         public FontData ParagraphFont { get => MultilingualParagraphFont.GetValue<FontData>(); set => MultilingualParagraphFont.SetValue<FontData>(value); }
 
         [JsonIgnore]
-        public Multilingual MultilingualParagraphFont { get; set; }=new Multilingual();
+        public Multilingual MultilingualParagraphFont { get; set; } = new Multilingual();
 
 
         public int ParagraphFontID { get => MultilingualParagraphFontID.GetValue<int>(); set => MultilingualParagraphFontID.SetValue<int>(value); }
+        public int? ItemInfoFirstLetterLeftIndent { get => MultilingualItemInfoFirstLetterLeftIndent.GetValue<int?>(); set => MultilingualItemInfoFirstLetterLeftIndent.SetValue<int?>(value); }
+        public int? ItemInfoFirstLetterRightIndent { get => MultilingualItemInfoFirstLetterRightIndent.GetValue<int?>(); set => MultilingualItemInfoFirstLetterRightIndent.SetValue<int?>(value); }
+        public int? ItemInfoFirstLetterLinesSpan { get => MultilingualItemInfoFirstLetterLinesSpan.GetValue<int?>(); set => MultilingualItemInfoFirstLetterLinesSpan.SetValue<int?>(value); }
+
+
+        public Multilingual MultilingualItemInfoFirstLetterLeftIndent { get; set; } = new Multilingual();
+
+        public Multilingual MultilingualItemInfoFirstLetterRightIndent { get; set; } = new Multilingual();
+
+        public Multilingual MultilingualItemInfoFirstLetterLinesSpan { get; set; } = new Multilingual();
+
         public Multilingual MultilingualParagraphFontID = new Multilingual();
 
 

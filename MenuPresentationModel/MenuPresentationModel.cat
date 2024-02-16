@@ -1830,7 +1830,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"4")
+		    value      	"7")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -1940,6 +1940,175 @@
 			    value      	"+3"))
 		    quid       	"65C671C3029D"
 		    type       	"UIBaseEx.FontData"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualHeadingFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{1c955bcd-5747-4521-8673-5c6172d92a61}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF7186032B"))
+		    quid       	"65CF7186032B"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualParagraphFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{578f6441-75ea-4dc1-a4b8-8560ea7ca213}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71860349"))
+		    quid       	"65CF71860349"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualParagraphFirstLetterFont"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{faf442c4-f7e2-49d5-8367-8674066049d7}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71860365"))
+		    quid       	"65CF71860365"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterLeftIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{41468368-8311-4aad-b284-970a90335d43}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF7186037F")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+4"))
+		    quid       	"65CF7186037F"
+		    type       	"int?"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterRightIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9da0f9e2-0559-443d-a734-7fddaf4fce08}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF7186039E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"65CF7186039E"
+		    type       	"int?"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterLinesSpan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9acd1b2e-597a-4561-8362-fe9804b72363}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF718603C0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"65CF718603C0"
+		    type       	"System.Nullable`1[[System.Int32,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterLeftIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{04ac7b4a-22af-4e4d-9ae3-770a5112f927}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF718603DD"))
+		    quid       	"65CF718603DD"
+		    type       	"int?"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterRightIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{0911e3c3-af8f-4bd5-b722-7a75223e1469}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71870014"))
+		    quid       	"65CF71870014"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterLinesSpan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ce27082c-1062-471f-982c-d31b0b03ad18}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71870035"))
+		    quid       	"65CF71870035"
+		    type       	"OOAdvantech.Multilingual"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 	    quidu      	"57ACBFCE02D6"
@@ -2030,7 +2199,7 @@
 			    name       	"Identity"
 			    value      	"+2"))
 		    quid       	"65C6723B0148"
-		    type       	"UIBaseEx.FontData"
+		    type       	"System.Nullable<UIBaseEx.FontData>"
 		    exportControl 	"Public")
 		(object ClassAttribute "ParagraphFont"
 		    attributes 	(list Attribute_Set
@@ -2084,7 +2253,7 @@
 			    name       	"GenerateGetOperation"
 			    value      	TRUE))
 		    quid       	"65C6FFA30301"
-		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    type       	"OOAdvantech.Multilingual"
 		    exportControl 	"Public")
 		(object ClassAttribute "MultilingualParagraphFont"
 		    attributes 	(list Attribute_Set
@@ -2105,7 +2274,7 @@
 			    name       	"GenerateGetOperation"
 			    value      	TRUE))
 		    quid       	"65C6FFA30342"
-		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    type       	"OOAdvantech.Multilingual"
 		    exportControl 	"Public")
 		(object ClassAttribute "MultilingualParagraphFirstLetterFont"
 		    attributes 	(list Attribute_Set
@@ -2126,7 +2295,145 @@
 			    name       	"GenerateGetOperation"
 			    value      	TRUE))
 		    quid       	"65C6FFA30382"
-		    type       	"OOAdvantech.OOAdvantech.Multilingual"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterLeftIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{97513c59-c1fe-4a54-891b-147c0e5c78f1}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71750392")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65CF71750392"
+		    type       	"System.Nullable<int>"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterRightIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{211d7e6a-562b-49c8-bc1b-ef7d32d62e61}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71760026")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65CF71760026"
+		    type       	"System.Nullable<int>"
+		    exportControl 	"Public")
+		(object ClassAttribute "ItemInfoFirstLetterLinesSpan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{ba3d4244-5e26-4ec6-b6d0-3ac3226505e8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF717600EA")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65CF717600EA"
+		    type       	"System.Nullable<int>"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterLeftIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9970094a-0655-4cc6-8ed3-6086d04f951e}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF7176026A")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65CF7176026A"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterRightIndent"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{850f111c-4d74-4c97-864d-94e69c31e020}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF717602B3")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65CF717602B3"
+		    type       	"OOAdvantech.Multilingual"
+		    exportControl 	"Public")
+		(object ClassAttribute "MultilingualItemInfoFirstLetterLinesSpan"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{cb8ef636-67d8-4c35-acfa-ca5502ebb4c5}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65CF71760300")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE))
+		    quid       	"65CF71760300"
+		    type       	"OOAdvantech.Multilingual"
 		    exportControl 	"Public"))
 	    module     	"Component View::MenuPresentationModel::MenuPresentationModel"
 	    quidu      	"57ACBFCE02D6"
@@ -31219,24 +31526,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"59113C3502AC"
-			    compartment 	(object Compartment
-				Parent_View 	@293
-				location   	(47, 1626)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	17
-				max_width  	1946)
 			    width      	500
 			    height     	394
 			    annotation 	8)
@@ -31298,24 +31587,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"59100BAE010D"
-			    compartment 	(object Compartment
-				Parent_View 	@295
-				location   	(2500, 1229)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	303)
 			    width      	469
 			    height     	394
 			    annotation 	8)
@@ -31347,24 +31618,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5910BEB602AA"
-			    compartment 	(object Compartment
-				Parent_View 	@296
-				location   	(40, 1083)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	528)
 			    width      	494
 			    height     	456
 			    annotation 	8)
@@ -31580,24 +31833,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FBD5A022C"
-			    compartment 	(object Compartment
-				Parent_View 	@306
-				location   	(34, 2236)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	628)
 			    width      	494
 			    height     	281
 			    annotation 	8)
@@ -31637,24 +31872,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FC11802B8"
-			    compartment 	(object Compartment
-				Parent_View 	@307
-				location   	(68, 2646)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	468)
 			    width      	482
 			    height     	375
 			    annotation 	8)
@@ -31685,24 +31902,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591FC3410108"
-			    compartment 	(object Compartment
-				Parent_View 	@308
-				location   	(3127, 2407)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	27
-				max_width  	1806)
 			    width      	488
 			    height     	244
 			    annotation 	8)
@@ -32148,24 +32347,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5942D0F2031F"
-			    compartment 	(object Compartment
-				Parent_View 	@330
-				location   	(2284, 1976)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	19
-				max_width  	1393)
 			    width      	525
 			    height     	288
 			    annotation 	8)
@@ -32206,24 +32387,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5942D1B80278"
-			    compartment 	(object Compartment
-				Parent_View 	@332
-				location   	(2265, 2363)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	30
-				max_width  	2700)
 			    width      	488
 			    height     	188
 			    annotation 	8)
@@ -32263,24 +32426,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"5947AF24032C"
-			    compartment 	(object Compartment
-				Parent_View 	@334
-				location   	(1822, 2354)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	30
-				max_width  	1215)
 			    width      	400
 			    height     	169
 			    annotation 	8)
@@ -32512,24 +32657,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"591F141503DC"
-			    compartment 	(object Compartment
-				Parent_View 	@345
-				location   	(3081, 1951)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	13
-				max_width  	1912)
 			    width      	531
 			    height     	319
 			    annotation 	8)
@@ -33052,24 +33179,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"65B33E190163"
-			    compartment 	(object Compartment
-				Parent_View 	@372
-				location   	(706, 1973)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	528)
 			    width      	444
 			    height     	232
 			    annotation 	8)
@@ -33127,8 +33236,8 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	1520
-	    origin_y   	0
+	    origin_x   	897
+	    origin_y   	122
 	    items      	(list diagram_item_list
 		(object ClassView "ClassUtility" "Logical View::MenuPresentationModel::PageContentType" @376
 		    ShowCompartmentStereotypes 	TRUE
@@ -33156,6 +33265,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57B9DA470335"
+		    compartment 	(object Compartment
+			Parent_View 	@376
+			location   	(181, 204)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	634)
 		    width      	713
 		    height     	375
 		    annotation 	8)
@@ -33453,6 +33580,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"57B4105B0056"
+		    compartment 	(object Compartment
+			Parent_View 	@388
+			location   	(903, 1037)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	515)
 		    width      	700
 		    height     	588
 		    annotation 	8)
@@ -33909,7 +34054,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	434
+			max_width  	456
 			compartmentItems 	(list Compartment
 			    "+ Name : System.string"))
 		    width      	532
@@ -34062,7 +34207,7 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(3276, 1343)
+		    location   	(3275, 1341)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -34075,7 +34220,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@417
-			location   	(2982, 1258)
+			location   	(2981, 1256)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	588
@@ -34085,6 +34230,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"65C64B810311"
+		    compartment 	(object Compartment
+			Parent_View 	@417
+			location   	(2981, 1317)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	13
+			max_width  	2712)
 		    width      	606
 		    height     	194
 		    annotation 	8)
@@ -34145,6 +34308,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"65C671F20337"
+		    compartment 	(object Compartment
+			Parent_View 	@419
+			location   	(2973, 801)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	13
+			max_width  	1478)
 		    width      	600
 		    height     	232
 		    annotation 	8)
@@ -34182,6 +34363,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"59EED42603D4"
+		    compartment 	(object Compartment
+			Parent_View 	@421
+			location   	(2134, 364)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	1143)
 		    width      	581
 		    height     	369
 		    annotation 	8)

@@ -593,6 +593,10 @@ namespace MenuPresentationModel
             string culName = CultureContext.CurrentNeutralCultureInfo.Name;
             ItemExtraInfoStyleSheet.HeadingFont = menuItemStyle.ItemInfoHeadingFont;
             ItemExtraInfoStyleSheet.ParagraphFont = menuItemStyle.ItemInfoParagraphFont;
+            ItemExtraInfoStyleSheet.ParagraphFirstLetterFont = menuItemStyle.ItemInfoParagraphFirstLetterFont;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLeftIndent= menuItemStyle.ItemInfoFirstLetterLeftIndent;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterRightIndent= menuItemStyle.ItemInfoFirstLetterRightIndent;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLinesSpan= menuItemStyle.ItemInfoFirstLetterLinesSpan;
         }
 
         /// <MetaDataID>{4952e0dd-c560-4bd5-8f69-930e8faa101d}</MetaDataID>

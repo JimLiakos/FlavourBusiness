@@ -164,6 +164,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             MenuPresentationModel.JsonMenuPresentation.RestaurantMenu jsonRestaurantMenu = null;
             using (OOAdvantech.CultureContext cultureContext = new OOAdvantech.CultureContext(culture, true))
             {
+                RealObject.GetItemExtraInfoStylingData();
                 jsonRestaurantMenu = new MenuPresentationModel.JsonMenuPresentation.RestaurantMenu(RealObject);
 
 
