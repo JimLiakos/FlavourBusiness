@@ -18,7 +18,7 @@ namespace FlavourBusinessManager.Shipping
     [Persistent()]
     public class FoodShipping : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, FlavourBusinessFacade.Shipping.IFoodShipping, FinanceFacade.IPaymentGateway
     {
-
+    
         /// <exclude>Excluded</exclude>
         DateTime? _DeliveryTime;
         /// <MetaDataID>{b3e9e858-b3da-4308-ae57-b8ab33179300}</MetaDataID>
