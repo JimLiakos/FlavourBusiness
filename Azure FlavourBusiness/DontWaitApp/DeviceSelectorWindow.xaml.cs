@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,11 +48,34 @@ namespace DontWaitApp
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            //DisplayOpenPorts();
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
             ApplicationSettings.ExtraStoragePath = DevicesIDS[SelectedIndex];
+            GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
+            //DisplayOpenPorts();
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             base.OnClosing(e);
+        }
+
+       void DisplayOpenPorts()
+        {
+            IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+
+            IPEndPoint[] endPoints = ipProperties.GetActiveTcpListeners();
+            TcpConnectionInformation[] tcpConnections =
+                ipProperties.GetActiveTcpConnections();
+
+            foreach (TcpConnectionInformation info in tcpConnections)
+            {
+                if (info.LocalEndPoint.Port == 9222)
+                {
+                    System.Diagnostics.Debug.WriteLine("Local: {0}:{1}\nRemote: {2}:{3}\nState: {4}\n",
+                        info.LocalEndPoint.Address, info.LocalEndPoint.Port,
+                        info.RemoteEndPoint.Address, info.RemoteEndPoint.Port,
+                        info.State.ToString());
+                }
+            }
         }
     }
 }
