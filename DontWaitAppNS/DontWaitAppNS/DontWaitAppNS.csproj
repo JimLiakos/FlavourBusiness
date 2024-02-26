@@ -259,6 +259,15 @@
     <Folder Include="UIBaseEx\" />
   </ItemGroup>
 
+ 
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="WebPageHost.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 
 
 </Project>

@@ -745,6 +745,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New pricelist.
+        /// </summary>
+        public static string NewPriceListMenuItemHeader {
+            get {
+                return ResourceManager.GetString("NewPriceListMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Translator.
         /// </summary>
         public static string NewTranslatorMenuPrompt {

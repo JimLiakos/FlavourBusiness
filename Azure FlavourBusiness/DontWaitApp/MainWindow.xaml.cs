@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CefSharp;
 using GenWebBrowser;
 
 namespace DontWaitApp
@@ -58,34 +59,36 @@ namespace DontWaitApp
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
 
             Browser.Navigated += Browser_Navigated;
+            Browser.ShouldOverrideUrlLoading = HybridWebView_ShouldOverrideUrlLoading;
 
             FlavoursOrderServer.Initialize();
 
             if (!string.IsNullOrWhiteSpace(FlavoursOrderServer.Path) && FlavoursOrderServer.Path.Split('/').Length > 0)
             {
                 //FlavoursOrderServer.GetServicePointData(FlavoursOrderServer.Path.Split('/')[0]);
-
                 FlavoursOrderServer_OnWebViewLoaded();
-
-                if (ApplicationSettings.Current.DisplayedFoodServicesClientSession!=null)
+                if (ApplicationSettings.Current.DisplayedFoodServicesClientSession != null)
                 {
-                    Browser.Navigate(new Uri(url + "#/?orderServerPath=.%2FEndUser"));
+                    Uri = new Uri(url + "#/?orderServerPath=.%2FEndUser");
+                    Browser.Navigate(Uri);
                     //http://192.168.2.8:4300/#/room-service
                 }
                 else
-                    Browser.Navigate(new Uri(url));
-
-
+                {
+                    Uri = new Uri(url);
+                    Browser.Navigate(Uri);
+                }
             }
             else
                 Browser.Navigate(new Uri(url));
 
+            Browser.ProcessRequest += Browser_ProcessRequest;
 
 
             FlavoursOrderServer_OnWebViewLoaded();
 
- 
-            if(OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID =="93000000296")
+
+            if (OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID == "93000000296")
             {
                 TestImplicitMealInvitation();
             }
@@ -94,9 +97,27 @@ namespace DontWaitApp
 
         }
 
+        private bool HybridWebView_ShouldOverrideUrlLoading(string url)
+        {
+            if (new Uri(url).Host == Uri.Host)
+            {
+
+                return false;
+            }
+            else
+            {
+                ////FlavoursOrderServer.Navigatge(url);
+                return true;
+            }
+        }
+        private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
+        {
+
+        }
+
         private void TestImplicitMealInvitation()
         {
-            
+
             Uri uri = new Uri("http://192.168.2.4:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6fdb8092de854ec4a277c5733c82cc54");
 
             int queryStartPos = uri.OriginalString.IndexOf("?");
@@ -122,6 +143,9 @@ namespace DontWaitApp
         }
 
         string address;
+
+        public Uri Uri { get; }
+
         private void Browser_Navigated(object sender, NavigatedEventArgs e)
         {
             if (address != e.Address)

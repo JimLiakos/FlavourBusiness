@@ -10,6 +10,8 @@ using DontWaitApp;
 using static System.Net.WebRequestMethods;
 using System.Linq;
 using OOAdvantech.Remoting.RestApi;
+using OOAdvantech.Web;
+using DontWaitAppNS;
 
 namespace DontWaitApp
 {
@@ -96,12 +98,19 @@ namespace DontWaitApp
                     hybridWebView.Uri = url;
 
                 hybridWebView.Navigated += HybridWebView_Navigated;
+                hybridWebView.ShouldOverrideUrlLoading = HybridWebView_ShouldOverrideUrlLoading;
 
                 OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(AzureServerUrl).ConnectivityChanged += ConnectivityChanged;
 
             }
 
 
+        }
+
+        private bool HybridWebView_ShouldOverrideUrlLoading(string url)
+        {
+            Navigation.PushAsync(new WebPageHost(url),true);
+            return true;
         }
 
         private void ConnectivityChanged(object sender, OOAdvantech.Remoting.RestApi.ConnectivityChangedEventArgs e)

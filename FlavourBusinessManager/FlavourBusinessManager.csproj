@@ -455,10 +455,12 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
+    <Compile Include="ItemsPriceInfo.cs" />
     <Compile Include="NativeAuthUser.cs" />
     <Compile Include="PaymentTerminal.cs" />
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />
+    <Compile Include="PriceList.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
     <Compile Include="ServiceContextPaymentFinder.cs" />
     <Compile Include="ServingBatch.cs" />

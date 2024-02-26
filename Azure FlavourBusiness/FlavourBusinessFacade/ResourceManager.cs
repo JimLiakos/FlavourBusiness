@@ -14,6 +14,10 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{1b1336c6-bbd8-4d91-b989-3721692c5228}</MetaDataID>
         List<OrganizationStorageRef> GraphicMenus { get; }
 
+        List<OrganizationStorageRef> PriceLists { get; }
+
+        OrganizationStorageRef NewPriceList();
+        void RemovePriceList(string storageIdentity);
 
         /// <MetaDataID>{bd6625bb-9739-4325-b0b4-9a4edc905059}</MetaDataID>
         OrganizationStorageRef GetStorage(OrganizationStorages dataType);
@@ -46,7 +50,8 @@ namespace FlavourBusinessFacade
         GraphicMenu,
         HeadingAccents,
         HallLayout,
-        OperativeRestaurantMenu
+        OperativeRestaurantMenu,
+        PriceList
 
     }
 

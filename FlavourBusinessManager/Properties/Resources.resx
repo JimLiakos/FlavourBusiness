@@ -148,6 +148,9 @@
     <value>Preparation Station</value>
     <comment>Specifies the description of the 'preparation station' when it is created.</comment>
   </data>
+  <data name="DefaultPriceListDescription" xml:space="preserve">
+    <value>PriceList</value>
+  </data>
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
     <value>Main Hall</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>

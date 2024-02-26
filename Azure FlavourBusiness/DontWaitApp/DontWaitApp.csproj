@@ -403,7 +403,7 @@
       <Name>RestApiRemoting</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WebBrowser\WebBrowser.csproj">
-      <Project>{0A6DBBC9-D8D3-4466-9A4E-80AE0582EB0A}</Project>
+      <Project>{0a6dbbc9-d8d3-4466-9a4e-80ae0582eb0a}</Project>
       <Name>WebBrowser</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FlavourBusinessApps\FlavourBusinessApps.csproj">

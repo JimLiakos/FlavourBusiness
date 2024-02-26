@@ -2,7 +2,7 @@
 (object Petal
     version    	47
     _written   	"Rose 8.0.0303.1400"
-    charSet    	0)
+    charSet    	161)
 
 (object Class_Category "FlavourBusinessFacade"
     is_unit    	TRUE
@@ -9415,7 +9415,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	1600
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @1
@@ -10633,7 +10633,7 @@
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
-			    fill_color 	33023
+			    fill_color 	4227327
 			    quidu      	"6440E71C0193"
 			    width      	443
 			    height     	244
@@ -10662,7 +10662,7 @@
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
-			    fill_color 	33023
+			    fill_color 	4227327
 			    quidu      	"64AAD4130385"
 			    width      	500
 			    height     	269
@@ -10691,7 +10691,7 @@
 			    icon       	"Interface"
 			    icon_style 	"Decoration"
 			    line_color 	3342489
-			    fill_color 	33023
+			    fill_color 	4227327
 			    quidu      	"62D639AF0057"
 			    width      	619
 			    height     	206
@@ -23173,7 +23173,7 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	0
+		    origin_x   	1450
 		    origin_y   	0
 		    items      	(list diagram_item_list
 			(object ClassView "Class" "Logical View::MenuModel::IMenuItem" @325
@@ -30023,7 +30023,379 @@
 	    is_unit    	TRUE
 	    is_loaded  	FALSE
 	    file_name  	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Food Shipping\\Food Shipping.cat"
-	    quid       	"64F363EE003D"))
+	    quid       	"64F363EE003D")
+	(object Class_Category "PriceList"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"MetaObjectID"
+		    value      	"FlavourBusinessFacade.PriceList"))
+	    quid       	"65D98D220303"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "IPriceList"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f3227625-fb47-47aa-b911-5eed56e5d67b}"))
+		    quid       	"65D98F3A0363"
+		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "AddItemsPriceInfos"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a78aab39-d9ad-45cd-84cf-3fb9b609610c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65D996EB01B1"))
+			    quid       	"65D996EB01B1"
+			    parameters 	(list Parameters
+				(object Parameter "itemsPriceInfo"
+				    quid       	"65D996EB01C0"
+				    type       	"FlavourBusinessFacade.PriceList.IItemsPriceInfo"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveItemsPriceInfos"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{83f3e18b-a96c-4917-a4b5-c766bd336fff}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65D996EB01E6"))
+			    quid       	"65D996EB01E6"
+			    parameters 	(list Parameters
+				(object Parameter "itemsPriceInfo"
+				    quid       	"65D996EB01F5"
+				    type       	"FlavourBusinessFacade.PriceList.IItemsPriceInfo"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
+		    quidu      	"5AA773E702B6"
+		    language   	"C#")
+		(object Class "IItemsPriceInfo"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7086923d-a949-4e1e-9bec-bbbc0430f181}"))
+		    quid       	"65D993320188"
+		    stereotype 	"Interface"
+		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
+		    quidu      	"5AA773E702B6"
+		    language   	"C#")
+		(object Association "PriceListItems"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65D9935F02F9")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"712c2573-54d4-4370-9589-e51517f911b5"))
+		    quid       	"65D9935F02F9"
+		    roles      	(list role_list
+			(object Role "ItemsPrices"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65D99360023C")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{029e6bdc-1883-43b7-985e-af7075671cff}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"ContainerClass"
+				    value      	"System.Collections.Generic.List<FlavourBusinessFacade.PriceList.IItemsPriceInfo>"))
+			    quid       	"65D99360023C"
+			    label      	"ItemsPrices"
+			    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IItemsPriceInfo"
+			    quidu      	"65D993320188"
+			    client_cardinality 	(value cardinality "1..*")
+			    is_navigable 	TRUE)
+			(object Role "$UNNAMED$41"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65D99360023F")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f302e096-419f-4d2c-924b-22c78f4e2b79}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
+			    quid       	"65D99360023F"
+			    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IPriceList"
+			    quidu      	"65D98F3A0363"
+			    client_cardinality 	(value cardinality "1")))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"65D98DDC0370"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::PriceList::IItemsPriceInfo" @535
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    location   	(1475, 694)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@535
+				location   	(1275, 672)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	400
+				justify    	0
+				label      	"IItemsPriceInfo")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"65D993320188"
+			    width      	418
+			    height     	244
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessFacade::PriceList::IPriceList" @536
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    location   	(331, 697)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@536
+				location   	(59, 631)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	545
+				justify    	0
+				label      	"IPriceList")
+			    icon       	"Interface"
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"65D98F3A0363"
+			    compartment 	(object Compartment
+				Parent_View 	@536
+				location   	(59, 692)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	1890)
+			    width      	563
+			    height     	332
+			    annotation 	8)
+			(object AssociationViewNew "PriceListItems" @537
+			    location   	(939, 713)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @538
+				Parent_View 	@537
+				location   	(883, 599)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"PriceListItems"
+				pctDist    	-0.450000
+				height     	115
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"65D9935F02F9"
+			    roleview_list 	(list RoleViews
+				(object RoleView "ItemsPrices" @539
+				    Parent_View 	@537
+				    location   	(470, 25)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @540
+					Parent_View 	@539
+					location   	(1113, 683)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	241
+					justify    	0
+					label      	"+ItemsPrices"
+					pctDist    	0.531469
+					height     	31
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"65D99360023C"
+				    client     	@537
+				    supplier   	@535
+				    line_style 	3
+				    origin_attachment 	(939, 713)
+				    terminal_attachment 	(1266, 713)
+				    label      	(object SegLabel @541
+					Parent_View 	@539
+					location   	(1232, 767)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1..*"
+					pctDist    	0.900000
+					height     	54
+					orientation 	1))
+				(object RoleView "$UNNAMED$41" @542
+				    Parent_View 	@537
+				    location   	(470, 25)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					charSet    	161
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"65D99360023F"
+				    client     	@537
+				    supplier   	@536
+				    line_style 	3
+				    origin_attachment 	(939, 713)
+				    terminal_attachment 	(612, 713)
+				    label      	(object SegLabel @543
+					Parent_View 	@542
+					location   	(646, 767)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    charSet    	161
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.900000
+					height     	54
+					orientation 	0)))))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"5AB1EB120382"
@@ -30034,7 +30406,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @535
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextRuntime" @544
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30050,7 +30422,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@535
+			Parent_View 	@544
 			location   	(1277, 1751)
 			fill_color 	13434879
 			nlines     	1
@@ -30065,7 +30437,7 @@
 		    width      	1006
 		    height     	443
 		    annotation 	8)
-		(object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @536
+		(object CategoryView "Logical View::FlavourBusinessFacade::ServicesContextResources" @545
 		    location   	(355, 2364)
 		    font       	(object Font
 			size       	10
@@ -30078,7 +30450,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@536
+			Parent_View 	@545
 			location   	(74, 2280)
 			fill_color 	13434879
 			nlines     	2
@@ -30091,7 +30463,7 @@
 		    quidu      	"5B8BB08D01B2"
 		    width      	575
 		    height     	181)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextManagment" @537
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContextManagment" @546
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30107,7 +30479,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@537
+			Parent_View 	@546
 			location   	(2715, 1928)
 			fill_color 	13434879
 			nlines     	1
@@ -30122,7 +30494,7 @@
 		    width      	926
 		    height     	343
 		    annotation 	8)
-		(object CategoryView "Logical View::FlavourBusinessFacade::EndUsers" @538
+		(object CategoryView "Logical View::FlavourBusinessFacade::EndUsers" @547
 		    location   	(365, 2014)
 		    font       	(object Font
 			size       	10
@@ -30135,7 +30507,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@538
+			Parent_View 	@547
 			location   	(71, 1930)
 			fill_color 	13434879
 			nlines     	2
@@ -30148,7 +30520,7 @@
 		    quidu      	"5C060A3B039D"
 		    width      	600
 		    height     	181)
-		(object CategoryView "Logical View::FlavourBusinessManager::RoomService" @539
+		(object CategoryView "Logical View::FlavourBusinessManager::RoomService" @548
 		    location   	(346, 2678)
 		    font       	(object Font
 			size       	10
@@ -30161,7 +30533,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@539
+			Parent_View 	@548
 			location   	(68, 2584)
 			fill_color 	13434879
 			nlines     	2
@@ -30174,7 +30546,7 @@
 		    quidu      	"5CDA64B20127"
 		    width      	568
 		    height     	200)
-		(object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @540
+		(object CategoryView "Logical View::FlavourBusinessFacade::HumanResources" @549
 		    location   	(344, 2958)
 		    font       	(object Font
 			size       	10
@@ -30187,7 +30559,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@540
+			Parent_View 	@549
 			location   	(76, 2867)
 			fill_color 	13434879
 			nlines     	2
@@ -30200,7 +30572,7 @@
 		    quidu      	"5F550CB102CC"
 		    width      	549
 		    height     	194)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser::EndUserData" @541
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser::EndUserData" @550
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30216,7 +30588,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@541
+			Parent_View 	@550
 			location   	(1008, 2427)
 			fill_color 	13434879
 			nlines     	1
@@ -30230,7 +30602,7 @@
 		    width      	588
 		    height     	287
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::UserData" @542
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::UserData" @551
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30246,7 +30618,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@542
+			Parent_View 	@551
 			location   	(1947, 2390)
 			fill_color 	13434879
 			nlines     	1
@@ -30260,7 +30632,7 @@
 		    width      	843
 		    height     	413
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser" @543
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IUser" @552
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeOperation 	TRUE
 		    location   	(422, 153)
@@ -30275,7 +30647,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@543
+			Parent_View 	@552
 			location   	(150, 144)
 			fill_color 	13434879
 			nlines     	1
@@ -30290,7 +30662,7 @@
 		    width      	563
 		    height     	219
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IParty" @544
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IParty" @553
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(1053, 150)
 		    font       	(object Font
@@ -30304,7 +30676,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@544
+			Parent_View 	@553
 			location   	(787, 144)
 			fill_color 	13434879
 			nlines     	1
@@ -30319,7 +30691,7 @@
 		    width      	550
 		    height     	212
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @545
+		(object ClassView "Class" "Logical View::FinanceFacade::IFisicalParty" @554
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(3984, 1989)
 		    font       	(object Font
@@ -30333,7 +30705,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@545
+			Parent_View 	@554
 			location   	(3791, 1978)
 			fill_color 	13434879
 			nlines     	1
@@ -30348,7 +30720,7 @@
 		    width      	404
 		    height     	222
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::ComputationalResources::IComputingCluster" @546
+		(object ClassView "Class" "Logical View::ComputationalResources::IComputingCluster" @555
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30364,7 +30736,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@546
+			Parent_View 	@555
 			location   	(90, 1257)
 			fill_color 	13434879
 			nlines     	1
@@ -30379,7 +30751,7 @@
 		    width      	488
 		    height     	275
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndPoint" @547
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::EndPoint" @556
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30395,7 +30767,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@547
+			Parent_View 	@556
 			location   	(2781, 1208)
 			fill_color 	13434879
 			nlines     	1
@@ -30409,7 +30781,7 @@
 		    width      	569
 		    height     	262
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::ComputationalResources::IComputingResource" @548
+		(object ClassView "Class" "Logical View::ComputationalResources::IComputingResource" @557
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30425,7 +30797,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@548
+			Parent_View 	@557
 			location   	(1424, 1265)
 			fill_color 	13434879
 			nlines     	1
@@ -30440,7 +30812,7 @@
 		    width      	451
 		    height     	319
 		    annotation 	8)
-		(object AssociationViewNew "ComputingClusterResource" @549
+		(object AssociationViewNew "ComputingClusterResource" @558
 		    location   	(992, 1294)
 		    font       	(object Font
 			size       	10
@@ -30452,8 +30824,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @550
-			Parent_View 	@549
+		    label      	(object SegLabel @559
+			Parent_View 	@558
 			location   	(940, 1116)
 			font       	(object Font
 			    size       	10
@@ -30478,8 +30850,8 @@
 		    line_color 	3342489
 		    quidu      	"5B1FE43F010E"
 		    roleview_list 	(list RoleViews
-			(object RoleView "Resources" @551
-			    Parent_View 	@549
+			(object RoleView "Resources" @560
+			    Parent_View 	@558
 			    location   	(658, 524)
 			    font       	(object Font
 				size       	10
@@ -30491,8 +30863,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @552
-				Parent_View 	@551
+			    label      	(object SegLabel @561
+				Parent_View 	@560
 				location   	(1207, 1220)
 				font       	(object Font
 				    size       	10
@@ -30516,13 +30888,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B1FE4400247"
-			    client     	@549
-			    supplier   	@548
+			    client     	@558
+			    supplier   	@557
 			    line_style 	3
 			    origin_attachment 	(992, 1294)
 			    terminal_attachment 	(1415, 1294)
-			    label      	(object SegLabel @553
-				Parent_View 	@551
+			    label      	(object SegLabel @562
+				Parent_View 	@560
 				location   	(1372, 1348)
 				font       	(object Font
 				    size       	10
@@ -30543,18 +30915,18 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "" @554
-			    Parent_View 	@549
+			(object RoleView "" @563
+			    Parent_View 	@558
 			    location   	(658, 524)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B1FE4400249"
-			    client     	@549
-			    supplier   	@546
+			    client     	@558
+			    supplier   	@555
 			    line_style 	3
 			    origin_attachment 	(992, 1294)
 			    terminal_attachment 	(569, 1294))))
-		(object AssociationViewNew "ComputingResourceEndPoint" @555
+		(object AssociationViewNew "ComputingResourceEndPoint" @564
 		    location   	(2318, 1315)
 		    font       	(object Font
 			size       	10
@@ -30566,8 +30938,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @556
-			Parent_View 	@555
+		    label      	(object SegLabel @565
+			Parent_View 	@564
 			location   	(2316, 1167)
 			font       	(object Font
 			    size       	10
@@ -30592,8 +30964,8 @@
 		    line_color 	3342489
 		    quidu      	"5B208E2E0110"
 		    roleview_list 	(list RoleViews
-			(object RoleView "CommunicationEndpoints" @557
-			    Parent_View 	@555
+			(object RoleView "CommunicationEndpoints" @566
+			    Parent_View 	@564
 			    location   	(853, 546)
 			    font       	(object Font
 				size       	10
@@ -30605,8 +30977,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @558
-				Parent_View 	@557
+			    label      	(object SegLabel @567
+				Parent_View 	@566
 				location   	(2506, 1258)
 				font       	(object Font
 				    size       	10
@@ -30630,23 +31002,23 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B208E2F00A0"
-			    client     	@555
-			    supplier   	@547
+			    client     	@564
+			    supplier   	@556
 			    line_style 	3
 			    origin_attachment 	(2318, 1315)
 			    terminal_attachment 	(2772, 1315))
-			(object RoleView "" @559
-			    Parent_View 	@555
+			(object RoleView "" @568
+			    Parent_View 	@564
 			    location   	(853, 546)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B208E2F00AF"
-			    client     	@555
-			    supplier   	@548
+			    client     	@564
+			    supplier   	@557
 			    line_style 	3
 			    origin_attachment 	(2318, 1315)
 			    terminal_attachment 	(1865, 1315))))
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IOrganization" @560
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IOrganization" @569
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(644, 581)
 		    font       	(object Font
@@ -30660,7 +31032,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@560
+			Parent_View 	@569
 			location   	(350, 553)
 			fill_color 	13434879
 			nlines     	1
@@ -30675,21 +31047,21 @@
 		    width      	606
 		    height     	256
 		    annotation 	8)
-		(object InheritView "" @561
+		(object InheritView "" @570
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"5F756C18013C"
-		    client     	@560
-		    supplier   	@543
+		    client     	@569
+		    supplier   	@552
 		    line_style 	0)
-		(object InheritView "" @562
+		(object InheritView "" @571
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"6044F7C40154"
-		    client     	@560
-		    supplier   	@544
+		    client     	@569
+		    supplier   	@553
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::ComputationalResources::IIsolatedComputingContext" @563
+		(object ClassView "Class" "Logical View::ComputationalResources::IIsolatedComputingContext" @572
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30705,7 +31077,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@563
+			Parent_View 	@572
 			location   	(2605, 643)
 			fill_color 	13434879
 			nlines     	1
@@ -30720,7 +31092,7 @@
 		    width      	675
 		    height     	487
 		    annotation 	8)
-		(object AssociationViewNew "ComputingResourceConsumer" @564
+		(object AssociationViewNew "ComputingResourceConsumer" @573
 		    location   	(2230, 1076)
 		    font       	(object Font
 			size       	10
@@ -30732,8 +31104,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @565
-			Parent_View 	@564
+		    label      	(object SegLabel @574
+			Parent_View 	@573
 			location   	(2230, 1017)
 			font       	(object Font
 			    size       	10
@@ -30758,8 +31130,8 @@
 		    line_color 	3342489
 		    quidu      	"5B25D6A501C5"
 		    roleview_list 	(list RoleViews
-			(object RoleView "ComputingContexts" @566
-			    Parent_View 	@564
+			(object RoleView "ComputingContexts" @575
+			    Parent_View 	@573
 			    location   	(599, 56)
 			    font       	(object Font
 				size       	10
@@ -30771,8 +31143,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @567
-				Parent_View 	@566
+			    label      	(object SegLabel @576
+				Parent_View 	@575
 				location   	(2348, 889)
 				font       	(object Font
 				    size       	10
@@ -30796,11 +31168,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B25D6A600FB"
-			    client     	@564
-			    supplier   	@563
+			    client     	@573
+			    supplier   	@572
 			    line_style 	0
-			    label      	(object SegLabel @568
-				Parent_View 	@566
+			    label      	(object SegLabel @577
+				Parent_View 	@575
 				location   	(2578, 991)
 				font       	(object Font
 				    size       	10
@@ -30821,16 +31193,16 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "$UNNAMED$2" @569
-			    Parent_View 	@564
+			(object RoleView "$UNNAMED$2" @578
+			    Parent_View 	@573
 			    location   	(599, 56)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B25D6A600FF"
-			    client     	@564
-			    supplier   	@548
+			    client     	@573
+			    supplier   	@557
 			    line_style 	0)))
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFoodTypeTag" @570
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFoodTypeTag" @579
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(2716, 194)
 		    font       	(object Font
@@ -30844,7 +31216,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@570
+			Parent_View 	@579
 			location   	(2450, 172)
 			fill_color 	13434879
 			nlines     	1
@@ -30859,7 +31231,7 @@
 		    width      	550
 		    height     	244
 		    annotation 	8)
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContext" @571
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::IFlavoursServicesContext" @580
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -30875,7 +31247,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@571
+			Parent_View 	@580
 			location   	(1514, 583)
 			fill_color 	13434879
 			nlines     	2
@@ -30890,7 +31262,7 @@
 		    width      	475
 		    height     	231
 		    annotation 	8)
-		(object AssociationViewNew "OrganizationServicesContext" @572
+		(object AssociationViewNew "OrganizationServicesContext" @581
 		    location   	(1226, 566)
 		    font       	(object Font
 			size       	10
@@ -30902,8 +31274,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @573
-			Parent_View 	@572
+		    label      	(object SegLabel @582
+			Parent_View 	@581
 			location   	(1140, 430)
 			font       	(object Font
 			    size       	10
@@ -30928,8 +31300,8 @@
 		    line_color 	3342489
 		    quidu      	"5B16B2390341"
 		    roleview_list 	(list RoleViews
-			(object RoleView "$UNNAMED$0" @574
-			    Parent_View 	@572
+			(object RoleView "$UNNAMED$0" @583
+			    Parent_View 	@581
 			    location   	(307, 294)
 			    font       	(object Font
 				size       	10
@@ -30941,8 +31313,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @575
-				Parent_View 	@574
+			    label      	(object SegLabel @584
+				Parent_View 	@583
 				location   	(1389, 529)
 				font       	(object Font
 				    size       	10
@@ -30967,13 +31339,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B16B23A03A3"
-			    client     	@572
-			    supplier   	@571
+			    client     	@581
+			    supplier   	@580
 			    line_style 	3
 			    origin_attachment 	(1226, 566)
 			    terminal_attachment 	(1505, 566)
-			    label      	(object SegLabel @576
-				Parent_View 	@574
+			    label      	(object SegLabel @585
+				Parent_View 	@583
 				location   	(1476, 620)
 				font       	(object Font
 				    size       	10
@@ -30994,8 +31366,8 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "Owner" @577
-			    Parent_View 	@572
+			(object RoleView "Owner" @586
+			    Parent_View 	@581
 			    location   	(307, 294)
 			    font       	(object Font
 				size       	10
@@ -31007,8 +31379,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @578
-				Parent_View 	@577
+			    label      	(object SegLabel @587
+				Parent_View 	@586
 				location   	(1004, 525)
 				font       	(object Font
 				    size       	10
@@ -31032,13 +31404,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B16B23A03A5"
-			    client     	@572
-			    supplier   	@560
+			    client     	@581
+			    supplier   	@569
 			    line_style 	3
 			    origin_attachment 	(1226, 566)
 			    terminal_attachment 	(947, 566)
-			    label      	(object SegLabel @579
-				Parent_View 	@577
+			    label      	(object SegLabel @588
+				Parent_View 	@586
 				location   	(976, 620)
 				font       	(object Font
 				    size       	10
@@ -31059,7 +31431,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object AssociationViewNew "ServicesContexComputing" @580
+		(object AssociationViewNew "ServicesContexComputing" @589
 		    location   	(2287, 616)
 		    font       	(object Font
 			size       	10
@@ -31071,8 +31443,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @581
-			Parent_View 	@580
+		    label      	(object SegLabel @590
+			Parent_View 	@589
 			location   	(2235, 508)
 			font       	(object Font
 			    size       	10
@@ -31097,8 +31469,8 @@
 		    line_color 	3342489
 		    quidu      	"5B16BA0500AC"
 		    roleview_list 	(list RoleViews
-			(object RoleView "RunAtContext" @582
-			    Parent_View 	@580
+			(object RoleView "RunAtContext" @591
+			    Parent_View 	@589
 			    location   	(562, 344)
 			    font       	(object Font
 				size       	10
@@ -31110,8 +31482,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @583
-				Parent_View 	@582
+			    label      	(object SegLabel @592
+				Parent_View 	@591
 				location   	(2534, 575)
 				font       	(object Font
 				    size       	10
@@ -31135,13 +31507,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B16BA060154"
-			    client     	@580
-			    supplier   	@563
+			    client     	@589
+			    supplier   	@572
 			    line_style 	3
 			    origin_attachment 	(2287, 616)
 			    terminal_attachment 	(2596, 616)
-			    label      	(object SegLabel @584
-				Parent_View 	@582
+			    label      	(object SegLabel @593
+				Parent_View 	@591
 				location   	(2565, 670)
 				font       	(object Font
 				    size       	10
@@ -31162,18 +31534,18 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "$UNNAMED$1" @585
-			    Parent_View 	@580
+			(object RoleView "$UNNAMED$1" @594
+			    Parent_View 	@589
 			    location   	(562, 344)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"5B16BA060157"
-			    client     	@580
-			    supplier   	@571
+			    client     	@589
+			    supplier   	@580
 			    line_style 	3
 			    origin_attachment 	(2287, 616)
 			    terminal_attachment 	(1979, 616))))
-		(object AssociationViewNew "FlavoursServicesContextFoodTypes" @586
+		(object AssociationViewNew "FlavoursServicesContextFoodTypes" @595
 		    location   	(2209, 401)
 		    font       	(object Font
 			size       	10
@@ -31185,8 +31557,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @587
-			Parent_View 	@586
+		    label      	(object SegLabel @596
+			Parent_View 	@595
 			location   	(2182, 401)
 			font       	(object Font
 			    size       	10
@@ -31211,8 +31583,8 @@
 		    line_color 	3342489
 		    quidu      	"62EA038E00F3"
 		    roleview_list 	(list RoleViews
-			(object RoleView "FoodTypes" @588
-			    Parent_View 	@586
+			(object RoleView "FoodTypes" @597
+			    Parent_View 	@595
 			    location   	(467, -195)
 			    font       	(object Font
 				size       	10
@@ -31224,8 +31596,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @589
-				Parent_View 	@588
+			    label      	(object SegLabel @598
+				Parent_View 	@597
 				location   	(2379, 287)
 				font       	(object Font
 				    size       	10
@@ -31249,11 +31621,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"62EA038E03D8"
-			    client     	@586
-			    supplier   	@570
+			    client     	@595
+			    supplier   	@579
 			    line_style 	0
-			    label      	(object SegLabel @590
-				Parent_View 	@588
+			    label      	(object SegLabel @599
+				Parent_View 	@597
 				location   	(2437, 366)
 				font       	(object Font
 				    size       	10
@@ -31274,8 +31646,8 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "$UNNAMED$3" @591
-			    Parent_View 	@586
+			(object RoleView "$UNNAMED$3" @600
+			    Parent_View 	@595
 			    location   	(467, -195)
 			    font       	(object Font
 				size       	10
@@ -31290,11 +31662,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"62EA038E03DA"
-			    client     	@586
-			    supplier   	@571
+			    client     	@595
+			    supplier   	@580
 			    line_style 	0
-			    label      	(object SegLabel @592
-				Parent_View 	@591
+			    label      	(object SegLabel @601
+				Parent_View 	@600
 				location   	(2024, 535)
 				font       	(object Font
 				    size       	10
@@ -31315,7 +31687,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::FlavourBusinessFacade::INativeAuthUser" @593
+		(object ClassView "Class" "Logical View::FlavourBusinessFacade::INativeAuthUser" @602
 		    ShowCompartmentStereotypes 	TRUE
 		    location   	(3984, 303)
 		    font       	(object Font
@@ -31329,7 +31701,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@593
+			Parent_View 	@602
 			location   	(3791, 292)
 			fill_color 	13434879
 			nlines     	1
@@ -31344,7 +31716,7 @@
 		    width      	404
 		    height     	222
 		    annotation 	8)
-		(object CategoryView "Logical View::FlavourBusinessFacade::Shipping" @594
+		(object CategoryView "Logical View::FlavourBusinessFacade::Shipping" @603
 		    location   	(3900, 925)
 		    font       	(object Font
 			size       	10
@@ -31357,7 +31729,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@594
+			Parent_View 	@603
 			location   	(3650, 841)
 			fill_color 	13434879
 			nlines     	2

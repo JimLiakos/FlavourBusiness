@@ -55,6 +55,8 @@ namespace DontWaitApp
 
     public delegate void PartOfMealRequestHandle(IFlavoursOrderServer flavoursOrderServer, Messmate messmate, string messageID);
 
+    public delegate void EmbeddedNavigationHandle(IFlavoursOrderServer flavoursOrderServer, string url);
+
     public delegate void MenuItemProposalHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string menuItemUri, string messageID);
 
     public delegate void SharedItemChangedHandle(IFoodServicesClientSessionViewModel flavoursOrderServer, Messmate messmate, string sharedItemUid, string messageID);
@@ -189,6 +191,7 @@ namespace DontWaitApp
 
         [GenerateEventConsumerProxy]
         event PartOfMealRequestHandle PartOfMealRequest;
+
 
 
 

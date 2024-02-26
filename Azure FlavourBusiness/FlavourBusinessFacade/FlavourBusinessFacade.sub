@@ -249,7 +249,15 @@
 		(object Realize_Relationship
 		    quid       	"656DFA7C013D"
 		    supplier   	"Logical View::FlavourBusinessFacade::HumanResources::IAuditWorkerEvents"
-		    quidu      	"656DF87F013D"))
+		    quidu      	"656DF87F013D")
+		(object Realize_Relationship
+		    quid       	"65D993B30302"
+		    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IPriceList"
+		    quidu      	"65D98F3A0363")
+		(object Realize_Relationship
+		    quid       	"65D993B5023A"
+		    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IItemsPriceInfo"
+		    quidu      	"65D993320188"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -2385,4 +2393,68 @@
 		    quidu      	"656DFA7C013D"
 		    client     	@1
 		    supplier   	@120
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::PriceList::IPriceList" @122
+		    location   	(1919, 3273)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@122
+			location   	(1918, 3381)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IPriceList")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65D98F3A0363")
+		(object RealizeView "" @123
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65D993B30302"
+		    client     	@1
+		    supplier   	@122
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::PriceList::IItemsPriceInfo" @124
+		    location   	(2819, 2913)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@124
+			location   	(2818, 3021)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"IItemsPriceInfo")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65D993320188")
+		(object RealizeView "" @125
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65D993B5023A"
+		    client     	@1
+		    supplier   	@124
 		    line_style 	0)))))

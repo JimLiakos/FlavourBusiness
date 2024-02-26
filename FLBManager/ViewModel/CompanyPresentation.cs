@@ -17,7 +17,7 @@ using WPFUIElementObjectBind;
 namespace FLBManager.ViewModel
 {
     /// <MetaDataID>{7151c406-5113-431d-b326-a5f9e0955550}</MetaDataID>
-    public class CompanyPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IGraphicMenusOwner
+    public class CompanyPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IGraphicMenusOwner, IPriceListsOwner
     {
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
@@ -60,6 +60,9 @@ namespace FLBManager.ViewModel
 
         /// <MetaDataID>{6cadf1cf-ced0-4d89-881a-ea07838a2c8a}</MetaDataID>
         internal MenusTreeNode Menus;
+
+
+        internal PriceListsTreeNode PriceListsTreeNode;
         /// <MetaDataID>{43f87a1e-7177-4b30-b5ea-4ea07e256e8b}</MetaDataID>
         GraphicMenusPresentation GraphicMenusPresentation;
         /// <MetaDataID>{c92f6458-76fa-4542-8247-e225722ee875}</MetaDataID>
@@ -84,6 +87,8 @@ namespace FLBManager.ViewModel
             foreach (var graphicMenuViewModel in graphicMenusPresentation.GraphicMenus)
                 _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus,this, true, true);
 
+
+            PriceListsTreeNode = new PriceListsTreeNode(Properties.Resources.PriceListTitle, this,this);
 
             RestaurantMenus = restaurantMenus;
 
@@ -423,6 +428,33 @@ namespace FLBManager.ViewModel
             MenuDesigner.ViewModel.Menu.MenuDesignerHost.NewGraphicMenu();
         }
 
+        public void AssignPriceList(PriceListTreeNode PriceListTreeNode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanAssignPriceList(PriceListTreeNode PriceListTreeNode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemovePriceList(PriceListTreeNode PriceListTreeNode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NewPriceList()
+        {
+
+            OrganizationStorageRef priceListStorageRef= (Organization as IResourceManager).NewPriceList();
+            PriceLists.Add(new PriceListTreeNode(this, priceListStorageRef));
+            PriceListsTreeNode.Refresh();
+
+            
+        }
+
+        
+
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
         /// <MetaDataID>{77ff6d5f-c772-439e-af29-a2e29bbfc382}</MetaDataID>
@@ -561,6 +593,9 @@ namespace FLBManager.ViewModel
                 if (Menus != null)
                     members.Add(Menus);
 
+                if(PriceListsTreeNode!=null)
+                    members.Add(PriceListsTreeNode);
+
                 if (this.MenuMakers != null)
                     members.Add(this.MenuMakers);
 
@@ -639,6 +674,10 @@ namespace FLBManager.ViewModel
         public List<GraphicMenuTreeNode> GraphicMenus => _GraphicMenus.Values.ToList();
 
         public bool NewGraphicMenuAllowed => true;
+
+        public List<PriceListTreeNode> PriceLists { get; set; } = new List<PriceListTreeNode>();
+
+        public bool NewPriceListAllowed => true;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

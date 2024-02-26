@@ -127,23 +127,6 @@ namespace MenuDesigner.ViewModel
             ResourceManager = resourceManager;
             _StorageRef = organizationStorageRef;
 
-            //FoodItemInfoViewDesignCommand = new WPFUIElementObjectBind.RoutedCommand((object sender) => { this.FoodItemInfoViewDesign(); },null,"FoodItemInfoViewDesignCommand");
-
-            //    _DesignItemInfoViewMenu = new WPFUIElementObjectBind.MenuCommand()
-            //    {
-            //        Header = Properties.Resources.DesignMenuTitle,
-            //        SubMenuCommands = new List<WPFUIElementObjectBind.MenuCommand>()
-            //                {
-            //                     new MenuCommand()
-            //                    {
-            //                        Header=Properties.Resources.DesignIteminfoVieMenuItemHeader,
-            //                        Command = FoodItemInfoViewDesignCommand
-            //                    },
-
-            //                }
-
-
-            //    };
         }
 
         //internal void FoodItemInfoViewDesign()

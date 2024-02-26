@@ -6,10 +6,7 @@
     x:Class="DontWaitApp.HybridWebViewPage">
     <ContentPage.Content>
         <Grid>
-            
-
             <local:HybridWebView  x:Name="hybridWebView" EnableRestApi="True" x:FieldModifier="public"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

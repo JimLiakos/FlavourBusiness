@@ -33,8 +33,35 @@ namespace FlavourBusinessToolKit
             _FileName = fileName;
             StorageRef = storageRef;
             UploadService = uploadService;
-
         }
+
+        public RawStorageData( string localFileName, OrganizationStorageRef storageRef, IUploadService uploadService)
+        {
+            string path = null;
+            var foldersSequence = localFileName.Split('\\');
+            foldersSequence = foldersSequence.Take(foldersSequence.Length - 1).ToArray();
+            foreach (var dir in foldersSequence)
+            {
+                if (path != null)
+                    path += "\\" + dir;
+                else
+                    path = dir;
+
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(path);
+            }
+            HttpClient httpClient = new HttpClient();
+            var dataStreamTask = httpClient.GetStreamAsync(storageRef.StorageUrl);
+            dataStreamTask.Wait();
+            using (var dataStream = dataStreamTask.Result)
+            {
+                StorageDoc = XDocument.Load(dataStream);
+                _FileName = localFileName;
+                StorageRef = storageRef;
+                UploadService = uploadService;
+            }
+        }
+
         public RawStorageData(OrganizationStorageRef storageRef, IUploadService uploadService)
         {
             HttpClient httpClient = new HttpClient();
@@ -45,17 +72,17 @@ namespace FlavourBusinessToolKit
             StorageRef = storageRef;
             UploadService = uploadService;
         }
-        public RawStorageData(string fileName, OrganizationStorageRef storageRef, IUploadService uploadService)
-        {
-            _FileName = fileName;
-            HttpClient httpClient = new HttpClient();
-            var getStreamTask =  httpClient.GetStreamAsync(storageRef.StorageUrl);
-            getStreamTask.Wait();
-            var dataStream = getStreamTask.Result;
-            StorageDoc = XDocument.Load(dataStream);
-            StorageRef = storageRef;
-            UploadService = uploadService;
-        }
+        //public RawStorageData(string fileName, OrganizationStorageRef storageRef, IUploadService uploadService)
+        //{
+        //    _FileName = fileName;
+        //    HttpClient httpClient = new HttpClient();
+        //    var getStreamTask =  httpClient.GetStreamAsync(storageRef.StorageUrl);
+        //    getStreamTask.Wait();
+        //    var dataStream = getStreamTask.Result;
+        //    StorageDoc = XDocument.Load(dataStream);
+        //    StorageRef = storageRef;
+        //    UploadService = uploadService;
+        //}
 
         public object RawData
         {

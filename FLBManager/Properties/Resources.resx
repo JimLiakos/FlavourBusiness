@@ -309,6 +309,9 @@
   <data name="PreparationTimeSpanLabel" xml:space="preserve">
     <value>Prepared in</value>
   </data>
+  <data name="PriceListTitle" xml:space="preserve">
+    <value>PriceList</value>
+  </data>
   <data name="ProvidedProductsTitle" xml:space="preserve">
     <value>Provided products</value>
     <comment>Restaurant provided products title bar title</comment>

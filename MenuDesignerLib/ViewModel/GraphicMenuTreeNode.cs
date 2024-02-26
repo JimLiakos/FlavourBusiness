@@ -296,8 +296,6 @@ namespace MenuDesigner.ViewModel
 
         private void SetOtherGraphicTreeNodesName(string name)
         {
-
-
             List<FBResourceTreeNode> graphicStorageReferences = null;
             if ((HeaderNode).FBResourceTreeNodesDictionary.TryGetValue(GraphicMenuStorageRef.StorageIdentity, out graphicStorageReferences))
             {
@@ -307,7 +305,6 @@ namespace MenuDesigner.ViewModel
                         graphicMenuTreeNode.Name = name;
                 }
             }
-
         }
 
         public override List<MenuCommand> SelectedItemContextMenuItems

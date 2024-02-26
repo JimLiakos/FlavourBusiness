@@ -144,6 +144,9 @@
     <value>Παρασκευαστήριο</value>
     <comment>Specifies the description of the 'preparation station' when it is created.</comment>
   </data>
+  <data name="DefaultPriceListDescription" xml:space="preserve">
+    <value>Τιμοκατάλογος</value>
+  </data>
   <data name="DefaultServiceAreaDescription" xml:space="preserve">
     <value>Κύρια αίθουσα</value>
     <comment>Specifies the description of the 'service area' when it is created.</comment>

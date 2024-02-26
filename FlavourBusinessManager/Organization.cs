@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Globalization;
 using FlavourBusinessManager.EndUsers;
+using System.Resources;
+using FlavourBusinessManager.Properties;
 
 //using FlavourBusinessToolKit;
 
@@ -454,7 +456,7 @@ namespace FlavourBusinessManager
             {
                 if (_HeadingAccents == null)
                 {
-                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri +  "graphicmenusresources/HeadingAccents.xml";
+                    string blobUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + "graphicmenusresources/HeadingAccents.xml";
                     RawStorageCloudBlob rawStorageCloudBlob = new RawStorageCloudBlob(blobUrl, "HeadingAccents");
                     var objectStorage = ObjectStorage.OpenStorage("HeadingAccents", rawStorageCloudBlob, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
@@ -578,7 +580,7 @@ namespace FlavourBusinessManager
 
                         stateTransition.Consistent = true;
                     }
-                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri  + fbstorage.Url;
+                    var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                     storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
@@ -623,7 +625,7 @@ namespace FlavourBusinessManager
             }
             else
             {
-                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri+ fbstorage.Url;
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
                 var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                 storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, Version = fbstorage.Version, TimeStamp = lastModified.Value.UtcDateTime };
@@ -778,12 +780,12 @@ namespace FlavourBusinessManager
                                 ObjectID objectID = null;
                                 string orgStorageIdentity = null;
                                 StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
-                                string blobUrl = "usersfolder/"+Identity + "/" + name + ".xml";
+                                string blobUrl = "usersfolder/" + Identity + "/" + name + ".xml";
 
                                 string oldBlobUrl = fbstorage.Url;
 
-                                if (blobUrl.IndexOf(blobsContainerName+"/") == 0)
-                                    blobUrl = blobUrl.Substring((blobsContainerName+"/").Length);
+                                if (blobUrl.IndexOf(blobsContainerName + "/") == 0)
+                                    blobUrl = blobUrl.Substring((blobsContainerName + "/").Length);
 
                                 if (oldBlobUrl.IndexOf(blobsContainerName + "/") == 0)
                                     oldBlobUrl = oldBlobUrl.Substring((blobsContainerName + "/").Length);
@@ -896,6 +898,64 @@ namespace FlavourBusinessManager
         }
 
 
+        internal List<OrganizationStorageRef> InternalPriceLists
+        {
+            get
+            {
+                List<OrganizationStorageRef> priceListsStorages = new List<OrganizationStorageRef>();
+                var fbstorages = (from storage in this.Storages
+                                  where storage.FlavourStorageType == OrganizationStorages.PriceList
+                                  select storage).ToList();
+
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri;
+                foreach (var fbStorage in fbstorages)
+                {
+                    try
+                    {
+                        var storageUrl = urlRoot + fbStorage.Url;
+                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
+
+                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
+                        priceListsStorages.Add(storageRef);
+                    }
+                    catch (Exception error)
+                    {
+
+                        throw;
+                    }
+                }
+
+                return priceListsStorages;
+            }
+        }
+
+
+        public List<OrganizationStorageRef> PriceLists
+        {
+            get
+            {
+                if (!(System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") is AuthUser authUser))
+                    throw new AuthenticationException();
+
+                string userId = authUser.User_ID;
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    return PriceLists;
+
+                bool authorized = false;
+
+                //AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+
+                if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
+                    throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
+                return PriceLists;
+            }
+        }
+
+
         /// <MetaDataID>{20b3e8a3-f9c1-4e99-8128-48178b2df525}</MetaDataID>
         public OrganizationStorageRef NewGraphicMenu(string culture)
         {
@@ -972,7 +1032,7 @@ namespace FlavourBusinessManager
                     stateTransition.Consistent = true;
                 }
 
-                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri +  fbstorage.Url;
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
                 var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
 
                 OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
@@ -1201,7 +1261,7 @@ namespace FlavourBusinessManager
             {
                 double? pageHeight = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Height;
                 double? pageWidth = (restaurantMenu as MenuPresentationModel.MenuCanvas.IRestaurantMenu).Pages.FirstOrDefault()?.Width;
-                if (pageHeight!=null)
+                if (pageHeight != null)
                 {
                     organizationStorage.SetPropertyValue("MenuPageHeight", pageHeight.Value.ToString(CultureInfo.GetCultureInfo(1033)));
                     organizationStorage.SetPropertyValue("MenuPageWidth", pageWidth.Value.ToString(CultureInfo.GetCultureInfo(1033)));
@@ -1349,8 +1409,8 @@ namespace FlavourBusinessManager
 
 
             var organizationMainStorage = OpenOrganizationMainStorage();
-            if (organizationMainStorage==null)
-                organizationMainStorage=OpenOrganizationMainStorage(true);
+            if (organizationMainStorage == null)
+                organizationMainStorage = OpenOrganizationMainStorage(true);
 
             ObjectStorage objectStorage = ObjectStorage.GetStorageOfObject(this);
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1372,7 +1432,7 @@ namespace FlavourBusinessManager
 
                 FlavoursServicesContext flavoursServiceContext = new FlavoursServicesContext();
                 flavoursServiceContext.ContextStorageName = instanceContextStorageName;
-                flavoursServiceContext.OrganizationStorageIdentity=organizationMainStorage.StorageMetaData.StorageName;
+                flavoursServiceContext.OrganizationStorageIdentity = organizationMainStorage.StorageMetaData.StorageName;
                 flavoursServiceContext.Description = Properties.Resources.FlavoursServicePointDefaultName;
                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(flavoursServiceContext);
                 _ServicesContexts.Add(flavoursServiceContext);
@@ -1496,7 +1556,7 @@ namespace FlavourBusinessManager
 
 
             //TODO:Να ελεχθεί όταν δεν υπάρχει Email
-            return contextStorageName+="Main";
+            return contextStorageName += "Main";
 
 
         }
@@ -1637,6 +1697,145 @@ namespace FlavourBusinessManager
 
             ObjectStorage.DeleteObject(menuMakingAccountability);
 
+        }
+
+        public OrganizationStorageRef NewPriceList()
+        {
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new AuthenticationException();
+
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
+                throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
+
+
+
+            string priceListName = Resources.DefaultPriceListDescription;
+
+            var fbstorage = (from storage in this.Storages
+                             where storage.Name == priceListName
+                             select storage).FirstOrDefault();
+            int count = 1;
+            while (fbstorage != null)
+            {
+                priceListName = Resources.DefaultPriceListDescription + count;
+                fbstorage = (from storage in this.Storages
+                             where storage.Name == priceListName
+                             select storage).FirstOrDefault();
+            }
+            try
+            {
+                ObjectID objectID = null;
+                string storageIdentity = null;
+                StorageInstanceRef.GetObjectID(this, out objectID, out storageIdentity);
+                string blobUrl = "usersfolder/" + Identity + "/" + priceListName + ".xml";
+                RawStorageCloudBlob rawStorage = new RawStorageCloudBlob(new XDocument(), blobUrl);
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    var objectStorage = ObjectStorage.NewStorage("PriceList",
+                                    rawStorage,
+                                    "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
+
+
+                    PriceList.PriceList priceList = new PriceList.PriceList();
+                    priceList.Description = priceListName;
+                    objectStorage.CommitTransientObjectState(priceList);
+                    PriceList.ItemsPriceInfo priceListItemsPriceInfo = new PriceList.ItemsPriceInfo();
+                    priceListItemsPriceInfo.Description = "pricelist items";
+                    objectStorage.CommitTransientObjectState(priceListItemsPriceInfo);
+                    priceList.AddItemsPriceInfos(priceListItemsPriceInfo);
+
+                    fbstorage = new FlavourBusinessStorage();
+                    fbstorage.StorageIdentity = objectStorage.StorageMetaData.StorageIdentity;
+                    fbstorage.Name = priceListName;
+                    fbstorage.Owner = this;
+                    fbstorage.Url = blobUrl;
+                    fbstorage.FlavourStorageType = OrganizationStorages.PriceList;
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(fbstorage);
+                    _Storages.Add(fbstorage);
+                    stateTransition.Consistent = true;
+                }
+
+                var storageUrl = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri + fbstorage.Url;
+                var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
+
+                OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
+
+                storageRef.UploadService = this;
+
+                return storageRef;
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+        public void RemovePriceList(string storageIdentity)
+        {
+
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new AuthenticationException();
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
+                throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
+
+
+            //Each graphic menu is splitted  in threw parts storage entry as header ,blob with data and published json file
+
+            var fbstorage = (from storage in this.Storages
+                             where storage.StorageIdentity == storageIdentity
+                             select storage).FirstOrDefault();
+
+
+            if (fbstorage != null)
+            {
+
+                #region service context price lists
+                //foreach (var serviceContext in this.ServicesContexts)
+                //{
+                //    if (serviceContext.GetRunTime().IsGraphicMenuAssigned(storageIdentity))
+                //        throw new Exception("Remove all graphic menu assignments first.");
+                //}
+
+                //// removes published json
+                //RemovePublishedGraphicMenu(fbstorage.StorageIdentity, fbstorage.Version, fbstorage.Name); 
+                #endregion
+
+                var priceListStorageRef = PriceLists.Where(x => x.StorageIdentity == storageIdentity).FirstOrDefault();
+
+
+                // removes graphic menu storage data
+                var blobClient = FlavourBusinessManagerApp.CloudBlobStorageAccount.CreateCloudBlobClient();
+                string containerName = fbstorage.Url.Substring(0, fbstorage.Url.IndexOf("/"));
+                string blobUrl = fbstorage.Url.Substring(fbstorage.Url.IndexOf("/") + 1);
+                var container = blobClient.GetContainerReference(containerName);
+                CloudBlockBlob blob = container.GetBlockBlobReference(blobUrl);
+                blob.DeleteIfExists();
+
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Storages.Remove(fbstorage);
+                    stateTransition.Consistent = true;
+                }
+            }
         }
     }
 }

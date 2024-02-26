@@ -2472,9 +2472,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
                 if (!System.IO.Directory.Exists(path))
                     System.IO.Directory.CreateDirectory(path);
-
-                //if (!System.IO.Directory.Exists(appDataPath))
-                //    System.IO.Directory.CreateDirectory(appDataPath);
+                
             }
 
             string temporaryStorageLocation = appDataPath + string.Format("\\{0}RestaurantMenuData.xml", graphicMenuStorageRef.StorageIdentity.Replace("-", ""));

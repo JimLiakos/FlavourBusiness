@@ -203,6 +203,8 @@
     <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
     <Compile Include="ViewModel\Preview\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="ViewModel\Preview\PseudoCode.cs" />
+    <Compile Include="ViewModel\PriceListsPresentation.cs" />
+    <Compile Include="ViewModel\PriceListTreeNode.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="Views\BackgroundSelectorWindow.xaml.cs">
       <DependentUpon>BackgroundSelectorWindow.xaml</DependentUpon>
@@ -894,6 +896,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\collapseall16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price-lists16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price-list16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -810,6 +810,7 @@ namespace FLBManager.ViewModel
             }
 
             var resourceManager = FlavourBusinessManager.Organization.CurrentOrganization as IResourceManager;
+
             _GraphicMenus = new GraphicMenusPresentation(resourceManager.GraphicMenus, resourceManager);
 
             foreach (var graphicMenu in _GraphicMenus.GraphicMenus)

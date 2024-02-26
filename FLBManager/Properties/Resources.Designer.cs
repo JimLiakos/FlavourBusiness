@@ -574,6 +574,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PriceList.
+        /// </summary>
+        public static string PriceListTitle {
+            get {
+                return ResourceManager.GetString("PriceListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provided products.
         /// </summary>
         public static string ProvidedProductsTitle {

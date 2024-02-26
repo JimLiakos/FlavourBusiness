@@ -670,4 +670,7 @@
   <data name="DesignIteminfoVieMenuItemHeader" xml:space="preserve">
     <value>Item info view </value>
   </data>
+  <data name="NewPriceListMenuItemHeader" xml:space="preserve">
+    <value>New pricelist</value>
+  </data>
 </root>

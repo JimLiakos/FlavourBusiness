@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OOAdvantech.Web;assembly=OOAdvantech"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="DontWaitAppNS.WebPageHost">
+    <NavigationPage.TitleView >
+        <Grid BackgroundColor="green">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Back"
+                   TextColor="White"
+                   Grid.Column="0" />
+
+        </Grid>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        
+        <Grid RowSpacing="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                
+            </Grid.RowDefinitions>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="BackLabel" Padding="20,0,0,0" TextColor="#0A7AFF" VerticalOptions="Center"  FontSize="Header" Text="Back"
+                   
+                   Grid.Column="0" />
+
+            </Grid>
+
+            <local:HybridWebView Grid.Row="1"  x:Name="hybridWebView" EnableRestApi="True" x:FieldModifier="public"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

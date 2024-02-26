@@ -130,12 +130,7 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (_ContextMenuItems == null)
                 {
-
                     _ContextMenuItems = new List<MenuCommand>();
-
-
-
-
                     MenuCommand menuItem = new MenuCommand(); ;
                     var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/chef16.png"));
                     menuItem.Header = Properties.Resources.NewPreparationStationPrompt;
@@ -144,7 +139,6 @@ namespace FLBManager.ViewModel.Preparation
                     _ContextMenuItems.Add(menuItem);
 
                 }
-
                 return _ContextMenuItems;
             }
         }

@@ -70,6 +70,7 @@
     <Compile Include="IGeocoding.cs" />
     <Compile Include="IHomeDeliveryCallcenterStation.cs" />
     <Compile Include="IHomeDeliveryServicePoint.cs" />
+    <Compile Include="IItemsPriceInfo.cs" />
     <Compile Include="IMeal.cs" />
     <Compile Include="IMealController.cs" />
     <Compile Include="IMealCourse.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="IPlace.cs" />
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
+    <Compile Include="IPriceList.cs" />
     <Compile Include="IServingBatch.cs" />
     <Compile Include="IServingShiftWork.cs" />
     <Compile Include="ISettings.cs" />
