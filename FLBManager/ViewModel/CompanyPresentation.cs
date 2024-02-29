@@ -156,7 +156,15 @@ namespace FLBManager.ViewModel
 
                 if (value != null)
                 {
-                    PriceLists = (Organization as IResourceManager).PriceLists.Select(priceListStorageInstanceRef => new PriceListPresentation(this, priceListStorageInstanceRef, _RestaurantMenus.Members[0] as MenuViewModel)).ToList();
+                    PriceLists=new List<PriceListPresentation>();
+                    foreach (var priceListStorageRef in (Organization as IResourceManager).PriceLists)
+                    {
+                        priceListStorageRef.UploadService=Organization as IUploadService;
+                        PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel));
+                    }
+
+
+
                 }
 
             }

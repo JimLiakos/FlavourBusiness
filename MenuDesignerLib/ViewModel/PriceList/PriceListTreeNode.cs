@@ -1,5 +1,6 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.PriceList;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessToolKit;
 using FLBManager.ViewModel;
 using MenuItemsEditor.ViewModel;
@@ -325,7 +326,7 @@ namespace MenuDesigner.ViewModel.PriceList
 
                 var itemsPreparationInfo = this.PriceList.NewPriceInfo(uri, ItemsPriceInfoType.Include);
 
-                //this.ItemsPreparationInfos = this.PreparationStation.ItemsPreparationInfos.ToList();
+                //this.ItemsPreparationInfos = this.PriceList.ItemsPreparationInfos.ToList();
             }
 
             List<IItemsPriceInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsPriceInfos(itemsCategory);
@@ -333,12 +334,15 @@ namespace MenuDesigner.ViewModel.PriceList
             {
                 // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
                 PriceList.RemoveItemsPriceInfos(uselessDescendantItemsPreparationInfos);
-                //ItemsPreparationInfos = PreparationStation.ItemsPreparationInfos.ToList();
+                //ItemsPreparationInfos = PriceList.ItemsPreparationInfos.ToList();
             }
         
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
+
+
+ 
 
         private List<IItemsPriceInfo> GetUselessDescendantItemsPriceInfos(IItemsCategory itemsCategory)
         {
@@ -356,19 +360,144 @@ namespace MenuDesigner.ViewModel.PriceList
             return itemsPreparationInfos;
         }
 
-        internal void ExcludeItems(IItemsCategory itemsCategory)
+ 
+        ItemsPriceInfoPresentation PreparationStationItems;
+
+        public void IncludeItem(MenuModel.IMenuItem menuItem)
         {
-            throw new NotImplementedException();
+
+            var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+            var excludedItemsPriceInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                                where itemsInfoEntry.@object == menuItem && itemsInfoEntry.ItemsPreparationInfo.Excluded()
+                                                select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+            if (excludedItemsPriceInfo != null)
+                PriceList.RemoveItemsPriceInfos(excludedItemsPriceInfo);
+             
+
+
+            if (!PriceList.HasOverriddenPrice(menuItem))
+            {
+                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+                var dd = this.PriceList.ItemsPrices;
+                var itemsPreparationInfo = this.PriceList.NewPriceInfo(uri, ItemsPriceInfoType.Include);
+                //this.AddItemsPreparationInfos(itemsPreparationInfo);
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+                foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPriceInfoPresentation>())
+                    itemsPreparationInfoPresentation.Refresh();
+            }
+
+            if (PreparationStationItems != null)
+                PreparationStationItems.Refresh();
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+
+
         }
 
-        internal void IncludeItem(IMenuItem menuItem)
+        public void ExcludeItems(MenuModel.IItemsCategory itemsCategory)
         {
-            throw new NotImplementedException();
+
+
+            if (PriceList.HasOverriddenPrice(itemsCategory))
+            {
+
+
+                var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsPrices
+                                             select new
+                                             {
+                                                 @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                                 ItemsPreparationInfo = itemsInfo
+                                             }).ToList();
+
+                var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                                    where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPreparationInfo.Included()
+                                                    select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+                if (includedItemsPreparationInfo != null)
+                {
+                    this.PriceList.RemoveItemsPriceInfos(includedItemsPreparationInfo);
+                    //RemoveItemsPreparationInfos(includedItemsPreparationInfo);
+                }
+                else
+                {
+
+                    string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+                    var itemsPreparationInfo = this.PriceList.NewPriceInfo(uri, ItemsPriceInfoType.Exclude);
+
+                    //AddItemsPreparationInfos(itemsPreparationInfo);
+                    //var sdd = itemsPreparationInfo.Exclude;
+                }
+
+                //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+                //    itemsPreparationInfoPresentation.Refresh();
+
+            }
+            else
+            {
+                List<IItemsPriceInfo> uselessDescendantItemsPriceInfos = GetUselessDescendantItemsPriceInfos(itemsCategory);
+                if (uselessDescendantItemsPriceInfos.Count > 0)
+                {
+                    // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
+                    PriceList.RemoveItemsPriceInfos(uselessDescendantItemsPriceInfos);
+                    //ItemsPreparationInfos = PriceList.ItemsPreparationInfos.ToList();
+                }
+                //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
+                //    itemsPreparationInfoPresentation.Refresh();
+
+
+            }
+
+            //if (PreparationStationItems != null)
+            //    PreparationStationItems.Refresh();
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            //foreach (var member in _Members.OfType<ItemsPreparationInfoPresentation>())
+            //    member.Refresh();
         }
 
-        internal void ExcludeItem(IMenuItem menuItem)
+
+        public void ExcludeItem(MenuModel.IMenuItem menuItem)
         {
-            throw new NotImplementedException();
+
+            if (PriceList.HasOverriddenPrice(menuItem))
+            {
+
+
+                var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsPrices
+                                             select new
+                                             {
+                                                 @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                                 ItemsPreparationInfo = itemsInfo
+                                             }).ToList();
+
+                var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                                    where itemsInfoEntry.@object == menuItem
+                                                    select itemsInfoEntry.ItemsPreparationInfo).FirstOrDefault();
+
+                if (includedItemsPreparationInfo != null)
+                {
+                    this.PriceList.RemoveItemsPriceInfos(includedItemsPreparationInfo);
+                    // RemoveItemsPreparationInfos(includedItemsPreparationInfo);
+                }
+                if (PriceList.HasOverriddenPrice(menuItem))
+                {
+
+                    string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+                    var itemsPreparationInfo = this.PriceList.NewPriceInfo(uri, ItemsPriceInfoType.Exclude);
+                    //this.AddItemsPreparationInfos(itemsPreparationInfo);
+                }
+
+                if (PreparationStationItems != null)
+                    PreparationStationItems.Refresh();
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
         }
     }
     static class ItemsCategoryExtention

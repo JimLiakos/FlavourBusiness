@@ -258,12 +258,12 @@ namespace MenuDesigner.ViewModel.PriceList
         {
             get
             {
-                return CanPrepared;
+                return DefinesNewPrice;
             }
         }
 
         /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
-        public bool CanPrepared
+        public bool DefinesNewPrice
         {
             get
             {
@@ -566,15 +566,15 @@ namespace MenuDesigner.ViewModel.PriceList
         }
 
         /// <MetaDataID>{cae2c912-49d0-45d1-894b-57dce6c77bdd}</MetaDataID>
-        public bool AllInHierarchyCanPrepared
+        public bool AllInHierarchyDefinesNewPrice
         {
             get
             {
-                if (!CanPrepared)
+                if (!DefinesNewPrice)
                     return false;
                 foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPriceInfoPresentation>())
                 {
-                    if (!itemsPreparationInfoPresentation.AllInHierarchyCanPrepared)
+                    if (!itemsPreparationInfoPresentation.DefinesNewPrice)
                         return false;
                 }
                 return true;
@@ -591,7 +591,7 @@ namespace MenuDesigner.ViewModel.PriceList
             if (ItemsCategory is ItemsCategory && menuItemWithChanges.IsAncestor(ItemsCategory as ItemsCategory))
             {
                 ItemsCategory.GetAllMenuItems();
-                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
                 _Members = null;
 
                 foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPriceInfoPresentation>())
@@ -628,7 +628,7 @@ namespace MenuDesigner.ViewModel.PriceList
 
                 if (itemsCategoryWithChanges.IsAncestor(ItemsCategory as ItemsCategory))
                 {
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
                     _Members = null;
 
                     foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPriceInfoPresentation>())
@@ -647,7 +647,7 @@ namespace MenuDesigner.ViewModel.PriceList
         /// <MetaDataID>{9bbe65bf-458f-4f70-9218-4a3e24f9823d}</MetaDataID>
         public void Refresh()
         {
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeSpanInMin)));
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TotalPreparationTimeSpanInMin)));

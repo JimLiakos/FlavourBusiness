@@ -126,14 +126,25 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
+
+        /// <exclude>Excluded</exclude>
+        [OOAdvantech.Json.JsonIgnore]
+        IClassified _MenuModelObject;
+
         /// <MetaDataID>{5741d9d1-3655-47f3-815c-6962fce85bf4}</MetaDataID>
-        public MenuModel.IClassified MenuModelObject
+        [OOAdvantech.Json.JsonIgnore]
+        public IClassified MenuModelObject
         {
             get
             {
-                return null;
+                if (_MenuModelObject == null)
+                    _MenuModelObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ItemsInfoObjectUri) as IClassified;
+
+                return _MenuModelObject;
             }
         }
+
+        
 
 
         /// <exclude>Excluded</exclude>

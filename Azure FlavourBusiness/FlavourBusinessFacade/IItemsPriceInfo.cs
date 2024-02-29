@@ -210,7 +210,7 @@ namespace FlavourBusinessFacade.PriceList
                     if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
                         return false;
 
-                }
+                }  
             }
 
             foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
