@@ -203,8 +203,9 @@
     <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
     <Compile Include="ViewModel\Preview\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="ViewModel\Preview\PseudoCode.cs" />
-    <Compile Include="ViewModel\PriceListsPresentation.cs" />
-    <Compile Include="ViewModel\PriceListTreeNode.cs" />
+    <Compile Include="ViewModel\PriceList\ItemsPriceInfoPresetation.cs" />
+    <Compile Include="ViewModel\PriceList\PriceListsPresentation.cs" />
+    <Compile Include="ViewModel\PriceList\PriceListTreeNode.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="Views\BackgroundSelectorWindow.xaml.cs">
       <DependentUpon>BackgroundSelectorWindow.xaml</DependentUpon>
@@ -257,6 +258,12 @@
     </Compile>
     <Compile Include="Views\MultiPriceHeadingsForm.xaml.cs">
       <DependentUpon>MultiPriceHeadingsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceList\ItemsPriceInfoView.xaml.cs">
+      <DependentUpon>ItemsPriceInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceList\PriceListPage.xaml.cs">
+      <DependentUpon>PriceListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PriceOptionsForm.xaml.cs">
       <DependentUpon>PriceOptionsForm.xaml</DependentUpon>
@@ -380,6 +387,14 @@
     <Page Include="Views\MultiPriceHeadingsForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PriceList\ItemsPriceInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PriceList\PriceListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PriceOptionsForm.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -902,6 +917,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\price-list16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price-lists32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price-list32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFUIElementObjectBind;
 
 namespace MenuDesigner.Views
 {
@@ -116,7 +117,7 @@ namespace MenuDesigner.Views
         {
             var ss = (sender as FrameworkElement).GetDataContextObject();
 
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
             {
                 dragDropTarget.DragEnter(sender, e);
@@ -135,7 +136,7 @@ namespace MenuDesigner.Views
         private void TreeNode_DragOver(object sender, DragEventArgs e)
         {
             var ss = (sender as FrameworkElement).GetDataContextObject();
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
             {
                 dragDropTarget.DragOver(sender, e);
@@ -153,7 +154,7 @@ namespace MenuDesigner.Views
         private void TreeNode_Drop(object sender, DragEventArgs e)
         {
             var ss = (sender as FrameworkElement).GetDataContextObject();
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
             {
                 dragDropTarget.Drop(sender, e);
@@ -165,7 +166,7 @@ namespace MenuDesigner.Views
 
         private void TreeNode_DragLeave(object sender, DragEventArgs e)
         {
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<FLBManager.ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
                 dragDropTarget.DragLeave(sender, e);
         }

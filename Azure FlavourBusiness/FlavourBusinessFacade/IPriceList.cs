@@ -1,4 +1,6 @@
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
+using System.Collections.Generic;
 
 namespace FlavourBusinessFacade.PriceList
 {
@@ -18,8 +20,12 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{a78aab39-d9ad-45cd-84cf-3fb9b609610c}</MetaDataID>
         void AddItemsPriceInfos(IItemsPriceInfo itemsPriceInfo);
+        IItemsPriceInfo NewPriceInfo(string uri, ItemsPriceInfoType include);
+
         /// <MetaDataID>{83f3e18b-a96c-4917-a4b5-c766bd336fff}</MetaDataID>
         void RemoveItemsPriceInfos(IItemsPriceInfo itemsPriceInfo);
+
+        void RemoveItemsPriceInfos(List<IItemsPriceInfo> itemsPriceInfos);
 
 
     }

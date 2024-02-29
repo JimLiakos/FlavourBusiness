@@ -673,4 +673,10 @@
   <data name="NewPriceListMenuItemHeader" xml:space="preserve">
     <value>New pricelist</value>
   </data>
+  <data name="PriceListPageTitle" xml:space="preserve">
+    <value>Edit pricelist</value>
+  </data>
+  <data name="ClearItemsPriceInfoMenuHeader" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

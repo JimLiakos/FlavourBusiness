@@ -187,6 +187,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string ClearItemsPriceInfoMenuHeader {
+            get {
+                return ResourceManager.GetString("ClearItemsPriceInfoMenuHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Company Resources.
         /// </summary>
         public static string CompanyResourcesLabel {
@@ -984,6 +993,15 @@ namespace MenuDesigner.Properties {
         public static string PriceLeaderTypeSelectionLabel {
             get {
                 return ResourceManager.GetString("PriceLeaderTypeSelectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit pricelist.
+        /// </summary>
+        public static string PriceListPageTitle {
+            get {
+                return ResourceManager.GetString("PriceListPageTitle", resourceCulture);
             }
         }
         

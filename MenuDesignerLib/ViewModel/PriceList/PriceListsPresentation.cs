@@ -13,13 +13,11 @@ using FlavourBusinessFacade;
 using FlavourBusinessToolKit;
 using System.Xml.Linq;
 using FlavourBusinessFacade.PriceList;
+using MenuItemsEditor.ViewModel;
 
-namespace MenuDesigner.ViewModel
+namespace MenuDesigner.ViewModel.PriceList
 {
-    public class PriceListPresentation
-    {
-    }
-
+ 
     public class PriceListsTreeNode : FBResourceTreeNode, IDragDropTarget
     {
 
@@ -44,11 +42,11 @@ namespace MenuDesigner.ViewModel
                 PriceListOwner.NewPriceList();
             });
 
-            PriceListsTreeNodes = new List<PriceListTreeNode>();
+            PriceListsTreeNodes = new List<PriceListPresentation>();
         }
 
         public RelayCommand NewPriceListMenuCommand { get; protected set; }
-        public List<PriceListTreeNode> PriceListsTreeNodes { get; }
+        public List<PriceListPresentation> PriceListsTreeNodes { get; }
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
@@ -141,10 +139,14 @@ namespace MenuDesigner.ViewModel
         }
 
 
+    
+
+
+
         public void DragEnter(object sender, DragEventArgs e)
         {
 
-            PriceListTreeNode priceListTreeNode = e.Data.GetData(typeof(PriceListTreeNode)) as PriceListTreeNode;
+            PriceListPresentation priceListTreeNode = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
             if (priceListTreeNode == null)
             {
                 e.Effects = DragDropEffects.None;
@@ -167,7 +169,8 @@ namespace MenuDesigner.ViewModel
         /// <MetaDataID>{475a0786-9795-489f-8dd0-96ce3002d55c}</MetaDataID>
         public void DragOver(object sender, DragEventArgs e)
         {
-            PriceListTreeNode priceListTreeNode = e.Data.GetData(typeof(PriceListTreeNode)) as PriceListTreeNode;
+
+            PriceListPresentation priceListTreeNode = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
             if (priceListTreeNode == null)
                 e.Effects = DragDropEffects.None;
             if (!PriceListOwner.CanAssignPriceList(priceListTreeNode))
@@ -178,7 +181,7 @@ namespace MenuDesigner.ViewModel
         public void Drop(object sender, DragEventArgs e)
         {
 
-            PriceListTreeNode priceListTreeNode = e.Data.GetData(typeof(PriceListTreeNode)) as PriceListTreeNode;
+            PriceListPresentation priceListTreeNode = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
 
 
             if (!PriceListOwner.CanAssignPriceList(priceListTreeNode))
@@ -201,13 +204,13 @@ namespace MenuDesigner.ViewModel
     public interface IPriceListsOwner
     {
         /// <MetaDataID>{1447e203-3caf-44cf-87b3-1d7553be40d5}</MetaDataID>
-        void AssignPriceList(PriceListTreeNode PriceListTreeNode);
+        void AssignPriceList(PriceListPresentation PriceListTreeNode);
         /// <MetaDataID>{6145fb52-5ba7-4e5c-bf04-d69f377b76ee}</MetaDataID>
-        bool CanAssignPriceList(PriceListTreeNode PriceListTreeNode);
+        bool CanAssignPriceList(PriceListPresentation PriceListTreeNode);
         /// <MetaDataID>{f03fbc94-4edf-44ab-8584-584eeacc6d84}</MetaDataID>
-        bool RemovePriceList(PriceListTreeNode PriceListTreeNode);
+        bool RemovePriceList(PriceListPresentation PriceListTreeNode);
         /// <MetaDataID>{a244212b-a172-4eca-9103-1ef4ffb76c5c}</MetaDataID>
-        List<PriceListTreeNode> PriceLists { get; }
+        List<PriceListPresentation> PriceLists { get; }
 
         /// <MetaDataID>{717680ce-943c-42f3-add9-e55557d3b2d8}</MetaDataID>
         bool NewPriceListAllowed { get; }

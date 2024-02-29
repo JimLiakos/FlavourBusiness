@@ -110,7 +110,7 @@ namespace FlavourBusinessManager.PriceList
         [BackwardCompatibilityID("+5")]
         public string Description
         {
-            get => _Description; 
+            get => _Description;
             set
             {
 
@@ -151,6 +151,52 @@ namespace FlavourBusinessManager.PriceList
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _ItemsPriceInfoType = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        string _ItemsInfoObjectUri;
+        private ItemsCategory itemsCategory;
+
+
+        public ItemsPriceInfo()
+        {
+
+        }
+
+        public ItemsPriceInfo(IItemsCategory itemsCategory)
+        {
+            _ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+
+            _Description = itemsCategory.Name;
+        }
+
+        /// <MetaDataID>{783a888e-ce32-429f-97b0-d2ea043bc308}</MetaDataID>
+        public ItemsPriceInfo(IMenuItem menuItem)
+        {
+            _ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+
+            _Description = menuItem.Name;
+        }
+
+
+
+        /// <MetaDataID>{8ff8374e-4373-44be-89c8-7968fd9dbc97}</MetaDataID>
+        [PersistentMember(nameof(_ItemsInfoObjectUri))]
+        [BackwardCompatibilityID("+7")]
+        public string ItemsInfoObjectUri
+        {
+            get => _ItemsInfoObjectUri; 
+            set
+            {
+                if (_ItemsInfoObjectUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ItemsInfoObjectUri = value;
                         stateTransition.Consistent = true;
                     }
                 }

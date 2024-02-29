@@ -941,7 +941,7 @@ namespace FlavourBusinessManager
                 AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
 
                 if (authUserRef.GetContextRoleObject<Organization>() == this)
-                    return PriceLists;
+                    return InternalPriceLists;
 
                 bool authorized = false;
 
@@ -951,7 +951,7 @@ namespace FlavourBusinessManager
 
                 if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                     throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
-                return PriceLists;
+                return InternalPriceLists;
             }
         }
 

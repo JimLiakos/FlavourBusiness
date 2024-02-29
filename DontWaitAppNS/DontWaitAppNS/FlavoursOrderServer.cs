@@ -55,11 +55,6 @@ using System.Drawing.Imaging;
 namespace DontWaitApp
 {
 
-
-
-
-
-
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
     public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
@@ -80,6 +75,10 @@ namespace DontWaitApp
                 if (NeighborhoodFoodServers.ContainsKey(location))
                     return Task.FromResult<List<HomeDeliveryServicePointInfo>>(NeighborhoodFoodServers[location]);
             }
+
+            Xamarin.Essentials.PhoneDialer phone;
+            
+
             NeighborhoodFoodServersTask = Task<List<HomeDeliveryServicePointInfo>>.Run(() =>
             {
                 System.Collections.Generic.List<HomeDeliveryServicePointInfo> servers = null;

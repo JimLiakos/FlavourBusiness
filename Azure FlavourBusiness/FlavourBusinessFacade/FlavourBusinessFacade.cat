@@ -30091,6 +30091,203 @@
 			    value      	"{7086923d-a949-4e1e-9bec-bbbc0430f181}"))
 		    quid       	"65D993320188"
 		    stereotype 	"Interface"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "OverridenPrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF80440261")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF80440261"
+			    type       	"System.Nullable<double>"
+			    exportControl 	"Public")
+			(object ClassAttribute "AmountDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e3d5df84-1222-4050-8576-c05471857bf0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF804402C2")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF804402C2"
+			    type       	"System.Nullable<double>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Pricerounding"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{ce678a17-0d59-4d88-89d4-35cc9de06524}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF80440328")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF80440328"
+			    type       	"System.Nullable<double>"
+			    exportControl 	"Public")
+			(object ClassAttribute "PercentageDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2b732863-faa1-4024-8bfb-5abff5af891d}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF80440389")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF80440389"
+			    type       	"System.Nullable<double>"
+			    exportControl 	"Public")
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5767c6cb-c6d3-44c1-bd5f-96b7fc3cc395}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF8045004F")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF8045004F"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "MenuModelObject"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{58e165c5-e9af-4c4d-854e-96cd6b6c145c}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF80450096")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"65DF80450096"
+			    type       	"MenuModel.IClassified"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemsPriceInfoType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3bb37c90-f505-4f75-90e1-484a9cedf2b7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF804500F3")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF804500F3"
+			    type       	"FlavourBusinessFacade.PriceList.ItemsPriceInfoType"
+			    exportControl 	"Public")
+			(object ClassAttribute "ItemsInfoObjectUri"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{60ff5e9f-feab-4c74-98ae-7de6f348e305}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65DF8045014D")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65DF8045014D"
+			    type       	"string"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
@@ -30198,6 +30395,24 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"65D993320188"
+			    compartment 	(object Compartment
+				Parent_View 	@535
+				location   	(1275, 733)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    charSet    	161
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	9
+				max_width  	1393)
 			    width      	418
 			    height     	244
 			    annotation 	8)

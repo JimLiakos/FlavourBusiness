@@ -8,9 +8,12 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade;
+using FlavourBusinessManager;
 using FLBManager.ViewModel.HumanResources;
 using MenuDesigner.ViewModel;
+using MenuDesigner.ViewModel.PriceList;
 using MenuItemsEditor;
+using MenuItemsEditor.ViewModel;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
@@ -78,6 +81,7 @@ namespace FLBManager.ViewModel
                 Translators = new HumanResources.TranslatorsTreeNode(this, translators);
 
 
+
             var menuMakers = Organization.GetMenuMakers(WorkerState.All);
             if (menuMakers.Count > 0)
                 MenuMakers = new HumanResources.MenuMakersTreeNode(this, menuMakers);
@@ -85,10 +89,10 @@ namespace FLBManager.ViewModel
             Menus = new MenusTreeNode(Properties.Resources.GraphicMenusTitle, this, this);
 
             foreach (var graphicMenuViewModel in graphicMenusPresentation.GraphicMenus)
-                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus,this, true, true);
+                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus, this, true, true);
 
 
-            PriceListsTreeNode = new PriceListsTreeNode(Properties.Resources.PriceListTitle, this,this);
+            PriceListsTreeNode = new PriceListsTreeNode(Properties.Resources.PriceListTitle, this, this);
 
             RestaurantMenus = restaurantMenus;
 
@@ -140,8 +144,23 @@ namespace FLBManager.ViewModel
         }
 
 
+        private RestaurantMenus _RestaurantMenus;
 
-        public RestaurantMenus RestaurantMenus { get; internal set; }
+        public RestaurantMenus RestaurantMenus
+        {
+            get => _RestaurantMenus; 
+            internal set
+            {
+
+                _RestaurantMenus = value;
+
+                if (value != null)
+                {
+                    PriceLists = (Organization as IResourceManager).PriceLists.Select(priceListStorageInstanceRef => new PriceListPresentation(this, priceListStorageInstanceRef, _RestaurantMenus.Members[0] as MenuViewModel)).ToList();
+                }
+
+            }
+        }
 
         private void GraphicMenusPresentation_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -149,7 +168,7 @@ namespace FLBManager.ViewModel
             {
                 if (!_GraphicMenus.ContainsKey(graphicMenuViewModel.StorageRef.StorageIdentity))
                 {
-                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus,this, true);
+                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus, this, true);
                     graphicMenuTreeNode.IsNodeExpanded = true;
                     Menus.IsNodeExpanded = true;
                     _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = graphicMenuTreeNode;
@@ -362,7 +381,7 @@ namespace FLBManager.ViewModel
         public bool RemoveGraphicMenu(GraphicMenuTreeNode graphicMenuTreeNodeToRemove)
         {
 
-            if( global::MenuDesigner.ViewModel.Menu.MenuDesignerHost.Current.Menu!=null&& global::MenuDesigner.ViewModel.Menu.MenuDesignerHost.Current.Menu.GraphicMenustorageRef.StorageIdentity== graphicMenuTreeNodeToRemove.GraphicMenuStorageRef.StorageIdentity)
+            if (global::MenuDesigner.ViewModel.Menu.MenuDesignerHost.Current.Menu != null && global::MenuDesigner.ViewModel.Menu.MenuDesignerHost.Current.Menu.GraphicMenustorageRef.StorageIdentity == graphicMenuTreeNodeToRemove.GraphicMenuStorageRef.StorageIdentity)
             {
                 StyleableWindow.WpfMessageBox.Show("Graphic menu", string.Format("The graphic menu '{0}' is opened from menu designer.{1} Close menu designer and try again.", graphicMenuTreeNodeToRemove.Name, System.Environment.NewLine), MessageBoxButton.OK, StyleableWindow.MessageBoxImage.Information);
                 return false;
@@ -428,32 +447,30 @@ namespace FLBManager.ViewModel
             MenuDesigner.ViewModel.Menu.MenuDesignerHost.NewGraphicMenu();
         }
 
-        public void AssignPriceList(PriceListTreeNode PriceListTreeNode)
+        public void AssignPriceList(PriceListPresentation PriceListTreeNode)
         {
             throw new NotImplementedException();
         }
 
-        public bool CanAssignPriceList(PriceListTreeNode PriceListTreeNode)
+        public bool CanAssignPriceList(PriceListPresentation PriceListTreeNode)
         {
             throw new NotImplementedException();
         }
 
-        public bool RemovePriceList(PriceListTreeNode PriceListTreeNode)
+        public bool RemovePriceList(PriceListPresentation PriceListTreeNode)
         {
             throw new NotImplementedException();
         }
 
         public void NewPriceList()
         {
+            OrganizationStorageRef priceListStorageRef = (Organization as IResourceManager).NewPriceList();
 
-            OrganizationStorageRef priceListStorageRef= (Organization as IResourceManager).NewPriceList();
-            PriceLists.Add(new PriceListTreeNode(this, priceListStorageRef));
+            PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, RestaurantMenus.Members[0] as MenuViewModel));
             PriceListsTreeNode.Refresh();
-
-            
         }
 
-        
+
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
@@ -593,7 +610,7 @@ namespace FLBManager.ViewModel
                 if (Menus != null)
                     members.Add(Menus);
 
-                if(PriceListsTreeNode!=null)
+                if (PriceListsTreeNode != null)
                     members.Add(PriceListsTreeNode);
 
                 if (this.MenuMakers != null)
@@ -627,6 +644,7 @@ namespace FLBManager.ViewModel
         /// <MetaDataID>{0398ff9f-8532-4cd2-bcdb-1b3dc7831ed4}</MetaDataID>
         private TranslatorsTreeNode Translators;
         private MenuMakersTreeNode MenuMakers;
+
 
         /// <MetaDataID>{7312b185-975d-4372-b901-0d1c040134b7}</MetaDataID>
         public FBResourceTreeNode Parent
@@ -675,7 +693,7 @@ namespace FLBManager.ViewModel
 
         public bool NewGraphicMenuAllowed => true;
 
-        public List<PriceListTreeNode> PriceLists { get; set; } = new List<PriceListTreeNode>();
+        public List<PriceListPresentation> PriceLists { get; set; } = new List<PriceListPresentation>();
 
         public bool NewPriceListAllowed => true;
 

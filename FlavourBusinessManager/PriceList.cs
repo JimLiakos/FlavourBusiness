@@ -1,4 +1,8 @@
 using FlavourBusinessFacade.PriceList;
+using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.ServicesContextResources;
+using MenuModel;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
@@ -59,6 +63,68 @@ namespace FlavourBusinessManager.PriceList
                 ItemsPrices.Remove(itemsPriceInfo);
                 stateTransition.Consistent = true;
             }
+        }
+
+        public event ObjectChangeStateHandle ObjectChangeState;
+
+        public void RemoveItemsPriceInfos(List<IItemsPriceInfo> itemsPriceInfos)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var itemsPreparationInfo in itemsPriceInfos)
+                    this._ItemsPrices.Remove(itemsPreparationInfo);
+                stateTransition.Consistent = true;
+            }
+            ObjectChangeState?.Invoke(this, null);
+            
+        }
+
+        public IItemsPriceInfo NewPriceInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
+        {
+            try
+            {
+                var obj = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
+
+                if (obj is MenuModel.ItemsCategory)
+                {
+                    ItemsPriceInfo itemsPiceInfo = new ItemsPriceInfo(obj as MenuModel.ItemsCategory);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPiceInfo);
+                        this._ItemsPrices.Add(itemsPiceInfo);
+                        itemsPiceInfo.ItemsPriceInfoType = itemsPriceInfoType;
+
+                        stateTransition.Consistent = true;
+                    }
+
+                    return itemsPiceInfo;
+                }
+
+                if (obj is MenuModel.IMenuItem)
+                {
+                    ItemsPriceInfo itemsPiceInfo = new ItemsPriceInfo(obj as MenuModel.IMenuItem);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPiceInfo);
+                        this._ItemsPrices.Add(itemsPiceInfo);
+                        itemsPiceInfo.ItemsPriceInfoType = itemsPriceInfoType;
+                        stateTransition.Consistent = true;
+                    }
+
+                    return itemsPiceInfo;
+
+                }
+            }
+            finally
+            {
+                ObjectChangeState?.Invoke(this, null);
+            }
+
+            return null;
+
         }
     }
 }

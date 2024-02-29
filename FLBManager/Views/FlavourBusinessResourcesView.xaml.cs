@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FLBManager.ViewModel;
 using MenuDesigner.ViewModel;
+using WPFUIElementObjectBind;
 
 namespace FLBManager.Views
 {
@@ -89,7 +90,7 @@ namespace FLBManager.Views
 
         private void TreeNode_DragOver(object sender, DragEventArgs e)
         {
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
                 dragDropTarget.DragOver(sender, e);
             else
@@ -98,7 +99,7 @@ namespace FLBManager.Views
 
         private void TreeNode_Drop(object sender, DragEventArgs e)
         {
-            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<ViewModel.IDragDropTarget>();
+            var dragDropTarget = (sender as FrameworkElement).GetDataContextObject<IDragDropTarget>();
             if (dragDropTarget != null)
                 dragDropTarget.Drop(sender, e);
             else

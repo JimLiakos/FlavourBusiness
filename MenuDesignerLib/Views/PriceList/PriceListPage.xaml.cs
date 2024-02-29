@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StyleableWindow;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +15,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFUIElementObjectBind;
 
-namespace FLBManager.Views.Preparation
+namespace MenuDesigner.Views.PriceList
 {
     /// <summary>
-    /// Interaction logic for PreparationStationItemsView.xaml
+    /// Interaction logic for PrriceListPage.xaml
     /// </summary>
-    /// <MetaDataID>{e120e8a6-1e10-4dd7-ba73-8da0943ff7bf}</MetaDataID>
-    public partial class PreparationStationItemsView : UserControl
+    public partial class PriceListPage : PageDialogViewEmulator
     {
-        public PreparationStationItemsView()
+        public PriceListPage()
         {
             InitializeComponent();
+
+            //Title="{x:Static resx:Resources.PriceListPageTitle}" 
         }
 
         private void DragEnter(object sender, DragEventArgs e)
@@ -62,7 +64,7 @@ namespace FLBManager.Views.Preparation
             }
             else
                 e.Effects = DragDropEffects.None;
-            
+
         }
 
         private void DragOver(object sender, DragEventArgs e)
@@ -75,9 +77,7 @@ namespace FLBManager.Views.Preparation
             else
                 e.Effects = DragDropEffects.None;
 
-            
-        }
 
-       
+        }
     }
 }
