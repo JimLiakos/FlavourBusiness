@@ -259,4 +259,13 @@
   <data name="DesignItem/infoVieMenuItemHeader" xml:space="preserve">
     <value>Item info view </value>
   </data>
+  <data name="AmountDiscountLabel" xml:space="preserve">
+    <value>Ποσοτική έκπτωση</value>
+  </data>
+  <data name="PercentageDiscoundLabel" xml:space="preserve">
+    <value>Ποσοστιαία έκπτωση</value>
+  </data>
+  <data name="PriceOverrideLabel" xml:space="preserve">
+    <value>Νέα τιμή</value>
+  </data>
 </root>

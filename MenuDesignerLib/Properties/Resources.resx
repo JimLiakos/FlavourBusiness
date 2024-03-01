@@ -679,4 +679,13 @@
   <data name="ClearItemsPriceInfoMenuHeader" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="AmountDiscountLabel" xml:space="preserve">
+    <value>Amount discount</value>
+  </data>
+  <data name="PercentageDiscoundLabel" xml:space="preserve">
+    <value>Percentage discount</value>
+  </data>
+  <data name="PriceOverrideLabel" xml:space="preserve">
+    <value>New price</value>
+  </data>
 </root>

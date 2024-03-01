@@ -684,6 +684,7 @@
     <Resource Include="Resources\Images\Metro\language24.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\Metro\low-price24.png" />
     <Resource Include="Resources\Images\Metro\Menu.png" />
   </ItemGroup>
   <ItemGroup>
@@ -924,6 +925,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Metro\price-list32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\low-price16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\percDiscount16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\percDiscount24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Metro\price24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

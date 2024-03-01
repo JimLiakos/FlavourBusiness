@@ -85,6 +85,10 @@ namespace MenuDesigner.ViewModel.PriceList
                 RemoveItemsPreparationInfo();
             });
 
+            ToggleDiscoundTypeCommand= new RelayCommand((object sender) =>
+            {
+                ToggleDiscoundType();
+            });
 
 
 
@@ -95,10 +99,22 @@ namespace MenuDesigner.ViewModel.PriceList
 
 
         }
+        public bool DiscoundTypesPopupOpen { get; set; }
+        private void ToggleDiscoundType()
+        {
+            DiscoundTypesPopupOpen = !DiscoundTypesPopupOpen;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DiscoundTypesPopupOpen)));
+        }
+
+
+        public List<DiscoundTypeViewModel> DiscoundTypes { get; } = new List<DiscoundTypeViewModel>() { new DiscoundTypeViewModel(MenuDesigner.ViewModel.PriceList.DiscoundTypes.PriceOverride),
+        new DiscoundTypeViewModel(MenuDesigner.ViewModel.PriceList.DiscoundTypes.AmountDiscount),
+        new DiscoundTypeViewModel(MenuDesigner.ViewModel.PriceList.DiscoundTypes.PercentageDiscound)};
+        //DiscoundTypeViewModel
 
 
         /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
-        public ItemsPriceInfoPresentation(ItemsPriceInfoPresentation parent, PriceListPresentation priceListPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent)
+        public ItemsPriceInfoPresentation(ItemsPriceInfoPresentation parent, PriceListPresentation priceListPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent) 
         {
             EditMode = editMode;
             PriceListPresentation = priceListPresentation;
@@ -114,7 +130,10 @@ namespace MenuDesigner.ViewModel.PriceList
             {
                 RemoveItemsPreparationInfo();
             });
-
+            ToggleDiscoundTypeCommand= new RelayCommand((object sender) =>
+            {
+                ToggleDiscoundType();
+            });
 
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
@@ -154,6 +173,10 @@ namespace MenuDesigner.ViewModel.PriceList
             RemoveItemsPreparationInfoCommand = new RelayCommand((object sender) =>
             {
                 RemoveItemsPreparationInfo();
+            });
+            ToggleDiscoundTypeCommand= new RelayCommand((object sender) =>
+            {
+                ToggleDiscoundType();
             });
 
 
@@ -402,7 +425,7 @@ namespace MenuDesigner.ViewModel.PriceList
                 if (ItemsCategory != null)
                     return ItemsCategory.Name;
                 else if (this.MenuItem != null)
-                    return this.MenuItem.Name;
+                    return MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector!=null).Count()>0 ? $"{MenuItem.Name}  {MenuItem.MenuItemPrice.Name}" : MenuItem.Name;
                 else
                     return "";
             }
@@ -484,7 +507,7 @@ namespace MenuDesigner.ViewModel.PriceList
                 }
                 else
                 {
-                    if(MenuItem!=null)
+                    if (MenuItem!=null)
                     {
                         _Members = MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null).Select(x => new ItemSelectorPriceInfo(this, MenuItem, x)).OfType<FBResourceTreeNode>().ToList();
                         return _Members;
@@ -500,7 +523,7 @@ namespace MenuDesigner.ViewModel.PriceList
         public RelayCommand DeleteCommand { get; protected set; }
         public RelayCommand RemoveItemsPreparationInfoCommand { get; protected set; }
 
-
+        public RelayCommand ToggleDiscoundTypeCommand { get; protected set; }
 
 
         /// <MetaDataID>{261115fe-509b-4c99-bb24-709235bb932f}</MetaDataID>
@@ -702,4 +725,67 @@ namespace MenuDesigner.ViewModel.PriceList
         }
     }
 
+
+    public enum DiscoundTypes
+    {
+        PriceOverride,
+        AmountDiscount,
+        PercentageDiscound
+    }
+
+    public class DiscoundTypeViewModel : MarshalByRefObject, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        DiscoundTypes DiscoundType;
+        public DiscoundTypeViewModel(DiscoundTypes discoundType) 
+        {
+            DiscoundType= discoundType;
+        }
+
+        public string Description
+        {
+            get
+            {
+                switch (DiscoundType)
+                {
+                    case DiscoundTypes.PriceOverride:
+                        return Properties.Resources.PriceOverrideLabel;
+                        
+                    case DiscoundTypes.AmountDiscount:
+                        return Properties.Resources.AmountDiscountLabel;
+                        
+                    case DiscoundTypes.PercentageDiscound:
+                        return Properties.Resources.PercentageDiscoundLabel;
+                    default:
+                        return Properties.Resources.PriceOverrideLabel;
+                }
+            }
+        }
+
+        public  ImageSource Image
+        {
+            get
+            {
+
+                switch (DiscoundType)
+                {
+                    case DiscoundTypes.PriceOverride:
+                        return new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/price24.png"));
+
+                    case DiscoundTypes.AmountDiscount:
+                        return new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/low-price24.png"));
+
+                    case DiscoundTypes.PercentageDiscound:
+                        return new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/percDiscount24.png"));
+                    default:
+                        return new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/price24.png"));
+                }
+
+            }
+        }
+    }
 }
+
+
+

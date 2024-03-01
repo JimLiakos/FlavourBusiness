@@ -160,6 +160,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount discount.
+        /// </summary>
+        public static string AmountDiscountLabel {
+            get {
+                return ResourceManager.GetString("AmountDiscountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Background.
         /// </summary>
         public static string BackgroundMenuTitle {
@@ -835,6 +844,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Percentage discount.
+        /// </summary>
+        public static string PercentageDiscoundLabel {
+            get {
+                return ResourceManager.GetString("PercentageDiscoundLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Food Preparation.
         /// </summary>
         public static string PreparationSattionsTitle {
@@ -1020,6 +1038,15 @@ namespace MenuDesigner.Properties {
         public static string PriceOptionsDetailsPrompt {
             get {
                 return ResourceManager.GetString("PriceOptionsDetailsPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New price.
+        /// </summary>
+        public static string PriceOverrideLabel {
+            get {
+                return ResourceManager.GetString("PriceOverrideLabel", resourceCulture);
             }
         }
         

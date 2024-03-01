@@ -162,7 +162,7 @@ namespace FLBManager.ViewModel
                         priceListStorageRef.UploadService=Organization as IUploadService;
                         PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel));
                     }
-
+                    PriceListsTreeNode?.Refresh();
 
 
                 }

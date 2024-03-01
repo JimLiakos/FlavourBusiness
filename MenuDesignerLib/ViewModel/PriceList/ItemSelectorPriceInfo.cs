@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using WPFUIElementObjectBind;
 
@@ -39,6 +40,28 @@ namespace MenuDesigner.ViewModel.PriceList
         public override void SelectionChange()
         {
             throw new NotImplementedException();
+        }
+
+        public Visibility PriceVisibility
+        {
+            get
+            {
+
+                return Visibility.Visible;
+
+
+
+            }
+            set { }
+        }
+        public string PriceText
+        {
+            get
+            {
+
+                return ItemPrice?.Price.ToString("C");
+            }
+            set { }
         }
     }
 }
