@@ -203,6 +203,7 @@
     <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
     <Compile Include="ViewModel\Preview\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="ViewModel\Preview\PseudoCode.cs" />
+    <Compile Include="ViewModel\PriceList\ItemSelectorPriceInfo.cs" />
     <Compile Include="ViewModel\PriceList\ItemsPriceInfoPresetation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListsPresentation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListTreeNode.cs" />

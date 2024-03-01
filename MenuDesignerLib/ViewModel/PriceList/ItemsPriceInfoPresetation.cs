@@ -1,23 +1,22 @@
 ﻿using FlavourBusinessFacade.ServicesContextResources;
 using FLBManager.ViewModel;
-using MenuItemsEditor.ViewModel;
+
 using MenuModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using UIBaseEx;
 using WPFUIElementObjectBind;
 using FlavourBusinessFacade.PriceList;
+using System.Windows;
 
 namespace MenuDesigner.ViewModel.PriceList
 {
-   
+
     public class ItemsPriceInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
         public override void RemoveChild(FBResourceTreeNode treeNode)
@@ -44,7 +43,7 @@ namespace MenuDesigner.ViewModel.PriceList
         internal IItemsCategory ItemsCategory;
 
 
-    
+
 
         /// <summary>
         /// When EditMode is true you can include item in preparation station, exclude or edit item preparation info.
@@ -76,7 +75,7 @@ namespace MenuDesigner.ViewModel.PriceList
             PriceListPresentation = priceListPresentation;
             ItemsCategory = menu.RootCategory;
 
-           
+
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
@@ -85,9 +84,9 @@ namespace MenuDesigner.ViewModel.PriceList
             {
                 RemoveItemsPreparationInfo();
             });
-            
 
-            
+
+
 
             //System.Windows.Input.RoutedCommand((object sender) =>
             //{
@@ -115,8 +114,8 @@ namespace MenuDesigner.ViewModel.PriceList
             {
                 RemoveItemsPreparationInfo();
             });
-            
-        
+
+
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
 
@@ -132,7 +131,7 @@ namespace MenuDesigner.ViewModel.PriceList
 
                 UpdatePresentationItems();
 
-                
+
                 foreach (var member in Members.OfType<ItemsPriceInfoPresentation>())
                 {
                     member.Refresh();
@@ -157,12 +156,12 @@ namespace MenuDesigner.ViewModel.PriceList
                 RemoveItemsPreparationInfo();
             });
 
-        
+
 
 
         }
 
-   
+
 
 
         /// <MetaDataID>{2a48dd97-5dfd-4f46-aabb-a776aa182436}</MetaDataID>
@@ -170,7 +169,7 @@ namespace MenuDesigner.ViewModel.PriceList
         /// <MetaDataID>{760c0787-688d-4974-8c42-a58092d27c33}</MetaDataID>
         ViewModelWrappers<MenuModel.IMenuItem, ItemsPriceInfoPresentation> MenuItems = new ViewModelWrappers<MenuModel.IMenuItem, ItemsPriceInfoPresentation>();
 
-        
+
 
         /// <summary>
         /// Defines when ItemsPreparationInfoPresentation node has items which can prepared from preparation station 
@@ -210,7 +209,7 @@ namespace MenuDesigner.ViewModel.PriceList
             }
         }
 
-        
+
 
 
 
@@ -240,11 +239,11 @@ namespace MenuDesigner.ViewModel.PriceList
 
             set
             {
-               
+
                 base.Edit = value;
             }
         }
-     
+
 
 
 
@@ -310,6 +309,30 @@ namespace MenuDesigner.ViewModel.PriceList
 
             }
         }
+
+        public Visibility PriceVisibility
+        {
+            get
+            {
+                if (MenuItem != null)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Hidden;
+
+
+            }
+            set { }
+        }
+        public string PriceText
+        {
+            get
+            {
+
+                return MenuItem?.MenuItemPrice?.Price.ToString("C");
+            }
+            set { }
+        }
+
         /// <summary>
         /// Some times a change in items preparation info affect nodes in preparation station infos hierarchy
         /// this method update the  hierarchy if needed
@@ -387,13 +410,13 @@ namespace MenuDesigner.ViewModel.PriceList
             {
             }
         }
-        
 
-        
 
-        
 
-        
+
+
+
+
 
         /// <MetaDataID>{5b29545c-fe12-4953-ae37-58f532044a8c}</MetaDataID>
         public override ImageSource TreeImage
@@ -429,13 +452,13 @@ namespace MenuDesigner.ViewModel.PriceList
                 if (ItemsCategory != null)
                 {
 
-                 
+
 
 
                     if (EditMode)
                     {
                         var itemsPriceInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
-                                                                  select SubCategories.GetViewModelFor(subCategory, this, PriceListPresentation, subCategory, EditMode)).Union(
+                                                            select SubCategories.GetViewModelFor(subCategory, this, PriceListPresentation, subCategory, EditMode)).Union(
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
                             select MenuItems.GetViewModelFor(menuItem, this, PriceListPresentation, menuItem, EditMode)));
 
@@ -447,7 +470,7 @@ namespace MenuDesigner.ViewModel.PriceList
                     else
                     {
                         var itemsPriceInfosPresentations = (from subCategory in ItemsCategory.ClassifiedItems.OfType<MenuModel.IItemsCategory>()
-                                                                  select SubCategories.GetViewModelFor(subCategory, this, PriceListPresentation, subCategory, EditMode)).Union(
+                                                            select SubCategories.GetViewModelFor(subCategory, this, PriceListPresentation, subCategory, EditMode)).Union(
                            (from menuItem in ItemsCategory.ClassifiedItems.OfType<MenuModel.MenuItem>()
                             select MenuItems.GetViewModelFor(menuItem, this, PriceListPresentation, menuItem, EditMode)));
 
@@ -460,7 +483,15 @@ namespace MenuDesigner.ViewModel.PriceList
                     }
                 }
                 else
-                    return new List<FBResourceTreeNode>();
+                {
+                    if(MenuItem!=null)
+                    {
+                        _Members = MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null).Select(x => new ItemSelectorPriceInfo(this, MenuItem, x)).OfType<FBResourceTreeNode>().ToList();
+                        return _Members;
+                    }
+
+                    return members;
+                }
             }
         }
 
@@ -469,11 +500,11 @@ namespace MenuDesigner.ViewModel.PriceList
         public RelayCommand DeleteCommand { get; protected set; }
         public RelayCommand RemoveItemsPreparationInfoCommand { get; protected set; }
 
-        
-        
+
+
 
         /// <MetaDataID>{261115fe-509b-4c99-bb24-709235bb932f}</MetaDataID>
-        
+
 
 
         /// <exclude>Excluded</exclude>
@@ -497,7 +528,7 @@ namespace MenuDesigner.ViewModel.PriceList
 
 
 
-                   
+
 
                     if (EditMode)
                     {
@@ -598,12 +629,12 @@ namespace MenuDesigner.ViewModel.PriceList
                     itemsPreparationInfoPresentation.Refresh(menuItemWithChanges);
 
 
-          
+
 
 
 
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-                
+
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
             }
 
@@ -664,9 +695,9 @@ namespace MenuDesigner.ViewModel.PriceList
                 itemsPreparationInfoPresentation.Refresh();
             _Members = null;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-            
+
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));
-            
+
 
         }
     }

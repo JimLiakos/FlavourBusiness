@@ -39,12 +39,14 @@ namespace MenuItemsEditor.ViewModel.Proxies
     public sealed class CNSPr_IMenuItemTSViewModel_PreparationItemChanged : OOAdvantech.Remoting.EventConsumerHandler
     {
         
-        public void Invoke(FlavourBusinessManager.RoomService.ItemPreparation preparationItem)
+        public void Invoke(FlavourBusinessManager.RoomService.ItemPreparation preparationItem, MenuModel.IMenuItem MenuItem)
         {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
             args[0] = preparationItem;
             argsTypes[0] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
+            args[1] = MenuItem;
+            argsTypes[1] = typeof(MenuModel.IMenuItem);
             object retValue = this.Invoke(typeof(MenuItemsEditor.ViewModel.PreparationItemChangedHandle), "Invoke", args, argsTypes);
         }
         
@@ -56,6 +58,31 @@ namespace MenuItemsEditor.ViewModel.Proxies
         public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
         {
             eventInfo.RemoveEventHandler(target, new MenuItemsEditor.ViewModel.PreparationItemChangedHandle(this.Invoke));
+        }
+    }
+    
+    public sealed class CNSPr_IStyleSheetItemInfo_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(object _object, string member)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = _object;
+            argsTypes[0] = typeof(object);
+            args[1] = member;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(OOAdvantech.ObjectChangeStateHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new OOAdvantech.ObjectChangeStateHandle(this.Invoke));
         }
     }
 }

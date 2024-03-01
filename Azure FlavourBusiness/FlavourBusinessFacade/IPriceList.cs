@@ -20,11 +20,13 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{a78aab39-d9ad-45cd-84cf-3fb9b609610c}</MetaDataID>
         void AddItemsPriceInfos(IItemsPriceInfo itemsPriceInfo);
+        /// <MetaDataID>{516aa500-46ce-4c94-9649-cff8228c611a}</MetaDataID>
         IItemsPriceInfo NewPriceInfo(string uri, ItemsPriceInfoType include);
 
         /// <MetaDataID>{83f3e18b-a96c-4917-a4b5-c766bd336fff}</MetaDataID>
         void RemoveItemsPriceInfos(IItemsPriceInfo itemsPriceInfo);
 
+        /// <MetaDataID>{e01da134-72d7-4331-912d-98d67e8e4bd7}</MetaDataID>
         void RemoveItemsPriceInfos(List<IItemsPriceInfo> itemsPriceInfos);
 
 

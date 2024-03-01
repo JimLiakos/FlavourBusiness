@@ -33328,7 +33328,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+					(object Message "ItemsServing( )"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33350,7 +33350,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+					(object Message "RaiseItemsStateChanged( )"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33372,7 +33372,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
+					(object Message "ItemsServing( )"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33394,7 +33394,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -33439,7 +33439,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -37237,7 +37237,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -37323,7 +37323,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+				label      	"RaiseItemsStateChanged( )"
 				pctDist    	1.059687
 				height     	107
 				orientation 	0)
@@ -37409,7 +37409,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<string>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -37495,7 +37495,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -37744,7 +37744,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)

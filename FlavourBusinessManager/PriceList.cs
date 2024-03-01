@@ -19,6 +19,8 @@ namespace FlavourBusinessManager.PriceList
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemsPriceInfo> _ItemsPrices = new OOAdvantech.Collections.Generic.Set<IItemsPriceInfo>();
         /// <MetaDataID>{5bc8adba-d38c-4992-98a6-6a3ce5881759}</MetaDataID>
+        [PersistentMember(nameof(_ItemsPrices))]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+1")]
         public System.Collections.Generic.List<FlavourBusinessFacade.PriceList.IItemsPriceInfo> ItemsPrices => _ItemsPrices.ToThreadSafeList();
 
@@ -49,7 +51,7 @@ namespace FlavourBusinessManager.PriceList
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                ItemsPrices.Add(itemsPriceInfo);
+                _ItemsPrices.Add(itemsPriceInfo);
                 stateTransition.Consistent = true;
             }
 
@@ -60,13 +62,14 @@ namespace FlavourBusinessManager.PriceList
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                ItemsPrices.Remove(itemsPriceInfo);
+                _ItemsPrices.Remove(itemsPriceInfo);
                 stateTransition.Consistent = true;
             }
         }
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
+        /// <MetaDataID>{2cfb3a5d-e099-48a6-917a-848ac5fae692}</MetaDataID>
         public void RemoveItemsPriceInfos(List<IItemsPriceInfo> itemsPriceInfos)
         {
 
@@ -77,9 +80,10 @@ namespace FlavourBusinessManager.PriceList
                 stateTransition.Consistent = true;
             }
             ObjectChangeState?.Invoke(this, null);
-            
+
         }
 
+        /// <MetaDataID>{cbbb4db7-0a70-4867-a942-e58184352c3a}</MetaDataID>
         public IItemsPriceInfo NewPriceInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
         {
             try
