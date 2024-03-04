@@ -139,6 +139,62 @@ namespace MenuItemsEditor.Views
 
 
 
+        public TextAlignment TextAlignment
+        {
+            get { return (TextAlignment)GetValue(TextHorizontalAlignmentProperty); }
+            set { SetValue(TextHorizontalAlignmentProperty, value); }
+        }
+        
+
+        public static readonly DependencyProperty TextHorizontalAlignmentProperty =
+                    DependencyProperty.Register(
+                    "TextAlignment",
+                    typeof(TextAlignment),
+                    typeof(ContextPriceTextBox),
+                    new PropertyMetadata(TextAlignment.Left, new PropertyChangedCallback(TextHorizontalAlignmentPropertyChangedCallback)));
+
+        public static void TextHorizontalAlignmentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ContextPriceTextBox)
+                (d as ContextPriceTextBox).TextHorizontalAlignmentPropertyChanged();
+            
+        }
+        private void TextHorizontalAlignmentPropertyChanged()
+        {
+            PriceTextBox.TextAlignment = TextAlignment;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TextAlignment)));
+        }
+
+
+
+
+
+        //public bool OverrideAllowed
+        //{
+        //    get { return (bool)GetValue(OverrideAllowedProperty); }
+        //    set { SetValue(OverrideAllowedProperty, value); }
+        //}
+
+
+        //public static readonly DependencyProperty OverrideAllowedProperty =
+        //            DependencyProperty.Register(
+        //            "OverrideAllowed",
+        //            typeof(bool),
+        //            typeof(ContextPriceTextBox),
+        //            new PropertyMetadata(false, new PropertyChangedCallback(TextHorizontalAlignmentPropertyChangedCallback)));
+
+        //public static void OverrideAllowedPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is ContextPriceTextBox)
+        //        (d as ContextPriceTextBox).OverrideAllowedPropertyChanged();
+
+        //}
+        //private void OverrideAllowedPropertyChanged()
+        //{
+            
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OverrideAllowed)));
+        //}
+
 
         public decimal Price
         {

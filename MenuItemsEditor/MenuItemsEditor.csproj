@@ -142,6 +142,10 @@
     <Compile Include="ViewModel\PreparationOptionViewModel.cs" />
     <Compile Include="ViewModel\PreparationScaledOptionViewModel.cs" />
     <Compile Include="ViewModel\PriceContextViewModel.cs" />
+    <Compile Include="ViewModel\PriceList\ItemSelectorPriceInfo.cs" />
+    <Compile Include="ViewModel\PriceList\ItemsPriceInfoPresetation.cs" />
+    <Compile Include="ViewModel\PriceList\PriceListsPresentation.cs" />
+    <Compile Include="ViewModel\PriceList\PriceListTreeNode.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="ViewModel\ScaleTypesViewModel.cs" />
     <Compile Include="ViewModel\ScaleTypeViewModel.cs" />
@@ -180,6 +184,12 @@
     </Compile>
     <Compile Include="Views\PreparationOptionView.xaml.cs">
       <DependentUpon>PreparationOptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceList\ItemsPriceInfoView.xaml.cs">
+      <DependentUpon>ItemsPriceInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceList\PriceListPage.xaml.cs">
+      <DependentUpon>PriceListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RestaurantMenuItemsTreeView.xaml.cs">
       <DependentUpon>RestaurantMenuItemsTreeView.xaml</DependentUpon>
@@ -236,6 +246,14 @@
     <Page Include="Views\PreparationOptionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PriceList\ItemsPriceInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PriceList\PriceListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RestaurantMenuItemsTreeView.xaml">
       <SubType>Designer</SubType>
@@ -338,6 +356,10 @@
       <Project>{0072f0d5-644d-4343-a34d-03ae24eba9fe}</Project>
       <Name>FlavourBusinessFacade</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessToolKit\FlavourBusinessToolKit.csproj">
+      <Project>{51aca19c-b6bc-4e33-b65b-f3112e93def9}</Project>
+      <Name>FlavourBusinessToolKit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BingAPILibrary\BingAPILibrary.csproj">
       <Project>{0082f653-f24c-470c-b6d8-15f0ad290592}</Project>
       <Name>BingAPILibrary</Name>
@@ -349,6 +371,10 @@
     <ProjectReference Include="..\FlavourBusinessManager\FlavourBusinessManager.csproj">
       <Project>{25aec1bf-1882-41c8-8b4a-b3b3e1ef624d}</Project>
       <Name>FlavourBusinessManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlavourBusinessUI\FlavourBusinessUI.csproj">
+      <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
+      <Name>FlavourBusinessUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\MenuModel\MenuModel.csproj">
       <Project>{3bd146ea-5976-40db-8d3a-68b7c20054c5}</Project>
@@ -585,6 +611,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Image\DefaultMealCourse.svg" />
+    <Resource Include="Image\percDiscount16.png" />
+    <Resource Include="Image\percDiscount24.png" />
+    <Resource Include="Image\price-list16.png" />
+    <Resource Include="Image\price-list24.png" />
+    <Resource Include="Image\price-list32.png" />
+    <Resource Include="Image\price-lists16.png" />
+    <Resource Include="Image\price-lists24.png" />
+    <Resource Include="Image\price-lists32.png" />
+    <Resource Include="Image\price16.png" />
+    <Resource Include="Image\price24.png" />
+    <Resource Include="Image\low-price16.png" />
+    <Resource Include="Image\low-price24.png" />
     <Resource Include="Image\font-size16.png" />
     <Resource Include="Image\DefaultMealCourse16.png" />
     <Resource Include="Image\DefaultMealCourse32.png" />

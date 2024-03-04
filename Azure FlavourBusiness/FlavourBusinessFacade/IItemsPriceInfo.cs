@@ -1,7 +1,9 @@
 using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel;
 using OOAdvantech.MetaDataRepository;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FlavourBusinessFacade.PriceList
@@ -64,10 +66,10 @@ namespace FlavourBusinessFacade.PriceList
         public static bool Excluded(this IItemsPriceInfo itemsPriceInfo)
         {
             return (itemsPriceInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
-         
+
         }
 
-    
+
 
 
         /// <MetaDataID>{363235af-9772-4e3b-9c43-31d48fdf75cd}</MetaDataID>
@@ -108,11 +110,11 @@ namespace FlavourBusinessFacade.PriceList
             return itemsPreparationInfoHierarchy;
         }
 
-     
+
         /// <MetaDataID>{b3200fb3-30f9-492c-afab-de4c31bcd06c}</MetaDataID>
         public static System.Collections.Generic.List<IItemsPriceInfo> GetItemsPriceInfo(this IPriceList priceList, IItemsCategory itemsCategory)
         {
-            System.Collections.Generic.List<IItemsPriceInfo> itemsPreparationInfoHierarchy = new  System.Collections.Generic.List<IItemsPriceInfo>();
+            System.Collections.Generic.List<IItemsPriceInfo> itemsPreparationInfoHierarchy = new System.Collections.Generic.List<IItemsPriceInfo>();
             var itemsPreparationInfos = (from itemsInfo in priceList.ItemsPrices
                                          select new
                                          {
@@ -142,6 +144,15 @@ namespace FlavourBusinessFacade.PriceList
 
 
             return itemsPreparationInfoHierarchy;
+        }
+
+        public static decimal RoundPriceToNearest(this IPriceList priceList, decimal price, double nearTo)
+        {
+            if (nearTo == 0 || nearTo > 1)
+                return price;
+
+            return (decimal)(Math.Round((double)price * (1 / nearTo)) / (1 / nearTo));
+
         }
 
 
@@ -186,10 +197,34 @@ namespace FlavourBusinessFacade.PriceList
 
                 }
             }
+            if (priceList.PriceListMainItemsPriceInfo.PercentageDiscount != null)
+                return true;
+
             return false;
         }
 
 
+
+
+
+
+        //public static double? GetPercentageDiscount(this IPriceList priceList, IItemsCategory itemsCategory)
+        //{
+        //    itemsCategory
+        //}
+        //public static double? GetPercentageDiscount(this IPriceList priceList, IMenuItem menuItem)
+        //{
+
+        //}
+
+        //public static void SetPercentageDiscount(this IPriceList priceList, IItemsCategory itemsCategory, double percentageDiscount)
+        //{
+
+        //}
+        //public static void SetPercentageDiscount(this IPriceList priceList, IMenuItem menuItem, double percentageDiscount)
+        //{
+
+        //}
         /// <MetaDataID>{63fd57ce-f588-45fe-86fd-7625ad1ead3e}</MetaDataID>
         public static bool HasOverriddenPrice(this IPriceList priceList, IMenuItem menuItem)
         {
@@ -201,6 +236,7 @@ namespace FlavourBusinessFacade.PriceList
                                              ItemsPreparationInfo = itemsInfo
                                          }).ToList();
 
+
             foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
             {
                 if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
@@ -210,7 +246,7 @@ namespace FlavourBusinessFacade.PriceList
                     if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
                         return false;
 
-                }  
+                }
             }
 
             foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
@@ -225,13 +261,18 @@ namespace FlavourBusinessFacade.PriceList
 
                         if (priceList.HasOverriddenPrice(itemsCategory))
                             return true;
-                        else
-                            return false;
 
-             
+
+          
+                        return false;
+
+
                     }
                 }
             }
+            if (priceList.PriceListMainItemsPriceInfo.PercentageDiscount != null)
+                return true;
+
             return false;
 
         }

@@ -442,4 +442,31 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="DesignMenuTitle" xml:space="preserve">
     <value>Design</value>
   </data>
+  <data name="AmountDiscountLabel" xml:space="preserve">
+    <value>Amount discount</value>
+  </data>
+  <data name="PercentageDiscountLabel" xml:space="preserve">
+    <value>% Discount</value>
+  </data>
+  <data name="PriceOverrideLabel" xml:space="preserve">
+    <value>New price</value>
+  </data>
+  <data name="ClearItemsPriceInfoMenuHeader" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="NewPriceListMenuItemHeader" xml:space="preserve">
+    <value>New pricelist</value>
+  </data>
+  <data name="PriceListDescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PriceListPageTitle" xml:space="preserve">
+    <value>Edit pricelist</value>
+  </data>
+  <data name="WritePriceListDescriptionPrompt" xml:space="preserve">
+    <value>Write pricelist description</value>
+  </data>
+  <data name="RoundPriceLabel" xml:space="preserve">
+    <value>Round near</value>
+  </data>
 </root>

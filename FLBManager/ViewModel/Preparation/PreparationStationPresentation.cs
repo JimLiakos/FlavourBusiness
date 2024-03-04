@@ -144,9 +144,6 @@ namespace FLBManager.ViewModel.Preparation
 
                 ClearSubCategoryItemsPreparationInfo(itemsCategory);
 
-             
-
-
             }
         }
 

@@ -6,6 +6,7 @@ using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FlavourBusinessManager.PriceList
 {
@@ -22,7 +23,36 @@ namespace FlavourBusinessManager.PriceList
         [PersistentMember(nameof(_ItemsPrices))]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         [BackwardCompatibilityID("+1")]
-        public System.Collections.Generic.List<FlavourBusinessFacade.PriceList.IItemsPriceInfo> ItemsPrices => _ItemsPrices.ToThreadSafeList();
+        public System.Collections.Generic.List<FlavourBusinessFacade.PriceList.IItemsPriceInfo> ItemsPrices
+        {
+            get
+            {
+                var itemsPrices = _ItemsPrices.ToThreadSafeList();
+                FlavourBusinessFacade.PriceList.IItemsPriceInfo itemsPriceInfo = itemsPrices.Where(x => x.ItemsInfoObjectUri == null).FirstOrDefault();
+                if (itemsPriceInfo != null)
+                    itemsPriceInfo.ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+                return itemsPrices;
+
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        IItemsPriceInfo _PriceListMainItemsPriceInfo;
+        public IItemsPriceInfo PriceListMainItemsPriceInfo
+        {
+            get
+            {
+                if (_PriceListMainItemsPriceInfo == null)
+                {
+                    var priceListUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
+                    FlavourBusinessFacade.PriceList.IItemsPriceInfo itemsPriceInfo = ItemsPrices.Where(x => x.ItemsInfoObjectUri == priceListUri).FirstOrDefault();
+                    if (itemsPriceInfo != null)
+                        _PriceListMainItemsPriceInfo = itemsPriceInfo;
+                }
+                return _PriceListMainItemsPriceInfo;
+            }
+        }
+
 
         /// <exclude>Excluded</exclude>
         string _Description;

@@ -91,10 +91,6 @@
       <Project>{8dfec0f3-c2ec-4d16-9e1d-09d33199e73f}</Project>
       <Name>WPFUIElementObjectBind-VS10</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MenuItemsEditor\MenuItemsEditor.csproj">
-      <Project>{615b9b02-7115-4a3c-b218-4732958801c8}</Project>
-      <Name>MenuItemsEditor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

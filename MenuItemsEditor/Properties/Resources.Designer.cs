@@ -115,11 +115,29 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount discount.
+        /// </summary>
+        public static string AmountDiscountLabel {
+            get {
+                return ResourceManager.GetString("AmountDiscountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change UncheckOption level property.
         /// </summary>
         public static string ChangeUncheckOptionPropertyValuePrompt {
             get {
                 return ResourceManager.GetString("ChangeUncheckOptionPropertyValuePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string ClearItemsPriceInfoMenuHeader {
+            get {
+                return ResourceManager.GetString("ClearItemsPriceInfoMenuHeader", resourceCulture);
             }
         }
         
@@ -493,6 +511,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New pricelist.
+        /// </summary>
+        public static string NewPriceListMenuItemHeader {
+            get {
+                return ResourceManager.GetString("NewPriceListMenuItemHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string OptionGroupNameLabel {
@@ -583,6 +610,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to % Discount.
+        /// </summary>
+        public static string PercentageDiscountLabel {
+            get {
+                return ResourceManager.GetString("PercentageDiscountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Predefined.
         /// </summary>
         public static string PredefinedTooltip {
@@ -638,6 +674,33 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string PriceListDescriptionLabel {
+            get {
+                return ResourceManager.GetString("PriceListDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit pricelist.
+        /// </summary>
+        public static string PriceListPageTitle {
+            get {
+                return ResourceManager.GetString("PriceListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New price.
+        /// </summary>
+        public static string PriceOverrideLabel {
+            get {
+                return ResourceManager.GetString("PriceOverrideLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantitative.
         /// </summary>
         public static string QuantitativeCheckBoxLabel {
@@ -652,6 +715,15 @@ namespace MenuItemsEditor.Properties {
         public static string QuantitativeCheckBoxToolTip {
             get {
                 return ResourceManager.GetString("QuantitativeCheckBoxToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round near.
+        /// </summary>
+        public static string RoundPriceLabel {
+            get {
+                return ResourceManager.GetString("RoundPriceLabel", resourceCulture);
             }
         }
         
@@ -896,6 +968,15 @@ namespace MenuItemsEditor.Properties {
         public static string WriteOptionFullNamePrompt {
             get {
                 return ResourceManager.GetString("WriteOptionFullNamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write pricelist description.
+        /// </summary>
+        public static string WritePriceListDescriptionPrompt {
+            get {
+                return ResourceManager.GetString("WritePriceListDescriptionPrompt", resourceCulture);
             }
         }
         

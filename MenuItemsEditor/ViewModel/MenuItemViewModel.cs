@@ -1453,6 +1453,8 @@ namespace MenuItemsEditor.ViewModel
 
 
                 _OverridePrice = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
             }
         }
 

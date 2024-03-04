@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MenuDesigner.Views.PriceList.ItemsPriceInfoView"
+﻿<UserControl x:Class="MenuItemsEditor.Views.PriceList.ItemsPriceInfoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MenuDesigner.Views.PriceList" 
-             xmlns:menuItemsEditor="clr-namespace:MenuItemsEditor;assembly=MenuItemsEditor"
+             xmlns:local="clr-namespace:MenuItemsEditor.Views" 
+             xmlns:resx="clr-namespace:MenuItemsEditor.Properties"
              xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
-             xmlns:ViewModel="clr-namespace:MenuDesigner.ViewModel.PriceList"
+             xmlns:ViewModel="clr-namespace:MenuItemsEditor.ViewModel.PriceList"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800">
     <UserControl.Resources>
@@ -16,7 +16,20 @@
                     <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
                     <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                     <ControlsEx:EditableTextBlock Background="Transparent" Margin="0,0,10,0" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
-                    <TextBlock Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="0,0,5,0"></TextBlock>
+                    <TextBlock Visibility="{Binding PriceVisibility}" VerticalAlignment="Center" Text="{Binding PriceText}" Margin="0,0,5,0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PriceHasChange}" Value="True">
+                                        <Setter Property="FontWeight"  Value="Medium" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <TextBlock VerticalAlignment="Center"  Text="{Binding PriceOverrideText}" Margin="5,0,5,0"/>
+
                 </StackPanel>
             </ContentControl>
         </DataTemplate>
@@ -28,14 +41,46 @@
                 <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="False"  VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
                 <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                 <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Background="{StaticResource WindowBackgroundBrush}">
-                    <StackPanel  Orientation="Horizontal" Margin="5,5,5,5">
+                    <StackPanel  Orientation="Horizontal" Margin="5,0,0,0">
                         <Label VerticalAlignment="Center"  Content="{Binding Name}" />
-                        <TextBlock Margin="5,0,0,0" Visibility="{Binding  PriceVisibility}" VerticalAlignment="Center" Text="{Binding PriceText}"></TextBlock>
-                        
-                        
-                        <!--<menuItemsEditor:ContextPriceTextBox OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  ></menuItemsEditor:ContextPriceTextBox>-->
-                        
-                        
+                        <Label VerticalAlignment="Center"  Margin="5,5,2,5">:</Label>
+
+                        <StackPanel Margin="5,0" Orientation="Horizontal" Background="WhiteSmoke" >
+
+                            <Label Margin="5,5,5,5" VerticalAlignment="Center" Content="{Binding Path=SelectedPriceOverrideType.Description}"></Label>
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding PercentageDiscountVisibility}">
+                                <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50" Unit="%" Number="{Binding PercentageDiscount, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+
+                                <Label Margin="5,5,5,5" VerticalAlignment="Center" Content="{x:Static  resx:Resources.RoundPriceLabel}"></Label>
+
+                                <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding Pricerounding, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding AmountDiscountVisibility}">
+                                <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding AmountDiscount, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding PriceOverrideVisibility}">
+                                <local:ContextPriceTextBox Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
+                            </StackPanel>
+                            
+                            <TextBlock VerticalAlignment="Center" Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="5,5,5,5">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PriceHasChange}" Value="True">
+                                                <Setter Property="FontWeight"  Value="Medium" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+
+                            <!--<local:ContextPriceTextBox Margin="5" OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  ></local:ContextPriceTextBox>-->
+                        </StackPanel>
+
                         <!--<menuItemsEditor:ContextPriceTextBox/>-->
                         <!--<ControlsEx:TextBoxNumberWithUnit FontWeight="{Binding PreparationTimeFontWeight}" Width="60"   Margin="5,0,0,0"  Name="PreparationTime" TextAlignment="Right" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch"    Number="{Binding Path=PreparationTimeSpanInMin,Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Unit="min">
                             <ControlsEx:TextBoxNumberWithUnit.Style>
@@ -54,24 +99,20 @@
                             <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
                         </Button>
 
-                        <Popup x:Name="TagsPopup" IsOpen="{Binding DiscoundTypesPopupOpen}"  Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=ToggleDiscoundTypeButton}"  >
+                        <Popup x:Name="TagsPopup" IsOpen="{Binding PriceOverrideTypesPopupOpen}"  Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=ToggleDiscoundTypeButton}"  >
                             <Grid>
                                 <StackPanel>
-                                    <ListBox ItemsSource="{Binding DiscoundTypes}" Padding="2,5">
-
+                                    <ListBox ItemsSource="{Binding PriceOverrideTypes}" SelectedValue="{Binding SelectedPriceOverrideType}" Padding="2,5">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Margin="5">
+                                                <Grid  MouseDown="PriceOverrideTypeMouseDown" Margin="5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
                                                         <ColumnDefinition Width="7"/>
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                        <Image Grid.Column="0" Width="20" Height="20" Source="{Binding Image}"></Image>
-                                                        <Label Grid.Column="2" Content="{Binding Description}"></Label>
-                                                    
-
-
+                                                    <Image Grid.Column="0" Width="20" Height="20" Source="{Binding Image}"></Image>
+                                                    <Label Grid.Column="2" Content="{Binding Description}"></Label>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>

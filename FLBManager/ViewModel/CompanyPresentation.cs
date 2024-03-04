@@ -11,9 +11,10 @@ using FlavourBusinessFacade;
 using FlavourBusinessManager;
 using FLBManager.ViewModel.HumanResources;
 using MenuDesigner.ViewModel;
-using MenuDesigner.ViewModel.PriceList;
+
 using MenuItemsEditor;
 using MenuItemsEditor.ViewModel;
+using MenuItemsEditor.ViewModel.PriceList;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
