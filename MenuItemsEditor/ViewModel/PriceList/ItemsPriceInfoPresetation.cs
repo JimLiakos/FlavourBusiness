@@ -117,6 +117,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
             set
             {
                 _SelectedPriceOverrideType = value;
+
+                if (_SelectedPriceOverrideType.PriceOverrideType!=PriceList.PriceOverrideTypes.PriceOverride)
+                    OverridePrice=null;
+
+                if (_SelectedPriceOverrideType.PriceOverrideType!=PriceList.PriceOverrideTypes.PercentageDiscount)
+                {
+                    PercentageDiscount=null;
+
+                }
+
+
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(SelectedPriceOverrideType)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PercentageDiscountVisibility)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideVisibility)));
@@ -291,6 +302,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
 
                 base.Edit = value;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceVisibility)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OverridePrice)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
+
             }
         }
 
@@ -374,13 +390,13 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
-        double? _OverridenPrice;
+        decimal? _OverridenPrice;
 
-        public double? OverridePrice
+        public decimal? OverridePrice
         {
             get
             {
-                double? OverridenPrice = -1;
+                decimal? OverridenPrice = -1;
                 if (this.ItemsCategory != null)
                     OverridenPrice = PriceListPresentation.GetOverridenPrice(this.ItemsCategory);
                 else if (this.MenuItem != null)
@@ -390,7 +406,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     _OverridenPrice = OverridenPrice.Value;
                 if (_OverridenPrice == null)
                     return -1;
-                return OverridenPrice;
+                return _OverridenPrice;
             }
             set
             {
@@ -408,7 +424,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     PriceListPresentation.SetOverridenPrice(this.ItemsCategory, _OverridenPrice);
                 else if (this.MenuItem != null)
                     this.PriceListPresentation.SetOverridenPrice(this.MenuItem, _OverridenPrice);
-
+                Refresh();
 
             }
         }
@@ -431,7 +447,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
                 if (this.DefinesNewPrice && percentageDiscount.HasValue)
                     return 100 * percentageDiscount.Value;
-                return _PercentageDiscount;
+                return 100 *_PercentageDiscount;
             }
             set
             {
@@ -448,11 +464,20 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     return;
                 }
 
-
-                if (this.ItemsCategory != null)
-                    PriceListPresentation.SetPercentageDiscount(this.ItemsCategory, _PercentageDiscount);
-                else if (this.MenuItem != null)
-                    this.PriceListPresentation.SetPercentageDiscount(this.MenuItem, _PercentageDiscount);
+                if (value.HasValue)
+                {
+                    if (this.ItemsCategory != null)
+                        PriceListPresentation.SetPercentageDiscount(this.ItemsCategory, _PercentageDiscount);
+                    else if (this.MenuItem != null)
+                        this.PriceListPresentation.SetPercentageDiscount(this.MenuItem, _PercentageDiscount);
+                }
+                else
+                {
+                    if (this.ItemsCategory != null)
+                        PriceListPresentation.SetPercentageDiscount(this.ItemsCategory, null);
+                    else if (this.MenuItem != null)
+                        this.PriceListPresentation.SetPercentageDiscount(this.MenuItem, null);
+                }
 
                 Refresh();
 
@@ -570,6 +595,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+                if (!Edit)
+                    return Visibility.Visible;
+
                 if (MenuItem != null && SelectedPriceOverrideType.PriceOverrideType != PriceList.PriceOverrideTypes.PriceOverride)
                     return Visibility.Visible;
                 else
@@ -606,15 +634,16 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
                 decimal? price = MenuItem?.MenuItemPrice?.Price;
-                if (price != null && PercentageDiscount > 0)
+                if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PercentageDiscount&& price != null && PercentageDiscount > 0)
                     price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
-                if (OverridePrice != null)
-                    return (decimal)OverridePrice;
+                if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PriceOverride&&_OverridenPrice != null)
+                    return (decimal)_OverridenPrice;
 
-                    return price;
+                return price;
             }
             set
             {
+                OverridePrice=value;
 
             }
         }
@@ -624,13 +653,16 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
                 decimal? price = MenuItem?.MenuItemPrice?.Price;
-                if (this.DefinesNewPrice && price != null && PercentageDiscount > 0)
+                if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PercentageDiscount&& this.DefinesNewPrice && price != null && PercentageDiscount > 0)
                 {
                     price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
                     var pricerounding = Pricerounding;
                     if (pricerounding.HasValue)
                         price = PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
                 }
+                if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PriceOverride&& this.DefinesNewPrice && price != null && OverridePrice > 0)
+                    price=OverridePrice;
+
 
                 return price?.ToString("C");
             }
@@ -986,6 +1018,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceHasChange)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OverridePrice)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Price)));
 
 
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));

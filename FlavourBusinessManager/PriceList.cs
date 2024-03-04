@@ -4,6 +4,7 @@ using FlavourBusinessManager.ServicesContextResources;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,23 @@ namespace FlavourBusinessManager.PriceList
             {
                 var itemsPrices = _ItemsPrices.ToThreadSafeList();
                 FlavourBusinessFacade.PriceList.IItemsPriceInfo itemsPriceInfo = itemsPrices.Where(x => x.ItemsInfoObjectUri == null).FirstOrDefault();
+                //if (itemsPriceInfo == null)
+                //{
+                //    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+                //    itemsPriceInfo=(from the_itemsPriceInfo in storage.GetObjectCollection<IItemsPriceInfo>()
+                //                    select the_itemsPriceInfo).ToList().Where(x => string.IsNullOrWhiteSpace(x.ItemsInfoObjectUri)).FirstOrDefault();
+                //    if (itemsPriceInfo != null)
+                //    {
+
+                //        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                //        {
+                //            _ItemsPrices.Add(itemsPriceInfo);
+                //            stateTransition.Consistent = true;
+                //        }
+
+                //    }
+
+                //}
                 if (itemsPriceInfo != null)
                     itemsPriceInfo.ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetPersistentObjectUri(this);
                 return itemsPrices;

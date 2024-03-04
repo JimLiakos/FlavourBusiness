@@ -15,12 +15,12 @@ namespace FlavourBusinessManager.PriceList
 
 
         /// <exclude>Excluded</exclude>
-        double? _OverridenPrice;
+        decimal? _OverridenPrice;
 
         /// <MetaDataID>{994ade9d-7095-4153-8813-187cb8734917}</MetaDataID>
         [PersistentMember(nameof(_OverridenPrice))]
         [BackwardCompatibilityID("+1")]
-        public double? OverridenPrice
+        public decimal? OverridenPrice
         {
             get => _OverridenPrice;
             set

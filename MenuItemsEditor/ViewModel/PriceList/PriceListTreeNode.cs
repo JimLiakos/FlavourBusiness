@@ -648,12 +648,12 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-        internal void SetPercentageDiscount(IItemsCategory itemsCategory, double percentageDiscount)
+        internal void SetPercentageDiscount(IItemsCategory itemsCategory, double? percentageDiscount)
         {
             GetOrCreateItemsPriceInfo(itemsCategory).PercentageDiscount = percentageDiscount;
         }
 
-        internal void SetPercentageDiscount(IMenuItem menuItem, double percentageDiscount)
+        internal void SetPercentageDiscount(IMenuItem menuItem, double? percentageDiscount)
         {
             GetOrCreateItemsPriceInfo(menuItem).PercentageDiscount = percentageDiscount;
         }
@@ -740,7 +740,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
-        internal double? GetOverridenPrice(IItemsCategory itemsCategory)
+        internal decimal? GetOverridenPrice(IItemsCategory itemsCategory)
         {
             var itemsPriceInfos = PriceList.GetItemsPriceInfo(itemsCategory);
 
@@ -752,7 +752,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
             return null;
         }
-        internal double? GetOverridenPrice(IMenuItem menuItem)
+        internal decimal? GetOverridenPrice(IMenuItem menuItem)
         {
             var itemsPriceInfos = PriceList.GetItemsPriceInfo(menuItem);
 
@@ -766,12 +766,12 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-        internal void SetOverridenPrice(IItemsCategory itemsCategory, double? OverridenPrice)
+        internal void SetOverridenPrice(IItemsCategory itemsCategory, decimal? OverridenPrice)
         {
             GetOrCreateItemsPriceInfo(itemsCategory).OverridenPrice = OverridenPrice;
         }
 
-        internal void SetOverridenPrice(IMenuItem menuItem, double? OverridenPrice)
+        internal void SetOverridenPrice(IMenuItem menuItem, decimal? OverridenPrice)
         {
             GetOrCreateItemsPriceInfo(menuItem).OverridenPrice = OverridenPrice;
         }

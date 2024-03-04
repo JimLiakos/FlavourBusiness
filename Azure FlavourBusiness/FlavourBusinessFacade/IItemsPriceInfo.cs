@@ -14,7 +14,7 @@ namespace FlavourBusinessFacade.PriceList
     {
         /// <MetaDataID>{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}</MetaDataID>
         [BackwardCompatibilityID("+7")]
-        double? OverridenPrice { get; set; }
+        decimal? OverridenPrice { get; set; }
 
         /// <MetaDataID>{e3d5df84-1222-4050-8576-c05471857bf0}</MetaDataID>
         [BackwardCompatibilityID("+6")]

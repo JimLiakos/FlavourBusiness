@@ -35,7 +35,7 @@
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
 
-            <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance ViewModel:ItemsPriceInfoPresentation}" >
+            <StackPanel Loaded="EditView_Loaded" Unloaded="EditView_Unloaded" AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance ViewModel:ItemsPriceInfoPresentation}" >
 
 
                 <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="False"  VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
@@ -62,7 +62,7 @@
                                 <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding AmountDiscount, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding PriceOverrideVisibility}">
-                                <local:ContextPriceTextBox Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
+                                <local:ContextPriceTextBox Margin="7,5,5,5"  Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
                             </StackPanel>
                             
                             <TextBlock VerticalAlignment="Center" Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="5,5,5,5">
