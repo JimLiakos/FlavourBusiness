@@ -611,6 +611,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Image\DefaultMealCourse.svg" />
+    <Resource Include="Image\more24.png" />
+    <Resource Include="Image\more16.png" />
     <Resource Include="Image\percDiscount16.png" />
     <Resource Include="Image\percDiscount24.png" />
     <Resource Include="Image\price-list16.png" />

@@ -72,12 +72,18 @@ namespace MenuItemsEditor.ViewModel.PriceList
         // <MetaDataID>{6d5912d3-dbd6-431c-b216-d6a4732da003}</MetaDataID>
         public ItemsPriceInfoPresentation(PriceListPresentation priceListPresentation, IMenu menu, bool editMode) : base(priceListPresentation)
         {
+            PriceOverrideTypes = new List<PriceOverrideTypeViewModel>() {
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PercentageDiscount),
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.AmountDiscount)};
+
             IsRootCategory = true;
             SelectedPriceOverrideType = PriceOverrideTypes[0];
             EditMode = editMode;
             ItemsPreparationInfo = new FlavourBusinessManager.ServicesContextResources.ItemsPreparationInfo(menu.RootCategory);
             PriceListPresentation = priceListPresentation;
             ItemsCategory = menu.RootCategory;
+
+       
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -137,21 +143,26 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
-        public List<PriceOverrideTypeViewModel> PriceOverrideTypes { get; } = new List<PriceOverrideTypeViewModel>() {
-            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PercentageDiscount),
-            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.AmountDiscount),
-            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PriceOverride)};
+
+        
+        public List<PriceOverrideTypeViewModel> PriceOverrideTypes { get; }
         //DiscoundTypeViewModel
 
 
         /// <MetaDataID>{81bc990f-0fb8-46d4-9096-885f628cdae6}</MetaDataID>
         public ItemsPriceInfoPresentation(ItemsPriceInfoPresentation parent, PriceListPresentation priceListPresentation, MenuModel.IItemsCategory itemsCategory, bool editMode) : base(parent)
         {
+            PriceOverrideTypes = new List<PriceOverrideTypeViewModel>() {
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PercentageDiscount),
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.AmountDiscount)};
+
             SelectedPriceOverrideType = PriceOverrideTypes[0];
             EditMode = editMode;
             PriceListPresentation = priceListPresentation;
 
             ItemsCategory = itemsCategory;
+
+
 
             DeleteCommand = new RelayCommand((object sender) =>
             {
@@ -199,10 +210,18 @@ namespace MenuItemsEditor.ViewModel.PriceList
         /// <MetaDataID>{f76f2725-c4bc-48db-b680-cf20f594f218}</MetaDataID>
         public ItemsPriceInfoPresentation(ItemsPriceInfoPresentation parent, PriceListPresentation priceListPresentation, IMenuItem menuItem, bool editMode) : base(parent)
         {
+
+            PriceOverrideTypes = new List<PriceOverrideTypeViewModel>() {
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PercentageDiscount),
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.AmountDiscount),
+            new PriceOverrideTypeViewModel(PriceList.PriceOverrideTypes.PriceOverride)};
+
             EditMode = editMode;
             SelectedPriceOverrideType = PriceOverrideTypes[0];
             PriceListPresentation = priceListPresentation;
             MenuItem = menuItem;
+
+
 
             DeleteCommand = new RelayCommand((object sender) =>
             {
@@ -551,6 +570,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 else if (this.MenuItem != null)
                     this.PriceListPresentation.SetAmountDiscount(this.MenuItem, _AmountDiscount);
 
+                Refresh();
+
 
             }
         }
@@ -638,6 +659,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
                 if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PriceOverride&&_OverridenPrice != null)
                     return (decimal)_OverridenPrice;
+                if (price!=null&& SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount!= null)
+                    price= price.Value- (decimal)AmountDiscount.Value;
+
 
                 return price;
             }
@@ -663,12 +687,14 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 if (SelectedPriceOverrideType.PriceOverrideType==PriceList.PriceOverrideTypes.PriceOverride&& this.DefinesNewPrice && price != null && OverridePrice > 0)
                     price=OverridePrice;
 
+                if (price != null && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount != null)
+                    price= price.Value - (decimal)AmountDiscount.Value;
 
                 return price?.ToString("C");
             }
             set { }
         }
-
+         
         /// <summary>
         /// Some times a change in items preparation info affect nodes in preparation station infos hierarchy
         /// this method update the  hierarchy if needed
@@ -1014,12 +1040,12 @@ namespace MenuItemsEditor.ViewModel.PriceList
         /// <MetaDataID>{9bbe65bf-458f-4f70-9218-4a3e24f9823d}</MetaDataID>
         public void Refresh()
         {
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Price)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OverridePrice)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceHasChange)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OverridePrice)));
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Price)));
 
 
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsCooked)));

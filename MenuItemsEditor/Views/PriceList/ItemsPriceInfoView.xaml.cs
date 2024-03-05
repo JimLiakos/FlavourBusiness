@@ -25,31 +25,19 @@ namespace MenuItemsEditor.Views.PriceList
         {
             InitializeComponent();
 
-            Unloaded += ItemsPriceInfoView_Unloaded;
-            Loaded += ItemsPriceInfoView_Loaded;
-
-
         }
 
-        private void ItemsPriceInfoView_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
 
-        private void ItemsPriceInfoView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-         
+
         bool inPreviewMouseDown = false;
 
         private void GlobalPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        { 
+        {
             try
             {
                 if (inPreviewMouseDown)
                     return;
-                inPreviewMouseDown=true;
+                inPreviewMouseDown = true;
                 var itemsPreparationInfo = this.GetDataContextObject<ItemsPriceInfoPresentation>();
                 if (!itemsPreparationInfo.Edit)
                     return;
@@ -59,23 +47,23 @@ namespace MenuItemsEditor.Views.PriceList
                 if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
                 {
 
-
-
-                    
-                    if (itemsPreparationInfo != null&&!itemsPreparationInfo.PriceOverrideTypesPopupOpen)
+                    if (itemsPreparationInfo != null && !itemsPreparationInfo.PriceOverrideTypesPopupOpen)
                     {
-
+                        Keyboard.ClearFocus();
                         foreach (var unitTextBox in WPFUIElementObjectBind.ObjectContext.FindChilds<TextBoxNumberWithUnit>(Content as DependencyObject))
                             unitTextBox.Focus();
                         foreach (var checkBox in WPFUIElementObjectBind.ObjectContext.FindChilds<CheckBox>(Content as DependencyObject))
                             checkBox.Focus();
-                        Keyboard.ClearFocus();
-                        itemsPreparationInfo.Edit = false;
-                        //Task.Run(() =>
-                        //{
-                        //    //System.Threading.Thread.Sleep(300);
-                        //    this.Dispatcher.Invoke(new Action(() => { itemsPreparationInfo.Edit = false; }));
-                        //});
+                        foreach (var contextPriceTextBox in WPFUIElementObjectBind.ObjectContext.FindChilds<ContextPriceTextBox>(Content as DependencyObject))
+                            contextPriceTextBox.UpdateProperty();
+
+                    
+                        foreach (var button in WPFUIElementObjectBind.ObjectContext.FindChilds<Button>(Content as DependencyObject))
+                        {
+                            button.Focus();
+                            itemsPreparationInfo.Edit = false;
+                        }
+
 
                     }
                 }
@@ -98,7 +86,7 @@ namespace MenuItemsEditor.Views.PriceList
             }
             finally
             {
-                inPreviewMouseDown=false;
+                inPreviewMouseDown = false;
             }
         }
         static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)

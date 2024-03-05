@@ -605,7 +605,9 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{7de79e26-376c-47dd-8df7-88508d2bc2e0}</MetaDataID>
         internal void SetPreparationTimeSpanInMin(IItemsCategory itemsCategory, double timeSpanInMinutes)
         {
-            GetOrCreateItemsPreparationInfo(itemsCategory).PreparationTimeSpanInMin = timeSpanInMinutes;
+
+            var itemsPreparationInfo = GetOrCreateItemsPreparationInfo(itemsCategory);
+            itemsPreparationInfo.PreparationTimeSpanInMin = timeSpanInMinutes;
             //foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPreparationInfoPresentation>())
             //    itemsPreparationInfoPresentation.Refresh();
             //if (PreparationStationItems != null)

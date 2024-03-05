@@ -355,6 +355,7 @@ namespace FLBManager.ViewModel.Preparation
                 if (ItemsCategory != null)
                 {
                     PreparationStationPresentation.SetPreparationTimeSpanInMin(this.ItemsCategory, value);
+                    var sds = PreparationTimeSpanInMin;
                     Refresh();
                 }
                 if (MenuItem != null)

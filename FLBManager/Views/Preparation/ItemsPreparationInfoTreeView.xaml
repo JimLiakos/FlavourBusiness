@@ -90,7 +90,7 @@
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
 
-            <StackPanel AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance local:ItemsPreparationInfoPresentation}" >
+            <StackPanel Loaded="ItemsPreparationInfoTreeView_Loaded" Unloaded="ItemsPreparationInfoTreeView_Unloaded" AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance local:ItemsPreparationInfoPresentation}" >
 
 
                 <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="False"  VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>

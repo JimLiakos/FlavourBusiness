@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOAdvantech.UserInterface.Runtime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace MenuItemsEditor.Views
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            if(OverridePrice!=-1)
+            if (OverridePrice != -1)
                 RemovePriceBtn.Visibility = Visibility.Visible;
         }
 
@@ -46,7 +47,7 @@ namespace MenuItemsEditor.Views
         {
             get
             {
-                
+
                 return _ContextPriceToolTip;
             }
         }
@@ -85,7 +86,7 @@ namespace MenuItemsEditor.Views
         /// <MetaDataID>{4ef71894-a041-4596-bffe-be2b80e2b7a5}</MetaDataID>
         private void OverridePricePropertyChanged()
         {
-            
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedValue)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceFontWeight)));
 
@@ -118,21 +119,25 @@ namespace MenuItemsEditor.Views
             }
         }
 
+        decimal? _DisplayedValue;
         public decimal DisplayedValue
         {
             get
             {
-                if (OverridePrice != -1)
-                    return OverridePrice;
-                else
-                    return Price;
+                if (_DisplayedValue == null)
+                {
+                    if (OverridePrice != -1)
+                        _DisplayedValue = OverridePrice;
+                    else
+                        _DisplayedValue = Price;
+                }
+
+                return _DisplayedValue.Value;
             }
             set
             {
-                if (OverridePrice == -1)
-                    Price = value;
-                else
-                    OverridePrice = value;
+                _DisplayedValue = value;
+
             }
 
         }
@@ -144,7 +149,7 @@ namespace MenuItemsEditor.Views
             get { return (TextAlignment)GetValue(TextHorizontalAlignmentProperty); }
             set { SetValue(TextHorizontalAlignmentProperty, value); }
         }
-        
+
 
         public static readonly DependencyProperty TextHorizontalAlignmentProperty =
                     DependencyProperty.Register(
@@ -157,7 +162,7 @@ namespace MenuItemsEditor.Views
         {
             if (d is ContextPriceTextBox)
                 (d as ContextPriceTextBox).TextHorizontalAlignmentPropertyChanged();
-            
+
         }
         private void TextHorizontalAlignmentPropertyChanged()
         {
@@ -191,7 +196,7 @@ namespace MenuItemsEditor.Views
         //}
         //private void OverrideAllowedPropertyChanged()
         //{
-            
+
         //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OverrideAllowed)));
         //}
 
@@ -229,9 +234,15 @@ namespace MenuItemsEditor.Views
 
         private void RemovePriceBtn_Click(object sender, RoutedEventArgs e)
         {
+
+
             OverridePrice = -1;
+            _DisplayedValue = null;
+            (this).GetBindingExpression(OverridePriceProperty).UpdateSource();
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedValue)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceFontWeight)));
+
         }
 
 
@@ -288,7 +299,42 @@ namespace MenuItemsEditor.Views
 
         }
 
+        internal void UpdateProperty()
+        {
+            if (_DisplayedValue != null)
+            {
+                if (OverridePrice == -1)
+                {
+                    if (Price != _DisplayedValue.Value)
+                    {
+                        Price = _DisplayedValue.Value;
+                       GetBindingExpression(PriceProperty)?.UpdateSource();
+                    }
+                }
+                else
+                {
+                    OverridePrice = _DisplayedValue.Value;
+                    GetBindingExpression(OverridePriceProperty)?.UpdateSource();
+                }
+                
+                
 
 
+
+            }
+        }
+
+        private void PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            UpdateProperty();
+            //if (_DisplayedValue != null)
+            //{
+            //    if (OverridePrice == -1)
+            //        Price = _DisplayedValue.Value;
+            //    else
+            //        OverridePrice = _DisplayedValue.Value;
+            //}
+
+        }
     }
 }

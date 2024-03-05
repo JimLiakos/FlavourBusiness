@@ -1,4 +1,5 @@
 ﻿using FLBManager.ViewModel.Preparation;
+using MenuItemsEditor.ViewModel.PriceList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,7 @@ namespace FLBManager.Views.Preparation
         public ItemsPreparationInfoTreeView()
         {
             InitializeComponent();
-            Unloaded += ItemsPreparationInfoTreeView_Unloaded;
-            Loaded += ItemsPreparationInfoTreeView_Loaded;
-
+        
             
         }
 
@@ -70,7 +69,7 @@ namespace FLBManager.Views.Preparation
 
             if (e.ClickCount == 2)
             {
-                PreviewMouseDown += GlobalPreviewMouseDown;
+                //PreviewMouseDown += GlobalPreviewMouseDown;
 
                 var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
                 if (itemsPreparationInfo != null && itemsPreparationInfo.CanPrepared)
@@ -89,6 +88,13 @@ namespace FLBManager.Views.Preparation
         {
             var po = PointToScreen(new Point(0, 0));
             var mousepos = Mouse.GetPosition(Grid);
+
+            var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
+            if (!itemsPreparationInfo.Edit)
+                return;
+
+
+
             if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
             {
                 if (DataContext is ItemsPreparationInfoPresentation && 
@@ -98,8 +104,8 @@ namespace FLBManager.Views.Preparation
 
 
 
-                PreviewMouseDown -= GlobalPreviewMouseDown;
-                var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
+                //PreviewMouseDown -= GlobalPreviewMouseDown;
+                //var itemsPreparationInfo = this.GetDataContextObject<ItemsPreparationInfoPresentation>();
                 if (itemsPreparationInfo != null)
                 {
                     
@@ -108,12 +114,12 @@ namespace FLBManager.Views.Preparation
                     foreach (var checkBox in WPFUIElementObjectBind.ObjectContext.FindChilds<CheckBox>(Content as DependencyObject))
                         checkBox.Focus();
                     Keyboard.ClearFocus();
-                    
-                    Task.Run(() =>
-                    {
-                        System.Threading.Thread.Sleep(300);
-                        this.Dispatcher.Invoke(new Action(() => { itemsPreparationInfo.Edit = false; }));
-                    });
+                    itemsPreparationInfo.Edit = false;
+                    //Task.Run(() =>
+                    //{
+                    //    System.Threading.Thread.Sleep(300);
+                    //    this.Dispatcher.Invoke(new Action(() => { itemsPreparationInfo.Edit = false; }));
+                    //});
            
                 }
             }

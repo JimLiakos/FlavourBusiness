@@ -750,7 +750,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 if (itemsPriceInfo.OverridenPrice != null)
                     return itemsPriceInfo.OverridenPrice.Value;
             }
-            return null;
+            return null; 
         }
         internal decimal? GetOverridenPrice(IMenuItem menuItem)
         {

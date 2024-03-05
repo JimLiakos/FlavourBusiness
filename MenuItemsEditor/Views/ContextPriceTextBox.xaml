@@ -8,7 +8,7 @@
              d:DesignHeight="30" d:DesignWidth="300">
     
     <Grid x:Name="ContextPrice"  MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Background="Bisque">
-        <TextBox ToolTip="{Binding ContextPriceToolTip}" FontWeight="{Binding PriceFontWeight}" VerticalContentAlignment="Center" x:Name="PriceTextBox" Text="{Binding DisplayedValue ,StringFormat=C,UpdateSourceTrigger=LostFocus}" ></TextBox>
+        <TextBox ToolTip="{Binding ContextPriceToolTip}" FontWeight="{Binding PriceFontWeight}" VerticalContentAlignment="Center" x:Name="PriceTextBox" Text="{Binding DisplayedValue ,StringFormat=C,UpdateSourceTrigger=PropertyChanged}" LostFocus="PriceTextBox_LostFocus" ></TextBox>
         <Button Visibility="Collapsed" Margin="3" Width="14" Height="14"  x:Name="RemovePriceBtn" Click="RemovePriceBtn_Click" HorizontalAlignment="Right"    Style="{StaticResource WindowButton}" >
             <Image Stretch="Uniform"  x:Name="CloseBoxImage" Width="10" Height="10"  Source="/StyleableWindow;component/Resources/Images/CloseWindow.png"></Image>
         </Button>

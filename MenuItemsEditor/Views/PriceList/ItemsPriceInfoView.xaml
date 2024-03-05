@@ -40,14 +40,14 @@
 
                 <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="False"  VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
                 <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Background="{StaticResource WindowBackgroundBrush}">
-                    <StackPanel  Orientation="Horizontal" Margin="5,0,0,0">
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="2" Background="WhiteSmoke">
+                    <StackPanel  Orientation="Horizontal" Margin="5,0,0,0" >
                         <Label VerticalAlignment="Center"  Content="{Binding Name}" />
                         <Label VerticalAlignment="Center"  Margin="5,5,2,5">:</Label>
 
                         <StackPanel Margin="5,0" Orientation="Horizontal" Background="WhiteSmoke" >
 
-                            <Label Margin="5,5,5,5" VerticalAlignment="Center" Content="{Binding Path=SelectedPriceOverrideType.Description}"></Label>
+                            <Label Margin="5,5,5,5" x:Name="priceOverrideType" VerticalAlignment="Center" Content="{Binding Path=SelectedPriceOverrideType.Description}"></Label>
 
                             <StackPanel Orientation="Horizontal" Visibility="{Binding PercentageDiscountVisibility}">
                                 <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50" Unit="%" Number="{Binding PercentageDiscount, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
@@ -62,7 +62,7 @@
                                 <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding AmountDiscount, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{Binding PriceOverrideVisibility}">
-                                <local:ContextPriceTextBox Margin="7,5,5,5"  Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
+                                <local:ContextPriceTextBox Padding="5,0,5,0" Margin="7,5,5,5"  Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
                             </StackPanel>
                             
                             <TextBlock VerticalAlignment="Center" Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="5,5,5,5">
@@ -95,8 +95,8 @@
                         </ControlsEx:TextBoxNumberWithUnit>-->
 
 
-                        <Button x:Name="ToggleDiscoundTypeButton" Margin="5,0,0,0"   Width="30" Height="30"  Command="{Binding ToggleDiscoundTypeCommand}" >
-                            <Image Width="16" Height="16" Source="/FLBManager;component/Resources/Images/Metro/tags.png" ></Image>
+                        <Button x:Name="ToggleDiscoundTypeButton" Margin="5,0,5,0"   Width="30" Height="30"  Command="{Binding ToggleDiscoundTypeCommand}" >
+                            <Image Width="20" Height="20" Source="/MenuItemsEditor;Component/Image/more24.png" ></Image>
                         </Button>
 
                         <Popup x:Name="TagsPopup" IsOpen="{Binding PriceOverrideTypesPopupOpen}"  Placement="Bottom"   AllowsTransparency="True"  PopupAnimation="Fade"  StaysOpen="False" PlacementTarget="{Binding ElementName=ToggleDiscoundTypeButton}"  >
