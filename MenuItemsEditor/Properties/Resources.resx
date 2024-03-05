@@ -469,4 +469,7 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="RoundPriceLabel" xml:space="preserve">
     <value>Round near</value>
   </data>
+  <data name="ToppingsDiscountCheckBoxLabel" xml:space="preserve">
+    <value>Toppings</value>
+  </data>
 </root>

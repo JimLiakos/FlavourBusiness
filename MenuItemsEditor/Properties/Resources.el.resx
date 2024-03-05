@@ -154,4 +154,7 @@
   <data name="PriceOverrideLabel" xml:space="preserve">
     <value>Νέα τιμή</value>
   </data>
+  <data name="ToppingsDiscountCheckBoxLabel" xml:space="preserve">
+    <value>Επιλογές</value>
+  </data>
 </root>

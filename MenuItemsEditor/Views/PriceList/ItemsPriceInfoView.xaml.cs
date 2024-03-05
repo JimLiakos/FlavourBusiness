@@ -133,12 +133,19 @@ namespace MenuItemsEditor.Views.PriceList
                     var itemsPreparationInfo = this.GetDataContextObject<ItemsPriceInfoPresentation>();
                     if (itemsPreparationInfo != null)
                     {
+
                         if (itemsPreparationInfo.DefinesNewPrice)
                             itemsPreparationInfo.Edit = true;
-                        e.Handled = true;
+                        else
+                        {
+                            itemsPreparationInfo.DefinesNewPrice=true;
+                            itemsPreparationInfo.Edit = true;
+                        }
+                        
                     }
                 }));
             }
+            e.Handled = true;
         }
 
         private void PriceOverrideTypeMouseDown(object sender, MouseButtonEventArgs e)

@@ -900,6 +900,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toppings.
+        /// </summary>
+        public static string ToppingsDiscountCheckBoxLabel {
+            get {
+                return ResourceManager.GetString("ToppingsDiscountCheckBoxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string TreeNodeRenameMenuItemHeader {

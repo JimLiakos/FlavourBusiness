@@ -557,6 +557,27 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
+        public IItemsPriceInfo GetItemsPriceInfo(MenuModel.IItemsCategory itemsCategory)
+        {
+            var itemsPriceInfos = (from itemsInfo in PriceList.ItemsPrices
+                                   select new
+                                   {
+                                       @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                       ItemsPriceInfo = itemsInfo
+                                   }).ToList();
+
+            var itemsPriceInfo = (from itemsInfoEntry in itemsPriceInfos
+                                  where itemsInfoEntry.@object == itemsCategory && (itemsInfoEntry.ItemsPriceInfo.Included())
+                                  select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
+
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo;
+            else
+                return null;
+        }
+
+
+
         public IItemsPriceInfo GetOrCreateItemsPriceInfo(MenuModel.IItemsCategory itemsCategory)
         {
             var itemsPriceInfos = (from itemsInfo in PriceList.ItemsPrices
@@ -593,6 +614,30 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
+
+        public IItemsPriceInfo GetItemsPriceInfo(MenuModel.IMenuItem menuItem)
+        {
+
+            var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPriceInfo = itemsInfo
+                                         }).ToList();
+
+            var itemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                        where itemsInfoEntry.@object == menuItem
+                                        select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
+
+            if (itemsPreparationInfo != null)
+            {
+                return itemsPreparationInfo;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 
         public IItemsPriceInfo GetOrCreateItemsPriceInfo(MenuModel.IMenuItem menuItem)
@@ -650,11 +695,25 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         internal void SetPercentageDiscount(IItemsCategory itemsCategory, double? percentageDiscount)
         {
+            if (percentageDiscount==null)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.PercentageDiscount=null;
+                return;
+            }
             GetOrCreateItemsPriceInfo(itemsCategory).PercentageDiscount = percentageDiscount;
         }
 
         internal void SetPercentageDiscount(IMenuItem menuItem, double? percentageDiscount)
         {
+            if (percentageDiscount==null)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(menuItem);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.PercentageDiscount=null;
+                return;
+            }
             GetOrCreateItemsPriceInfo(menuItem).PercentageDiscount = percentageDiscount;
         }
 
@@ -712,7 +771,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 if (itemsPriceInfo.AmountDiscount != null)
                     return itemsPriceInfo.AmountDiscount.Value;
             }
-            return 0;
+            return PriceList.PriceListMainItemsPriceInfo.AmountDiscount;
         }
         internal double? GetAmountDiscount(IMenuItem menuItem)
         {
@@ -724,19 +783,44 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 if (itemsPriceInfo.AmountDiscount != null)
                     return itemsPriceInfo.AmountDiscount.Value;
             }
-            return 0;
+            return PriceList.PriceListMainItemsPriceInfo.AmountDiscount;
+
+        }
+        internal void SetAmountDiscount(double amountDiscount)
+        {
+            if (amountDiscount == 0)
+                PriceList.PriceListMainItemsPriceInfo.AmountDiscount = null;
+            else
+                PriceList.PriceListMainItemsPriceInfo.AmountDiscount = amountDiscount;
 
         }
 
         internal void SetAmountDiscount(IItemsCategory itemsCategory, double AmountDiscount)
         {
+            if (AmountDiscount==0)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.AmountDiscount=null;
+            }
+
             GetOrCreateItemsPriceInfo(itemsCategory).AmountDiscount = AmountDiscount;
         }
 
         internal void SetAmountDiscount(IMenuItem menuItem, double AmountDiscount)
         {
+            if (AmountDiscount==0)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(menuItem);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.AmountDiscount=null;
+                return;
+            }
+
+
             GetOrCreateItemsPriceInfo(menuItem).AmountDiscount = AmountDiscount;
         }
+
 
 
 
@@ -768,11 +852,26 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         internal void SetOverridenPrice(IItemsCategory itemsCategory, decimal? OverridenPrice)
         {
+            if(OverridenPrice==null)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.OverridenPrice=null;
+                return;
+            }
+                
             GetOrCreateItemsPriceInfo(itemsCategory).OverridenPrice = OverridenPrice;
         }
 
         internal void SetOverridenPrice(IMenuItem menuItem, decimal? OverridenPrice)
         {
+            if (OverridenPrice==null)
+            {
+                var itemsPriceInfo = GetItemsPriceInfo(menuItem);
+                if (itemsPriceInfo!=null)
+                    itemsPriceInfo.OverridenPrice=null;
+                return;
+            }
             GetOrCreateItemsPriceInfo(menuItem).OverridenPrice = OverridenPrice;
         }
 

@@ -200,6 +200,9 @@ namespace FlavourBusinessFacade.PriceList
             if (priceList.PriceListMainItemsPriceInfo.PercentageDiscount != null)
                 return true;
 
+            if (priceList.PriceListMainItemsPriceInfo.AmountDiscount != null)
+                return true;
+
             return false;
         }
 
@@ -272,7 +275,8 @@ namespace FlavourBusinessFacade.PriceList
             }
             if (priceList.PriceListMainItemsPriceInfo.PercentageDiscount != null)
                 return true;
-
+            if (priceList.PriceListMainItemsPriceInfo.AmountDiscount != null)
+                return true;
             return false;
 
         }

@@ -83,7 +83,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             PriceListPresentation = priceListPresentation;
             ItemsCategory = menu.RootCategory;
 
-       
+
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -119,7 +119,44 @@ namespace MenuItemsEditor.ViewModel.PriceList
         PriceOverrideTypeViewModel _SelectedPriceOverrideType;
         public PriceOverrideTypeViewModel SelectedPriceOverrideType
         {
-            get => _SelectedPriceOverrideType;
+            get
+            {
+                if (Edit)
+                    return _SelectedPriceOverrideType;
+                else
+                {
+                    double? percentageDiscount = 0;
+                    if (this.ItemsCategory != null)
+                        percentageDiscount = PriceListPresentation.GetPercentageDiscount(this.ItemsCategory);
+                    else if (this.MenuItem != null)
+                        percentageDiscount = this.PriceListPresentation.GetPercentageDiscount(this.MenuItem);
+                    if (percentageDiscount.HasValue)
+                        return PriceOverrideTypes.Where(x => x.PriceOverrideType==PriceList.PriceOverrideTypes.PercentageDiscount).FirstOrDefault();
+
+                    double? amountDiscount = 0;
+                    if (this.ItemsCategory != null)
+                        amountDiscount  = PriceListPresentation.GetAmountDiscount(this.ItemsCategory);
+                    else if (this.MenuItem != null)
+                        amountDiscount  = this.PriceListPresentation.GetAmountDiscount(this.MenuItem);
+
+                    if (amountDiscount.HasValue)
+                        return PriceOverrideTypes.Where(x => x.PriceOverrideType==PriceList.PriceOverrideTypes.AmountDiscount).FirstOrDefault();
+
+
+
+                    decimal? overridenPrice = 0;
+                    if (this.ItemsCategory != null)
+                        overridenPrice   = PriceListPresentation.GetOverridenPrice(this.ItemsCategory);
+                    else if (this.MenuItem != null)
+                        overridenPrice   = this.PriceListPresentation.GetOverridenPrice(this.MenuItem);
+
+                    if (overridenPrice.HasValue)
+                        return PriceOverrideTypes.Where(x => x.PriceOverrideType==PriceList.PriceOverrideTypes.PriceOverride).FirstOrDefault();
+
+                    return PriceOverrideTypes.Where(x => x.PriceOverrideType==PriceList.PriceOverrideTypes.PercentageDiscount).FirstOrDefault();
+
+                }
+            }
             set
             {
                 _SelectedPriceOverrideType = value;
@@ -144,7 +181,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
-        
+
         public List<PriceOverrideTypeViewModel> PriceOverrideTypes { get; }
         //DiscoundTypeViewModel
 
@@ -321,17 +358,70 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
 
                 base.Edit = value;
+
+
+
+                double? percentageDiscount = 0;
+                if (this.ItemsCategory != null)
+                    percentageDiscount = PriceListPresentation.GetPercentageDiscount(this.ItemsCategory);
+                else if (this.MenuItem != null)
+                    percentageDiscount = this.PriceListPresentation.GetPercentageDiscount(this.MenuItem);
+
+
+
+                double? amountDiscount = 0;
+                if (this.ItemsCategory != null)
+                    amountDiscount  = PriceListPresentation.GetAmountDiscount(this.ItemsCategory);
+                else if (this.MenuItem != null)
+                    amountDiscount  = this.PriceListPresentation.GetAmountDiscount(this.MenuItem);
+
+
+
+
+
+                decimal? overridenPrice = 0;
+                if (this.ItemsCategory != null)
+                    overridenPrice   = PriceListPresentation.GetOverridenPrice(this.ItemsCategory);
+                else if (this.MenuItem != null)
+                    overridenPrice   = this.PriceListPresentation.GetOverridenPrice(this.MenuItem);
+
+
+                if (!percentageDiscount.HasValue&&!amountDiscount.HasValue&&!overridenPrice.HasValue)
+                {
+
+                }
+
+
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceVisibility)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OverridePrice)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
 
             }
+
+
+
+
         }
 
 
+        /// <exclude>Excluded</exclude>
+        bool _IsToppingsDiscountEnabled;
 
+        public bool IsToppingsDiscountEnabled
+        {
+            get => _EnableToppingsDiscount;
+            set
+            {
+                _EnableToppingsDiscount=value;
+                RunPropertyChanged
+            }
+        }
 
+        public Visibility ToppingsDiscoundRoudingVisible
+        {
+            get Ean
+        }
 
 
 
@@ -565,6 +655,16 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 if (value.HasValue)
                     _AmountDiscount = value.Value;
+                if (IsRootCategory)
+                {
+                    PriceListPresentation.SetAmountDiscount(_AmountDiscount);
+                    Pricerounding = _Pricerounding;
+                    Refresh();
+                    return;
+                }
+
+
+
                 if (this.ItemsCategory != null)
                     PriceListPresentation.SetAmountDiscount(this.ItemsCategory, _AmountDiscount);
                 else if (this.MenuItem != null)
@@ -694,7 +794,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
             set { }
         }
-         
+
         /// <summary>
         /// Some times a change in items preparation info affect nodes in preparation station infos hierarchy
         /// this method update the  hierarchy if needed
