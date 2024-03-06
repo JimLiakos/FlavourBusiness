@@ -14,6 +14,7 @@ using WPFUIElementObjectBind;
 using FlavourBusinessFacade.PriceList;
 using System.Windows;
 
+
 namespace MenuItemsEditor.ViewModel.PriceList
 {
 
@@ -1046,7 +1047,24 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 {
                     if (MenuItem != null)
                     {
+
+                        var itemOptionsPriceInfos = (from menuItemType in MenuItem.Types
+                                                     from optionGroup in menuItemType.Options.OfType<MenuModel.IPreparationOptionsGroup>()
+                                                     where optionGroup.HasOptionWithPrice(MenuItem)
+                                                     select new ItemOptionsPriceInfo(this, MenuItem, optionGroup,null)).OfType<FBResourceTreeNode>().ToList();
+
+                        var unGroupedScaledOptions = (from menuItemType in MenuItem.Types
+                                                      from option in menuItemType.Options.OfType<MenuModel.IPreparationScaledOption>()
+                                                      select new ItemOptionsPriceInfo(this, MenuItem, option,null)).OfType<FBResourceTreeNode>().ToList();
+
+                        itemOptionsPriceInfos.AddRange(unGroupedScaledOptions);
+
+                        //MenuItem.o
                         _Members = MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null).Select(x => new ItemSelectorPriceInfo(this, MenuItem, x)).OfType<FBResourceTreeNode>().ToList();
+
+                        if (_Members.Count==0)
+                            _Members.AddRange(itemOptionsPriceInfos);
+
                         return _Members;
                     }
 
@@ -1183,7 +1201,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 ItemsCategory.GetAllMenuItems();
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
-                _Members = null;
+                //_Members = null;
 
                 foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPriceInfoPresentation>())
                     itemsPreparationInfoPresentation.Refresh(menuItemWithChanges);
@@ -1264,7 +1282,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             foreach (var itemSelectorPriceInfo in Members.OfType<ItemSelectorPriceInfo>())
                 itemSelectorPriceInfo.Refresh();
-            _Members = null;
+            //_Members = null;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationTimeIsVisible)));

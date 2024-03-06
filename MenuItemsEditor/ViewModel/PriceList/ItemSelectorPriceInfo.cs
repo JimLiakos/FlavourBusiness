@@ -20,16 +20,38 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             ItemPriceInfoPresentation = parent as ItemsPriceInfoPresentation;
             ItemPrice =itemPrice;
+
+            var itemOptionsPriceInfos = (from menuItemType in menuItem.Types
+                                         from optionGroup in menuItemType.Options.OfType<MenuModel.IPreparationOptionsGroup>()
+                                         where optionGroup.HasOptionWithPrice(menuItem)
+                                         select new ItemOptionsPriceInfo(this, menuItem, optionGroup,itemPrice as IPricingContext)).OfType<FBResourceTreeNode>().ToList();
+
+            var unGroupedScaledOptions = (from menuItemType in menuItem.Types
+                                          from option in menuItemType.Options.OfType<MenuModel.IPreparationScaledOption>()
+                                          select new ItemOptionsPriceInfo(this, menuItem, option, itemPrice as IPricingContext)).OfType<FBResourceTreeNode>().ToList();
+
+            
+
+            itemOptionsPriceInfos.AddRange(unGroupedScaledOptions);
+
+            Members=itemOptionsPriceInfos;
+
         }
         public void Refresh()
         {
+            foreach(var member in Members.OfType<ItemOptionsPriceInfo>())
+            {
+                member.Refresh();
+            }
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceHasChanged)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
         }
         public override string Name { get => ItemPrice.ItemSelector.Name; set { } }
 
         public override ImageSource TreeImage => null;
 
-        public override List<FBResourceTreeNode> Members => new List<FBResourceTreeNode>();
+        public override List<FBResourceTreeNode> Members { get; } 
 
         public override List<MenuCommand> ContextMenuItems => new List<MenuCommand>();
 
@@ -112,7 +134,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
-        public bool PriceHasChange
+        public bool PriceHasChanged
         {
             get
             {

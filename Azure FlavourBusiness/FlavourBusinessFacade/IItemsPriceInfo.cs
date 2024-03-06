@@ -217,6 +217,18 @@ namespace FlavourBusinessFacade.PriceList
 
 
 
+        public static bool HasOptionWithPrice(this IPreparationOptionsGroup optionGroup, IMenuItem menuItem)
+        {
+            return optionGroup.GroupedOptions.Any(x => x.HasOptionWithPrice(menuItem));
+        }
+
+        public static bool HasOptionWithPrice(this IPreparationScaledOption option, IMenuItem menuItem)
+        {
+            if (option is IPricingContext)
+                return false;
+            else
+                return true;
+        }
 
 
         //public static double? GetPercentageDiscount(this IPriceList priceList, IItemsCategory itemsCategory)
