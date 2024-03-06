@@ -200,7 +200,7 @@
     <comment>Defines the label for options types List</comment>
   </data>
   <data name="OrgPriceLabel" xml:space="preserve">
-    <value>Original Price</value>
+    <value>Default price is </value>
     <comment>Inform user for the original price of pricing dubject</comment>
   </data>
   <data name="PreparationOptionsGroupDefaultName" xml:space="preserve">
@@ -470,6 +470,23 @@ There are preaparation oprtions with wrang, scale type.</value>
     <value>Round near</value>
   </data>
   <data name="ToppingsDiscountCheckBoxLabel" xml:space="preserve">
-    <value>Toppings</value>
+    <value>Options</value>
+  </data>
+  <data name="PriceListDiscountOptionsRoundTextBoxToolTip" xml:space="preserve">
+    <value>Write the decimal for the rounding to the nearest number for options. 
+For instance round nearest to 0.5 .</value>
+  </data>
+  <data name="PriceListDiscountRoundTextBoxToolTip" xml:space="preserve">
+    <value>Write the decimal for the rounding to the nearest number. 
+For instance round nearest to 0.5 .</value>
+  </data>
+  <data name="PriceListDiscountTooltip" xml:space="preserve">
+    <value>You can define the percentage discount 
+for an item or the category items.</value>
+    <comment>Defines the tool tip of ItemsPriceInfo edit view when price override type is discount</comment>
+  </data>
+  <data name="PriceListOptionsDiscoundToolTip" xml:space="preserve">
+    <value>If you want to apply the discount to the item extra options prices, 
+click on the options checkbox.</value>
   </data>
 </root>

@@ -80,6 +80,59 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
+
+        /// <exclude>Excluded</exclude>
+        double? _OptionsPricesRounding;
+
+        /// <MetaDataID>{1ccd46a0-9b7e-48e8-ab01-db2294757b65}</MetaDataID>
+        [PersistentMember(nameof(_OptionsPricesRounding))]
+        [BackwardCompatibilityID("+8")]
+        public double? OptionsPricesRounding
+        {
+            get => _OptionsPricesRounding;
+            set
+            {
+                if (_OptionsPricesRounding != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OptionsPricesRounding = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+
+        /// <exclude>Excluded</exclude>
+        bool _OptionsPricesDiscount;
+
+
+        /// <MetaDataID>{faf629b4-5b06-457e-8ed1-8bd7a4300ab6}</MetaDataID>
+
+        [PersistentMember(nameof(_OptionsPricesDiscount))]
+        [BackwardCompatibilityID("+9")]
+        public bool OptionsPricesDiscount
+        {
+            get => _OptionsPricesDiscount;
+            set
+            {
+                if (_OptionsPricesDiscount != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _OptionsPricesDiscount = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+
         /// <exclude>Excluded</exclude>
         double? _PercentageDiscount;
         /// <MetaDataID>{1e7a1978-81c3-4a0d-b2cf-b969f38a22b3}</MetaDataID>
@@ -144,7 +197,7 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
-        
+
 
 
         /// <exclude>Excluded</exclude>
@@ -170,14 +223,17 @@ namespace FlavourBusinessManager.PriceList
 
         /// <exclude>Excluded</exclude>
         string _ItemsInfoObjectUri;
+        /// <MetaDataID>{87cc9c6b-bf5c-4ac1-8938-505ca8ebf3da}</MetaDataID>
         private ItemsCategory itemsCategory;
 
 
+        /// <MetaDataID>{f92c1291-e0d7-499f-8c9e-6cd611a33e66}</MetaDataID>
         public ItemsPriceInfo()
         {
 
         }
 
+        /// <MetaDataID>{5c1d7c10-9c0a-4af4-b621-718671c70920}</MetaDataID>
         public ItemsPriceInfo(IItemsCategory itemsCategory)
         {
             _ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
@@ -200,7 +256,7 @@ namespace FlavourBusinessManager.PriceList
         [BackwardCompatibilityID("+7")]
         public string ItemsInfoObjectUri
         {
-            get => _ItemsInfoObjectUri; 
+            get => _ItemsInfoObjectUri;
             set
             {
                 if (_ItemsInfoObjectUri != value)
@@ -213,5 +269,7 @@ namespace FlavourBusinessManager.PriceList
                 }
             }
         }
+
+
     }
 }

@@ -52753,7 +52753,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"8")
+			    value      	"10")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -52764,6 +52764,60 @@
 			    quid       	"65DC31FF009E"
 			    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IItemsPriceInfo"
 			    quidu      	"65D993320188"))
+		    operations 	(list Operations
+			(object Operation "ItemsPriceInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{f92c1291-e0d7-499f-8c9e-6cd611a33e66}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E81B6F0110"))
+			    quid       	"65E81B6F0110"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsPriceInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5c1d7c10-9c0a-4af4-b621-718671c70920}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E81B6F0399"))
+			    quid       	"65E81B6F0399"
+			    parameters 	(list Parameters
+				(object Parameter "itemsCategory"
+				    quid       	"65E81B6F03A3"
+				    type       	"MenuModel.IItemsCategory"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "ItemsPriceInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{783a888e-ce32-429f-97b0-d2ea043bc308}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E81B700071"))
+			    quid       	"65E81B700071"
+			    parameters 	(list Parameters
+				(object Parameter "menuItem"
+				    quid       	"65E81B70007C"
+				    type       	"MenuModel.IMenuItem"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "OverridenPrice"
 			    attributes 	(list Attribute_Set
@@ -53012,6 +53066,88 @@
 				    value      	"+7"))
 			    quid       	"65DF7FE003A1"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "OptionsPricesRounding"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1ccd46a0-9b7e-48e8-ab01-db2294757b65}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E81B700090")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
+			    quid       	"65E81B700090"
+			    type       	"double?"
+			    exportControl 	"Public")
+			(object ClassAttribute "itemsCategory"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{87cc9c6b-bf5c-4ac1-8938-505ca8ebf3da}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E81B7000F8")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE))
+			    quid       	"65E81B7000F8"
+			    type       	"MenuModel.ItemsCategory")
+			(object ClassAttribute "OptionsPricesDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{faf629b4-5b06-457e-8ed1-8bd7a4300ab6}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E82681016B")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"65E82681016B"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -53071,8 +53207,8 @@
 				icon_style 	"Icon"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	9
-				max_width  	1393)
+				nlines     	12
+				max_width  	2009)
 			    width      	418
 			    height     	244
 			    annotation 	8)

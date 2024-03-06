@@ -18,6 +18,7 @@ namespace MenuModel
         /// <MetaDataID>{ca42b958-2a74-4f3f-93cf-8eab6da7d648}</MetaDataID>
         void RemoveClassifiedItem(IClassified classifiedItem);
 
+        /// <MetaDataID>{68b18465-d1eb-4b4d-9df9-218fa5c719a6}</MetaDataID>
         void InsertClassifiedItem(int index, IClassified classifiedItem);
     }
 }

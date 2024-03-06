@@ -18,6 +18,7 @@ namespace FlavourBusinessFacade.PriceList
         System.Collections.Generic.List<IItemsPriceInfo> ItemsPrices { get; }
 
 
+        /// <MetaDataID>{2ee663b8-a65c-46fe-9f6b-a71371070f01}</MetaDataID>
         IItemsPriceInfo PriceListMainItemsPriceInfo { get; }
 
         /// <MetaDataID>{a78aab39-d9ad-45cd-84cf-3fb9b609610c}</MetaDataID>

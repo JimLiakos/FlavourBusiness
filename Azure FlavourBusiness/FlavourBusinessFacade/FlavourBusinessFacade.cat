@@ -30088,9 +30088,37 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{7086923d-a949-4e1e-9bec-bbbc0430f181}"))
+			    value      	"{7086923d-a949-4e1e-9bec-bbbc0430f181}")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"{7086923d-a949-4e1e-9bec-bbbc0430f181}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"LastMemberID"
+			    value      	"10"))
 		    quid       	"65D993320188"
 		    stereotype 	"Interface"
+		    operations 	(list Operations
+			(object Operation "OptionsPricesDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b750cce8-902d-4b9c-94da-763487791e2b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E8266B03CC"))
+			    quid       	"65E8266B03CC"
+			    result     	"System.Nullable`1[[System.Boolean,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "OverridenPrice"
 			    attributes 	(list Attribute_Set
@@ -30113,9 +30141,17 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+1"))
 			    quid       	"65DF80440261"
-			    type       	"System.Nullable<double>"
+			    type       	"System.Nullable<decimal>"
 			    exportControl 	"Public")
 			(object ClassAttribute "AmountDiscount"
 			    attributes 	(list Attribute_Set
@@ -30138,7 +30174,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+2"))
 			    quid       	"65DF804402C2"
 			    type       	"System.Nullable<double>"
 			    exportControl 	"Public")
@@ -30163,7 +30207,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+3"))
 			    quid       	"65DF80440328"
 			    type       	"System.Nullable<double>"
 			    exportControl 	"Public")
@@ -30188,7 +30240,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+4"))
 			    quid       	"65DF80440389"
 			    type       	"System.Nullable<double>"
 			    exportControl 	"Public")
@@ -30213,7 +30273,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+5"))
 			    quid       	"65DF8045004F"
 			    type       	"string"
 			    exportControl 	"Public")
@@ -30234,7 +30302,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+6"))
 			    quid       	"65DF80450096"
 			    type       	"MenuModel.IClassified"
 			    exportControl 	"Public")
@@ -30259,7 +30335,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+7"))
 			    quid       	"65DF804500F3"
 			    type       	"FlavourBusinessFacade.PriceList.ItemsPriceInfoType"
 			    exportControl 	"Public")
@@ -30284,9 +30368,75 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateSetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+8"))
 			    quid       	"65DF8045014D"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "OptionsPricesRounding"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{32b87239-ef84-4483-ad05-7d0a7f28e9cd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E817BA03BE")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+9"))
+			    quid       	"65E817BA03BE"
+			    type       	"System.Nullable<double>"
+			    exportControl 	"Public")
+			(object ClassAttribute "OptionsPricesDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5f0736b0-14b7-4c95-94fe-effa3ddc646e}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65E8266B035C")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65E8266B035C"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
@@ -30411,8 +30561,8 @@
 				icon_style 	"Icon"
 				fill_color 	16777215
 				anchor     	2
-				nlines     	9
-				max_width  	1393)
+				nlines     	12
+				max_width  	2009)
 			    width      	418
 			    height     	244
 			    annotation 	8)

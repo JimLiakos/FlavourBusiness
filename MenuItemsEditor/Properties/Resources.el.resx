@@ -157,4 +157,15 @@
   <data name="ToppingsDiscountCheckBoxLabel" xml:space="preserve">
     <value>Επιλογές</value>
   </data>
+  <data name="PriceListDiscountRoundTextBoxToolTip" xml:space="preserve">
+    <value>Γράψτε το δεκαδικό για τη στρογγυλοποίηση στον πλησιέστερο αριθμό.</value>
+  </data>
+  <data name="PriceListDiscountTooltip" xml:space="preserve">
+    <value>Μπορείτε να ορίσετε το ποσοστό έκπτωσης για ένα είδος ή τα είδη της κατηγορίας.</value>
+    <comment>Defines the tool tip of ItemsPriceInfo edit view when price override type is discount</comment>
+  </data>
+  <data name="PriceListOptionsDiscoundToolTip" xml:space="preserve">
+    <value>Εάν θέλετε να εφαρμόσετε την έκπτωση στις τιμές επιπλέον επιλογών του προϊόντος, 
+κάντε κλικ στο πλαίσιο ελέγχου επιλογών.</value>
+  </data>
 </root>

@@ -9,19 +9,25 @@ using System.Linq;
 namespace FlavourBusinessFacade.PriceList
 {
     /// <MetaDataID>{7086923d-a949-4e1e-9bec-bbbc0430f181}</MetaDataID>
-    [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("{7086923d-a949-4e1e-9bec-bbbc0430f181}")]
+    [BackwardCompatibilityID("{7086923d-a949-4e1e-9bec-bbbc0430f181}")]
     public interface IItemsPriceInfo
     {
+        /// <MetaDataID>{32b87239-ef84-4483-ad05-7d0a7f28e9cd}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
+        double? OptionsPricesRounding { get; set; }
+        bool OptionsPricesDiscount { get; set; }
+
         /// <MetaDataID>{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}</MetaDataID>
-        [BackwardCompatibilityID("+7")]
+        [BackwardCompatibilityID("+1")]
         decimal? OverridenPrice { get; set; }
 
+
         /// <MetaDataID>{e3d5df84-1222-4050-8576-c05471857bf0}</MetaDataID>
-        [BackwardCompatibilityID("+6")]
+        [BackwardCompatibilityID("+2")]
         double? AmountDiscount { get; set; }
 
         /// <MetaDataID>{ce678a17-0d59-4d88-89d4-35cc9de06524}</MetaDataID>
-        [BackwardCompatibilityID("+5")]
+        [BackwardCompatibilityID("+3")]
         double? Pricerounding { get; set; }
 
         /// <MetaDataID>{2b732863-faa1-4024-8bfb-5abff5af891d}</MetaDataID>
@@ -29,18 +35,19 @@ namespace FlavourBusinessFacade.PriceList
         double? PercentageDiscount { get; set; }
 
         /// <MetaDataID>{5767c6cb-c6d3-44c1-bd5f-96b7fc3cc395}</MetaDataID>
-        [BackwardCompatibilityID("+1")]
+        [BackwardCompatibilityID("+5")]
         string Description { get; set; }
 
         /// <MetaDataID>{58e165c5-e9af-4c4d-854e-96cd6b6c145c}</MetaDataID>
-        [BackwardCompatibilityID("+2")]
+        [BackwardCompatibilityID("+6")]
         IClassified MenuModelObject { get; }
 
         /// <MetaDataID>{3bb37c90-f505-4f75-90e1-484a9cedf2b7}</MetaDataID>
-        [BackwardCompatibilityID("+3")]
+        [BackwardCompatibilityID("+7")]
         ItemsPriceInfoType ItemsPriceInfoType { get; set; }
 
         /// <MetaDataID>{60ff5e9f-feab-4c74-98ae-7de6f348e305}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
         string ItemsInfoObjectUri { get; set; }
     }
 
@@ -146,6 +153,7 @@ namespace FlavourBusinessFacade.PriceList
             return itemsPreparationInfoHierarchy;
         }
 
+        /// <MetaDataID>{d6d430fc-fb4c-419b-8334-d90442ad0c87}</MetaDataID>
         public static decimal RoundPriceToNearest(this IPriceList priceList, decimal price, double nearTo)
         {
             if (nearTo == 0 || nearTo > 1)

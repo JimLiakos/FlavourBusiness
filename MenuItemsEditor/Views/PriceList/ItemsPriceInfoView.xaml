@@ -17,11 +17,11 @@
                     <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
                     <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                     <ControlsEx:EditableTextBlock Background="Transparent" Margin="0,0,10,0" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
-                    <TextBlock Visibility="{Binding PriceVisibility}" VerticalAlignment="Center" Text="{Binding PriceText}" Margin="0,0,5,0">
+                    <TextBlock  Visibility="{Binding PriceVisibility}" VerticalAlignment="Center" Text="{Binding PriceText}" ToolTip="{Binding OrgPriceToolTip}"  Margin="0,0,5,0">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding PriceHasChange}" Value="True">
+                                    <DataTrigger Binding="{Binding PriceHasChanged}" Value="True">
                                         <Setter Property="FontWeight"  Value="Medium" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -36,7 +36,7 @@
         </DataTemplate>
         <DataTemplate x:Key="EditTemplate">
 
-            <StackPanel Loaded="EditView_Loaded" Unloaded="EditView_Unloaded" AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance ViewModel:ItemsPriceInfoPresentation}" >
+            <StackPanel ToolTip="{Binding PriceOverrideTypeToolTip}" Loaded="EditView_Loaded" Unloaded="EditView_Unloaded" AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance ViewModel:ItemsPriceInfoPresentation}" >
 
 
                 <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="False"  VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
@@ -55,7 +55,11 @@
 
                                 <Label Margin="5,5,5,5" VerticalAlignment="Center" Content="{x:Static  resx:Resources.RoundPriceLabel}"></Label>
 
-                                <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding Pricerounding, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                                <ControlsEx:TextBoxNumberWithUnit Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding Pricerounding, Mode=TwoWay,UpdateSourceTrigger=LostFocus}">
+                                    <ControlsEx:TextBoxNumberWithUnit.ToolTip>
+                                        <TextBlock TextAlignment="Left" Text="{x:Static resx:Resources.PriceListDiscountRoundTextBoxToolTip}"></TextBlock>
+                                    </ControlsEx:TextBoxNumberWithUnit.ToolTip>
+                                </ControlsEx:TextBoxNumberWithUnit>
                             </StackPanel>
 
 
@@ -65,12 +69,12 @@
                             <StackPanel Orientation="Horizontal" Visibility="{Binding PriceOverrideVisibility}">
                                 <local:ContextPriceTextBox Padding="5,0,5,0" Margin="7,5,5,5"  Width="70" TextAlignment="Right"   OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  VerticalAlignment="Center" ></local:ContextPriceTextBox>
                             </StackPanel>
-                            
-                            <TextBlock VerticalAlignment="Center" Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="5,5,5,5">
+
+                            <TextBlock ToolTip="{Binding OrgPriceToolTip}" VerticalAlignment="Center" Visibility="{Binding PriceVisibility}" Text="{Binding PriceText}" Margin="5,5,5,5">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding PriceHasChange}" Value="True">
+                                            <DataTrigger Binding="{Binding PriceHasChanged}" Value="True">
                                                 <Setter Property="FontWeight"  Value="Medium" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -78,7 +82,15 @@
                                 </TextBlock.Style>
                             </TextBlock>
 
-                            <CheckBox VerticalAlignment="Center" IsChecked="{ Binding }" Content="{x:Static resx:Resources.ToppingsDiscountCheckBoxLabel}"></CheckBox>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding PercentageDiscountVisibility}">
+                                <CheckBox VerticalAlignment="Center" IsChecked="{ Binding IsToppingsDiscountEnabled}" Content="{x:Static resx:Resources.ToppingsDiscountCheckBoxLabel}" ToolTip="{x:Static resx:Resources.PriceListOptionsDiscoundToolTip}" ></CheckBox>
+                                <ControlsEx:TextBoxNumberWithUnit Visibility="{Binding ToppingsDiscountRoundingVisible}" Margin="7,5,5,5" TextAlignment="Right" HorizontalAlignment="Left" VerticalContentAlignment="Center"  Width="50"  Number="{Binding Pricerounding, Mode=TwoWay,UpdateSourceTrigger=LostFocus}">
+                                    <ControlsEx:TextBoxNumberWithUnit.ToolTip>
+                                        <TextBlock TextAlignment="Left" Text="{x:Static resx:Resources.PriceListDiscountOptionsRoundTextBoxToolTip}"></TextBlock>
+                                    </ControlsEx:TextBoxNumberWithUnit.ToolTip>
+                                    
+                                </ControlsEx:TextBoxNumberWithUnit>
+                            </StackPanel>
 
 
                             <!--<local:ContextPriceTextBox Margin="5" OrgPriceToolTip="{Binding OrgPriceToolTip}" OverridePrice="{Binding OverridePrice, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Price="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  ></local:ContextPriceTextBox>-->

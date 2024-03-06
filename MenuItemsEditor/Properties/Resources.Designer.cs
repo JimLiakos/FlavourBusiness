@@ -592,7 +592,7 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original Price.
+        ///   Looks up a localized string similar to Default price is .
         /// </summary>
         public static string OrgPriceLabel {
             get {
@@ -679,6 +679,46 @@ namespace MenuItemsEditor.Properties {
         public static string PriceListDescriptionLabel {
             get {
                 return ResourceManager.GetString("PriceListDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write the decimal for the rounding to the nearest number for options. 
+        ///For instance round nearest to 0.5 ..
+        /// </summary>
+        public static string PriceListDiscountOptionsRoundTextBoxToolTip {
+            get {
+                return ResourceManager.GetString("PriceListDiscountOptionsRoundTextBoxToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write the decimal for the rounding to the nearest number. 
+        ///For instance round nearest to 0.5 ..
+        /// </summary>
+        public static string PriceListDiscountRoundTextBoxToolTip {
+            get {
+                return ResourceManager.GetString("PriceListDiscountRoundTextBoxToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can define the percentage discount 
+        ///for an item or the category items..
+        /// </summary>
+        public static string PriceListDiscountTooltip {
+            get {
+                return ResourceManager.GetString("PriceListDiscountTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you want to apply the discount to the item extra options prices, 
+        ///click on the options checkbox..
+        /// </summary>
+        public static string PriceListOptionsDiscoundToolTip {
+            get {
+                return ResourceManager.GetString("PriceListOptionsDiscoundToolTip", resourceCulture);
             }
         }
         
@@ -900,7 +940,7 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toppings.
+        ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string ToppingsDiscountCheckBoxLabel {
             get {
