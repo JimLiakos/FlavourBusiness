@@ -107,23 +107,23 @@ namespace FlavourBusinessManager.PriceList
 
 
         /// <exclude>Excluded</exclude>
-        bool _OptionsPricesDiscount;
+        bool? _IsOptionsPricesDiscountEnabled;
 
 
         /// <MetaDataID>{faf629b4-5b06-457e-8ed1-8bd7a4300ab6}</MetaDataID>
 
-        [PersistentMember(nameof(_OptionsPricesDiscount))]
+        [PersistentMember(nameof(_IsOptionsPricesDiscountEnabled))]
         [BackwardCompatibilityID("+9")]
-        public bool OptionsPricesDiscount
+        public bool? IsOptionsPricesDiscountEnabled
         {
-            get => _OptionsPricesDiscount;
+            get => _IsOptionsPricesDiscountEnabled;
             set
             {
-                if (_OptionsPricesDiscount != value)
+                if (_IsOptionsPricesDiscountEnabled != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _OptionsPricesDiscount = value;
+                        _IsOptionsPricesDiscountEnabled = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -182,16 +182,16 @@ namespace FlavourBusinessManager.PriceList
 
         /// <exclude>Excluded</exclude>
         [OOAdvantech.Json.JsonIgnore]
-        IClassified _MenuModelObject;
+        object _MenuModelObject;
 
         /// <MetaDataID>{5741d9d1-3655-47f3-815c-6962fce85bf4}</MetaDataID>
         [OOAdvantech.Json.JsonIgnore]
-        public IClassified MenuModelObject
+        public object MenuModelObject
         {
             get
             {
                 if (_MenuModelObject == null)
-                    _MenuModelObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ItemsInfoObjectUri) as IClassified;
+                    _MenuModelObject = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ItemsInfoObjectUri);
 
                 return _MenuModelObject;
             }
@@ -223,14 +223,20 @@ namespace FlavourBusinessManager.PriceList
 
         /// <exclude>Excluded</exclude>
         string _ItemsInfoObjectUri;
-        /// <MetaDataID>{87cc9c6b-bf5c-4ac1-8938-505ca8ebf3da}</MetaDataID>
-        private ItemsCategory itemsCategory;
+      
 
 
         /// <MetaDataID>{f92c1291-e0d7-499f-8c9e-6cd611a33e66}</MetaDataID>
         public ItemsPriceInfo()
         {
 
+        }
+
+        public ItemsPriceInfo(IMenuItemPrice menuItemPrice)
+        {
+            _ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItemPrice).GetPersistentObjectUri(menuItemPrice);
+
+            _Description = menuItemPrice.Name;
         }
 
         /// <MetaDataID>{5c1d7c10-9c0a-4af4-b621-718671c70920}</MetaDataID>

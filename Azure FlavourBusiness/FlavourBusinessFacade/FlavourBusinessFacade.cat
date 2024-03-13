@@ -15045,7 +15045,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"5D0074A9012A"
 				    messages   	(list Messages
-					(object Message "GetClientSession(          )"
+					(object Message "GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 					    quid       	"5D0074C30291"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15067,7 +15067,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"5CFF278800A6"
 				    messages   	(list Messages
-					(object Message "GetClientSession(       )"
+					(object Message "GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 					    quid       	"5CFF282C01F0"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15089,7 +15089,7 @@
 				    supplier   	"$UNNAMED$30"
 				    quidu      	"5D0085810266"
 				    messages   	(list Messages
-					(object Message "GetFoodServiceClientSession(     )"
+					(object Message "GetFoodServiceClientSession(string, string, string, string, bool)"
 					    quid       	"5D0086950247"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -15120,7 +15120,7 @@
 				    supplier   	"HarySession"
 				    quidu      	"5D29F2CD025F"
 				    messages   	(list Messages
-					(object Message "MealInvitation( )"
+					(object Message "MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 					    quid       	"5D29F38A035B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -17777,7 +17777,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(          )"
+				label      	"GetClientSession(string, string, string, string, FlavourBusinessFacade.DeviceType, string, string, System.Collections.Generic.List<FlavourBusinessFacade.OrganizationStorageRef>, bool, bool)"
 				pctDist    	5.191667
 				height     	162
 				orientation 	0)
@@ -17864,7 +17864,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetClientSession(       )"
+				label      	"GetClientSession(string, string, string, string, string, FlavourBusinessFacade.IUser, bool)"
 				pctDist    	2.466667
 				height     	138
 				orientation 	0)
@@ -17951,7 +17951,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetFoodServiceClientSession(     )"
+				label      	"GetFoodServiceClientSession(string, string, string, string, bool)"
 				pctDist    	6.600000
 				height     	55
 				orientation 	0)
@@ -18246,7 +18246,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealInvitation( )"
+				label      	"MealInvitation(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession)"
 				pctDist    	1.175000
 				height     	119
 				orientation 	0)
@@ -30079,7 +30079,288 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetPercentageDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3ccdfdeb-48d4-4dac-b793-7b45b06bc765}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8700291"))
+			    quid       	"65EFD8700291"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD87002A9"
+				    type       	"object"))
+			    result     	"System.Nullable`1[[System.Double,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetPriceRounding"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3281d9b3-3196-4fc7-bb2c-d68f4458ff9b}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD87002D4"))
+			    quid       	"65EFD87002D4"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD87002EA"
+				    type       	"object"))
+			    result     	"System.Nullable`1[[System.Double,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "IsOptionsPricesDiscountEnabled"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8e75ce6c-0bd9-49b8-9faa-796f903796a0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8700309"))
+			    quid       	"65EFD8700309"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD870031E"
+				    type       	"object"))
+			    result     	"bool"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetOptionsPricesRounding"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{8c3128f9-4cf3-4d88-af2d-1895d319c048}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8700347"))
+			    quid       	"65EFD8700347"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD870035D"
+				    type       	"object"))
+			    result     	"System.Nullable`1[[System.Double,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetOverridePrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{75706c57-0795-43e4-9680-1758fcfa9c40}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8710015"))
+			    quid       	"65EFD8710015"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD871002D"
+				    type       	"object"))
+			    result     	"System.Nullable`1[[System.Decimal,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetAmountDiscount"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{21f22e71-e1c1-4045-9b25-bf9f0285a652}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8710053"))
+			    quid       	"65EFD8710053"
+			    parameters 	(list Parameters
+				(object Parameter "priceListSubject"
+				    quid       	"65EFD8710069"
+				    type       	"object"))
+			    result     	"System.Nullable`1[[System.Double,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "NewPriceInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{516aa500-46ce-4c94-9649-cff8228c611a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD87100F6"))
+			    quid       	"65EFD87100F6"
+			    parameters 	(list Parameters
+				(object Parameter "uri"
+				    quid       	"65EFD871010A"
+				    type       	"string")
+				(object Parameter "include"
+				    quid       	"65EFD8710123"
+				    type       	"FlavourBusinessFacade.PriceList.ItemsPriceInfoType"))
+			    result     	"FlavourBusinessFacade.PriceList.IItemsPriceInfo"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "RemoveItemsPriceInfos"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{e01da134-72d7-4331-912d-98d67e8e4bd7}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD871018E"))
+			    quid       	"65EFD871018E"
+			    parameters 	(list Parameters
+				(object Parameter "itemsPriceInfos"
+				    quid       	"65EFDD330321"
+				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.PriceList.IItemsPriceInfo>"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFinalPrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{01882af7-d78b-437c-bfb1-eb78bd497ba8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD87101DD"))
+			    quid       	"65EFD87101DD"
+			    parameters 	(list Parameters
+				(object Parameter "menuItem"
+				    quid       	"65EFD87101F3"
+				    type       	"MenuModel.IMenuItem"))
+			    result     	"System.Nullable`1[[System.Decimal,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFinalPrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{179aa811-4925-42aa-af89-b346eef586c8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD871022A"))
+			    quid       	"65EFD871022A"
+			    parameters 	(list Parameters
+				(object Parameter "menuItemPrice"
+				    quid       	"65EFD871023F"
+				    type       	"MenuModel.IMenuItemPrice"))
+			    result     	"System.Nullable`1[[System.Decimal,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetFinalPrice"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{5d017c6f-631b-41c6-8cc8-0ef4a29676e0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8710287"))
+			    quid       	"65EFD8710287"
+			    parameters 	(list Parameters
+				(object Parameter "option"
+				    quid       	"65EFD871029B"
+				    type       	"MenuModel.IPreparationScaledOption")
+				(object Parameter "itemPrice"
+				    quid       	"65EFD87102B3"
+				    type       	"MenuModel.IMenuItemPrice"))
+			    result     	"System.Nullable`1[[System.Decimal,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetDerivedPriceContext"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{4cd0bfe9-f963-4521-8915-1e3c56040cfd}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFDD340035"))
+			    quid       	"65EFDD340035"
+			    parameters 	(list Parameters
+				(object Parameter "pricingContext"
+				    quid       	"65EFDD34004B"
+				    type       	"MenuModel.IPricingContext"))
+			    result     	"MenuModel.IPricingContext"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "Description"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{9f8f9bcc-5335-49eb-bc6b-6d761457d913}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD871031E")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"65EFD871031E"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PriceListMainItemsPriceInfo"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{2ee663b8-a65c-46fe-9f6b-a71371070f01}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"65EFD8710388")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"65EFD8710388"
+			    type       	"FlavourBusinessFacade.PriceList.IItemsPriceInfo"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessFacade::FlavourBusinessFacade"
 		    quidu      	"5AA773E702B6"
 		    language   	"C#")
@@ -30610,7 +30891,7 @@
 				icon_style 	"Icon"
 				fill_color 	13434879
 				anchor     	2
-				nlines     	3
+				nlines     	17
 				max_width  	1890)
 			    width      	563
 			    height     	332

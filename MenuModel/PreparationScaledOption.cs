@@ -375,15 +375,15 @@ namespace MenuModel
 
 
         /// <MetaDataID>{9ee65ddc-efa8-440f-a2d5-1207e091705c}</MetaDataID>
-        public decimal GetPrice(IPricingContext pricicingContext)
+        public decimal GetPrice(IPricingContext pricingContext)
         {
-            if (pricicingContext != null)
+            if (pricingContext != null)
             {
-                ICustomizedPrice customazedPrice = (from ancustomazedPrice in _PricingContexts
-                                                    where ancustomazedPrice.PricingContext == pricicingContext
+                ICustomizedPrice customizedPrice = (from ancustomazedPrice in _PricingContexts
+                                                    where ancustomazedPrice.PricingContext == pricingContext
                                                     select ancustomazedPrice).FirstOrDefault();
-                if (customazedPrice != null)
-                    return customazedPrice.Price;
+                if (customizedPrice != null)
+                    return customizedPrice.Price;
             }
 
             return Price;
@@ -392,21 +392,21 @@ namespace MenuModel
         /// <MetaDataID>{ec231c6b-4cb5-4c9a-9386-d6bdfd7849ef}</MetaDataID>
         public void SetPrice(IPricingContext pricicingContext, decimal price)
         {
-            ICustomizedPrice customazedPrice = (from ancustomazedPrice in _PricingContexts
+            ICustomizedPrice customizedPrice = (from ancustomazedPrice in _PricingContexts
                                                 where ancustomazedPrice.PricingContext == pricicingContext
                                                 select ancustomazedPrice).FirstOrDefault();
 
-            if (customazedPrice != null)
-                customazedPrice.Price = price;
+            if (customizedPrice != null)
+                customizedPrice.Price = price;
             else
             {
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    customazedPrice = new CustomizedPrice(pricicingContext, this);
-                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(customazedPrice);
-                    customazedPrice.Price = price;
-                    _PricingContexts.Add(customazedPrice);
+                    customizedPrice = new CustomizedPrice(pricicingContext, this);
+                    OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(customizedPrice);
+                    customizedPrice.Price = price;
+                    _PricingContexts.Add(customizedPrice);
                     stateTransition.Consistent = true;
                 }
 
@@ -415,11 +415,11 @@ namespace MenuModel
         }
 
         /// <MetaDataID>{47116b57-4e26-4628-b03f-038a866bf828}</MetaDataID>
-        public void RemoveCustomazedPrice(ICustomizedPrice customazedPrice)
+        public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
         {
             //using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             //{
-            //    _PricingContexts.Remove(customazedPrice);
+            //    _PricingContexts.Remove(customizedPrice);
             //    stateTransition.Consistent = true;
             //}
         }

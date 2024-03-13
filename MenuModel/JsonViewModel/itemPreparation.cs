@@ -374,40 +374,40 @@ namespace MenuModel.JsonViewModel
 #endif
 
         /// <MetaDataID>{1a988709-6772-4d56-835d-c168eb03af2f}</MetaDataID>
-        public void RemoveCustomazedPrice(ICustomizedPrice customazedPrice)
+        public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
         {
             throw new NotImplementedException();
         }
 
         /// <MetaDataID>{405e6c21-fce5-4fcd-82a3-fc9731190f12}</MetaDataID>
-        public ICustomizedPrice GetCustomazedPrice(IPricedSubject pricedSubject)
+        public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
         {
-            CustomizedPrice customazedPrice = (from aCustomazedPrice in PricedSubjects.OfType<CustomizedPrice>()
+            CustomizedPrice customizedPrice = (from aCustomazedPrice in PricedSubjects.OfType<CustomizedPrice>()
                                                where aCustomazedPrice.PricedSubject == pricedSubject
                                                select aCustomazedPrice).FirstOrDefault();
-            if (customazedPrice == null)
+            if (customizedPrice == null)
             {
-                customazedPrice = new CustomizedPrice();
+                customizedPrice = new CustomizedPrice();
                 //option.Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(orgOption).GetPersistentObjectUri(orgOption);
 
 
-                customazedPrice.PricedSubject = pricedSubject;
-                customazedPrice.PricingContext = this;
+                customizedPrice.PricedSubject = pricedSubject;
+                customizedPrice.PricingContext = this;
 
-                PricedSubjects.Add(customazedPrice);
-                pricedSubject.PricingContexts.Add(customazedPrice);
+                PricedSubjects.Add(customizedPrice);
+                pricedSubject.PricingContexts.Add(customizedPrice);
             }
-            return customazedPrice;
+            return customizedPrice;
         }
 
         /// <MetaDataID>{ae3debb3-6ca7-4c9a-94cf-43f4bee29857}</MetaDataID>
-        public decimal GetPrice(IPricingContext pricicingContext)
+        public decimal GetPrice(IPricingContext pricingContext)
         {
             throw new NotImplementedException();
         }
 
         /// <MetaDataID>{52ed8594-aeb1-40ae-9554-a5e0d4d12b7e}</MetaDataID>
-        public void SetPrice(IPricingContext pricicingContext, decimal price)
+        public void SetPrice(IPricingContext pricingContext, decimal price)
         {
             throw new NotImplementedException();
         }

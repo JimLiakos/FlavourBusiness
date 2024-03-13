@@ -15,7 +15,7 @@ namespace FlavourBusinessFacade.PriceList
         /// <MetaDataID>{32b87239-ef84-4483-ad05-7d0a7f28e9cd}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         double? OptionsPricesRounding { get; set; }
-        bool OptionsPricesDiscount { get; set; }
+        bool? IsOptionsPricesDiscountEnabled { get; set; }
 
         /// <MetaDataID>{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}</MetaDataID>
         [BackwardCompatibilityID("+1")]
@@ -40,7 +40,7 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{58e165c5-e9af-4c4d-854e-96cd6b6c145c}</MetaDataID>
         [BackwardCompatibilityID("+6")]
-        IClassified MenuModelObject { get; }
+        object MenuModelObject { get; }
 
         /// <MetaDataID>{3bb37c90-f505-4f75-90e1-484a9cedf2b7}</MetaDataID>
         [BackwardCompatibilityID("+7")]
@@ -75,11 +75,104 @@ namespace FlavourBusinessFacade.PriceList
             return (itemsPriceInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
 
         }
+        public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, MenuModel.IMenuItem menuItem)
+        {
 
+            var itemsPreparationInfos = (from itemsInfo in priceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPriceInfo = itemsInfo
+                                         }).ToList();
+
+            var itemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                        where itemsInfoEntry.@object == menuItem
+                                        select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
+
+            if (itemsPreparationInfo != null)
+            {
+                return itemsPreparationInfo;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, object priceListSubject)
+        {
+
+            var itemsPreparationInfos = (from itemsInfo in priceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPriceInfo = itemsInfo
+                                         }).ToList();
+
+            var itemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
+                                        where itemsInfoEntry.@object == priceListSubject
+                                        select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
+
+            if (itemsPreparationInfo != null)
+                return itemsPreparationInfo;
+            else
+                return null;
+        }
 
 
 
         /// <MetaDataID>{363235af-9772-4e3b-9c43-31d48fdf75cd}</MetaDataID>
+        public static System.Collections.Generic.List<IItemsPriceInfo> GetItemsPriceInfo(this IPriceList priceList, object priceListSubject)
+        {
+
+            if(priceListSubject is IMenuItemPrice)
+            {
+
+            }
+            System.Collections.Generic.List<IItemsPriceInfo> itemsPreparationInfoHierarchy = new System.Collections.Generic.List<IItemsPriceInfo>();
+
+            var itemsPreparationInfos = (from itemsInfo in priceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPriceInfo = itemsInfo
+                                         });// ;//.ToList();
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is IMenuItem && itemsPreparationInfoEntry.@object == priceListSubject)
+                {
+                    itemsPreparationInfoHierarchy.Add(itemsPreparationInfoEntry.ItemsPriceInfo);
+                    break;
+                }
+                if (priceListSubject is IMenuItemPrice && itemsPreparationInfoEntry.@object == (priceListSubject as IMenuItemPrice).MenuItem)
+                {
+                    itemsPreparationInfoHierarchy.Add(itemsPreparationInfoEntry.ItemsPriceInfo);
+                    break;
+                }
+
+            }
+
+            IClassified classifiedObject = priceListSubject as IClassified;
+            if(priceListSubject is IMenuItemPrice)
+                classifiedObject = (priceListSubject as IMenuItemPrice).MenuItem as IClassified;
+
+            if (classifiedObject is IClassified)
+            {
+                foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+                {
+                    if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
+                    {
+                        IItemsCategory itemsCategory = null;
+                        var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
+                        itemsCategory = (classifiedObject as MenuModel.IClassified).Class as IItemsCategory;
+                        itemsPreparationInfoHierarchy.AddRange((System.Collections.Generic.IEnumerable<IItemsPriceInfo>)priceList.GetItemsPriceInfo(itemsCategory));
+                    }
+                }
+            }
+            return itemsPreparationInfoHierarchy;
+        }
+
         public static System.Collections.Generic.List<IItemsPriceInfo> GetItemsPriceInfo(this IPriceList priceList, IMenuItem menuItem)
         {
             System.Collections.Generic.List<IItemsPriceInfo> itemsPreparationInfoHierarchy = new System.Collections.Generic.List<IItemsPriceInfo>();
@@ -138,7 +231,7 @@ namespace FlavourBusinessFacade.PriceList
                         itemsPreparationInfoHierarchy.Add(itemsPreparationInfoEntry.ItemsPreparationInfo);
                 }
             }
-            itemsCategory = itemsCategory.Parent;
+
             while (itemsCategory != null)
             {
                 foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
@@ -201,7 +294,13 @@ namespace FlavourBusinessFacade.PriceList
                         itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
 
                     if (itemsCategoryOrParent == itemsPreparationInfoCategory)
-                        return true;
+                    {
+                        if (itemsPreparationInfo.Excluded())
+                            return false;
+                        if (itemsPreparationInfo.Included())
+                            return true;
+
+                    }
 
                 }
             }
@@ -286,7 +385,7 @@ namespace FlavourBusinessFacade.PriceList
                             return true;
 
 
-          
+
                         return false;
 
 
@@ -302,6 +401,68 @@ namespace FlavourBusinessFacade.PriceList
         }
 
 
+        public static bool HasOverriddenPrice(this IPriceList priceList, IMenuItemPrice menuItemPrice)
+        {
+
+            var itemsPreparationInfos = (from itemsInfo in priceList.ItemsPrices
+                                         select new
+                                         {
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsPreparationInfo = itemsInfo
+                                         }).ToList();
+
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItemPrice && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItemPrice) == menuItemPrice)
+                {
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                        return true;
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                        return false;
+                }
+            }
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem)
+                {
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                        return true;
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                        return false;
+
+                }
+            }
+
+            foreach (var itemsPreparationInfoEntry in itemsPreparationInfos)
+            {
+                if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory)
+                {
+                    MenuModel.IItemsCategory itemsCategory = null;
+                    var itemsPreparationInfoCategory = (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory);
+                    if (menuItemPrice.MenuItem is MenuModel.IClassified)
+                    {
+                        itemsCategory = (menuItemPrice.MenuItem as MenuModel.IClassified).Class as IItemsCategory;
+
+                        if (priceList.HasOverriddenPrice(itemsCategory))
+                            return true;
+
+
+
+                        return false;
+
+
+                    }
+                }
+            }
+            if (priceList.PriceListMainItemsPriceInfo.PercentageDiscount != null)
+                return true;
+            if (priceList.PriceListMainItemsPriceInfo.AmountDiscount != null)
+                return true;
+            return false;
+
+        }
 
     }
 

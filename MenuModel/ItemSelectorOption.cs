@@ -77,12 +77,14 @@ namespace MenuModel
         }
 
         /// <MetaDataID>{4531fbde-bb9a-4e71-8764-4b77d23b7fb8}</MetaDataID>
-        public ICustomizedPrice GetCustomazedPrice(IPricedSubject pricedSubject)
+        public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
         {
             return (from customizedPrice in _PricedSubjects
                     where customizedPrice.PricedSubject == pricedSubject
                     select customizedPrice).FirstOrDefault();
         }
+
+     
 
         /// <MetaDataID>{6f8a725d-4e93-4f8a-830c-41ada7b7f6d4}</MetaDataID>
         public override decimal Price

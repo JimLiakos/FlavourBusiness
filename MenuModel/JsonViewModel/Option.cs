@@ -213,8 +213,8 @@ namespace MenuModel.JsonViewModel
                     {
                         IPricingContext jsonPricingContext = mappedObject[customPrice.PricingContext] as IPricingContext;
                         IPricedSubject jsonPricedSubject = option;
-                        ICustomizedPrice customazedPrice = jsonPricingContext.GetCustomazedPrice(jsonPricedSubject);
-                        customazedPrice.Price = customPrice.Price;
+                        ICustomizedPrice customizedPrice = jsonPricingContext.GetCustomizedPrice(jsonPricedSubject);
+                        customizedPrice.Price = customPrice.Price;
                     }
                     else
                     {
@@ -255,7 +255,7 @@ namespace MenuModel.JsonViewModel
         }
 
         /// <MetaDataID>{0a5747c2-0826-4bf2-99ab-350aefca58ab}</MetaDataID>
-        public void RemoveCustomazedPrice(ICustomizedPrice customazedPrice)
+        public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
         {
             throw new NotImplementedException();
         }

@@ -5,8 +5,8 @@ using OOAdvantech;
 namespace MenuModel
 {
     /// <MetaDataID>{5b1dc307-2ce6-4339-ab21-a69b6c4a71ec}</MetaDataID>
-    public interface IMenuItem
-    {
+    public interface IMenuItem 
+    { 
         /// <MetaDataID>{befa463c-cd86-40cc-8e18-585b593f3b74}</MetaDataID>
         [BackwardCompatibilityID("+13")]
         string ItemInfo { get; set; }

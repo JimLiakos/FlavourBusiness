@@ -76,7 +76,7 @@ namespace DontWaitApp
                     return Task.FromResult<List<HomeDeliveryServicePointInfo>>(NeighborhoodFoodServers[location]);
             }
 
-            Xamarin.Essentials.PhoneDialer phone;
+            
             
 
             NeighborhoodFoodServersTask = Task<List<HomeDeliveryServicePointInfo>>.Run(() =>

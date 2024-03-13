@@ -159,7 +159,9 @@ namespace FLBManager.ViewModel.Preparation
             });
             CheckBoxVisibility = System.Windows.Visibility.Visible;
         }
-
+        /// <summary>
+        /// Removes the itemsPriceInfo from price list, the price information comes from the previous object in the hierarchy
+        /// </summary>
         private void RemoveItemsPreparationInfo()
         {
             if(EditMode)

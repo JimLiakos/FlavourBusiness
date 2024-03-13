@@ -1,4 +1,5 @@
-﻿using MenuItemsEditor.ViewModel.PriceList;
+﻿using FLBManager.ViewModel;
+using MenuItemsEditor.ViewModel.PriceList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace MenuItemsEditor.Views.PriceList
                 if (inPreviewMouseDown)
                     return;
                 inPreviewMouseDown = true;
-                var itemsPreparationInfo = this.GetDataContextObject<ItemsPriceInfoPresentation>();
+                FBResourceTreeNode itemsPreparationInfo = this.GetDataContextObject<FBResourceTreeNode>();
                 if (!itemsPreparationInfo.Edit)
                     return;
 
@@ -47,7 +48,7 @@ namespace MenuItemsEditor.Views.PriceList
                 if (mousepos.X < 0 || mousepos.Y < 0 || mousepos.X > ActualWidth || mousepos.Y > ActualHeight)
                 {
 
-                    if (itemsPreparationInfo != null && !itemsPreparationInfo.PriceOverrideTypesPopupOpen)
+                    if (itemsPreparationInfo != null && (itemsPreparationInfo as ItemsPriceInfoPresentation)?.PriceOverrideTypesPopupOpen!=true)
                     {
                         Keyboard.ClearFocus();
                         foreach (var unitTextBox in WPFUIElementObjectBind.ObjectContext.FindChilds<TextBoxNumberWithUnit>(Content as DependencyObject))
@@ -126,7 +127,7 @@ namespace MenuItemsEditor.Views.PriceList
 
             if (e.ClickCount == 2)
             {
-                this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
+                this.GetObjectContext()?.RunUnderContextTransaction(new Action(() =>
                 {
 
                     //PreviewMouseDown += GlobalPreviewMouseDown;
@@ -141,11 +142,29 @@ namespace MenuItemsEditor.Views.PriceList
                             itemsPreparationInfo.DefinesNewPrice=true;
                             itemsPreparationInfo.Edit = true;
                         }
-                        
                     }
+                    else
+                    {
+                        var itemSelectorPriceInfo = this.GetDataContextObject<ItemSelectorPriceInfoPresetation>();
+                        if (itemSelectorPriceInfo != null)
+                        {
+
+                            if (itemSelectorPriceInfo.ItemPriceInfoPresentation.DefinesNewPrice)
+                                itemSelectorPriceInfo.Edit = true;
+                            else
+                            {
+                                itemSelectorPriceInfo.ItemPriceInfoPresentation.DefinesNewPrice = true;
+                                itemSelectorPriceInfo.Edit = true;
+                            }
+
+                        }
+
+                    }
+                    
                 }));
+                e.Handled = true;
             }
-            e.Handled = true;
+            
         }
 
         private void PriceOverrideTypeMouseDown(object sender, MouseButtonEventArgs e)
@@ -164,7 +183,7 @@ namespace MenuItemsEditor.Views.PriceList
 
         private void EditView_Loaded(object sender, RoutedEventArgs e)
         {
-            var itemsPreparationInfo = this.GetDataContextObject<ItemsPriceInfoPresentation>();
+            FBResourceTreeNode itemsPreparationInfo = this.GetDataContextObject<FBResourceTreeNode>();
             if (itemsPreparationInfo != null && itemsPreparationInfo.Edit)
                 PreviewMouseDown += GlobalPreviewMouseDown;
         }

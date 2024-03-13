@@ -176,7 +176,9 @@ namespace FLBManager.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Defines context menu of tree view node 
+        /// </summary>
         /// <MetaDataID>{0c5958ea-2f11-4a93-9952-65f4eed4de36}</MetaDataID>
         public abstract List<WPFUIElementObjectBind.MenuCommand> ContextMenuItems
         {
@@ -192,6 +194,11 @@ namespace FLBManager.ViewModel
         /// <MetaDataID>{1a0148a3-d0b6-4eb2-8389-c5f09b656127}</MetaDataID>
         public abstract void RemoveChild(FBResourceTreeNode treeNode);
 
+        public void ClearSelected()
+        {
+            IsSelected = false;
+            foreach (var member in Members) { member.ClearSelected(); }
+        }
     }
 
 

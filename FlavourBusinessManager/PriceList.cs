@@ -2,6 +2,7 @@ using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicesContextResources;
 using MenuModel;
+using MenuModel.JsonViewModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
@@ -14,7 +15,7 @@ namespace FlavourBusinessManager.PriceList
     /// <MetaDataID>{089749b1-083b-4348-b598-6fd512b853a5}</MetaDataID>
     [BackwardCompatibilityID("{089749b1-083b-4348-b598-6fd512b853a5}")]
     [Persistent()]
-    public class PriceList : IPriceList
+    public class PriceList : IPriceList, IPricingContext
     {
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -93,6 +94,10 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
+        public string Name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
+
         /// <MetaDataID>{0131fa91-7249-4e84-b030-a40b49940389}</MetaDataID>
         public void AddItemsPriceInfos(IItemsPriceInfo itemsPriceInfo)
         {
@@ -131,6 +136,94 @@ namespace FlavourBusinessManager.PriceList
 
         }
 
+        public double? GetPercentageDiscount(object priceListSubject)
+        {
+
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.PercentageDiscount;
+
+            var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
+
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo.PercentageDiscount;
+
+            return PriceListMainItemsPriceInfo.PercentageDiscount;
+        }
+        public double? GetPriceRounding(object priceListSubject)
+        {
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.Pricerounding;
+
+            var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo.Pricerounding;
+
+            if (PriceListMainItemsPriceInfo.PercentageDiscount != null && PriceListMainItemsPriceInfo.Pricerounding != null)
+                return PriceListMainItemsPriceInfo.Pricerounding;
+            return null;
+        }
+
+        public bool IsOptionsPricesDiscountEnabled(object priceListSubject)
+        {
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.IsOptionsPricesDiscountEnabled == true;
+
+            var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo.IsOptionsPricesDiscountEnabled == true;
+
+            if (PriceListMainItemsPriceInfo.IsOptionsPricesDiscountEnabled == true)
+                return true;
+            else
+                return false;
+        }
+
+        public double? GetOptionsPricesRounding(object priceListSubject)
+        {
+
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.OptionsPricesRounding;
+
+            var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo.OptionsPricesRounding;
+
+
+            if (this.PriceListMainItemsPriceInfo.PercentageDiscount != null && this.PriceListMainItemsPriceInfo.OptionsPricesRounding != null)
+                return this.PriceListMainItemsPriceInfo.OptionsPricesRounding;
+            return null;
+        }
+
+
+
+
+        public decimal? GetOverridePrice(object priceListSubject)
+        {
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.OverridenPrice;
+            return null;
+        }
+
+        public double? GetAmountDiscount(object priceListSubject)
+        {
+
+            var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+                return the_itemsPriceInfo.AmountDiscount;
+
+            var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
+
+            if (itemsPriceInfo != null)
+                return itemsPriceInfo.AmountDiscount;
+
+            return PriceListMainItemsPriceInfo.AmountDiscount;
+        }
+
         /// <MetaDataID>{cbbb4db7-0a70-4867-a942-e58184352c3a}</MetaDataID>
         public IItemsPriceInfo NewPriceInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
         {
@@ -165,9 +258,21 @@ namespace FlavourBusinessManager.PriceList
                         itemsPiceInfo.ItemsPriceInfoType = itemsPriceInfoType;
                         stateTransition.Consistent = true;
                     }
-
                     return itemsPiceInfo;
+                }
 
+                if (obj is IMenuItemPrice)
+                {
+                    ItemsPriceInfo itemsPiceInfo = new ItemsPriceInfo(obj as MenuModel.IMenuItemPrice);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPiceInfo);
+                        this._ItemsPrices.Add(itemsPiceInfo);
+                        itemsPiceInfo.ItemsPriceInfoType = itemsPriceInfoType;
+                        stateTransition.Consistent = true;
+                    }
+                    return itemsPiceInfo;
                 }
             }
             finally
@@ -178,5 +283,329 @@ namespace FlavourBusinessManager.PriceList
             return null;
 
         }
+
+
+        public decimal? GetFinalPrice(IMenuItem menuItem)
+        {
+
+            double? percentageDiscount = GetPercentageDiscount(menuItem);
+            double? amountDiscount = GetAmountDiscount(menuItem);
+            decimal? overridePrice = GetOverridePrice(menuItem);
+
+            if (percentageDiscount != null && amountDiscount != null)
+            {
+
+            }
+            if (percentageDiscount != null && overridePrice != null)
+            {
+
+            }
+            if (amountDiscount != null && overridePrice != null)
+            {
+
+            }
+            decimal? price = menuItem?.MenuItemPrice?.Price;
+            if (price == null || price.Value == 0)
+                return price;
+            if (percentageDiscount != null)
+            {
+
+                var priceRounding = GetPriceRounding(menuItem);
+
+
+                price = price.Value * (decimal)(1 - percentageDiscount.Value);
+                if (priceRounding.HasValue)
+                    price = this.RoundPriceToNearest(price.Value, priceRounding.Value);
+            }
+            if (overridePrice != null)
+                return overridePrice;
+
+            if (amountDiscount != null)
+                return price.Value - (decimal)amountDiscount;
+
+            return price;
+
+        }
+
+
+        public decimal? GetFinalPrice(IMenuItemPrice menuItemPrice)
+        {
+
+            double? percentageDiscount = GetPercentageDiscount(menuItemPrice);
+            double? amountDiscount = GetAmountDiscount(menuItemPrice);
+            decimal? overridePrice = GetOverridePrice(menuItemPrice);
+
+            if (percentageDiscount != null && amountDiscount != null)
+            {
+
+            }
+            if (percentageDiscount != null && overridePrice != null)
+            {
+
+            }
+            if (amountDiscount != null && overridePrice != null)
+            {
+
+            }
+            decimal? price = menuItemPrice?.Price;
+            if (price == null || price.Value == 0)
+                return price;
+
+
+            if (this.GetItemPriceInfo(menuItemPrice)?.Excluded() == true)
+                return price;
+            if (percentageDiscount != null)
+            {
+
+                var priceRounding = GetPriceRounding(menuItemPrice);
+
+
+                price = price.Value * (decimal)(1 - percentageDiscount.Value);
+                if (priceRounding.HasValue)
+                    price = this.RoundPriceToNearest(price.Value, priceRounding.Value);
+            }
+            if (overridePrice != null)
+                return overridePrice;
+
+            if (amountDiscount != null)
+                return price.Value - (decimal)amountDiscount;
+
+            return price;
+        }
+
+
+
+        public decimal? GetFinalPrice(IPreparationScaledOption option, IMenuItemPrice menuItemPrice)
+        {
+            double? percentageDiscount = GetPercentageDiscount(menuItemPrice);
+            double? amountDiscount = GetAmountDiscount(menuItemPrice);
+            decimal? overridePrice = GetOverridePrice(menuItemPrice);
+            double? optionsPricesRounding = GetOptionsPricesRounding(menuItemPrice);
+            var isOptionsPricesDiscountEnabled = IsOptionsPricesDiscountEnabled(menuItemPrice);
+
+
+            if (percentageDiscount != null && amountDiscount != null)
+            {
+            }
+            if (percentageDiscount != null && overridePrice != null)
+            {
+            }
+            if (amountDiscount != null && overridePrice != null)
+            {
+            }
+
+            decimal? price = null;
+            if (option != null)
+            {
+                #region Gets option price
+                if (menuItemPrice != null)
+                {
+                    var customizedPrice = menuItemPrice.GetCustomizedPrice(option as IPricedSubject);
+                    if (customizedPrice != null)
+                        price = customizedPrice.Price;
+                    else
+                    {
+                        customizedPrice = (menuItemPrice as MenuModel.MenuItemPrice).ItemSelector?.GetCustomizedPrice(option as IPricedSubject);
+                        if (customizedPrice != null)
+                            price = customizedPrice.Price;
+                        else
+                            price = option.Price;
+
+                        // customizedPrice = ItemPrice.i.GetCustomizedPrice(Option as IPricedSubject);
+                    }
+
+                }
+                else
+                    price = option.Price;
+
+                #endregion
+
+
+                if (isOptionsPricesDiscountEnabled && this.GetItemPriceInfo(menuItemPrice)?.Excluded() != true)
+                {
+                    // Apply discount
+                    price = price.Value * (decimal)(1 - percentageDiscount.Value);
+                    if (optionsPricesRounding.HasValue)
+                        price = this.RoundPriceToNearest(price.Value, optionsPricesRounding.Value);
+                }
+
+            }
+            return price;
+
+        }
+
+        public IPricingContext GetDerivedPriceContext(IPricingContext pricingContext)
+        {
+            if (pricingContext is IMenuItemPrice)
+                return new PriceListMenuItemPrice(pricingContext as IMenuItemPrice, this);
+
+            return this;
+        }
+
+        public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
+        {
+
+            double? percentageDiscount = GetPercentageDiscount(pricedSubject);
+            double? amountDiscount = GetAmountDiscount(pricedSubject);
+            decimal? overridePrice = GetOverridePrice(pricedSubject);
+
+            if (percentageDiscount != null && amountDiscount != null)
+            {
+
+            }
+            if (percentageDiscount != null && overridePrice != null)
+            {
+
+            }
+            if (amountDiscount != null && overridePrice != null)
+            {
+
+            }
+            decimal? price = pricedSubject?.Price;
+            if (price == null || price.Value == 0)
+                return null;
+
+
+            if (this.GetItemPriceInfo(pricedSubject)?.Excluded() == true)
+                return new PriceListPrice(pricedSubject,this,price.Value);
+            if (percentageDiscount != null)
+            {
+
+                var priceRounding = GetPriceRounding(pricedSubject);
+
+
+                price = price.Value * (decimal)(1 - percentageDiscount.Value);
+                if (priceRounding.HasValue)
+                    price = this.RoundPriceToNearest(price.Value, priceRounding.Value);
+                if(price!=null)
+                    return new PriceListPrice(pricedSubject, this, price.Value );
+                else
+                    return null;
+
+            }
+            if (overridePrice != null)
+           
+                return new PriceListPrice(pricedSubject, this, overridePrice.Value);
+                
+           
+
+            if (amountDiscount != null)
+                return new PriceListPrice(pricedSubject, this, price.Value - (decimal)amountDiscount);
+            return null;
+        }
+
+        class PriceListMenuItemPrice : IPricingContext
+        {
+            public PriceListMenuItemPrice(IMenuItemPrice menuItemPrice, PriceList priceList)
+            {
+                MenuItemPrice = menuItemPrice;
+                PriceList = priceList;
+            }
+
+            public string Name
+            {
+                get => PriceList.Name;
+                set => throw new System.NotImplementedException();
+            }
+
+            public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
+
+            IMenuItemPrice MenuItemPrice { get; }
+            PriceList PriceList { get; }
+
+            public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
+            {
+
+
+                double? percentageDiscount = PriceList.GetPercentageDiscount(MenuItemPrice);
+                double? amountDiscount = PriceList.GetAmountDiscount(MenuItemPrice);
+                decimal? overridePrice = PriceList.GetOverridePrice(MenuItemPrice);
+                double? optionsPricesRounding = PriceList.GetOptionsPricesRounding(MenuItemPrice);
+                var isOptionsPricesDiscountEnabled = PriceList.IsOptionsPricesDiscountEnabled(MenuItemPrice);
+
+
+                if (percentageDiscount != null && amountDiscount != null)
+                {
+                }
+                if (percentageDiscount != null && overridePrice != null)
+                {
+                }
+                if (amountDiscount != null && overridePrice != null)
+                {
+                }
+
+                decimal? price = null;
+                if (pricedSubject != null)
+                {
+                    #region Gets option price
+                    if (MenuItemPrice != null)
+                    {
+                        var customizedPrice = MenuItemPrice.GetCustomizedPrice(pricedSubject);
+                        if (customizedPrice != null)
+                            price = customizedPrice.Price;
+                        else
+                        {
+                            customizedPrice = (MenuItemPrice as MenuModel.MenuItemPrice).ItemSelector?.GetCustomizedPrice(pricedSubject);
+                            if (customizedPrice != null)
+                                price = customizedPrice.Price;
+                            else
+                                price = pricedSubject.Price;
+
+                            // customizedPrice = ItemPrice.i.GetCustomizedPrice(Option as IPricedSubject);
+                        }
+
+                    }
+                    else
+                        price = pricedSubject.Price;
+
+                    #endregion
+
+
+                    if (isOptionsPricesDiscountEnabled && PriceList.GetItemPriceInfo(MenuItemPrice)?.Excluded() != true)
+                    {
+                        // Apply discount
+                        price = price.Value * (decimal)(1 - percentageDiscount.Value);
+                        if (optionsPricesRounding.HasValue)
+                            price = PriceList.RoundPriceToNearest(price.Value, optionsPricesRounding.Value);
+                    }
+
+                }
+                if (price == null)
+                    return null;
+
+                return new PriceListPrice(pricedSubject,this,price.Value);
+            }
+
+            public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
+            {
+
+            }
+        }
+
+        class PriceListPrice : ICustomizedPrice
+        {
+
+            public PriceListPrice(IPricedSubject pricedSubject, IPricingContext pricingContext, decimal price)
+            {
+                _Price = price;
+                PricedSubject = pricedSubject;
+                PricingContext = pricingContext;
+            }
+            public IPricedSubject PricedSubject { get; }
+
+            public IPricingContext PricingContext { get; }
+
+            /// <exclude>Excluded</exclude>
+            decimal _Price;
+            public decimal Price { get { return _Price; } set { } }
+        }
     }
+
+
+
 }

@@ -143,7 +143,7 @@
     <Compile Include="ViewModel\PreparationScaledOptionViewModel.cs" />
     <Compile Include="ViewModel\PriceContextViewModel.cs" />
     <Compile Include="ViewModel\PriceList\ItemOptionsPriceInfo.cs" />
-    <Compile Include="ViewModel\PriceList\ItemSelectorPriceInfo.cs" />
+    <Compile Include="ViewModel\PriceList\ItemSelectorPriceInfoPresetation.cs" />
     <Compile Include="ViewModel\PriceList\ItemsPriceInfoPresetation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListsPresentation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListTreeNode.cs" />

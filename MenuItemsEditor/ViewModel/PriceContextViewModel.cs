@@ -114,17 +114,17 @@ namespace MenuItemsEditor.ViewModel
                 //    MenuModel.MenuItemPrice menuItemPrice = null;
                 //    if (menuItemPrices.TryGetValue(PreparationScaledOptionViewModel.MenuItemViewModel.MenuItem, out menuItemPrice))
                 //    {
-                //        var customazedPrice = menuItemPrice.GetCustomazedPrice(PricedSubject);
-                //        if (customazedPrice != null)
-                //            return customazedPrice.Price;
+                //        var customizedPrice = menuItemPrice.GetCustomizedPrice(PricedSubject);
+                //        if (customizedPrice != null)
+                //            return customizedPrice.Price;
                 //    }
                 //}
                 //else
                 if (PricingContext != null && PricedSubject != null)
                 {
-                    var customazedPrice = PricingContext.GetCustomazedPrice(PricedSubject);
-                    if (customazedPrice != null)
-                        return customazedPrice.Price;
+                    var customizedPrice = PricingContext.GetCustomizedPrice(PricedSubject);
+                    if (customizedPrice != null)
+                        return customizedPrice.Price;
                 }
                 return -1;
             }
@@ -136,9 +136,9 @@ namespace MenuItemsEditor.ViewModel
                     {
                         if (PricingContext != null)
                         {
-                            var customazedPrice = PricingContext.GetCustomazedPrice(PricedSubject);
-                            if (customazedPrice != null)
-                                PricingContext.RemoveCustomazedPrice(customazedPrice);
+                            var customizedPrice = PricingContext.GetCustomizedPrice(PricedSubject);
+                            if (customizedPrice != null)
+                                PricingContext.RemoveCustomizedPrice(customizedPrice);
 
                         }
                         //if (MenuItemViewModel != null && PricingContext is MenuModel.ItemSelectorOption)
@@ -149,16 +149,16 @@ namespace MenuItemsEditor.ViewModel
                         //    MenuModel.MenuItemPrice menuItemPrice = null;
                         //    if (menuItemPrices.TryGetValue(MenuItemViewModel.MenuItem, out menuItemPrice))
                         //    {
-                        //        var customazedPrice = menuItemPrice.GetCustomazedPrice(PricedSubject);
-                        //        if (customazedPrice != null)
-                        //            menuItemPrice.RemoveCustomazedPrice(customazedPrice);
+                        //        var customizedPrice = menuItemPrice.GetCustomizedPrice(PricedSubject);
+                        //        if (customizedPrice != null)
+                        //            menuItemPrice.RemoveCustomazedPrice(customizedPrice);
                         //    }
                         //}
                         //else if (PricingContext != null && PricedSubject != null)
                         //{
-                        //    var customazedPrice = PricingContext.GetCustomazedPrice(PricedSubject);
-                        //    if (customazedPrice != null)
-                        //        PricingContext.RemoveCustomazedPrice(customazedPrice);
+                        //    var customizedPrice = PricingContext.GetCustomizedPrice(PricedSubject);
+                        //    if (customizedPrice != null)
+                        //        PricingContext.RemoveCustomazedPrice(customizedPrice);
                         //}
                     }
                     else
@@ -184,22 +184,22 @@ namespace MenuItemsEditor.ViewModel
                 //    MenuModel.MenuItemPrice menuItemPrice = null;
                 //    if (menuItemPrices.TryGetValue(MenuItemViewModel.MenuItem, out menuItemPrice))
                 //    {
-                //        var customazedPrice = menuItemPrice.GetCustomazedPrice(PricedSubject);
-                //        if (customazedPrice != null)
-                //            return customazedPrice.Price;
+                //        var customizedPrice = menuItemPrice.GetCustomizedPrice(PricedSubject);
+                //        if (customizedPrice != null)
+                //            return customizedPrice.Price;
                 //    }
                 //}
                 if(PricingContext!=null)
                 {
-                    var customazedPrice = PricingContext.GetCustomazedPrice(PricedSubject);
-                    if (customazedPrice != null)
-                        return customazedPrice.Price;
+                    var customizedPrice = PricingContext.GetCustomizedPrice(PricedSubject);
+                    if (customizedPrice != null)
+                        return customizedPrice.Price;
                 }
                 if(ItemSelectorOption !=null)
                 {
-                    var customazedPrice = ItemSelectorOption.GetCustomazedPrice(PricedSubject);
-                    if (customazedPrice != null)
-                        return customazedPrice.Price;
+                    var customizedPrice = ItemSelectorOption.GetCustomizedPrice(PricedSubject);
+                    if (customizedPrice != null)
+                        return customizedPrice.Price;
                 }
                 return PricedSubject.Price;
             }
@@ -248,9 +248,9 @@ namespace MenuItemsEditor.ViewModel
                     //MenuModel.MenuItemPrice menuItemPrice = null;
                     //if (menuItemPrices.TryGetValue(PreparationScaledOptionViewModel.MenuItemViewModel.MenuItem, out menuItemPrice))
                     //{
-                    //    var customazedPrice = menuItemPrice.GetCustomazedPrice(PreparationScaledOptionViewModel.PreparationScaledOption);
-                    //    if (customazedPrice != null)
-                    //        return customazedPrice.Price;
+                    //    var customizedPrice = menuItemPrice.GetCustomizedPrice(PreparationScaledOptionViewModel.PreparationScaledOption);
+                    //    if (customizedPrice != null)
+                    //        return customizedPrice.Price;
                     //}
                 
                 return PricedSubject.Price;

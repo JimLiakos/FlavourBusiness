@@ -45,7 +45,7 @@ namespace MenuModel.JsonViewModel
             else
             {
                 ItemSelectorOption itemSelector = new ItemSelectorOption(orgItemSelector);
-           
+
                 mappedObject[orgItemSelector] = itemSelector;
 
                 itemSelector.LevelType = ScaleType.GetScaleTypeFor(orgItemSelector.LevelType, mappedObject);
@@ -57,21 +57,23 @@ namespace MenuModel.JsonViewModel
 #endif
 
         /// <MetaDataID>{77bb30e5-8016-4524-8ca7-8ae02672f9f9}</MetaDataID>
-        public ICustomizedPrice GetCustomazedPrice(IPricedSubject pricedSubject)
+        public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
         {
-            CustomizedPrice customazedPrice = (from aCustomazedPrice in PricedSubjects.OfType<CustomizedPrice>()
+            CustomizedPrice customizedPrice = (from aCustomazedPrice in PricedSubjects.OfType<CustomizedPrice>()
                                                where aCustomazedPrice.PricedSubject == pricedSubject
                                                select aCustomazedPrice).FirstOrDefault();
-            if (customazedPrice == null)
+            if (customizedPrice == null)
             {
-                customazedPrice = new CustomizedPrice();
-                customazedPrice.PricedSubject = pricedSubject;
-                customazedPrice.PricingContext = this;
+                customizedPrice = new CustomizedPrice();
+                customizedPrice.PricedSubject = pricedSubject;
+                customizedPrice.PricingContext = this;
 
-                PricedSubjects.Add(customazedPrice);
-                pricedSubject.PricingContexts.Add(customazedPrice);
+                PricedSubjects.Add(customizedPrice);
+                pricedSubject.PricingContexts.Add(customizedPrice);
             }
-            return customazedPrice;
+            return customizedPrice;
         }
     }
+
+
 }

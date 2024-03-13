@@ -616,7 +616,7 @@ namespace MenuModel
         //    pricedSubject.GetPrice
         //    return pricedSubject.GetPrice(this);
 
-        //    //ICustomazedPrice customazedPrice=(from anCustomazedPrice in PricedSubjects
+        //    //ICustomazedPrice customizedPrice=(from anCustomazedPrice in PricedSubjects
         //    //                                  where anCustomazedPrice.PricedSubject== pricedSubject
         //    //                                  select anCustomazedPrice).f
 

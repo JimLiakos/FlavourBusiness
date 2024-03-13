@@ -228,6 +228,7 @@ namespace MenuItemsEditor.Views
         /// <MetaDataID>{4ef71894-a041-4596-bffe-be2b80e2b7a5}</MetaDataID>
         private void PricePropertyChanged()
         {
+            _DisplayedValue = null;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedValue)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceFontWeight)));
         }
