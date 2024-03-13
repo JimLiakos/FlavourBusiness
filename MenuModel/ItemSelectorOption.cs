@@ -10,7 +10,7 @@ namespace MenuModel
     /// <MetaDataID>{76e5080c-6610-4022-906f-0e960e6aba63}</MetaDataID>
     [BackwardCompatibilityID("{76e5080c-6610-4022-906f-0e960e6aba63}")]
     [Persistent()]
-    public class ItemSelectorOption :PreparationScaledOption, IPricingContext
+    public class ItemSelectorOption : PreparationScaledOption, IPricingContext
     {
 
         /// <MetaDataID>{28531f65-3332-4601-9eb7-3eb38f70d1f7}</MetaDataID>
@@ -33,9 +33,9 @@ namespace MenuModel
         {
             get
             {
-              return  (from menuItemPrice in _MenuItemPrices
-                 where menuItemPrice.MenuItem!=null
-                 select menuItemPrice).ToDictionary(x => x.MenuItem);
+                return (from menuItemPrice in _MenuItemPrices
+                        where menuItemPrice.MenuItem!=null
+                        select menuItemPrice).ToDictionary(x => x.MenuItem);
                 //return _MenuItemPrices.ToDictionary(x => x.MenuItem);
             }
         }
@@ -83,8 +83,12 @@ namespace MenuModel
                     where customizedPrice.PricedSubject == pricedSubject
                     select customizedPrice).FirstOrDefault();
         }
+        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        {
+            return pricedSubject.Price;
+        }
 
-     
+
 
         /// <MetaDataID>{6f8a725d-4e93-4f8a-830c-41ada7b7f6d4}</MetaDataID>
         public override decimal Price

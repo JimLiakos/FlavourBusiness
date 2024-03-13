@@ -73,6 +73,11 @@ namespace MenuModel.JsonViewModel
             }
             return customizedPrice;
         }
+
+        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        {
+            return pricedSubject.Price;
+        }
     }
 
 

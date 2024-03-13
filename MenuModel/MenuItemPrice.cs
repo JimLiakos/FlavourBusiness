@@ -228,6 +228,11 @@ namespace MenuModel
                     select customizedPrice).FirstOrDefault();
         }
 
-      
+        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        {
+            return pricedSubject.Price;
+        }
+
+
     }
 }

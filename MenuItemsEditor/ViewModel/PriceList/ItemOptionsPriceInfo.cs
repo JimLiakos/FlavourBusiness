@@ -56,31 +56,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
 
             Option = option;
-
-            //if (parent is ItemsPriceInfoPresentation)
-            //    this.ItemPriceInfoPresentation = parent as ItemsPriceInfoPresentation;
-
-            //if (parent is ItemOptionsPriceInfo)
-            //    this.ItemPriceInfoPresentation = (parent as ItemOptionsPriceInfo).ItemPriceInfoPresentation;
-
-
-
             if (parent is ItemOptionsPriceInfo)
-            {
-                // this.ItemPriceInfoPresentation = (parent as ItemOptionsPriceInfo).ItemPriceInfoPresentation;
                 ItemPrice = (parent as ItemOptionsPriceInfo).ItemPrice;
-            }
 
             if (parent is ItemSelectorPriceInfoPresetation)
-            {
-                //this.ItemPriceInfoPresentation = (parent as ItemSelectorPriceInfoPresetation).Parent as ItemsPriceInfoPresentation;
                 ItemPrice = (parent as ItemSelectorPriceInfoPresetation).ItemPrice;
-            }
-
-            if (ItemPriceInfoPresentation == null)
-            {
-
-            }
 
 
             Members = new List<FBResourceTreeNode>();
@@ -244,30 +224,29 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+
+                
                 decimal? price = null;
                 if (Option != null)
-                {
-                    if (ItemPrice != null)
-                    {
-                        var customizedPrice = ItemPrice.GetCustomizedPrice(Option as IPricedSubject);
-                        if (customizedPrice != null)
-                            price = customizedPrice.Price;
-                        else
-                        {
-                            customizedPrice = ItemPrice.ItemSelector?.GetCustomizedPrice(Option as IPricedSubject);
-                            if (customizedPrice != null)
-                                price = customizedPrice.Price;
-                            else
-                                price = Option.Price;
-
-                            // customizedPrice = ItemPrice.i.GetCustomizedPrice(Option as IPricedSubject);
-                        }
-                    }
-                }
-
-
-
-
+                    price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetDerivedPriceContext(ItemPrice)?.GetDeafultPrice(Option);
+                //{
+                //    if (ItemPrice != null)
+                //    {
+                //        var customizedPrice = ItemPrice.GetCustomizedPrice(Option as IPricedSubject);
+                //        if (customizedPrice != null)
+                //            price = customizedPrice.Price;
+                //        else
+                //        {
+                //            customizedPrice = ItemPrice.ItemSelector?.GetCustomizedPrice(Option as IPricedSubject);
+                //            if (customizedPrice != null)
+                //                price = customizedPrice.Price;
+                //            else
+                //                price = Option.Price;
+                //        }
+                //    }
+                //    else
+                //        price = Option.Price;
+                //}
                 return price;
             }
         }
@@ -276,87 +255,85 @@ namespace MenuItemsEditor.ViewModel.PriceList
         public decimal? GetFinalPrice()
         {
 
-            decimal? m_price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetFinalPrice(Option, ItemPrice);
+            //decimal? m_price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetFinalPrice(Option, ItemPrice);
 
             decimal? m__price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetDerivedPriceContext(ItemPrice)?.GetCustomizedPrice(Option)?.Price;
             if (!m__price.HasValue)
                 m__price = Option?.Price;
-            decimal? price = OrgPrice;
-            decimal? t_price = ItemPriceInfoPresentation.PriceListPresentation.GetPrice(Option, ItemPrice);
+            //decimal? price = OrgPrice;
+            //decimal? t_price = ItemPriceInfoPresentation.PriceListPresentation.GetPrice(Option, ItemPrice);
 
 
-            if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && price != null && ItemPriceInfoPresentation.PercentageDiscount > 0)
-            {
-                if (ItemSelectorPriceInfoPresentation != null)
-                {
-                    if (ItemSelectorPriceInfoPresentation.DefinesNewPrice)
-                    {
-                        price = price.Value * (decimal)(1 - ItemSelectorPriceInfoPresentation.PercentageDiscount.Value / 100);
-                        var pricerounding = ItemPriceInfoPresentation.OptionsPricesRounding;
-                        if (pricerounding.HasValue)
-                            price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
-                    }
-                }
-                else
-                {
-                    price = price.Value * (decimal)(1 - ItemPriceInfoPresentation.PercentageDiscount.Value / 100);
-                    var pricerounding = ItemPriceInfoPresentation.OptionsPricesRounding;
-                    if (pricerounding.HasValue)
-                        price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
-                }
-            }
-            if (price != m_price)
-            {
+            //if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && price != null && ItemPriceInfoPresentation.PercentageDiscount > 0)
+            //{
+            //    if (ItemSelectorPriceInfoPresentation != null)
+            //    {
+            //        if (ItemSelectorPriceInfoPresentation.DefinesNewPrice)
+            //        {
+            //            price = price.Value * (decimal)(1 - ItemSelectorPriceInfoPresentation.PercentageDiscount.Value / 100);
+            //            var pricerounding = ItemPriceInfoPresentation.OptionsPricesRounding;
+            //            if (pricerounding.HasValue)
+            //                price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        price = price.Value * (decimal)(1 - ItemPriceInfoPresentation.PercentageDiscount.Value / 100);
+            //        var pricerounding = ItemPriceInfoPresentation.OptionsPricesRounding;
+            //        if (pricerounding.HasValue)
+            //            price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
+            //    }
+            //}
+            //if (price != m_price)
+            //{
 
-            }
-            else if (price != m__price)
-            {
+            //}
+            //else if (price != m__price)
+            //{
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-            }
+            //}
 
 
             return m__price;
         }
 
-        public decimal? Price
-        {
-            get
-            {
+        //public decimal? Price
+        //{
+        //    get
+        //    {
+        //        decimal? price = OrgPrice;
+        //        decimal? t_price = ItemPriceInfoPresentation.PriceListPresentation.GetPrice(Option, ItemPrice);
 
-                decimal? price = OrgPrice;
-                decimal? t_price = ItemPriceInfoPresentation.PriceListPresentation.GetPrice(Option, ItemPrice);
-
-
-                if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && price != null && ItemPriceInfoPresentation.PercentageDiscount > 0)
-                {
-                    if (ItemSelectorPriceInfoPresentation != null)
-                    {
-                        if (ItemSelectorPriceInfoPresentation.DefinesNewPrice)
-                        {
-                            price = price.Value * (decimal)(1 - ItemSelectorPriceInfoPresentation.PercentageDiscount.Value / 100);
-                            var priceRounding = ItemPriceInfoPresentation.OptionsPricesRounding;
-                            if (priceRounding.HasValue)
-                                price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, priceRounding.Value);
-                        }
-                    }
-                    else
-                    {
-                        price = price.Value * (decimal)(1 - ItemPriceInfoPresentation.PercentageDiscount.Value / 100);
-                        var priceRounding = ItemPriceInfoPresentation.OptionsPricesRounding;
-                        if (priceRounding.HasValue)
-                            price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, priceRounding.Value);
-                    }
-                }
+        //        if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && price != null && ItemPriceInfoPresentation.PercentageDiscount > 0)
+        //        {
+        //            if (ItemSelectorPriceInfoPresentation != null)
+        //            {
+        //                if (ItemSelectorPriceInfoPresentation.DefinesNewPrice)
+        //                {
+        //                    price = price.Value * (decimal)(1 - ItemSelectorPriceInfoPresentation.PercentageDiscount.Value / 100);
+        //                    var priceRounding = ItemPriceInfoPresentation.OptionsPricesRounding;
+        //                    if (priceRounding.HasValue)
+        //                        price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, priceRounding.Value);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                price = price.Value * (decimal)(1 - ItemPriceInfoPresentation.PercentageDiscount.Value / 100);
+        //                var priceRounding = ItemPriceInfoPresentation.OptionsPricesRounding;
+        //                if (priceRounding.HasValue)
+        //                    price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, priceRounding.Value);
+        //            }
+        //        }
 
 
-                return price;
-            }
-            set { }
-        }
+        //        return price;
+        //    }
+        //    set { }
+        //}
 
         public bool IsDefinesNewPriceEnabled { get; } = false;
         public bool DefinesNewPrice
@@ -385,8 +362,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
                 decimal? price = OrgPrice;
-                return ItemPriceInfoPresentation.DefinesNewPrice && price != Price;
-
+                return ItemPriceInfoPresentation.DefinesNewPrice && price != GetFinalPrice();
             }
         }
 

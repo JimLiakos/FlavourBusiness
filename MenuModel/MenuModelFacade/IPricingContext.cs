@@ -21,6 +21,10 @@ namespace MenuModel
         /// <MetaDataID>{94dc1543-7310-4ce6-b528-92dd09cde403}</MetaDataID>
         ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject);
 
+        decimal GetDeafultPrice(IPricedSubject pricedSubject);
+
+
+
         
 
     }

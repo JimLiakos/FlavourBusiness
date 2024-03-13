@@ -297,7 +297,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         private decimal? GetFinalPrice()
         {
 
-            decimal? m_price = this.PriceListPresentation.PriceList.GetFinalPrice(ItemPrice);
+            //decimal? m_price = this.PriceListPresentation.PriceList.GetFinalPrice(ItemPrice);
             decimal? m__price = (PriceListPresentation.PriceList as IPricingContext).GetCustomizedPrice(ItemPrice)?.Price;
             if (!m__price.HasValue)
                 m__price = ItemPrice.Price;
@@ -321,11 +321,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
-            if (price != m_price)
-            {
-
-            }
-            else if(price != m__price)
+           if(price != m__price)
             {
 
             }
@@ -335,8 +331,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
 
 
-            if (OrgPrice >= 0 && m_price < 0)
-                m_price = 0;
+            if (OrgPrice >= 0 && m__price < 0)
+                m__price = 0;
             return m__price;
         }
 

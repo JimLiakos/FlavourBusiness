@@ -187,9 +187,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     else if (this.MenuItem != null)
                         this.PriceListPresentation.SetAmountDiscount(this.MenuItem, 0);
 
-                    decimal? m_p = null;
-                    if (this.MenuItem != null)
-                        m_p = this.PriceListPresentation.PriceList.GetFinalPrice(this.MenuItem);
+                    //decimal? m_p = null;
+                    //if (this.MenuItem != null)
+                    //    m_p = this.PriceListPresentation.PriceList.GetFinalPrice(this.MenuItem);
 
 
 
@@ -1118,45 +1118,45 @@ namespace MenuItemsEditor.ViewModel.PriceList
         private decimal? GetFinalPrice()
         {
 
-            decimal? m_price = this.PriceListPresentation.PriceList.GetFinalPrice(MenuItem);
             decimal? m__price = (PriceListPresentation.PriceList as IPricingContext).GetCustomizedPrice(MenuItem?.MenuItemPrice)?.Price;
-            if (!m__price.HasValue)
-                m__price = MenuItem?.MenuItemPrice.Price;
+            //decimal? m_price = this.PriceListPresentation.PriceList.GetFinalPrice(MenuItem);
+            //if (!m__price.HasValue)
+            //    m__price = MenuItem?.MenuItemPrice.Price;
 
-            decimal? price = MenuItem?.MenuItemPrice?.Price;
-            if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount && this.DefinesNewPrice && price != null && PercentageDiscount > 0)
-            {
-                price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
-                var pricerounding = Pricerounding;
-                if (pricerounding.HasValue)
-                    price = PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
-            }
-            if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PriceOverride && this.DefinesNewPrice && price != null && OverridePrice > 0)
-                price = OverridePrice;
+            //decimal? price = MenuItem?.MenuItemPrice?.Price;
+            //if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount && this.DefinesNewPrice && price != null && PercentageDiscount > 0)
+            //{
+            //    price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
+            //    var pricerounding = Pricerounding;
+            //    if (pricerounding.HasValue)
+            //        price = PriceListPresentation.PriceList.RoundPriceToNearest(price.Value, pricerounding.Value);
+            //}
+            //if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PriceOverride && this.DefinesNewPrice && price != null && OverridePrice > 0)
+            //    price = OverridePrice;
 
-            if (price != null && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount != null)
-                price = price.Value - (decimal)AmountDiscount.Value;
+            //if (price != null && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount != null)
+            //    price = price.Value - (decimal)AmountDiscount.Value;
 
-            var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresetation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
-            if (itemSelectorPriceInfoPresetation?.HasDedicatedItemPriceInfo == true)
-                price = itemSelectorPriceInfoPresetation?.Price;
+            //var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresetation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
+            //if (itemSelectorPriceInfoPresetation?.HasDedicatedItemPriceInfo == true)
+            //    price = itemSelectorPriceInfoPresetation?.Price;
 
 
-            if (price != m_price)
-            {
+            //if (price != m_price)
+            //{
 
-            }
-            else if (price != m__price)
-            {
+            //}
+            //else if (price != m__price)
+            //{
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
 
-            }
+            //}
 
-            if (OrgPrice >= 0 && m_price < 0)
-                m_price = 0;
+            if (OrgPrice >= 0 && m__price < 0)
+                m__price = 0;
             return m__price;
         }
 

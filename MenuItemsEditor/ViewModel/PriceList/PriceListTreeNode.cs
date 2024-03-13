@@ -1,4 +1,5 @@
-﻿using FlavourBusinessFacade;
+﻿using Finance.ViewModel;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.PriceList;
@@ -27,10 +28,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
 
         }
+
+        public int MenuItemsColumnIndex { get; set; } = 3;
+
+        public int MenuItemsColumnSpan { get; set; } = 1;
+
         public PriceListPresentation(FBResourceTreeNode parent, OrganizationStorageRef priceListStorageRef, MenuViewModel menuViewModel) : base(parent)
         {
             PriceListStorageRef = priceListStorageRef;
             MenuViewModel = menuViewModel;
+
+            TaxAuthority=MenuViewModel.Menu.TaxAuthority;
 
 
             //string localFileName = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microneme\\DontWaitWater\\{priceListStorageRef.Name}.xml";
@@ -49,6 +57,24 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 _ItemsToChoose = null;
                 EditMenuItem(win);
             });
+        }
+
+        Dictionary<FinanceFacade.ITaxableType, TaxableTypeViewModel> _TaxableTypes;
+
+        FinanceFacade.ITaxAuthority TaxAuthority;
+
+
+        public IList<TaxableTypeViewModel> TaxableTypes
+        {
+            get
+            {
+                if (_TaxableTypes == null)
+                    _TaxableTypes = (from taxableType in TaxAuthority.TaxableTypes
+                                     select new TaxableTypeViewModel(taxableType)).ToDictionary(x => x.TaxableType);
+
+                return _TaxableTypes.Values.ToList();
+
+            }
         }
 
 
