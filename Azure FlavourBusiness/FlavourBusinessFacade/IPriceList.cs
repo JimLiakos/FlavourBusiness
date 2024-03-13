@@ -60,13 +60,13 @@ namespace FlavourBusinessFacade.PriceList
 
 
 
-        ///// <MetaDataID>{01882af7-d78b-437c-bfb1-eb78bd497ba8}</MetaDataID>
-        //decimal? GetFinalPrice(IMenuItem menuItem);
+        /// <MetaDataID>{01882af7-d78b-437c-bfb1-eb78bd497ba8}</MetaDataID>
+        decimal? GetFinalPrice(IMenuItem menuItem);
 
-        ///// <MetaDataID>{179aa811-4925-42aa-af89-b346eef586c8}</MetaDataID>
-        //decimal? GetFinalPrice(IMenuItemPrice menuItemPrice);
-        ///// <MetaDataID>{5d017c6f-631b-41c6-8cc8-0ef4a29676e0}</MetaDataID>
-        //decimal? GetFinalPrice(IPreparationScaledOption option, IMenuItemPrice itemPrice);
+        /// <MetaDataID>{179aa811-4925-42aa-af89-b346eef586c8}</MetaDataID>
+        decimal? GetFinalPrice(IMenuItemPrice menuItemPrice);
+        /// <MetaDataID>{5d017c6f-631b-41c6-8cc8-0ef4a29676e0}</MetaDataID>
+        decimal? GetFinalPrice(IPreparationScaledOption option, IMenuItemPrice itemPrice);
 
         /// <MetaDataID>{4cd0bfe9-f963-4521-8915-1e3c56040cfd}</MetaDataID>
         IPricingContext GetDerivedPriceContext(IPricingContext pricingContext);
