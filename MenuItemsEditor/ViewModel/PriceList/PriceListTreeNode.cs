@@ -74,6 +74,23 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
+        TaxableTypeViewModel _SelectedTaxableType;
+        public TaxableTypeViewModel SelectedTaxableType
+        {
+            get
+            {
+                return _SelectedTaxableType;
+            }
+            set
+            { 
+                if (_SelectedTaxableType != value)
+                {
+                    _SelectedTaxableType=value;
+                    _ItemsToChoose?.OfType<ItemsPriceInfoPresentation>().FirstOrDefault()?.Refresh();
+                }
+            }
+        }
+
 
         IPriceList _PriceList = null;
 
@@ -1390,9 +1407,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
-        public int MenuItemsColumnIndex { get; set; } = 3;
+        public int MenuItemsColumnIndex { get; set; } = 1;
 
-        public int MenuItemsColumnSpan { get; set; } = 1;
+        public int MenuItemsColumnSpan { get; set; } = 3;
 
     }
 }

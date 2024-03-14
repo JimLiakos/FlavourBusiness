@@ -673,12 +673,15 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                if (PriceListPresentation.Taxes)
+                if (PriceListPresentation.Taxes&&!IsRootCategory)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
             }
         }
+
+
+
 
         /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
         public bool DefinesNewPrice
@@ -1584,6 +1587,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasDedicatedItemPriceInfo)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideTypeImage)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
 
 
 
@@ -1617,6 +1621,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Price)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
+        }
+
+        public bool IsDefinesTaxesEnabled
+        {
+            get
+            {
+                if (PriceListPresentation.Taxes&&PriceListPresentation.SelectedTaxableType!=null)
+                    return true;
+                else
+                    return false;
+            }
         }
     }
 

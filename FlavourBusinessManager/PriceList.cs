@@ -4,6 +4,7 @@ using FlavourBusinessManager.ServicesContextResources;
 using MenuModel;
 using MenuModel.JsonViewModel;
 using OOAdvantech;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -101,10 +102,15 @@ namespace FlavourBusinessManager.PriceList
         /// <MetaDataID>{fa0af410-ee21-428e-93c3-75bc654874fc}</MetaDataID>
         public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
 
+
+
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<IItemsTaxInfo> _ItemsTaxes = new OOAdvantech.Collections.Generic.Set<IItemsTaxInfo>();
+
         /// <MetaDataID>{2f321a14-72bd-49ed-816c-6ad28f8cfec6}</MetaDataID>
         [PersistentMember(nameof(_ItemsTaxes))]
         [BackwardCompatibilityID("+3")]
-        public List<IItemsTaxInfo> ItemsTaxes => throw new System.NotImplementedException();
+        public List<IItemsTaxInfo> ItemsTaxes => _ItemsTaxes.ToThreadSafeList();
 
         /// <MetaDataID>{0131fa91-7249-4e84-b030-a40b49940389}</MetaDataID>
         public void AddItemsPriceInfos(IItemsPriceInfo itemsPriceInfo)

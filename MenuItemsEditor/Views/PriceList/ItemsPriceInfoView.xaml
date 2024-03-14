@@ -16,7 +16,7 @@
                 <StackPanel   AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance ViewModel:ItemsPriceInfoPresentation}" >
 
                     <CheckBox Visibility="{Binding PriceListPresentation.IsDefinesNewPriceVisibility}" IsEnabled="{Binding IsDefinesNewPriceEnabled}" VerticalAlignment="Center" IsChecked="{Binding DefinesNewPrice}"></CheckBox>
-                    <CheckBox Visibility="{Binding IsDefinesTaxesVisibility}"  VerticalAlignment="Center" IsChecked="{Binding DefinesTaxes}"></CheckBox>
+                    <CheckBox Visibility="{Binding IsDefinesTaxesVisibility}" IsEnabled="{Binding IsDefinesTaxesEnabled}" VerticalAlignment="Center" IsChecked="{Binding DefinesTaxes}"></CheckBox>
                     <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                     <ControlsEx:EditableTextBlock Background="Transparent" Margin="0,0,10,0" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" >
                         <ControlsEx:EditableTextBlock.Style>
