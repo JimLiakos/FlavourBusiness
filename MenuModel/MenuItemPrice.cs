@@ -99,7 +99,7 @@ namespace MenuModel
         {
             get
             {
-                if (_Price.HasValue)
+                if (_Price.HasValue && _Price.Value != -1)
                     return _Price.Value;
                 else if (ItemSelector != null)
                     return ItemSelector.Price;

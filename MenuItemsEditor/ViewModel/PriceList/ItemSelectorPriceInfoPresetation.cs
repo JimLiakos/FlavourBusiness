@@ -17,9 +17,9 @@ using WPFUIElementObjectBind;
 namespace MenuItemsEditor.ViewModel.PriceList
 {
     /// <MetaDataID>{330d4ee9-3ed3-4fef-ab04-5778b4b571ab}</MetaDataID>
-    public class ItemSelectorPriceInfoPresetation : FBResourceTreeNode, INotifyPropertyChanged
+    public class ItemSelectorPriceInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
-        public ItemSelectorPriceInfoPresetation(FBResourceTreeNode parent, PriceListPresentation priceListPresentation, IMenuItem menuItem, MenuItemPrice itemPrice, bool editMode) : base(parent)
+        public ItemSelectorPriceInfoPresentation(FBResourceTreeNode parent, PriceListPresentation priceListPresentation, IMenuItem menuItem, MenuItemPrice itemPrice, bool editMode) : base(parent)
         {
 
             ItemPriceInfoPresentation = parent as ItemsPriceInfoPresentation;
@@ -77,6 +77,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasDedicatedItemPriceInfo)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
 
         }
 
@@ -156,7 +157,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
                 FBResourceTreeNode treeNode = this;
-                while (treeNode.Parent is ItemsPriceInfoPresentation || treeNode.Parent is ItemSelectorPriceInfoPresetation)
+                while (treeNode.Parent is ItemsPriceInfoPresentation || treeNode.Parent is ItemSelectorPriceInfoPresentation)
                 {
                     treeNode = treeNode.Parent;
                 }
@@ -258,6 +259,15 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
+        public Visibility IsDefinesTaxesVisibility
+        {
+            get
+            {
+                return Visibility.Collapsed;
+            }
+        }
+
+
         public override bool HasContextMenu => true;
 
         public override bool Edit
@@ -265,6 +275,12 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get => base.Edit;
             set
             {
+                if (PriceListPresentation?.Taxes == true)
+                {
+                    base.Edit = false;
+                    return;
+                }
+
                 base.Edit = value;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceVisibility)));
                 ObjectPropertiesChanged();
@@ -321,7 +337,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
-           if(price != m__price)
+            if (price != m__price)
             {
 
             }
@@ -410,7 +426,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
 
-                if (ItemPrice != null && PriceListPresentation.GetItemsPriceInfo(ItemPrice)?.ItemsPriceInfoType == ItemsPriceInfoType.Include)
+                if (ItemPrice != null && PriceListPresentation.GetItemsPriceInfo(ItemPrice)?.ItemsPriceInfoType == ItemsPriceInfoType.Include && !PriceListPresentation.Taxes)
                     return true;
 
                 return false;
@@ -508,6 +524,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+                if (PriceListPresentation.Taxes)
+                    return "";
+
                 if (PriceListPresentation.GetItemsPriceInfo(ItemPrice) != null)
                     return "";
                 if (ItemPriceInfoPresentation.DefinesNewPrice && ItemPriceInfoPresentation.SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount)

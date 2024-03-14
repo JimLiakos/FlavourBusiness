@@ -29,10 +29,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-        public int MenuItemsColumnIndex { get; set; } = 3;
-
-        public int MenuItemsColumnSpan { get; set; } = 1;
-
+    
         public PriceListPresentation(FBResourceTreeNode parent, OrganizationStorageRef priceListStorageRef, MenuViewModel menuViewModel) : base(parent)
         {
             PriceListStorageRef = priceListStorageRef;
@@ -80,7 +77,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         IPriceList _PriceList = null;
 
-
+        public Visibility IsDefinesNewPriceVisibility
+        {
+            get
+            {
+                if (Taxes)
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
+        }
+    
         public IPriceList PriceList
         {
             get
@@ -1339,9 +1346,57 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             return null;
         }
+
+        bool _Taxes;
+        public bool Taxes
+        {
+            get => _Taxes;
+            set
+            {
+                if (_Taxes != value)
+                {
+                    _Taxes = value;
+                    if (_Taxes)
+                    {
+                        MenuItemsColumnIndex = 3;
+                        MenuItemsColumnSpan = 1;
+                    }
+                    else
+                    {
+                        MenuItemsColumnIndex = 1;
+                        MenuItemsColumnSpan = 3;
+                    }
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TaxesVisibility)));
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnIndex)));
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnSpan)));
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesNewPriceVisibility)));
+
+                    _ItemsToChoose.OfType<ItemsPriceInfoPresentation>().ToList().ForEach(item => { item.Refresh(); });
+
+
+
+                }
+            }
+        }
+
+        public Visibility TaxesVisibility
+        {
+            get
+            {
+                if (Taxes)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+        public int MenuItemsColumnIndex { get; set; } = 3;
+
+        public int MenuItemsColumnSpan { get; set; } = 1;
+
     }
 }
-static class ItemsCategoryExtention
+static class ItemsCategoryExtension
 {
     /// <MetaDataID>{e78b2a9d-d9b4-4f90-8a52-e5bb03227c45}</MetaDataID>
     public static List<MenuItem> GetAllMenuItems(this IItemsCategory itemsCategory)
@@ -1384,6 +1439,8 @@ static class ItemsCategoryExtention
         return false;
 
     }
+
+
 
 
 }

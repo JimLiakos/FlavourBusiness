@@ -15,6 +15,7 @@ namespace FlavourBusinessFacade.PriceList
         /// <MetaDataID>{32b87239-ef84-4483-ad05-7d0a7f28e9cd}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         double? OptionsPricesRounding { get; set; }
+        /// <MetaDataID>{f1eb4d26-ffe6-4065-a42c-2b772398909b}</MetaDataID>
         bool? IsOptionsPricesDiscountEnabled { get; set; }
 
         /// <MetaDataID>{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}</MetaDataID>
@@ -125,7 +126,7 @@ namespace FlavourBusinessFacade.PriceList
         public static System.Collections.Generic.List<IItemsPriceInfo> GetItemsPriceInfo(this IPriceList priceList, object priceListSubject)
         {
 
-            if(priceListSubject is IMenuItemPrice)
+            if (priceListSubject is IMenuItemPrice)
             {
 
             }
@@ -154,7 +155,7 @@ namespace FlavourBusinessFacade.PriceList
             }
 
             IClassified classifiedObject = priceListSubject as IClassified;
-            if(priceListSubject is IMenuItemPrice)
+            if (priceListSubject is IMenuItemPrice)
                 classifiedObject = (priceListSubject as IMenuItemPrice).MenuItem as IClassified;
 
             if (classifiedObject is IClassified)
@@ -256,6 +257,11 @@ namespace FlavourBusinessFacade.PriceList
 
         }
 
+
+        public static bool HasOverriddenTaxes(this IPriceList priceList, IItemsCategory itemsCategory)
+        {
+            return false;
+        }
 
         /// <MetaDataID>{112fd3c1-e25f-4e72-9fef-db94ea560622}</MetaDataID>
         public static bool HasOverriddenPrice(this IPriceList priceList, IItemsCategory itemsCategory)

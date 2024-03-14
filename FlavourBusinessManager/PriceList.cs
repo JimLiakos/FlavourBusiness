@@ -57,6 +57,7 @@ namespace FlavourBusinessManager.PriceList
 
         /// <exclude>Excluded</exclude>
         IItemsPriceInfo _PriceListMainItemsPriceInfo;
+        /// <MetaDataID>{a810e92f-6441-42c5-8c28-975cbdac8593}</MetaDataID>
         public IItemsPriceInfo PriceListMainItemsPriceInfo
         {
             get
@@ -94,9 +95,16 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
+        /// <MetaDataID>{610d0ffe-619e-4b14-81e4-5463bada60c9}</MetaDataID>
         public string Name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
+        /// <MetaDataID>{fa0af410-ee21-428e-93c3-75bc654874fc}</MetaDataID>
         public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
+
+        /// <MetaDataID>{2f321a14-72bd-49ed-816c-6ad28f8cfec6}</MetaDataID>
+        [PersistentMember(nameof(_ItemsTaxes))]
+        [BackwardCompatibilityID("+3")]
+        public List<IItemsTaxInfo> ItemsTaxes => throw new System.NotImplementedException();
 
         /// <MetaDataID>{0131fa91-7249-4e84-b030-a40b49940389}</MetaDataID>
         public void AddItemsPriceInfos(IItemsPriceInfo itemsPriceInfo)
@@ -136,6 +144,7 @@ namespace FlavourBusinessManager.PriceList
 
         }
 
+        /// <MetaDataID>{a205c02f-4c7e-47c5-996f-ae9a9341b264}</MetaDataID>
         public double? GetPercentageDiscount(object priceListSubject)
         {
 
@@ -150,6 +159,7 @@ namespace FlavourBusinessManager.PriceList
 
             return PriceListMainItemsPriceInfo.PercentageDiscount;
         }
+        /// <MetaDataID>{af69c6b9-727b-4a71-af37-eb1b03b8a3e9}</MetaDataID>
         public double? GetPriceRounding(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
@@ -165,6 +175,7 @@ namespace FlavourBusinessManager.PriceList
             return null;
         }
 
+        /// <MetaDataID>{43575e9d-c145-4fed-83ed-142de2aa289f}</MetaDataID>
         public bool IsOptionsPricesDiscountEnabled(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
@@ -181,6 +192,7 @@ namespace FlavourBusinessManager.PriceList
                 return false;
         }
 
+        /// <MetaDataID>{262d8279-c095-41f9-8bc9-c3248ab81a68}</MetaDataID>
         public double? GetOptionsPricesRounding(object priceListSubject)
         {
 
@@ -201,6 +213,7 @@ namespace FlavourBusinessManager.PriceList
 
 
 
+        /// <MetaDataID>{8d0ecbae-2d32-4514-83f5-14896d0511a5}</MetaDataID>
         public decimal? GetOverridePrice(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
@@ -209,6 +222,7 @@ namespace FlavourBusinessManager.PriceList
             return null;
         }
 
+        /// <MetaDataID>{8b331deb-3ab0-49ee-98f1-6c89595b7fa8}</MetaDataID>
         public double? GetAmountDiscount(object priceListSubject)
         {
 
@@ -434,6 +448,7 @@ namespace FlavourBusinessManager.PriceList
 
 
 
+        /// <MetaDataID>{dd0742ab-217b-47cd-90eb-12dd4c3ca690}</MetaDataID>
         public IPricingContext GetDerivedPriceContext(IPricingContext pricingContext)
         {
             if (pricingContext is IMenuItemPrice)
@@ -442,11 +457,13 @@ namespace FlavourBusinessManager.PriceList
             return this;
         }
 
+        /// <MetaDataID>{db66132e-139c-4596-b670-71d301e47ddb}</MetaDataID>
         public void RemoveCustomizedPrice(ICustomizedPrice customizedPrice)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <MetaDataID>{07a06f93-ff34-4edf-888b-28ce44a64127}</MetaDataID>
         public ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject)
         {
 
@@ -484,7 +501,7 @@ namespace FlavourBusinessManager.PriceList
                 price = price.Value * (decimal)(1 - percentageDiscount.Value);
                 if (priceRounding.HasValue)
                     price = this.RoundPriceToNearest(price.Value, priceRounding.Value);
-                if (price!=null)
+                if (price != null)
                     return new PriceListPrice(pricedSubject, this, price.Value);
                 else
                     return null;
@@ -502,6 +519,7 @@ namespace FlavourBusinessManager.PriceList
         }
 
 
+        /// <MetaDataID>{ca2cf21e-d820-4e04-9b6c-2432f0e65ffb}</MetaDataID>
         public decimal GetDeafultPrice(IPricedSubject pricedSubject)
         {
             return pricedSubject.Price;

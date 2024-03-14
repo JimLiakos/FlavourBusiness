@@ -29,6 +29,9 @@ namespace MenuItemsEditor.Views.PriceList
             //Title="{x:Static resx:Resources.PriceListPageTitle}" 
         }
 
+
+        
+
         private void DragEnter(object sender, DragEventArgs e)
         {
 

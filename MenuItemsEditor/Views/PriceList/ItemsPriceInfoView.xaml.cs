@@ -145,7 +145,7 @@ namespace MenuItemsEditor.Views.PriceList
                     }
                     else
                     {
-                        var itemSelectorPriceInfo = this.GetDataContextObject<ItemSelectorPriceInfoPresetation>();
+                        var itemSelectorPriceInfo = this.GetDataContextObject<ItemSelectorPriceInfoPresentation>();
                         if (itemSelectorPriceInfo != null)
                         {
 

@@ -7,6 +7,11 @@ namespace FlavourBusinessFacade.PriceList
     /// <MetaDataID>{f3227625-fb47-47aa-b911-5eed56e5d67b}</MetaDataID>
     public interface IPriceList
     {
+        [RoleAMultiplicityRange(0)]
+        [Association("PriceListTaxes", Roles.RoleA, "bf6f1424-175c-4276-af86-fff865eb2392")]
+        [RoleBMultiplicityRange(1, 1)]
+        List<IItemsTaxInfo> ItemsTaxes { get; }
+
         /// <MetaDataID>{9f8f9bcc-5335-49eb-bc6b-6d761457d913}</MetaDataID>
         [BackwardCompatibilityID("+1")]
         string Description { get; set; }
@@ -15,7 +20,7 @@ namespace FlavourBusinessFacade.PriceList
         [Association("PriceListItems", Roles.RoleA, "712c2573-54d4-4370-9589-e51517f911b5")]
         [RoleAMultiplicityRange(1)]
         [RoleBMultiplicityRange(1, 1)]
-        System.Collections.Generic.List<IItemsPriceInfo> ItemsPrices { get; }
+        List<IItemsPriceInfo> ItemsPrices { get; }
 
 
         /// <MetaDataID>{2ee663b8-a65c-46fe-9f6b-a71371070f01}</MetaDataID>

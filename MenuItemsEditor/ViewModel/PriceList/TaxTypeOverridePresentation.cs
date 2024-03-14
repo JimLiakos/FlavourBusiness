@@ -14,6 +14,7 @@ using WPFUIElementObjectBind;
 using FlavourBusinessFacade.PriceList;
 using System.Windows;
 using System.Runtime.Remoting.Messaging;
+using FlavourBusinessManager.ServicesContextResources;
 
 
 
@@ -32,7 +33,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         /// <MetaDataID>{017f504b-513b-4fc4-af42-c0c2ae4641b9}</MetaDataID>
         public readonly IItemsPreparationInfo ItemsPreparationInfo;
         /// <MetaDataID>{b369fbe0-d83b-467f-ba71-050afe49452e}</MetaDataID>
-        public readonly PriceListPresentation PriceListPresentation;
+        public PriceListPresentation PriceListPresentation { get; }
 
         /// <summary>
         /// Preparation infos concern menu item
@@ -197,7 +198,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     {
                         case PriceList.PriceOverrideTypes.PriceOverride:
                             {
-                                if (_OverridePrice != -1&& HasDedicatedItemPriceInfo)
+                                if (_OverridePrice != -1 && HasDedicatedItemPriceInfo)
                                 {
                                     if (this.ItemsCategory != null)
                                         PriceListPresentation.SetOverridenPrice(this.ItemsCategory, _OverridePrice);
@@ -208,7 +209,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                             }
                         case PriceList.PriceOverrideTypes.AmountDiscount:
                             {
-                                if (_AmountDiscount > 0&&HasDedicatedItemPriceInfo)
+                                if (_AmountDiscount > 0 && HasDedicatedItemPriceInfo)
                                 {
                                     if (this.ItemsCategory != null)
                                         PriceListPresentation.SetAmountDiscount(this.ItemsCategory, _AmountDiscount);
@@ -220,7 +221,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
                         case PriceList.PriceOverrideTypes.PercentageDiscount:
                             {
-                                if (_PercentageDiscount > 0&& HasDedicatedItemPriceInfo)
+                                if (_PercentageDiscount > 0 && HasDedicatedItemPriceInfo)
                                 {
                                     if (this.ItemsCategory != null)
                                         PriceListPresentation.SetPercentageDiscount(this.ItemsCategory, _PercentageDiscount);
@@ -479,6 +480,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             set
             {
+                if (PriceListPresentation?.Taxes == true)
+                {
+                    base.Edit = false;
+                    return;
+                }
 
                 base.Edit = value;
 
@@ -632,6 +638,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+                if (PriceListPresentation.Taxes)
+                    return false;
+
                 if (IsRootCategory)
                     return PriceListPresentation.PriceList.PriceListMainItemsPriceInfo.PercentageDiscount != null || PriceListPresentation.PriceList.PriceListMainItemsPriceInfo.AmountDiscount != null;
 
@@ -656,6 +665,20 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
         public bool IsDefinesNewPriceEnabled { get; } = true;
+
+        public bool DefinesTaxes { get; set; }
+
+
+        public Visibility IsDefinesTaxesVisibility
+        {
+            get
+            {
+                if (PriceListPresentation.Taxes)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
 
         /// <MetaDataID>{c0a45032-38e7-4142-ba1e-47015ff8c0dd}</MetaDataID>
         public bool DefinesNewPrice
@@ -1041,6 +1064,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+                if (PriceListPresentation.Taxes)
+                    return "";
+
                 if (DefinesNewPrice && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount)
                     if (PercentageDiscount > 0)
                         return $"{PercentageDiscount}%";
@@ -1079,13 +1105,13 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 {
                     if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount && price != null && PercentageDiscount > 0)
                         price = price.Value * (decimal)(1 - PercentageDiscount.Value / 100);
-                    if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PriceOverride && _OverridePrice != null&& _OverridePrice != -1)
+                    if (SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PriceOverride && _OverridePrice != null && _OverridePrice != -1)
                         return (decimal)_OverridePrice;
                     if (price != null && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount != null)
                         price = price.Value - (decimal)AmountDiscount.Value;
 
 
-                    var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresetation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
+                    var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresentation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
                     if (itemSelectorPriceInfoPresetation?.HasDedicatedItemPriceInfo == true)
                         price = itemSelectorPriceInfoPresetation?.Price;
                 }
@@ -1137,7 +1163,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             //if (price != null && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.AmountDiscount && AmountDiscount != null)
             //    price = price.Value - (decimal)AmountDiscount.Value;
 
-            //var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresetation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
+            //var itemSelectorPriceInfoPresetation = Members.OfType<ItemSelectorPriceInfoPresentation>().Where(x => x.ItemPrice == MenuItem?.MenuItemPrice).FirstOrDefault();
             //if (itemSelectorPriceInfoPresetation?.HasDedicatedItemPriceInfo == true)
             //    price = itemSelectorPriceInfoPresetation?.Price;
 
@@ -1154,7 +1180,10 @@ namespace MenuItemsEditor.ViewModel.PriceList
             //{
 
             //}
+            if (OrgPrice < 0)
+            {
 
+            }
             if (OrgPrice >= 0 && m__price < 0)
                 m__price = 0;
             return m__price;
@@ -1326,7 +1355,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                         itemOptionsPriceInfos.AddRange(unGroupedScaledOptions);
 
                         //MenuItem.o
-                        _Members = MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null).Select(x => new ItemSelectorPriceInfoPresetation(this, PriceListPresentation, MenuItem, x, EditMode)).OfType<FBResourceTreeNode>().ToList();
+                        _Members = MenuItem.Prices.OfType<MenuItemPrice>().Where(x => x.ItemSelector != null).Select(x => new ItemSelectorPriceInfoPresentation(this, PriceListPresentation, MenuItem, x, EditMode)).OfType<FBResourceTreeNode>().ToList();
 
                         if (_Members.Count == 0)
                             _Members.AddRange(itemOptionsPriceInfos);
@@ -1554,6 +1583,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasDedicatedItemPriceInfo)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideTypeImage)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
 
 
 
@@ -1566,14 +1596,14 @@ namespace MenuItemsEditor.ViewModel.PriceList
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasAppearanceOrderValue)));
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrder)));
             //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderText)));
-            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
+            //RunPropertyChang(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
 
 
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPriceInfoPresentation>())
                 itemsPreparationInfoPresentation.Refresh();
 
-            foreach (var itemSelectorPriceInfo in Members.OfType<ItemSelectorPriceInfoPresetation>())
+            foreach (var itemSelectorPriceInfo in Members.OfType<ItemSelectorPriceInfoPresentation>())
                 itemSelectorPriceInfo.Refresh();
             //_Members = null;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
@@ -1649,6 +1679,28 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             }
         }
+    }
+
+    public class TaxTypeOverridePresentation
+    {
+        readonly IMenuItem MenuItem;
+        readonly PriceListPresentation PriceListPresentation;
+        readonly IItemsCategory ItemsCategory;
+
+
+        public TaxTypeOverridePresentation(PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
+        {
+            ItemsCategory = itemsCategory;
+            PriceListPresentation = priceListPresentation;
+        }
+
+        public TaxTypeOverridePresentation(PriceListPresentation priceListPresentation, IMenuItem menuItem)
+        {
+            MenuItem = menuItem;
+            PriceListPresentation = priceListPresentation;
+        }
+
+
     }
 }
 

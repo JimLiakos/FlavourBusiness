@@ -27,10 +27,10 @@ namespace MenuItemsEditor.ViewModel.PriceList
             //if (parent is ItemOptionsPriceInfo)
             //    this.ItemPriceInfoPresentation = (parent as ItemOptionsPriceInfo).ItemPriceInfoPresentation;
 
-            if (parent is ItemSelectorPriceInfoPresetation)
+            if (parent is ItemSelectorPriceInfoPresentation)
             {
-                //this.ItemPriceInfoPresentation = (parent as ItemSelectorPriceInfoPresetation).Parent as ItemsPriceInfoPresentation;
-                ItemPrice = (parent as ItemSelectorPriceInfoPresetation).ItemPrice;
+                //this.ItemPriceInfoPresentation = (parent as ItemSelectorPriceInfoPresentation).Parent as ItemsPriceInfoPresentation;
+                ItemPrice = (parent as ItemSelectorPriceInfoPresentation).ItemPrice;
             }
 
 
@@ -59,8 +59,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
             if (parent is ItemOptionsPriceInfo)
                 ItemPrice = (parent as ItemOptionsPriceInfo).ItemPrice;
 
-            if (parent is ItemSelectorPriceInfoPresetation)
-                ItemPrice = (parent as ItemSelectorPriceInfoPresetation).ItemPrice;
+            if (parent is ItemSelectorPriceInfoPresentation)
+                ItemPrice = (parent as ItemSelectorPriceInfoPresentation).ItemPrice;
 
 
             Members = new List<FBResourceTreeNode>();
@@ -77,6 +77,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(DefinesNewPrice)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(OrgPriceToolTip)));
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
+
+            
 
 
 
@@ -114,7 +117,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 IsSelected = true;
 
                 FBResourceTreeNode treeNode = this;
-                while (treeNode.Parent is ItemsPriceInfoPresentation || treeNode.Parent is ItemSelectorPriceInfoPresetation || treeNode.Parent is ItemOptionsPriceInfo)
+                while (treeNode.Parent is ItemsPriceInfoPresentation || treeNode.Parent is ItemSelectorPriceInfoPresentation || treeNode.Parent is ItemOptionsPriceInfo)
                 {
                     treeNode = treeNode.Parent;
                 }
@@ -155,7 +158,15 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
-        public ItemSelectorPriceInfoPresetation ItemSelectorPriceInfoPresentation
+        public PriceListPresentation PriceListPresentation
+        {
+            get
+            {
+                return ItemPriceInfoPresentation.PriceListPresentation;
+            }
+        }
+
+        public ItemSelectorPriceInfoPresentation ItemSelectorPriceInfoPresentation
         {
             get
             {
@@ -164,8 +175,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 treeNode = Parent;
                 while (treeNode != null)
                 {
-                    if (treeNode is ItemSelectorPriceInfoPresetation)
-                        return treeNode as ItemSelectorPriceInfoPresetation;
+                    if (treeNode is ItemSelectorPriceInfoPresentation)
+                        return treeNode as ItemSelectorPriceInfoPresentation;
 
                     if (treeNode == null)
                         break;
@@ -225,7 +236,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
 
-                
+
                 decimal? price = null;
                 if (Option != null)
                     price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetDerivedPriceContext(ItemPrice)?.GetDeafultPrice(Option);
@@ -366,6 +377,14 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
+        public Visibility IsDefinesTaxesVisibility
+        {
+            get
+            {
+                return Visibility.Collapsed;
+            }
+        }
+
 
         public string OrgPriceToolTip
         {
@@ -381,6 +400,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
+                if (PriceListPresentation.Taxes)
+                    return "";
+
                 if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && ItemPriceInfoPresentation.SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount)
                 {
 

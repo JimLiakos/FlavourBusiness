@@ -71,6 +71,7 @@
     <Compile Include="IHomeDeliveryCallcenterStation.cs" />
     <Compile Include="IHomeDeliveryServicePoint.cs" />
     <Compile Include="IItemsPriceInfo.cs" />
+    <Compile Include="IItemsTaxInfo.cs" />
     <Compile Include="IMeal.cs" />
     <Compile Include="IMealController.cs" />
     <Compile Include="IMealCourse.cs" />

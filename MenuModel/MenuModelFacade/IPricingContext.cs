@@ -21,11 +21,12 @@ namespace MenuModel
         /// <MetaDataID>{94dc1543-7310-4ce6-b528-92dd09cde403}</MetaDataID>
         ICustomizedPrice GetCustomizedPrice(IPricedSubject pricedSubject);
 
+        /// <MetaDataID>{8e6c5be3-6707-4d82-85b1-e6240a472dee}</MetaDataID>
         decimal GetDeafultPrice(IPricedSubject pricedSubject);
 
 
 
-        
+
 
     }
 }
