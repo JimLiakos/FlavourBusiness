@@ -15,6 +15,7 @@ using FlavourBusinessFacade.PriceList;
 using System.Windows;
 using System.Runtime.Remoting.Messaging;
 using FlavourBusinessManager.ServicesContextResources;
+using FinanceFacade;
 
 
 
@@ -48,6 +49,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
         /// <MetaDataID>{b341b6ed-cd19-4c47-b3a2-9f175b91d05b}</MetaDataID>
         // <MetaDataID>{a777298f-cf21-4ccb-848d-38596df908f3}</MetaDataID>
         internal IItemsCategory ItemsCategory;
+
+        public TaxTypeOverridePresentation TaxTypeOverridePresentation { get; }
 
 
 
@@ -90,6 +93,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
             ItemsCategory = menu.RootCategory;
 
 
+            
+
+
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -103,7 +109,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             ToggleDiscoundTypeCommand = new RelayCommand((object sender) =>
             {
-                ToggleDiscoundType();
+                ToggleDiscountType();
             });
 
 
@@ -116,7 +122,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
         public bool PriceOverrideTypesPopupOpen { get; set; }
-        internal void ToggleDiscoundType()
+        internal void ToggleDiscountType()
         {
             PriceOverrideTypesPopupOpen = !PriceOverrideTypesPopupOpen;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideTypesPopupOpen)));
@@ -315,6 +321,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             ItemsCategory = itemsCategory;
 
+            TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, ItemsCategory);
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -328,7 +335,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             });
             ToggleDiscoundTypeCommand = new RelayCommand((object sender) =>
             {
-                ToggleDiscoundType();
+                ToggleDiscountType();
             });
 
             CheckBoxVisibility = System.Windows.Visibility.Visible;
@@ -381,7 +388,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             SelectedPriceOverrideType = PriceOverrideTypes[0];
 
             MenuItem = menuItem;
-
+            TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, MenuItem);
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -394,7 +401,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             });
             ToggleDiscoundTypeCommand = new RelayCommand((object sender) =>
             {
-                ToggleDiscoundType();
+                ToggleDiscountType();
             });
 
 
@@ -547,7 +554,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 else if (this.MenuItem != null)
                     itemsPriceInfo = PriceListPresentation.GetItemsPriceInfo(this.MenuItem);
 
-                if (itemsPriceInfo?.PercentageDiscount != null && itemsPriceInfo.Included())
+                if (itemsPriceInfo?.PercentageDiscount != null && itemsPriceInfo.IsIncluded())
                     return true;
                 else
                     return false;
@@ -666,7 +673,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         public bool IsDefinesNewPriceEnabled { get; } = true;
 
-        public bool DefinesTaxes { get; set; }
+        
 
 
         public Visibility IsDefinesTaxesVisibility
@@ -1688,18 +1695,33 @@ namespace MenuItemsEditor.ViewModel.PriceList
         readonly IItemsCategory ItemsCategory;
 
 
-        public TaxTypeOverridePresentation(PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
+        public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
         {
             ItemsCategory = itemsCategory;
             PriceListPresentation = priceListPresentation;
         }
 
-        public TaxTypeOverridePresentation(PriceListPresentation priceListPresentation, IMenuItem menuItem)
+        public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IMenuItem menuItem)
         {
             MenuItem = menuItem;
             PriceListPresentation = priceListPresentation;
         }
 
+
+        public bool DefinesTaxInfo
+        {
+            get
+            {
+                ITaxableType taxableType = null;  
+
+                if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
+                    taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
+                else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
+                    taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
+
+                return false;
+            }
+        }
 
     }
 }

@@ -149,7 +149,7 @@ namespace FlavourBusinessManager.PriceList
         {
 
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.PercentageDiscount;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
@@ -163,7 +163,7 @@ namespace FlavourBusinessManager.PriceList
         public double? GetPriceRounding(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.Pricerounding;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
@@ -179,7 +179,7 @@ namespace FlavourBusinessManager.PriceList
         public bool IsOptionsPricesDiscountEnabled(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.IsOptionsPricesDiscountEnabled == true;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
@@ -197,7 +197,7 @@ namespace FlavourBusinessManager.PriceList
         {
 
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.OptionsPricesRounding;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
@@ -217,7 +217,7 @@ namespace FlavourBusinessManager.PriceList
         public decimal? GetOverridePrice(object priceListSubject)
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.OverridenPrice;
             return null;
         }
@@ -227,7 +227,7 @@ namespace FlavourBusinessManager.PriceList
         {
 
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
-            if (the_itemsPriceInfo != null && the_itemsPriceInfo.Included())
+            if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
                 return the_itemsPriceInfo.AmountDiscount;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
@@ -243,22 +243,22 @@ namespace FlavourBusinessManager.PriceList
         {
             try
             {
-                var obj = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
+                var obj = ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
 
                 if (obj is MenuModel.ItemsCategory)
                 {
-                    ItemsPriceInfo itemsPiceInfo = new ItemsPriceInfo(obj as MenuModel.ItemsCategory);
+                    ItemsPriceInfo itemsPriceInfo = new ItemsPriceInfo(obj as ItemsCategory);
 
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPiceInfo);
-                        this._ItemsPrices.Add(itemsPiceInfo);
-                        itemsPiceInfo.ItemsPriceInfoType = itemsPriceInfoType;
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsPriceInfo);
+                        this._ItemsPrices.Add(itemsPriceInfo);
+                        itemsPriceInfo.ItemsPriceInfoType = itemsPriceInfoType;
 
                         stateTransition.Consistent = true;
                     }
 
-                    return itemsPiceInfo;
+                    return itemsPriceInfo;
                 }
 
                 if (obj is MenuModel.IMenuItem)
@@ -490,7 +490,7 @@ namespace FlavourBusinessManager.PriceList
 
 
 
-            if (this.GetItemPriceInfo(pricedSubject)?.Excluded() == true)
+            if (this.GetItemPriceInfo(pricedSubject)?.IsExcluded() == true)
                 return new PriceListPrice(pricedSubject, this, price.Value);
             if (percentageDiscount != null)
             {
@@ -592,7 +592,7 @@ namespace FlavourBusinessManager.PriceList
                     #endregion
 
 
-                    if (isOptionsPricesDiscountEnabled && PriceList.GetItemPriceInfo(MenuItemPrice)?.Excluded() != true)
+                    if (isOptionsPricesDiscountEnabled && PriceList.GetItemPriceInfo(MenuItemPrice)?.IsExcluded() != true)
                     {
                         // Apply discount
                         price = price.Value * (decimal)(1 - percentageDiscount.Value);

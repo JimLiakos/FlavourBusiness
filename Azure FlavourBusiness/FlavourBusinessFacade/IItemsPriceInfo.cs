@@ -65,17 +65,30 @@ namespace FlavourBusinessFacade.PriceList
     public static class ItemsPriceInfoTypeExtension
     {
         /// <MetaDataID>{9d6be088-acf3-4837-838d-54d95cc7c501}</MetaDataID>
-        public static bool Included(this IItemsPriceInfo itemsPriceInfo)
+        public static bool IsIncluded(this IItemsPriceInfo itemsPriceInfo)
         {
             return (itemsPriceInfo.ItemsPriceInfoType & ItemsPriceInfoType.Include) == ItemsPriceInfoType.Include;
         }
 
         /// <MetaDataID>{4c2454fe-eade-4cf3-8857-c0fe7704dadd}</MetaDataID>
-        public static bool Excluded(this IItemsPriceInfo itemsPriceInfo)
+        public static bool IsExcluded(this IItemsPriceInfo itemsPriceInfo)
         {
             return (itemsPriceInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
-
         }
+
+
+        
+        public static bool IsIncluded(this IItemsTaxInfo itemsTaxInfo)
+        {
+            return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Include) == ItemsPriceInfoType.Include;
+        }
+
+        
+        public static bool IsExcluded(this IItemsTaxInfo itemsTaxInfo)
+        {
+            return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
+        }
+
         public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, MenuModel.IMenuItem menuItem)
         {
 
@@ -260,6 +273,93 @@ namespace FlavourBusinessFacade.PriceList
 
         public static bool HasOverriddenTaxes(this IPriceList priceList, IItemsCategory itemsCategory)
         {
+
+
+            var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
+                                         select new
+                                         {
+                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             ItemsTaxesInfo = itemsInfo
+                                         }).ToList();
+
+            foreach (var itemsTaxesInfoEntry in itemsTaxesInfos)
+            {
+                if (itemsTaxesInfoEntry.@object is MenuModel.IItemsCategory && (itemsTaxesInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+                {
+                    if (itemsTaxesInfoEntry.ItemsTaxesInfo.IsIncluded())
+                        return true;
+                    else
+                        return false;
+
+                }
+            }
+
+            foreach (var itemsTaxInfo in priceList.ItemsTaxes)
+            {
+                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
+                var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsTaxInfo as System.MarshalByRefObject) ? itemsTaxInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsTaxInfo.ItemsInfoObjectUri);
+                if (@object is MenuModel.IItemsCategory)
+                {
+                    var itemsTaxInfoCategory = (@object as MenuModel.IItemsCategory);
+                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsTaxInfoCategory)
+                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
+
+                    if (itemsCategoryOrParent == itemsTaxInfoCategory)
+                    {
+                        if (itemsTaxInfo.IsExcluded())
+                            return false;
+                        if (itemsTaxInfo.IsIncluded())
+                            return true;
+                    }
+
+                }
+            }
+
+            return false;
+        }
+
+        public static bool HasOverriddenTaxes(this IPriceList priceList, IMenuItem menuItem)
+        {
+            var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
+                                   select new
+                                   {
+                                       ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+                                       @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                       ItemsTaxesInfo = itemsInfo
+                                   }).ToList();
+
+
+
+            foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
+            {
+                if (itemsTaxInfoEntry.@object is MenuModel.IMenuItem && (itemsTaxInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
+                {
+                    if (itemsTaxInfoEntry.ItemsTaxesInfo.IsIncluded())
+                        return true;
+                    if (itemsTaxInfoEntry.ItemsTaxesInfo.IsExcluded())
+                        return false;
+
+                }
+            }
+
+            foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
+            {
+                if (itemsTaxInfoEntry.@object is MenuModel.IItemsCategory)
+                {
+                    MenuModel.IItemsCategory itemsCategory = null;
+                    var itemsPreparationInfoCategory = (itemsTaxInfoEntry.@object as MenuModel.IItemsCategory);
+                    if (menuItem is MenuModel.IClassified)
+                    {
+                        itemsCategory = (menuItem as MenuModel.IClassified).Class as IItemsCategory;
+
+                        if (priceList.HasOverriddenTaxes(itemsCategory))
+                            return true;
+                        return false;
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -280,7 +380,7 @@ namespace FlavourBusinessFacade.PriceList
             {
                 if (itemsPreparationInfoEntry.@object is MenuModel.IItemsCategory && (itemsPreparationInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
                 {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsIncluded())
                         return true;
                     else
                         return false;
@@ -301,9 +401,9 @@ namespace FlavourBusinessFacade.PriceList
 
                     if (itemsCategoryOrParent == itemsPreparationInfoCategory)
                     {
-                        if (itemsPreparationInfo.Excluded())
+                        if (itemsPreparationInfo.IsExcluded())
                             return false;
-                        if (itemsPreparationInfo.Included())
+                        if (itemsPreparationInfo.IsIncluded())
                             return true;
 
                     }
@@ -369,9 +469,9 @@ namespace FlavourBusinessFacade.PriceList
             {
                 if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
                 {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsIncluded())
                         return true;
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsExcluded())
                         return false;
 
                 }
@@ -422,9 +522,9 @@ namespace FlavourBusinessFacade.PriceList
             {
                 if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItemPrice && (itemsPreparationInfoEntry.@object as MenuModel.IMenuItemPrice) == menuItemPrice)
                 {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsIncluded())
                         return true;
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsExcluded())
                         return false;
                 }
             }
@@ -433,9 +533,9 @@ namespace FlavourBusinessFacade.PriceList
             {
                 if (itemsPreparationInfoEntry.@object is MenuModel.IMenuItem)
                 {
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Included())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsIncluded())
                         return true;
-                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.Excluded())
+                    if (itemsPreparationInfoEntry.ItemsPreparationInfo.IsExcluded())
                         return false;
 
                 }

@@ -1,4 +1,5 @@
 ﻿using Finance.ViewModel;
+using FinanceFacade;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
@@ -29,13 +30,13 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-    
+
         public PriceListPresentation(FBResourceTreeNode parent, OrganizationStorageRef priceListStorageRef, MenuViewModel menuViewModel) : base(parent)
         {
             PriceListStorageRef = priceListStorageRef;
             MenuViewModel = menuViewModel;
 
-            TaxAuthority=MenuViewModel.Menu.TaxAuthority;
+            TaxAuthority = MenuViewModel.Menu.TaxAuthority;
 
 
             //string localFileName = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microneme\\DontWaitWater\\{priceListStorageRef.Name}.xml";
@@ -87,7 +88,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                     return Visibility.Visible;
             }
         }
-    
+
         public IPriceList PriceList
         {
             get
@@ -406,6 +407,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
+
         internal void IncludeItems(IItemsCategory itemsCategory)
         {
             var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsPrices
@@ -416,7 +418,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                          }).ToList();
 
             var excludedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                                where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.Excluded()
+                                                where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
                                                 select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
             if (excludedItemsPreparationInfo != null)
             {
@@ -466,6 +468,27 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
+        internal void IncludeItemsInListOfTaxes(IItemsCategory itemsCategory)
+        {
+
+        }
+
+        internal void IncludeItemInListOfTaxes(IMenuItem menuItem)
+        {
+
+        }
+
+        internal void ExcludeItemsFromListOfTaxes(IItemsCategory itemsCategory)
+        {
+
+        }
+
+        internal void ExcludeItemFromListOfTaxes(IMenuItem menuItem)
+        {
+
+        }
+
+
         ItemsPriceInfoPresentation PreparationStationItems;
 
         public void IncludeItem(MenuModel.IMenuItem menuItem)
@@ -479,7 +502,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                          }).ToList();
 
             var excludedItemsPriceInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                          where itemsInfoEntry.@object == menuItem && itemsInfoEntry.ItemsPriceInfo.Excluded()
+                                          where itemsInfoEntry.@object == menuItem && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
                                           select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
             if (excludedItemsPriceInfo != null)
@@ -520,7 +543,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                          }).ToList();
 
             var excludedItemsPriceInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                          where itemsInfoEntry.@object == menuItemPrice && itemsInfoEntry.ItemsPriceInfo.Excluded()
+                                          where itemsInfoEntry.@object == menuItemPrice && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
                                           select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
             if (excludedItemsPriceInfo != null)
@@ -565,7 +588,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                              }).ToList();
 
                 var includedItemsPreparationInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                                    where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.Included()
+                                                    where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.IsIncluded()
                                                     select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
                 if (includedItemsPreparationInfo != null)
@@ -705,6 +728,23 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
+        public IItemsTaxInfo GetItemsTaxInfo(MenuModel.IItemsCategory itemsCategory)
+        {
+            var itemsInfos = (from itemsInfo in PriceList.ItemsTaxes
+                                   select new
+                                   {
+                                       @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                       ItemsTaxInfo = itemsInfo
+                                   }).ToList();
+
+            var itemsTaxInfo = (from itemsInfoEntry in itemsInfos
+                                where itemsInfoEntry.@object == itemsCategory //&& (itemsInfoEntry.ItemsPriceInfo.Included())
+                                  select itemsInfoEntry.ItemsTaxInfo).FirstOrDefault();
+
+            return itemsTaxInfo;
+
+        }
+
 
         public IItemsPriceInfo GetOrCreateItemsPriceInfo(MenuModel.IItemsCategory itemsCategory)
         {
@@ -716,7 +756,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                    }).ToList();
 
             var itemsPriceInfo = (from itemsInfoEntry in itemsPriceInfos
-                                  where itemsInfoEntry.@object == itemsCategory && (itemsInfoEntry.ItemsPriceInfo.Included())
+                                  where itemsInfoEntry.@object == itemsCategory && (itemsInfoEntry.ItemsPriceInfo.IsIncluded())
                                   select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
             if (itemsPriceInfo != null)
@@ -837,7 +877,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
+        internal ITaxableType GetTaxableType(IItemsCategory itemsCategory)
+        {
+           var taxableType =GetItemsTaxInfo(itemsCategory);
+            return taxableType.TaxableType; 
+        }
 
+        internal ITaxableType GetTaxableType(IMenuItem menuItem)
+        {
+            var taxableType = GetItemsTaxInfo(menuItem);
+            return taxableType.TaxableType;
+        }
 
         internal double? GetPercentageDiscount(IItemsCategory itemsCategory)
         {
@@ -910,7 +960,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             if (percentageDiscount == null)
             {
                 var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
-                if (itemsPriceInfo != null && itemsPriceInfo.Included())
+                if (itemsPriceInfo != null && itemsPriceInfo.IsIncluded())
                     itemsPriceInfo.PercentageDiscount = null;
                 return;
             }
@@ -1193,7 +1243,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         internal void SetAmountDiscount(IItemsCategory itemsCategory, double? AmountDiscount)
         {
-            if (AmountDiscount == 0|| AmountDiscount==null)
+            if (AmountDiscount == 0 || AmountDiscount == null)
             {
                 var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
                 if (itemsPriceInfo != null)

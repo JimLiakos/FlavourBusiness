@@ -232,6 +232,7 @@ namespace FlavourBusinessManager.PriceList
 
         }
 
+        /// <MetaDataID>{9b4ada15-ca29-4cc7-9b3c-e78c9ab8cff2}</MetaDataID>
         public ItemsPriceInfo(IMenuItemPrice menuItemPrice)
         {
             _ItemsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItemPrice).GetPersistentObjectUri(menuItemPrice);

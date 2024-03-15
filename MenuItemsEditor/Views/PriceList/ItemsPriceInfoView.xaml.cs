@@ -175,7 +175,7 @@ namespace MenuItemsEditor.Views.PriceList
 
                 if (itemsPreparationInfo != null)
                 {
-                    itemsPreparationInfo.ToggleDiscoundType();
+                    itemsPreparationInfo.ToggleDiscountType();
                     //e.Handled = true;
                 }
             }));
