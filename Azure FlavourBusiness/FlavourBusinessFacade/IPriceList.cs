@@ -57,6 +57,14 @@ namespace FlavourBusinessFacade.PriceList
         /// <MetaDataID>{516aa500-46ce-4c94-9649-cff8228c611a}</MetaDataID>
         IItemsPriceInfo NewPriceInfo(string uri, ItemsPriceInfoType include);
 
+
+        IItemsTaxInfo NewTaxInfo(string uri, ItemsPriceInfoType include);
+
+
+        void RemoveItemsTaxInfos(IItemsTaxInfo itemsTaxInfo);
+        void RemoveItemsTaxInfos(List<IItemsTaxInfo> itemsTaxInfo);
+
+
         /// <MetaDataID>{83f3e18b-a96c-4917-a4b5-c766bd336fff}</MetaDataID>
         void RemoveItemsPriceInfos(IItemsPriceInfo itemsPriceInfo);
 
@@ -75,5 +83,6 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{4cd0bfe9-f963-4521-8915-1e3c56040cfd}</MetaDataID>
         IPricingContext GetDerivedPriceContext(IPricingContext pricingContext);
+        
     }
 }

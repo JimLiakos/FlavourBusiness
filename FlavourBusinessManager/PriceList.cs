@@ -134,6 +134,27 @@ namespace FlavourBusinessManager.PriceList
             }
         }
 
+        public void RemoveItemsTaxInfos(IItemsTaxInfo itemsTaxInfo)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                _ItemsTaxes.Remove(itemsTaxInfo);
+                stateTransition.Consistent = true;
+            }
+        }
+
+        public void RemoveItemsTaxInfos(List<IItemsTaxInfo> itemsTaxInfos)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (IItemsTaxInfo itemsTaxInfo in itemsTaxInfos)
+                    this._ItemsTaxes.Remove(itemsTaxInfo);
+                stateTransition.Consistent = true;
+            }
+            ObjectChangeState?.Invoke(this, null);
+        }
+
+
         public event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{2cfb3a5d-e099-48a6-917a-848ac5fae692}</MetaDataID>
@@ -303,7 +324,52 @@ namespace FlavourBusinessManager.PriceList
             return null;
 
         }
+        
+        public IItemsTaxInfo NewTaxInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
+        {
+            try
+            {
+                var obj = ObjectStorage.GetObjectFromUri(itemsInfoObjectUri);
 
+                if (obj is MenuModel.ItemsCategory)
+                {
+                    ItemsTaxInfo itemsTaxInfo = new ItemsTaxInfo(obj as ItemsCategory);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsTaxInfo);
+                        _ItemsTaxes.Add(itemsTaxInfo);
+                        itemsTaxInfo.ItemsPriceInfoType = itemsPriceInfoType;
+
+                        stateTransition.Consistent = true;
+                    }
+
+                    return itemsTaxInfo;
+                }
+
+                if (obj is MenuModel.IMenuItem)
+                {
+                    ItemsTaxInfo itemsTaxInfo = new ItemsTaxInfo(obj as IMenuItem);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(itemsTaxInfo);
+                        _ItemsTaxes.Add(itemsTaxInfo);
+                        itemsTaxInfo.ItemsPriceInfoType = itemsPriceInfoType;
+                        stateTransition.Consistent = true;
+                    }
+                    return itemsTaxInfo;
+                }
+
+
+            }
+            finally
+            {
+                ObjectChangeState?.Invoke(this, null);
+            }
+
+            return null;
+        }
 
         //public decimal? GetFinalPrice(IMenuItem menuItem)
         //{

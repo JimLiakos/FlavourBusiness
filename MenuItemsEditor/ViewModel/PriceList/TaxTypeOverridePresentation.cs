@@ -1594,7 +1594,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasDedicatedItemPriceInfo)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideTypeImage)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
+            
 
 
 
@@ -1616,6 +1616,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             foreach (var itemSelectorPriceInfo in Members.OfType<ItemSelectorPriceInfoPresentation>())
                 itemSelectorPriceInfo.Refresh();
+
+            TaxTypeOverridePresentation?.Refresh();
             //_Members = null;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
@@ -1630,16 +1632,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
         }
 
-        public bool IsDefinesTaxesEnabled
-        {
-            get
-            {
-                if (PriceListPresentation.Taxes&&PriceListPresentation.SelectedTaxableType!=null)
-                    return true;
-                else
-                    return false;
-            }
-        }
+     
     }
 
 
@@ -1703,12 +1696,13 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
     }
 
-    public class TaxTypeOverridePresentation
+    public class TaxTypeOverridePresentation:INotifyPropertyChanged
     {
         readonly IMenuItem MenuItem;
         readonly PriceListPresentation PriceListPresentation;
         readonly IItemsCategory ItemsCategory;
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
         {
@@ -1722,19 +1716,61 @@ namespace MenuItemsEditor.ViewModel.PriceList
             PriceListPresentation = priceListPresentation;
         }
 
+        public void Refresh()
+        {
+            Pro
+        }
+
 
         public bool DefinesTaxInfo
         {
             get
             {
                 ITaxableType taxableType = null;  
+               if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
+                    taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
+                else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
+                    taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
 
+                return taxableType==PriceListPresentation.SelectedTaxableType.TaxableType;
+            }
+            set
+            {
+
+
+                if (value && ItemsCategory != null)
+                    PriceListPresentation.IncludeItemsInListOfTaxes(ItemsCategory,PriceListPresentation.SelectedTaxableType);
+
+                if (!value && ItemsCategory != null)
+                    PriceListPresentation.ExcludeItemsFromListOfTaxes(ItemsCategory);
+
+
+                if (value && MenuItem != null)
+                    PriceListPresentation.IncludeItemInListOfTaxes(MenuItem, PriceListPresentation.SelectedTaxableType);
+
+                if (!value && MenuItem != null)
+                    this.PriceListPresentation.ExcludeItemFromListOfTaxes(MenuItem);
+
+            }
+        }
+
+        public bool IsDefinesTaxesEnabled
+        {
+            get
+            {
+                ITaxableType taxableType = null;
                 if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
                     taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
                 else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
                     taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
 
-                return false;
+                if(taxableType!=null&&taxableType!=PriceListPresentation.SelectedTaxableType)
+                    return false;
+
+                if (PriceListPresentation.Taxes&&PriceListPresentation.SelectedTaxableType!=null)
+                    return true;
+                else
+                    return false;
             }
         }
 

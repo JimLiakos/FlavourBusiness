@@ -279,7 +279,7 @@ namespace FlavourBusinessFacade.PriceList
                                          select new
                                          {
                                              ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                              ItemsTaxesInfo = itemsInfo
                                          }).ToList();
 
@@ -298,7 +298,7 @@ namespace FlavourBusinessFacade.PriceList
             foreach (var itemsTaxInfo in priceList.ItemsTaxes)
             {
                 MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-                var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsTaxInfo as System.MarshalByRefObject) ? itemsTaxInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsTaxInfo.ItemsInfoObjectUri);
+                var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsTaxInfo as System.MarshalByRefObject) ? itemsTaxInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsTaxInfo.ItemsInfoObjectUri);
                 if (@object is MenuModel.IItemsCategory)
                 {
                     var itemsTaxInfoCategory = (@object as MenuModel.IItemsCategory);
@@ -325,7 +325,7 @@ namespace FlavourBusinessFacade.PriceList
                                    select new
                                    {
                                        ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                       @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+                                       @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
                                        ItemsTaxesInfo = itemsInfo
                                    }).ToList();
 
