@@ -1718,7 +1718,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         public void Refresh()
         {
-            Pro
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(DefinesTaxInfo)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
         }
 
 
