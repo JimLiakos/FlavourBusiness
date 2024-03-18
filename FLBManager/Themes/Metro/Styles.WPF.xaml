@@ -965,7 +965,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <Grid>
+                    <Grid VerticalAlignment="Stretch">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="ValidationStates">
                                 <VisualState x:Name="Valid" />

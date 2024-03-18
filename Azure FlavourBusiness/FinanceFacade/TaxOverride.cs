@@ -9,7 +9,7 @@ namespace FinanceFacade
     [Persistent()]
     public class TaxOverride : ITaxOverride
     {
-    
+
         /// <exclude>Excluded</exclude>
         double _TaxRate;
         /// <MetaDataID>{31f5e81a-fe63-49a9-bd87-9301b5939fb5}</MetaDataID>
@@ -108,6 +108,32 @@ namespace FinanceFacade
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
                         _TaxesContext = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{2c17bb16-22f1-418c-9268-b96cc366caa3}</MetaDataID>
+        public decimal Fee { get => 0; set { } }
+
+
+        /// <exclude>Excluded</exclude>
+        bool _IsActive =true;
+
+        /// <MetaDataID>{7eb22f4b-4f23-485f-9a24-8381db705579}</MetaDataID>
+        [PersistentMember(nameof(_IsActive))]
+        [BackwardCompatibilityID("+5")]
+        public bool IsActive
+        {
+            get => _IsActive;
+            set
+            {
+                if (_IsActive != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsActive = value;
                         stateTransition.Consistent = true;
                     }
                 }

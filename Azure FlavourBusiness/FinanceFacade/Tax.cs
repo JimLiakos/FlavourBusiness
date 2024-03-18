@@ -11,6 +11,32 @@ namespace FinanceFacade
     [Persistent()]
     public class Tax : ITax
     {
+
+        /// <exclude>Excluded</exclude>
+        bool _IsActive=true;
+        /// <MetaDataID>{98e73c47-836f-48a1-8234-6c97ff2d6be8}</MetaDataID>
+        [PersistentMember(nameof(_IsActive))]
+        [BackwardCompatibilityID("+7")]
+        public bool IsActive
+        {
+            get => _IsActive;
+            set
+            {
+
+                if (_IsActive != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _IsActive = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
+      
+
         /// <exclude>Excluded</exclude>
         decimal _Fee;
 

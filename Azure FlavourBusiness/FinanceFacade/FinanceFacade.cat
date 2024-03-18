@@ -100,7 +100,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"6")
+		    value      	"7")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Generate Backward ID"
@@ -112,7 +112,7 @@
 	    quid       	"5C6A6160024B"
 	    stereotype 	"Interface"
 	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute " Description"
+		(object ClassAttribute "Description"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"C#"
@@ -276,6 +276,39 @@
 			    value      	TRUE))
 		    quid       	"61FCB1140121"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{aa31b742-2d44-4b36-961e-c1511e5466ab}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F5E0B602EA")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+6"))
+		    quid       	"65F5E0B602EA"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -354,7 +387,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"3"))
+		    value      	"4"))
 	    quid       	"5C6A6D02014E"
 	    stereotype 	"Interface"
 	    class_attributes 	(list class_attribute_list
@@ -400,7 +433,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"MetaObjectID"
-			    value      	"{e045d60f-3859-4da0-bbab-66127f26650c}")
+			    value      	"{4b8160b7-52f7-4db2-9ecd-a6e781e8ec13}")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Generate Backward ID"
@@ -423,6 +456,139 @@
 			    value      	"+2"))
 		    quid       	"5C6BDF16033F"
 		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2f7593d4-495f-4d1a-a97d-984118d2f9c4}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F5E58F00E0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Generate Backward ID"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+3"))
+		    quid       	"65F5E58F00E0"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "AccountID"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7f411354-12d6-49cd-b583-eaccc64a3022}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F60081")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65F672F60081"
+		    type       	"string"
+		    exportControl 	"Public")
+		(object ClassAttribute "Tax"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{89743e31-6dcf-41f5-b669-69a46adbfcba}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F600D5")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65F672F600D5"
+		    type       	"FinanceFacade.ITax"
+		    exportControl 	"Public")
+		(object ClassAttribute "TaxesContext"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{9b008ecf-f372-4d9b-8ffd-f418278e34e2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F6011E")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65F672F6011E"
+		    type       	"FinanceFacade.ITaxesContext"
+		    exportControl 	"Public")
+		(object ClassAttribute "Fee"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{f59c0624-d479-4a1c-b590-3e2cdde391d9}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F60196")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE))
+		    quid       	"65F672F60196"
+		    type       	"decimal"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -2082,7 +2248,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"7")
+		    value      	"8")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -2287,6 +2453,39 @@
 			    value      	TRUE))
 		    quid       	"61FCB24E0082"
 		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{98e73c47-836f-48a1-8234-6c97ff2d6be8}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F5E38D01C0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+7"))
+		    quid       	"65F5E38D01C0"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -2392,7 +2591,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5")
+		    value      	"6")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -2503,6 +2702,52 @@
 			    value      	"+4"))
 		    quid       	"5C6E681C0174"
 		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "Fee"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{2c17bb16-22f1-418c-9268-b96cc366caa3}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F6820200F3"))
+		    quid       	"65F6820200F3"
+		    type       	"decimal"
+		    exportControl 	"Public")
+		(object ClassAttribute "IsActive"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{7eb22f4b-4f23-485f-9a24-8381db705579}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F68202016C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"65F68202016C"
+		    type       	"bool"
 		    exportControl 	"Public"))
 	    module     	"Component View:: FinanceFacade:: FinanceFacade"
 	    quidu      	"5C6A6F8C02D7"
@@ -5386,9 +5631,49 @@
 		    quid       	"63DBCFF60321"
 		    supplier   	"Logical View::FinanceFacade::IPayment"
 		    quidu      	"635CB39B0177")))
+	(object Association "$UNNAMED$7"
+	    attributes 	(list Attribute_Set
+		(object Attribute
+		    tool       	"MetaData"
+		    name       	"UniqueID"
+		    value      	"65F672F601E8")
+		(object Attribute
+		    tool       	"C#"
+		    name       	"Identity"
+		    value      	"a412ff95-1226-4623-9270-ef898e01c6c8"))
+	    quid       	"65F672F601E8"
+	    roles      	(list role_list
+		(object Role "TaxOverrides"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F601E9")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{bf94ed52-ba12-4989-9380-821a92f5f44d}"))
+		    quid       	"65F672F601E9"
+		    label      	"TaxOverrides"
+		    supplier   	"Logical View::FinanceFacade::ITaxOverride"
+		    quidu      	"5C6A6D02014E"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$8"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"65F672F601EB")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{868877d6-0f01-40ba-9832-f48332b633ac}"))
+		    quid       	"65F672F601EB"
+		    supplier   	"Logical View::FinanceFacade::ITax"
+		    quidu      	"5C6A6160024B")))
 	(object Mechanism @1
 	    logical_models 	(list unit_reference_list
-		(object Object "$UNNAMED$7"
+		(object Object "$UNNAMED$9"
 		    quid       	"64ACDCE90330"
 		    collaborators 	(list link_list
 			(object Link
@@ -5429,14 +5714,14 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	1569
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::FinanceFacade::ITaxOverride" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(3048, 359)
+		    location   	(3045, 363)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5449,7 +5734,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(2848, 309)
+			location   	(2845, 313)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	401
@@ -5460,6 +5745,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6D02014E"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(2845, 374)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	890)
 		    width      	419
 		    height     	300
 		    annotation 	8)
@@ -5490,6 +5793,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2CFC0371"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1240, 1351)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	1465)
 		    width      	519
 		    height     	288
 		    annotation 	8)
@@ -5497,7 +5818,7 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(2359, 1394)
+		    location   	(2387, 1372)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5510,18 +5831,36 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2093, 1240)
+			location   	(2093, 1241)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	532
+			max_width  	589
 			justify    	0
 			label      	"Tax")
 		    icon_style 	"Decoration"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D3E021D"
-		    width      	550
-		    height     	332
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(2093, 1302)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	671)
+		    width      	607
+		    height     	287
 		    annotation 	8)
 		(object ClassView "Class" "Logical View::FinanceFacade::TaxesContext" @5
 		    ShowCompartmentStereotypes 	TRUE
@@ -5550,6 +5889,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2D80037E"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(3486, 1314)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	671)
 		    width      	563
 		    height     	262
 		    annotation 	8)
@@ -5580,6 +5937,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E2DB701D6"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(2765, 1298)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	890)
 		    width      	556
 		    height     	319
 		    annotation 	8)
@@ -5617,6 +5992,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C7104940072"
+		    compartment 	(object Compartment
+			Parent_View 	@8
+			location   	(72, 2180)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	14
+			max_width  	1546)
 		    width      	575
 		    height     	406
 		    annotation 	8)
@@ -5679,6 +6072,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A6160024B"
+		    compartment 	(object Compartment
+			Parent_View 	@10
+			location   	(2101, 717)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	412)
 		    width      	538
 		    height     	388
 		    annotation 	8)
@@ -5717,6 +6128,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A61DE02D0"
+		    compartment 	(object Compartment
+			Parent_View 	@12
+			location   	(1297, 824)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	412)
 		    width      	438
 		    height     	281
 		    annotation 	8)
@@ -6039,6 +6468,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6A63D303B2"
+		    compartment 	(object Compartment
+			Parent_View 	@28
+			location   	(3456, 811)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	412)
 		    width      	525
 		    height     	300
 		    annotation 	8)
@@ -6132,7 +6579,7 @@
 			    line_style 	3
 			    origin_attachment 	(3038, 810)
 			    terminal_attachment 	(3447, 810))
-			(object RoleView "TaxOverrides" @34
+			(object RoleView "" @34
 			    Parent_View 	@30
 			    location   	(979, 306)
 			    font       	(object Font
@@ -6158,12 +6605,13 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
+				hidden     	TRUE
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
 				max_width  	273
 				justify    	0
-				label      	"+TaxOverrides"
+				label      	""
 				pctDist    	0.800000
 				height     	42
 				orientation 	1)
@@ -6182,7 +6630,7 @@
 		    supplier   	@2
 		    line_style 	1
 		    origin_attachment 	(3038, 810)
-		    terminal_attachment 	(3044, 509))
+		    terminal_attachment 	(3042, 513))
 		(object ClassView "Class" "Logical View::FinanceFacade::ITaxAuthority" @37
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -6211,6 +6659,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
+		    compartment 	(object Compartment
+			Parent_View 	@37
+			location   	(102, 1421)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	9
+			max_width  	475)
 		    width      	538
 		    height     	375
 		    annotation 	8)
@@ -8012,7 +8478,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ObjectView "$UNNAMED$7" @120
+		(object ObjectView "$UNNAMED$9" @120
 		    location   	(192, 412)
 		    font       	(object Font
 			size       	10
@@ -8274,7 +8740,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object InterObjView "$UNNAMED$7" @132
+		(object InterObjView "$UNNAMED$9" @132
 		    location   	(275, 225)
 		    font       	(object Font
 			size       	10

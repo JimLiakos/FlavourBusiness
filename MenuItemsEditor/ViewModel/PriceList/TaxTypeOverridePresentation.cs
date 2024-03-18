@@ -1734,7 +1734,10 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
                     taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
 
-                return taxableType==PriceListPresentation.SelectedTaxableType.TaxableType;
+               if(taxableType==null)
+                    return false;
+
+                return taxableType==PriceListPresentation?.SelectedTaxableType?.TaxableType;
             }
             set
             {

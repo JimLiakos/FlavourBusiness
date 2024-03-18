@@ -9209,13 +9209,25 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"ContainerClass"
-			    value      	(value Text "IList<ITaxOverride>")))
+			    value      	(value Text "System.Collections.Generic.IList<FinanceFacade.ITaxOverride>"))
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"5C6A6D46028E"
 		    label      	"TaxOverrides"
 		    supplier   	"Logical View::FinanceFacade::ITaxesContext"
 		    quidu      	"5C6A63D303B2"
 		    is_navigable 	TRUE)
-		(object Role "TaxOverrides"
+		(object Role "$UNNAMED$10"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -9228,12 +9240,18 @@
 			(object Attribute
 			    tool       	"C#"
 			    name       	"ContainerClass"
-			    value      	(value Text "IList<ITaxOverride>")))
+			    value      	(value Text "IList<ITaxOverride>"))
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	FALSE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Indexer"
+			    value      	FALSE))
 		    quid       	"5C6A6D460291"
-		    label      	"TaxOverrides"
 		    supplier   	"Logical View::FinanceFacade::ITax"
-		    quidu      	"5C6A6160024B"
-		    is_navigable 	TRUE))
+		    quidu      	"5C6A6160024B"))
 	    AssociationClass 	"Logical View::FinanceFacade::ITaxOverride")
 	(object Association "MenuTaxes"
 	    attributes 	(list Attribute_Set
@@ -9275,7 +9293,7 @@
 		    quidu      	"5C6E352E016D"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$10"
+		(object Role "$UNNAMED$11"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -9412,7 +9430,7 @@
 		    quidu      	"6075762C025B"
 		    client_cardinality 	(value cardinality "0..*")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$11"
+		(object Role "$UNNAMED$12"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -9434,7 +9452,7 @@
 		    supplier   	"Logical View::MenuModel::IMenuItem"
 		    quidu      	"5721EC2D00C7"))
 	    AssociationClass 	"Logical View::MenuModel::IPartofMeal")
-	(object Association "$UNNAMED$12"
+	(object Association "$UNNAMED$13"
 	    attributes 	(list Attribute_Set
 		(object Attribute
 		    tool       	"MetaData"
@@ -9478,7 +9496,7 @@
 		    quidu      	"6075144803C3"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$13"
+		(object Role "$UNNAMED$14"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -9598,7 +9616,7 @@
 		    quidu      	"616950830001"
 		    client_cardinality 	(value cardinality "0..*")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$14"
+		(object Role "$UNNAMED$15"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -9660,7 +9678,7 @@
 		    quidu      	"616950830001"
 		    client_cardinality 	(value cardinality "1..*")
 		    is_navigable 	TRUE)
-		(object Role "$UNNAMED$15"
+		(object Role "$UNNAMED$16"
 		    attributes 	(list Attribute_Set
 			(object Attribute
 			    tool       	"MetaData"
@@ -11347,7 +11365,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))
-			(object RoleView "$UNNAMED$14" @79
+			(object RoleView "$UNNAMED$15" @79
 			    Parent_View 	@74
 			    location   	(-622, 17)
 			    font       	(object Font
@@ -11992,7 +12010,7 @@
 				pctDist    	0.832298
 				height     	42
 				orientation 	0))
-			(object RoleView "$UNNAMED$15" @111
+			(object RoleView "$UNNAMED$16" @111
 			    Parent_View 	@106
 			    location   	(472, 348)
 			    font       	(object Font
@@ -14318,7 +14336,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))
-			(object RoleView "$UNNAMED$10" @220
+			(object RoleView "$UNNAMED$11" @220
 			    Parent_View 	@215
 			    location   	(-479, -1)
 			    stereotype 	TRUE
@@ -14723,7 +14741,7 @@
 		    width      	563
 		    height     	350
 		    annotation 	8)
-		(object AssociationViewNew "$UNNAMED$12" @239
+		(object AssociationViewNew "$UNNAMED$13" @239
 		    location   	(2317, 291)
 		    font       	(object Font
 			size       	10
@@ -14804,7 +14822,7 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "$UNNAMED$13" @243
+			(object RoleView "$UNNAMED$14" @243
 			    Parent_View 	@239
 			    location   	(875, 11)
 			    stereotype 	TRUE
@@ -14947,7 +14965,7 @@
 				pctDist    	0.750000
 				height     	56
 				orientation 	0))
-			(object RoleView "$UNNAMED$11" @250
+			(object RoleView "$UNNAMED$12" @250
 			    Parent_View 	@245
 			    location   	(-2789, 247)
 			    stereotype 	TRUE

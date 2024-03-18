@@ -7,10 +7,10 @@ namespace FlavourBusinessFacade.PriceList
     /// <MetaDataID>{f3227625-fb47-47aa-b911-5eed56e5d67b}</MetaDataID>
     public interface IPriceList
     {
-        [RoleAMultiplicityRange(0)]
-        [Association("PriceListTaxes", Roles.RoleA, "bf6f1424-175c-4276-af86-fff865eb2392")]
-        [RoleBMultiplicityRange(1, 1)]
-        List<IItemsTaxInfo> ItemsTaxes { get; }
+        //[RoleAMultiplicityRange(0)]
+        //[Association("PriceListTaxes", Roles.RoleA, "bf6f1424-175c-4276-af86-fff865eb2392")]
+        //[RoleBMultiplicityRange(1, 1)]
+        //List<IItemsTaxInfo> ItemsTaxes { get; }
 
         /// <MetaDataID>{9f8f9bcc-5335-49eb-bc6b-6d761457d913}</MetaDataID>
         [BackwardCompatibilityID("+1")]
@@ -58,11 +58,14 @@ namespace FlavourBusinessFacade.PriceList
         IItemsPriceInfo NewPriceInfo(string uri, ItemsPriceInfoType include);
 
 
-        IItemsTaxInfo NewTaxInfo(string uri, ItemsPriceInfoType include);
+        ///// <MetaDataID>{3709d9f6-7558-4535-9e1b-3f400017e699}</MetaDataID>
+        //IItemsTaxInfo NewTaxInfo(string uri, ItemsPriceInfoType include);
 
 
-        void RemoveItemsTaxInfos(IItemsTaxInfo itemsTaxInfo);
-        void RemoveItemsTaxInfos(List<IItemsTaxInfo> itemsTaxInfo);
+        ///// <MetaDataID>{a88ce1cc-5a82-4726-9c95-bd3b4d6cbe1a}</MetaDataID>
+        //void RemoveItemsTaxInfos(IItemsTaxInfo itemsTaxInfo);
+        ///// <MetaDataID>{889a86fd-da78-48e3-bb25-d0e278a7bdcd}</MetaDataID>
+        //void RemoveItemsTaxInfos(List<IItemsTaxInfo> itemsTaxInfo);
 
 
         /// <MetaDataID>{83f3e18b-a96c-4917-a4b5-c766bd336fff}</MetaDataID>

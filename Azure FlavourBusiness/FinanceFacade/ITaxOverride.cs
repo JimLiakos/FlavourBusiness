@@ -7,6 +7,10 @@ namespace FinanceFacade
     [AssociationClass(typeof(ITaxesContext), typeof(ITax), "TaxOverride")]
     public interface ITaxOverride
     {
+        /// <MetaDataID>{2f7593d4-495f-4d1a-a97d-984118d2f9c4}</MetaDataID>
+        [BackwardCompatibilityID("+3")]
+        bool IsActive { get; set; }
+
         /// <MetaDataID>{4b8160b7-52f7-4db2-9ecd-a6e781e8ec13}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         double TaxRate { get; set; }
@@ -24,5 +28,7 @@ namespace FinanceFacade
         /// <MetaDataID>{9b008ecf-f372-4d9b-8ffd-f418278e34e2}</MetaDataID>
         [AssociationClassRole(Roles.RoleA)]
         ITaxesContext TaxesContext { get; set; }
+        /// <MetaDataID>{f59c0624-d479-4a1c-b590-3e2cdde391d9}</MetaDataID>
+        decimal Fee { get; set; }
     }
 }

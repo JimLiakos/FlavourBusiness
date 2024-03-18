@@ -15,9 +15,64 @@
     </Window.DataContext>
     <Window.Resources>
         <ViewModel:TaxAuthorityPresentation x:Key="D_TaxAuthorityPresentation"/>
+        <Style x:Key="ButtonFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#F3F3F3" Offset="0"/>
+            <GradientStop Color="#EBEBEB" Offset="0.5"/>
+            <GradientStop Color="#DDDDDD" Offset="0.5"/>
+            <GradientStop Color="#CDCDCD" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
+        <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Border x:Name="on"  Height="25" Padding="10,0,10,0" Background="LightGray" CornerRadius="2,0,0,4" Margin="10,0,0,0">
+                                <TextBlock x:Name="onText" Text="On" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border x:Name="off"  Height="25" Background="LightGray" Padding="10,0,10,0" CornerRadius="0,2,4,0">
+                                <TextBlock x:Name="offText" Text="Off" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="on" Property="Background" Value="LightBlue"/>
+                                <Setter TargetName="onText" Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="off" Property="Background" Value="LightBlue"/>
+                                <Setter TargetName="offText" Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+    
     <Grid>
-
+        
         <sw:DialogContentControl Grid.ColumnSpan="2"  BeforeTransactionCommit="{Binding Value.BeforeSaveCommand}" >
 
             <Grid DataContext="{Binding Value}" d:DataContext="{StaticResource D_TaxAuthorityPresentation}">
@@ -52,7 +107,7 @@
 
 
                     </ListBox>
-                    <Grid  Grid.Row="3" Background="WhiteSmoke" Margin="0,0.111,1.222,8" Grid.RowSpan="2">
+                    <Grid  Grid.Row="3" Background="WhiteSmoke"  Grid.RowSpan="2">
                         <Border Grid.Row="1" BorderBrush="{StaticResource ListBoxBorderBrush}" BorderThickness="0.6" >
 
                             <Grid>
@@ -119,7 +174,7 @@
 
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="auto"/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -127,8 +182,13 @@
                         <RowDefinition/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Label  Grid.Row="1" Content="Taxes" Margin="5,0,0,5"></Label>
-                    <ListBox  ItemsSource="{Binding TaxOverrides}"  Grid.Row="2" Grid.RowSpan="4"  >
+                    
+
+                    <Label  Grid.Row="1" Content="{Binding TaxesListTitle}" Margin="5,0,0,5"></Label>
+                    <ListBox  ItemsSource="{Binding TaxOverrides}"  Grid.Row="2" Grid.RowSpan="5"  
+                              ScrollViewer.CanContentScroll="False"
+                              HorizontalAlignment="Stretch" 
+                              VerticalAlignment="Stretch"  >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid >
@@ -144,6 +204,8 @@
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="auto"/>
                                                 <ColumnDefinition Width="25" />
+                                                <ColumnDefinition Width="auto"/>
+                                                
                                                 <ColumnDefinition Width="15" />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
@@ -151,9 +213,12 @@
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
                                             <TextBlock Grid.Column="1"  Text="{Binding Description}" VerticalAlignment="Center" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
-                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
-                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsMimized, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
-                                            <Button VerticalAlignment="Top" Grid.Column="5" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
+
+                                            <TextBlock Text="{Binding TaxRate}" Grid.Column="2" Visibility="{Binding Path=IsTaxDataVisible, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+                                            <TextBlock Text="%" Grid.Column="3" Visibility="{Binding Path=IsTaxDataVisible, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <TextBlock Grid.Column="5" HorizontalAlignment="Right"  Margin="0,0,10,0"    Text="Disabled" VerticalAlignment="Center" Visibility="{Binding Path=IsDisabledTextVisible, Converter={StaticResource BooleanToVisibilityConverter}}" ></TextBlock>
+
+                                            <Button VerticalAlignment="Top" Grid.Column="6" Width="16" Height="16" Command="{Binding MaximizeCommand}" HorizontalAlignment="Right"  Style="{DynamicResource WindowButton}"   >
                                                 <Image x:Name="CloseBoxImage" Width="12" Height="12" Source="{Binding MaxMinImage}"></Image>
                                             </Button>
                                             <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="4" Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" MinHeight="40" >
@@ -167,6 +232,8 @@
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                     <RowDefinition Height="10"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="10"/>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
@@ -174,21 +241,23 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label Margin="0,0,0,4"  VerticalAlignment="Bottom" Content="{x:Static resx:Resources.DescriptionLabel}"/>
-                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" VerticalContentAlignment="Center"  Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
+                                                <wpftoolkitex:WatermarkTextBox Grid.ColumnSpan="3" VerticalContentAlignment="Center" IsEnabled="{Binding IsActive}"  Text="{Binding Description,UpdateSourceTrigger=LostFocus}"  Grid.Row="1"></wpftoolkitex:WatermarkTextBox>
 
                                                 <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax rate"/>
-                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   Unit="%"/>
+                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Row="4" Grid.Column="0" IsEnabled="{Binding IsActive}"  VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxRate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   Unit="%"/>
                                                 <Label Grid.Row="3" Margin="0,0,0,4" Grid.Column="2"  VerticalAlignment="Bottom" Content="Account number"/>
                                                 <Border  Grid.Column="2" Grid.Row="4" BorderThickness="{Binding AccountIDErrorBorder}" BorderBrush="Red" Margin="1" >
-                                                    <wpftoolkitex:WatermarkTextBox    VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
+                                                    <wpftoolkitex:WatermarkTextBox  IsEnabled="{Binding IsActive}"   VerticalContentAlignment="Center"  Text="{Binding AccountID ,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  ></wpftoolkitex:WatermarkTextBox>
                                                 </Border>
 
                                                 <Label Grid.Row="6" Margin="0,0,0,4" Grid.Column="0"  VerticalAlignment="Bottom" Content="Tax fee"/>
-                                                <ControlsEx:TextBoxNumberWithUnit  Grid.Row="7" Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxFee, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
+                                                <ControlsEx:TextBoxNumberWithUnit IsEnabled="{Binding IsActive}" Grid.Row="7" Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Right" Number="{Binding TaxFee, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"   />
 
-                                                <CheckBox  Grid.Column="2" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Per unit"  IsChecked="{Binding FeePerUnit , Mode=TwoWay }" />
+                                                <CheckBox  Grid.Column="2" Grid.Row="7" IsEnabled="{Binding IsActive}" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Per unit"  IsChecked="{Binding FeePerUnit , Mode=TwoWay }" />
 
-
+                                                <Grid Grid.Row="9" Grid.ColumnSpan="4" >
+                                                    <ConnectableCtrl:TwoStateButton   HorizontalAlignment="Center" IsChecked="{Binding IsActive}"  OnDescription="Enable" OffDescription="Disable" Style="{StaticResource TwoStatesToggleButtonStyle}"   ></ConnectableCtrl:TwoStateButton>
+                                                </Grid>
 
                                             </Grid>
 

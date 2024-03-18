@@ -25,6 +25,10 @@ namespace FinanceFacade
         [BackwardCompatibilityID("+2")]
         string AccountID { get; set; }
 
+        /// <MetaDataID>{aa31b742-2d44-4b36-961e-c1511e5466ab}</MetaDataID>
+        [BackwardCompatibilityID("+6")]
+        bool IsActive { get; set; }
+
         /// <MetaDataID>{c11c70ad-9373-4a5e-aaf0-1d3cf1089982}</MetaDataID>
         [Association("TaxOverride", Roles.RoleA, "42de5995-db4d-4076-bcef-88e364a59db1")]
         [AssociationClass(typeof(ITaxOverride))]

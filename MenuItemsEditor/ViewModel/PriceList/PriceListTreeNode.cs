@@ -4,6 +4,7 @@ using FlavourBusinessFacade;
 using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.PriceList;
+using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessToolKit;
 using FLBManager.ViewModel;
 using MenuItemsEditor.ViewModel;
@@ -504,6 +505,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
         internal void IncludeItemsInListOfTaxes(IItemsCategory itemsCategory, TaxableTypeViewModel selectedTaxableType)
         {
 
+            if(selectedTaxableType==null)
+                throw new ArgumentNullException(nameof(selectedTaxableType));
 
             var itemsTaxInfos = (from itemsInfo in PriceList.ItemsTaxes
                                          select new
@@ -524,7 +527,14 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
 
-                var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+                    (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
+
+                    stateTransition.Consistent = true;
+                }
 
                 //this.ItemsPreparationInfos = this.PriceList.ItemsPreparationInfos.ToList();
             }
@@ -545,6 +555,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         internal void IncludeItemInListOfTaxes(IMenuItem menuItem, TaxableTypeViewModel selectedTaxableType)
         {
+            if (selectedTaxableType == null)
+                throw new ArgumentNullException(nameof(selectedTaxableType));
+
             var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsTaxes
                                          select new
                                          {
@@ -563,9 +576,14 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             if (!PriceList.HasOverriddenTaxes(menuItem))
             {
-                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-                var dd = this.PriceList.ItemsPrices;
-                var itemsPreparationInfo = this.PriceList.NewPriceInfo(uri, ItemsPriceInfoType.Include);
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+                    var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+                    (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
+                    stateTransition.Consistent = true;
+                }
 
                 //this.AddItemsPreparationInfos(itemsPreparationInfo);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:ControlsEx="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls"
     xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d">
 
     <!-- *********************************  COLORS  ********************************* -->
@@ -903,6 +904,46 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="TwoStatesToggleButtonStyle" TargetType="{x:Type ControlsEx:TwoStateButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ControlsEx:TwoStateButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border x:Name="on"    Background="LightGray" CornerRadius="2,0,0,4" Margin="10,0,0,0">
+                            <TextBlock x:Name="onText" Margin="10,8,10,8" Text="{TemplateBinding OnDescription}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border x:Name="off"   Background="LightGray" CornerRadius="0,2,4,0">
+                            <TextBlock x:Name="offText" Margin="10,8,10,8"  Text="{TemplateBinding OffDescription}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="on" Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                            <Setter TargetName="onText" Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="off" Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                            <Setter TargetName="offText" Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
        TargetType="Separator">

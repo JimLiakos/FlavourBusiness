@@ -77,18 +77,21 @@ namespace FlavourBusinessFacade.PriceList
         }
 
 
-        
+
+        /// <MetaDataID>{61d1ca27-3074-47e9-b250-1216b669e6c7}</MetaDataID>
         public static bool IsIncluded(this IItemsTaxInfo itemsTaxInfo)
         {
             return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Include) == ItemsPriceInfoType.Include;
         }
 
-        
+
+        /// <MetaDataID>{61f23f83-47b6-4064-af11-fd5e63c98648}</MetaDataID>
         public static bool IsExcluded(this IItemsTaxInfo itemsTaxInfo)
         {
             return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
         }
 
+        /// <MetaDataID>{dfd3de56-0bd1-4367-970f-fb2d3cd1debd}</MetaDataID>
         public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, MenuModel.IMenuItem menuItem)
         {
 
@@ -113,6 +116,7 @@ namespace FlavourBusinessFacade.PriceList
             }
         }
 
+        /// <MetaDataID>{2aa3f1e4-6353-4cd2-999e-2fd04ce38793}</MetaDataID>
         public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, object priceListSubject)
         {
 
@@ -187,6 +191,7 @@ namespace FlavourBusinessFacade.PriceList
             return itemsPreparationInfoHierarchy;
         }
 
+        /// <MetaDataID>{02794bde-e837-4cd7-af0a-d20920a46adf}</MetaDataID>
         public static System.Collections.Generic.List<IItemsPriceInfo> GetItemsPriceInfo(this IPriceList priceList, IMenuItem menuItem)
         {
             System.Collections.Generic.List<IItemsPriceInfo> itemsPreparationInfoHierarchy = new System.Collections.Generic.List<IItemsPriceInfo>();
@@ -271,97 +276,99 @@ namespace FlavourBusinessFacade.PriceList
         }
 
 
-        public static bool HasOverriddenTaxes(this IPriceList priceList, IItemsCategory itemsCategory)
-        {
+        ///// <MetaDataID>{b15c9304-4b5e-4b86-ad7d-ac5987e213cd}</MetaDataID>
+        //public static bool HasOverriddenTaxes(this IPriceList priceList, IItemsCategory itemsCategory)
+        //{
 
 
-            var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
-                                         select new
-                                         {
-                                             ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                             @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsTaxesInfo = itemsInfo
-                                         }).ToList();
+        //    var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
+        //                           select new
+        //                           {
+        //                               ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+        //                               @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                               ItemsTaxesInfo = itemsInfo
+        //                           }).ToList();
 
-            foreach (var itemsTaxesInfoEntry in itemsTaxesInfos)
-            {
-                if (itemsTaxesInfoEntry.@object is MenuModel.IItemsCategory && (itemsTaxesInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
-                {
-                    if (itemsTaxesInfoEntry.ItemsTaxesInfo.IsIncluded())
-                        return true;
-                    else
-                        return false;
+        //    foreach (var itemsTaxesInfoEntry in itemsTaxesInfos)
+        //    {
+        //        if (itemsTaxesInfoEntry.@object is MenuModel.IItemsCategory && (itemsTaxesInfoEntry.@object as MenuModel.IItemsCategory) == itemsCategory)
+        //        {
+        //            if (itemsTaxesInfoEntry.ItemsTaxesInfo.IsIncluded())
+        //                return true;
+        //            else
+        //                return false;
 
-                }
-            }
+        //        }
+        //    }
 
-            foreach (var itemsTaxInfo in priceList.ItemsTaxes)
-            {
-                MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
-                var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsTaxInfo as System.MarshalByRefObject) ? itemsTaxInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsTaxInfo.ItemsInfoObjectUri);
-                if (@object is MenuModel.IItemsCategory)
-                {
-                    var itemsTaxInfoCategory = (@object as MenuModel.IItemsCategory);
-                    while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsTaxInfoCategory)
-                        itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
+        //    foreach (var itemsTaxInfo in priceList.ItemsTaxes)
+        //    {
+        //        MenuModel.IItemsCategory itemsCategoryOrParent = itemsCategory;
+        //        var @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsTaxInfo as System.MarshalByRefObject) ? itemsTaxInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsTaxInfo.ItemsInfoObjectUri);
+        //        if (@object is MenuModel.IItemsCategory)
+        //        {
+        //            var itemsTaxInfoCategory = (@object as MenuModel.IItemsCategory);
+        //            while (itemsCategoryOrParent != null && itemsCategoryOrParent != itemsTaxInfoCategory)
+        //                itemsCategoryOrParent = itemsCategoryOrParent.Class as MenuModel.IItemsCategory;
 
-                    if (itemsCategoryOrParent == itemsTaxInfoCategory)
-                    {
-                        if (itemsTaxInfo.IsExcluded())
-                            return false;
-                        if (itemsTaxInfo.IsIncluded())
-                            return true;
-                    }
+        //            if (itemsCategoryOrParent == itemsTaxInfoCategory)
+        //            {
+        //                if (itemsTaxInfo.IsExcluded())
+        //                    return false;
+        //                if (itemsTaxInfo.IsIncluded())
+        //                    return true;
+        //            }
 
-                }
-            }
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        public static bool HasOverriddenTaxes(this IPriceList priceList, IMenuItem menuItem)
-        {
-            var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
-                                   select new
-                                   {
-                                       ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
-                                       @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.TaxableType : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                       ItemsTaxesInfo = itemsInfo
-                                   }).ToList();
+        ///// <MetaDataID>{5f9bbf48-5c88-418a-bec3-300869d2f69e}</MetaDataID>
+        //public static bool HasOverriddenTaxes(this IPriceList priceList, IMenuItem menuItem)
+        //{
+        //    var itemsTaxesInfos = (from itemsInfo in priceList.ItemsTaxes
+        //                           select new
+        //                           {
+        //                               ItemsInfoObjectUri = itemsInfo.ItemsInfoObjectUri,
+        //                               @object = !OOAdvantech.Remoting.RemotingServices.IsOutOfProcess(itemsInfo as System.MarshalByRefObject) ? itemsInfo.MenuModelObject : OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                               ItemsTaxesInfo = itemsInfo
+        //                           }).ToList();
 
 
 
-            foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
-            {
-                if (itemsTaxInfoEntry.@object is MenuModel.IMenuItem && (itemsTaxInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
-                {
-                    if (itemsTaxInfoEntry.ItemsTaxesInfo.IsIncluded())
-                        return true;
-                    if (itemsTaxInfoEntry.ItemsTaxesInfo.IsExcluded())
-                        return false;
+        //    foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
+        //    {
+        //        if (itemsTaxInfoEntry.@object is MenuModel.IMenuItem && (itemsTaxInfoEntry.@object as MenuModel.IMenuItem) == menuItem)
+        //        {
+        //            if (itemsTaxInfoEntry.ItemsTaxesInfo.IsIncluded())
+        //                return true;
+        //            if (itemsTaxInfoEntry.ItemsTaxesInfo.IsExcluded())
+        //                return false;
 
-                }
-            }
+        //        }
+        //    }
 
-            foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
-            {
-                if (itemsTaxInfoEntry.@object is MenuModel.IItemsCategory)
-                {
-                    MenuModel.IItemsCategory itemsCategory = null;
-                    var itemsPreparationInfoCategory = (itemsTaxInfoEntry.@object as MenuModel.IItemsCategory);
-                    if (menuItem is MenuModel.IClassified)
-                    {
-                        itemsCategory = (menuItem as MenuModel.IClassified).Class as IItemsCategory;
+        //    foreach (var itemsTaxInfoEntry in itemsTaxesInfos)
+        //    {
+        //        if (itemsTaxInfoEntry.@object is MenuModel.IItemsCategory)
+        //        {
+        //            MenuModel.IItemsCategory itemsCategory = null;
+        //            var itemsPreparationInfoCategory = (itemsTaxInfoEntry.@object as MenuModel.IItemsCategory);
+        //            if (menuItem is MenuModel.IClassified)
+        //            {
+        //                itemsCategory = (menuItem as MenuModel.IClassified).Class as IItemsCategory;
 
-                        if (priceList.HasOverriddenTaxes(itemsCategory))
-                            return true;
-                        return false;
-                    }
-                }
-            }
+        //                if (priceList.HasOverriddenTaxes(itemsCategory))
+        //                    return true;
+        //                return false;
+        //            }
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         /// <MetaDataID>{112fd3c1-e25f-4e72-9fef-db94ea560622}</MetaDataID>
         public static bool HasOverriddenPrice(this IPriceList priceList, IItemsCategory itemsCategory)
@@ -422,11 +429,13 @@ namespace FlavourBusinessFacade.PriceList
 
 
 
+        /// <MetaDataID>{0e942f9a-81c2-431e-8a01-6d64f0b7e6fb}</MetaDataID>
         public static bool HasOptionWithPrice(this IPreparationOptionsGroup optionGroup, IMenuItem menuItem)
         {
             return optionGroup.GroupedOptions.Any(x => x.HasOptionWithPrice(menuItem));
         }
 
+        /// <MetaDataID>{71b92f46-4100-4ca2-a484-ed88f1fffd45}</MetaDataID>
         public static bool HasOptionWithPrice(this IPreparationScaledOption option, IMenuItem menuItem)
         {
             if (option is IPricingContext)
@@ -507,6 +516,7 @@ namespace FlavourBusinessFacade.PriceList
         }
 
 
+        /// <MetaDataID>{476aa98d-09f1-4f95-8e80-abff4c1313dc}</MetaDataID>
         public static bool HasOverriddenPrice(this IPriceList priceList, IMenuItemPrice menuItemPrice)
         {
 
