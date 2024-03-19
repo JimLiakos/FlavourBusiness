@@ -24,6 +24,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
 
 
+    /// <MetaDataID>{a1aa47c9-f94f-45a4-a91f-3dc323e24a26}</MetaDataID>
     public class ItemsPriceInfoPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
 
@@ -50,7 +51,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         // <MetaDataID>{a777298f-cf21-4ccb-848d-38596df908f3}</MetaDataID>
         internal IItemsCategory ItemsCategory;
 
-        public TaxTypeOverridePresentation TaxTypeOverridePresentation { get; }
+        //public TaxTypeOverridePresentation TaxTypeOverridePresentation { get; }
 
 
 
@@ -93,7 +94,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             ItemsCategory = menu.RootCategory;
 
 
-            
+
 
 
 
@@ -321,7 +322,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             ItemsCategory = itemsCategory;
 
-            TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, ItemsCategory);
+            //TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, ItemsCategory);
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -388,7 +389,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             SelectedPriceOverrideType = PriceOverrideTypes[0];
 
             MenuItem = menuItem;
-            TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, MenuItem);
+            //TaxTypeOverridePresentation = new TaxTypeOverridePresentation(this, PriceListPresentation, MenuItem);
 
 
             DeleteCommand = new RelayCommand((object sender) =>
@@ -487,11 +488,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
             set
             {
-                if (PriceListPresentation?.Taxes == true)
-                {
-                    base.Edit = false;
-                    return;
-                }
+                //if (PriceListPresentation?.Taxes == true)
+                //{
+                //    base.Edit = false;
+                //    return;
+                //}
 
                 base.Edit = value;
 
@@ -645,8 +646,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                if (PriceListPresentation.Taxes)
-                    return false;
+                //if (PriceListPresentation.Taxes)
+                //    return false;
 
                 if (IsRootCategory)
                     return PriceListPresentation.PriceList.PriceListMainItemsPriceInfo.PercentageDiscount != null || PriceListPresentation.PriceList.PriceListMainItemsPriceInfo.AmountDiscount != null;
@@ -673,19 +674,19 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         public bool IsDefinesNewPriceEnabled { get; } = true;
 
-        
 
 
-        public Visibility IsDefinesTaxesVisibility
-        {
-            get
-            {
-                if (PriceListPresentation.Taxes&&!IsRootCategory)
-                    return Visibility.Visible;
-                else
-                    return Visibility.Collapsed;
-            }
-        }
+
+        //public Visibility IsDefinesTaxesVisibility
+        //{
+        //    get
+        //    {
+        //        if (PriceListPresentation.Taxes&&!IsRootCategory)
+        //            return Visibility.Visible;
+        //        else
+        //            return Visibility.Collapsed;
+        //    }
+        //}
 
 
 
@@ -1074,8 +1075,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                if (PriceListPresentation.Taxes)
-                    return "";
+                //if (PriceListPresentation.Taxes)
+                //    return "";
 
                 if (DefinesNewPrice && SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount)
                     if (PercentageDiscount > 0)
@@ -1593,8 +1594,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasDedicatedItemPriceInfo)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceOverrideTypeImage)));
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
-            
+            //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesVisibility)));
+
 
 
 
@@ -1617,7 +1618,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             foreach (var itemSelectorPriceInfo in Members.OfType<ItemSelectorPriceInfoPresentation>())
                 itemSelectorPriceInfo.Refresh();
 
-            TaxTypeOverridePresentation?.Refresh();
+            //TaxTypeOverridePresentation?.Refresh();
             //_Members = null;
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
@@ -1632,7 +1633,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceText)));
         }
 
-     
+
     }
 
 
@@ -1696,90 +1697,91 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
     }
 
-    public class TaxTypeOverridePresentation:INotifyPropertyChanged
-    {
-        readonly IMenuItem MenuItem;
-        readonly PriceListPresentation PriceListPresentation;
-        readonly IItemsCategory ItemsCategory;
+    //public class TaxTypeOverridePresentation:INotifyPropertyChanged
+    //{
+    //    readonly IMenuItem MenuItem;
+    //    readonly PriceListPresentation PriceListPresentation;
+    //    readonly IItemsCategory ItemsCategory;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    //    public event PropertyChangedEventHandler PropertyChanged;
 
-        public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
-        {
-            ItemsCategory = itemsCategory;
-            PriceListPresentation = priceListPresentation;
-        }
+    //    public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IItemsCategory itemsCategory)
+    //    {
+    //        ItemsCategory = itemsCategory;
+    //        PriceListPresentation = priceListPresentation;
+    //    }
 
-        public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IMenuItem menuItem)
-        {
-            MenuItem = menuItem;
-            PriceListPresentation = priceListPresentation;
-        }
+    //    public TaxTypeOverridePresentation(ItemsPriceInfoPresentation itemsPriceInfoPresentation, PriceListPresentation priceListPresentation, IMenuItem menuItem)
+    //    {
+    //        MenuItem = menuItem;
+    //        PriceListPresentation = priceListPresentation;
+    //    }
 
-        public void Refresh()
-        {
-            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(DefinesTaxInfo)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
-        }
-
-
-        public bool DefinesTaxInfo
-        {
-            get
-            {
-                ITaxableType taxableType = null;  
-               if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
-                    taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
-                else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
-                    taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
-
-               if(taxableType==null)
-                    return false;
-
-                return taxableType==PriceListPresentation?.SelectedTaxableType?.TaxableType;
-            }
-            set
-            {
+    //    public void Refresh()
+    //    {
+    //        PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(DefinesTaxInfo)));
+    //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
+    //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDefinesTaxesEnabled)));
+    //    }
 
 
-                if (value && ItemsCategory != null)
-                    PriceListPresentation.IncludeItemsInListOfTaxes(ItemsCategory,PriceListPresentation.SelectedTaxableType);
+    //    public bool DefinesTaxInfo
+    //    {
+    //        get
+    //        {
+    //            ITaxableType taxableType = null;  
+    //           if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
+    //                taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
+    //            else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
+    //                taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
 
-                if (!value && ItemsCategory != null)
-                    PriceListPresentation.ExcludeItemsFromListOfTaxes(ItemsCategory);
+    //           if(taxableType==null)
+    //                return false;
+
+    //            return taxableType==PriceListPresentation?.SelectedTaxableType?.TaxableType;
+    //        }
+    //        set
+    //        {
 
 
-                if (value && MenuItem != null)
-                    PriceListPresentation.IncludeItemInListOfTaxes(MenuItem, PriceListPresentation.SelectedTaxableType);
+    //            if (value && ItemsCategory != null)
+    //                PriceListPresentation.IncludeItemsInListOfTaxes(ItemsCategory,PriceListPresentation.SelectedTaxableType);
 
-                if (!value && MenuItem != null)
-                    this.PriceListPresentation.ExcludeItemFromListOfTaxes(MenuItem);
+    //            if (!value && ItemsCategory != null)
+    //                PriceListPresentation.ExcludeItemsFromListOfTaxes(ItemsCategory);
 
-            }
-        }
 
-        public bool IsDefinesTaxesEnabled
-        {
-            get
-            {
-                ITaxableType taxableType = null;
-                if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
-                    taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
-                else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
-                    taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
+    //            if (value && MenuItem != null)
+    //                PriceListPresentation.IncludeItemInListOfTaxes(MenuItem, PriceListPresentation.SelectedTaxableType);
 
-                if(taxableType!=null&&taxableType!=PriceListPresentation.SelectedTaxableType)
-                    return false;
+    //            if (!value && MenuItem != null)
+    //                this.PriceListPresentation.ExcludeItemFromListOfTaxes(MenuItem);
 
-                if (PriceListPresentation.Taxes&&PriceListPresentation.SelectedTaxableType!=null)
-                    return true;
-                else
-                    return false;
-            }
-        }
+    //        }
+    //    }
 
-    }
+    //    public bool IsDefinesTaxesEnabled
+    //    {
+    //        get
+    //        {
+    //            ITaxableType taxableType = null;
+    //            if (this.ItemsCategory != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.ItemsCategory))
+    //                taxableType= PriceListPresentation.GetTaxableType(ItemsCategory);
+    //            else if (this.MenuItem != null && PriceListPresentation.PriceList.HasOverriddenTaxes(this.MenuItem))
+    //                taxableType = PriceListPresentation.GetTaxableType(this.MenuItem);
+
+    //            if(taxableType!=null&&taxableType!=PriceListPresentation.SelectedTaxableType)
+    //                return false;
+
+    //            if (PriceListPresentation.Taxes&&PriceListPresentation.SelectedTaxableType!=null)
+    //                return true;
+    //            else
+    //                return false;
+    //        }
+    //    }
+
+    //}
+
 }
 
 

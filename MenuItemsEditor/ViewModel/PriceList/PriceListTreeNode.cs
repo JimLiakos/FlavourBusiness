@@ -24,6 +24,7 @@ using WPFUIElementObjectBind;
 
 namespace MenuItemsEditor.ViewModel.PriceList
 {
+    /// <MetaDataID>{1df9f1ac-6ef9-4f7d-b14e-f0c2fb737af5}</MetaDataID>
     public class PriceListPresentation : FBResourceTreeNode, INotifyPropertyChanged
     {
         public PriceListPresentation() : base(null)
@@ -38,6 +39,10 @@ namespace MenuItemsEditor.ViewModel.PriceList
             MenuViewModel = menuViewModel;
 
             TaxAuthority = MenuViewModel.Menu.TaxAuthority;
+
+            var taxesContexts = TaxAuthority.TaxesContexts.Select(x => new TaxesContextViewModel(x)).ToList();
+            taxesContexts.Insert(0, new TaxesContextViewModel(null));
+            TaxesContexts = taxesContexts;
 
 
             //string localFileName = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microneme\\DontWaitWater\\{priceListStorageRef.Name}.xml";
@@ -61,6 +66,20 @@ namespace MenuItemsEditor.ViewModel.PriceList
         Dictionary<FinanceFacade.ITaxableType, TaxableTypeViewModel> _TaxableTypes;
 
         FinanceFacade.ITaxAuthority TaxAuthority;
+
+        public List<TaxesContextViewModel> TaxesContexts { get; }
+
+        public TaxesContextViewModel PriceListTaxContext
+        {
+            get
+            {
+                return TaxesContexts.Where(x => x.TaxesContext == PriceList.TaxesContext).FirstOrDefault();
+            }
+            set
+            {
+                PriceList.TaxesContext = value.TaxesContext;
+            }
+        }
 
 
         public IList<TaxableTypeViewModel> TaxableTypes
@@ -87,7 +106,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 if (_SelectedTaxableType != value)
                 {
-                    _SelectedTaxableType=value;
+                    _SelectedTaxableType = value;
                     _ItemsToChoose?.OfType<ItemsPriceInfoPresentation>().FirstOrDefault()?.Refresh();
                 }
             }
@@ -96,16 +115,16 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         IPriceList _PriceList = null;
 
-        public Visibility IsDefinesNewPriceVisibility
-        {
-            get
-            {
-                if (Taxes)
-                    return Visibility.Collapsed;
-                else
-                    return Visibility.Visible;
-            }
-        }
+        //public Visibility IsDefinesNewPriceVisibility
+        //{
+        //    get
+        //    {
+        //        if (Taxes)
+        //            return Visibility.Collapsed;
+        //        else
+        //            return Visibility.Visible;
+        //    }
+        //}
 
         public IPriceList PriceList
         {
@@ -486,117 +505,117 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
-        private List<IItemsTaxInfo> GetUselessDescendantItemsTaxInfos(IItemsCategory itemsCategory)
-        {
+        //private List<IItemsTaxInfo> GetUselessDescendantItemsTaxInfos(IItemsCategory itemsCategory)
+        //{
 
-            List<IItemsTaxInfo> itemsPreparationInfos = new List<IItemsTaxInfo>();
+        //    List<IItemsTaxInfo> itemsPreparationInfos = new List<IItemsTaxInfo>();
 
-            //_Members.Add(new ItemsPreparationInfoPresentation(this, itemsPreparationInfo));
-            var itemsTaxesInfosEntry = (from itemsInfo in PriceList.ItemsTaxes
-                                              select new
-                                              {
-                                                  @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                                  ItemsPriceInfo = itemsInfo
-                                              }).ToList();
+        //    //_Members.Add(new ItemsPreparationInfoPresentation(this, itemsPreparationInfo));
+        //    var itemsTaxesInfosEntry = (from itemsInfo in PriceList.ItemsTaxes
+        //                                      select new
+        //                                      {
+        //                                          @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                                          ItemsPriceInfo = itemsInfo
+        //                                      }).ToList();
 
-            return itemsPreparationInfos;
-        }
+        //    return itemsPreparationInfos;
+        //}
 
-        internal void IncludeItemsInListOfTaxes(IItemsCategory itemsCategory, TaxableTypeViewModel selectedTaxableType)
-        {
+        //internal void IncludeItemsInListOfTaxes(IItemsCategory itemsCategory, TaxableTypeViewModel selectedTaxableType)
+        //{
 
-            if(selectedTaxableType==null)
-                throw new ArgumentNullException(nameof(selectedTaxableType));
+        //    if(selectedTaxableType==null)
+        //        throw new ArgumentNullException(nameof(selectedTaxableType));
 
-            var itemsTaxInfos = (from itemsInfo in PriceList.ItemsTaxes
-                                         select new
-                                         {
-                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsPriceInfo = itemsInfo
-                                         }).ToList();
+        //    var itemsTaxInfos = (from itemsInfo in PriceList.ItemsTaxes
+        //                                 select new
+        //                                 {
+        //                                     @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                                     ItemsPriceInfo = itemsInfo
+        //                                 }).ToList();
 
-            var excludedItemsTaxInfo = (from itemsInfoEntry in itemsTaxInfos
-                                        where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
-                                                select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
-          
-            if (excludedItemsTaxInfo != null)
-                PriceList.RemoveItemsTaxInfos(excludedItemsTaxInfo);
-                
+        //    var excludedItemsTaxInfo = (from itemsInfoEntry in itemsTaxInfos
+        //                                where itemsInfoEntry.@object == itemsCategory && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
+        //                                        select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
-            if (!PriceList.HasOverriddenTaxes(itemsCategory))
-            {
-                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-
-                    var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
-                    (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
-
-                    stateTransition.Consistent = true;
-                }
-
-                //this.ItemsPreparationInfos = this.PriceList.ItemsPreparationInfos.ToList();
-            }
-
-            List<IItemsTaxInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsTaxInfos(itemsCategory);
-            if (uselessDescendantItemsPreparationInfos.Count > 0)
-            {
-                // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
-                PriceList.RemoveItemsTaxInfos(uselessDescendantItemsPreparationInfos);
-                //ItemsPreparationInfos = PriceList.ItemsPreparationInfos.ToList();
-            }
+        //    if (excludedItemsTaxInfo != null)
+        //        PriceList.RemoveItemsTaxInfos(excludedItemsTaxInfo);
 
 
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        //    if (!PriceList.HasOverriddenTaxes(itemsCategory))
+        //    {
+        //        string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+
+        //        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //        {
+
+        //            var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+        //            (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
+
+        //            stateTransition.Consistent = true;
+        //        }
+
+        //        //this.ItemsPreparationInfos = this.PriceList.ItemsPreparationInfos.ToList();
+        //    }
+
+        //    List<IItemsTaxInfo> uselessDescendantItemsPreparationInfos = GetUselessDescendantItemsTaxInfos(itemsCategory);
+        //    if (uselessDescendantItemsPreparationInfos.Count > 0)
+        //    {
+        //        // the item preparation infos which refer to items or category which contained in included category and are useless must be removed
+        //        PriceList.RemoveItemsTaxInfos(uselessDescendantItemsPreparationInfos);
+        //        //ItemsPreparationInfos = PriceList.ItemsPreparationInfos.ToList();
+        //    }
 
 
-        }
-
-        internal void IncludeItemInListOfTaxes(IMenuItem menuItem, TaxableTypeViewModel selectedTaxableType)
-        {
-            if (selectedTaxableType == null)
-                throw new ArgumentNullException(nameof(selectedTaxableType));
-
-            var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsTaxes
-                                         select new
-                                         {
-                                             @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                             ItemsPriceInfo = itemsInfo
-                                         }).ToList();
-
-            var excludedItemsPriceInfo = (from itemsInfoEntry in itemsPreparationInfos
-                                          where itemsInfoEntry.@object == menuItem && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
-                                          select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
-
-            if (excludedItemsPriceInfo != null)
-                PriceList.RemoveItemsTaxInfos(excludedItemsPriceInfo);
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
 
+        //}
 
-            if (!PriceList.HasOverriddenTaxes(menuItem))
-            {
+        //internal void IncludeItemInListOfTaxes(IMenuItem menuItem, TaxableTypeViewModel selectedTaxableType)
+        //{
+        //    if (selectedTaxableType == null)
+        //        throw new ArgumentNullException(nameof(selectedTaxableType));
 
-                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
-                {
-                    string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-                    var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
-                    (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
-                    stateTransition.Consistent = true;
-                }
+        //    var itemsPreparationInfos = (from itemsInfo in PriceList.ItemsTaxes
+        //                                 select new
+        //                                 {
+        //                                     @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                                     ItemsPriceInfo = itemsInfo
+        //                                 }).ToList();
 
-                //this.AddItemsPreparationInfos(itemsPreparationInfo);
-                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        //    var excludedItemsPriceInfo = (from itemsInfoEntry in itemsPreparationInfos
+        //                                  where itemsInfoEntry.@object == menuItem && itemsInfoEntry.ItemsPriceInfo.IsExcluded()
+        //                                  select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
-                foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPriceInfoPresentation>())
-                    itemsPreparationInfoPresentation.Refresh();
-            }
+        //    if (excludedItemsPriceInfo != null)
+        //        PriceList.RemoveItemsTaxInfos(excludedItemsPriceInfo);
 
-            if (PreparationStationItems != null)
-                PreparationStationItems.Refresh();
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
-        }
+
+        //    if (!PriceList.HasOverriddenTaxes(menuItem))
+        //    {
+
+        //        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+        //        {
+        //            string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+        //            var itemsTaxInfo = this.PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+        //            (itemsTaxInfo as ItemsTaxInfo).TaxableType = selectedTaxableType.TaxableType;
+        //            stateTransition.Consistent = true;
+        //        }
+
+        //        //this.AddItemsPreparationInfos(itemsPreparationInfo);
+        //        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+        //        foreach (var itemsPreparationInfoPresentation in ItemsToChoose.OfType<ItemsPriceInfoPresentation>())
+        //            itemsPreparationInfoPresentation.Refresh();
+        //    }
+
+        //    if (PreparationStationItems != null)
+        //        PreparationStationItems.Refresh();
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+        //}
 
         internal void ExcludeItemsFromListOfTaxes(IItemsCategory itemsCategory)
         {
@@ -846,7 +865,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                   where itemsInfoEntry.@object == itemsCategory //&& (itemsInfoEntry.ItemsPriceInfo.Included())
                                   select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
-            if (itemsPriceInfo!=null)
+            if (itemsPriceInfo != null)
                 return itemsPriceInfo;
             else if (createIfNotExist)
             {
@@ -861,57 +880,57 @@ namespace MenuItemsEditor.ViewModel.PriceList
         }
 
 
-        public IItemsTaxInfo GetItemsTaxInfo(MenuModel.IItemsCategory itemsCategory, bool createIfNotExist = false)
-        {
-            var itemsInfos = (from itemsInfo in PriceList.ItemsTaxes
-                              select new
-                              {
-                                  @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                  ItemsTaxInfo = itemsInfo
-                              }).ToList();
+        //public IItemsTaxInfo GetItemsTaxInfo(MenuModel.IItemsCategory itemsCategory, bool createIfNotExist = false)
+        //{
+        //    var itemsInfos = (from itemsInfo in PriceList.ItemsTaxes
+        //                      select new
+        //                      {
+        //                          @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                          ItemsTaxInfo = itemsInfo
+        //                      }).ToList();
 
-            var itemsTaxInfo = (from itemsInfoEntry in itemsInfos
-                                where itemsInfoEntry.@object == itemsCategory //&& (itemsInfoEntry.ItemsPriceInfo.Included())
-                                select itemsInfoEntry.ItemsTaxInfo).FirstOrDefault();
+        //    var itemsTaxInfo = (from itemsInfoEntry in itemsInfos
+        //                        where itemsInfoEntry.@object == itemsCategory //&& (itemsInfoEntry.ItemsPriceInfo.Included())
+        //                        select itemsInfoEntry.ItemsTaxInfo).FirstOrDefault();
 
-            if (itemsTaxInfo!=null)
-                return itemsTaxInfo;
-            else if (createIfNotExist)
-            {
-                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
-                itemsTaxInfo = PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
-                return itemsTaxInfo;
-            }
+        //    if (itemsTaxInfo!=null)
+        //        return itemsTaxInfo;
+        //    else if (createIfNotExist)
+        //    {
+        //        string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+        //        itemsTaxInfo = PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+        //        return itemsTaxInfo;
+        //    }
 
-            return itemsTaxInfo;
+        //    return itemsTaxInfo;
 
-        }
+        //}
 
-        public IItemsTaxInfo GetItemsTaxInfo(IMenuItem menuItem, bool createIfNotExist = false)
-        {
-            var itemsInfos = (from itemsInfo in PriceList.ItemsTaxes
-                              select new
-                              {
-                                  @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
-                                  ItemsTaxInfo = itemsInfo
-                              }).ToList();
+        //public IItemsTaxInfo GetItemsTaxInfo(IMenuItem menuItem, bool createIfNotExist = false)
+        //{
+        //    var itemsInfos = (from itemsInfo in PriceList.ItemsTaxes
+        //                      select new
+        //                      {
+        //                          @object = OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(itemsInfo.ItemsInfoObjectUri),
+        //                          ItemsTaxInfo = itemsInfo
+        //                      }).ToList();
 
-            var itemsTaxInfo = (from itemsInfoEntry in itemsInfos
-                                where itemsInfoEntry.@object == menuItem //&& (itemsInfoEntry.ItemsPriceInfo.Included())
-                                select itemsInfoEntry.ItemsTaxInfo).FirstOrDefault();
+        //    var itemsTaxInfo = (from itemsInfoEntry in itemsInfos
+        //                        where itemsInfoEntry.@object == menuItem //&& (itemsInfoEntry.ItemsPriceInfo.Included())
+        //                        select itemsInfoEntry.ItemsTaxInfo).FirstOrDefault();
 
-            if (itemsTaxInfo!=null)
-                return itemsTaxInfo;
-            else if (createIfNotExist)
-            {
-                string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
-                itemsTaxInfo = PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
-                return itemsTaxInfo;
-            }
+        //    if (itemsTaxInfo!=null)
+        //        return itemsTaxInfo;
+        //    else if (createIfNotExist)
+        //    {
+        //        string uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem);
+        //        itemsTaxInfo = PriceList.NewTaxInfo(uri, ItemsPriceInfoType.Include);
+        //        return itemsTaxInfo;
+        //    }
 
-            return itemsTaxInfo;
+        //    return itemsTaxInfo;
 
-        }
+        //}
 
 
         public IItemsPriceInfo GetOrCreateItemsPriceInfo(IItemsCategory itemsCategory)
@@ -1014,7 +1033,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                   where itemsInfoEntry.@object == itemPrice //&& (itemsInfoEntry.ItemsPriceInfo.Included())
                                   select itemsInfoEntry.ItemsPriceInfo).FirstOrDefault();
 
-            if (itemsPriceInfo !=null)
+            if (itemsPriceInfo != null)
                 return itemsPriceInfo;
             else if (createIfNotExist)
             {
@@ -1053,17 +1072,17 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-        internal ITaxableType GetTaxableType(IItemsCategory itemsCategory)
-        {
-            var taxableType = GetItemsTaxInfo(itemsCategory);
-            return taxableType.TaxableType;
-        }
+        //internal ITaxableType GetTaxableType(IItemsCategory itemsCategory)
+        //{
+        //    var taxableType = GetItemsTaxInfo(itemsCategory);
+        //    return taxableType.TaxableType;
+        //}
 
-        internal ITaxableType GetTaxableType(IMenuItem menuItem)
-        {
-            var taxableType = GetItemsTaxInfo(menuItem);
-            return taxableType.TaxableType;
-        }
+        //internal ITaxableType GetTaxableType(IMenuItem menuItem)
+        //{
+        //    var taxableType = GetItemsTaxInfo(menuItem);
+        //    return taxableType.TaxableType;
+        //}
 
         internal double? GetPercentageDiscount(IItemsCategory itemsCategory)
         {
@@ -1573,55 +1592,56 @@ namespace MenuItemsEditor.ViewModel.PriceList
             return null;
         }
 
-        bool _Taxes;
-        public bool Taxes
-        {
-            get => _Taxes;
-            set
-            {
-                if (_Taxes != value)
-                {
-                    _Taxes = value;
-                    if (_Taxes)
-                    {
-                        MenuItemsColumnIndex = 3;
-                        MenuItemsColumnSpan = 1;
-                    }
-                    else
-                    {
-                        MenuItemsColumnIndex = 1;
-                        MenuItemsColumnSpan = 3;
-                    }
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TaxesVisibility)));
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnIndex)));
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnSpan)));
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesNewPriceVisibility)));
+        //bool _Taxes;
+        //public bool Taxes
+        //{
+        //    get => _Taxes;
+        //    set
+        //    {
+        //        if (_Taxes != value)
+        //        {
+        //            _Taxes = value;
+        //            if (_Taxes)
+        //            {
+        //                MenuItemsColumnIndex = 3;
+        //                MenuItemsColumnSpan = 1;
+        //            }
+        //            else
+        //            {
+        //                MenuItemsColumnIndex = 1;
+        //                MenuItemsColumnSpan = 3;
+        //            }
+        //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(TaxesVisibility)));
+        //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnIndex)));
+        //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(MenuItemsColumnSpan)));
+        //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(IsDefinesNewPriceVisibility)));
 
-                    _ItemsToChoose.OfType<ItemsPriceInfoPresentation>().ToList().ForEach(item => { item.Refresh(); });
+        //            _ItemsToChoose.OfType<ItemsPriceInfoPresentation>().ToList().ForEach(item => { item.Refresh(); });
 
 
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
-        public Visibility TaxesVisibility
-        {
-            get
-            {
-                if (Taxes)
-                    return Visibility.Visible;
-                else
-                    return Visibility.Collapsed;
-            }
-        }
+        //public Visibility TaxesVisibility
+        //{
+        //    get
+        //    {
+        //        if (Taxes)
+        //            return Visibility.Visible;
+        //        else
+        //            return Visibility.Collapsed;
+        //    }
+        //}
 
-        public int MenuItemsColumnIndex { get; set; } = 1;
+        //public int MenuItemsColumnIndex { get; set; } = 1;
 
-        public int MenuItemsColumnSpan { get; set; } = 3;
+        //public int MenuItemsColumnSpan { get; set; } = 3;
 
     }
 }
+/// <MetaDataID>{9afe942f-3a9a-43ae-b690-5d2a6ed42704}</MetaDataID>
 static class ItemsCategoryExtension
 {
     /// <MetaDataID>{e78b2a9d-d9b4-4f90-8a52-e5bb03227c45}</MetaDataID>

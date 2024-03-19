@@ -20,6 +20,7 @@ namespace MenuItemsEditor.Views.PriceList
     /// <summary>
     /// Interaction logic for PrriceListPage.xaml
     /// </summary>
+    /// <MetaDataID>{2ae8189d-3714-4963-947a-e52c0de8c784}</MetaDataID>
     public partial class PriceListPage : PageDialogViewEmulator
     {
         public PriceListPage()
@@ -30,7 +31,7 @@ namespace MenuItemsEditor.Views.PriceList
         }
 
 
-        
+
 
         private void DragEnter(object sender, DragEventArgs e)
         {

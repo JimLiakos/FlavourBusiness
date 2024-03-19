@@ -46,12 +46,18 @@ namespace Finance.ViewModel
         {
             get
             {
+                if(TaxesContext == null)
+                    return Properties.Resources.NameForDefaultTaxes;
+
                 return TaxesContext?.Description;
             }
             set
             {
-                TaxesContext.Description = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                if (TaxesContext != null)
+                {
+                    TaxesContext.Description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
             }
         }
 

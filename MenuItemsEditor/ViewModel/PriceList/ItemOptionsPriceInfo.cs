@@ -400,8 +400,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                if (PriceListPresentation.Taxes)
-                    return "";
+               
 
                 if (ItemPriceInfoPresentation.IsOptionsPricesDiscountEnabled && ItemPriceInfoPresentation.DefinesNewPrice && ItemPriceInfoPresentation.SelectedPriceOverrideType.PriceOverrideType == PriceList.PriceOverrideTypes.PercentageDiscount)
                 {

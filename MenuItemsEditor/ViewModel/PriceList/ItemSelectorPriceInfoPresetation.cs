@@ -275,12 +275,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get => base.Edit;
             set
             {
-                if (PriceListPresentation?.Taxes == true)
-                {
-                    base.Edit = false;
-                    return;
-                }
-
+               
                 base.Edit = value;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceVisibility)));
                 ObjectPropertiesChanged();
@@ -426,7 +421,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
             get
             {
 
-                if (ItemPrice != null && PriceListPresentation.GetItemsPriceInfo(ItemPrice)?.ItemsPriceInfoType == ItemsPriceInfoType.Include && !PriceListPresentation.Taxes)
+                if (ItemPrice != null && PriceListPresentation.GetItemsPriceInfo(ItemPrice)?.ItemsPriceInfoType == ItemsPriceInfoType.Include )
                     return true;
 
                 return false;
@@ -524,8 +519,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                if (PriceListPresentation.Taxes)
-                    return "";
+                
 
                 if (PriceListPresentation.GetItemsPriceInfo(ItemPrice) != null)
                     return "";

@@ -1,3 +1,4 @@
+using FinanceFacade;
 using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicesContextResources;
@@ -101,6 +102,29 @@ namespace FlavourBusinessManager.PriceList
 
         /// <MetaDataID>{fa0af410-ee21-428e-93c3-75bc654874fc}</MetaDataID>
         public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
+
+
+        /// <exclude>Excluded</exclude>
+       OOAdvantech.Member<ITaxesContext> _TaxesContext=new Member<ITaxesContext>();
+
+        /// <MetaDataID>{fb27de47-6bf5-4a7c-af11-3197ad91d7ed}</MetaDataID>
+        [PersistentMember(nameof(_TaxesContext))]
+        [BackwardCompatibilityID("+4")]
+        public ITaxesContext TaxesContext
+        {
+            get => _TaxesContext.Value;
+            set
+            {
+                if (_TaxesContext != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TaxesContext.Value = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
 
 
@@ -324,7 +348,7 @@ namespace FlavourBusinessManager.PriceList
             return null;
 
         }
-        
+
         //public IItemsTaxInfo NewTaxInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
         //{
         //    try

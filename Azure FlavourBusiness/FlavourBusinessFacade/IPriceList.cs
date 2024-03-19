@@ -7,6 +7,9 @@ namespace FlavourBusinessFacade.PriceList
     /// <MetaDataID>{f3227625-fb47-47aa-b911-5eed56e5d67b}</MetaDataID>
     public interface IPriceList
     {
+        [Association("PriceListTaxes", Roles.RoleA, "07ace1fa-dd79-498e-9c9b-7e98662ac440")]
+        FinanceFacade.ITaxesContext TaxesContext { get; set; }
+
         //[RoleAMultiplicityRange(0)]
         //[Association("PriceListTaxes", Roles.RoleA, "bf6f1424-175c-4276-af86-fff865eb2392")]
         //[RoleBMultiplicityRange(1, 1)]

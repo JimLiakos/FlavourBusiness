@@ -144,7 +144,7 @@
     <Compile Include="ViewModel\PriceContextViewModel.cs" />
     <Compile Include="ViewModel\PriceList\ItemOptionsPriceInfo.cs" />
     <Compile Include="ViewModel\PriceList\ItemSelectorPriceInfoPresetation.cs" />
-    <Compile Include="ViewModel\PriceList\TaxTypeOverridePresentation.cs" />
+    <Compile Include="ViewModel\PriceList\ItemsOverridePresentation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListsPresentation.cs" />
     <Compile Include="ViewModel\PriceList\PriceListTreeNode.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />

@@ -383,7 +383,7 @@ There are preaparation oprtions with wrang, scale type.</value>
   <data name="IngredientCheckBoxToolTip" xml:space="preserve">
     <value>Option participate  as ingredient in recipe of product</value>
   </data>
-  <data name="TaxesListBoxLabel" xml:space="preserve">
+  <data name="TaxesComboBoxLabel" xml:space="preserve">
     <value>Taxes</value>
   </data>
   <data name="TaxesMenuItemHeader" xml:space="preserve">

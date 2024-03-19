@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DescriptionLabel" xml:space="preserve">
-    <value>Description </value>
+    <value>Περιγραφή</value>
     <comment>Defines the label for menu item TextBox</comment>
   </data>
   <data name="NameForDefaultTaxes" xml:space="preserve">
-    <value>Default taxes</value>
+    <value>Προκαθορισμένοι φόροι</value>
   </data>
   <data name="NewTaxDefaultName" xml:space="preserve">
-    <value>Tax</value>
+    <value>Φόρος</value>
     <comment>Defines default name for new tax</comment>
   </data>
   <data name="TaxesListBoxLabel" xml:space="preserve">
-    <value>Taxes</value>
+    <value>Φόροι</value>
   </data>
   <data name="WriteTaxableTypeDescriptionPrompt" xml:space="preserve">
     <value>Write a taxable type description</value>
