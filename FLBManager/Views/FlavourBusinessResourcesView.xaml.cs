@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FLBManager.ViewModel;
 using MenuDesigner.ViewModel;
+using MenuItemsEditor.ViewModel.PriceList;
 using WPFUIElementObjectBind;
 
 namespace FLBManager.Views
@@ -55,6 +56,10 @@ namespace FLBManager.Views
                     DragDrop.DoDragDrop(this, graphicMenuTreeNode, DragDropEffects.Copy);
                 }
 
+                var priceListPresentation = (sender as FrameworkElement).GetDataContextObject<PriceListPresentation>();
+
+                if (priceListPresentation != null)
+                    DragDrop.DoDragDrop(this, priceListPresentation, DragDropEffects.Copy);
 
             }
 

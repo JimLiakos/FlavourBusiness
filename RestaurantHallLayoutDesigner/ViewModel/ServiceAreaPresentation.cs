@@ -19,6 +19,7 @@ using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using RestaurantHallLayoutModel;
 using WPFUIElementObjectBind;
+using MenuItemsEditor.ViewModel.PriceList;
 
 namespace FloorLayoutDesigner.ViewModel
 {
@@ -471,6 +472,9 @@ namespace FloorLayoutDesigner.ViewModel
         /// <MetaDataID>{32c8cf5b-2b92-43f8-b76f-e4a23e31b26c}</MetaDataID>
         public void DragEnter(object sender, DragEventArgs e)
         {
+            //MenuItemsEditor.ViewModel.pr
+            PriceListPresentation canvasItem = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
+
             e.Effects = DragDropEffects.None;
         }
 

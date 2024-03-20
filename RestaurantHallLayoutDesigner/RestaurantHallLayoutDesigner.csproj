@@ -291,7 +291,7 @@
       <Name>FlavourBusinessUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\MenuItemsEditor\MenuItemsEditor.csproj">
-      <Project>{615B9B02-7115-4A3C-B218-4732958801C8}</Project>
+      <Project>{615b9b02-7115-4a3c-b218-4732958801c8}</Project>
       <Name>MenuItemsEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\MenuModel\MenuModel.csproj">

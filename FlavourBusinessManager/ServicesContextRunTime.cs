@@ -1718,8 +1718,23 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return serverStorageFolder;
         }
 
-
         /// <MetaDataID>{cb479cfa-63f5-4f29-ba81-f1e597d4af0b}</MetaDataID>
+        public void RemoveGraphicMenu(OrganizationStorageRef graphicMenuStorageRef)
+        {
+            var fbstorage = (from storage in _Storages
+                             where storage.StorageIdentity == graphicMenuStorageRef.StorageIdentity
+                             select storage).FirstOrDefault();
+            if (fbstorage != null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Storages.Remove(fbstorage);
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        
         public void RemovePriceList(OrganizationStorageRef priceListStorageRef) 
         {
             var fbstorage = (from storage in _Storages
