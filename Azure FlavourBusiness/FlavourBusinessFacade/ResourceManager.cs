@@ -14,9 +14,12 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{1b1336c6-bbd8-4d91-b989-3721692c5228}</MetaDataID>
         List<OrganizationStorageRef> GraphicMenus { get; }
 
+        /// <MetaDataID>{e093c521-b3ef-4b40-996b-46b06f25ad8a}</MetaDataID>
         List<OrganizationStorageRef> PriceLists { get; }
 
+        /// <MetaDataID>{9e42e78b-9a25-43f7-a223-ccb40421f756}</MetaDataID>
         OrganizationStorageRef NewPriceList();
+        /// <MetaDataID>{49bc52ef-329f-4b8a-a10c-acbfff818532}</MetaDataID>
         void RemovePriceList(string storageIdentity);
 
         /// <MetaDataID>{bd6625bb-9739-4325-b0b4-9a4edc905059}</MetaDataID>

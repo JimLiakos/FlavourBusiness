@@ -17,6 +17,7 @@ namespace FlavourBusinessFacade.EndUsers
         string OrderComment { get; set; }
 
       
+        string PriceListJson { get;}
 
         /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
         [BackwardCompatibilityID("+19")]

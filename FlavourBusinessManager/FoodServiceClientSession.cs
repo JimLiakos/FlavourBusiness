@@ -2749,6 +2749,14 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public string PriceListJson
+        {
+            get
+            {
+                return null;
+            }
+        }
+
 
 
 

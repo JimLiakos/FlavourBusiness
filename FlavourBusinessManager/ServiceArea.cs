@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlavourBusinessFacade;
+using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.HumanResources;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -15,6 +18,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class ServiceArea : MarshalByRefObject, IServiceArea, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+      
         /// <MetaDataID>{b3f32e8c-f23e-4338-8fa3-2d57ba439202}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+6")]
@@ -239,6 +243,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{24944b0d-f734-44d4-8565-a3ff9a72c3d0}</MetaDataID>
+        public List<OrganizationStorageRef> PriceLists => throw new NotImplementedException();
+
 
         /// <MetaDataID>{fbed765d-b818-45e3-81d9-64ce055ccaea}</MetaDataID>
         public void AddServicePoint(IHallServicePoint servicePoint)
@@ -296,6 +303,26 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{4fc0a363-a133-4ab6-ba36-41a95afb79f9}</MetaDataID>
         public bool MealTypeAssigned(string mealTypeUri)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <MetaDataID>{6f81259c-da76-4ebc-bb6b-a12d616f242c}</MetaDataID>
+        public void AssignPriceList(OrganizationStorageRef priceListStorageRef)
+        {
+
+            ServicePointRunTime.ServicesContextRunTime.Current.AssignPriceList(priceListStorageRef);
+
+            FlavourBusinessToolKit.RawStorageData rawPriceListData = new FlavourBusinessToolKit.RawStorageData(priceListStorageRef, null);
+            OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("PriceList", rawPriceListData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+            var priceList = (from m_priceList in restMenusData.GetObjectCollection<IPriceList>()
+                                  select m_priceList).FirstOrDefault();
+
+
+        }
+
+        /// <MetaDataID>{3cab0aaa-91be-48c8-9edb-07dd51a0d642}</MetaDataID>
+        public void RemovePriceList(OrganizationStorageRef priceListStorageRef)
         {
             throw new NotImplementedException();
         }

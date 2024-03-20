@@ -180,6 +180,7 @@ namespace FlavourBusinessManager
                 _PropertiesValues = OOAdvantech.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(PropertiesValuesJson);
 
         }
+        /// <MetaDataID>{bc68a14c-7ad5-4858-a22b-f4caed9ea9f8}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         public void BeforeCommitObjectState()
         {

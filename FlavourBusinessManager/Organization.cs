@@ -324,8 +324,31 @@ namespace FlavourBusinessManager
             else
             {
                 string blobUrl = fbStorage.Url;
-                return new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                var uploadSlot= new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                uploadSlot.FileUploaded += UploadSlot_FileUploaded;
+                uploadSlot.Tag = fbStorage;
+                return uploadSlot;
             }
+        }
+
+        private void UploadSlot_FileUploaded(object sender, EventArgs e)
+        {
+            UploadSlot uploadSlot = (UploadSlot)sender;
+            (sender as UploadSlot).FileUploaded -= UploadSlot_FileUploaded;
+
+            var fbStorage = uploadSlot.Tag as FlavourBusinessStorage;
+
+            if (fbStorage != null&& fbStorage.FlavourStorageType==OrganizationStorages.PriceList) 
+            {
+                foreach (var serviceContext in this._ServicesContexts)
+                {
+                    Task.Run(() =>
+                    {
+                        serviceContext.GetRunTime()?.ObjectStorageUpdate(fbStorage.StorageIdentity, fbStorage.FlavourStorageType);
+                    });
+                }
+            }
+
         }
 
 

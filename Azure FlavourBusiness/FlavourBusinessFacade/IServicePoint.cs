@@ -49,7 +49,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         }
         [RoleAMultiplicityRange(0)]
         [Association("ServicePointSesions", Roles.RoleA, "08fdaee2-f871-4200-9856-8d2cc9754909")]
-        System.Collections.Generic.IList<IFoodServiceSession> ServiceSessions { get; }
+        IList<IFoodServiceSession> ServiceSessions { get; }
 
         /// <MetaDataID>{39fb52e5-2700-4284-b361-09f4049d8178}</MetaDataID>
         [BackwardCompatibilityID("+2")]

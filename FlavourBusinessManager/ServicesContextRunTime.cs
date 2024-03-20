@@ -1526,6 +1526,34 @@ namespace FlavourBusinessManager.ServicePointRunTime
         }
 
 
+        public void AssignPriceList(OrganizationStorageRef priceListStorageRef)
+        {
+
+            if ((from storage in _Storages
+                 where storage.StorageIdentity == priceListStorageRef.StorageIdentity
+                 select storage).Count() == 0)
+            {
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    var fbstorage = new FlavourBusinessStorage();
+                    fbstorage.StorageIdentity = priceListStorageRef.StorageIdentity;
+                    fbstorage.Name = priceListStorageRef.Name;
+
+                    int npos = priceListStorageRef.StorageUrl.IndexOf("usersfolder/");
+                    if (npos != -1)
+                        fbstorage.Url = priceListStorageRef.StorageUrl.Substring(npos);
+                    else
+                        fbstorage.Url = priceListStorageRef.StorageUrl;
+                    fbstorage.FlavourStorageType = OrganizationStorages.PriceList;
+                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(fbstorage);
+                    _Storages.Add(fbstorage);
+
+                    //GraphicMenuStorageMetaDataUpdated(priceListStorageRef);
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
 
 
         /// <MetaDataID>{bcb050fe-a95c-4908-8fa8-9ac1b251721e}</MetaDataID>
@@ -1692,10 +1720,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
         /// <MetaDataID>{cb479cfa-63f5-4f29-ba81-f1e597d4af0b}</MetaDataID>
-        public void RemoveGraphicMenu(OrganizationStorageRef graphicMenuStorageRef)
+        public void RemovePriceList(OrganizationStorageRef priceListStorageRef) 
         {
             var fbstorage = (from storage in _Storages
-                             where storage.StorageIdentity == graphicMenuStorageRef.StorageIdentity
+                             where storage.StorageIdentity == priceListStorageRef.StorageIdentity
                              select storage).FirstOrDefault();
             if (fbstorage != null)
             {
@@ -1762,7 +1790,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         public void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef)
         {
             var menuItem = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
-            ObjectStorage.UpdateOperativeOperativeObjects(restaurantMenusDataStorageRef.StorageIdentity);
+            ObjectStorage.UpdateOperativeObjects(restaurantMenusDataStorageRef.StorageIdentity);
             var menuItem2 = ObjectStorage.GetObjectFromUri<MenuModel.MenuItem>(@"7021ec91-37df-4417-8c1a-a6afb012fd09\3\56");
             SetRestaurantMenusData(restaurantMenusDataStorageRef);
 
@@ -2294,6 +2322,19 @@ namespace FlavourBusinessManager.ServicePointRunTime
             return servicePoint;
 
         }
+
+
+
+
+        public void ObjectStorageUpdate(string storageIdentity, OrganizationStorages flavourStorageType)
+        {
+
+            ObjectStorage.UpdateOperativeObjects(storageIdentity);
+
+        }
+
+
+
         /// <MetaDataID>{fd5b3748-a682-47e5-8c57-59022f9e4f17}</MetaDataID>
         public ClientSessionData GetClientSession(string servicePointIdentity, string mealInvitationSessionID, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, string organizationIdentity, List<OrganizationStorageRef> graphicMenus, bool endUser, bool create)
         {
@@ -2640,7 +2681,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             else
             {
                 string blobUrl = fbStorage.Url;
-                var uploadSlot = new FlavourBusinessToolKit.UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                var uploadSlot = new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
                 uploadSlot.FileUploaded += UploadSlot_FileUploaded;
                 uploadSlot.Tag = fbStorage;
                 return uploadSlot;
@@ -2654,14 +2695,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
             (sender as FlavourBusinessToolKit.UploadSlot).FileUploaded -= UploadSlot_FileUploaded;
 
             FlavourBusinessStorage storageRef = (sender as FlavourBusinessToolKit.UploadSlot).Tag as FlavourBusinessStorage;
-            ObjectStorage.UpdateOperativeOperativeObjects(storageRef.StorageIdentity);
+            ObjectStorage.UpdateOperativeObjects(storageRef.StorageIdentity);
 
 
         }
         /// <MetaDataID>{cfaf6fae-af4a-4ceb-a682-c39bcef3ec8c}</MetaDataID>
         public void StorageDataUpdated(string storageIdentity)
         {
-            ObjectStorage.UpdateOperativeOperativeObjects(storageIdentity);
+            ObjectStorage.UpdateOperativeObjects(storageIdentity);
         }
 
 

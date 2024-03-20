@@ -236,6 +236,8 @@ namespace FlavourBusinessFacade
         string AssignCourierScannerDevice(string deviceAssignKey);
         UserData SignInNativeUser(string userName, string password);
         IServicePoint GetServicePoint(string servicePointIdentity);
+        void ObjectStorageUpdate(string storageIdentity, OrganizationStorages flavourStorageType);
+
 
 
 
