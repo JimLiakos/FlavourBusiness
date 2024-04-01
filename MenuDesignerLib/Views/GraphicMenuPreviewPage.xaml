@@ -34,7 +34,7 @@
                             </StackPanel>
                             
                         </Button>
-                        <Label VerticalAlignment="Center" Margin="20,0,5,0" Content="{x:Static resx:Resources.PriceListSelectorLabel}"></Label>
+                        <Label VerticalAlignment="Center" Visibility="{Binding IsPriceListsVisible}" Margin="20,0,5,0" Content="{x:Static resx:Resources.PriceListSelectorLabel}"></Label>
                         <ComboBox Width="200" ItemsSource="{Binding PriceLists}" Visibility="{Binding IsPriceListsVisible}" DisplayMemberPath="Name" SelectedValue="{Binding PriceList}"></ComboBox>
                     </StackPanel>
                 </ContentControl>

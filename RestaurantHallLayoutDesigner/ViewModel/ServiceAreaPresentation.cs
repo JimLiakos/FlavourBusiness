@@ -28,12 +28,12 @@ using FlavourBusinessFacade.PriceList;
 namespace FloorLayoutDesigner.ViewModel
 {
     /// <MetaDataID>{2346d8c4-3061-4757-9e0e-9c039aaf0e89}</MetaDataID>
-    public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel 
+    public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel
     {
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
             if (treeNode is PriceListPresentation)
-                SalesPointViewModel. RemovePriceList(treeNode as PriceListPresentation);
+                SalesPointViewModel.RemovePriceList(treeNode as PriceListPresentation);
         }
         List<FBResourceTreeNode> _TreeItems;
         public List<FBResourceTreeNode> TreeItems
@@ -76,16 +76,16 @@ namespace FloorLayoutDesigner.ViewModel
         {
             ServiceArea = serviceArea;
             FlavoursServicesContext = flavoursServicesContext;
-            
-            
-            SalesPointViewModel = new SalesPointViewModel(serviceArea as ISalesPoint,this, (HeaderNode as IPriceListsOwner).Organization);
+
+
+            SalesPointViewModel = new SalesPointViewModel(serviceArea as ISalesPoint, this, (HeaderNode as IPriceListsOwner).Organization);
             PriceListsTreeNode = SalesPointViewModel.PriceListsTreeNode;
             SalesPointViewModel.AssignedPriceListHasChanged += (salesPointViewModel) =>
             {
                 _ContextMenuItems = null;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(ContextMenuItems)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
-                
+
             };
 
             //_Name = Properties.Resources.LoadingPrompt;
@@ -107,7 +107,7 @@ namespace FloorLayoutDesigner.ViewModel
             AssignPricelistCommand = new RelayCommand((object sender) =>
             {
                 var priceList = UIProxy.GetRealObject<PriceListPresentation>(sender);
-              SalesPointViewModel. AssignPriceList(priceList);
+                SalesPointViewModel.AssignPriceList(priceList);
 
             });
 
@@ -700,11 +700,13 @@ namespace FloorLayoutDesigner.ViewModel
     }
 
     public delegate void AssignedPriceListHasChangedHandler(SalesPointViewModel salesPointViewModel);
-    public class SalesPointViewModel: IPriceListsOwner
+    public class SalesPointViewModel : IPriceListsOwner
     {
         ISalesPoint SalesPoint;
 
         FBResourceTreeNode SalesPointNode;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public event AssignedPriceListHasChangedHandler AssignedPriceListHasChanged;
 
@@ -714,7 +716,7 @@ namespace FloorLayoutDesigner.ViewModel
             SalesPoint = salesPoint;
             SalesPointNode = salesPointNode;
             Organization = organization;
-            PriceListsTreeNode =  new PriceListsTreeNode(MenuItemsEditor.Properties.Resources.PriceListsNodeName, salesPointNode, this); 
+            PriceListsTreeNode =  new PriceListsTreeNode(MenuItemsEditor.Properties.Resources.PriceListsNodeName, salesPointNode, this);
         }
 
 
@@ -723,7 +725,7 @@ namespace FloorLayoutDesigner.ViewModel
         #region IPriceListsOwner implementation
 
 
-       public readonly PriceListsTreeNode PriceListsTreeNode;
+        public readonly PriceListsTreeNode PriceListsTreeNode;
 
         public MenuCommand PriceListsMenuItem { get; private set; }
         public List<OrganizationStorageRef> PriceListStorageRefs { get; private set; }
@@ -772,6 +774,7 @@ namespace FloorLayoutDesigner.ViewModel
             AssignedPriceListHasChanged?.Invoke(this);
 
             PriceListsTreeNode.Refresh();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
 
         }
 
@@ -791,7 +794,9 @@ namespace FloorLayoutDesigner.ViewModel
 
             AssignedPriceListHasChanged?.Invoke(this);
 
-                 return true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
+
+            return true;
         }
 
         public bool NewPriceListAllowed => false;

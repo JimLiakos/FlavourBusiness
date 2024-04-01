@@ -103,7 +103,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
                 {
                     OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                       {
-                          (Organization as IResourceManager).PublishPriceList(priceListStorageRef);
+                          PriceListStorageRef=(Organization as IResourceManager).PublishPriceList(priceListStorageRef);
+
+                          RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PriceListStorageRef)));
                       });
 
                     Task.Run(() =>
@@ -259,7 +261,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         bool Editable = true;
 
-        public readonly OrganizationStorageRef PriceListStorageRef = null;
+        public OrganizationStorageRef PriceListStorageRef  { get; private set;}
 
         public MenuViewModel MenuViewModel { get; }
 

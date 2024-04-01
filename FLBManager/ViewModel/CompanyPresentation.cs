@@ -90,7 +90,7 @@ namespace FLBManager.ViewModel
             Menus = new MenusTreeNode(Properties.Resources.GraphicMenusTitle, this, this);
 
             foreach (var graphicMenuViewModel in graphicMenusPresentation.GraphicMenus)
-                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null,this, Menus, this, true, true);
+                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, this, Menus, this, true, true);
 
 
             PriceListsTreeNode = new PriceListsTreeNode(MenuItemsEditor.Properties.Resources.PriceListsNodeName, this, this);
@@ -149,7 +149,7 @@ namespace FLBManager.ViewModel
 
         public RestaurantMenus RestaurantMenus
         {
-            get => _RestaurantMenus; 
+            get => _RestaurantMenus;
             internal set
             {
 
@@ -162,7 +162,11 @@ namespace FLBManager.ViewModel
                     foreach (var priceListStorageRef in PriceListStorageRefs)
                     {
                         priceListStorageRef.UploadService=Organization as IUploadService;
-                        PriceLists.Add(new PriceListPresentation(PriceListsTreeNode, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel, Organization));
+                        var priceListPresentation = new PriceListPresentation(PriceListsTreeNode, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel, Organization);
+                        priceListPresentation.PropertyChanged+=PriceListPresentation_PropertyChanged;
+
+
+                        PriceLists.Add(priceListPresentation);
                     }
                     PriceListsTreeNode?.Refresh();
 
@@ -172,14 +176,20 @@ namespace FLBManager.ViewModel
             }
         }
 
+        private void PriceListPresentation_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName=="PriceListStorageRef")
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
+        }
+
         private void GraphicMenusPresentation_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            
+
             foreach (var graphicMenuViewModel in GraphicMenusPresentation.GraphicMenus)
             {
                 if (!_GraphicMenus.ContainsKey(graphicMenuViewModel.StorageRef.StorageIdentity))
                 {
-                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null,this, Menus, this, true);
+                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, this, Menus, this, true);
                     graphicMenuTreeNode.IsNodeExpanded = true;
                     Menus.IsNodeExpanded = true;
                     _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = graphicMenuTreeNode;
@@ -471,14 +481,20 @@ namespace FLBManager.ViewModel
         public bool RemovePriceList(PriceListPresentation PriceListTreeNode)
         {
             throw new NotImplementedException();
+            PriceListTreeNode.PropertyChanged-=PriceListPresentation_PropertyChanged;
         }
 
         public void NewPriceList()
         {
             OrganizationStorageRef priceListStorageRef = (Organization as IResourceManager).NewPriceList();
             PriceListStorageRefs.Add(priceListStorageRef);
-            PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, RestaurantMenus.Members[0] as MenuViewModel,Organization));
+
+            var priceListPresentation = new PriceListPresentation(this, priceListStorageRef, RestaurantMenus.Members[0] as MenuViewModel, Organization);
+            PriceLists.Add(priceListPresentation);
+            priceListPresentation.PropertyChanged+=PriceListPresentation_PropertyChanged;
             PriceListsTreeNode.Refresh();
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
         }
 
 
@@ -709,7 +725,7 @@ namespace FLBManager.ViewModel
 
         public List<OrganizationStorageRef> PriceListStorageRefs { get; set; } = new List<OrganizationStorageRef>();
 
-        
+
 
 
         public bool NewPriceListAllowed => true;

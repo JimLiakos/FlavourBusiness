@@ -341,6 +341,8 @@ namespace FlavourBusinessManager
 
             if (fbStorage != null && fbStorage.FlavourStorageType == OrganizationStorages.PriceList)
             {
+                ObjectStorage.UpdateOperativeObjects(fbStorage.StorageIdentity);
+
                 foreach (var serviceContext in this._ServicesContexts)
                 {
                     Task.Run(() =>
@@ -1327,7 +1329,7 @@ namespace FlavourBusinessManager
         }
 
 
-        public void PublishPriceList(OrganizationStorageRef priceListStorageRef)
+        public OrganizationStorageRef PublishPriceList(OrganizationStorageRef priceListStorageRef)
         {
             AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
             if (authUser == null)
@@ -1411,7 +1413,7 @@ namespace FlavourBusinessManager
                 foreach (var servicesContext in ServicesContexts)
                     servicesContext.GetRunTime().StorageMetaDataUpdated(priceListStorageRef);
             }
-
+            return priceListStorageRef;
 
 
 

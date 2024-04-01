@@ -30,6 +30,7 @@ using FlavourBusinessManager.PriceList;
 using MenuItemsEditor.ViewModel.PriceList;
 using FlavourBusinessManager.ServicePointRunTime;
 using System.Net;
+using FlavourBusinessFacade.PriceList;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -86,12 +87,13 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             get => _PriceList;
             set
             {
-                if(_PriceList != value) {
+                if (_PriceList != value)
+                {
 
                     _PriceList = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceList)));
                 }
-                
+
             }
         }
         public Visibility IsPriceListsVisible
@@ -112,10 +114,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         {
             GraphicMenustorageRef = graphicMenuStorageRef;
             PriceListsOwner = priceListsOwner;
+            PriceListsOwner.PropertyChanged+=PriceListsOwner_PropertyChanged;
 
             if (PriceListsOwner != null)
             {
-                _PriceLists = PriceListsOwner.PriceLists.Select(x => new PriceList.MenuPriceList(x.PriceListStorageRef)).ToList();
+                _PriceLists = PriceListsOwner.PriceLists.Where(x => !string.IsNullOrWhiteSpace(x.PriceListStorageRef?.Version)).Select(x => new PriceList.MenuPriceList(x.PriceListStorageRef)).ToList();
 
                 if (_PriceLists.Count > 0)
                 {
@@ -176,7 +179,27 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         }
 
+        private void PriceListsOwner_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName =="PriceLists")
+            {
 
+                var priceLists = PriceListsOwner.PriceLists.Select(x => new PriceList.MenuPriceList(x.PriceListStorageRef)).ToList();
+
+                if (priceLists.Count > 0)
+                    priceLists.Insert(0, new PriceList.MenuPriceList(null));
+
+                if (_PriceList?.PriceListStorageRef==null)
+                    _PriceList = priceLists[0];
+                else
+                    _PriceList =priceLists.Where(x => x.PriceListStorageRef?.StorageIdentity==_PriceList.PriceListStorageRef?.StorageIdentity).FirstOrDefault();
+
+                _PriceLists=priceLists;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceLists)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceList)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPriceListsVisible)));
+            }
+        }
 
         private void Publish()
         {
@@ -466,7 +489,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             graphickMenuResources[jsonFileName.ToLower()] = jsonRestaurantMenuStream;
 
             CreatePriceListPreview(graphickMenuResources);
-          
+
         }
 
         public void CreatePriceListPreview(Dictionary<string, MemoryStream> graphickMenuResources)

@@ -242,6 +242,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
         void NewPriceList();
 
         IOrganization Organization { get; }
+
+        event PropertyChangedEventHandler PropertyChanged;
     }
 
 
