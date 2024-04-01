@@ -20,7 +20,7 @@ namespace FlavourBusinessManager.PriceList
         /// <MetaDataID>{994ade9d-7095-4153-8813-187cb8734917}</MetaDataID>
         [PersistentMember(nameof(_OverridenPrice))]
         [BackwardCompatibilityID("+1")]
-        public decimal? OverridenPrice
+        public decimal? OverriddenPrice
         {
             get => _OverridenPrice;
             set
@@ -64,7 +64,7 @@ namespace FlavourBusinessManager.PriceList
         /// <MetaDataID>{984aec00-8594-49e5-9677-6c10f2bef4ed}</MetaDataID>
         [PersistentMember(nameof(_Pricerounding))]
         [BackwardCompatibilityID("+3")]
-        public double? Pricerounding
+        public double? PriceRounding
         {
             get => _Pricerounding;
             set

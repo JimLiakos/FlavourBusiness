@@ -20,7 +20,7 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{672fa328-3c4c-4a35-bd8b-3bc3c97409d1}</MetaDataID>
         [BackwardCompatibilityID("+1")]
-        decimal? OverridenPrice { get; set; }
+        decimal? OverriddenPrice { get; set; }
 
 
         /// <MetaDataID>{e3d5df84-1222-4050-8576-c05471857bf0}</MetaDataID>
@@ -29,7 +29,7 @@ namespace FlavourBusinessFacade.PriceList
 
         /// <MetaDataID>{ce678a17-0d59-4d88-89d4-35cc9de06524}</MetaDataID>
         [BackwardCompatibilityID("+3")]
-        double? Pricerounding { get; set; }
+        double? PriceRounding { get; set; }
 
         /// <MetaDataID>{2b732863-faa1-4024-8bfb-5abff5af891d}</MetaDataID>
         [BackwardCompatibilityID("+4")]
@@ -78,18 +78,18 @@ namespace FlavourBusinessFacade.PriceList
 
 
 
-        /// <MetaDataID>{61d1ca27-3074-47e9-b250-1216b669e6c7}</MetaDataID>
-        public static bool IsIncluded(this IItemsTaxInfo itemsTaxInfo)
-        {
-            return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Include) == ItemsPriceInfoType.Include;
-        }
+        ///// <MetaDataID>{61d1ca27-3074-47e9-b250-1216b669e6c7}</MetaDataID>
+        //public static bool IsIncluded(this IItemsTaxInfo itemsTaxInfo)
+        //{
+        //    return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Include) == ItemsPriceInfoType.Include;
+        //}
 
 
-        /// <MetaDataID>{61f23f83-47b6-4064-af11-fd5e63c98648}</MetaDataID>
-        public static bool IsExcluded(this IItemsTaxInfo itemsTaxInfo)
-        {
-            return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
-        }
+        ///// <MetaDataID>{61f23f83-47b6-4064-af11-fd5e63c98648}</MetaDataID>
+        //public static bool IsExcluded(this IItemsTaxInfo itemsTaxInfo)
+        //{
+        //    return (itemsTaxInfo.ItemsPriceInfoType & ItemsPriceInfoType.Exclude) == ItemsPriceInfoType.Exclude;
+        //}
 
         /// <MetaDataID>{dfd3de56-0bd1-4367-970f-fb2d3cd1debd}</MetaDataID>
         public static IItemsPriceInfo GetItemPriceInfo(this IPriceList priceList, MenuModel.IMenuItem menuItem)

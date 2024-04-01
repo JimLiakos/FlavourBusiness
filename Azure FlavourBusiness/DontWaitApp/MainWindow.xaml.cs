@@ -80,7 +80,10 @@ namespace DontWaitApp
                 }
             }
             else
+            {
+                Uri = new Uri(url);
                 Browser.Navigate(new Uri(url));
+            }
 
             Browser.ProcessRequest += Browser_ProcessRequest;
 

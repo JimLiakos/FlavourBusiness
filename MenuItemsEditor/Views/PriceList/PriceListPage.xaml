@@ -46,7 +46,7 @@
     </Page.Resources>
 
     <Grid DataContext="{Binding Value}" d:DataContext="{d:DesignInstance ViewModel:PriceListPresentation, IsDesignTimeCreatable=True}" >
-        <sw:DialogContentControl BeforeTransactionCommit="{Binding BeforeTransactionCommitCommand}" Buttons="OnlyBack"   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.PriceListPageTitle}" InitialWidth="1100" InitialHeight="600" Icon="/MenuItemsEditor;component/Image/price-list32.png">
+        <sw:DialogContentControl BeforeTransactionCommit="{Binding BeforeTransactionCommitCommand}" Buttons="OKCancel"   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Title="{x:Static resx:Resources.PriceListPageTitle}" InitialWidth="1100" InitialHeight="600" Icon="/MenuItemsEditor;component/Image/price-list32.png">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="17*"/>
@@ -250,6 +250,18 @@
                 </TreeView>
 
             </Grid>
+
+            <sw:DialogContentControl.Footer>
+
+                <ContentControl  >
+                    <Button Visibility="{Binding Path=PublishAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"    HorizontalAlignment="Right" Width="90" Command="{Binding PublishCommand}" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="/MenuItemsEditor;component/Image/cloud-computing24.png"/>
+                            <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.PublishMenuContextMenuHeader}" ></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </ContentControl>
+            </sw:DialogContentControl.Footer>
 
         </sw:DialogContentControl>
 

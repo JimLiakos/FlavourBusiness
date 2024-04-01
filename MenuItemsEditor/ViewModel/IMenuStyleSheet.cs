@@ -14,11 +14,12 @@ namespace MenuItemsEditor.ViewModel
         List<IMenuStyleSheet> StyleSheets { get; }
     }
 
+    /// <MetaDataID>{cc805637-fd4e-4829-b392-c0d071444af9}</MetaDataID>
     [HttpVisible]
     public interface IMenuStyleSheet
     {
 
-        
+
         string Name { get; }
         Task<IStyleSheet> StyleSheet { get; }
 

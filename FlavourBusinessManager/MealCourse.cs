@@ -581,7 +581,7 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{e146e6e4-9b86-429f-b4d2-171b340d8937}</MetaDataID>
         [CachingDataOnClientSide]
-        public FlavourBusinessFacade.EndUsers.SessionData SessionData
+        public SessionData SessionData
         {
             get
             {
@@ -599,7 +599,8 @@ namespace FlavourBusinessManager.RoomService
                     var storageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", organizationIdentity, fbstorage.StorageIdentity, fbstorage.Name, versionSuffix);
                     var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbstorage.Url);
                     var storageRef = new OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime };
-                    (Meal.Session as ServicesContextResources.FoodServiceSession).Menu = storageRef;
+                    (Meal.Session as FoodServiceSession).Menu = storageRef;
+                    
                 }
 
                 var defaultMealTypeUri = Meal.Session.ServicePoint.ServesMealTypesUris.FirstOrDefault();
@@ -628,7 +629,7 @@ namespace FlavourBusinessManager.RoomService
                     ServedMealTypesUris = servedMealTypesUris,
                     // FoodServiceSession = Meal.Session,
                     ServicePointIdentity = Meal.Session.ServicePoint.ServicesPointIdentity,
-                    Menu = (Meal.Session as ServicesContextResources.FoodServiceSession).Menu,
+                    Menu = (Meal.Session as FoodServiceSession).Menu,
                     ServicesPointName = Meal.Session.ServicePoint.Description,
                     ServicesContextLogo = "Pizza Hut"
                 };

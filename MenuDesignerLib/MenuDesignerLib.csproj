@@ -203,6 +203,7 @@
     <Compile Include="ViewModel\Preview\FlavoursOrderServer.cs" />
     <Compile Include="ViewModel\Preview\FoodServicesClientSessionViewModel.cs" />
     <Compile Include="ViewModel\Preview\PseudoCode.cs" />
+    <Compile Include="ViewModel\PriceList\MenuPriceList.cs" />
     <Compile Include="ViewModel\RestaurantMenuItemsPresentation.cs" />
     <Compile Include="Views\BackgroundSelectorWindow.xaml.cs">
       <DependentUpon>BackgroundSelectorWindow.xaml</DependentUpon>
@@ -285,7 +286,6 @@
   <ItemGroup>
     <Folder Include="FLBManager\ViewModel\" />
     <Folder Include="Themes\" />
-    <Folder Include="ViewModel\PriceList\" />
     <Folder Include="Views\PriceList\" />
   </ItemGroup>
   <ItemGroup>

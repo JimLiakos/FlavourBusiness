@@ -456,7 +456,6 @@
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="ItemsPriceInfo.cs" />
-    <Compile Include="ItemsTaxInfo.cs" />
     <Compile Include="NativeAuthUser.cs" />
     <Compile Include="PaymentTerminal.cs" />
     <Compile Include="Place.cs" />

@@ -815,6 +815,7 @@ namespace MenuPresentationModel.MenuCanvas
 
         }
 
+        /// <MetaDataID>{d84848c9-01ed-4c0e-88cf-4f0231aca328}</MetaDataID>
         public MenuStyles.Alignment FoodItemAlignment
         {
             get
@@ -823,6 +824,7 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
+        /// <MetaDataID>{8dd14789-f4fd-4c0c-a034-0b82d32f527b}</MetaDataID>
         public MenuStyles.PriceLayout FoodItemPriceLayout
         {
             get
@@ -1112,6 +1114,7 @@ namespace MenuPresentationModel.MenuCanvas
 
             return lineTextXpos;
         }
+        /// <MetaDataID>{17d6ad5b-e2bd-4343-99bc-e8f1a5a6c765}</MetaDataID>
         internal MenuStyles.IPriceStyle PriceStyle
         {
             get
@@ -1314,7 +1317,9 @@ namespace MenuPresentationModel.MenuCanvas
                         MainPrice.XPos = priceAlignedWithSubtext.XPos + priceAlignedWithSubtext.Width + GetPriceLeaderWidth(priceStyle);
                 }
                 else
-                    MainPrice.XPos = XPos + Width - MainPrice.Width;
+                    MainPrice.XPos = XPos + Width - MainPrice.Width; // PriceList new Price align right
+                    
+
 
                 if (PriceAtFixedPosition || (priceAlignedWithSubtext.Width + FoodItemPricesWithLeaderWitdh) <= Width)
                     MainPrice.AlignOnBaseline(priceAlignedWithSubtext);
@@ -1460,6 +1465,7 @@ namespace MenuPresentationModel.MenuCanvas
             //#endregion
         }
 
+        /// <MetaDataID>{47b053ff-44d0-4bed-8f83-960967950ab9}</MetaDataID>
         void ResetPriceLeaderDescription()
         {
             var spaceWidth = Font.MeasureText(" ").Width;
@@ -1558,9 +1564,11 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
+        /// <MetaDataID>{67c80cb0-1355-4b4a-a644-609d9171b398}</MetaDataID>
         bool PricesTextBuilt = false;
         /// <MetaDataID>{46453625-16f6-42e6-b256-067d06a0a7fe}</MetaDataID>
         int? _PriceLineIndex;
+        /// <MetaDataID>{141cb0c1-e73a-4b89-89f3-6768201fc441}</MetaDataID>
         int? PriceLineIndex
         {
             get => _PriceLineIndex;
@@ -1577,6 +1585,7 @@ namespace MenuPresentationModel.MenuCanvas
                 //    MainPrice.Visisble = false;
             }
         }
+        /// <MetaDataID>{d19d3afa-5a7c-48b8-ac1d-13fcbd1729f3}</MetaDataID>
         private bool PriceAtFixedPosition
         {
             get
@@ -2174,10 +2183,12 @@ namespace MenuPresentationModel.MenuCanvas
             ObjectChangeState?.Invoke(this, null);
         }
 
+        /// <MetaDataID>{65df64f0-1440-42ea-8fe2-0974c9d89a9d}</MetaDataID>
         private double FoodItemPricesWithLeaderWitdh
         {
             get => GetPriceLeaderWidth(PriceStyle) + FoodItemPricesWitdh;
         }
+        /// <MetaDataID>{c7df8760-6a47-4412-b688-1052e055bf17}</MetaDataID>
         private double PriceLeaderWidth
         {
             get => GetPriceLeaderWidth(PriceStyle);
@@ -2231,6 +2242,7 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
+        /// <MetaDataID>{e83d8522-91a9-4f6a-a5e4-9d422def9b61}</MetaDataID>
         private FontData FoodItemPriceFont
         {
             get

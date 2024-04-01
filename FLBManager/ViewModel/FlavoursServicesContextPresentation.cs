@@ -63,7 +63,7 @@ namespace FLBManager.ViewModel
                     MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
 
                 foreach (var graphicMenu in FlavoursServicesContextRuntime.GraphicMenus)
-                    _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode, this, false);
+                    _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, Company, MenusTreeNode, this, false);
 
 
                 if (GraphicMenus.Count == 0)
@@ -179,11 +179,11 @@ namespace FLBManager.ViewModel
 
                         var graphicMenus = FlavoursServicesContextRuntime.GraphicMenus;
 
-
+                        
                         if (MenusTreeNode == null && graphicMenus.Count > 0)
                             MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);
                         foreach (var graphicMenu in FlavoursServicesContextRuntime.GraphicMenus)
-                            _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, MenusTreeNode, this, false);
+                            _GraphicMenus[graphicMenu.StorageIdentity] = new GraphicMenuTreeNode(graphicMenu, null, this.Company, MenusTreeNode, this, false);
 
 
 
@@ -569,7 +569,7 @@ namespace FLBManager.ViewModel
                 FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
             FlavoursServicesContextRuntime.AssignGraphicMenu(graphicMenuTreeNode.GraphicMenuStorageRef);
 
-            _GraphicMenus[graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef.Clone(), null, MenusTreeNode, this, false);
+            _GraphicMenus[graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef.Clone(), null,this.Company, MenusTreeNode, this, false);
 
             if (MenusTreeNode == null)
                 MenusTreeNode = new MenusTreeNode(Name + " " + Properties.Resources.GraphicMenusTitle, this, this);

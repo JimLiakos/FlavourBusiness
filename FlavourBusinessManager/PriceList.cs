@@ -3,9 +3,9 @@ using FlavourBusinessFacade.PriceList;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicesContextResources;
 using MenuModel;
-using MenuModel.JsonViewModel;
-using OOAdvantech;
 
+using OOAdvantech;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -98,18 +98,20 @@ namespace FlavourBusinessManager.PriceList
         }
 
         /// <MetaDataID>{610d0ffe-619e-4b14-81e4-5463bada60c9}</MetaDataID>
-        public string Name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Name { get =>""; set { }   }
 
         /// <MetaDataID>{fa0af410-ee21-428e-93c3-75bc654874fc}</MetaDataID>
-        public IList<ICustomizedPrice> PricedSubjects => throw new System.NotImplementedException();
+        public IList<ICustomizedPrice> PricedSubjects => new List<ICustomizedPrice>();
 
 
         /// <exclude>Excluded</exclude>
-       OOAdvantech.Member<ITaxesContext> _TaxesContext=new Member<ITaxesContext>();
+        [OOAdvantech.Json.JsonIgnore]
+        Member<ITaxesContext> _TaxesContext=new Member<ITaxesContext>();
 
         /// <MetaDataID>{fb27de47-6bf5-4a7c-af11-3197ad91d7ed}</MetaDataID>
         [PersistentMember(nameof(_TaxesContext))]
         [BackwardCompatibilityID("+4")]
+        [OOAdvantech.Json.JsonIgnore]
         public ITaxesContext TaxesContext
         {
             get => _TaxesContext.Value;
@@ -215,14 +217,14 @@ namespace FlavourBusinessManager.PriceList
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
             if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
-                return the_itemsPriceInfo.Pricerounding;
+                return the_itemsPriceInfo.PriceRounding;
 
             var itemsPriceInfo = this.GetItemsPriceInfo(priceListSubject).FirstOrDefault();
             if (itemsPriceInfo != null)
-                return itemsPriceInfo.Pricerounding;
+                return itemsPriceInfo.PriceRounding;
 
-            if (PriceListMainItemsPriceInfo.PercentageDiscount != null && PriceListMainItemsPriceInfo.Pricerounding != null)
-                return PriceListMainItemsPriceInfo.Pricerounding;
+            if (PriceListMainItemsPriceInfo.PercentageDiscount != null && PriceListMainItemsPriceInfo.PriceRounding != null)
+                return PriceListMainItemsPriceInfo.PriceRounding;
             return null;
         }
 
@@ -269,7 +271,7 @@ namespace FlavourBusinessManager.PriceList
         {
             var the_itemsPriceInfo = this.GetItemPriceInfo(priceListSubject);
             if (the_itemsPriceInfo != null && the_itemsPriceInfo.IsIncluded())
-                return the_itemsPriceInfo.OverridenPrice;
+                return the_itemsPriceInfo.OverriddenPrice;
             return null;
         }
 
@@ -347,6 +349,18 @@ namespace FlavourBusinessManager.PriceList
 
             return null;
 
+        }
+
+
+
+        /// <MetaDataID>{b66cd981-a4ba-4ba4-ab74-848e2a195d63}</MetaDataID>
+        internal string Json
+        {
+            get
+            {
+                string json = JsonConvert.SerializeObject(this, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings);
+                return json;
+            }
         }
 
         //public IItemsTaxInfo NewTaxInfo(string itemsInfoObjectUri, ItemsPriceInfoType itemsPriceInfoType)
@@ -616,7 +630,7 @@ namespace FlavourBusinessManager.PriceList
 
 
         /// <MetaDataID>{ca2cf21e-d820-4e04-9b6c-2432f0e65ffb}</MetaDataID>
-        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        public decimal GetDefaultPrice(IPricedSubject pricedSubject)
         {
             return pricedSubject.Price;
         }
@@ -702,7 +716,7 @@ namespace FlavourBusinessManager.PriceList
 
                 return new PriceListPrice(pricedSubject, this, price.Value);
             }
-            public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+            public decimal GetDefaultPrice(IPricedSubject pricedSubject)
             {
                 decimal price = 0;
                 if (MenuItemPrice != null)
@@ -729,6 +743,8 @@ namespace FlavourBusinessManager.PriceList
             {
 
             }
+
+
         }
 
         class PriceListPrice : ICustomizedPrice

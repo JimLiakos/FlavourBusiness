@@ -78,7 +78,7 @@
 
                     </Grid>
 
-                    <TreeView Grid.Row="3"        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding MenuItemsTaxInfo}"  >
+                    <TreeView Grid.Row="3"   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding MenuItemsTaxInfo}"  >
 
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectedItemChanged">

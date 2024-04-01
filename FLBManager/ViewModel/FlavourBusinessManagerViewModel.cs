@@ -714,7 +714,7 @@ namespace FLBManager.ViewModel
                     _SignInUserPopup.SignedIn += SignInUserPopup_SignedIn;
             }
         }
-        public void GetOrgenizationRestMenus(IResourceManager resourceManager)
+        public void GetOrganizationRestMenus(IResourceManager resourceManager)
         {
             string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Microneme";
             if (!System.IO.Directory.Exists(appDataPath))
@@ -732,17 +732,17 @@ namespace FLBManager.ViewModel
             var dataStream = dataStreamTask.Result;
             RawStorageData storageData = new RawStorageData(XDocument.Load(dataStream), temporaryStorageLocation, storageRef, resourceManager as IUploadService);
 
-            RestaurantMenus = new MenuItemsEditor.RestaurantMenus(storageData);
+            RestaurantMenus = new RestaurantMenus(storageData);
             _BusinessResources.RestaurantMenus = RestaurantMenus;
 
 
             MenuData = new RestaurantMenuItemsPresentation((RestaurantMenus.Members[0] as MenuItemsEditor.ViewModel.MenuViewModel).Menu, this, null);
             MenuData.ShowMenuTaxes += MenuData_ShowMenuTaxes;
-            OrganizationStorageRef styleSeetStorageRef = resourceManager.GetStorage(OrganizationStorages.StyleSheets);
+            OrganizationStorageRef styleSheetStorageRef = resourceManager.GetStorage(OrganizationStorages.StyleSheets);
             temporaryStorageLocation = appDataPath + "\\StyleSheets.xml";
-            RawStorageData styleSeetStorageData = new RawStorageData(temporaryStorageLocation, styleSeetStorageRef, null);
-            var styleSeetObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("StyleSheets", styleSeetStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
-            MenuPresentationModel.MenuStyles.StyleSheet.ObjectStorage = styleSeetObjectStorage;
+            RawStorageData styleSheetStorageData = new RawStorageData(temporaryStorageLocation, styleSheetStorageRef, null);
+            var styleSheetObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("StyleSheets", styleSheetStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
+            StyleSheet.ObjectStorage = styleSheetObjectStorage;
 
 
             OrganizationStorageRef backgroundImagesStorageRef = resourceManager.GetStorage(OrganizationStorages.BackgroundImages);
@@ -824,7 +824,7 @@ namespace FLBManager.ViewModel
 
             await Task.Run(() =>
             {
-                GetOrgenizationRestMenus(user as IResourceManager);
+                GetOrganizationRestMenus(user as IResourceManager);
             });
 
 

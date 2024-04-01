@@ -3534,7 +3534,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::Menu" @73
-			location   	(2642, 509)
+			location   	(2705, 506)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3547,7 +3547,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@73
-			    location   	(1914, 178)
+			    location   	(1977, 175)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	1456
@@ -3560,7 +3560,7 @@
 			width      	1469
 			height     	675)
 		    (object CategoryView "Logical View::MenuDesigner" @74
-			location   	(2165, 505)
+			location   	(2228, 502)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3573,7 +3573,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@74
-			    location   	(1943, 421)
+			    location   	(2006, 418)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	444
@@ -3586,7 +3586,7 @@
 			width      	456
 			height     	181)
 		    (object CategoryView "Logical View::MenuModel" @75
-			location   	(2849, 390)
+			location   	(2912, 387)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3599,7 +3599,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@75
-			    location   	(2599, 306)
+			    location   	(2662, 303)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	500
@@ -3619,7 +3619,7 @@
 			supplier   	@75
 			line_style 	0)
 		    (object CategoryView "Logical View::MenuPresentationModel" @77
-			location   	(2896, 712)
+			location   	(2959, 709)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3632,7 +3632,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@77
-			    location   	(2618, 627)
+			    location   	(2681, 624)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	556

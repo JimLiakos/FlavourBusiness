@@ -84,6 +84,7 @@ namespace DontWaitApp
         /// <MetaDataID>{c4fef46e-2e44-414e-89a8-cdebcff380cc}</MetaDataID>
         bool WaiterView { get; }
 
+        /// <MetaDataID>{212ec734-dbcf-4d4a-9291-adf5f6d18e23}</MetaDataID>
         AppType AppType { get; }
 
         /// <MetaDataID>{71dba63a-ee1a-457e-aa4a-dc758bc11a06}</MetaDataID>
@@ -254,17 +255,21 @@ namespace DontWaitApp
 
         /// <MetaDataID>{1296cf3c-a0c6-4483-a8ec-3c2ac3874660}</MetaDataID>
         void UpdateHallsServicePointStates(Dictionary<string, ServicePointState> hallsServicePointsState);
+        /// <MetaDataID>{3ee67778-5e13-4f7a-b28b-3010775c69b1}</MetaDataID>
         Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession);
 
 
-        
 
+
+        /// <MetaDataID>{d846c240-e1df-4139-a113-79890be6add8}</MetaDataID>
         Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(string servicePointIdentity, IFlavoursServicesContextRuntime flavoursServices = null, bool create = true);
 
+        /// <MetaDataID>{641cea0e-efca-49c9-bed6-ecc2b631e8f4}</MetaDataID>
         void SessionIsNoLongerActive(IFoodServicesClientSessionViewModel foodServicesClientSessionViewModel);
+        /// <MetaDataID>{09770479-beaa-47e3-9ac6-656d861e9bdf}</MetaDataID>
         IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu);
 
-        
+
 
         //Task<bool> OpenFoodServicesClientSession(IFoodServiceClientSession foodServiceClientSession);
 
@@ -276,8 +281,10 @@ namespace DontWaitApp
     /// <MetaDataID>{b955c48a-3bb5-4c3e-b97e-9799ad7a1cbe}</MetaDataID>
     public class Contact
     {
+        /// <MetaDataID>{c2ce58e0-3ff2-4b89-817e-108a74cb9495}</MetaDataID>
         string displayName;
 
+        /// <MetaDataID>{57064369-1025-4f9b-bcf6-815aa37cec54}</MetaDataID>
         public Contact()
         {
         }
@@ -305,30 +312,41 @@ namespace DontWaitApp
         }
 #endif
 
+        /// <MetaDataID>{56d2075f-b11e-4a6e-8e22-1ed695c3315c}</MetaDataID>
         public string Id { get; set; }
 
+        /// <MetaDataID>{595c7505-a580-47cd-9dc1-cdff621a1d99}</MetaDataID>
         public string DisplayName
         {
             get => !string.IsNullOrWhiteSpace(displayName) ? displayName : BuildDisplayName();
             private set => displayName = value;
         }
 
+        /// <MetaDataID>{263c777c-6a03-4022-bb23-3a9a5d3698bd}</MetaDataID>
         public string NamePrefix { get; set; }
 
+        /// <MetaDataID>{60095617-1c42-4ccf-b391-1b832aa8f85e}</MetaDataID>
         public string GivenName { get; set; }
 
+        /// <MetaDataID>{e5e56690-bbfa-4039-ad6d-428be213df55}</MetaDataID>
         public string MiddleName { get; set; }
 
+        /// <MetaDataID>{c970e2a3-2387-49aa-9c5e-d0bad0065f49}</MetaDataID>
         public string FamilyName { get; set; }
 
+        /// <MetaDataID>{4dd20f3e-ca67-49cb-bdd5-60d5b1a66781}</MetaDataID>
         public string NameSuffix { get; set; }
 
+        /// <MetaDataID>{309d21d2-c31a-48fb-ab4b-ce4ae5990337}</MetaDataID>
         public List<string> Phones { get; set; } = new List<string>();
 
+        /// <MetaDataID>{b407a5b2-fd19-4c2b-a893-66d160bbf7a9}</MetaDataID>
         public List<string> Emails { get; set; } = new List<string>();
 
+        /// <MetaDataID>{cf96d105-0d2a-44e0-83cb-fcf49f6f1047}</MetaDataID>
         public override string ToString() => DisplayName;
 
+        /// <MetaDataID>{c75d8bfa-1bb1-4732-aaf8-bacf6b01fead}</MetaDataID>
         string BuildDisplayName()
         {
             if (string.IsNullOrWhiteSpace(GivenName))
@@ -427,7 +445,10 @@ namespace DontWaitApp
         public DateTime? ServiceTime { get; internal set; }
         /// <MetaDataID>{95fc2074-cae0-4b70-9c7f-153e55edde82}</MetaDataID>
         public PayOptions? PayOption { get; internal set; }
+        /// <MetaDataID>{068b2557-254b-4168-9c51-170fdd29f6e2}</MetaDataID>
         public string FontsLink { get; internal set; }
+        /// <MetaDataID>{d2971b5b-ff61-46dc-a4b8-6e8c7d2f76f8}</MetaDataID>
+        public string PriceListUrl { get; internal set; }
 
         /// <MetaDataID>{94b21849-ddf7-4553-9b1b-76bf018e6f84}</MetaDataID>
         [PersistentMember()]
@@ -493,6 +514,7 @@ namespace DontWaitApp
             var equal = left.ServicePointIdentity == right.ServicePointIdentity &&
                 left.MenuFile == right.MenuFile &&
                 left.MenuRoot == right.MenuRoot &&
+                left.PriceListUrl == right.PriceListUrl &&
                 left.ClientSessionID == right.ClientSessionID &&
                 left.MainSessionID == right.MainSessionID &&
                 left.GetOrderItems().Count == right.GetOrderItems().Count;
@@ -519,7 +541,9 @@ namespace DontWaitApp
     /// <MetaDataID>{62dfcf63-566a-45f7-aa85-16ce37400804}</MetaDataID>
     public class Location
     {
+        /// <MetaDataID>{c3a487ca-4e0c-40d3-a97e-ed23bd3ce276}</MetaDataID>
         public double Latitude;
+        /// <MetaDataID>{8d3f235b-1827-4a1e-bc84-6b75cdc6bd9d}</MetaDataID>
         public double Longitude;
     }
 

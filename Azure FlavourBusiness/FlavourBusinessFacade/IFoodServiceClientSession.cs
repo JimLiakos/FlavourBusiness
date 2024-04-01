@@ -16,8 +16,9 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+25")]
         string OrderComment { get; set; }
 
-      
-        string PriceListJson { get;}
+
+        /// <MetaDataID>{dfffad8d-466d-449e-bded-92d03047f45d}</MetaDataID>
+        OrganizationStorageRef PriceList { get; }
 
         /// <MetaDataID>{ad06fb5e-beee-4633-a79f-8d2647aac923}</MetaDataID>
         [BackwardCompatibilityID("+19")]
@@ -258,12 +259,14 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{af43e9d0-b99f-4547-b1d7-33a0b998ee1c}</MetaDataID>
         void SetSessionDeliveryPlace(IPlace deliveryPlace);
 
+        /// <MetaDataID>{6cfde247-a4cb-4af4-8400-d6e91da604dc}</MetaDataID>
         IPlace GetSessionDeliveryPlace();
 
         /// <MetaDataID>{8ad09d41-4b56-4ad8-9cf2-6e90b48bf9bb}</MetaDataID>
         void SetSessionServiceTime(DateTime? value);
         /// <MetaDataID>{2c79ce1f-2d6e-4179-a123-e187fba12cc1}</MetaDataID>
         void UpdateSessionUser(string userLanguageCode);
+        /// <MetaDataID>{a0d63757-8ce0-44c1-b4cd-132867c59a63}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
 
 
@@ -341,12 +344,18 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{eea67de5-e4ff-44f5-9bd8-3de929b95c3c}</MetaDataID>
         public ServicePointState ServicePointState;
+        /// <MetaDataID>{a8464f23-ae69-40f4-97c2-f4ccd41644a5}</MetaDataID>
         public OrganizationStorageRef Menu;
 
         /// <MetaDataID>{e6423399-cbc1-48c7-b618-2cfa5631e82c}</MetaDataID>
         public SessionType SessionType;
-        public string UserLanguageCode ;
+        /// <MetaDataID>{77a16b63-4035-450f-914f-a89fba0fd1fb}</MetaDataID>
+        public string UserLanguageCode;
+        /// <MetaDataID>{85fc8c6b-194d-42f2-845c-9c96ea8024ad}</MetaDataID>
         public IPlace DeliveryPlace;
+
+        /// <MetaDataID>{385f4b82-c101-49bc-b129-cca21db47ca7}</MetaDataID>
+        public OrganizationStorageRef PriceList;
     }
 
 
@@ -375,11 +384,16 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{18571150-9388-4aa4-827d-a4795c35c7c5}</MetaDataID>
         public OrganizationStorageRef Menu;
 
+        /// <MetaDataID>{1ca29df0-cb0b-45ce-8696-d42212c8b862}</MetaDataID>
+        public OrganizationStorageRef PriceList;
+
+        /// <MetaDataID>{c6ca515f-8cd3-476f-b826-1eb0cb2c921e}</MetaDataID>
         public string Description;
 
+        /// <MetaDataID>{ea92f8bf-16ec-4193-a525-988ca51bba3a}</MetaDataID>
         public SessionType SessionType;
     }
-     
+
 
     /// <MetaDataID>{bf4ffb5f-7561-4659-a602-cceb0d1837d3}</MetaDataID>
     public enum ChangeDeliveryPlaceResponse

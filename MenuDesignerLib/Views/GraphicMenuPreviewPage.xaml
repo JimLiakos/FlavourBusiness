@@ -13,8 +13,8 @@
     </sw:PageDialogViewEmulator.DataContext>
     <sw:PageDialogViewEmulator.Resources>
         <ViewModel:BookViewModel x:Key="SampleBookViewModel" />
-        
-        
+
+
     </sw:PageDialogViewEmulator.Resources>
     <Grid x:Name="PreviewGrid"   DataContext="{Binding Value}"  d:DataContext="{d:DesignInstance ViewModel:BookViewModel, IsDesignTimeCreatable=True}">
         <sw:DialogContentControl HorizontalAlignment="Stretch" PagePadding="6" InitialHeight="{Binding PreviewHeight}" InitialWidth="{Binding PreviewWidth}" VerticalAlignment="Stretch" Buttons="OnlyBack"  >
@@ -26,13 +26,17 @@
 
                 <ContentControl  >
 
-
-                    <Button Visibility="{Binding Path=PublishAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"    HorizontalAlignment="Right" Width="90" Command="{Binding PublishCommand}" >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="20" Source="/MenuDesignerLib;component/Resources/Images/Metro/cloud-computing24.png"/>
-                            <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.PublishMenuContextMenuHeader}" ></TextBlock>
-                        </StackPanel>
-                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Visibility="{Binding Path=PublishAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"   HorizontalAlignment="Right" Width="110" Command="{Binding PublishCommand}" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="22" Source="/MenuDesignerLib;component/Resources/Images/Metro/cloud-computing24.png"/>
+                                <TextBlock Margin="4,0,0,0" Text="{x:Static resx:Resources.PublishMenuContextMenuHeader}" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                            
+                        </Button>
+                        <Label VerticalAlignment="Center" Margin="20,0,5,0" Content="{x:Static resx:Resources.PriceListSelectorLabel}"></Label>
+                        <ComboBox Width="200" ItemsSource="{Binding PriceLists}" Visibility="{Binding IsPriceListsVisible}" DisplayMemberPath="Name" SelectedValue="{Binding PriceList}"></ComboBox>
+                    </StackPanel>
                 </ContentControl>
             </sw:DialogContentControl.Footer>
         </sw:DialogContentControl>

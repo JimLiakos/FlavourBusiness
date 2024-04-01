@@ -61,6 +61,7 @@ namespace DontWaitApp
         Task<FlavourBusinessFacade.RoomService.IBill> GetBill();
 
 
+        /// <MetaDataID>{bf8c65cf-4109-4211-ad29-49793d160c56}</MetaDataID>
         Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
 
         /// <MetaDataID>{ff44b605-d9c9-4796-9b41-5bd22ed8e965}</MetaDataID>
@@ -78,6 +79,7 @@ namespace DontWaitApp
         {
             get;
         }
+        /// <MetaDataID>{6ae7852f-d4c2-482d-b210-dab0aead75bd}</MetaDataID>
         [HttpInVisible]
         string MainSessionID { get; }
 

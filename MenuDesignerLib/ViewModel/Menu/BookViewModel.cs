@@ -26,6 +26,10 @@ using MenuItemsEditor.Views;
 using MenuItemsEditor.ViewModel;
 using MenuPresentationModel.MenuStyles;
 using OOAdvantech.Remoting;
+using FlavourBusinessManager.PriceList;
+using MenuItemsEditor.ViewModel.PriceList;
+using FlavourBusinessManager.ServicePointRunTime;
+using System.Net;
 
 namespace MenuDesigner.ViewModel.MenuCanvas
 {
@@ -64,14 +68,61 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         public bool PublishAllowed { get; set; }
 
         public readonly FlavourBusinessFacade.OrganizationStorageRef GraphicMenustorageRef;
+        IPriceListsOwner PriceListsOwner;
+
+
+        List<PriceList.MenuPriceList> _PriceLists = new List<PriceList.MenuPriceList>();
+        public List<PriceList.MenuPriceList> PriceLists
+        {
+            get
+            {
+                return _PriceLists;
+            }
+        }
+
+        PriceList.MenuPriceList _PriceList;
+        public PriceList.MenuPriceList PriceList
+        {
+            get => _PriceList;
+            set
+            {
+                if(_PriceList != value) {
+
+                    _PriceList = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PriceList)));
+                }
+                
+            }
+        }
+        public Visibility IsPriceListsVisible
+        {
+            get
+            {
+                if (_PriceLists != null && _PriceLists.Count > 0)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
+
+
         /// <MetaDataID>{b7e805c6-e1a0-4341-871a-fecec35256b1}</MetaDataID>
-        public BookViewModel(MenuPresentationModel.RestaurantMenu menu, FlavourBusinessFacade.OrganizationStorageRef graphicMenustorageRef)
+        public BookViewModel(RestaurantMenu menu, OrganizationStorageRef graphicMenuStorageRef, IPriceListsOwner priceListsOwner)
                     : base(menu)
         {
-            GraphicMenustorageRef = graphicMenustorageRef;
+            GraphicMenustorageRef = graphicMenuStorageRef;
+            PriceListsOwner = priceListsOwner;
 
+            if (PriceListsOwner != null)
+            {
+                _PriceLists = PriceListsOwner.PriceLists.Select(x => new PriceList.MenuPriceList(x.PriceListStorageRef)).ToList();
 
-
+                if (_PriceLists.Count > 0)
+                {
+                    _PriceLists.Insert(0, new PriceList.MenuPriceList(null));
+                    _PriceList = _PriceLists[0];
+                }
+            }
             StyleSelectionCommand = new WPFUIElementObjectBind.RelayCommand((object seneder) => { this.StyleSelection(); });
             BeforeSaveCommand = new WPFUIElementObjectBind.RelayCommand((object seneder) => { menu.Name = MenuName; });
 
@@ -373,6 +424,8 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                         };
                     }
                 }
+
+
             }
 
 
@@ -412,10 +465,32 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             string jsonFileName = menuRoot + menuName + ".json";
             graphickMenuResources[jsonFileName.ToLower()] = jsonRestaurantMenuStream;
 
-
+            CreatePriceListPreview(graphickMenuResources);
+          
         }
 
+        public void CreatePriceListPreview(Dictionary<string, MemoryStream> graphickMenuResources)
+        {
+            if (PriceList?.PriceListStorageRef != null)
+            {
 
+
+                string versionSuffix = "";
+                if (!string.IsNullOrWhiteSpace(PriceList.PriceListStorageRef.Version))
+                    versionSuffix = "/" + PriceList.PriceListStorageRef.Version;
+                else
+                    versionSuffix = "";
+                string priceListJsonUrl = string.Format("http://127.0.0.1:10000/devstoreaccount1/usersfolder/{0}/PriceLists/{1}{3}/{2}.json", PriceListsOwner.Organization.Identity, PriceList.PriceListStorageRef.StorageIdentity, PriceList.PriceListStorageRef.BlobName, versionSuffix);
+                using (WebClient wc = new WebClient())
+                {
+                    MemoryStream priceListStream = new MemoryStream(wc.DownloadData(priceListJsonUrl));
+                    priceListStream.Position = 0;
+                    if (graphickMenuResources.ContainsKey("customscheme://PriceList/pricelist.json".ToLower()))
+                        graphickMenuResources["customscheme://PriceList/pricelist.json".ToLower()].Close();
+                    graphickMenuResources["customscheme://PriceList/pricelist.json".ToLower()] = priceListStream;
+                }
+            }
+        }
 
         private void Preview()
         {
@@ -1980,7 +2055,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
 
                     //};
-                
+
                 }
                 return _FontsMenu;
             }
@@ -2404,7 +2479,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
         static Dictionary<string, Task<RestaurantMenu>> LoadRestaurantMenuTasks = new Dictionary<string, Task<RestaurantMenu>>();
 
-        static public BookViewModel OpenMenu(OrganizationStorageRef graphicMenuStorageRef, bool publishAllowed = false)
+        static public BookViewModel OpenMenu(OrganizationStorageRef graphicMenuStorageRef, IPriceListsOwner priceListsOwner, bool publishAllowed = false)
         {
 
             string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Microneme\\DontWaitWater";
@@ -2425,8 +2500,6 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                         OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", graphicMenuStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
 
-                        //var menuCanvasFoodItems = (from menu in storage.GetObjectCollection<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>()
-                        //                                                          select menu).ToList();
 
 
                         MenuPresentationModel.RestaurantMenu theRestaurantMenu = (from menu in storage.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
@@ -2440,7 +2513,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
             }
             loadRestaurantMenuTask.Wait();
             var restaurantMenu = loadRestaurantMenuTask.Result;
-            var bookViewModel = new BookViewModel(restaurantMenu, graphicMenuStorageRef);
+            var bookViewModel = new BookViewModel(restaurantMenu, graphicMenuStorageRef, priceListsOwner);
 
             int pageCount = restaurantMenu.Pages.Count;
 
@@ -2472,7 +2545,7 @@ namespace MenuDesigner.ViewModel.MenuCanvas
 
                 if (!System.IO.Directory.Exists(path))
                     System.IO.Directory.CreateDirectory(path);
-                
+
             }
 
             string temporaryStorageLocation = appDataPath + string.Format("\\{0}RestaurantMenuData.xml", graphicMenuStorageRef.StorageIdentity.Replace("-", ""));
@@ -2489,15 +2562,15 @@ namespace MenuDesigner.ViewModel.MenuCanvas
     }
 
 
-    class MenuItemStylingViewModel:ExtMarshalByRefObject, IMenuStyleSheet
+    class MenuItemStylingViewModel : ExtMarshalByRefObject, IMenuStyleSheet
     {
         BookViewModel BookViewModel;
 
         public string Name => BookViewModel.MenuName;
 
-        public Task<IStyleSheet> StyleSheet => Task < IStyleSheet >.FromResult(this.BookViewModel.MenuStylesheet as IStyleSheet);
+        public Task<IStyleSheet> StyleSheet => Task<IStyleSheet>.FromResult(this.BookViewModel.MenuStylesheet as IStyleSheet);
 
-        public MenuItemStylingViewModel(BookViewModel bookViewModel) 
+        public MenuItemStylingViewModel(BookViewModel bookViewModel)
         {
             BookViewModel = bookViewModel;
         }

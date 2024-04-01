@@ -150,8 +150,9 @@ namespace FlavourBusinessFacade
         void RemoveGraphicMenu(OrganizationStorageRef graphicMenuStorageRef);
 
 
-        /// <MetaDataID>{875524bb-8d42-4f6a-8286-98a1aaf524df}</MetaDataID>
-        void GraphicMenuStorageMetaDataUpdated(OrganizationStorageRef graphicMenuStorageRef);
+       
+
+        void StorageMetaDataUpdated(OrganizationStorageRef storageRef);
 
         /// <MetaDataID>{8e7c1368-77d0-408a-9854-b31b76758af9}</MetaDataID>
         void OperativeRestaurantMenuDataUpdated(OrganizationStorageRef restaurantMenusDataStorageRef);
@@ -237,6 +238,7 @@ namespace FlavourBusinessFacade
         UserData SignInNativeUser(string userName, string password);
         IServicePoint GetServicePoint(string servicePointIdentity);
         void ObjectStorageUpdate(string storageIdentity, OrganizationStorages flavourStorageType);
+        
 
 
 

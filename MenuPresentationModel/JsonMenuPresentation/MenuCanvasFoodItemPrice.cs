@@ -66,7 +66,11 @@ namespace MenuPresentationModel.JsonMenuPresentation
             FontID = (menu as RestaurantMenu).GetFontID(menuCanvasFoodItemPrice.Font);
             BaseLine = menuCanvasFoodItemPrice.BaseLine;// Font.GetTextBaseLine(menuCanvasFoodItemPrice.Description);
             Type = GetType().Name;
+
+            MenuItemPriceUri = (menuCanvasFoodItemPrice as MenuCanvas.MenuCanvasFoodItemPrice).MenuItemPriceUri;
         }
+        public string MenuItemPriceUri { get; set; }
+
         /// <MetaDataID>{a595d979-d256-4e0f-9ec4-7086a01dd16e}</MetaDataID>
         public string Type { get; set; }
 

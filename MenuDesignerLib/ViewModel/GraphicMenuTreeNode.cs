@@ -15,6 +15,7 @@ using FlavourBusinessToolKit;
 using FLBManager.ViewModel;
 using MenuDesigner.ViewModel.Menu;
 using MenuDesigner.ViewModel.MenuCanvas;
+using MenuItemsEditor.ViewModel.PriceList;
 using OOAdvantech.Transactions;
 using WPFUIElementObjectBind;
 
@@ -33,14 +34,24 @@ namespace MenuDesigner.ViewModel
         public readonly OrganizationStorageRef GraphicMenuStorageRef;
         public readonly OrganizationStorageRef MenuItemsStorageRef;
         readonly IGraphicMenusOwner GraphicMenusOwner;
+
+        public List<OrganizationStorageRef> PriceLists;
+
         bool Editable;
         bool PublishAllowed;
-        public GraphicMenuTreeNode(OrganizationStorageRef graphicMenuStorageRef, OrganizationStorageRef menuItemsStorageRef, FBResourceTreeNode parent, IGraphicMenusOwner owner, bool editable, bool publishAllowed = false) : base(parent)
+
+       public readonly IPriceListsOwner PriceListsOwner;
+
+        public GraphicMenuTreeNode(OrganizationStorageRef graphicMenuStorageRef, OrganizationStorageRef menuItemsStorageRef,IPriceListsOwner priceLists ,  FBResourceTreeNode parent, IGraphicMenusOwner owner, bool editable, bool publishAllowed = false) : base(parent)
         {
             GraphicMenusOwner = owner;
             Editable = editable;
             PublishAllowed = publishAllowed;
             GraphicMenuStorageRef = graphicMenuStorageRef;
+
+            //PriceLists = priceLists;
+            PriceListsOwner= priceLists;
+
             if (graphicMenuStorageRef != null && graphicMenuStorageRef.UploadService == null)
             {
 
@@ -63,9 +74,9 @@ namespace MenuDesigner.ViewModel
             });
 
 
-            DesigneCommand = new RelayCommand(async (object sender) =>
+            DesignCommand = new RelayCommand(async (object sender) =>
            {
-               await SowOnGrpaphicMenuDesigner();
+               await SowOnGraphicsMenuDesigner();
 
            });
 
@@ -91,7 +102,7 @@ namespace MenuDesigner.ViewModel
 
         }
 
-        private async Task SowOnGrpaphicMenuDesigner()
+        private async Task SowOnGraphicsMenuDesigner()
         {
             if (MenuDesignerHost.Current != null)
             {
@@ -108,7 +119,7 @@ namespace MenuDesigner.ViewModel
                     }
                 }
 
-                await MenuDesignerHost.OpenGraphicMenu(GraphicMenuStorageRef, MenuItemsStorageRef);
+                await MenuDesignerHost.OpenGraphicMenu(GraphicMenuStorageRef, MenuItemsStorageRef,PriceListsOwner);
             }
         }
 
@@ -150,7 +161,7 @@ namespace MenuDesigner.ViewModel
         public RelayCommand DeleteCommand { get; protected set; }
         public RelayCommand PublishCommand { get; protected set; }
 
-        public RelayCommand DesigneCommand { get; protected set; }
+        public RelayCommand DesignCommand { get; protected set; }
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
@@ -183,7 +194,7 @@ namespace MenuDesigner.ViewModel
                     imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuDesignerLib;Component/Resources/Images/Metro/sketch16.png"));
                     menuItem.Header = MenuDesigner.Properties.Resources.DesignGraphicMenuContextHeader;
                     menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                    menuItem.Command = DesigneCommand;
+                    menuItem.Command = DesignCommand;
                     _ContextMenuItems.Add(menuItem);
 
                     if (PublishAllowed)

@@ -29,7 +29,7 @@ namespace MenuDesigner.ViewModel.Menu
         public abstract Task SaveAndPublish(OrganizationStorageRef graphicMenuStorageRef);
 
         static object OpenGraphicMenuLock = new object();
-        public static async Task<BookViewModel> OpenGraphicMenu(OrganizationStorageRef graphicMenuStorageRef, OrganizationStorageRef graphicMenuItemsStorageRef)
+        public static async Task<BookViewModel> OpenGraphicMenu(OrganizationStorageRef graphicMenuStorageRef, OrganizationStorageRef graphicMenuItemsStorageRef, MenuItemsEditor.ViewModel.PriceList.IPriceListsOwner priceListsOwner=null)
         {
 
 
@@ -50,7 +50,7 @@ namespace MenuDesigner.ViewModel.Menu
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                 {
                     
-                    bookViewModel = BookViewModel.OpenMenu(graphicMenuStorageRef);
+                    bookViewModel = BookViewModel.OpenMenu(graphicMenuStorageRef, priceListsOwner);
 
                     stateTransition.Consistent = true;
                 }

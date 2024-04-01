@@ -332,6 +332,12 @@ namespace FlavourBusinessManager.HumanResources
             return null;
         }
 
+        public List<OrganizationStorageRef> GetPriceLists(IActivity menuMakingActivity)
+        {
+            IResourceManager organization = menuMakingActivity.Accountability.Commissioner as IResourceManager;
+            return organization.PriceLists;
+        }
+
 
     }
 }

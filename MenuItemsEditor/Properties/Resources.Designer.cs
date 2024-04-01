@@ -79,6 +79,15 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string AddPrefix {
+            get {
+                return ResourceManager.GetString("AddPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Option.
         /// </summary>
         public static string AddPreparationOtionLabel {
@@ -732,11 +741,29 @@ namespace MenuItemsEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pricelists.
+        /// </summary>
+        public static string PriceListsNodeName {
+            get {
+                return ResourceManager.GetString("PriceListsNodeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New price.
         /// </summary>
         public static string PriceOverrideLabel {
             get {
                 return ResourceManager.GetString("PriceOverrideLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish.
+        /// </summary>
+        public static string PublishMenuContextMenuHeader {
+            get {
+                return ResourceManager.GetString("PublishMenuContextMenuHeader", resourceCulture);
             }
         }
         

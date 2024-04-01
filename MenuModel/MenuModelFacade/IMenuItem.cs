@@ -128,7 +128,8 @@ namespace MenuModel
         /// <MetaDataID>{beef7cf6-a213-4794-8c50-fb8974ac186e}</MetaDataID>
         Multilingual MultilingualExtrasDescription { get; }
 
-        Multilingual MultilingualItemInfo { get;}
+        /// <MetaDataID>{f6e8abc7-87dd-44cf-b48f-f037089b570a}</MetaDataID>
+        Multilingual MultilingualItemInfo { get; }
 
 
     }

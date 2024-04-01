@@ -36,6 +36,8 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{1ad71aa0-06ac-4e8e-93e9-af361bf18e5a}</MetaDataID>
         void PublishMenu(OrganizationStorageRef storageRef);
 
+        void PublishPriceList(OrganizationStorageRef storageRef);
+
 
 
     }
@@ -68,7 +70,7 @@ namespace FlavourBusinessFacade
         public string StorageIdentity { get; set; }
 
         /// <MetaDataID>{df5946ae-3f68-4dac-92db-3f568a9a34d0}</MetaDataID>
-        public DateTime TimeStamp { get;  set; }
+        public DateTime TimeStamp { get; set; }
 
         /// <MetaDataID>{36f5651c-f9b0-4489-a536-be20a8991c22}</MetaDataID>
         public string StorageUrl { get; set; }
@@ -89,7 +91,25 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{8c56a270-32bc-4192-917d-4c7340696988}</MetaDataID>
         public OrganizationStorageRef Clone()
         {
-            return new OrganizationStorageRef() { Description = this.Description, Name = this.Name, StorageIdentity = this.StorageIdentity, StorageUrl = this.StorageUrl, TimeStamp = this.TimeStamp, UploadService= this.UploadService, PropertiesValues=this.PropertiesValues };
+            return new OrganizationStorageRef() { Description = this.Description, Name = this.Name, StorageIdentity = this.StorageIdentity, StorageUrl = this.StorageUrl, TimeStamp = this.TimeStamp, UploadService = this.UploadService, PropertiesValues = this.PropertiesValues };
+        }
+
+        /// <MetaDataID>{d56bb154-4c82-4b39-ae45-6baf261c68fe}</MetaDataID>
+        public string BlobName
+        {
+            get
+            {
+                string blobName = StorageUrl;
+                int index = blobName.LastIndexOf("/");
+                if (index != -1)
+                    blobName = blobName.Substring(index + 1);
+
+                if (blobName.LastIndexOf('.') != -1)
+                    return blobName.Substring(0, blobName.LastIndexOf('.'));
+                else
+                    return blobName;
+
+            }
         }
     }
 }

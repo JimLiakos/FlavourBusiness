@@ -688,4 +688,10 @@
   <data name="PriceOverrideLabel" xml:space="preserve">
     <value>New price</value>
   </data>
+  <data name="NonePriceListName" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PriceListSelectorLabel" xml:space="preserve">
+    <value>Pricelists:</value>
+  </data>
 </root>

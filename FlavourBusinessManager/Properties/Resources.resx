@@ -136,6 +136,9 @@
     <value>Menu</value>
     <comment>Specifies the name of the 'GraphicMenu when it is created.</comment>
   </data>
+  <data name="DefaultHallFileName" xml:space="preserve">
+    <value>Hall</value>
+  </data>
   <data name="DefaultHomeDeliveryCallCenterStationDescription" xml:space="preserve">
     <value>Call Center</value>
     <comment>Specifies the description of the home delivery call centerStationDescription station' when it is created.</comment>

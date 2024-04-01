@@ -81,10 +81,11 @@ namespace MenuPresentationModel
 
 
         /// <MetaDataID>{8b7c0f36-b4f4-4311-beb2-ec2dec9125fe}</MetaDataID>
-        public void PublishMenu(string serverStorageFolder, string previousVersionServerStorageFolder, string menuResourcesPrefix, IFileManager fileManager, string menuName)
+        public void PublishMenu(string serverStorageFolder, string previousVersionServerStorageFolder, string menuResourcesPrefix, IFileManager fileManager, OrganizationStorageRef storageRef)
         {
+            string menuBlobName = storageRef.BlobName;
 
-            if(ItemExtraInfoStyleSheet==null)
+            if (ItemExtraInfoStyleSheet == null)
                 GetItemExtraInfoStylingData();
             string rootUri = "http://localhost/devstoreaccount1";
             if (fileManager != null)
@@ -101,7 +102,7 @@ namespace MenuPresentationModel
 
                 Dictionary<string, string> pageImages = new Dictionary<string, string>();
 
-                if (jsonRestaurantMenu.OrderPadBackground!=null)
+                if (jsonRestaurantMenu.OrderPadBackground != null)
                 {
                     if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
                         pageImages[jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri] = jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri;
@@ -150,7 +151,7 @@ namespace MenuPresentationModel
 
                 }
 
-                if (jsonRestaurantMenu.OrderPadBackground!=null)
+                if (jsonRestaurantMenu.OrderPadBackground != null)
                 {
 
                     if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
@@ -320,24 +321,6 @@ namespace MenuPresentationModel
 
 
 
-
-
-            try
-            {
-                //var jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { ReferenceLoopHandling = OOAdvantech.Json.ReferenceLoopHandling.Serialize, TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, Binder = new OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder(OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Serialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization), ReferenceResolver = new OOAdvantech.Remoting.RestApi.Serialization.ReferenceResolver() };
-                //jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
-                //jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                //string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(jsonRestaurantMenu, jSetttings);
-                //jSetttings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.None, ContractResolver = new OOAdvantech.Remoting.RestApi.Serialization.JsonContractResolver(OOAdvantech.Remoting.RestApi.Serialization.JsonContractType.Deserialize, null, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializationFormat.TypeScriptJsonSerialization) };
-                //jSetttings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK";
-                //jSetttings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                //jsonEx = System.IO.File.ReadAllText(@"C:\menu.txt");
-                //var sss = OOAdvantech.Json.JsonConvert.DeserializeObject<MenuPresentationModel.JsonMenuPresentation.RestaurantMenu>(jsonEx, jSetttings);
-            }
-            catch (Exception error)
-            {
-            }
-
             string json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
 
             //
@@ -347,11 +330,17 @@ namespace MenuPresentationModel
             byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(json);
             jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
             jsonRestaurantMenuStream.Position = 0;
-            string jsonFileName = serverStorageFolder + menuName + ".json";
+            string jsonFileName = serverStorageFolder + menuBlobName + ".json";
+            string xmlFileName = serverStorageFolder + menuBlobName + ".xml";
+
+       
+
             if (fileManager != null)
                 fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
 
 
+            fileManager.Copy(storageRef.StorageUrl.Replace(fileManager.RootUri + "/", ""), xmlFileName);
+            //serverStorageFolder
             json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings);
 
             //OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings
@@ -361,7 +350,7 @@ namespace MenuPresentationModel
             jsonBuffer = System.Text.Encoding.UTF8.GetBytes(json);
             jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
             jsonRestaurantMenuStream.Position = 0;
-            jsonFileName = serverStorageFolder + menuName + "_t.json";
+            jsonFileName = serverStorageFolder + menuBlobName + "_t.json";
             if (fileManager != null)
                 fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
 
@@ -594,9 +583,9 @@ namespace MenuPresentationModel
             ItemExtraInfoStyleSheet.HeadingFont = menuItemStyle.ItemInfoHeadingFont;
             ItemExtraInfoStyleSheet.ParagraphFont = menuItemStyle.ItemInfoParagraphFont;
             ItemExtraInfoStyleSheet.ParagraphFirstLetterFont = menuItemStyle.ItemInfoParagraphFirstLetterFont;
-            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLeftIndent= menuItemStyle.ItemInfoFirstLetterLeftIndent;
-            ItemExtraInfoStyleSheet.ItemInfoFirstLetterRightIndent= menuItemStyle.ItemInfoFirstLetterRightIndent;
-            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLinesSpan= menuItemStyle.ItemInfoFirstLetterLinesSpan;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLeftIndent = menuItemStyle.ItemInfoFirstLetterLeftIndent;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterRightIndent = menuItemStyle.ItemInfoFirstLetterRightIndent;
+            ItemExtraInfoStyleSheet.ItemInfoFirstLetterLinesSpan = menuItemStyle.ItemInfoFirstLetterLinesSpan;
         }
 
         /// <MetaDataID>{4952e0dd-c560-4bd5-8f69-930e8faa101d}</MetaDataID>
@@ -703,7 +692,7 @@ namespace MenuPresentationModel
             foreach (var menuCanvasItem in _MenuCanvasItems)
                 menuCanvasItem.ObjectChangeState += ManuCanvasItemChangeState;
 
-            if(_ItemExtraInfoStyleSheet.Value==null)
+            if (_ItemExtraInfoStyleSheet.Value == null)
             {
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -745,16 +734,16 @@ namespace MenuPresentationModel
         /// <MetaDataID>{7b52ff92-c72e-4af4-b442-b411796f73dd}</MetaDataID>
         public static bool IsLandscape(OrganizationStorageRef graphicMenu)
         {
-            
+
             string menuPageHeightAsString = null;
             string menuPageWidthAsString = null;
-            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString) && graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
             {
                 double height = 0;
                 double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
                 double width = 0;
                 double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
-                return width>height;
+                return width > height;
             }
 
             return false;
@@ -764,13 +753,13 @@ namespace MenuPresentationModel
         {
             string menuPageHeightAsString = null;
             string menuPageWidthAsString = null;
-            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString)&&graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
+            if (graphicMenu.PropertiesValues.TryGetValue("MenuPageHeight", out menuPageHeightAsString) && graphicMenu.PropertiesValues.TryGetValue("MenuPageWidth", out menuPageWidthAsString))
             {
                 double height = 0;
                 double.TryParse(menuPageHeightAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out height);
                 double width = 0;
                 double.TryParse(menuPageWidthAsString, NumberStyles.Float, CultureInfo.GetCultureInfo(1033), out width);
-                return height>width;
+                return height > width;
             }
 
             return false;

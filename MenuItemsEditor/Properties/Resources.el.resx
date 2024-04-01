@@ -168,4 +168,11 @@
     <value>Εάν θέλετε να εφαρμόσετε την έκπτωση στις τιμές επιπλέον επιλογών του προϊόντος, 
 κάντε κλικ στο πλαίσιο ελέγχου επιλογών.</value>
   </data>
+  <data name="AddPrefix" xml:space="preserve">
+    <value>Πρόσθεσε</value>
+    <comment>Defines 'Add' prefix of object Name which will be added</comment>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>PublishMenuContextMenuHeader</value>
+  </data>
 </root>

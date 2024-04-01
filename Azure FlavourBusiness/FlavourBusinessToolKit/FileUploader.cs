@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using FlavourBusinessFacade;
@@ -27,6 +28,10 @@ namespace FlavourBusinessToolKit
         FileInfo GetBlobInfo(string filePath);
 
         List<FileInfo> ListBlobs(string serverStorageFolder);
+
+        Stream GetBlobStream(string filePath);
+
+
     }
 
     /// <MetaDataID>{c3074225-faa3-46ff-80f2-11feedefbec1}</MetaDataID>
@@ -45,6 +50,58 @@ namespace FlavourBusinessToolKit
                 }
                 return _CurrentFileManager;
             }
+        }
+
+        public static bool StreamEquals(Stream a, Stream b)
+        {
+            const int bufferSize = 2048;
+            if (a == b)
+            {
+                return true;
+            }
+
+            if (a == null || b == null)
+            {
+                throw new ArgumentNullException(a == null ? "a" : "b");
+            }
+
+            if (a.Length != b.Length)
+            {
+                return false;
+            }
+
+
+
+            byte[] buffer = new byte[bufferSize];
+            byte[] otherBuffer = new byte[bufferSize];
+            while ((_ = a.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                var _ = b.Read(otherBuffer, 0, otherBuffer.Length);
+
+                if (!otherBuffer.SequenceEqual(buffer))
+                {
+                    a.Seek(0, SeekOrigin.Begin);
+                    b.Seek(0, SeekOrigin.Begin);
+                    return false;
+                }
+            }
+            a.Seek(0, SeekOrigin.Begin);
+            b.Seek(0, SeekOrigin.Begin);
+            return true;
+
+
+
+            //for (int i = 0; i < a.Length; i++)
+            //{
+            //    int aByte = a.ReadByte();
+            //    int bByte = b.ReadByte();
+            //    if (aByte.CompareTo(bByte) != 0)
+            //    {
+            //        return false;
+            //    }
+            //}
+
+            //return true;
         }
     }
 
@@ -516,6 +573,22 @@ namespace FlavourBusinessToolKit
 
         }
 
+
+        public Stream GetBlobStream(string blobUrl)
+        {
+            var blobClient = CloudStorageAccount.CreateCloudBlobClient();
+            string containerName = blobUrl.Substring(0, blobUrl.IndexOf("/"));
+            blobUrl = blobUrl.Substring(blobUrl.IndexOf("/") + 1);
+            var container = blobClient.GetContainerReference(containerName);
+            if (container.Exists())
+            {
+                CloudBlockBlob blob = container.GetBlockBlobReference(blobUrl);
+                return blob.OpenRead();
+            }
+            else
+                return null;
+        }
+
         bool IFileManager.Exist(string blobUrl)
         {
             var blobClient = CloudStorageAccount.CreateCloudBlobClient();
@@ -708,6 +781,16 @@ namespace FlavourBusinessToolKit
             string userFolder = "27B45100-AF26-4E33-8846-4FA08FA6A586";
             string targetUri = RootUri + "usersfolder/" + userFolder + "/" + filePath;
             return new NativeFileInfo(new System.IO.FileInfo(targetUri));
+        }
+
+        public Stream GetBlobStream(string filePath)
+        {
+
+            string userFolder = "27B45100-AF26-4E33-8846-4FA08FA6A586";
+            string targetUri = RootUri + "usersfolder/" + userFolder + "/" + filePath;
+            if (File.Exists(targetUri))
+                return File.OpenRead(targetUri);
+            return null;
         }
 
 

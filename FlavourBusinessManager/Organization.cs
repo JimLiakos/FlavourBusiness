@@ -22,6 +22,7 @@ using System.Globalization;
 using FlavourBusinessManager.EndUsers;
 using System.Resources;
 using FlavourBusinessManager.Properties;
+using OOAdvantech.Json;
 
 //using FlavourBusinessToolKit;
 
@@ -324,7 +325,7 @@ namespace FlavourBusinessManager
             else
             {
                 string blobUrl = fbStorage.Url;
-                var uploadSlot= new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                var uploadSlot = new UploadSlot(blobUrl, FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
                 uploadSlot.FileUploaded += UploadSlot_FileUploaded;
                 uploadSlot.Tag = fbStorage;
                 return uploadSlot;
@@ -338,7 +339,7 @@ namespace FlavourBusinessManager
 
             var fbStorage = uploadSlot.Tag as FlavourBusinessStorage;
 
-            if (fbStorage != null&& fbStorage.FlavourStorageType==OrganizationStorages.PriceList) 
+            if (fbStorage != null && fbStorage.FlavourStorageType == OrganizationStorages.PriceList)
             {
                 foreach (var serviceContext in this._ServicesContexts)
                 {
@@ -787,8 +788,8 @@ namespace FlavourBusinessManager
                             if (fbstorage.Name != name)
                             {
                                 storageUpdated = true;
-                                if (fbstorage.FlavourStorageType == OrganizationStorages.GraphicMenu)
-                                    RenamePublishedGraphicMenu(fbstorage.StorageIdentity, fbstorage.Version, fbstorage.Name, name);
+                                //if (fbstorage.FlavourStorageType == OrganizationStorages.GraphicMenu)
+                                //    RenamePublishedGraphicMenu(fbstorage.StorageIdentity, fbstorage.Version, fbstorage.Name, name);
 
                                 fbstorage.Name = name;
 
@@ -803,26 +804,7 @@ namespace FlavourBusinessManager
                                 ObjectID objectID = null;
                                 string orgStorageIdentity = null;
                                 StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
-                                string blobUrl = "usersfolder/" + Identity + "/" + name + ".xml";
 
-                                string oldBlobUrl = fbstorage.Url;
-
-                                if (blobUrl.IndexOf(blobsContainerName + "/") == 0)
-                                    blobUrl = blobUrl.Substring((blobsContainerName + "/").Length);
-
-                                if (oldBlobUrl.IndexOf(blobsContainerName + "/") == 0)
-                                    oldBlobUrl = oldBlobUrl.Substring((blobsContainerName + "/").Length);
-
-
-                                var existBlob = container.GetBlockBlobReference(oldBlobUrl);
-                                var newBlob = container.GetBlockBlobReference(blobUrl);
-                                //create a new blob
-                                var task = newBlob.StartCopyAsync(existBlob);
-                                task.Wait();
-
-                                fbstorage.Url = "usersfolder/" + blobUrl;
-                                //delete the old
-                                existBlob.Delete();
                             }
 
                             if (fbstorage.Description != description)
@@ -841,7 +823,7 @@ namespace FlavourBusinessManager
 
 
                     foreach (var servicesContext in ServicesContexts)
-                        servicesContext.GetRunTime().GraphicMenuStorageMetaDataUpdated(storageRef);
+                        servicesContext.GetRunTime().StorageMetaDataUpdated(storageRef);
 
 
 
@@ -1217,19 +1199,7 @@ namespace FlavourBusinessManager
             if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
                 throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
 
-            RawStorageData rawStorageData = new RawStorageData(GetStorage(OrganizationStorages.RestaurantMenus), null);
-            ObjectStorage restMenusData = ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
-
-            rawStorageData = new RawStorageData(storageRef, null);
-
-            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
-
-            //RawStorageData rawrestaurantMenuData = new RawStorageData(GetStorage(OrganizationStorages.RestaurantMenus), null);
-            //OOAdvantech.Linq.Storage restaurantMenuDataStorage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestaurantMenuData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
-
-
-            IRestaurantMenuPublisher restaurantMenu = (from menu in storage.GetObjectCollection<IRestaurantMenuPublisher>()
-                                                       select menu).FirstOrDefault();
+            ;
             ObjectID objectID = null;
             string orgStorageIdentity = null;
             StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
@@ -1264,6 +1234,8 @@ namespace FlavourBusinessManager
 
             string serverStorageFolder = string.Format("usersfolder/{0}/Menus/{1}{2}", orgIdentity, storageRef.StorageIdentity, versionSuffix);
 
+
+
             string oldVersionSuffix = "";
             if (!string.IsNullOrWhiteSpace(oldVersion))
                 oldVersionSuffix = "/" + oldVersion + "/";
@@ -1274,11 +1246,39 @@ namespace FlavourBusinessManager
 
 
             IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+            string menuBlobName = storageRef.BlobName;
 
-            restaurantMenu.PublishMenu(serverStorageFolder, previousVersionServerStorageFolder, "", fileManager, storageRef.Name);
+            string xmlFileName = serverStorageFolder + menuBlobName + ".xml";
+
+            try
+            {
+                string previousVersionXmlFileName = previousVersionServerStorageFolder + menuBlobName + ".xml";
+
+                Stream previousVersionXmlStream = fileManager.GetBlobStream(previousVersionXmlFileName);
+                Stream xmlFileNameStream = fileManager.GetBlobStream(storageRef.StorageUrl.Replace(fileManager.RootUri + "/", ""));
+                if (FileManager.StreamEquals(previousVersionXmlStream, xmlFileNameStream))
+                {
+                    return;
+                }
+            }
+            catch (Exception error)
+            {
 
 
+            }
+            RawStorageData rawStorageData = new RawStorageData(GetStorage(OrganizationStorages.RestaurantMenus), null);
+            ObjectStorage restMenusData = ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider");
 
+            rawStorageData = new RawStorageData(storageRef, null);
+
+            OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenu", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+
+
+            IRestaurantMenuPublisher restaurantMenu = (from menu in storage.GetObjectCollection<IRestaurantMenuPublisher>()
+                                                       select menu).FirstOrDefault();
+
+
+            restaurantMenu.PublishMenu(serverStorageFolder, previousVersionServerStorageFolder, "", fileManager, storageRef);
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.RequiresNew))
             {
@@ -1311,24 +1311,154 @@ namespace FlavourBusinessManager
 
             menuItemsStorageRef.UploadService = null;
 
-
-
             //PublishMenuRestaurantMenuData(operativeMenuItemsStorageRef);
-
 
             operativeMenuItemsStorageRef = GetStorage(OrganizationStorages.OperativeRestaurantMenu);
             operativeMenuItemsStorageRef.UploadService = null;
 
             foreach (var servicesContext in ServicesContexts)
             {
-                servicesContext.GetRunTime().GraphicMenuStorageMetaDataUpdated(storageRef);
+                servicesContext.GetRunTime().StorageMetaDataUpdated(storageRef);
                 var RestaurantMenuDataSharedUri = servicesContext.GetRunTime().RestaurantMenuDataSharedUri;
                 servicesContext.GetRunTime().OperativeRestaurantMenuDataUpdated(operativeMenuItemsStorageRef);
                 RestaurantMenuDataSharedUri = servicesContext.GetRunTime().RestaurantMenuDataSharedUri;
             }
 
+        }
+
+
+        public void PublishPriceList(OrganizationStorageRef priceListStorageRef)
+        {
+            AuthUser authUser = System.Runtime.Remoting.Messaging.CallContext.GetData("AutUser") as AuthUser;
+            if (authUser == null)
+                throw new AuthenticationException();
+
+            bool authorized = false;
+            if (authUser != null)
+            {
+                AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
+                if (authUserRef.GetContextRoleObject<Organization>() == this)
+                    authorized = true;
+            }
+            if (!authorized)//(authUser.User_ID != this.SignUpUserIdentity)
+                throw new InvalidCredentialException("The user " + authUser.Name + " isn't recognized as organization owner.");
+
+
+            ObjectID objectID = null;
+            string orgStorageIdentity = null;
+            StorageInstanceRef.GetObjectID(this, out objectID, out orgStorageIdentity);
+
+            var organizationStorage = (from fbStorage in Storages
+                                       where fbStorage.StorageIdentity == priceListStorageRef.StorageIdentity
+                                       select fbStorage).FirstOrDefault();
+            string version = "";
+            string oldVersion = organizationStorage.Version;
+
+            if (string.IsNullOrWhiteSpace(oldVersion))
+            {
+                version = "v1";
+
+            }
+            else
+            {
+                int v = int.Parse(oldVersion.Replace("v", ""));
+                v++;
+                version = "v" + v.ToString();
+            }
+
+
+
+            string orgIdentity = this.Identity;
+
+            string versionSuffix = "";
+            if (!string.IsNullOrWhiteSpace(version))
+                versionSuffix = "/" + version + "/";
+            else
+                versionSuffix = "/";
+
+
+
+            string serverStorageFolder = string.Format("usersfolder/{0}/PriceLists/{1}{2}", orgIdentity, priceListStorageRef.StorageIdentity, versionSuffix);
+
+            string oldVersionSuffix = "";
+            if (!string.IsNullOrWhiteSpace(oldVersion))
+                oldVersionSuffix = "/" + oldVersion + "/";
+            else
+                oldVersionSuffix = "/";
+
+
+            FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(priceListStorageRef, null);
+            OOAdvantech.Linq.Storage priceListStorage = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("PriceList", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+
+
+            var priceList = (from m_priceList in priceListStorage.GetObjectCollection<PriceList.PriceList>()
+                             select m_priceList).FirstOrDefault();
+
+
+            string previousVersionServerStorageFolder = string.Format("usersfolder/{0}/PriceLists/{1}{2}", orgIdentity, priceListStorageRef.StorageIdentity, oldVersionSuffix);
+
+            string priceListBlobName = serverStorageFolder + priceListStorageRef.StorageUrl.Substring(priceListStorageRef.StorageUrl.LastIndexOf("/") + 1).Replace(".xml", ".json");
+
+            string previousVersionPriceListBlobName = previousVersionServerStorageFolder + priceListStorageRef.StorageUrl.Substring(priceListStorageRef.StorageUrl.LastIndexOf("/") + 1).Replace(".xml", ".json");
+
+
+            if (WritePublicPriceListMenuDataIfChanged(priceList, priceListBlobName, previousVersionPriceListBlobName))
+            {
+                organizationStorage.Version = version;
+                priceListStorageRef.Version = version;
+
+
+                foreach (var servicesContext in ServicesContexts)
+                    servicesContext.GetRunTime().StorageMetaDataUpdated(priceListStorageRef);
+            }
+
+
+
+
 
         }
+
+        private bool WritePublicPriceListMenuDataIfChanged(PriceList.PriceList priceList, string jsonFileName, string previousVersionJsonFileName)
+        {
+            string json = JsonConvert.SerializeObject(priceList, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize, PreserveReferencesHandling = PreserveReferencesHandling.All });
+
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+
+
+
+
+            var jSettings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings;
+            string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(priceList, jSettings);
+            if (fileManager.Exist(previousVersionJsonFileName))
+            {
+                Stream previousVersionJsonStream = fileManager.GetBlobStream(previousVersionJsonFileName);
+
+                byte[] buffer = new byte[previousVersionJsonStream.Length];
+                previousVersionJsonStream.Position = 0;
+                previousVersionJsonStream.Read(buffer, 0, (int)previousVersionJsonStream.Length);
+                previousVersionJsonStream.Close();
+                string oldJsonEx = System.Text.Encoding.UTF8.GetString(buffer);
+
+                if (oldJsonEx.Length == jsonEx.Length && oldJsonEx == jsonEx)
+                    return false;
+            }
+
+
+            MemoryStream jsonRestaurantMenuStream = new MemoryStream();
+            byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(jsonEx);
+            jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
+            jsonRestaurantMenuStream.Position = 0;
+
+            if (fileManager != null)
+                fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
+
+            return true;
+
+
+        }
+
+
+
 
         #endregion
 

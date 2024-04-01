@@ -288,7 +288,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.el.resx" />
+    <EmbeddedResource Include="Properties\Resources.el.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -611,6 +613,8 @@
     <Resource Include="Image\DefaultMealCourse24.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\cloud-computing16.png" />
+    <Resource Include="Image\cloud-computing24.png" />
     <Content Include="Image\DefaultMealCourse.svg" />
     <Resource Include="Image\more24.png" />
     <Resource Include="Image\more16.png" />

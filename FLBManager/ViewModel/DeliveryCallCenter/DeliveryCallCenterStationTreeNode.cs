@@ -97,7 +97,7 @@ namespace FLBManager.ViewModel.Delivery
             if (!string.IsNullOrWhiteSpace(graphicMenuStorageIdentity))
             {
                 var graphicMenuTreeNode = parent.ServicesContextPresentation.Company.GraphicMenus.Where(x => x.GraphicMenuStorageRef.StorageIdentity==deliveryCallCenterStation.CallcenterStationIdentity).FirstOrDefault();
-                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
+                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), graphicMenuTreeNode.PriceListsOwner, this, this, false);
             }
         }
 
@@ -416,7 +416,7 @@ namespace FLBManager.ViewModel.Delivery
                 this.HomeDeliveryCallCenterStation.GraphicMenuStorageIdentity=graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity;
                 //this.DeliveryCallCenterStationsTreeNode.ServiceContextInfrastructure.ServicesContextPresentation.AssignGraphicMenu(graphicMenuTreeNode);
                 this.HomeDeliveryServiceTreeNode.ServicesContextPresentation.AssignGraphicMenu(graphicMenuTreeNode);
-                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
+                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), graphicMenuTreeNode.PriceListsOwner, this, this, false);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             }
         }

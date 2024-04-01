@@ -52,6 +52,30 @@ namespace DontWaitApp
     public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
+
+        /// <exclude>Excluded</exclude>
+        string _PriceListUrl;
+
+        /// <MetaDataID>{004f98c9-bbe8-46e8-9d33-0b6e95beb073}</MetaDataID>
+        [PersistentMember(nameof(_PriceListUrl))]
+        [BackwardCompatibilityID("+20")]
+        public string PriceListUrl
+        {
+            get => _PriceListUrl;
+            set
+            {
+                if (_PriceListUrl != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PriceListUrl = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
         /// <exclude>Excluded</exclude>
         DateTime? _ServiceTime;
 
@@ -454,6 +478,8 @@ namespace DontWaitApp
 
             }
         }
+
+        
 
 
         /// <exclude>Excluded</exclude>
@@ -1074,6 +1100,7 @@ namespace DontWaitApp
                     MenuName = MenuName,
                     MenuRoot = MenuRoot,
                     MenuFile = MenuFile,
+                    PriceListUrl= PriceListUrl,
                     ClientSessionID = ClientSessionID,
                     MainSessionID = MainSessionID,
                     FoodServiceClientSessionUri = FoodServiceClientSessionUri,
@@ -1124,7 +1151,7 @@ namespace DontWaitApp
         IFoodServiceClientSession _FoodServicesClientSession;
 
         /// <MetaDataID>{be42123c-b940-44e6-91d1-d2a9e2b2ca7a}</MetaDataID>
-        public FlavourBusinessFacade.EndUsers.IFoodServiceClientSession FoodServicesClientSession
+        public IFoodServiceClientSession FoodServicesClientSession
         {
             get
             {
@@ -1240,9 +1267,20 @@ namespace DontWaitApp
 #endif
                 //storeRef.StorageUrl = "https://angularhost.z16.web.core.windows.net/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("usersfolder"));
 
+
+                var priceListStorageRef = clientSessionData.PriceList;
+#if !DeviceDotNet
+                if (priceListStorageRef != null)
+                    priceListStorageRef.StorageUrl = "https://dev-localhost/devstoreaccount1/" + priceListStorageRef.StorageUrl.Substring(priceListStorageRef.StorageUrl.IndexOf("usersfolder"));
+
+#endif
+
+
+
                 MenuName = storeRef.Name;
                 MenuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
                 MenuFile = storeRef.StorageUrl.Substring(storeRef.StorageUrl.LastIndexOf("/") + 1);
+                PriceListUrl = priceListStorageRef?.StorageUrl;
                 ClientSessionID = FoodServicesClientSession.SessionID;
                 MainSessionID = FoodServicesClientSession.MainSession?.SessionID;
                 FoodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(FoodServicesClientSession);
@@ -1257,6 +1295,8 @@ namespace DontWaitApp
                 FoodServicesClientSession.ObjectChangeState += FoodServicesClientSessionChangeState;
                 FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
                 FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
+
+                
 
 
 
@@ -1411,6 +1451,7 @@ namespace DontWaitApp
 
 
         }
+        /// <MetaDataID>{fa575847-542b-44f2-96c2-51398a146e95}</MetaDataID>
         public async Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
         {
             Bill = FoodServicesClientSession?.GetBill(itemPreparations);

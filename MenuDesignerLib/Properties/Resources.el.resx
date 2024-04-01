@@ -268,4 +268,7 @@
   <data name="PriceOverrideLabel" xml:space="preserve">
     <value>Νέα τιμή</value>
   </data>
+  <data name="PriceListSelectorLabel" xml:space="preserve">
+    <value>Τιμοκατάλογοι:</value>
+  </data>
 </root>

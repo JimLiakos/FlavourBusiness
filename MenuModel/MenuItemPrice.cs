@@ -228,7 +228,7 @@ namespace MenuModel
                     select customizedPrice).FirstOrDefault();
         }
 
-        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        public decimal GetDefaultPrice(IPricedSubject pricedSubject)
         {
             return pricedSubject.Price;
         }

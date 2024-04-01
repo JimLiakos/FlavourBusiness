@@ -7,6 +7,7 @@ using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.HumanResources;
 using MenuModel;
 using OOAdvantech;
+
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -16,9 +17,14 @@ namespace FlavourBusinessManager.ServicesContextResources
     /// <MetaDataID>{9b6776e7-0c74-4bb0-80d3-66f13ed99260}</MetaDataID>
     [BackwardCompatibilityID("{9b6776e7-0c74-4bb0-80d3-66f13ed99260}")]
     [Persistent()]
-    public class ServiceArea : MarshalByRefObject, IServiceArea, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ServiceArea : MarshalByRefObject, IServiceArea,ISalesPoint, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-      
+
+        [Association("ServiceAreaPriceLists", Roles.RoleA, "18dcd9d3-5778-4e2b-8b17-3ca25574033b")]
+        [RoleAMultiplicityRange(0)]
+        [PersistentMember]
+        public OOAdvantech.Collections.Generic.Set<FlavourBusinessStorage> PricelistStorageRefs = new OOAdvantech.Collections.Generic.Set<FlavourBusinessStorage>();
+
         /// <MetaDataID>{b3f32e8c-f23e-4338-8fa3-2d57ba439202}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+6")]
@@ -244,8 +250,33 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{24944b0d-f734-44d4-8565-a3ff9a72c3d0}</MetaDataID>
-        public List<OrganizationStorageRef> PriceLists => throw new NotImplementedException();
+        public List<OrganizationStorageRef> PriceLists
+        {
+            get
+            {
 
+                List<OrganizationStorageRef> priceLists = new List<OrganizationStorageRef>();
+
+                string urlRoot = RawStorageCloudBlob.BlobsStorageHttpAbsoluteUri;
+                foreach (var fbStorage in PricelistStorageRefs)
+                {
+                    try
+                    {
+                        var storageUrl = urlRoot + fbStorage.Url;
+                        var lastModified = RawStorageCloudBlob.GetBlobLastModified(fbStorage.Url);
+                        OrganizationStorageRef storageRef = new OrganizationStorageRef { StorageIdentity = fbStorage.StorageIdentity, FlavourStorageType = fbStorage.FlavourStorageType, Name = fbStorage.Name, StorageUrl = storageUrl, TimeStamp = lastModified.Value.UtcDateTime, Version = fbStorage.Version };
+                        priceLists.Add(storageRef);
+                    }
+                    catch (Exception error)
+                    {
+                        
+                    }
+
+                }
+                return priceLists;
+
+            }
+        }
 
         /// <MetaDataID>{fbed765d-b818-45e3-81d9-64ce055ccaea}</MetaDataID>
         public void AddServicePoint(IHallServicePoint servicePoint)
@@ -312,11 +343,18 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             ServicePointRunTime.ServicesContextRunTime.Current.AssignPriceList(priceListStorageRef);
+            var fbStorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x => x.StorageIdentity == priceListStorageRef.StorageIdentity).First();
 
-            FlavourBusinessToolKit.RawStorageData rawPriceListData = new FlavourBusinessToolKit.RawStorageData(priceListStorageRef, null);
-            OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("PriceList", rawPriceListData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
-            var priceList = (from m_priceList in restMenusData.GetObjectCollection<IPriceList>()
-                                  select m_priceList).FirstOrDefault();
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                PricelistStorageRefs.Add(fbStorage);
+                stateTransition.Consistent = true;
+            }
+
+            //FlavourBusinessToolKit.RawStorageData rawPriceListData = new FlavourBusinessToolKit.RawStorageData(priceListStorageRef, null);
+            //OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("PriceList", rawPriceListData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
+            //var priceList = (from m_priceList in restMenusData.GetObjectCollection<IPriceList>()
+            //                 select m_priceList).FirstOrDefault();
 
 
         }
@@ -324,7 +362,14 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{3cab0aaa-91be-48c8-9edb-07dd51a0d642}</MetaDataID>
         public void RemovePriceList(OrganizationStorageRef priceListStorageRef)
         {
-            throw new NotImplementedException();
+            ServicePointRunTime.ServicesContextRunTime.Current.AssignPriceList(priceListStorageRef);
+            var fbStorage = ServicePointRunTime.ServicesContextRunTime.Current.Storages.Where(x => x.StorageIdentity == priceListStorageRef.StorageIdentity).FirstOrDefault();
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                PricelistStorageRefs.Remove(fbStorage);
+                stateTransition.Consistent = true;
+            }
         }
     }
+
 }

@@ -11,7 +11,7 @@ using OOAdvantech.Json;
 namespace MenuModel.JsonViewModel
 {
     /// <MetaDataID>{dcf114f9-d0ef-4301-bec1-273571f309bd}</MetaDataID>
-    public class MenuFoodItem : TypedObject, IMenuItem
+    public class MenuFoodItem : TypedObject, IMenuItem, IClassified
     {
         /// <MetaDataID>{7ba12cf1-2fc2-4462-9549-e79e0cabac4b}</MetaDataID>
         public MenuFoodItem()
@@ -33,7 +33,7 @@ namespace MenuModel.JsonViewModel
             _PromptForDefault = new Multilingual(menuItem.MultilingualPromptForDefault);
             _PromptForCustom = new Multilingual(menuItem.MultilingualPromptForCustom);
             _ExtrasDescription = new Multilingual(menuItem.MultilingualExtrasDescription);
-            _ItemInfo= new Multilingual(menuItem.MultilingualItemInfo);
+            _ItemInfo = new Multilingual(menuItem.MultilingualItemInfo);
             AllowCustom = menuItem.AllowCustom;
             Stepper = menuItem.Stepper;
             Description = menuItem.Description;
@@ -82,6 +82,14 @@ namespace MenuModel.JsonViewModel
             }
 
             PartofMeals = (from partOfMeal in menuItem.PartofMeals select new PartofMeal(partOfMeal, mappedObject)).OfType<IPartofMeal>().ToList();
+
+            if ((menuItem as IClassified)?.Class != null)
+            {
+                if (mappedObject.ContainsKey((menuItem as IClassified)?.Class))
+                    Class = mappedObject[(menuItem as IClassified)?.Class] as IClass;
+                else
+                    Class = new ItemsCategory((menuItem as IClassified)?.Class as IItemsCategory, mappedObject);
+            }
 
         }
 #endif
@@ -166,6 +174,7 @@ namespace MenuModel.JsonViewModel
         Multilingual _ItemInfo = new Multilingual();
 
 
+        /// <MetaDataID>{71180208-2189-42ef-b3fd-e92256109678}</MetaDataID>
         [JsonIgnore]
         public string ItemInfo { get => _ItemInfo.GetValue<string>(); set => _ItemInfo.SetValue<string>(value); }
 
@@ -245,8 +254,9 @@ namespace MenuModel.JsonViewModel
         /// <MetaDataID>{16ea71a6-be2d-4798-969a-3768fb00bcbb}</MetaDataID>
         public Multilingual MultilingualExtrasDescription { get { return new Multilingual(_ExtrasDescription); } set { _ExtrasDescription = value; } }
 
+        /// <MetaDataID>{7636066a-f049-4d07-b914-78e00a0cfa6f}</MetaDataID>
         public Multilingual MultilingualItemInfo { get { return new Multilingual(_ItemInfo); } set { _ItemInfo = value; } }
-        
+
 
         /// <MetaDataID>{7764429b-4b51-45b6-8257-1dbad77f6509}</MetaDataID>
         public bool Stepper { get; set; }
@@ -255,8 +265,10 @@ namespace MenuModel.JsonViewModel
         public IList<IPartofMeal> PartofMeals { get; set; }
         /// <MetaDataID>{31dbf330-3556-459f-8418-fd93f915aa70}</MetaDataID>
         public bool SelectorAlwaysInDescription { get; set; }
+        /// <MetaDataID>{69904e33-83d5-4a93-95a5-286e69b4b274}</MetaDataID>
+        public IClass Class { get; set; }
 
-        
+
 
 
 
@@ -400,7 +412,7 @@ namespace MenuModel.JsonViewModel
             return customizedPrice;
         }
 
-        public decimal GetDeafultPrice(IPricedSubject pricedSubject)
+        public decimal GetDefaultPrice(IPricedSubject pricedSubject)
         {
             return pricedSubject.Price;
         }
@@ -417,5 +429,54 @@ namespace MenuModel.JsonViewModel
             throw new NotImplementedException();
         }
     }
+
+
+    /// <MetaDataID>{c7db335f-1871-4187-b681-e77b2ea07e41}</MetaDataID>
+    public class ItemsCategory : IClass, IClassified
+    {
+        /// <MetaDataID>{743dc99b-3a1e-43f5-8fdc-139c639c53c6}</MetaDataID>
+        public ItemsCategory(IItemsCategory itemsCategory, Dictionary<object, object> mappedObject)
+        {
+            Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
+            mappedObject[itemsCategory] = this;
+            Name = itemsCategory.Name;
+            if (itemsCategory.Parent != null)
+            {
+                if (mappedObject.ContainsKey(itemsCategory.Parent))
+                    Class = mappedObject[itemsCategory.Parent] as IItemsCategory;
+                else
+                    Class = new ItemsCategory(itemsCategory.Parent, mappedObject);
+            }
+        }
+
+        /// <MetaDataID>{1e5395e7-464f-474f-b5c2-c50518a7a55d}</MetaDataID>
+        public IList<IClassified> ClassifiedItems { get; } = new List<IClassified>();
+
+        /// <MetaDataID>{8cedcc5f-e469-4338-b83d-01cf6ddfd530}</MetaDataID>
+        public string Name { get; set; }
+        /// <MetaDataID>{f0a5f447-0dd0-4fb5-972d-ca6686d75598}</MetaDataID>
+        public IClass Class { get; set; }
+        /// <MetaDataID>{e907f697-b350-440f-ab85-638f3ececef0}</MetaDataID>
+        public string Uri { get; set; }
+
+        /// <MetaDataID>{58dcc70c-4a2e-401e-9e83-59b820520bf9}</MetaDataID>
+        public void AddClassifiedItem(IClassified classifiedItem)
+        {
+            ClassifiedItems.Add(classifiedItem);
+        }
+
+        /// <MetaDataID>{a5a3bea4-5b0f-4a20-aae6-e667679ed7fa}</MetaDataID>
+        public void InsertClassifiedItem(int index, IClassified classifiedItem)
+        {
+            ClassifiedItems.Insert(0, classifiedItem);
+        }
+
+        /// <MetaDataID>{5b4d8188-dc96-474f-ad62-f1bef50fc34f}</MetaDataID>
+        public void RemoveClassifiedItem(IClassified classifiedItem)
+        {
+            ClassifiedItems.Remove(classifiedItem);
+        }
+    }
+
 
 }

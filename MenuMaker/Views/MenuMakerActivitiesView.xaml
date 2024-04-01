@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Behaviors="clr-namespace:WPFUIElementObjectBind.Behaviors;assembly=WPFConnectableControls"
-             xmlns:local="clr-namespace:MenuMaker.Views" xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" xmlns:resx="clr-namespace:MenuMaker.Properties"
+             xmlns:local="clr-namespace:MenuMaker.Views" 
+             xmlns:ControlsEX="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls" 
+             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
+             xmlns:resx="clr-namespace:MenuMaker.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -68,7 +71,7 @@
                 </Border>
             </Grid>
 
-            <TreeView  BorderThickness="0" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"  x:Name="MenuItemsTreeView"  ItemsSource="{Binding Resources}"  >
+            <TreeView  BorderThickness="0" Grid.Row="1" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"  x:Name="MenuItemsTreeView"  ItemsSource="{Binding Resources}"  >
                 <!--<TreeView.Resources>
                 
                 </TreeView.Resources>-->

@@ -38,7 +38,7 @@ namespace MenuDesigner.Views
             WebBrowserHost.DataContext = FlavoursOrderServer;
             this.GetObjectContext().RunUnderContextTransaction(new Action(() =>
             {
-                GraphickMenuResources = new Dictionary<string, MemoryStream>();
+                GraphicMenuResources = new Dictionary<string, MemoryStream>();
                 
                 MenuModel.IMenuItem firstMenuItemOfGraphicMenu = BookViewModel.RestaurantMenu.MenuCanvasItems.OfType<MenuPresentationModel.MenuCanvas.MenuCanvasFoodItem>().FirstOrDefault()?.MenuItem;
                 if(firstMenuItemOfGraphicMenu!=null)
@@ -48,7 +48,9 @@ namespace MenuDesigner.Views
                     string defaultMealTypeUri=(from mealType in storage.GetObjectCollection<MenuModel.FixedMealType>()
                      select mealType).ToList().Where(x => x.Courses.Count == 2).FirstOrDefault()?.MealTypeUri;
 
-                    
+                    string priceListUrl = null;
+                    if (BookViewModel.PriceList != null && BookViewModel.PriceList.PriceListStorageRef != null)
+                        priceListUrl = "customscheme://PriceList/pricelist.json";
                     FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData = new DontWaitApp.MenuData()
                     {
                         ServicesPointName = "",
@@ -57,6 +59,7 @@ namespace MenuDesigner.Views
                         MenuName = "Marzano Phone",
                         MenuFile = "Marzano Phone.json",
                         MenuRoot = "customscheme://Menu/",
+                        PriceListUrl= priceListUrl,
                         ClientSessionID = "6ac1ac9751274733a6554312621b09a591000000296",
                         DefaultMealTypeUri = defaultMealTypeUri
                     };
@@ -65,7 +68,8 @@ namespace MenuDesigner.Views
 
 
 
-                BookViewModel.CreateMenuPreview(FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuRoot, FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuName, GraphickMenuResources);
+                BookViewModel.CreateMenuPreview(FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuRoot, FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuName, GraphicMenuResources);
+                BookViewModel.PropertyChanged += BookViewModel_PropertyChanged;
 
             }));
             string url = @"https://localhost:4300/";
@@ -77,11 +81,38 @@ namespace MenuDesigner.Views
             FlavoursOrderServer.Initialize();
         }
 
-        Dictionary<string, MemoryStream> GraphickMenuResources = null;
+        private void BookViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ViewModel.MenuCanvas.BookViewModel.PriceList))
+            {
+                string priceListUrl = null;
+                if (BookViewModel.PriceList != null && BookViewModel.PriceList.PriceListStorageRef != null)
+                    priceListUrl = "customscheme://PriceList/pricelist.json";
+                FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData = new DontWaitApp.MenuData()
+                {
+                    ServicesPointName = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.ServicesPointName,
+                    ServicesContextLogo = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.ServicesContextLogo,
+                    ServicePointIdentity = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity,
+                    MenuName = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuName,
+                    MenuFile = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuFile,
+                    MenuRoot = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.MenuRoot,
+                    PriceListUrl = priceListUrl,
+                    ClientSessionID = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.ClientSessionID,
+                    DefaultMealTypeUri = FlavoursOrderServer.FoodServicesClientSessionViewModel.MenuData.DefaultMealTypeUri
+                };
+
+
+                BookViewModel.CreatePriceListPreview(GraphicMenuResources);
+
+                Browser.Reload(ignoreCache: false);
+            }
+        }
+
+        Dictionary<string, MemoryStream> GraphicMenuResources = null;
 
         private void Browser_ProcessRequest(Uri requestUri, CustomProtocolResponse response)
         {
-            response.Stream = GraphickMenuResources[requestUri.ToString().ToLower()];
+            response.Stream = GraphicMenuResources[requestUri.ToString().ToLower()];
         }
         public void SetLanguage(CultureInfo culture)
         {

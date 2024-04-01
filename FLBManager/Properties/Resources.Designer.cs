@@ -574,7 +574,7 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PriceList.
+        ///   Looks up a localized string similar to Pricelist.
         /// </summary>
         public static string PriceListTitle {
             get {

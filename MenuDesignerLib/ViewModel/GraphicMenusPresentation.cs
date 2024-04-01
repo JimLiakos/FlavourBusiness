@@ -197,7 +197,7 @@ namespace MenuDesigner.ViewModel
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                             {
 
-                                var bookViewModel = BookViewModel.OpenMenu(_StorageRef);
+                                var bookViewModel = BookViewModel.OpenMenu(_StorageRef,null);
                                 stateTransition.Consistent = true;
                                 return bookViewModel;
 

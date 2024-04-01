@@ -1836,13 +1836,13 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "RemoveGraphicMenu", args, argsTypes);
         }
         
-        public void GraphicMenuStorageMetaDataUpdated(FlavourBusinessFacade.OrganizationStorageRef graphicMenuStorageRef)
+        public void StorageMetaDataUpdated(FlavourBusinessFacade.OrganizationStorageRef storageRef)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
-            args[0] = graphicMenuStorageRef;
+            args[0] = storageRef;
             argsTypes[0] = typeof(FlavourBusinessFacade.OrganizationStorageRef);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GraphicMenuStorageMetaDataUpdated", args, argsTypes);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "StorageMetaDataUpdated", args, argsTypes);
         }
         
         public void OperativeRestaurantMenuDataUpdated(FlavourBusinessFacade.OrganizationStorageRef restaurantMenusDataStorageRef)
@@ -2125,6 +2125,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetServicePoint", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IServicePoint>(retValue);
+        }
+        
+        public void ObjectStorageUpdate(string storageIdentity, FlavourBusinessFacade.OrganizationStorages flavourStorageType)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = storageIdentity;
+            argsTypes[0] = typeof(string);
+            args[1] = flavourStorageType;
+            argsTypes[1] = typeof(FlavourBusinessFacade.OrganizationStorages);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "ObjectStorageUpdate", args, argsTypes);
         }
     }
     
@@ -9943,6 +9954,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 args[0] = value;
                 argsTypes[0] = typeof(string);
                 this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_OrderComment", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.OrganizationStorageRef PriceList
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_PriceList", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.OrganizationStorageRef>(retValue);
             }
         }
         

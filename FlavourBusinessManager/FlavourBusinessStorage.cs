@@ -1,4 +1,5 @@
 using FlavourBusinessFacade;
+using Microsoft.Azure.Storage;
 using OOAdvantech.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -172,6 +173,26 @@ namespace FlavourBusinessManager
 
             }
         }
+
+        public string BlobName
+        {
+            get
+            {
+                string blobName = Url;
+                int index = blobName.LastIndexOf("/");
+                if (index != -1)
+                    blobName = blobName.Substring(index + 1);
+
+                if (blobName.LastIndexOf('.') != -1)
+                    return blobName.Substring(0, blobName.LastIndexOf('.'));
+                else
+                    return blobName;
+
+            }
+        }
+
+
+
         /// <MetaDataID>{170c2448-eef2-411a-a67e-c4d1e102b472}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()

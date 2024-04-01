@@ -176,6 +176,7 @@ namespace FLBManager.ViewModel
         {
             get
             {
+                System.Windows.Controls.MenuItem menuItem=null;
                 var selectedItemContextMenuItems = _Company.SelectedItemContextMenuItems;
                 if (selectedItemContextMenuItems != null)
                     return selectedItemContextMenuItems;

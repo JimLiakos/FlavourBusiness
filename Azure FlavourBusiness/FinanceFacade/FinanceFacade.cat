@@ -5681,7 +5681,7 @@
 			    supplier   	"checkoutManager"
 			    quidu      	"64ACDCF10367"
 			    messages   	(list Messages
-				(object Message "Pay(   )"
+				(object Message "Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 				    quid       	"64ACE4670198"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -8428,7 +8428,7 @@
 			nlines     	1
 			max_width  	10
 			justify    	0
-			label      	"Pay(   )"
+			label      	"Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)
@@ -8698,7 +8698,7 @@
 			nlines     	1
 			max_width  	10
 			justify    	0
-			label      	"Pay(   )"
+			label      	"Pay(FinanceFacade.IPayment, FinanceFacade.PaymentMethod, decimal)"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)

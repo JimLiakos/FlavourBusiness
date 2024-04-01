@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Xml.Linq;
+using FlavourBusinessFacade;
 using Newtonsoft.Json;
 
 namespace FlavourBusinessToolKit
@@ -15,7 +16,7 @@ namespace FlavourBusinessToolKit
     public interface IRestaurantMenuPublisher
     {
         /// <MetaDataID>{c0a613f7-9a93-4112-b74f-5908dc824e83}</MetaDataID>
-        void PublishMenu(string serverStorageFolder,string menuResourcesPrefix, string previousVersionServerStorageFolder, IFileManager fileManager, string menuName);
+        void PublishMenu(string serverStorageFolder,string menuResourcesPrefix, string previousVersionServerStorageFolder, IFileManager fileManager, OrganizationStorageRef storageRef);
     }
 
     /// <MetaDataID>{acb01dc6-8fb8-4b99-bd3a-da38154f7f64}</MetaDataID>

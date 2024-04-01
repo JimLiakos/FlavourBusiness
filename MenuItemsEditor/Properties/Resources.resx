@@ -489,4 +489,14 @@ for an item or the category items.</value>
     <value>If you want to apply the discount to the item extra options prices, 
 click on the options checkbox.</value>
   </data>
+  <data name="AddPrefix" xml:space="preserve">
+    <value>Add</value>
+    <comment>Defines 'Add' prefix of object Name which will be added</comment>
+  </data>
+  <data name="PriceListsNodeName" xml:space="preserve">
+    <value>Pricelists</value>
+  </data>
+  <data name="PublishMenuContextMenuHeader" xml:space="preserve">
+    <value>Publish</value>
+  </data>
 </root>

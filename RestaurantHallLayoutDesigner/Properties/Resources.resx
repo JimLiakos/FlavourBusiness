@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddPrefix" xml:space="preserve">
+    <value>Add the</value>
+    <comment>Defines 'Add' prefix of object Name which will be added</comment>
+  </data>
   <data name="AddServicePointHeader" xml:space="preserve">
     <value>New Table</value>
     <comment>Defines the ContextMenu MenuItem Header to add service point tree node</comment>
@@ -171,6 +175,9 @@
   </data>
   <data name="PasteMenuItemHeader" xml:space="preserve">
     <value>Paste</value>
+  </data>
+  <data name="PriceListsManuHeader" xml:space="preserve">
+    <value>Pricelists</value>
   </data>
   <data name="RedoMenuItemHeader" xml:space="preserve">
     <value>Redo</value>

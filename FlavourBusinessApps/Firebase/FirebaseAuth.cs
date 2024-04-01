@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FlavourBusinessApps
 {
+    /// <MetaDataID>{bbd8bffd-81d0-4a3a-9fdf-d7de078fb30a}</MetaDataID>
     public class FirebaseAuth : IOAuth
     {
         public async Task<AuthUser> VerifyIdToken(string authToken)
@@ -32,7 +33,7 @@ namespace FlavourBusinessApps
 
             authUser.Auth_Time = FromUnixTime((long)decoded.Claims["auth_time"]).ToLocalTime();
 
-            authUser.Audience =decoded.Audience;
+            authUser.Audience = decoded.Audience;
             authUser.Email = (from claim in decoded.Claims where claim.Key == "email" select claim.Value as string).FirstOrDefault();
 
             if ((from claim in decoded.Claims where claim.Key == "email_verified" select claim.Value).FirstOrDefault() != null)

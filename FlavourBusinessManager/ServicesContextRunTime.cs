@@ -833,7 +833,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             }
         }
-        
+
         /// <MetaDataID>{be5c7298-abaf-4538-a45c-8cee3b38f9a1}</MetaDataID>
         private void SessionsMonitoringTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -917,7 +917,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
 
 
-                var workerServingMessages = worker.Messages.Where(x => (x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe||x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter) &&
+                var workerServingMessages = worker.Messages.Where(x => (x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe || x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter) &&
                                                 !x.MessageReaded && x.NotificationsNum <= 5).ToList();
                 if (workerServingMessages.Count > 0)
                 {
@@ -1651,18 +1651,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             string serverStorageFolder = GetVersionFolder(version);
             string jsonFileName = serverStorageFolder + restaurantMenusData.Name + ".json";
-            WritePublicRestaurantMenuData(jsonFileName);
-
-            if (fileManager != null)
+            string previousVersionJsonFileName = previousVersionServerStorageFolder + restaurantMenusData.Name + ".json";
+            if (WritePublicRestaurantMenuDataIfChanged(jsonFileName, previousVersionJsonFileName))
             {
-                jsonFileName = previousVersionServerStorageFolder + restaurantMenusData.Name + ".json";
-                fileManager.GetBlobInfo(jsonFileName).DeleteIfExists();
-            }
 
-            using (SystemStateTransition stateTransition = new SystemStateTransition())
-            {
-                restaurantMenusData.Version = version;
-                stateTransition.Consistent = true;
+                if (fileManager != null)
+                {
+                    jsonFileName = previousVersionServerStorageFolder + restaurantMenusData.Name + ".json";
+                    fileManager.GetBlobInfo(jsonFileName).DeleteIfExists();
+                }
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition())
+                {
+                    restaurantMenusData.Version = version;
+                    stateTransition.Consistent = true;
+                }
             }
 
 
@@ -1671,17 +1674,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //var sss = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.IMenuItem>>(jsonEx, jSetttings);
         }
         /// <MetaDataID>{09d076c1-518e-4c4c-8c94-ad05f45ab97a}</MetaDataID>
-        private void WritePublicRestaurantMenuData(string jsonFileName)
+        private bool WritePublicRestaurantMenuDataIfChanged(string jsonFileName, string previousVersionJsonFileName)
         {
             IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
 
-            //var fbstorage = (from servicesContextRunTimeStorage in Storages
-            //                 where servicesContextRunTimeStorage.FlavourStorageType == FlavourBusinessFacade.OrganizationStorages.OperativeRestaurantMenu
-            //                 select servicesContextRunTimeStorage).FirstOrDefault();
-            //var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = RestaurantMenuDataUri, TimeStamp = RestaurantMenuDataLastModified };
 
-            //RawStorageData rawStorageData = new RawStorageData(storageRef, null);
-            //OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
 
             var objectStorage = ObjectStorage.GetStorageOfObject(OperativeRestaurantMenu);
             OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(objectStorage);
@@ -1692,8 +1689,21 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             var meneuItemsNames = menuFoodItems.Select(X => X.Name).ToList();
 
-            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings;
-            string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(menuFoodItems, jSetttings);
+            var jSettings = JsonSerializerSettings.TypeRefSerializeSettings;
+            string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(menuFoodItems, jSettings);
+
+            Stream previousVersionJsonStream = fileManager.GetBlobStream(previousVersionJsonFileName);
+
+            byte[] buffer = new byte[previousVersionJsonStream.Length];
+            previousVersionJsonStream.Position = 0;
+            previousVersionJsonStream.Read(buffer, 0, (int)previousVersionJsonStream.Length);
+            previousVersionJsonStream.Close();
+            string oldJsonEx = System.Text.Encoding.UTF8.GetString(buffer);
+
+            if (oldJsonEx.Length == jsonEx.Length && oldJsonEx == jsonEx)
+                return false;
+
+
             MemoryStream jsonRestaurantMenuStream = new MemoryStream();
             byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(jsonEx);
             jsonRestaurantMenuStream.Write(jsonBuffer, 0, jsonBuffer.Length);
@@ -1701,6 +1711,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             if (fileManager != null)
                 fileManager.Upload(jsonFileName, jsonRestaurantMenuStream, "application/json");
+
+            return true;
 
 
         }
@@ -1734,8 +1746,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        
-        public void RemovePriceList(OrganizationStorageRef priceListStorageRef) 
+
+        public void RemovePriceList(OrganizationStorageRef priceListStorageRef)
         {
             var fbstorage = (from storage in _Storages
                              where storage.StorageIdentity == priceListStorageRef.StorageIdentity
@@ -1749,9 +1761,31 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
         }
+        public void StorageMetaDataUpdated(OrganizationStorageRef storageRef)
+        {
+            if (storageRef.FlavourStorageType == OrganizationStorages.GraphicMenu)
+            {
+                GraphicMenuStorageMetaDataUpdated(storageRef);
+            }
+            else
+            {
+                var sc_storageRef = _Storages.Where(x => x.StorageIdentity == storageRef.StorageIdentity).FirstOrDefault();
 
+                if (sc_storageRef != null)
+                {
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+                        // sc_storageRef.Url = storageRef.StorageUrl;
+                        sc_storageRef.Name = storageRef.Name;
+                        sc_storageRef.Version= storageRef.Version;
+
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
         /// <MetaDataID>{e57f4255-89a4-44e4-8b44-c9688dab616b}</MetaDataID>
-        public void GraphicMenuStorageMetaDataUpdated(OrganizationStorageRef graphicMenuStorageRef)
+        void GraphicMenuStorageMetaDataUpdated(OrganizationStorageRef graphicMenuStorageRef)
         {
             var fbstorage = (from storage in _Storages
                              where storage.StorageIdentity == graphicMenuStorageRef.StorageIdentity
@@ -2139,7 +2173,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         FlavourBusinessFacade.RoomService.IMealsController _MealsController;
 
         /// <MetaDataID>{80ea5e2b-4baa-4036-af72-8a91354dbe36}</MetaDataID>
-        
+
         public IMealsController MealsController
         {
             get
@@ -2325,15 +2359,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var servicesContextIdentity = ServicesContextIdentity;
             servicePointIdentity = servicePointIdentity.Replace(servicesContextIdentity + ";", "");
 
-            if (DeliveryServicePoint.ServicesPointIdentity==servicePointIdentity)
+            if (DeliveryServicePoint.ServicesPointIdentity == servicePointIdentity)
                 return DeliveryServicePoint;
 
 
-                var servicePoint = (from serviceArea in ServiceAreas
+            var servicePoint = (from serviceArea in ServiceAreas
                                 from aServicePoint in serviceArea.ServicePoints
                                 where aServicePoint.ServicesPointIdentity == servicePointIdentity
                                 select aServicePoint).OfType<IServicePoint>().FirstOrDefault();
-            
+
             return servicePoint;
 
         }
@@ -2627,7 +2661,25 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
             else
             {
-                string blobUrl = "usersfolder/" + OrganizationIdentity + "/" + serviceArea.Description.Replace(" ", "-") + ".xml";
+
+
+                string hallBlobName = Properties.Resources.DefaultHallFileName;
+
+                fbstorage = (from storage in this.Storages
+                             where storage.Name == hallBlobName
+                             select storage).FirstOrDefault();
+                int count = 1;
+                while (fbstorage != null)
+                {
+                    hallBlobName = Properties.Resources.DefaultHallFileName + count;
+                    fbstorage = (from storage in this.Storages
+                                 where storage.Name == hallBlobName
+                                 select storage).FirstOrDefault();
+                }
+
+
+
+                string blobUrl = "usersfolder/" + OrganizationIdentity + "/" + hallBlobName + ".xml";
                 RawStorageCloudBlob rawStorage = new RawStorageCloudBlob(new XDocument(), blobUrl);
                 RestaurantHallLayoutModel.HallLayout restaurantHallLayout = null;
                 ObjectStorage hallLayoutStorage = null;
@@ -3183,7 +3235,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         if (!NativeUsers.Contains(nativeAuthUser))
                             NativeUsers.Add(nativeAuthUser);
                     }
-                    
+
                 }
                 ObjectChangeState?.Invoke(this, nameof(ServiceContextHumanResources));
 
@@ -3362,7 +3414,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 }
             }
         }
-         
+
 
 
         /// <MetaDataID>{52248cf8-a28f-493a-82ec-fd456600df81}</MetaDataID>

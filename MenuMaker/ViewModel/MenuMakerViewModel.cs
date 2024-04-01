@@ -17,6 +17,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPFUIElementObjectBind;
 
+
 namespace MenuMaker.ViewModel
 {
     /// <MetaDataID>{36d46a3d-8e39-4c1b-b466-ca7218cb52f1}</MetaDataID>

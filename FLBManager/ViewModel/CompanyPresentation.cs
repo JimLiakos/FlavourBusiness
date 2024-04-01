@@ -90,10 +90,10 @@ namespace FLBManager.ViewModel
             Menus = new MenusTreeNode(Properties.Resources.GraphicMenusTitle, this, this);
 
             foreach (var graphicMenuViewModel in graphicMenusPresentation.GraphicMenus)
-                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus, this, true, true);
+                _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null,this, Menus, this, true, true);
 
 
-            PriceListsTreeNode = new PriceListsTreeNode(Properties.Resources.PriceListTitle, this, this);
+            PriceListsTreeNode = new PriceListsTreeNode(MenuItemsEditor.Properties.Resources.PriceListsNodeName, this, this);
 
             RestaurantMenus = restaurantMenus;
 
@@ -157,11 +157,12 @@ namespace FLBManager.ViewModel
 
                 if (value != null)
                 {
-                    PriceLists=new List<PriceListPresentation>();
-                    foreach (var priceListStorageRef in (Organization as IResourceManager).PriceLists)
+                    PriceListStorageRefs = (Organization as IResourceManager).PriceLists;
+                    PriceLists =new List<PriceListPresentation>();
+                    foreach (var priceListStorageRef in PriceListStorageRefs)
                     {
                         priceListStorageRef.UploadService=Organization as IUploadService;
-                        PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel));
+                        PriceLists.Add(new PriceListPresentation(PriceListsTreeNode, priceListStorageRef, _RestaurantMenus.Members[0] as MenuViewModel, Organization));
                     }
                     PriceListsTreeNode?.Refresh();
 
@@ -173,11 +174,12 @@ namespace FLBManager.ViewModel
 
         private void GraphicMenusPresentation_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            
             foreach (var graphicMenuViewModel in GraphicMenusPresentation.GraphicMenus)
             {
                 if (!_GraphicMenus.ContainsKey(graphicMenuViewModel.StorageRef.StorageIdentity))
                 {
-                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null, Menus, this, true);
+                    var graphicMenuTreeNode = new GraphicMenuTreeNode(graphicMenuViewModel.StorageRef, null,this, Menus, this, true);
                     graphicMenuTreeNode.IsNodeExpanded = true;
                     Menus.IsNodeExpanded = true;
                     _GraphicMenus[graphicMenuViewModel.StorageRef.StorageIdentity] = graphicMenuTreeNode;
@@ -474,8 +476,8 @@ namespace FLBManager.ViewModel
         public void NewPriceList()
         {
             OrganizationStorageRef priceListStorageRef = (Organization as IResourceManager).NewPriceList();
-
-            PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, RestaurantMenus.Members[0] as MenuViewModel));
+            PriceListStorageRefs.Add(priceListStorageRef);
+            PriceLists.Add(new PriceListPresentation(this, priceListStorageRef, RestaurantMenus.Members[0] as MenuViewModel,Organization));
             PriceListsTreeNode.Refresh();
         }
 
@@ -704,7 +706,15 @@ namespace FLBManager.ViewModel
 
         public List<PriceListPresentation> PriceLists { get; set; } = new List<PriceListPresentation>();
 
+
+        public List<OrganizationStorageRef> PriceListStorageRefs { get; set; } = new List<OrganizationStorageRef>();
+
+        
+
+
         public bool NewPriceListAllowed => true;
+
+        IOrganization IPriceListsOwner.Organization => Organization;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

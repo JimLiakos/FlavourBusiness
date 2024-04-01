@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using UIBaseEx;
 
@@ -13,8 +14,28 @@ namespace MenuPresentationModel.MenuCanvas
     [Persistent()]
     public class MenuCanvasFoodItemPrice : MarshalByRefObject, IMenuCanvasFoodItemPrice
     {
+        /// <exclude>Excluded</exclude> 
+        string _MenuItemPriceUri;
+        /// <MetaDataID>{284c67b3-7d74-427d-a6fb-2cb43a1e5922}</MetaDataID>
+        [PersistentMember(nameof(_MenuItemPriceUri))]
+        [BackwardCompatibilityID("+12")]
+        public string MenuItemPriceUri
+        {
+            get => _MenuItemPriceUri;
+            set
+            {
+                if (_MenuItemPriceUri != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _MenuItemPriceUri = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
-   
+
         /// <exclude>Excluded</exclude>
         MenuModel.MenuItemPrice _MenuItemPrice;
         /// <MetaDataID>{315fadd0-bd32-4b46-bdd6-42d3c0c638c7}</MetaDataID>
@@ -27,6 +48,8 @@ namespace MenuPresentationModel.MenuCanvas
             internal set
             {
                 _MenuItemPrice = value;
+
+                MenuItemPriceUri= ObjectStorage.GetStorageOfObject(_MenuItemPrice).GetPersistentObjectUri(_MenuItemPrice);
             }
         }
 
@@ -135,6 +158,8 @@ namespace MenuPresentationModel.MenuCanvas
             }
         }
 
+      
+
 
 
 
@@ -177,6 +202,7 @@ namespace MenuPresentationModel.MenuCanvas
 
         /// <exclude>Excluded</exclude>
         static NumberFormatInfo nfi;
+        /// <MetaDataID>{9042c660-ed67-485b-9655-78076177c5f9}</MetaDataID>
         static CultureInfo nfiCulture;
         /// <exclude>Excluded</exclude>
         OOAdvantech.MultilingualMember<string> _Description=new MultilingualMember<string>();
@@ -188,7 +214,7 @@ namespace MenuPresentationModel.MenuCanvas
             get
             {
                 string description = "";
-                description = GetDescriprion();
+                description = GetDescription();
                 return description;
             }
 
@@ -208,7 +234,7 @@ namespace MenuPresentationModel.MenuCanvas
         }
 
         /// <MetaDataID>{13cd5aa3-a06c-479d-97be-a890b5c5c2b2}</MetaDataID>
-        private string GetDescriprion(MenuStyles.IPriceStyle style = null)
+        private string GetDescription(MenuStyles.IPriceStyle style = null)
         {
             if (style == null)
                 style = Style;
@@ -283,10 +309,10 @@ namespace MenuPresentationModel.MenuCanvas
             else
                 font= style.Font;
 
-            var size = font.MeasureText(GetDescriprion(style));
+            var size = font.MeasureText(GetDescription(style));
             Height = size.Height;
             Width = size.Width;
-            BaseLine = font.GetTextBaseLine(GetDescriprion(style));
+            BaseLine = font.GetTextBaseLine(GetDescription(style));
         }
 
         /// <exclude>Excluded</exclude>

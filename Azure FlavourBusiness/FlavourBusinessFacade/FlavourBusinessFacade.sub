@@ -261,7 +261,11 @@
 		(object Realize_Relationship
 		    quid       	"65F2B9A202FD"
 		    supplier   	"Logical View::FlavourBusinessFacade::PriceList::IItemsTaxInfo"
-		    quidu      	"65F2B4D701E1"))
+		    quidu      	"65F2B4D701E1")
+		(object Realize_Relationship
+		    quid       	"65FE6398015F"
+		    supplier   	"Logical View::FlavourBusinessFacade::PriceList::ISalesPoint"
+		    quidu      	"65FE62E80080"))
 	    language   	"C#"))
     physical_presentations 	(list unit_reference_list
 	(object Module_Diagram "Main"
@@ -2499,4 +2503,36 @@
 		    quidu      	"65F2B9A202FD"
 		    client     	@1
 		    supplier   	@126
+		    line_style 	0)
+		(object InterfaceView "Logical View::FlavourBusinessFacade::PriceList::ISalesPoint" @128
+		    location   	(1019, 3363)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			charSet    	161
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@128
+			location   	(1018, 3471)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	225
+			justify    	0
+			label      	"ISalesPoint")
+		    icon       	"Interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"65FE62E80080")
+		(object RealizeView "" @129
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"65FE6398015F"
+		    client     	@1
+		    supplier   	@128
 		    line_style 	0)))))

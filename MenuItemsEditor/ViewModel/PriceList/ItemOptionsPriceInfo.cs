@@ -239,7 +239,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
                 decimal? price = null;
                 if (Option != null)
-                    price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetDerivedPriceContext(ItemPrice)?.GetDeafultPrice(Option);
+                    price = ItemPriceInfoPresentation.PriceListPresentation.PriceList.GetDerivedPriceContext(ItemPrice)?.GetDefaultPrice(Option);
                 //{
                 //    if (ItemPrice != null)
                 //    {

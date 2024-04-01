@@ -14,16 +14,19 @@ using FlavourBusinessToolKit;
 using System.Xml.Linq;
 using FlavourBusinessFacade.PriceList;
 using MenuItemsEditor.ViewModel;
+using FlavourBusinessManager.PriceList;
 
 namespace MenuItemsEditor.ViewModel.PriceList
 {
- 
+
     public class PriceListsTreeNode : FBResourceTreeNode, IDragDropTarget
     {
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
-            throw new NotImplementedException();
+            if(treeNode is PriceListPresentation)
+                PriceListOwner.RemovePriceList(treeNode as PriceListPresentation);
+            
         }
 
         ///// <MetaDataID>{ab37fd26-6d11-4d08-a682-06e6aeabed58}</MetaDataID>
@@ -43,6 +46,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
             });
 
             PriceListsTreeNodes = new List<PriceListPresentation>();
+
+           
         }
 
         public RelayCommand NewPriceListMenuCommand { get; protected set; }
@@ -62,7 +67,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
                     if (PriceListOwner.NewPriceListAllowed)
                     {
-                      
+
                         MenuCommand menuItem = new MenuCommand();
                         var imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/price-list16.png"));
                         menuItem.Header = Properties.Resources.NewPriceListMenuItemHeader;
@@ -83,7 +88,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         {
             get
             {
-                return this.PriceListOwner.PriceLists.OfType<FBResourceTreeNode>().ToList();
+                return PriceListOwner.PriceLists.OfType<FBResourceTreeNode>().ToList();
             }
         }
         string _Name;
@@ -136,10 +141,28 @@ namespace MenuItemsEditor.ViewModel.PriceList
         public void Refresh()
         {
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
+
+            foreach (var priceList in PriceListOwner.PriceLists)
+            {
+                List<FBResourceTreeNode> priceListStorageReferences = null;
+                if (!HeaderNode.FBResourceTreeNodesDictionary.TryGetValue(priceList.PriceListStorageRef.StorageIdentity, out priceListStorageReferences))
+                {
+                    priceListStorageReferences = new List<FBResourceTreeNode>();
+                    priceListStorageReferences.Add(priceList);
+                    HeaderNode.FBResourceTreeNodesDictionary[priceList.PriceListStorageRef.StorageIdentity] = priceListStorageReferences;
+                }
+                else
+                {
+                    if (!priceListStorageReferences.Contains(priceList))
+                        priceListStorageReferences.Add(priceList);
+                }
+            }
+
         }
 
 
-    
+
 
 
 
@@ -194,11 +217,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
-     
 
 
 
-        
+
+
     }
 
     public interface IPriceListsOwner
@@ -217,6 +240,8 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         /// <MetaDataID>{06e0e951-abc5-438c-8617-5971d7b7feba}</MetaDataID>
         void NewPriceList();
+
+        IOrganization Organization { get; }
     }
 
 

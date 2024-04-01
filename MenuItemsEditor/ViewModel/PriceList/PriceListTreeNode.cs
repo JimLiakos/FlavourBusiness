@@ -32,19 +32,43 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         }
 
+        //IOrganization Organization
+        //{
+        //    get
+        //    {
+        //        ret
 
-        public PriceListPresentation(FBResourceTreeNode parent, OrganizationStorageRef priceListStorageRef, MenuViewModel menuViewModel) : base(parent)
+
+        //    }
+        //}
+
+
+        public PriceListPresentation(FBResourceTreeNode parent, OrganizationStorageRef priceListStorageRef, MenuViewModel menuViewModel, IOrganization organization) : base(parent)
         {
             PriceListStorageRef = priceListStorageRef;
             MenuViewModel = menuViewModel;
-
+            Organization = organization;
             TaxAuthority = MenuViewModel.Menu.TaxAuthority;
 
             var taxesContexts = TaxAuthority.TaxesContexts.Select(x => new TaxesContextViewModel(x)).ToList();
             taxesContexts.Insert(0, new TaxesContextViewModel(null));
             TaxesContexts = taxesContexts;
+            List<FBResourceTreeNode> priceListStorageReferences = null;
+            if (!HeaderNode.FBResourceTreeNodesDictionary.TryGetValue(PriceListStorageRef.StorageIdentity, out priceListStorageReferences))
+            {
+                priceListStorageReferences = new List<FBResourceTreeNode>();
+                priceListStorageReferences.Add(this);
+                HeaderNode.FBResourceTreeNodesDictionary[PriceListStorageRef.StorageIdentity] = priceListStorageReferences;
+            }
+            else
+            {
+                priceListStorageReferences.Add(this);
+            }
 
-
+            RenameCommand = new RelayCommand((object sender) =>
+            {
+                EditMode();
+            });
             //string localFileName = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microneme\\DontWaitWater\\{priceListStorageRef.Name}.xml";
             //var rawStorageData = new RawStorageData(localFileName, priceListStorageRef, priceListStorageRef.UploadService);
 
@@ -54,12 +78,47 @@ namespace MenuItemsEditor.ViewModel.PriceList
             //var priceList = (from m_priceList in storage.GetObjectCollection<IPriceList>()
             //                 select m_priceList).FirstOrDefault();
 
+            DeleteCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
 
+                if (HeaderNode.FBResourceTreeNodesDictionary.TryGetValue(PriceListStorageRef.StorageIdentity, out priceListStorageReferences))
+                {
+                    if (priceListStorageReferences.Contains(this))
+                        priceListStorageReferences.Remove(this);
+                }
+
+                parent.RemoveChild(this);
+
+            });
             EditCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 _ItemsToChoose = null;
                 EditMenuItem(win);
+            });
+
+            PublishCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                if (Organization != null)
+                {
+                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                      {
+                          (Organization as IResourceManager).PublishPriceList(priceListStorageRef);
+                      });
+
+                    Task.Run(() =>
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            PublishCommand.UserInterfaceObjectConnection.Save();
+
+                        }));
+                    });
+
+
+                }
+
+
             });
         }
 
@@ -81,6 +140,26 @@ namespace MenuItemsEditor.ViewModel.PriceList
             }
         }
 
+        public bool PublishAllowed { get => Organization != null; }
+
+        public void EditMode()
+        {
+            if (_Edit == true)
+            {
+                _Edit = !_Edit;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Edit)));
+            }
+            _Edit = true;
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Edit)));
+        }
+
+        public override bool IsEditable
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public IList<TaxableTypeViewModel> TaxableTypes
         {
@@ -91,7 +170,6 @@ namespace MenuItemsEditor.ViewModel.PriceList
                                      select new TaxableTypeViewModel(taxableType)).ToDictionary(x => x.TaxableType);
 
                 return _TaxableTypes.Values.ToList();
-
             }
         }
 
@@ -181,9 +259,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         bool Editable = true;
 
-        OrganizationStorageRef PriceListStorageRef = null;
+        public readonly OrganizationStorageRef PriceListStorageRef = null;
 
         public MenuViewModel MenuViewModel { get; }
+
+        private readonly IOrganization Organization;
 
         public override string Name
         {
@@ -192,50 +272,106 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 if (PriceListStorageRef.Name != value)
                 {
-                    string oldName = PriceListStorageRef.Name;
-                    if (!string.IsNullOrWhiteSpace(value) && System.IO.Path.GetInvalidFileNameChars().Where(x => value.IndexOf(x) != -1).Count() > 0)
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                     {
-                        var messageBoxResult = StyleableWindow.WpfMessageBox.Show("Graphic menu name", "The graphic name has invalid characters !", MessageBoxButton.OK, StyleableWindow.MessageBoxImage.Error);
-
-
-
-                        Task.Run(() =>
+                        string oldName = PriceListStorageRef.Name;
+                        if (!string.IsNullOrWhiteSpace(value) && System.IO.Path.GetInvalidFileNameChars().Where(x => value.IndexOf(x) != -1).Count() > 0)
                         {
-                            SetOtherPriceListTreeNodesName(oldName);
-                            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
-
-                        });
-                        return;
-                    }
-                    PriceListStorageRef.Name = value;
-                    SetOtherPriceListTreeNodesName(value);
-                    if (Editable)
-                    {
-                        OrganizationStorageRef storageRef = null;
-                        try
-                        {
-                            storageRef = (FlavourBusinessManager.Organization.CurrentOrganization as FlavourBusinessFacade.IResourceManager).UpdateStorage(PriceListStorageRef.Name, PriceListStorageRef.Description, PriceListStorageRef.StorageIdentity);
-                        }
-                        catch (Exception error)
-                        {
+                            var messageBoxResult = StyleableWindow.WpfMessageBox.Show("Graphic menu name", "The graphic name has invalid characters !", MessageBoxButton.OK, StyleableWindow.MessageBoxImage.Error);
                             Task.Run(() =>
                             {
-                                PriceListStorageRef.Name = oldName;
                                 SetOtherPriceListTreeNodesName(oldName);
                                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+
                             });
                             return;
                         }
 
-                        PriceListStorageRef.StorageUrl = storageRef.StorageUrl;
-                        PriceListStorageRef.Name = storageRef.Name;
-                        PriceListStorageRef.TimeStamp = storageRef.TimeStamp;
-                        PriceListStorageRef.StorageIdentity = storageRef.StorageIdentity;
-                        PriceListStorageRef.Name = storageRef.Name;
+                        //OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                        //{
+
+
+
+                        PriceListStorageRef.Name = value;
+                        SetOtherPriceListTreeNodesName(value);
+                        if (Editable)
+                        {
+                            OrganizationStorageRef storageRef = null;
+                            try
+                            {
+                                storageRef = (FlavourBusinessManager.Organization.CurrentOrganization as FlavourBusinessFacade.IResourceManager).UpdateStorage(PriceListStorageRef.Name, PriceListStorageRef.Description, PriceListStorageRef.StorageIdentity);
+                            }
+                            catch (Exception error)
+                            {
+                                Task.Run(() =>
+                                {
+                                    PriceListStorageRef.Name = oldName;
+                                    SetOtherPriceListTreeNodesName(oldName);
+                                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+                                });
+                                return;
+                            }
+
+                            PriceListStorageRef.StorageUrl = storageRef.StorageUrl;
+                            PriceListStorageRef.Name = storageRef.Name;
+                            PriceListStorageRef.TimeStamp = storageRef.TimeStamp;
+                            PriceListStorageRef.StorageIdentity = storageRef.StorageIdentity;
+                            PriceListStorageRef.Name = storageRef.Name;
+                        }
+                        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+
+                        stateTransition.Consistent = true;
                     }
-                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+
+                    //});
+
+                    //    string oldName = PriceListStorageRef.Name;
+                    //if (!string.IsNullOrWhiteSpace(value) && System.IO.Path.GetInvalidFileNameChars().Where(x => value.IndexOf(x) != -1).Count() > 0)
+                    //{
+                    //    var messageBoxResult = StyleableWindow.WpfMessageBox.Show("Graphic menu name", "The graphic name has invalid characters !", MessageBoxButton.OK, StyleableWindow.MessageBoxImage.Error);
+
+
+
+                    //    Task.Run(() =>
+                    //    {
+                    //        SetOtherPriceListTreeNodesName(oldName);
+                    //        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+
+                    //    });
+                    //    return;
+                    //}
+                    //PriceListStorageRef.Name = value;
+                    //SetOtherPriceListTreeNodesName(value);
+                    //if (Editable)
+                    //{
+                    //    OrganizationStorageRef storageRef = null;
+                    //    try
+                    //    {
+                    //        storageRef = (FlavourBusinessManager.Organization.CurrentOrganization as FlavourBusinessFacade.IResourceManager).UpdateStorage(PriceListStorageRef.Name, PriceListStorageRef.Description, PriceListStorageRef.StorageIdentity);
+                    //    }
+                    //    catch (Exception error)
+                    //    {
+                    //        Task.Run(() =>
+                    //        {
+                    //            PriceListStorageRef.Name = oldName;
+                    //            SetOtherPriceListTreeNodesName(oldName);
+                    //            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
+                    //        });
+                    //        return;
+                    //    }
+
+                    //    PriceListStorageRef.StorageUrl = storageRef.StorageUrl;
+                    //    PriceListStorageRef.Name = storageRef.Name;
+                    //    PriceListStorageRef.TimeStamp = storageRef.TimeStamp;
+                    //    PriceListStorageRef.StorageIdentity = storageRef.StorageIdentity;
+                    //    PriceListStorageRef.Name = storageRef.Name;
+                    //}
+                    //RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
 
                 }
+                else
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
 
             }
         }
@@ -279,6 +415,9 @@ namespace MenuItemsEditor.ViewModel.PriceList
 
         public RelayCommand DeleteCommand { get; protected set; }
         public RelayCommand EditCommand { get; protected set; }
+
+
+        public RelayCommand PublishCommand { get; protected set; }
 
 
 
@@ -1231,19 +1370,19 @@ namespace MenuItemsEditor.ViewModel.PriceList
         internal void SetPricerounding(double? pricerounding)
         {
             if (pricerounding == 0)
-                PriceList.PriceListMainItemsPriceInfo.Pricerounding = null;
+                PriceList.PriceListMainItemsPriceInfo.PriceRounding = null;
             else
-                PriceList.PriceListMainItemsPriceInfo.Pricerounding = pricerounding;
+                PriceList.PriceListMainItemsPriceInfo.PriceRounding = pricerounding;
         }
 
         internal void SetPricerounding(IItemsCategory itemsCategory, double? pricerounding)
         {
-            GetOrCreateItemsPriceInfo(itemsCategory).Pricerounding = pricerounding;
+            GetOrCreateItemsPriceInfo(itemsCategory).PriceRounding = pricerounding;
         }
 
         internal void SetPricerounding(IMenuItem menuItem, double? pricerounding)
         {
-            GetOrCreateItemsPriceInfo(menuItem).Pricerounding = pricerounding;
+            GetOrCreateItemsPriceInfo(menuItem).PriceRounding = pricerounding;
         }
 
         internal void SetsOptionsPricesDiscountEnabled(bool optionsPricesDiscount)
@@ -1368,7 +1507,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         internal void SetOptionsPricesRounding(double? optionsPricesRounding)
         {
             if (optionsPricesRounding == 0)
-                PriceList.PriceListMainItemsPriceInfo.Pricerounding = null;
+                PriceList.PriceListMainItemsPriceInfo.PriceRounding = null;
             else
                 PriceList.PriceListMainItemsPriceInfo.OptionsPricesRounding = optionsPricesRounding;
         }
@@ -1536,11 +1675,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 var itemsPriceInfo = GetItemsPriceInfo(itemsCategory);
                 if (itemsPriceInfo != null)
-                    itemsPriceInfo.OverridenPrice = null;
+                    itemsPriceInfo.OverriddenPrice = null;
                 return;
             }
 
-            GetOrCreateItemsPriceInfo(itemsCategory).OverridenPrice = OverridenPrice;
+            GetOrCreateItemsPriceInfo(itemsCategory).OverriddenPrice = OverridenPrice;
         }
 
         internal void SetOverridenPrice(MenuItemPrice itemPrice, decimal? overridenPrice)
@@ -1549,11 +1688,11 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 var itemsPriceInfo = GetItemsPriceInfo(itemPrice);
                 if (itemsPriceInfo != null)
-                    itemsPriceInfo.OverridenPrice = null;
+                    itemsPriceInfo.OverriddenPrice = null;
                 return;
             }
 
-            GetOrCreateItemsPriceInfo(itemPrice).OverridenPrice = overridenPrice;
+            GetOrCreateItemsPriceInfo(itemPrice).OverriddenPrice = overridenPrice;
         }
 
         internal void SetOverridenPrice(IMenuItem menuItem, decimal? OverridenPrice)
@@ -1562,10 +1701,10 @@ namespace MenuItemsEditor.ViewModel.PriceList
             {
                 var itemsPriceInfo = GetItemsPriceInfo(menuItem);
                 if (itemsPriceInfo != null)
-                    itemsPriceInfo.OverridenPrice = null;
+                    itemsPriceInfo.OverriddenPrice = null;
                 return;
             }
-            GetOrCreateItemsPriceInfo(menuItem).OverridenPrice = OverridenPrice;
+            GetOrCreateItemsPriceInfo(menuItem).OverriddenPrice = OverridenPrice;
         }
 
 
@@ -1583,7 +1722,7 @@ namespace MenuItemsEditor.ViewModel.PriceList
         internal void ClearItemsPriceInfo()
         {
             PriceList.PriceListMainItemsPriceInfo.PercentageDiscount = null;
-            PriceList.PriceListMainItemsPriceInfo.Pricerounding = null;
+            PriceList.PriceListMainItemsPriceInfo.PriceRounding = null;
         }
 
         internal decimal? GetPrice(IPreparationScaledOption option, MenuItemPrice itemPrice)

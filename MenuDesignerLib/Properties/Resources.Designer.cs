@@ -790,6 +790,15 @@ namespace MenuDesigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string NonePriceListName {
+            get {
+                return ResourceManager.GetString("NonePriceListName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal Heading.
         /// </summary>
         public static string NormalHeadingFontsMenuItemHeader {
@@ -1020,6 +1029,15 @@ namespace MenuDesigner.Properties {
         public static string PriceListPageTitle {
             get {
                 return ResourceManager.GetString("PriceListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pricelists:.
+        /// </summary>
+        public static string PriceListSelectorLabel {
+            get {
+                return ResourceManager.GetString("PriceListSelectorLabel", resourceCulture);
             }
         }
         

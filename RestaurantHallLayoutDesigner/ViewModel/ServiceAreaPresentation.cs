@@ -20,25 +20,30 @@ using OOAdvantech.Transactions;
 using RestaurantHallLayoutModel;
 using WPFUIElementObjectBind;
 using MenuItemsEditor.ViewModel.PriceList;
+using System.Windows.Controls;
+using OOAdvantech.UserInterface.Runtime;
+using MenuItemsEditor.ViewModel;
+using FlavourBusinessFacade.PriceList;
 
 namespace FloorLayoutDesigner.ViewModel
 {
     /// <MetaDataID>{2346d8c4-3061-4757-9e0e-9c039aaf0e89}</MetaDataID>
-    public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel
+    public class ServiceAreaPresentation : FBResourceTreeNode, INotifyPropertyChanged, IDragDropTarget, IServiceAreaViewModel 
     {
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
-            throw new NotImplementedException();
+            if (treeNode is PriceListPresentation)
+                SalesPointViewModel. RemovePriceList(treeNode as PriceListPresentation);
         }
         List<FBResourceTreeNode> _TreeItems;
         public List<FBResourceTreeNode> TreeItems
         {
             get
             {
-                if(_TreeItems==null)
-                    _TreeItems =new List<FBResourceTreeNode>() { new ServiceAreaPresentation(ServiceArea, MealTypesViewModel) };
+                if (_TreeItems == null)
+                    _TreeItems = new List<FBResourceTreeNode>() { new ServiceAreaPresentation(ServiceArea, MealTypesViewModel) };
                 return _TreeItems;
-                
+
             }
         }
 
@@ -53,7 +58,7 @@ namespace FloorLayoutDesigner.ViewModel
             }
         }
 
-        public ServiceAreaPresentation():base(null)
+        public ServiceAreaPresentation() : base(null)
         {
         }
 
@@ -63,13 +68,30 @@ namespace FloorLayoutDesigner.ViewModel
         /// <MetaDataID>{c224a420-b8da-4f4a-9a0c-64c056294897}</MetaDataID>
         IServiceAreaTreeNodeOwner FlavoursServicesContext;
 
+        public SalesPointViewModel SalesPointViewModel { get; }
+        public PriceListsTreeNode PriceListsTreeNode { get; }
+
         /// <MetaDataID>{b7fc965f-51b4-4c09-9b24-f808131ab602}</MetaDataID>
-        public ServiceAreaPresentation(IServiceArea serviceArea, FBResourceTreeNode parent, IServiceAreaTreeNodeOwner flavoursServicesContext ) : base(parent)
+        public ServiceAreaPresentation(IServiceArea serviceArea, FBResourceTreeNode parent, IServiceAreaTreeNodeOwner flavoursServicesContext) : base(parent)
         {
             ServiceArea = serviceArea;
             FlavoursServicesContext = flavoursServicesContext;
+            
+            
+            SalesPointViewModel = new SalesPointViewModel(serviceArea as ISalesPoint,this, (HeaderNode as IPriceListsOwner).Organization);
+            PriceListsTreeNode = SalesPointViewModel.PriceListsTreeNode;
+            SalesPointViewModel.AssignedPriceListHasChanged += (salesPointViewModel) =>
+            {
+                _ContextMenuItems = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(ContextMenuItems)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+                
+            };
 
-            _Name = Properties.Resources.LoadingPrompt;
+            //_Name = Properties.Resources.LoadingPrompt;
+
+
+
 
             GetServiceAreName();
 
@@ -80,6 +102,13 @@ namespace FloorLayoutDesigner.ViewModel
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
+            });
+
+            AssignPricelistCommand = new RelayCommand((object sender) =>
+            {
+                var priceList = UIProxy.GetRealObject<PriceListPresentation>(sender);
+              SalesPointViewModel. AssignPriceList(priceList);
+
             });
 
             AddServicePointCommand = new RelayCommand((object sender) =>
@@ -108,14 +137,15 @@ namespace FloorLayoutDesigner.ViewModel
             });
         }
 
+
         MealTypesTreeNode MealTypesTreeNode;
-        public ServiceAreaPresentation(IServiceArea serviceArea, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) :base(null)
+        public ServiceAreaPresentation(IServiceArea serviceArea, MenuItemsEditor.ViewModel.MealTypesViewModel mealTypesViewModel) : base(null)
         {
             _Name = serviceArea.Description;
             ServiceArea = serviceArea;
             MealTypesViewModel = mealTypesViewModel;
-            MealTypesTreeNode = new MealTypesTreeNode( this);
-              _Members =new List<FBResourceTreeNode>() { MealTypesTreeNode };
+            MealTypesTreeNode = new MealTypesTreeNode(this);
+            _Members = new List<FBResourceTreeNode>() { MealTypesTreeNode };
             IsNodeExpanded = true;
             Task.Run(() =>
             {
@@ -169,7 +199,7 @@ namespace FloorLayoutDesigner.ViewModel
             {
                 if (RestaurantHallLayout == null)
                 {
-                    
+
                     OrganizationStorageRef hallLayoutStorageRef = FlavoursServicesContext.ServicesContext.GetHallLayoutStorageForServiceArea(ServiceArea);
 
                     string appDataPath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\Microneme";
@@ -193,7 +223,7 @@ namespace FloorLayoutDesigner.ViewModel
                                                 select hallLayout).FirstOrDefault();
                         if (RestaurantHallLayout == null)
                         {
-                            RestaurantHallLayout = new HallLayout() { Name = ServiceArea.Description,ServicesContextIdentity=ServiceArea.ServicesContextIdentity };
+                            RestaurantHallLayout = new HallLayout() { Name = ServiceArea.Description, ServicesContextIdentity = ServiceArea.ServicesContextIdentity };
                             hallLayoutStorage.CommitTransientObjectState(RestaurantHallLayout);
                         }
                         RestaurantHallLayout.ServiceArea = ServiceArea;
@@ -333,6 +363,8 @@ namespace FloorLayoutDesigner.ViewModel
         /// <MetaDataID>{73dabb7e-dceb-4677-9ce2-c585eb94a453}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
+        public RelayCommand AssignPricelistCommand { get; protected set; }
+
         /// <MetaDataID>{9178cc6b-09ae-49bd-8c66-94fa7fe5fa97}</MetaDataID>
         public RelayCommand AddServicePointCommand { get; protected set; }
 
@@ -347,6 +379,7 @@ namespace FloorLayoutDesigner.ViewModel
         {
             get
             {
+                var priceListsNodeEntries = this.HeaderNode.FBResourceTreeNodesDictionary.Where(x => x.Value.All(y => y is PriceListPresentation)).Select(x => x.Value.OfType<PriceListPresentation>().FirstOrDefault()).ToList();
 
                 if (_ContextMenuItems == null)
                 {
@@ -398,19 +431,52 @@ namespace FloorLayoutDesigner.ViewModel
                     menuItem.Command = DeleteCommand;
 
                     _ContextMenuItems.Add(menuItem);
+                    PriceListsMenuItem = new MenuCommand();
+                    imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/price-list16.png"));
+                    PriceListsMenuItem.Header = Properties.Resources.PriceListsManuHeader; //$"{Properties.Resources.AddPrefix} {priceList.Name}";
+                    PriceListsMenuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
 
+                }
+                //priceListsNodeEntries = new List<PriceListPresentation>();
+                foreach (var priceList in priceListsNodeEntries.Where(x => SalesPointViewModel.PriceLists.Where(y => y.PriceListStorageRef.StorageIdentity == y.PriceListStorageRef.StorageIdentity).Count() == 0))
+                {
 
+                    if (PriceListsMenuItem.SubMenuCommands.Count() == 0)
+                    {
+                        MenuCommand menuItem = new MenuCommand();
+                        BitmapImage imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/price-list16.png"));
+                        menuItem.Header = $"{Properties.Resources.AddPrefix} {priceList.Name}";
+                        menuItem.Icon = new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                        menuItem.Command = AssignPricelistCommand;
+                        menuItem.Parameter = priceList;
+                        menuItem.Tag = priceList;
+                        PriceListsMenuItem.AddMenucommand(menuItem);
+                    }
+                }
+                if (PriceListsMenuItem.SubMenuCommands.Count > 0 && !_ContextMenuItems.Contains(PriceListsMenuItem))
+                {
+                    if (_ContextMenuItems.IndexOf(null) != 1)
+                        _ContextMenuItems.Insert(_ContextMenuItems.IndexOf(null), PriceListsMenuItem);
+                    else
+                        _ContextMenuItems.Add(PriceListsMenuItem);
+                }
 
+                if (PriceListsMenuItem.SubMenuCommands.Count == 0 && _ContextMenuItems.Contains(PriceListsMenuItem))
+                    _ContextMenuItems.Remove(PriceListsMenuItem);
 
-
-
-
+                if (PriceListsMenuItem != null)
+                {
+                    foreach (var priceListMenuItem in PriceListsMenuItem.SubMenuCommands)
+                        priceListMenuItem.Header = (priceListMenuItem.Tag as PriceListPresentation).Name;
                 }
 
                 return _ContextMenuItems;
             }
         }
 
+
+
+        /// <exclude>Excluded</exclude>
         List<FBResourceTreeNode> _Members;
 
         /// <MetaDataID>{3930a9a5-c95b-4528-a912-885e71b3686c}</MetaDataID>
@@ -418,8 +484,11 @@ namespace FloorLayoutDesigner.ViewModel
         {
             get
             {
-                
-                return _Members;
+                if (SalesPointViewModel.PriceLists.Count > 0)
+                    return new List<FBResourceTreeNode>() { PriceListsTreeNode }.Union(_Members).ToList();
+                else
+                    return _Members;
+
             }
         }
         /// <exclude>Excluded</exclude>
@@ -467,15 +536,24 @@ namespace FloorLayoutDesigner.ViewModel
         }
 
         public MenuItemsEditor.ViewModel.MealTypesViewModel MealTypesViewModel { get; set; }
-        
+        public MenuCommand PriceListsMenuItem { get; private set; }
+
+
+
+
+
 
         /// <MetaDataID>{32c8cf5b-2b92-43f8-b76f-e4a23e31b26c}</MetaDataID>
         public void DragEnter(object sender, DragEventArgs e)
         {
             //MenuItemsEditor.ViewModel.pr
-            PriceListPresentation canvasItem = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
-
-            e.Effects = DragDropEffects.None;
+            PriceListPresentation priceList = e.Data.GetData(typeof(PriceListPresentation)) as PriceListPresentation;
+            if (priceList != null && SalesPointViewModel.CanAssignPriceList(priceList))
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+            else
+                e.Effects = DragDropEffects.None;
         }
 
         /// <MetaDataID>{8ba9d096-ca95-4104-9e2e-fbe41ef1f9f3}</MetaDataID>
@@ -511,13 +589,13 @@ namespace FloorLayoutDesigner.ViewModel
 
         public IServicePointViewModel GetServicePoint(string servicesPointIdentity)
         {
-            return  this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
+            return this.ServicePoints.Where(x => x.ServicePoint.ServicesPointIdentity == servicesPointIdentity).FirstOrDefault() as ServicePointPresentation;
         }
 
         public List<AssignedMealTypeViewMode> GetMealTypes(string servicesPointIdentity)
         {
 
-            if(string.IsNullOrWhiteSpace(servicesPointIdentity))
+            if (string.IsNullOrWhiteSpace(servicesPointIdentity))
                 return (from mealTypeViewModel in MealTypesViewModel.MealTypes
                         select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this)).ToList();
 
@@ -530,11 +608,204 @@ namespace FloorLayoutDesigner.ViewModel
             else
             {
                 return (from mealTypeViewModel in MealTypesViewModel.MealTypes
-                        select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this )).ToList();
+                        select new AssignedMealTypeViewMode(mealTypeViewModel.MealType, this)).ToList();
             }
 
         }
+
+        //#region IPriceListsOwner implementation
+
+        //PriceListsTreeNode PriceListsTreeNode;
+
+        //public MenuCommand PriceListsMenuItem { get; private set; }
+        //public List<OrganizationStorageRef> PriceListStorageRefs { get; private set; }
+
+        ///// <exclude>Excluded</exclude>
+        //List<PriceListPresentation> _PriceList = new List<PriceListPresentation>();
+
+        //public List<PriceListPresentation> PriceLists
+        //{
+        //    get
+        //    {
+        //        if (PriceListStorageRefs == null)
+        //            PriceListStorageRefs = (ServiceArea as ISalesPoint).PriceLists;
+
+        //        #region Sync serviceArea price list nodes
+        //        foreach (var storageRef in PriceListStorageRefs)
+        //        {
+        //            if (_PriceList.Where(x => x.PriceListStorageRef.StorageIdentity == storageRef.StorageIdentity).Count() == 0)
+        //            {
+        //                var priceListsNodeEntries = this.HeaderNode.FBResourceTreeNodesDictionary.Where(x => x.Value.All(y => y is PriceListPresentation)).Select(x => x.Value.OfType<PriceListPresentation>().FirstOrDefault()).ToList();
+        //                var priceListNode = priceListsNodeEntries.Where(x => x.PriceListStorageRef.StorageIdentity == storageRef.StorageIdentity).FirstOrDefault();
+        //                _PriceList.Add(new PriceListPresentation(PriceListsTreeNode, priceListNode.PriceListStorageRef, priceListNode.MenuViewModel));
+        //            }
+        //        }
+        //        foreach (var removedPriceList in _PriceList.Where(x => !PriceListStorageRefs.Any(y => y.StorageIdentity == x.PriceListStorageRef.StorageIdentity)).ToList())
+        //        {
+        //            _PriceList.Remove(removedPriceList);
+        //        }
+
+        //        #endregion
+
+        //        return _PriceList.ToList();
+        //    }
+        //}
+
+
+
+
+
+        //public void AssignPriceList(PriceListPresentation priceList)
+        //{
+
+        //    (ServiceArea as ISalesPoint).AssignPriceList(priceList.PriceListStorageRef);
+        //    PriceListStorageRefs.Add(priceList.PriceListStorageRef);
+
+        //    _ContextMenuItems = null;
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(ContextMenuItems)));
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        //    PriceListsTreeNode.Refresh();
+
+        //}
+
+        //public bool CanAssignPriceList(PriceListPresentation PriceListTreeNode)
+        //{
+        //    return false;
+        //}
+
+        //public bool RemovePriceList(PriceListPresentation priceListTreeNode)
+        //{
+        //    var priceListStorageRef = PriceListStorageRefs.Where(x => x.StorageIdentity == priceListTreeNode.PriceListStorageRef.StorageIdentity).FirstOrDefault();
+        //    if (priceListStorageRef != null)
+        //    {
+        //        (ServiceArea as ISalesPoint).RemovePriceList(priceListStorageRef);
+        //        PriceListStorageRefs.Remove(priceListStorageRef);
+
+        //    }
+        //    _ContextMenuItems = null;
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+        //    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(ContextMenuItems)));
+        //    return true;
+        //}
+
+        //public bool NewPriceListAllowed => false;
+
+        //public void NewPriceList()
+        //{
+
+        //}
+        //#endregion
+
+
     }
+
+    public delegate void AssignedPriceListHasChangedHandler(SalesPointViewModel salesPointViewModel);
+    public class SalesPointViewModel: IPriceListsOwner
+    {
+        ISalesPoint SalesPoint;
+
+        FBResourceTreeNode SalesPointNode;
+
+        public event AssignedPriceListHasChangedHandler AssignedPriceListHasChanged;
+
+
+        public SalesPointViewModel(ISalesPoint salesPoint, FBResourceTreeNode salesPointNode, IOrganization organization)
+        {
+            SalesPoint = salesPoint;
+            SalesPointNode = salesPointNode;
+            Organization = organization;
+            PriceListsTreeNode =  new PriceListsTreeNode(MenuItemsEditor.Properties.Resources.PriceListsNodeName, salesPointNode, this); 
+        }
+
+
+
+
+        #region IPriceListsOwner implementation
+
+
+       public readonly PriceListsTreeNode PriceListsTreeNode;
+
+        public MenuCommand PriceListsMenuItem { get; private set; }
+        public List<OrganizationStorageRef> PriceListStorageRefs { get; private set; }
+
+        /// <exclude>Excluded</exclude>
+        List<PriceListPresentation> _PriceList = new List<PriceListPresentation>();
+
+        public List<PriceListPresentation> PriceLists
+        {
+            get
+            {
+                if (PriceListStorageRefs == null)
+                    PriceListStorageRefs = SalesPoint.PriceLists;
+
+                #region Sync serviceArea price list nodes
+                foreach (var storageRef in PriceListStorageRefs)
+                {
+                    if (_PriceList.Where(x => x.PriceListStorageRef.StorageIdentity == storageRef.StorageIdentity).Count() == 0)
+                    {
+                        var priceListsNodeEntries = SalesPointNode.HeaderNode.FBResourceTreeNodesDictionary.Where(x => x.Value.All(y => y is PriceListPresentation)).Select(x => x.Value.OfType<PriceListPresentation>().FirstOrDefault()).ToList();
+                        var priceListNode = priceListsNodeEntries.Where(x => x.PriceListStorageRef.StorageIdentity == storageRef.StorageIdentity).FirstOrDefault();
+                        _PriceList.Add(new PriceListPresentation(PriceListsTreeNode, priceListNode.PriceListStorageRef, priceListNode.MenuViewModel, Organization));
+                    }
+                }
+                foreach (var removedPriceList in _PriceList.Where(x => !PriceListStorageRefs.Any(y => y.StorageIdentity == x.PriceListStorageRef.StorageIdentity)).ToList())
+                {
+                    _PriceList.Remove(removedPriceList);
+                }
+
+                #endregion
+
+                return _PriceList.ToList();
+            }
+        }
+
+
+
+
+
+        public void AssignPriceList(PriceListPresentation priceList)
+        {
+
+            SalesPoint.AssignPriceList(priceList.PriceListStorageRef);
+            PriceListStorageRefs.Add(priceList.PriceListStorageRef);
+
+            AssignedPriceListHasChanged?.Invoke(this);
+
+            PriceListsTreeNode.Refresh();
+
+        }
+
+        public bool CanAssignPriceList(PriceListPresentation PriceListTreeNode)
+        {
+            return false;
+        }
+
+        public bool RemovePriceList(PriceListPresentation priceListTreeNode)
+        {
+            var priceListStorageRef = PriceListStorageRefs.Where(x => x.StorageIdentity == priceListTreeNode.PriceListStorageRef.StorageIdentity).FirstOrDefault();
+            if (priceListStorageRef != null)
+            {
+                SalesPoint.RemovePriceList(priceListStorageRef);
+                PriceListStorageRefs.Remove(priceListStorageRef);
+            }
+
+            AssignedPriceListHasChanged?.Invoke(this);
+
+                 return true;
+        }
+
+        public bool NewPriceListAllowed => false;
+
+        public IOrganization Organization { get; }
+
+        public void NewPriceList()
+        {
+
+        }
+        #endregion
+    }
+
+
 
     /// <MetaDataID>{572fa887-0e6d-440c-88c3-82122fd188bf}</MetaDataID>
     public interface IServiceAreaTreeNodeOwner

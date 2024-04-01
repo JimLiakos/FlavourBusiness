@@ -21,6 +21,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.Azure.Documents.Spatial;
 using MenuPresentationModel;
 using FlavourBusinessManager.HumanResources;
+using OOAdvantech.Json;
 
 namespace FlavourBusinessManager.EndUsers
 {
@@ -149,9 +150,9 @@ namespace FlavourBusinessManager.EndUsers
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
                 if (ServicePoint is IHomeDeliveryServicePoint)
-                    return new ClientSessionData() { ServicesContextLogo = ServicePoint.Description, ServicesPointName = "", SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
+                    return new ClientSessionData() { ServicesContextLogo = ServicePoint.Description, ServicesPointName = "", SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace(), PriceList = PriceList};
                 else
-                    return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace() };
+                    return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace(), PriceList = PriceList };
 
             }
         }
@@ -1459,7 +1460,7 @@ namespace FlavourBusinessManager.EndUsers
                         versionSuffix = "/" + graphicMenu.Version;
                     else
                         versionSuffix = "";
-                    graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", ServicesContextRunTime.OrganizationIdentity, graphicMenu.StorageIdentity, graphicMenu.Name, versionSuffix);
+                    graphicMenu.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/Menus/{1}{3}/{2}.json", ServicesContextRunTime.OrganizationIdentity, graphicMenu.StorageIdentity, graphicMenu.BlobName, versionSuffix);
                     _Menu = graphicMenu;
                 }
                 return _Menu;
@@ -2749,11 +2750,24 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-        public string PriceListJson
+        public OrganizationStorageRef PriceList
         {
             get
             {
-                return null;
+                var priceListStorageRef = ((this.ServicePoint as HallServicePoint)?.ServiceArea as ServiceArea)?.PriceLists.FirstOrDefault();
+
+                if (priceListStorageRef!=null)
+                {
+                    string versionSuffix = "";
+                    if (!string.IsNullOrWhiteSpace(priceListStorageRef.Version))
+                        versionSuffix = "/" + priceListStorageRef.Version;
+                    else
+                        versionSuffix = "";
+                    priceListStorageRef.StorageUrl = RawStorageCloudBlob.RootUri + string.Format("/usersfolder/{0}/PriceLists/{1}{3}/{2}.json", ServicesContextRunTime.OrganizationIdentity, priceListStorageRef.StorageIdentity, priceListStorageRef.BlobName, versionSuffix);
+                }
+
+                return priceListStorageRef;
+                
             }
         }
 

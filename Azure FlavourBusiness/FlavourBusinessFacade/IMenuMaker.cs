@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FlavourBusinessFacade.HumanResources
 {
     /// <MetaDataID>{16175185-5c62-454b-81bd-62eeb5c5a5c7}</MetaDataID>
@@ -15,6 +17,10 @@ namespace FlavourBusinessFacade.HumanResources
 
         /// <MetaDataID>{02b8db90-d5b6-46f6-b8dc-70bd4d250169}</MetaDataID>
         OrganizationStorageRef GetGraphicMenuItems(IActivity menuMakingActivity);
+
+
+       List< OrganizationStorageRef> GetPriceLists(IActivity menuMakingActivity);
+
         /// <MetaDataID>{3d31eae6-9a26-4e0d-8079-33bde813e90a}</MetaDataID>
         [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
         string OAuthUserIdentity { get; }

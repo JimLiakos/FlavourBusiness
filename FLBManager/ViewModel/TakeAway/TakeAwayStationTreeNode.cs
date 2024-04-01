@@ -94,7 +94,7 @@ namespace FLBManager.ViewModel.TakeAway
             if (!string.IsNullOrWhiteSpace(graphicMenuStorageIdentity))
             {
                 var graphicMenuTreeNode = parent.ServiceContextInfrastructure.ServicesContextPresentation.Company.GraphicMenus.Where(x => x.GraphicMenuStorageRef.StorageIdentity==takeAwayStation.GraphicMenuStorageIdentity).FirstOrDefault();
-                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
+                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), graphicMenuTreeNode.PriceListsOwner, this, this, false);
             }
         }
 
@@ -411,7 +411,7 @@ namespace FLBManager.ViewModel.TakeAway
 
                 this.TakeAwayStation.GraphicMenuStorageIdentity=graphicMenuTreeNode.GraphicMenuStorageRef.StorageIdentity;
                 TakeAwayStationsTreeNode.ServiceContextInfrastructure.ServicesContextPresentation.AssignGraphicMenu(graphicMenuTreeNode);
-                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), this, this, false);
+                GraphicMenuTreeNode=    new GraphicMenuTreeNode(graphicMenuTreeNode.GraphicMenuStorageRef?.Clone(), graphicMenuTreeNode.MenuItemsStorageRef?.Clone(), graphicMenuTreeNode.PriceListsOwner, this, this, false);
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             }
         }
