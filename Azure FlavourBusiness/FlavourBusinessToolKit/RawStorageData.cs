@@ -59,6 +59,12 @@ namespace FlavourBusinessToolKit
                 _FileName = localFileName;
                 StorageRef = storageRef;
                 UploadService = uploadService;
+
+                string storageIdentity = StorageDoc.Root.Attribute("StorageIdentity")?.Value;
+                if (!string.IsNullOrEmpty(storageIdentity) && storageIdentity != storageRef.StorageIdentity)
+                    throw new InvalidDataException("StorageIdentity mismatch");
+
+
             }
         }
 

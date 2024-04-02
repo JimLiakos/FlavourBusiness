@@ -72,7 +72,7 @@ namespace MenuDesigner.Views
                 BookViewModel.PropertyChanged += BookViewModel_PropertyChanged;
 
             }));
-            string url = @"https://localhost:4300/";
+            string url = @"https://localhost:4400/";
 
             Browser = new WebBrowserOverlay(WebBrowserHost, BrowserType.Chrome, true);
             Browser.ProcessRequest += this.Browser_ProcessRequest;

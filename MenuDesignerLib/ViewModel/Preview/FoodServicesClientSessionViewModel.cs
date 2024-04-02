@@ -56,13 +56,13 @@ namespace MenuDesigner.ViewModel.Preview
         /// <MetaDataID>{2416f0ce-58b1-45b0-a9cf-b73bdbd4e428}</MetaDataID>
         public void AddItem(ItemPreparation item)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <MetaDataID>{c66c2fa5-5d6c-4853-9b5b-8d1507908ba0}</MetaDataID>
         public void AddSharingItem(ItemPreparation item)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <MetaDataID>{1c9e34c1-e698-49c5-8e09-bb7ff540befb}</MetaDataID>

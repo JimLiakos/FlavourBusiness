@@ -1806,7 +1806,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     fbstorage.Version = graphicMenuStorageRef.Version;
 
                     var storageRef = new FlavourBusinessFacade.OrganizationStorageRef { StorageIdentity = fbstorage.StorageIdentity, FlavourStorageType = fbstorage.FlavourStorageType, Name = fbstorage.Name, Description = fbstorage.Description, StorageUrl = graphicMenuStorageRef.StorageUrl, TimeStamp = RestaurantMenuDataLastModified };
-                    FlavourBusinessToolKit.RawStorageData rawStorageData = new FlavourBusinessToolKit.RawStorageData(storageRef, null);
+                    FlavourBusinessToolKit.RawStorageData rawStorageData = new RawStorageData(storageRef, null);
                     OOAdvantech.Linq.Storage restMenusData = new OOAdvantech.Linq.Storage(OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage("RestMenusData", rawStorageData, "OOAdvantech.MetaDataLoadingSystem.MetaDataStorageProvider"));
                     var restaurantMenu = (from menu in restMenusData.GetObjectCollection<MenuPresentationModel.RestaurantMenu>()
                                           select menu).FirstOrDefault();
