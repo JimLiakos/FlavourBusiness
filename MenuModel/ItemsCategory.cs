@@ -35,7 +35,7 @@ namespace MenuModel
         [PersistentMember("_Class")]
         [BackwardCompatibilityID("+1")]
         [AssociationEndBehavior(PersistencyFlag.ReferentialIntegrity)]
-        public MenuModel.IClass Class
+        public IClass Class
         {
             set
             {

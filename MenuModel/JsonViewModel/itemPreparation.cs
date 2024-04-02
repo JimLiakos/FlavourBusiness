@@ -435,17 +435,17 @@ namespace MenuModel.JsonViewModel
     public class ItemsCategory : IClass, IClassified
     {
         /// <MetaDataID>{743dc99b-3a1e-43f5-8fdc-139c639c53c6}</MetaDataID>
-        public ItemsCategory(IItemsCategory itemsCategory, Dictionary<object, object> mappedObject)
+        public ItemsCategory(IClass itemsCategory, Dictionary<object, object> mappedObject)
         {
             Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsCategory).GetPersistentObjectUri(itemsCategory);
             mappedObject[itemsCategory] = this;
             Name = itemsCategory.Name;
-            if (itemsCategory.Parent != null)
+            if ((itemsCategory as IClassified)?.Class != null)
             {
-                if (mappedObject.ContainsKey(itemsCategory.Parent))
-                    Class = mappedObject[itemsCategory.Parent] as IItemsCategory;
+                if (mappedObject.ContainsKey((itemsCategory as IClassified)?.Class))
+                    Class = mappedObject[(itemsCategory as IClassified)?.Class] as IClass;
                 else
-                    Class = new ItemsCategory(itemsCategory.Parent, mappedObject);
+                    Class = new ItemsCategory((itemsCategory as IClassified)?.Class, mappedObject);
             }
         }
 
