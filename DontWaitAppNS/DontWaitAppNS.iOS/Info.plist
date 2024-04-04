@@ -60,14 +60,14 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
 	<key>NSAppTransportSecurity</key>    
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to access your camera to capture a photo add and update profile picture.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need to access your photo library to select a photo add and update profile picture</string>
-<dict>
-    <key>NSAllowsLocalNetworking</key>
-    <true/>
-</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
