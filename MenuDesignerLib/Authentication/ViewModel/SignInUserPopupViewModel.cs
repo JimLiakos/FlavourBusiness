@@ -498,7 +498,7 @@ namespace FLBAuthentication.ViewModel
 
                      }
                      catch (Exception error)
-                     {
+                     {  
 
                          throw;
                      }
