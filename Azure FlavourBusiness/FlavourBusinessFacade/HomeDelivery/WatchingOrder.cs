@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessFacade.HomeDelivery
+namespace FlavourBusinessFacade
 {
     /// <MetaDataID>{e87404cd-1460-49dc-9cee-fc1c4ad4f7fd}</MetaDataID>
     public class WatchingOrder
     {
         public string OrderCode { get; set; } = "082439A";
 
-        public HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
+        public ServicePointAbbreviation ServicePoint { get; set; }
 
         public string TimeStamp { get; set; }
 
@@ -46,7 +46,7 @@ namespace FlavourBusinessFacade.HomeDelivery
     }
      
     /// <MetaDataID>{991b4aaf-6eae-4a72-b4f7-7e3df79aaae5}</MetaDataID>
-    public class CallCenterStationWatchingOrders
+    public class StationWatchingOrders
     {
         public List<WatchingOrder> WatchingOrders { get; set; } = new List<WatchingOrder>();
 

@@ -65,6 +65,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [CachingDataOnClientSide]
         string ServicesContextIdentity { get; set; }
 
+
+        IFlavoursServicesContextRuntime GetServiceContextRuntime();
+
         /// <MetaDataID>{56fee2b7-7636-44e5-b109-20bb54b24388}</MetaDataID>
         [BackwardCompatibilityID("+5")]
         [CachingDataOnClientSide]
@@ -163,5 +166,15 @@ namespace FlavourBusinessFacade.ServicesContextResources
         TakeAway = 1,
         Delivery = 2
     }
+
+    /// <MetaDataID>{85196471-e6af-456c-8af5-6a1d81f73ee1}</MetaDataID>
+    public class ServicePointAbbreviation
+    {
+        public string Description { get; set; }
+        public string ServicesContextIdentity { get; set; }
+        public string ServicesPointIdentity { get; set; }
+
+    }
+
 
 }

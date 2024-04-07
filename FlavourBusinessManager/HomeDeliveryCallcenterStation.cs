@@ -1,6 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.HomeDelivery;
+
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.UnitTest;
@@ -329,6 +329,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                 // servicePoint.GetFoodServiceClientSession()
             }
 
+            
+
+            //IFlavoursServicesContextManagment ddd;
+            //ddd.GetServicesContextRuntime()
 
 
 
@@ -431,12 +435,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
-        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
+        public StationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
         {
             if (candidateToRemoveWatchingOrders == null)
                 candidateToRemoveWatchingOrders = new List<WatchingOrderAbbreviation>();
 
-            CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
+            StationWatchingOrders callCenterStationWatchingOrders = new StationWatchingOrders();
             List<WatchingOrder> watchingOrders = new List<WatchingOrder>();
             foreach (var HomeDeliveryServicePoint in HomeDeliveryServicePoints)
             {

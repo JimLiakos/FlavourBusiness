@@ -434,6 +434,10 @@ namespace MenuModel.JsonViewModel
     /// <MetaDataID>{c7db335f-1871-4187-b681-e77b2ea07e41}</MetaDataID>
     public class ItemsCategory : IClass, IClassified
     {
+        public ItemsCategory()
+        {
+
+        }
         /// <MetaDataID>{743dc99b-3a1e-43f5-8fdc-139c639c53c6}</MetaDataID>
         public ItemsCategory(IClass itemsCategory, Dictionary<object, object> mappedObject)
         {

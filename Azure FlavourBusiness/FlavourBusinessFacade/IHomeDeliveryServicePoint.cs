@@ -1,5 +1,5 @@
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.HomeDelivery;
+
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.Shipping;
 using OOAdvantech.MetaDataRepository;
@@ -74,7 +74,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e1a5d545-2883-4c58-bdb5-da1d8f5d61a7}</MetaDataID>
         IUploadSlot GetUploadSlotForLogoBackgroundImage();
         /// <MetaDataID>{705ac1ed-dbd3-49b5-9331-397ea7c34593}</MetaDataID>
-        CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
+        StationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
         /// <MetaDataID>{12a55af9-dcfe-4418-93d8-be4d74151e6e}</MetaDataID>
         CourierShippingPair GetCourierShipping(string scannedCode);
 

@@ -4,8 +4,9 @@ using FlavourBusinessFacade;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using FlavourBusinessFacade.HomeDelivery;
+
 using OOAdvantech.Json;
+using FlavourBusinessFacade.ServicesContextResources;
 
 namespace TakeAwayApp.ViewModel
 {
@@ -16,7 +17,7 @@ namespace TakeAwayApp.ViewModel
         public WatchingOrderPresentation(WatchingOrder watchingOrder, List<FlavourBusinessManager.RoomService.ViewModel.MealCourse> mealCourses)
         {
             ServerWatchingOrder = watchingOrder;
-            HomeDeliveryServicePoint = watchingOrder.HomeDeliveryServicePoint;
+            ServicePoint = watchingOrder.ServicePoint;
             TimeStamp = watchingOrder.TimeStamp;
             DeliveryPlace = watchingOrder.DeliveryPlace;
             SessionID = watchingOrder.SessionID;
@@ -42,7 +43,7 @@ namespace TakeAwayApp.ViewModel
         public WatchingOrderState State { get; set; }
         public string Description { get; }
         public string ClientPhone { get; set; }
-        public HomeDeliveryServicePointAbbreviation HomeDeliveryServicePoint { get; set; }
+        public ServicePointAbbreviation ServicePoint { get; set; }
 
         public string TimeStamp { get; set; }
 

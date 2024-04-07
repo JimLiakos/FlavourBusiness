@@ -250,6 +250,8 @@ namespace TakeAwayApp.ViewModel
             if (HomeDeliveryServicePoint == null)
                 return Task<bool>.FromResult(false);
 
+            FlavoursOrderServer.SerializeTaskScheduler.Wait();
+
             return Task<bool>.Run(() =>
               {
                   var foodServicesClientSessionPresentation = FoodServiceClientSession as FoodServicesClientSessionViewModel;

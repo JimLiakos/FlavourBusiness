@@ -21,7 +21,7 @@ using Xamarin.Forms;
 
 using FlavourBusinessFacade.RoomService;
 using DontWaitApp;
-using FlavourBusinessFacade.HomeDelivery;
+
 
 
 #if DeviceDotNet
@@ -175,7 +175,7 @@ namespace TakeAwayApp.ViewModel
 
 #endif
 
-            _MealCoursesInProgress.OnNewViewModelWrapper+=MealCoursesInProgress_OnNewViewModelWrapper;
+            _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
 
             //string channelUri = string.Format("{0}({1})", AzureServerUrl, "0470e076603e47b6a82556fe4c1bf335");
             // TakeawayCashier=OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(channelUri, "3bdea2dc-3185-4331-bdb9-f17c535f2965\\49\\8413280b-a2d0-43d1-8194-59aaa001de3d") as FlavourBusinessFacade.HumanResources.ITakeawayCashier;
@@ -622,7 +622,7 @@ namespace TakeAwayApp.ViewModel
         public bool InActiveShiftWork
         {
             get
-            {  
+            {
                 if (ActiveShiftWork != null)
                 {
                     var startedAt = ActiveShiftWork.StartsAt;
@@ -702,8 +702,8 @@ namespace TakeAwayApp.ViewModel
             {
                 return this.TakeAwayStation.GetNativeUsers();
             });
-        } 
-         
+        }
+
         /// <MetaDataID>{17df1e47-7f36-4cbf-aa07-928059b6ec0f}</MetaDataID>
         public UserData SignInNativeUser(string userName, string password)
         {
@@ -1084,11 +1084,14 @@ namespace TakeAwayApp.ViewModel
                 if (_HomeDeliveryCallCenterStation != value)
                 {
 
-                    if (_HomeDeliveryCallCenterStation!=null)
-                        _HomeDeliveryCallCenterStation.ObjectChangeState-=HomeDeliveryCallCenterStation_ObjectChangeState;
+
+                    if (_HomeDeliveryCallCenterStation != null)
+                        _HomeDeliveryCallCenterStation.ObjectChangeState -= HomeDeliveryCallCenterStation_ObjectChangeState;
                     _HomeDeliveryCallCenterStation = value;
-                    if (_HomeDeliveryCallCenterStation!=null)
-                        _HomeDeliveryCallCenterStation.ObjectChangeState+=HomeDeliveryCallCenterStation_ObjectChangeState;
+
+                    
+                    if (_HomeDeliveryCallCenterStation != null)
+                        _HomeDeliveryCallCenterStation.ObjectChangeState += HomeDeliveryCallCenterStation_ObjectChangeState;
 
 
                 }
@@ -1097,16 +1100,17 @@ namespace TakeAwayApp.ViewModel
 
         private void HomeDeliveryCallCenterStation_ObjectChangeState(object _object, string member)
         {
-            if (_WatchingOrders!=null)
+            if (_WatchingOrders != null)
             {
                 var watchingOrders = _WatchingOrders.ToList();
-                var stationWatchingOrders = watchingOrders.Select(x => new WatchingOrderAbbreviation() { SessionID=x.SessionID, TimeStamp=x.TimeStamp }).ToList();
+                var stationWatchingOrders = watchingOrders.Select(x => new WatchingOrderAbbreviation() { SessionID = x.SessionID, TimeStamp = x.TimeStamp }).ToList();
                 var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders(stationWatchingOrders);
 
-                watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.MissingWatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
-                watchingOrders=watchingOrders.Where(x => !callCenterStationWatchingOrders.WatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID==x.SessionID)).ToList();
-                watchingOrders.AddRange(callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList());
-                _WatchingOrders=watchingOrders;
+                watchingOrders = watchingOrders.Where(x => !callCenterStationWatchingOrders.MissingWatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID == x.SessionID)).ToList();
+                watchingOrders = watchingOrders.Where(x => !callCenterStationWatchingOrders.WatchingOrders.Any(removedWatchingOrder => removedWatchingOrder.SessionID == x.SessionID)).ToList();
+                watchingOrders.AddRange(callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,
+                    () => { return new FlavourBusinessManager.RoomService.ViewModel.MealCourse(x, GetMealsController(watchingOrder.ServicePoint)); })).ToList())).ToList());
+                _WatchingOrders = watchingOrders;
 
 
 
@@ -1157,17 +1161,52 @@ namespace TakeAwayApp.ViewModel
                     {
                         var callCenterStationWatchingOrders = _HomeDeliveryCallCenterStation.GetWatchingOrders();
 
+                        _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,
+                            () => { return new FlavourBusinessManager.RoomService.ViewModel.MealCourse(x, GetMealsController(watchingOrder.ServicePoint)); })).ToList())).ToList();
 
-                        _WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList();
+                        //_WatchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x)).ToList())).ToList();
 
                         //_WatchingOrders.AddRange(_WatchingOrders.ToList());
                         //_WatchingOrders.AddRange(_WatchingOrders.ToList());
                         //_WatchingOrders.AddRange(_WatchingOrders.ToList());
                         //_WatchingOrders.AddRange(_WatchingOrders.ToList());
                     }
+                    if(TakeAwayStation != null)
+                    {
+                        var callCenterStationWatchingOrders = TakeAwayStation.GetWatchingOrders();
+
+                        
+                        var watchingOrders = callCenterStationWatchingOrders.WatchingOrders.Select(watchingOrder => new WatchingOrderPresentation(watchingOrder, watchingOrder.MealCourses.Select(x => _MealCoursesInProgress.GetViewModelFor(x,
+                            () => { return new FlavourBusinessManager.RoomService.ViewModel.MealCourse(x, GetMealsController(watchingOrder.ServicePoint)); })).ToList())).ToList();
+
+                        if (_WatchingOrders == null)
+                            _WatchingOrders = watchingOrders;
+                        else
+                            _WatchingOrders.AddRange(watchingOrders);
+                    }
                 }
                 return _WatchingOrders;
             }
+        }
+        Dictionary<string, IMealsController> MealsControllersDictionary;
+        private IMealsController GetMealsController(ServicePointAbbreviation homeDeliveryServicePoint)
+        {
+            if (_HomeDeliveryServicePoints == null)
+                _HomeDeliveryServicePoints = this.HomeDeliveryCallCenterStation.HomeDeliveryServicePoints;
+
+            if (MealsControllersDictionary == null)
+            {
+                MealsControllersDictionary = new Dictionary<string, IMealsController>();
+                foreach (var theHomeDeliveryServicePoint in _HomeDeliveryServicePoints)
+                    MealsControllersDictionary[theHomeDeliveryServicePoint.ServicesPointIdentity] = theHomeDeliveryServicePoint.GetServiceContextRuntime().MealsController;
+
+                if(TakeAwayStation!=null)
+                    MealsControllersDictionary[TakeAwayStation.ServicesPointIdentity] = TakeAwayStation.GetServiceContextRuntime().MealsController;
+
+
+            }
+            return MealsControllersDictionary[homeDeliveryServicePoint.ServicesPointIdentity];
+
         }
 
         /// <MetaDataID>{7f7af574-b2e1-47b3-9e7d-4a6773840adb}</MetaDataID>
@@ -1243,7 +1282,7 @@ namespace TakeAwayApp.ViewModel
                     return homeDeliverySession;
 
                 var foodServicesClientSessionViewModel = this.FlavoursOrderServer.GetFoodServicesClientSessionViewModel(HomeDeliveryCallCenterStation.Menu);
-                homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.HomeDeliveryServicePoint, HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
+                homeDeliverySession = HomeDeliverySession.GetHomeDeliverySession(this, watchingOrder.ServicePoint as HomeDeliveryServicePointAbbreviation, HomeDeliveryServicePoints, foodServicesClientSessionViewModel, sessionID);
                 this.HomeDeliverySessions.Add(homeDeliverySession);
 
                 return homeDeliverySession;
@@ -1274,7 +1313,7 @@ namespace TakeAwayApp.ViewModel
         internal void UpdateWatchingOrder(WatchingOrder watchingOrder)
         {
 
-            if (watchingOrder!=null)
+            if (watchingOrder != null)
             {
 
                 var existingWatchingOrder = this.WatchingOrders.Where(x => x.SessionID == watchingOrder.SessionID).FirstOrDefault();
