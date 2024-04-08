@@ -1828,7 +1828,7 @@ namespace DontWaitApp
                 {
                     string defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
                     defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;50886542db964edf8dec5734e3f89395";//table A4
-                    //defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;ba1ef9fe4cb64ac6bd1daed625ecb00b";//Take away
+                    defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;ba1ef9fe4cb64ac6bd1daed625ecb00b";//Take away
                     if (string.IsNullOrWhiteSpace(servicePointIdentity)||servicePointIdentity.Split(';').Length < 2)
                         servicePointIdentity = defaultServicePoint;
 
