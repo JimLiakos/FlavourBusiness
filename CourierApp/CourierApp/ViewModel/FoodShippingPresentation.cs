@@ -131,7 +131,7 @@ namespace CourierApp.ViewModel
             var sessionData = foodShipping.MealCourse.SessionData;
             var storeRef = sessionData.Menu;
 #if !DeviceDotNet
-
+            // read 
             storeRef.StorageUrl = "https://dev-localhost/" + storeRef.StorageUrl.Substring(storeRef.StorageUrl.IndexOf("devstoreaccount1"));
 #endif
             string menuRoot = storeRef.StorageUrl.Substring(0, storeRef.StorageUrl.LastIndexOf("/") + 1);
