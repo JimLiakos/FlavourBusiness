@@ -3965,7 +3965,7 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.EndUsers.FoodServiceClientUri>>(retValue);
         }
         
-        public FlavourBusinessFacade.HomeDelivery.WatchingOrder CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
+        public FlavourBusinessFacade.WatchingOrder CommitSession(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession foodServicesClientSession, FlavourBusinessFacade.ServicesContextResources.FoodServicesClientUpdateData foodServicesClientData, FlavourBusinessFacade.EndUsers.IPlace deliveryPlace)
         {
             object[] args = new object[3];
             System.Type[] argsTypes = new System.Type[3];
@@ -3976,17 +3976,17 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[2] = deliveryPlace;
             argsTypes[2] = typeof(FlavourBusinessFacade.EndUsers.IPlace);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "CommitSession", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.WatchingOrder>(retValue);
+            return this.Proxy.GetValue<FlavourBusinessFacade.WatchingOrder>(retValue);
         }
         
-        public FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)
+        public FlavourBusinessFacade.StationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = candidateToRemoveWatchingOrders;
-            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation), "GetWatchingOrders", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
+            return this.Proxy.GetValue<FlavourBusinessFacade.StationWatchingOrders>(retValue);
         }
         
         public FlavourBusinessFacade.EndUsers.FoodServiceClientUri GetFoodServicesOpenSession(FlavourBusinessFacade.HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint, string sessionID)
@@ -4491,14 +4491,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.IUploadSlot>(retValue);
         }
         
-        public FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)
+        public FlavourBusinessFacade.StationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = candidateToRemoveWatchingOrders;
-            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.HomeDelivery.WatchingOrderAbbreviation>);
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryServicePoint), "GetWatchingOrders", args, argsTypes);
-            return this.Proxy.GetValue<FlavourBusinessFacade.HomeDelivery.CallCenterStationWatchingOrders>(retValue);
+            return this.Proxy.GetValue<FlavourBusinessFacade.StationWatchingOrders>(retValue);
         }
         
         public FlavourBusinessFacade.ServicesContextResources.CourierShippingPair GetCourierShipping(string scannedCode)
@@ -4527,6 +4527,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = mealTypeUri;
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "RemoveMealType", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime GetServiceContextRuntime()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "GetServiceContextRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
         }
         
         public void AddFoodServiceSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession)
@@ -5134,6 +5142,16 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             return this.Proxy.GetValue<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>(retValue);
         }
         
+        public FlavourBusinessFacade.StationWatchingOrders GetWatchingOrders(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation> candidateToRemoveWatchingOrders)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = candidateToRemoveWatchingOrders;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.WatchingOrderAbbreviation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.ITakeAwayStation), "GetWatchingOrders", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.StationWatchingOrders>(retValue);
+        }
+        
         public FlavourBusinessFacade.UserData SignInNativeUser(string userName, string password)
         {
             object[] args = new object[2];
@@ -5162,6 +5180,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = mealTypeUri;
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "RemoveMealType", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime GetServiceContextRuntime()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "GetServiceContextRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
         }
         
         public void AddFoodServiceSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession)
@@ -6112,6 +6138,14 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = mealTypeUri;
             argsTypes[0] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "RemoveMealType", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.IFlavoursServicesContextRuntime GetServiceContextRuntime()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IServicePoint), "GetServiceContextRuntime", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.IFlavoursServicesContextRuntime>(retValue);
         }
         
         public void AddFoodServiceSession(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession foodServiceSession)

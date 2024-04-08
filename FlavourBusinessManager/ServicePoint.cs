@@ -409,6 +409,9 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         if (this is HomeDeliveryServicePoint)
                             fsClientSession.SessionType = SessionType.HomeDelivery;
+                        
+                        if (this is TakeAwayStation)
+                            fsClientSession.SessionType = SessionType.Takeaway;
 
 
                         if (user != null && fsClientSession != null && user.Identity != fsClientSession.UserIdentity)
