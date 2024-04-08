@@ -1551,8 +1551,8 @@
 			zoom       	100
 			max_height 	28350
 			max_width  	21600
-			origin_x   	1922
-			origin_y   	0
+			origin_x   	188
+			origin_y   	416
 			items      	(list diagram_item_list
 			    (object ClassView "Class" "Logical View::TakeAwayStationDevice::ApplicationSettings" @2
 				ShowCompartmentStereotypes 	TRUE
@@ -1788,7 +1788,7 @@
 					    default_color 	TRUE)
 					label      	(object SegLabel @13
 					    Parent_View 	@12
-					    location   	(1620, 798)
+					    location   	(1620, 799)
 					    font       	(object Font
 						size       	10
 						face       	"Arial"
@@ -1883,7 +1883,7 @@
 					    orientation 	0))))
 			    (object ClassView "Class" "Logical View::TakeAwayStationDevice::HomeDeliverySession" @17
 				ShowCompartmentStereotypes 	TRUE
-				location   	(2328, 1434)
+				location   	(2303, 1485)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1896,7 +1896,7 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@17
-				    location   	(1959, 1340)
+				    location   	(1934, 1391)
 				    fill_color 	13434879
 				    nlines     	1
 				    max_width  	739
@@ -2094,8 +2094,8 @@
 				    max_width  	628
 				    justify    	0
 				    label      	"CreateTemporaryClientSession( )"
-				    pctDist    	0.500000
-				    height     	45
+				    pctDist    	0.470033
+				    height     	138
 				    orientation 	0)
 				label      	(object SegLabel @26
 				    Parent_View 	@24
@@ -2116,8 +2116,8 @@
 				    max_width  	219
 				    justify    	0
 				    label      	"GetClient"
-				    pctDist    	0.500000
-				    height     	45
+				    pctDist    	0.483074
+				    height     	91
 				    orientation 	0)
 				label      	(object SegLabel @27
 				    Parent_View 	@24
@@ -2138,8 +2138,8 @@
 				    max_width  	435
 				    justify    	0
 				    label      	"CommitClientSession"
-				    pctDist    	0.500000
-				    height     	45
+				    pctDist    	0.496115
+				    height     	44
 				    orientation 	0)
 				object_arc 	@23
 				pctDist    	0.455358
@@ -4014,7 +4014,7 @@
 			    (object Attribute
 				tool       	"DotNet"
 				name       	"Project"
-				value      	"$dot Net Projects Path\\FlavourBusiness\\TakeAwayApp\\TakeAwayApp\\TakeAwayApp\\TakeAwayApp.csproj"))
+				value      	"$dot Net Projects Path\\FlavourBusiness\\TakeAwayApp\\TakeAwayApp\\TakeAwayApp.csproj"))
 			quid       	"6444AFD80073"
 			stereotype 	""
 			realized_interfaces 	(list realize_rel_list

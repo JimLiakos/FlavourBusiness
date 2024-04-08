@@ -1,7 +1,6 @@
 ﻿using CefSharp;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.HomeDelivery;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.ViewModel;

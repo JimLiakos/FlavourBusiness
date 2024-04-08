@@ -2400,8 +2400,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             if (servicePoint == null && DeliveryServicePoint?.ServicesPointIdentity == servicePointIdentity)
                 servicePoint = DeliveryServicePoint as IServicePoint;
+            if(servicePoint==null)
+                servicePoint=TakeAwayStations.Where(x=>x.ServicesPointIdentity==servicePointIdentity).FirstOrDefault();
 
-            var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceType, deviceFirebaseToken, endUser, create);
+                var clientSession = servicePoint.GetFoodServiceClientSession(clientName, mealInvitationSessionID, clientDeviceID, deviceType, deviceFirebaseToken, endUser, create);
 
             if (clientSession == null)
                 return new ClientSessionData();

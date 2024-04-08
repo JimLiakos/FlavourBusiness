@@ -26,6 +26,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{a92cc1f7-b116-4fac-9b3c-8812169fd2a0}</MetaDataID>
         IFoodServiceClientSession GetUncommittedFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken);
 
+
+        StationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null);
+
         /// <MetaDataID>{75eada58-23a6-48db-8f89-483755d67b94}</MetaDataID>
         UserData SignInNativeUser(string userName, string password);
 

@@ -1,6 +1,6 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
-using FlavourBusinessFacade.HomeDelivery;
+
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessFacade.Shipping;
@@ -482,7 +482,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             SessionType = foodServicesSession.SessionType,
                             DeliveryPlace = foodServicesSession.DeliveryPlace,
                             EntryDateTime = foodServicesSession.SessionStarts,
-                            HomeDeliveryServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },
+                            ServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },
                             MealCourses = foodServicesSession.Meal.Courses,
                             TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
                             State = WatchingOrderState.InProggres,
@@ -499,10 +499,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{0d15bff7-fe2b-45b6-853d-53aab0caa5f9}</MetaDataID>
-        public CallCenterStationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
+        public StationWatchingOrders GetWatchingOrders(List<WatchingOrderAbbreviation> candidateToRemoveWatchingOrders = null)
         {
 
-            CallCenterStationWatchingOrders callCenterStationWatchingOrders = new CallCenterStationWatchingOrders();
+            StationWatchingOrders callCenterStationWatchingOrders = new StationWatchingOrders();
             //List<WatchingOrderAbbreviation> removedWatchingOrders = new OOAdvantech.Collections.Generic.List<WatchingOrderAbbreviation>();
             if (candidateToRemoveWatchingOrders != null)
             {

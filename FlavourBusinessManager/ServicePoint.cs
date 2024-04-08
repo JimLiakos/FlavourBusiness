@@ -982,6 +982,11 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             (partialSession.ServicePoint as ServicePoint).TransferPartialSession(partialSession, targetSessionID);
         }
+
+        public IFlavoursServicesContextRuntime GetServiceContextRuntime()
+        {
+            return ServicePointRunTime.ServicesContextRunTime.Current;
+        }
     }
 }
 

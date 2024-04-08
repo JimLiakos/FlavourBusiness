@@ -1306,13 +1306,22 @@ namespace DontWaitApp
                 {
                     var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current);
 
+                    var orderItems = OrderItems.ToList();
                     foreach (var flavourItem in FoodServicesClientSession.FlavourItems)
                     {
                         var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
                         if (cachedOrderItem != null)
+                        {
                             _OrderItems.Remove(cachedOrderItem);
+                            orderItems.Remove(cachedOrderItem);
+                        }
                         _OrderItems.Add(flavourItem as ItemPreparation);
                         objectStarage.CommitTransientObjectState(flavourItem);
+                    }
+                    foreach (var item in orderItems)
+                    {
+                        if(item.SessionID==SessionID|| item.SessionID==null)
+                            FoodServicesClientSession.AddItem(item);
                     }
 
 
