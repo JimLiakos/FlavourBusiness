@@ -162,7 +162,12 @@ namespace MenuItemsEditor.ViewModel
                     HeadingFont = CurrentMenuItemStyle.ItemInfoHeadingFont,
                     ParagraphFont = CurrentMenuItemStyle.ItemInfoParagraphFont,
                     ItemNameFont = CurrentMenuItemStyle.Font,
-                    ItemPriceFont = CurrentPriceStyle.Font
+                    ItemPriceFont = CurrentPriceStyle.Font,
+                    ParagraphFirstLetterFont = CurrentMenuItemStyle.ItemInfoParagraphFirstLetterFont,
+                    ItemInfoFirstLetterLeftIndent = CurrentMenuItemStyle.ItemInfoFirstLetterLeftIndent,
+                    ItemInfoFirstLetterRightIndent = CurrentMenuItemStyle.ItemInfoFirstLetterRightIndent,
+                    ItemInfoFirstLetterLinesSpan = CurrentMenuItemStyle.ItemInfoFirstLetterLinesSpan
+
                 };
 
                 menuStyleSheet.UpdateItemExtraInfoStyling();

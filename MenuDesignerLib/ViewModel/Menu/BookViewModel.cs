@@ -114,10 +114,11 @@ namespace MenuDesigner.ViewModel.MenuCanvas
         {
             GraphicMenustorageRef = graphicMenuStorageRef;
             PriceListsOwner = priceListsOwner;
-            PriceListsOwner.PropertyChanged+=PriceListsOwner_PropertyChanged;
+            
 
             if (PriceListsOwner != null)
             {
+                PriceListsOwner.PropertyChanged+=PriceListsOwner_PropertyChanged;
                 _PriceLists = PriceListsOwner.PriceLists.Where(x => !string.IsNullOrWhiteSpace(x.PriceListStorageRef?.Version)).Select(x => new PriceList.MenuPriceList(x.PriceListStorageRef)).ToList();
 
                 if (_PriceLists.Count > 0)
