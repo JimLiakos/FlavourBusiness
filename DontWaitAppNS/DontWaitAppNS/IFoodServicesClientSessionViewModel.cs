@@ -20,7 +20,7 @@ namespace DontWaitApp
     public interface IFoodServicesClientSessionViewModel
     {
         [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
-        FlavourBusinessFacade.EndUsers.IPlace DeliveryPlace { get; set; }
+        IPlace DeliveryPlace { get; set; }
 
        
 
@@ -52,6 +52,8 @@ namespace DontWaitApp
 
         /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
         Task<bool> SendItemsForPreparation();
+
+        Task<bool> CommitNewSessionType(SessionType sessionType);
 
         /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
         void RefreshMessmates();

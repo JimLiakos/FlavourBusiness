@@ -133,6 +133,28 @@ namespace FlavourBusinessManager.ServicesContextResources
                             itemPreparation.StateTimestamp = DateTime.UtcNow;
                         }
 
+
+                        if(value is IHomeDeliveryServicePoint)
+                        {
+                            SessionType=SessionType.HomeDelivery;
+                            foreach(var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
+                                clientSession.SessionType=SessionType.HomeDelivery;
+                        }
+
+
+                        if (value is IHallServicePoint)
+                        {
+                            SessionType=SessionType.Hall;
+                            foreach (var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
+                                clientSession.SessionType=SessionType.Hall;
+                        }
+                        if (value is ITakeAwayStation)
+                        {
+                            SessionType=SessionType.Takeaway;
+                            foreach (var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
+                                clientSession.SessionType=SessionType.Takeaway;
+                        }
+
                         stateTransition.Consistent = true;
                     }
 

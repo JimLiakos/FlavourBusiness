@@ -10648,6 +10648,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>>(retValue);
         }
         
+        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> CommitNewSessionType(FlavourBusinessFacade.EndUsers.SessionType sessionType, System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = sessionType;
+            argsTypes[0] = typeof(FlavourBusinessFacade.EndUsers.SessionType);
+            args[1] = itemPreparations;
+            argsTypes[1] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CommitNewSessionType", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>>(retValue);
+        }
+        
         public void MenuItemProposal(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession messmateClientSesion, string menuItemUri)
         {
             object[] args = new object[2];

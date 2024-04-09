@@ -50,7 +50,7 @@ namespace DontWaitApp
     [BackwardCompatibilityID("{5ce0ff0c-1c71-4161-85e4-12150431675e}")]
     [Persistent()]
     public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
-    {
+    { 
 
 
         /// <exclude>Excluded</exclude>
@@ -1675,6 +1675,13 @@ namespace DontWaitApp
             }
             return true;
 
+        }
+
+        public async Task<bool> CommitNewSessionType(SessionType sessionType)
+        {
+            var itemsNewState = FoodServicesClientSession.CommitNewSessionType(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
+            FoodServicesClientSession=FoodServicesClientSession;
+            return true;
         }
 
 

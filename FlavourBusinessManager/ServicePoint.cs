@@ -304,7 +304,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         //}
 
         /// <MetaDataID>{f9251525-75d8-4189-b246-e25d08c268ce}</MetaDataID>
-        public virtual IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID,DeviceType deviceType, string deviceFirebaseToken)
+        public virtual IFoodServiceClientSession NewFoodServiceClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken)
         {
             throw new NotImplementedException();
         }
@@ -409,7 +409,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         if (this is HomeDeliveryServicePoint)
                             fsClientSession.SessionType = SessionType.HomeDelivery;
-                        
+
                         if (this is TakeAwayStation)
                             fsClientSession.SessionType = SessionType.Takeaway;
 
@@ -503,9 +503,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 if (_ServicesContextRunTime == null)
                     _ServicesContextRunTime = ServicePointRunTime.ServicesContextRunTime.Current;
-                    //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
-                    //_ServicesContextRunTime = (from runTime in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>() select runTime).FirstOrDefault();
-                
+                //OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
+                //_ServicesContextRunTime = (from runTime in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>() select runTime).FirstOrDefault();
+
                 return _ServicesContextRunTime;
 
             }
@@ -725,15 +725,32 @@ namespace FlavourBusinessManager.ServicesContextResources
                                       where servicePoint.ServicesPointIdentity == targetServicePointIdentity
                                       select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
+            if (ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity==targetServicePointIdentity)
+                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint as ServicePoint;
+
+
+            if (ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x=>x.ServicesPointIdentity==targetServicePointIdentity).Count()==1)
+                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x => x.ServicesPointIdentity==targetServicePointIdentity).FirstOrDefault() as ServicePoint;
+
+
+
             if (targetServicePoint == null)
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
-                var servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
+                FoodServiceSession servicePointLastOpenSession = null;
+                if (targetServicePoint is HallServicePoint)
+                    servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
                 if (servicePointLastOpenSession == null)
                 {
-                    (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
+                    if (targetServicePoint is IHomeDeliveryServicePoint&&foodServiceSession.PartialClientSessions.Count>1)
+                        throw new Exception("You cannot transform session to home delivery session");
+
+                    if (targetServicePoint is ITakeAwayStation&&foodServiceSession.PartialClientSessions.Count>1)
+                        throw new Exception("You cannot transform session to take away session");
+
+                    (foodServiceSession as FoodServiceSession).ServicePoint = targetServicePoint;
                     targetServicePoint.UpdateState();
 
                     if (foodServiceSession.Meal != null)
@@ -742,6 +759,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
                     }
+
+
                 }
                 else
                 {
@@ -800,7 +819,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
                 var sessionItemsForTransfer = session.FlavourItems.Union(session.SharedItems).Distinct().OfType<RoomService.ItemPreparation>().Where(sessionItem => itemPreparations.Any(x => x.uid == sessionItem.uid)).ToList();
-                
+
 
                 var itemsSharings = (from sessionItem in sessionItemsForTransfer
                                      from sessionID in sessionItem.SharedInSessions
@@ -817,7 +836,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                 }
 
-                
+
                 foreach (var sessionItem in sessionItemsForTransfer.ToList())
                 {
                     if (sessionItem.PaidAmounts.Count>0)
@@ -923,7 +942,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                     foreach (var item in itemsForTransfer)
                     {
-                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceType, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken,!(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
+                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceType, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken, !(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
                         foodServiceClientSession.Merge(item);
                     }
 

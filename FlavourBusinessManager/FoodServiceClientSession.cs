@@ -23,6 +23,7 @@ using MenuPresentationModel;
 using FlavourBusinessManager.HumanResources;
 using OOAdvantech.Json;
 
+
 namespace FlavourBusinessManager.EndUsers
 {
 
@@ -2774,7 +2775,32 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
+        public Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations)
+        {
+            Dictionary<string, ItemPreparationState> items = new Dictionary<string, ItemPreparationState>();
+            if (SessionType!= sessionType)
+            {
+                
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    items = Commit(itemPreparations);
+                    if (sessionType==SessionType.HomeDelivery)
+                    {
+                        if (ServicesContextRunTime.Current.DeliveryServicePoint!=null)
+                            ServicesContextResources.ServicePoint.TransferSession(this.MainSession, ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity);
+                    }
+                    if (sessionType==SessionType.Takeaway)
+                    {
+                        if (ServicesContextRunTime.Current.TakeAwayStations.FirstOrDefault()!=null)
+                            ServicesContextResources.ServicePoint.TransferSession(this.MainSession, ServicesContextRunTime.Current.TakeAwayStations.FirstOrDefault().ServicesPointIdentity);
+                    }
 
+
+                    stateTransition.Consistent = true;
+                }
+            }
+            return items;
+        }
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
         public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
         {
@@ -2788,7 +2814,7 @@ namespace FlavourBusinessManager.EndUsers
             if (itemsIDS.Count != flavourItems.Count)
                 throw new Exception("there is an item that does not belong to this session");
 
-            List<RoomService.ItemPreparation> changeStateFlavourItems = new List<RoomService.ItemPreparation>();
+            List<ItemPreparation> changeStateFlavourItems = new List<RoomService.ItemPreparation>();
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
