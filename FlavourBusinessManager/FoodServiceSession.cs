@@ -125,6 +125,31 @@ namespace FlavourBusinessManager.ServicesContextResources
                         foreach (var sessionPart in this.PartialClientSessions)
                             sessionPart.ServicePoint = value;
 
+                        if (_ServicePoint is HallServicePoint)
+                        {
+                            SessionType = SessionType.Hall;
+                            foreach (var sessionPart in this.PartialClientSessions.OfType<FoodServiceClientSession>())
+                                sessionPart.SessionType= SessionType.Hall;
+                        }
+
+                        if (_ServicePoint is HomeDeliveryServicePoint)
+                        {
+                            if (SessionType != SessionType.HomeDelivery)
+                            {
+                                if (this.PartialClientSessions.Count > 1)
+                                    throw new Exception("You cannot transfer session with multiple parts to home delivery servicePoint");
+                                SessionType = SessionType.HomeDelivery;
+                                foreach (var sessionPart in this.PartialClientSessions.OfType<FoodServiceClientSession>())
+                                    sessionPart.SessionType = SessionType;
+                            }
+                        }
+                        if (_ServicePoint is TakeAwayStation)
+                        {
+                            SessionType = SessionType.Hall;
+                            foreach (var sessionPart in this.PartialClientSessions.OfType<FoodServiceClientSession>())
+                                sessionPart.SessionType = SessionType.Takeaway;
+                        }
+
 
                         foreach (var itemPreparation in (from sessionPart in this.PartialClientSessions
                                                          from itemPreparation in sessionPart.FlavourItems.OfType<ItemPreparation>()
@@ -132,6 +157,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
                             itemPreparation.StateTimestamp = DateTime.UtcNow;
                         }
+
+
+
 
                         stateTransition.Consistent = true;
                     }

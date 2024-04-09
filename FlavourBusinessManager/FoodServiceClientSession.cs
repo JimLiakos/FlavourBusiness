@@ -2823,6 +2823,27 @@ namespace FlavourBusinessManager.EndUsers
             return itemsNewState;
         }
 
+
+        public IFoodServiceClientSession CommitSessionTypeChange(SessionType sessionType, List<IItemPreparation> itemPreparations)
+        {
+            
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                Commit(itemPreparations);
+                if (sessionType != this.SessionType)
+                {
+                    if (sessionType == SessionType.HomeDelivery)
+                    {
+                        ServicesContextResources.ServicePoint.TransferSession(this.MainSession, ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity);
+                    }
+                }
+
+                stateTransition.Consistent = true;
+            }
+
+            return this;
+        }
         /// <MetaDataID>{9db073fb-148b-4efe-99c6-2cb6f4e68f42}</MetaDataID>
         private void AllItemsCommited()
         {

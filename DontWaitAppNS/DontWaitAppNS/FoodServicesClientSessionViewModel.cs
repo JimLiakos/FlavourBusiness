@@ -1160,7 +1160,7 @@ namespace DontWaitApp
             set
             {
                 if (_FoodServicesClientSession != null)
-                {
+                { 
                     try
                     {
                         _FoodServicesClientSession.MessageReceived -= MessageReceived;
@@ -1304,7 +1304,7 @@ namespace DontWaitApp
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    var objectStarage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current);
+                    var objectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(ApplicationSettings.Current);
 
                     var orderItems = OrderItems.ToList();
                     foreach (var flavourItem in FoodServicesClientSession.FlavourItems)
@@ -1316,7 +1316,7 @@ namespace DontWaitApp
                             orderItems.Remove(cachedOrderItem);
                         }
                         _OrderItems.Add(flavourItem as ItemPreparation);
-                        objectStarage.CommitTransientObjectState(flavourItem);
+                        objectStorage.CommitTransientObjectState(flavourItem);
                     }
                     foreach (var item in orderItems)
                     {
@@ -1332,7 +1332,7 @@ namespace DontWaitApp
                         if (cachedOrderItem != null)
                             _OrderItems.Remove(cachedOrderItem);
                         _OrderItems.Add(flavourItem as ItemPreparation);
-                        objectStarage.CommitTransientObjectState(flavourItem);
+                        objectStorage.CommitTransientObjectState(flavourItem);
                     }
                     stateTransition.Consistent = true;
                 }
@@ -1673,6 +1673,14 @@ namespace DontWaitApp
                 var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
                 item.State = item.State;
             }
+            return true;
+
+        }
+
+        public async Task<bool> CommitNewSessionType(SessionType sessionType)
+        {
+            if(this.SessionType != sessionType)
+                this.FoodServicesClientSession = this.FoodServicesClientSession.CommitSessionTypeChange(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
             return true;
 
         }
