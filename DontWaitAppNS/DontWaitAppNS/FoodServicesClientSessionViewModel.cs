@@ -1677,18 +1677,15 @@ namespace DontWaitApp
 
         }
 
-        public async Task<bool> CommitNewSessionType(SessionType sessionType)
-        {
-            if(this.SessionType != sessionType)
-                this.FoodServicesClientSession = this.FoodServicesClientSession.CommitSessionTypeChange(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
-            return true;
-
-        }
+      
 
         public async Task<bool> CommitNewSessionType(SessionType sessionType)
         {
-            var itemsNewState = FoodServicesClientSession.CommitNewSessionType(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
-            FoodServicesClientSession=FoodServicesClientSession;
+            if (this.SessionType != sessionType)
+            {
+                var itemsNewState = FoodServicesClientSession.CommitNewSessionType(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
+                FoodServicesClientSession = FoodServicesClientSession;
+            }
             return true;
         }
 

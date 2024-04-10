@@ -55,8 +55,6 @@ namespace DontWaitApp
         /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
         Task<bool> SendItemsForPreparation();
 
-        Task<bool> CommitNewSessionType(SessionType sessionType);
-
         /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
         void RefreshMessmates();
 
