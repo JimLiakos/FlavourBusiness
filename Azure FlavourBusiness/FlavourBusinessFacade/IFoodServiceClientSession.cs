@@ -232,6 +232,10 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{b8ad8261-1dc2-4065-aaf9-3648bfa5d9c0}</MetaDataID>
         Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations);
 
+        Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations);
+        
+
+
         /// <MetaDataID>{5e5aa9fa-5b59-43f6-9e62-0852f60c6c4b}</MetaDataID>
         void MenuItemProposal(IFoodServiceClientSession messmateClientSesion, string menuItemUri);
 

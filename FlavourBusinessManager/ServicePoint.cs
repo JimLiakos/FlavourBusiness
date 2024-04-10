@@ -729,22 +729,32 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                                       where servicePoint.ServicesPointIdentity == targetServicePointIdentity
                                       select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
+            if (ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity==targetServicePointIdentity)
+                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint as ServicePoint;
+
+
+            if (ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x=>x.ServicesPointIdentity==targetServicePointIdentity).Count()==1)
+                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x => x.ServicesPointIdentity==targetServicePointIdentity).FirstOrDefault() as ServicePoint;
+
+
 
             if (targetServicePoint == null)
                 throw new ArgumentException("There is no service with identity, the value of 'targetServicePointIdentity' parameter");
             else
             {
                 FoodServiceSession servicePointLastOpenSession = null;
-                
                 if (targetServicePoint is HallServicePoint)
                     servicePointLastOpenSession = targetServicePoint.OpenSessions.OrderBy(x => x.SessionStarts).LastOrDefault();
 
                 if (servicePointLastOpenSession == null)
                 {
-                    (foodServiceSession as ServicesContextResources.FoodServiceSession).ServicePoint = targetServicePoint;
-               
+                    if (targetServicePoint is IHomeDeliveryServicePoint&&foodServiceSession.PartialClientSessions.Count>1)
+                        throw new Exception("You cannot transform session to home delivery session");
 
+                    if (targetServicePoint is ITakeAwayStation&&foodServiceSession.PartialClientSessions.Count>1)
+                        throw new Exception("You cannot transform session to take away session");
 
+                    (foodServiceSession as FoodServiceSession).ServicePoint = targetServicePoint;
                     targetServicePoint.UpdateState();
                     
 
