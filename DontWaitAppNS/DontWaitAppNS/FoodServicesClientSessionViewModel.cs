@@ -1318,22 +1318,25 @@ namespace DontWaitApp
                         _OrderItems.Add(flavourItem as ItemPreparation);
                         objectStorage.CommitTransientObjectState(flavourItem);
                     }
-                    foreach (var item in orderItems)
-                    {
-                        if(item.SessionID==SessionID|| item.SessionID==null)
-                            FoodServicesClientSession.AddItem(item);
-                    }
-
-
 
                     foreach (var flavourItem in FoodServicesClientSession.SharedItems)
                     {
                         var cachedOrderItem = OrderItems.Where(x => x.uid == flavourItem.uid).FirstOrDefault();
                         if (cachedOrderItem != null)
+                        {
                             _OrderItems.Remove(cachedOrderItem);
+                            orderItems.Remove(cachedOrderItem);
+                        }
                         _OrderItems.Add(flavourItem as ItemPreparation);
                         objectStorage.CommitTransientObjectState(flavourItem);
                     }
+
+                    foreach (var item in orderItems)
+                    {
+                        if (item.SessionID == SessionID || item.SessionID == null)
+                            FoodServicesClientSession.AddItem(item);
+                    }
+
                     stateTransition.Consistent = true;
                 }
                 #endregion

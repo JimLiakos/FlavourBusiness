@@ -13731,6 +13731,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5801B0D101BF"
+		    compartment 	(object Compartment
+			Parent_View 	@193
+			location   	(2811, 442)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
 		    width      	663
 		    height     	300
 		    annotation 	8)
@@ -13762,6 +13780,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5801B52E0335"
+		    compartment 	(object Compartment
+			Parent_View 	@194
+			location   	(1853, 471)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	481)
 		    width      	404
 		    height     	222
 		    annotation 	8)
@@ -13966,6 +14002,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5803057F000F"
+		    compartment 	(object Compartment
+			Parent_View 	@203
+			location   	(858, 1550)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	1134)
 		    width      	537
 		    height     	275
 		    annotation 	8)
@@ -13996,6 +14050,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"580305AC0316"
+		    compartment 	(object Compartment
+			Parent_View 	@204
+			location   	(1762, 1487)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	1134)
 		    width      	713
 		    height     	388
 		    annotation 	8)
@@ -14055,6 +14127,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5801B60600A7"
+		    compartment 	(object Compartment
+			Parent_View 	@206
+			location   	(1802, 977)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	1509)
 		    width      	550
 		    height     	350
 		    annotation 	8)
@@ -14085,6 +14175,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5C6E352E016D"
+		    compartment 	(object Compartment
+			Parent_View 	@207
+			location   	(75, 986)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	475)
 		    width      	468
 		    height     	307
 		    annotation 	8)
@@ -14116,6 +14224,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5802FC080000"
+		    compartment 	(object Compartment
+			Parent_View 	@208
+			location   	(904, 1005)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	303)
 		    width      	404
 		    height     	222
 		    annotation 	8)

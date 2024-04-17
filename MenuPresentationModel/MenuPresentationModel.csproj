@@ -194,6 +194,10 @@
       <Project>{8d4656bc-51d1-4e2d-ae5b-6f530df69333}</Project>
       <Name>ModulePublisher - VS10</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{BC023782-2913-447E-90C1-AF934F8F2CE1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Azure FlavourBusiness\FlavourBusinessFacade\FlavourBusinessFacade.csproj">
       <Project>{0072F0D5-644D-4343-A34D-03AE24EBA9FE}</Project>
       <Name>FlavourBusinessFacade</Name>

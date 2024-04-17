@@ -151,7 +151,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 //"sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=50886542db964edf8dec5734e3f89395"
                 if (ServicePoint is IHomeDeliveryServicePoint)
-                    return new ClientSessionData() { ServicesContextLogo = ServicePoint.Description, ServicesPointName = "", SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace(), PriceList = PriceList};
+                    return new ClientSessionData() { ServicesContextLogo = ServicePoint.Description, ServicesPointName = "", SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace(), PriceList = PriceList };
                 else
                     return new ClientSessionData() { ServicesContextLogo = "Pizza Hut", ServicesPointName = ServicePoint.Description, SessionType = SessionType, ServicePointIdentity = ServicePoint.ServicesContextIdentity + ";" + ServicePoint.ServicesPointIdentity, Token = ServicesContextRunTime.GetToken(this), FoodServiceClientSession = this, Menu = Menu, ServedMealTypesUris = servedMealTypesUris, DefaultMealTypeUri = defaultMealTypeUri, ServicePointState = ServicePoint.State, UserLanguageCode = UserLanguageCode, DeliveryPlace = GetSessionDeliveryPlace(), PriceList = PriceList };
 
@@ -407,14 +407,21 @@ namespace FlavourBusinessManager.EndUsers
                     if ((messmateClientSesion as FoodServiceClientSession).ExplicitMainSession != null)
                     {
 
-                        // Makes this partial session with implicit main session part of messmate session explicitly
-                        if (_MainSession.Value != null)
-                            _MainSession.Value.RemovePartialSession(this);
+                        if (messmateClientSesion.MainSession == MainSession)
+                        {
+                            ImplicitMealParticipation = false;
+                        }
+                        else
+                        {
+                            // Makes this partial session with implicit main session part of messmate session explicitly
+                            if (_MainSession.Value != null)
+                                _MainSession.Value.RemovePartialSession(this);
 
-                        _MainSession.Value = null;
-                        ImplicitMealParticipation = false;
+                            _MainSession.Value = null;
+                            ImplicitMealParticipation = false;
 
-                        (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession.AddPartialSession(this);
+                            (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession.AddPartialSession(this);
+                        }
                     }
                     else
                     {
@@ -492,7 +499,11 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (ExplicitMainSession != (messmateClientSesion as FoodServiceClientSession).ExplicitMainSession)
                     {
-                        if (messmateClientSesion.MainSession != null)
+                        if (messmateClientSesion.MainSession == MainSession)
+                        {
+                            messmateClientSesion.ImplicitMealParticipation = false;
+                        }
+                        else if (messmateClientSesion.MainSession != null)
                         {
                             (MainSession as FoodServiceSession).Merge(messmateClientSesion.MainSession);
                         }
@@ -1625,7 +1636,12 @@ namespace FlavourBusinessManager.EndUsers
                 if (IsWaiterSession) //For waiter returns all implicit meal participants and meal invitation participants
                     return MainSession.PartialClientSessions.Where(x => x != this).ToList();
                 else
-                    return MainSession.PartialClientSessions.Where(x => x != this && !x.ImplicitMealParticipation).ToList();// All participant which participate with meal invitation
+                {
+                    if (!ImplicitMealParticipation)
+                        return MainSession.PartialClientSessions.Where(x => x != this && !x.ImplicitMealParticipation).ToList();// All participant which participate with meal invitation
+                    else
+                        return new List<IFoodServiceClientSession>();
+                }
 
             }
             else
@@ -2757,7 +2773,7 @@ namespace FlavourBusinessManager.EndUsers
             {
                 var priceListStorageRef = ((this.ServicePoint as HallServicePoint)?.ServiceArea as ServiceArea)?.PriceLists.FirstOrDefault();
 
-                if (priceListStorageRef!=null)
+                if (priceListStorageRef != null)
                 {
                     string versionSuffix = "";
                     if (!string.IsNullOrWhiteSpace(priceListStorageRef.Version))
@@ -2768,7 +2784,7 @@ namespace FlavourBusinessManager.EndUsers
                 }
 
                 return priceListStorageRef;
-                
+
             }
         }
 
@@ -2778,20 +2794,20 @@ namespace FlavourBusinessManager.EndUsers
         public Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations)
         {
             Dictionary<string, ItemPreparationState> items = new Dictionary<string, ItemPreparationState>();
-            if (SessionType!= sessionType)
+            if (SessionType != sessionType)
             {
-                
+
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     items = Commit(itemPreparations);
-                    if (sessionType==SessionType.HomeDelivery)
+                    if (sessionType == SessionType.HomeDelivery)
                     {
-                        if (ServicesContextRunTime.Current.DeliveryServicePoint!=null)
+                        if (ServicesContextRunTime.Current.DeliveryServicePoint != null)
                             ServicesContextResources.ServicePoint.TransferSession(this.MainSession, ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity);
                     }
-                    if (sessionType==SessionType.Takeaway)
+                    if (sessionType == SessionType.Takeaway)
                     {
-                        if (ServicesContextRunTime.Current.TakeAwayStations.FirstOrDefault()!=null)
+                        if (ServicesContextRunTime.Current.TakeAwayStations.FirstOrDefault() != null)
                             ServicesContextResources.ServicePoint.TransferSession(this.MainSession, ServicesContextRunTime.Current.TakeAwayStations.FirstOrDefault().ServicesPointIdentity);
                     }
 
@@ -2852,7 +2868,7 @@ namespace FlavourBusinessManager.EndUsers
 
         //public IFoodServiceClientSession CommitSessionTypeChange(SessionType sessionType, List<IItemPreparation> itemPreparations)
         //{
-            
+
 
         //    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
         //    {

@@ -329,6 +329,9 @@ namespace FlavourBusinessFacade.EndUsers
     /// <MetaDataID>{559c8633-1178-4ce7-aa69-c71b0e6d2798}</MetaDataID>
     public struct ClientSessionData
     {
+
+        public string ISOCurrencySymbol;
+
         /// <MetaDataID>{10c60dd6-a207-4c50-8adf-5e8aa3c65424}</MetaDataID>
         public string ServicePointIdentity;
         /// <MetaDataID>{fc539f91-4ce9-4117-bb97-f4b033fb976f}</MetaDataID>

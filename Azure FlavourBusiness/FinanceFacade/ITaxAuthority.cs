@@ -43,6 +43,9 @@ namespace FinanceFacade
         [Association("AuthorityTaxableTypes", Roles.RoleA, "4b415a9e-1195-4e8e-be2b-07edf585e114")]
         [RoleBMultiplicityRange(1, 1)]
         IList<ITaxableType> TaxableTypes { get; }
-   
+
+        /// <MetaDataID>{c0a7ffb0-6f21-4469-99d1-40c051ee1598}</MetaDataID>
+        string ISOCurrencySymbol { get; }
+
     }
 }

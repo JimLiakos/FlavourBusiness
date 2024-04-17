@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinanceFacade;
 using MenuModel;
 using OOAdvantech;
 using OOAdvantech.Json;
@@ -42,8 +43,11 @@ namespace MenuModel.JsonViewModel
 
             SelectorAlwaysInDescription = menuItem.SelectorAlwaysInDescription;
 
-            ISOCurrencySymbol = RegionInfo.CurrentRegion.ISOCurrencySymbol;
-            CurrencySymbol = RegionInfo.CurrentRegion.CurrencySymbol;
+            ISOCurrencySymbol = (menuItem as MenuItem).Menu.TaxAuthority.ISOCurrencySymbol;//RegionInfo.CurrentRegion.ISOCurrencySymbol;
+            string currencySymbol = null;
+            TaxAuthority.TryGetCurrencySymbol(ISOCurrencySymbol, out currencySymbol);
+            CurrencySymbol= currencySymbol;
+            
             Quantity = 1;
             Prices = new List<IMenuItemPrice>();
 

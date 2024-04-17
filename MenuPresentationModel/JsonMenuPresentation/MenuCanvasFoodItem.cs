@@ -122,9 +122,11 @@ namespace MenuPresentationModel.JsonMenuPresentation
                 PriceLeader = new MenuCanvasPriceLeader(menu, menuCanvasFoodItem.PriceLeader, this);
             Type = GetType().Name;
 
+
             if (menuCanvasFoodItem.MenuItem!=null)
             {
 
+                
                 if (mappedObjects.TryGetValue(menuCanvasFoodItem.MenuItem, out mappedObject))
                     MenuItem = mappedObject as MenuModel.JsonViewModel.MenuFoodItem;
                 else

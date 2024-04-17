@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 using System.Linq;
 using OOAdvantech.Transactions;
+using System.Globalization;
 
 namespace FinanceFacade
 {
@@ -11,6 +12,27 @@ namespace FinanceFacade
     [Persistent()]
     public class TaxAuthority : ITaxAuthority
     {
+        /// <exclude>Excluded</exclude>
+        string _ISOCurrencySymbol = "EUR";
+
+        /// <MetaDataID>{f8be1c5c-b1dd-4d00-ab70-a2114ddd7a01}</MetaDataID>
+        [PersistentMember(nameof(_ISOCurrencySymbol))]
+        [BackwardCompatibilityID("+6")]
+        public string ISOCurrencySymbol
+        {
+            get => _ISOCurrencySymbol;
+            set
+            {
+                if (_ISOCurrencySymbol != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ISOCurrencySymbol = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<ITaxesContext> _TaxesContexts = new OOAdvantech.Collections.Generic.Set<ITaxesContext>();
@@ -139,7 +161,7 @@ namespace FinanceFacade
             }
         }
 
-     
+
         /// <MetaDataID>{530a45b7-854f-4e6c-865a-f57f879aaaac}</MetaDataID>
         public void AddTaxableType(ITaxableType taxableType)
         {
@@ -218,6 +240,27 @@ namespace FinanceFacade
 
             }
 
+        }
+
+        public static bool TryGetCurrencySymbol(string ISOCurrencySymbol, out string symbol)
+        {
+            symbol = CultureInfo
+                .GetCultures(CultureTypes.AllCultures)
+                .Where(c => !c.IsNeutralCulture)
+                .Select(culture => {
+                    try
+                    {
+                        return new RegionInfo(culture.Name);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                })
+                .Where(ri => ri != null && ri.ISOCurrencySymbol == ISOCurrencySymbol)
+                .Select(ri => ri.CurrencySymbol)
+                .FirstOrDefault();
+            return symbol != null;
         }
     }
 }

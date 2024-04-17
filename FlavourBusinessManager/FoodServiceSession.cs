@@ -129,7 +129,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                         {
                             SessionType = SessionType.Hall;
                             foreach (var sessionPart in this.PartialClientSessions.OfType<FoodServiceClientSession>())
-                                sessionPart.SessionType= SessionType.Hall;
+                                sessionPart.SessionType = SessionType.Hall;
                         }
 
                         if (_ServicePoint is HomeDeliveryServicePoint)
@@ -159,25 +159,25 @@ namespace FlavourBusinessManager.ServicesContextResources
                         }
 
 
-                        if(value is IHomeDeliveryServicePoint)
+                        if (value is IHomeDeliveryServicePoint)
                         {
-                            SessionType=SessionType.HomeDelivery;
-                            foreach(var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
-                                clientSession.SessionType=SessionType.HomeDelivery;
+                            SessionType = SessionType.HomeDelivery;
+                            foreach (var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
+                                clientSession.SessionType = SessionType.HomeDelivery;
                         }
 
 
                         if (value is IHallServicePoint)
                         {
-                            SessionType=SessionType.Hall;
+                            SessionType = SessionType.Hall;
                             foreach (var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
-                                clientSession.SessionType=SessionType.Hall;
+                                clientSession.SessionType = SessionType.Hall;
                         }
                         if (value is ITakeAwayStation)
                         {
-                            SessionType=SessionType.Takeaway;
+                            SessionType = SessionType.Takeaway;
                             foreach (var clientSession in PartialClientSessions.OfType<FoodServiceClientSession>())
-                                clientSession.SessionType=SessionType.Takeaway;
+                                clientSession.SessionType = SessionType.Takeaway;
                         }
 
                         stateTransition.Consistent = true;
@@ -240,7 +240,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         public System.DateTime SessionStarts
         {
             get
-            { 
+            {
                 return _SessionStarts;
             }
 
@@ -612,33 +612,37 @@ namespace FlavourBusinessManager.ServicesContextResources
         public void MonitorTick()
         {
             #region check for long time meal conversation and update the waiters
+
             var firstItemPreparation = (from partialClientSession in PartialClientSessions
                                         from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
                                         orderby itemPreparation.StateTimestamp
                                         select itemPreparation).FirstOrDefault();
-            if (firstItemPreparation != null &&
-                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
-                (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
+            if (SessionType == SessionType.Hall)
             {
-                if (ServicePoint.State == ServicePointState.Conversation)
-                    (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
-
-                if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
+                if (firstItemPreparation != null &&
+                    (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
+                    (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
                 {
-                    if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                    if (ServicePoint.State == ServicePointState.Conversation)
+                        (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
+
+                    if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
                     {
-                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
                         {
-                            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                            ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                            {
+                                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                            }
                         }
-                    }
 
-                }
-                else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                {
-                    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                    }
+                    else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                    {
+                        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                    }
                 }
             }
             #endregion
@@ -701,7 +705,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType,WillTakeCareTimestamp = DateTime.UtcNow });
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType, WillTakeCareTimestamp = DateTime.UtcNow });
                     if (caregivingType == Caregiver.CareGivingType.ConversationCheck)
                         WillTakeCareTimestamp = DateTime.UtcNow;
 
