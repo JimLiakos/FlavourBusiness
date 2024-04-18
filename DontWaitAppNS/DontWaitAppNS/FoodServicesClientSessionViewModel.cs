@@ -50,7 +50,7 @@ namespace DontWaitApp
     [BackwardCompatibilityID("{5ce0ff0c-1c71-4161-85e4-12150431675e}")]
     [Persistent()]
     public class FoodServicesClientSessionViewModel : MarshalByRefObject, IFoodServicesClientSessionViewModel, OOAdvantech.Remoting.IExtMarshalByRefObject
-    { 
+    {
 
 
         /// <exclude>Excluded</exclude>
@@ -479,7 +479,7 @@ namespace DontWaitApp
             }
         }
 
-        
+
 
 
         /// <exclude>Excluded</exclude>
@@ -671,20 +671,28 @@ namespace DontWaitApp
             });
         }
 
+
+        FlavourBusinessFacade.EndUsers.Message ShareItemHasChangeMessage;
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
-            string itemUid = message.GetDataValue<string>("SharedItemUid");
-            string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
-            string itemChangeSession = message.GetDataValue<string>("itemChangeSession");
-            Messmate changeItemMessmate = Messmates.Where(x => x.ClientSessionID == itemChangeSession).FirstOrDefault();
+            if (_SharedItemChanged!=null)
+            {
+                string itemUid = message.GetDataValue<string>("SharedItemUid");
+                string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
+                string itemChangeSession = message.GetDataValue<string>("itemChangeSession");
+                Messmate changeItemMessmate = Messmates.Where(x => x.ClientSessionID == itemChangeSession).FirstOrDefault();
 
 
-            bool isShared = message.GetDataValue<bool>("IsShared");
-            List<string> shareInSessions = message.GetDataValue<List<string>>("ShareInSessions");
-            FoodServicesClientSessionItemStateChanged(itemUid, itemOwningSession, isShared, shareInSessions);
-            _SharedItemChanged?.Invoke(this, changeItemMessmate, itemUid, message.MessageID);
-            FoodServicesClientSession.RemoveMessage(message.MessageID);
+                bool isShared = message.GetDataValue<bool>("IsShared");
+                List<string> shareInSessions = message.GetDataValue<List<string>>("ShareInSessions");
+                FoodServicesClientSessionItemStateChanged(itemUid, itemOwningSession, isShared, shareInSessions);
+                _SharedItemChanged?.Invoke(this, changeItemMessmate, itemUid, message.MessageID);
+                FoodServicesClientSession.RemoveMessage(message.MessageID);
+                GetMessages();
+            }
+            else
+                ShareItemHasChangeMessage=message;
         }
 
         /// <MetaDataID>{837f1943-f15c-49d8-a50b-2832acab8771}</MetaDataID>
@@ -809,7 +817,7 @@ namespace DontWaitApp
 
             }
 
-            
+
 
             foreach (var messmate in (from theMessmate in this.Messmates
                                       where theMessmate.HasItemWithUid(itemUid) && !shareInSessions.Contains(theMessmate.ClientSessionID)
@@ -1013,7 +1021,7 @@ namespace DontWaitApp
             }
         }
 
-          
+
 
 
         /// <MetaDataID>{c8a403e0-d804-40a6-8543-4bee48d1319f}</MetaDataID>
@@ -1160,7 +1168,7 @@ namespace DontWaitApp
             set
             {
                 if (_FoodServicesClientSession != null)
-                { 
+                {
                     try
                     {
                         _FoodServicesClientSession.MessageReceived -= MessageReceived;
@@ -1296,7 +1304,7 @@ namespace DontWaitApp
                 FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
                 FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
 
-                
+
 
 
 
@@ -1589,19 +1597,19 @@ namespace DontWaitApp
                 {
                     if (FoodServicesClientSession != null)
                     {
-                    
-                            var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
-                                             select new Messmate(clientSession, OrderItems)).ToList();
-                            Messmates = messmates;
-                            if (SessionType == SessionType.Hall)
-                            {
-                                var candidateMessmates = (from clientSession in FoodServicesClientSession?.GetPeopleNearMe()
-                                                          select new Messmate(clientSession, OrderItems)).ToList();
-                                CandidateMessmates = candidateMessmates;
-                            }
 
-                            MessmatesLoaded = true;
-                            //GetMessages();
+                        var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
+                                         select new Messmate(clientSession, OrderItems)).ToList();
+                        Messmates = messmates;
+                        if (SessionType == SessionType.Hall)
+                        {
+                            var candidateMessmates = (from clientSession in FoodServicesClientSession?.GetPeopleNearMe()
+                                                      select new Messmate(clientSession, OrderItems)).ToList();
+                            CandidateMessmates = candidateMessmates;
+                        }
+
+                        MessmatesLoaded = true;
+                        //GetMessages();
                         _ObjectChangeState?.Invoke(this, null);
                     }
                 }
@@ -1668,7 +1676,7 @@ namespace DontWaitApp
 
         }
 
-      
+
 
         public async Task<bool> CommitNewSessionType(SessionType sessionType)
         {
@@ -1688,9 +1696,20 @@ namespace DontWaitApp
         [HttpInVisible]
         public event SharedItemChangedHandle SharedItemChanged
         {
-            add
+            add 
             {
                 _SharedItemChanged += value;
+                if (ShareItemHasChangeMessage!=null)
+                {
+                    Task.Run(() =>
+                    {
+                        System.Threading.Thread.Sleep(2000);
+                        ShareItemHasChangeMessage=null;
+                        ShareItemHasChangeMessageForward(ShareItemHasChangeMessage);
+
+                    });
+                }
+
             }
             remove
             {
@@ -1719,7 +1738,7 @@ namespace DontWaitApp
 
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
-                
+
                 var datetime = DateTime.Now;
                 string timestamp = DateTime.Now.ToLongTimeString() + ":" + datetime.Millisecond.ToString();
 
@@ -1872,7 +1891,7 @@ namespace DontWaitApp
             //MenuData = menuData;
             FlavoursOrderServer.SerializeTaskScheduler.AddTask(async () =>
             {
-                
+
                 var datetime = DateTime.Now;
                 string timestamp = DateTime.Now.ToLongTimeString() + ":" + datetime.Millisecond.ToString();
 
