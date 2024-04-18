@@ -809,7 +809,7 @@ namespace DontWaitApp
 
             }
 
-            //Removes this item from the messmates which had the preparation item and its session isn't among item shareInSessions.
+            
 
             foreach (var messmate in (from theMessmate in this.Messmates
                                       where theMessmate.HasItemWithUid(itemUid) && !shareInSessions.Contains(theMessmate.ClientSessionID)
@@ -1589,18 +1589,7 @@ namespace DontWaitApp
                 {
                     if (FoodServicesClientSession != null)
                     {
-                        //FlavoursOrderServer.WaiterView
-                        //if (WaiterView)
-                        //{
-                        //    var messmates = (from clientSession in FoodServiceClientSession?.GetServicePointParticipants()
-                        //                     where clientSession != this._FoodServiceClientSession
-                        //                     select new Messmate(clientSession, OrderItems)).ToList();
-                        //    Messmates = messmates;
-                        //    MessmatesLoaded = true;
-
-                        //}
-                        //else
-                        {
+                    
                             var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
                                              select new Messmate(clientSession, OrderItems)).ToList();
                             Messmates = messmates;
@@ -1613,7 +1602,6 @@ namespace DontWaitApp
 
                             MessmatesLoaded = true;
                             //GetMessages();
-                        }
                         _ObjectChangeState?.Invoke(this, null);
                     }
                 }
