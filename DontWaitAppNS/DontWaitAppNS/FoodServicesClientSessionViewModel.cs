@@ -707,7 +707,7 @@ namespace DontWaitApp
                 GetMessages();
             }
             else
-                ShareItemHasChangeMessage=message;
+                ShareItemHasChangeMessage = message;
         }
 
         /// <MetaDataID>{837f1943-f15c-49d8-a50b-2832acab8771}</MetaDataID>
@@ -1123,7 +1123,7 @@ namespace DontWaitApp
                     MenuName = MenuName,
                     MenuRoot = MenuRoot,
                     MenuFile = MenuFile,
-                    PriceListUrl= PriceListUrl,
+                    PriceListUrl = PriceListUrl,
                     ClientSessionID = ClientSessionID,
                     MainSessionID = MainSessionID,
                     FoodServiceClientSessionUri = FoodServiceClientSessionUri,
@@ -1402,7 +1402,7 @@ namespace DontWaitApp
                 OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "_ObjectChangeState?.Invoke(this, nameof(MenuData))" });
 #endif
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
-                GetMessages();
+                GetMessages();tyty
             }
         }
 
@@ -1714,12 +1714,12 @@ namespace DontWaitApp
             add
             {
                 _SharedItemChanged += value;
-                if (ShareItemHasChangeMessage!=null)
+                if (ShareItemHasChangeMessage != null)
                 {
                     Task.Run(() =>
                     {
                         System.Threading.Thread.Sleep(2000);
-                        ShareItemHasChangeMessage=null;
+                        ShareItemHasChangeMessage = null;
                         ShareItemHasChangeMessageForward(ShareItemHasChangeMessage);
 
                     });

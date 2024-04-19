@@ -1269,6 +1269,10 @@ namespace DontWaitApp
             var clientSession = (from theMessmate in this.CandidateMessmates
                                  where theMessmate.ClientSessionID == messmate.ClientSessionID
                                  select theMessmate.ClientSession).FirstOrDefault();
+#if !DEBUG
+            if (clientSession == null)
+                return;
+#endif
 
             if (FoodServicesClientSessionViewModel?.FoodServicesClientSession?.ServicePoint == clientSession.ServicePoint)
             {
@@ -1419,7 +1423,7 @@ namespace DontWaitApp
             }
         }
 
-        #endregion
+#endregion
 
 
 
@@ -1714,33 +1718,42 @@ namespace DontWaitApp
         {
             get
             {
+                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get in"});
+
                 return Task<List<IFoodServicesClientSessionViewModel>>.Run(async () =>
                    {
 
                        await InitializationTask;
-
-                       var areNoLongerActiveSesions = new List<FoodServicesClientSessionViewModel>();
-
-                       foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
+                       try
                        {
 
-                           var isActive = await foodServicesClientSession.IsActive();
+                           var areNoLongerActiveSesions = new List<FoodServicesClientSessionViewModel>();
 
-                           if (isActive.HasValue && isActive.Value == false)
-                               areNoLongerActiveSesions.Add(foodServicesClientSession);
-                       }
-                       if (areNoLongerActiveSesions.Count > 0)
-                       {
-                           using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                           foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
                            {
-                               foreach (var foodServicesClientSession in areNoLongerActiveSesions)
-                                   ApplicationSettings.Current.RemoveClientSession(foodServicesClientSession);
 
-                               stateTransition.Consistent = true;
+                               var isActive = await foodServicesClientSession.IsActive();
+
+                               if (isActive.HasValue && isActive.Value == false)
+                                   areNoLongerActiveSesions.Add(foodServicesClientSession);
                            }
-                       }
+                           if (areNoLongerActiveSesions.Count > 0)
+                           {
+                               using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                               {
+                                   foreach (var foodServicesClientSession in areNoLongerActiveSesions)
+                                       ApplicationSettings.Current.RemoveClientSession(foodServicesClientSession);
 
-                       return ApplicationSettings.Current.ActiveSessions.OfType<IFoodServicesClientSessionViewModel>().ToList();
+                                   stateTransition.Consistent = true;
+                               }
+                           }
+
+                           return ApplicationSettings.Current.ActiveSessions.OfType<IFoodServicesClientSessionViewModel>().ToList();
+                       }
+                       finally
+                       {
+                           OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get out" });
+                       }
                    });
             }
         }
