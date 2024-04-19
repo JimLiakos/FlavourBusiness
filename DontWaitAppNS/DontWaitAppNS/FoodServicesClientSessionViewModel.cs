@@ -677,7 +677,7 @@ namespace DontWaitApp
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
             if (_SharedItemChanged!=null)
-            {
+            { 
                 string itemUid = message.GetDataValue<string>("SharedItemUid");
                 string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
                 string itemChangeSession = message.GetDataValue<string>("itemChangeSession");
