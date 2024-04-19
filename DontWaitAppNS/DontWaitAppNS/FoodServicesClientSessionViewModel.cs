@@ -602,6 +602,9 @@ namespace DontWaitApp
             {
                 if (FoodServicesClientSession != null)
                 {
+#if DeviceDotNet
+                    OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "PeekMessage" });
+#endif
                     var message = FoodServicesClientSession.PeekMessage();
 
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
@@ -1387,7 +1390,7 @@ namespace DontWaitApp
                 OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "_ObjectChangeState?.Invoke(this, nameof(MenuData))" });
 #endif
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
-                GetMessages();tyty
+                GetMessages();
             }
         }
 
