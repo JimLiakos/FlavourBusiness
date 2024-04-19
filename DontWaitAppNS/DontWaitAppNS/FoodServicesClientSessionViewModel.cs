@@ -600,13 +600,28 @@ namespace DontWaitApp
         {
             lock (MessagesLock)
             {
+
+#if DeviceDotNet
+                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "In GetMessage" });
+#endif
                 if (FoodServicesClientSession != null)
                 {
                     var message = FoodServicesClientSession.PeekMessage();
+                    if (message == null)
+                    {
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "there is not message" });
+#endif
 
+
+                    }
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
                     {
                         string clientSessionID = message.GetDataValue("ClientSessionID") as string;
+
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "ClientMessages.PartOfMealRequest" });
+#endif
 
                         var messmate = this.GetCandidateMessmates().Union(this.GetMessmates()).Where(x => x.ClientSessionID == "clientSessionID").FirstOrDefault();
                         if (messmate == null)
@@ -677,7 +692,7 @@ namespace DontWaitApp
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
             if (_SharedItemChanged!=null)
-            { 
+            {
                 string itemUid = message.GetDataValue<string>("SharedItemUid");
                 string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
                 string itemChangeSession = message.GetDataValue<string>("itemChangeSession");
@@ -1696,7 +1711,7 @@ namespace DontWaitApp
         [HttpInVisible]
         public event SharedItemChangedHandle SharedItemChanged
         {
-            add 
+            add
             {
                 _SharedItemChanged += value;
                 if (ShareItemHasChangeMessage!=null)

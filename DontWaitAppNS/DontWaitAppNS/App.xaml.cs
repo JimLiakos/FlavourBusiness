@@ -55,10 +55,10 @@ namespace DontWaitApp
 
 
             //}
+             
 
 
-
-            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWeb.zip");
+            HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWebv1.zip");
 
 
 
