@@ -600,16 +600,31 @@ namespace DontWaitApp
         {
             lock (MessagesLock)
             {
+
+#if DeviceDotNet
+                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "In GetMessage" });
+#endif
                 if (FoodServicesClientSession != null)
                 {
 #if DeviceDotNet
                     OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "PeekMessage" });
 #endif
                     var message = FoodServicesClientSession.PeekMessage();
+                    if (message == null)
+                    {
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "there is not message" });
+#endif
 
+
+                    }
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
                     {
                         string clientSessionID = message.GetDataValue("ClientSessionID") as string;
+
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "ClientMessages.PartOfMealRequest" });
+#endif
 
                         var messmate = this.GetCandidateMessmates().Union(this.GetMessmates()).Where(x => x.ClientSessionID == "clientSessionID").FirstOrDefault();
                         if (messmate == null)
@@ -679,7 +694,7 @@ namespace DontWaitApp
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
-            if (_SharedItemChanged != null)
+            if (_SharedItemChanged!=null)
             {
                 string itemUid = message.GetDataValue<string>("SharedItemUid");
                 string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
