@@ -33,6 +33,8 @@ namespace DontWaitApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
+           AppDomain.CurrentDomain.UnhandledException += AppDomain_UnhandledException;
             SerializeTaskScheduler.RunAsync();
             FireBase.Init();
             //FlavourBusinessManager.FlavoursServicesContext ss = new FlavourBusinessManager.FlavoursServicesContext();
@@ -174,6 +176,10 @@ namespace DontWaitApp
             base.OnStartup(e);
         }
 
+        private void AppDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            
+        }
 
         void ApplicationStart(object sender, StartupEventArgs e)
         {

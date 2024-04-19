@@ -685,7 +685,7 @@ namespace DontWaitApp
             FoodServicesClientSessionItemStateChanged(itemUid, itemOwningSession, isShared, shareInSessions);
             _SharedItemChanged?.Invoke(this, changeItemMessmate, itemUid, message.MessageID);
             FoodServicesClientSession.RemoveMessage(message.MessageID);
-        }
+        } 
 
         /// <MetaDataID>{837f1943-f15c-49d8-a50b-2832acab8771}</MetaDataID>
         private void MessageReceived(IMessageConsumer sender)

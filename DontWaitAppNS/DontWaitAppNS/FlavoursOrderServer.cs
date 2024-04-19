@@ -1269,6 +1269,10 @@ namespace DontWaitApp
             var clientSession = (from theMessmate in this.CandidateMessmates
                                  where theMessmate.ClientSessionID == messmate.ClientSessionID
                                  select theMessmate.ClientSession).FirstOrDefault();
+#if !DEBUG
+            if (clientSession == null)
+                return;
+#endif
 
             if (FoodServicesClientSessionViewModel?.FoodServicesClientSession?.ServicePoint == clientSession.ServicePoint)
             {
@@ -1419,7 +1423,7 @@ namespace DontWaitApp
             }
         }
 
-        #endregion
+#endregion
 
 
 
