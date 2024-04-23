@@ -597,7 +597,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
         internal void GetMessages()
-        {
+        {  
             lock (MessagesLock)
             {
 

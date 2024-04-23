@@ -205,7 +205,7 @@ namespace DontWaitApp
         [BackwardCompatibilityID("+8")]
         public string Path
         {
-            get => _Path;
+            get => null;
             set
             {
 

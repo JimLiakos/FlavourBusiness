@@ -135,6 +135,7 @@ namespace DontWaitApp
             }
             ApplicationSettings.Current.DisplayedFoodServicesClientSession = foodServicesClientSessionViewModel;
             FoodServicesClientSessionViewModel = foodServicesClientSessionViewModel;
+            foodServicesClientSessionViewModel.GetMessages();
             return true;
         }
 
