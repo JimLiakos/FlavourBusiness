@@ -638,7 +638,7 @@ namespace DontWaitApp
 
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MenuItemProposal)
                     {
-                        MenuItemProposalMessageForword(message);
+                        MenuItemProposalMessageForward(message);
                         return;
                     }
 
@@ -657,6 +657,10 @@ namespace DontWaitApp
 
 
                 }
+
+#if DeviceDotNet
+                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "out GetMessage" });
+#endif
 
             }
         }
@@ -2050,7 +2054,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{1ad75d89-e702-4d8e-8577-316b6b2a7977}</MetaDataID>
-        private void MenuItemProposalMessageForword(FlavourBusinessFacade.EndUsers.Message message)
+        private void MenuItemProposalMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
             if (_MenuItemProposal != null)
             {
@@ -2059,18 +2063,12 @@ namespace DontWaitApp
                     var messmate = (from theMessmate in this.Messmates
                                     where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
                                     select theMessmate).FirstOrDefault();
-                    if (messmate == null)
+                    if (messmate != null)
                     {
-                        messmate = (from theMessmate in this.Messmates
-                                    where theMessmate.ClientSessionID == message.GetDataValue("ClientSessionID") as string
-                                    select theMessmate).FirstOrDefault();
-                        if (messmate != null)
-                            FoodServicesClientSession.RemoveMessage(message.MessageID);
-                        return;
-                    }
-                    string menuItemUri = message.GetDataValue<string>("MenuItemUri");
+                        string menuItemUri = message.GetDataValue<string>("MenuItemUri");
 
-                    _MenuItemProposal?.Invoke(this, messmate, menuItemUri, message.MessageID);
+                        _MenuItemProposal?.Invoke(this, messmate, menuItemUri, message.MessageID);
+                    }
 
                     //try
                     //{

@@ -32,4 +32,4 @@ namespace FlavourBusinessFacade.EndUsers
 
     public delegate void MessageReceivedHandle(IMessageConsumer sender);
 
-}
+}  

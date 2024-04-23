@@ -58,7 +58,7 @@ namespace DontWaitApp
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
     public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
     {
-         
+
         /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
         public int Age = 12;
         /// <MetaDataID>{5f360b37-d769-4114-a29c-43bbcbfeffd1}</MetaDataID>
@@ -76,8 +76,8 @@ namespace DontWaitApp
                     return Task.FromResult<List<HomeDeliveryServicePointInfo>>(NeighborhoodFoodServers[location]);
             }
 
-            
-            
+
+
 
             NeighborhoodFoodServersTask = Task<List<HomeDeliveryServicePointInfo>>.Run(() =>
             {
@@ -203,7 +203,7 @@ namespace DontWaitApp
         public FlavoursOrderServer(AppType appType, bool useAssignedPaymentTerminal)
         {
             AppType = appType;
-            this.UseAssignedPaymentTerminal=useAssignedPaymentTerminal;
+            this.UseAssignedPaymentTerminal = useAssignedPaymentTerminal;
         }
 
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
@@ -570,11 +570,11 @@ namespace DontWaitApp
             set
             {
 
-                if (_EndUser!=null)
-                    _EndUser.ObjectChangeState-=EndUser_ObjectChangeState;
+                if (_EndUser != null)
+                    _EndUser.ObjectChangeState -= EndUser_ObjectChangeState;
                 _EndUser = value;
-                if (_EndUser!=null)
-                    _EndUser.ObjectChangeState+=EndUser_ObjectChangeState;
+                if (_EndUser != null)
+                    _EndUser.ObjectChangeState += EndUser_ObjectChangeState;
             }
         }
 
@@ -855,9 +855,9 @@ namespace DontWaitApp
             get => _FoodServicesClientSessionViewModel;
             set
             {
-                if (_FoodServicesClientSessionViewModel!=value)
+                if (_FoodServicesClientSessionViewModel != value)
                 {
-                    _FoodServicesClientSessionViewModel=value as FoodServicesClientSessionViewModel;
+                    _FoodServicesClientSessionViewModel = value as FoodServicesClientSessionViewModel;
                     _FoodServicesClientSessionViewModel?.FoodServicesClientSession?.UpdateSessionUser(Language);
                 }
 
@@ -932,7 +932,7 @@ namespace DontWaitApp
                 HomeDeliveryServicePointInfo homeDeliveryServicePointInfo;
                 lock (NeighborhoodFoodServers)
                 {
-                    homeDeliveryServicePointInfo=NeighborhoodFoodServers.SelectMany(x => x.Value).Where(x => x.ServicePointIdentity== servicePointIdentity).FirstOrDefault();
+                    homeDeliveryServicePointInfo = NeighborhoodFoodServers.SelectMany(x => x.Value).Where(x => x.ServicePointIdentity == servicePointIdentity).FirstOrDefault();
                 }
                 FoodServicesClientSessionViewModel = await GetFoodServicesClientSessionViewModel(servicePointIdentity, homeDeliveryServicePointInfo?.FlavoursServices);
 
@@ -1423,7 +1423,7 @@ namespace DontWaitApp
             }
         }
 
-#endregion
+        #endregion
 
 
 
@@ -1704,7 +1704,7 @@ namespace DontWaitApp
 #if DeviceDotNet
                 DeviceApplication.Current.Log(new List<string>() { "get_CurrentFoodServicesClientSession" });
 #endif
-                if (FoodServicesClientSessionViewModel==null)
+                if (FoodServicesClientSessionViewModel == null)
                 {
 
                 }
@@ -1718,7 +1718,9 @@ namespace DontWaitApp
         {
             get
             {
+#if DeviceDotNet
                 OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get in"});
+#endif
 
                 return Task<List<IFoodServicesClientSessionViewModel>>.Run(async () =>
                    {
@@ -1752,7 +1754,9 @@ namespace DontWaitApp
                        }
                        finally
                        {
+#if DeviceDotNet
                            OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get out" });
+#endif
                        }
                    });
             }
@@ -1812,8 +1816,8 @@ namespace DontWaitApp
             get => _SignedInFlavourBusinessUser;
             set
             {
-                _SignedInFlavourBusinessUser=value;
-                if (FoodServicesClientSessionViewModel!=null&&FoodServicesClientSessionViewModel.FoodServicesClientSession!=null)
+                _SignedInFlavourBusinessUser = value;
+                if (FoodServicesClientSessionViewModel != null && FoodServicesClientSessionViewModel.FoodServicesClientSession != null)
                     FoodServicesClientSessionViewModel.FoodServicesClientSession.UpdateSessionUser(Language);
 
 
@@ -1824,7 +1828,7 @@ namespace DontWaitApp
 
         public IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu)
         {
-             
+
             var foodServicesClientSessionViewModel = new FoodServicesClientSessionViewModel();
 
             foodServicesClientSessionViewModel.Init(menu, this);
@@ -1842,7 +1846,7 @@ namespace DontWaitApp
                     string defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;9967813ee9d943db823ca97779eb9fd7";
                     defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;50886542db964edf8dec5734e3f89395";//table A4
                     //defaultServicePoint = "7f9bde62e6da45dc8c5661ee2220a7b0;ba1ef9fe4cb64ac6bd1daed625ecb00b";//Take away
-                    if (string.IsNullOrWhiteSpace(servicePointIdentity)||servicePointIdentity.Split(';').Length < 2)
+                    if (string.IsNullOrWhiteSpace(servicePointIdentity) || servicePointIdentity.Split(';').Length < 2)
                         servicePointIdentity = defaultServicePoint;
 
                     //string servicePoint = "ca33b38f5c634fd49c50af60b042f910;8dedb45522ad479480e113c59d4bbdd0";
@@ -1856,7 +1860,7 @@ namespace DontWaitApp
                     {
                         try
                         {
-                            if (flavoursServices!=null)
+                            if (flavoursServices != null)
                                 clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, FlavourBusinessFacade.DeviceType.Phone, device.FirebaseToken, null, null, !WaiterView, create);
                             else
                                 clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, FlavourBusinessFacade.DeviceType.Phone, device.FirebaseToken, !WaiterView, create);
@@ -1889,8 +1893,9 @@ namespace DontWaitApp
                     var foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.FoodServiceClientSessionUri == foodServiceClientSessionUri).FirstOrDefault();
                     if (foodServicesClientSessionViewModel != null)
                     {
-                        foodServicesClientSessionViewModel.FlavoursOrderServer=this;
-                        foodServicesClientSessionViewModel.FoodServicesClientSession = clientSessionData.Value.FoodServiceClientSession;
+                        foodServicesClientSessionViewModel.FlavoursOrderServer = this;
+                        if(foodServicesClientSessionViewModel.FoodServicesClientSession != clientSessionData.Value.FoodServiceClientSession)
+                            foodServicesClientSessionViewModel.FoodServicesClientSession = clientSessionData.Value.FoodServiceClientSession;
                     }
                     else
                     {
@@ -1923,7 +1928,7 @@ namespace DontWaitApp
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
             var clientSessionData = foodServiceClientSession.ClientSessionData;
-            if (foodServicesClientSessionViewModel==null)
+            if (foodServicesClientSessionViewModel == null)
             {
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
@@ -2066,10 +2071,10 @@ namespace DontWaitApp
         /// <MetaDataID>{a34440a6-11d3-4378-8cdc-58bc87f87269}</MetaDataID>
         internal async Task<bool> Pay(IPayment payment, PaymentMethod paymentMethod, decimal tipAmount)
         {
-            if (payment.State==PaymentState.Completed)
+            if (payment.State == PaymentState.Completed)
                 return true;
 
-            if (paymentMethod==FinanceFacade.PaymentMethod.PaymentGateway)
+            if (paymentMethod == FinanceFacade.PaymentMethod.PaymentGateway)
             {
 #if DeviceDotNet
                 var paymentService = new PaymentService();
@@ -2087,7 +2092,7 @@ namespace DontWaitApp
 #endif
                 return false;
             }
-            else if (paymentMethod==FinanceFacade.PaymentMethod.Card)
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Card)
             {
                 if (this.UseAssignedPaymentTerminal)
                 {
@@ -2105,7 +2110,7 @@ namespace DontWaitApp
                     return true;
                 }
             }
-            else if (paymentMethod==FinanceFacade.PaymentMethod.Cash)
+            else if (paymentMethod == FinanceFacade.PaymentMethod.Cash)
             {
                 payment.CashPaymentCompleted(tipAmount);
                 return true;
@@ -2118,5 +2123,5 @@ namespace DontWaitApp
         /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>
         internal AuthUser AuthUser;
     }
-  
+
 }

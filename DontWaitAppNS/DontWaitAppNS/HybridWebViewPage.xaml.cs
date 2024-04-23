@@ -74,7 +74,7 @@ namespace DontWaitApp
                 // long count = AssemblyMetaObject.Residents.Count;
 
 
-                url= "webapp://index.html";
+                //url= "webapp://index.html";
                 //url = "local://index.html";
                 //System.Reflection.DispatchProxy dispatchProxy;
 
