@@ -690,9 +690,9 @@ namespace DontWaitApp
                 catch (Exception error)
                 {
                 }
-            });
+            }); 
         }
-
+         
 
         FlavourBusinessFacade.EndUsers.Message ShareItemHasChangeMessage;
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
@@ -1726,8 +1726,9 @@ namespace DontWaitApp
                     Task.Run(() =>
                     {
                         System.Threading.Thread.Sleep(2000);
+                        var shareItemHasChangeMessage = ShareItemHasChangeMessage;
                         ShareItemHasChangeMessage = null;
-                        ShareItemHasChangeMessageForward(ShareItemHasChangeMessage);
+                        ShareItemHasChangeMessageForward(shareItemHasChangeMessage);
 
                     });
                 }

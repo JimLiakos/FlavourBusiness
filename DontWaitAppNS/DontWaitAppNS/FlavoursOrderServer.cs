@@ -447,8 +447,6 @@ namespace DontWaitApp
         public void WebViewLoaded()
         {
             OnWebViewLoaded?.Invoke();
-            this._FoodServicesClientSessionViewModel?.GetMessages();
-
         }
 
 
@@ -679,12 +677,7 @@ namespace DontWaitApp
                         Path = "";
                 }
 
-                if (displayedFoodServicesClientSession != null && (await displayedFoodServicesClientSession.IsActive()) != null && (await displayedFoodServicesClientSession.IsActive()).Value)
-                {
-
-                    displayedFoodServicesClientSession.GetMessages();
-                }
-                else
+                if(await displayedFoodServicesClientSession?.IsActive()!=true)
                 {
 
                     ApplicationSettings.Current.DisplayedFoodServicesClientSession = null;
