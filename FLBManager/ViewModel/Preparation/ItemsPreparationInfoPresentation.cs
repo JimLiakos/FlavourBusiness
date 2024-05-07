@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.ServicesContextResources;
+using FloorLayoutDesigner.ViewModel;
 using MenuItemsEditor.ViewModel;
 using MenuModel;
 using OOAdvantech.PersistenceLayer;
 using UIBaseEx;
 using WPFUIElementObjectBind;
+using static QRCoder.QRCodeGenerator;
 
 namespace FLBManager.ViewModel.Preparation
 {
@@ -21,7 +25,14 @@ namespace FLBManager.ViewModel.Preparation
     {
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
-            throw new NotImplementedException();
+            if (treeNode is PreparationStationPresentation)
+            {
+                PreparationSubStations.Remove((treeNode as PreparationStationPresentation).PreparationStation);
+                PreparationStationPresentation?.PreparationStation.RemoveSubStation((treeNode as PreparationStationPresentation).PreparationStation);
+                _Members = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
+
         }
         /// <MetaDataID>{017f504b-513b-4fc4-af42-c0c2ae4641b9}</MetaDataID>
         public readonly IItemsPreparationInfo ItemsPreparationInfo;
@@ -48,7 +59,10 @@ namespace FLBManager.ViewModel.Preparation
         {
             if (PreparationStationPresentation != null)
             {
-                var preparationStation = PreparationStationPresentation.PreparationStation.NewSubStation();
+                var preparationSubStation = PreparationStationPresentation.PreparationStation.NewSubStation();
+                PreparationSubStations.GetViewModelFor(preparationSubStation, () => { return new PreparationStationPresentation(this, preparationSubStation, PreparationStationPresentation.MenuViewModel, EditMode); });
+                _Members = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             }
         }
 
@@ -83,7 +97,10 @@ namespace FLBManager.ViewModel.Preparation
             ItemsCategory = menu.RootCategory;
 
             foreach (var preparationSubStation in preparationStationPresentation.PreparationStation.SubStations)
-                PreparationSubStations.GetViewModelFor(preparationSubStation, this, preparationSubStation, PreparationStationPresentation.MenuViewModel, editMode);
+                PreparationSubStations.GetViewModelFor(preparationSubStation, () =>
+                {
+                    return new PreparationStationPresentation(this, preparationSubStation, PreparationStationPresentation.MenuViewModel, editMode);
+                });
 
             DeleteCommand = new RelayCommand((object sender) =>
             {
@@ -118,7 +135,6 @@ namespace FLBManager.ViewModel.Preparation
             //{
             //    System.Diagnostics.Debug.WriteLine("");
             //});
-
 
         }
 
@@ -816,6 +832,8 @@ namespace FLBManager.ViewModel.Preparation
 
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
+
+        
         public RelayCommand RemoveItemsPreparationInfoCommand { get; protected set; }
 
         /// <MetaDataID>{21c808d9-18d9-4d71-a039-827f56f10443}</MetaDataID>
@@ -854,6 +872,15 @@ namespace FLBManager.ViewModel.Preparation
 
                     if(EditMode)
                     {
+
+
+                       // menuItem = new MenuCommand();
+                       // //imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
+                       // menuItem.Header = "Service Points";//Properties.Resources.ClearItemsPreparationInfoMenuHeader;
+                       // menuItem.Icon = emptyImage;// new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                       //// menuItem.Command = RemoveItemsPreparationInfoCommand;
+                       // _ContextMenuItems.Add(menuItem);
+
 
 
                         menuItem = new MenuCommand();

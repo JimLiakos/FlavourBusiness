@@ -84,9 +84,9 @@ namespace FlavourBusinessFacade.RoomService
         public ItemsPreparationContext(IMealCourse mealCourse, IPreparationStation preparationStation, List<IItemPreparation> preparationItems)
         {
 
-            this.SessionType= mealCourse.Meal.Session.SessionType;
+            this.SessionType = mealCourse.Meal.Session.SessionType;
             //string uri = null;
-            if (mealCourse==null)
+            if (mealCourse == null)
             {
 
             }
@@ -102,15 +102,15 @@ namespace FlavourBusinessFacade.RoomService
                 PreparationStationDescription = preparationStation.Description;
 
                 //Description = MealCourse.Meal.Session.ServicePoint.ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
-                if(MealCourse.Meal.Session.SessionType==EndUsers.SessionType.Hall)
-                    MealCourseDescription = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.Hall)
+                    MealCourseDescription = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
 
                 if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
-                    MealCourseDescription =MealCourse.Meal.Session.DeliveryPlace.Description;
+                    MealCourseDescription = MealCourse.Meal.Session.DeliveryPlace.Description;
 
-                    Description = preparationStation.Description;
+                Description = preparationStation.Description;
             }
-            else 
+            else
             {
                 Description = Resource.FoodItemInstantlyAvailable;
                 this.PreparationStationIdentity = TradeProductsStationIdentity;
@@ -146,7 +146,13 @@ namespace FlavourBusinessFacade.RoomService
         {
             if (nameof(IFoodServiceSession.ServicePoint) == member)
             {
-                Description = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint).ServiceArea  .Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                if (MealCourse.Meal.Session.ServicePoint is IHallServicePoint)
+                    Description = (MealCourse.Meal.Session.ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + MealCourse.Meal.Session.ServicePoint.Description;
+                else if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
+                    Description = MealCourse.Meal.Session.DeliveryPlace.Description;
+                else
+                    Description = MealCourse.Meal.Session.ServicePoint.Description;
+
                 ServicePoint = MealCourse.Meal.Session.ServicePoint;
                 ObjectChangeState?.Invoke(this, null);
             }
@@ -216,7 +222,7 @@ namespace FlavourBusinessFacade.RoomService
         public DateTime PreparedAtForecast { get; set; }
 
 
-        public bool? _PreparationOrderCommited; 
+        public bool? _PreparationOrderCommited;
         public bool PreparationOrderCommitted
         {
             get
@@ -229,7 +235,7 @@ namespace FlavourBusinessFacade.RoomService
             }
             set => _PreparationOrderCommited = value;
         }
-                
+
         public int PreparatioOrder
         {
             get

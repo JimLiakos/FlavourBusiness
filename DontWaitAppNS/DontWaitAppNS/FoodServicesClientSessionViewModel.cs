@@ -594,6 +594,7 @@ namespace DontWaitApp
         /// <MetaDataID>{9714f9b4-1950-4bd5-9a10-a482c42d355e}</MetaDataID>
         object MessagesLock = new object();
 
+        Message YouMustDecideMessage;
 
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
         internal void GetMessages()
@@ -654,6 +655,11 @@ namespace DontWaitApp
                     {
                         YouMustDecideMessageForward(message);
                     }
+                    if(YouMustDecideMessage==null&& _MessmatesWaitForYouToDecide!=null)
+                    {
+                        YouMustDecideMessage= new Message() { MessageID = Guid.NewGuid().ToString("N") };
+                        YouMustDecideMessageForward(YouMustDecideMessage);
+                    }
 
 
                 }
@@ -668,29 +674,32 @@ namespace DontWaitApp
         /// <MetaDataID>{4a4ab174-50dd-4220-88c1-cb6e1d925628}</MetaDataID>
         private void YouMustDecideMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
-            FoodServicesClientSession.RemoveMessage(message.MessageID);
-            Task.Run(() =>
+            if (message.Notification != null)
             {
-                try
+                FoodServicesClientSession.RemoveMessage(message.MessageID);
+                Task.Run(() =>
                 {
-                    var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
-                                     select new Messmate(clientSession, OrderItems)).ToList();
+                    try
+                    {
+                        var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
+                                         select new Messmate(clientSession, OrderItems)).ToList();
 
-                    messmates = (from messmate in messmates
-                                 where !messmate.WaiterSession
-                                 from preparationItem in messmate.PreparationItems
-                                 where preparationItem.State == ItemPreparationState.Committed
-                                 select messmate).Distinct().ToList();
+                        messmates = (from messmate in messmates
+                                     where !messmate.WaiterSession
+                                     from preparationItem in messmate.PreparationItems
+                                     where preparationItem.State == ItemPreparationState.Committed
+                                     select messmate).Distinct().ToList();
 
-                    while (_MessmatesWaitForYouToDecide == null)
-                        System.Threading.Thread.Sleep(1000);
+                        while (_MessmatesWaitForYouToDecide == null)
+                            System.Threading.Thread.Sleep(1000);
 
-                    _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
-                }
-                catch (Exception error)
-                {
-                }
-            }); 
+                        _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
+                    }
+                    catch (Exception error)
+                    {
+                    }
+                });
+            }
         }
          
 
@@ -1650,8 +1659,14 @@ namespace DontWaitApp
         {
             add
             {
+                if (_MessmatesWaitForYouToDecide == null)
+                {
+                    _MessmatesWaitForYouToDecide += value;
+                    GetMessages();
+                }
+                else
+                    _MessmatesWaitForYouToDecide += value;
 
-                _MessmatesWaitForYouToDecide += value;
             }
             remove
             {
@@ -1720,18 +1735,23 @@ namespace DontWaitApp
         {
             add
             {
-                _SharedItemChanged += value;
-                if (ShareItemHasChangeMessage != null)
+                if (_SharedItemChanged == null)
                 {
-                    Task.Run(() =>
+                    _SharedItemChanged += value;
+                    if (ShareItemHasChangeMessage != null)
                     {
-                        System.Threading.Thread.Sleep(2000);
-                        var shareItemHasChangeMessage = ShareItemHasChangeMessage;
-                        ShareItemHasChangeMessage = null;
-                        ShareItemHasChangeMessageForward(shareItemHasChangeMessage);
+                        Task.Run(() =>
+                        {
+                            System.Threading.Thread.Sleep(2000);
+                            var shareItemHasChangeMessage = ShareItemHasChangeMessage;
+                            ShareItemHasChangeMessage = null;
+                            ShareItemHasChangeMessageForward(shareItemHasChangeMessage);
 
-                    });
+                        });
+                    }
                 }
+                else
+                    _SharedItemChanged += value;
 
             }
             remove

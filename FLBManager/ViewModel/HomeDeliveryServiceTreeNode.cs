@@ -1,11 +1,13 @@
 ﻿using FlavourBusinessFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FLBManager.ViewModel.Delivery;
+using FloorLayoutDesigner.ViewModel;
 using OOAdvantech.Transactions;
 using StyleableWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +32,7 @@ namespace FLBManager.ViewModel
                 Delete();
             });
 
-            SettingsCommand= DeleteCommand = new RelayCommand((object sender) =>
+            SettingsCommand = DeleteCommand = new RelayCommand((object sender) =>
             {
                 OpenHomeDeliverySettings();
             });
@@ -40,7 +42,7 @@ namespace FLBManager.ViewModel
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 var sdsd = this.HomeDeliveryService.ServicesPointIdentity;
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup(Properties.Resources.AssignCourierDeviceTitle , Properties.Resources.AssignCourierDevicePrompt) { CodeValue = this.HomeDeliveryService.ServicesPointIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup(Properties.Resources.AssignCourierDeviceTitle, Properties.Resources.AssignCourierDevicePrompt) { CodeValue = this.HomeDeliveryService.ServicesPointIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 
@@ -143,6 +145,8 @@ namespace FLBManager.ViewModel
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Name)));
         }
 
+
+  
         public override bool HasContextMenu => true;
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;

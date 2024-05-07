@@ -358,6 +358,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{2f99ee50-7744-4e5a-85cc-0e57d1c949fa}</MetaDataID>
         [PersistentMember(nameof(_PreparationForInfos))]
         [BackwardCompatibilityID("+5")]
+        [CachingDataOnClientSide]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 
         /// <MetaDataID>{1593b236-b246-4099-981f-ace2d6b584bf}</MetaDataID>
@@ -396,6 +398,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{65f5d480-8bad-4707-a063-a552eda431e0}</MetaDataID>
         [PersistentMember(nameof(_SubStations))]
         [BackwardCompatibilityID("+7")]
+        [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public List<IPreparationStation> SubStations => _SubStations.ToThreadSafeList();
 
         public event ObjectChangeStateHandle ObjectChangeState;
@@ -486,8 +489,23 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+
                 _PreparationForInfos.Remove(preparationForInfo);
                 ObjectStorage.DeleteObject(preparationForInfo);
+
+                stateTransition.Consistent = true;
+            }
+        }
+
+        public void RemovePreparationForInfos(List<IPreparationForInfo> preparationForInfos)
+        {
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                foreach (var preparationForInfo in preparationForInfos)
+                {
+                        _PreparationForInfos.Remove(preparationForInfo);
+                        ObjectStorage.DeleteObject(preparationForInfo);
+                }
                 stateTransition.Consistent = true;
             }
         }
@@ -501,6 +519,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{624df837-5606-4bbe-b471-5735642e9fec}</MetaDataID>
         public IPreparationForInfo NewServiceAreaPreparationForInfo(IServiceArea serviceArea, PreparationForInfoType preparationForInfoType)
         {
+
+
+
             var existPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
             if (existPreparationForInfo != null)
             {
@@ -612,6 +633,8 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{cc7b3a81-4bea-4a90-aace-5f019c0adbba}</MetaDataID>
         public IPreparationForInfo NewServicePointPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType preparationForInfoType)
         {
+
+
             var existPreparationForInfo = PreparationForInfos.Where(x => x.ServicePoint == servicePoint).FirstOrDefault();
             if (existPreparationForInfo != null)
             {

@@ -1696,7 +1696,7 @@ namespace FlavourBusinessManager
         private void RegisterOrganizationMainStorageComponents(ObjectStorage objectStorage)
         {
             List<string> types = new List<string>() { typeof(FoodServiceClient).FullName };
-            objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName, types);
+            objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName, types);
         }
 
         private string GetOrganizationMainStorageName()

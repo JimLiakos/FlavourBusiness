@@ -48,7 +48,7 @@ namespace FLBManager.ViewModel.Preparation
 
         }
         /// <MetaDataID>{59ff9b8c-0cc4-4617-8c1c-4367e79017ce}</MetaDataID>
-        Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
+      internal  Infrastructure.InfrastructureTreeNode ServiceContextInfrastructure;
 
         /// <MetaDataID>{538d43ac-584e-4e19-b349-dc5a2b082cdb}</MetaDataID>
         Dictionary<IPreparationStation, PreparationStationPresentation> PreparationStations = new Dictionary<IPreparationStation, PreparationStationPresentation>();

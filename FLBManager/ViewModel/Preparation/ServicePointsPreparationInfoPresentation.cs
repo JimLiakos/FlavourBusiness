@@ -19,17 +19,44 @@ namespace FLBManager.ViewModel.Preparation
         {
             throw new NotImplementedException();
         }
-        public readonly IPreparationForInfo ServicePointsPreparationInfo;
+        public IPreparationForInfo ServicePointsPreparationInfo { get; private set; }
+
         PreparationStationPresentation PreparationStationPresentation;
 
         public ServicePointsPreparationInfoPresentation ServicePointsPreparationInfoTreeNode { get; }
+
+
+        public bool IsCooked
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public bool HasAppearanceOrderValue
+        {
+            get
+            {
+                return false;
+            }
+        }
+        public bool HasTags
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+
 
         //ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
         internal IServiceArea ServiceArea;
         IServicePoint ServicePoint;
 
         //this, PreparationStationPresentation, servicePoint, SelectionCheckBox)
-        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent,  IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
+        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
             ServicePointsPreparationInfo = servicePointsPreparationInfo;
@@ -44,8 +71,8 @@ namespace FLBManager.ViewModel.Preparation
 
         }
 
-   
-            bool SelectionCheckBox;
+
+        bool SelectionCheckBox;
 
 
 
@@ -77,9 +104,11 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
+
                 if (this.ServiceArea != null && this.PreparationStationPresentation.StationPreparesForServicePoints(this.ServiceArea))
                     return true;
-                else if (this.ServicePoint != null && this.PreparationStationPresentation.StationPreparesForServicePoint(this.ServicePoint))
+                else
+                if (this.ServicePoint != null && this.PreparationStationPresentation.StationPreparesForServicePoint(this.ServicePoint))
                     return true;
                 else
                     return false;
@@ -95,7 +124,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 if (value && ServicePoint != null)
                 {
-                    this.PreparationStationPresentation.IncludeServicePoint(ServicePoint);
+                    this.ServicePointsPreparationInfo = this.PreparationStationPresentation.IncludeServicePoint(ServicePoint);
                     Refresh();
                 }
 
@@ -112,10 +141,12 @@ namespace FLBManager.ViewModel.Preparation
         private void Delete()
         {
             if (ServiceArea != null)
-                PreparationStationPresentation.ExcludeServicePoints(ServiceArea);
+            {
+                PreparationStationPresentation.RemoveChild(this);
+            }
 
             if (this.ServicePoint != null)
-                PreparationStationPresentation.ExcludeServicePoint(ServicePoint);
+                this.ServicePointsPreparationInfo = PreparationStationPresentation.ExcludeServicePoint(ServicePoint);
 
         }
 
@@ -193,7 +224,7 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
-        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent,  PreparationStationPresentation preparationStationPresentation, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
+        public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
         {
             PreparationStationPresentation = preparationStationPresentation;
         }
@@ -213,7 +244,7 @@ namespace FLBManager.ViewModel.Preparation
         //    CheckBoxVisibility = System.Windows.Visibility.Visible;
         //}
 
-        
+
         public ServicePointsPreparationInfoPresentation(ServicePointsPreparationInfoPresentation parent, PreparationStationPresentation preparationStationPresentation, IServicePoint servicePoint, bool selectionCheckBox) : base(parent)
         {
             SelectionCheckBox = selectionCheckBox;
@@ -296,11 +327,30 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(CanPrepared)));
 
 
-            foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())
-                itemsPreparationInfoPresentation.Refresh();
+            foreach (var servicePointsPreparationInfoPresentation in Members.OfType<ServicePointsPreparationInfoPresentation>())
+                servicePointsPreparationInfoPresentation.Refresh();
 
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
 
+        }
+
+        internal List<IPreparationForInfo> GetAllPreparationForInfo()
+        {
+            if ((ServiceArea != null))
+            {
+
+                var preparationForInfoList = this.PreparationStationPresentation.PreparationForInfos.Where(x => x.ServicePoint is IHallServicePoint && (x.ServicePoint as IHallServicePoint).ServiceArea == ServiceArea).ToList();
+
+                if (ServicePointsPreparationInfo != null)
+                    preparationForInfoList.Add(ServicePointsPreparationInfo);
+
+                return preparationForInfoList;
+
+            }
+            if (ServicePointsPreparationInfo != null)
+                return new List<IPreparationForInfo>() { this.ServicePointsPreparationInfo };
+            else
+                return new List<IPreparationForInfo>();
         }
     }
 }

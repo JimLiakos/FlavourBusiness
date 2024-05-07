@@ -23,6 +23,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         void RemoveSubStation(IPreparationStation preparationStation);
 
 
+        [RoleBMultiplicityRange(1, 1)]
         [RoleAMultiplicityRange(0)]
         [Association("PreparationStationPrepareFor", Roles.RoleA, "d953fcd5-84d0-429b-a436-09c0bfa66a5a")]
         List<IPreparationForInfo> PreparationForInfos { get; }
@@ -56,6 +57,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         IItemsPreparationInfo NewPreparationInfo(string itemsInfoObjectUri, ItemsPreparationInfoType itemsPreparationInfoType);
         /// <MetaDataID>{e20e36c9-34e7-4d91-8e5e-85399c0566ed}</MetaDataID>
         void RemovePreparationForInfo(IPreparationForInfo PreparationForInfo);
+
+        void RemovePreparationForInfos(List< IPreparationForInfo> PreparationForInfos);
 
         /// <MetaDataID>{fbea817c-1e40-45d0-a939-deae8a96af4b}</MetaDataID>
         void RemovePreparationInfos(List<IItemsPreparationInfo> itemsPreparationInfos);

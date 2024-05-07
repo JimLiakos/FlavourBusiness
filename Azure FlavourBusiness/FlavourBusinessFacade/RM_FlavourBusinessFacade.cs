@@ -4799,6 +4799,15 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation), "RemovePreparationForInfo", args, argsTypes);
         }
         
+        public void RemovePreparationForInfos(System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo> PreparationForInfos)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = PreparationForInfos;
+            argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo>);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation), "RemovePreparationForInfos", args, argsTypes);
+        }
+        
         public void RemovePreparationInfos(System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo> itemsPreparationInfos)
         {
             object[] args = new object[1];

@@ -22,6 +22,8 @@ using FlavourBusinessManager.ServicePointRunTime;
 using System.Collections.Generic;
 using System.Diagnostics;
 using OOAdvantech.Json.Linq;
+using static System.Windows.Forms.LinkLabel;
+using FlavourBusinessFacade.PriceList;
 
 namespace FlavourBusinessManager
 {
@@ -135,14 +137,30 @@ namespace FlavourBusinessManager
             {
                 try
                 {
+                    OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(objectStorage.StorageMetaData));
+
+                   // var tmpList = (from @interface in storage.GetObjectCollection<OOAdvantech.MetaDataRepository.Interface>()
+                   //                where @interface.Name == "IItemsPriceInfo"
+                   //                select @interface).ToList();
+
+                   // var tmpLista = (from @interface in storage.GetObjectCollection<OOAdvantech.MetaDataRepository.Class>()
+                   //                where @interface.Name == "ItemsPriceInfo"
+                   //                 select @interface).ToList();
+
+
+                   //// ObjectStorage.DeleteObject(tmpList[1]);
+                   // ObjectStorage.DeleteObject(tmpLista[1]);
+
+
+
                     if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName))
                     {
-                        objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-                        objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                        objectStorage.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                        objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
                     }
                     else if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(Organization).Assembly.FullName))
                     {
-                        objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                        objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
                     }
 
 
@@ -422,8 +440,8 @@ namespace FlavourBusinessManager
                         throw Error;
                     try
                     {
-                        storageSession.StorageMetaData.RegisterComponent(typeof(ComputationalResources.IsolatedComputingContext).Assembly.FullName);
-                        storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                        storageSession.RegisterComponent(typeof(ComputationalResources.IsolatedComputingContext).Assembly.FullName);
+                        storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
 
                     }
                     catch (System.Exception Errore)

@@ -69,7 +69,7 @@ namespace ComputationalResources
         //        else
         //            throw Error;
 
-        //        objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+        //        objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
         //    }
         //    catch (System.Exception Error)
         //    {

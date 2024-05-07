@@ -38,8 +38,6 @@ namespace FLBManager.ViewModel
                 {
                     if (value.All(x => _ServiceAreaMap.Any(y => y == x)))
                         hasChanges = false;
-
-
                 }
                 if (hasChanges)
                 {

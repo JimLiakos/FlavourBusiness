@@ -124,9 +124,9 @@ namespace FlavourBusinessManager
                 storageSession = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
                                                             storageType, accountName, acountkey);
-                //storageSession.StorageMetaData.RegisterComponent(typeof(IsolatedComputingContext).Assembly.FullName);
-                //storageSession.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-                //storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                //storageSession.RegisterComponent(typeof(IsolatedComputingContext).Assembly.FullName);
+                //storageSession.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                //storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
 
 
             }
@@ -151,8 +151,8 @@ namespace FlavourBusinessManager
                     throw Error;
                 try
                 {
-                    storageSession.StorageMetaData.RegisterComponent(typeof(IsolatedComputingContext).Assembly.FullName);
-                    storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                    storageSession.RegisterComponent(typeof(IsolatedComputingContext).Assembly.FullName);
+                    storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
                 }
                 catch (System.Exception Errore)
                 {

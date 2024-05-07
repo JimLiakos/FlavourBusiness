@@ -30,11 +30,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
             if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
                 _Description = MealCourse.Meal.Session.DeliveryPlace.Description;
 
-            
+
             //_Description = (ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + ServicePoint.Description;
             _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(mealCourse)?.GetPersistentObjectUri(mealCourse);
 
-            
+
         }
 
         private void MealCourse_ObjectChangeState(object _object, string member)
@@ -42,7 +42,13 @@ namespace FlavourBusinessFacade.ServicesContextResources
             if (nameof(IFoodServiceSession.ServicePoint) == member)
             {
                 ServicePoint = MealCourse.Meal.Session.ServicePoint;
-                Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
+                if (ServicePoint is IHallServicePoint)
+                    Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
+                else if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
+                    Description = MealCourse.Meal.Session.DeliveryPlace.Description;
+                else
+                    Description = ServicePoint.Description;
+
                 ObjectChangeState?.Invoke(this, null);
             }
 
@@ -55,7 +61,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
             ServicePoint = servicePoint;
             PreparationItems = preparationItems;
             Description = description;
-           _Uri = uri;
+            _Uri = uri;
         }
 
         /// <exclude>Excluded</exclude>
@@ -66,13 +72,13 @@ namespace FlavourBusinessFacade.ServicesContextResources
         {
             get
             {
-                if(_Uri==null)
+                if (_Uri == null)
                     _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(MealCourse)?.GetPersistentObjectUri(MealCourse);
                 return _Uri;
             }
         }
 
-      
+
 
 
         /// <exclude>Excluded</exclude>
@@ -81,8 +87,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
         {
             get
             {
-                if(MealCourse!=null)
-                    _Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
+                if (MealCourse != null)
+                {
+                    if (ServicePoint is IHallServicePoint)
+                        _Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
+                    else if (MealCourse.Meal.Session.SessionType == EndUsers.SessionType.HomeDelivery)
+                        Description = MealCourse.Meal.Session.DeliveryPlace.Description;
+                    else
+                        _Description = ServicePoint.Description;
+
+                }
                 return _Description;
             }
             set

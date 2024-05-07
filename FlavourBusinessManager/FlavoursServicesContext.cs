@@ -201,7 +201,7 @@ namespace FlavourBusinessManager
 
                 });
                 FlavourBusinessesStorage = storageSession;
-                //storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                //storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
             }
             catch (OOAdvantech.PersistenceLayer.StorageException Error)
             {
@@ -215,7 +215,7 @@ namespace FlavourBusinessManager
                     throw Error;
                 try
                 {
-                    storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                    storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
                 }
                 catch (System.Exception Errore)
                 {
@@ -634,7 +634,7 @@ namespace FlavourBusinessManager
                 storageSession = ObjectStorage.OpenStorage(storageName,
                                                             storageLocation,
                                                             storageType);
-                // storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                // storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
             }
             catch (OOAdvantech.PersistenceLayer.StorageException Error)
             {
@@ -648,7 +648,7 @@ namespace FlavourBusinessManager
                     throw Error;
                 try
                 {
-                    storageSession.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                    storageSession.RegisterComponent(typeof(Organization).Assembly.FullName);
                 }
                 catch (System.Exception Errore)
                 {

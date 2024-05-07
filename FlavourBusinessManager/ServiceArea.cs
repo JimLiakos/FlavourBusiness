@@ -19,7 +19,7 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class ServiceArea : MarshalByRefObject, IServiceArea,ISalesPoint, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
-
+         
         [Association("ServiceAreaPriceLists", Roles.RoleA, "18dcd9d3-5778-4e2b-8b17-3ca25574033b")]
         [RoleAMultiplicityRange(0)]
         [PersistentMember]

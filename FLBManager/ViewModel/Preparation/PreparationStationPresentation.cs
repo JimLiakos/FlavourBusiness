@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.ServicesContextResources;
+using FloorLayoutDesigner.ViewModel;
 using MenuItemsEditor.ViewModel;
 using MenuModel;
 using OOAdvantech.PersistenceLayer;
@@ -13,6 +17,7 @@ using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
 using StyleableWindow;
 using WPFUIElementObjectBind;
+
 
 namespace FLBManager.ViewModel.Preparation
 {
@@ -22,58 +27,94 @@ namespace FLBManager.ViewModel.Preparation
 
         public override void RemoveChild(FBResourceTreeNode treeNode)
         {
-            throw new NotImplementedException();
+
+            if (treeNode is ServicePointsPreparationInfoPresentation)
+            {
+                List<IPreparationForInfo> preparationForInfoList = (treeNode as ServicePointsPreparationInfoPresentation).GetAllPreparationForInfo();
+
+                PreparationStation.RemovePreparationForInfos(preparationForInfoList);
+
+                foreach (var preparationInfoFor in preparationForInfoList)
+                    PreparationForInfos.Remove(preparationInfoFor);
+
+                this._PreparationStationSubjects.Remove(treeNode);
+
+                _EditContextMenuItems = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(EditContextMenuItems)));
+            }
+            else
+                PreparationStationItems?.RemoveChild(treeNode);
+
+            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
         /// <MetaDataID>{49b5c4dc-49d7-467f-8ea3-71f736302ce1}</MetaDataID>
-        internal void ExcludeServicePoint(IServicePoint servicePoint)
+        internal IPreparationForInfo ExcludeServicePoint(IServicePoint servicePoint)
         {
-
             if (StationPreparesForServicePoint(servicePoint))
             {
-
-                var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
-                                                  where preparationForInfo.ServicePoint == servicePoint
-                                                  select preparationForInfo).FirstOrDefault();
-
-                if (includedPreparationForInfo != null)
+                try
                 {
-                    this.PreparationStation.RemovePreparationForInfo(includedPreparationForInfo);
-                    PreparationForInfos.Remove(includedPreparationForInfo);
+                    var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
+                                                      where preparationForInfo.ServicePoint == servicePoint&& preparationForInfo.PreparationForInfoType==PreparationForInfoType.Include
+                                                      select preparationForInfo).FirstOrDefault();
+
+                    if (includedPreparationForInfo != null)
+                    {
+                        this.PreparationStation.RemovePreparationForInfo(includedPreparationForInfo);
+                        PreparationForInfos.Remove(includedPreparationForInfo);
+                        return null;
+                    }
+                    if (StationPreparesForServicePoint(servicePoint))
+                    {
+
+                        var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Exclude);
+                        this.PreparationForInfos.Add(preparationForInfo);
+                        return preparationForInfo;
+                    }
+                    return null;
                 }
-                if (StationPreparesForServicePoint(servicePoint))
+                finally
                 {
-
-                    var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Exclude);
-                    this.PreparationForInfos.Add(preparationForInfo);
+                    if (PreparationStationItems != null)
+                        PreparationStationItems.Refresh();
+                    RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
                 }
-
-                if (PreparationStationItems != null)
-                    PreparationStationItems.Refresh();
-                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
             }
+            return null;
         }
 
         /// <MetaDataID>{aa0a5218-1aa5-44c1-9817-fe43628a60a9}</MetaDataID>
-        internal void IncludeServicePoint(IServicePoint servicePoint)
+        internal IPreparationForInfo IncludeServicePoint(IServicePoint servicePoint)
         {
 
-            var excludedpreparationForInfo = (from preparationForInfo in this.PreparationForInfos
-                                              where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude
-                                              select preparationForInfo).FirstOrDefault();
-
-            if (excludedpreparationForInfo != null)
+            try
             {
-                PreparationStation.RemovePreparationForInfo(excludedpreparationForInfo);
-                PreparationForInfos.Remove(excludedpreparationForInfo);
-            }
+                var excludedpreparationForInfo = (from preparationForInfo in this.PreparationForInfos
+                                                  where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Exclude
+                                                  select preparationForInfo).FirstOrDefault();
 
-            if (!StationPreparesForServicePoint(servicePoint))
-            {
-                var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Include);
-                this.PreparationForInfos.Add(preparationForInfo);
+                if (excludedpreparationForInfo != null)
+                {
+                    PreparationStation.RemovePreparationForInfo(excludedpreparationForInfo);
+                    PreparationForInfos.Remove(excludedpreparationForInfo);
+                    return null;
+                }
+
+                if (!StationPreparesForServicePoint(servicePoint))
+                {
+                    var preparationForInfo = this.PreparationStation.NewServicePointPreparationForInfo(servicePoint, PreparationForInfoType.Include);
+                    this.PreparationForInfos.Add(preparationForInfo);
+                    return preparationForInfo;
+                }
             }
-            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            finally
+            {
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+            }
+            return null;
+
         }
 
         /// <MetaDataID>{df0d9a71-473e-4cae-a73d-ff4ab506dbd6}</MetaDataID>
@@ -84,30 +125,32 @@ namespace FLBManager.ViewModel.Preparation
                                       select a_preparationForInfo).FirstOrDefault();
             if (preparationForInfo != null)
             {
-                PreparationStation.RemovePreparationForInfo(preparationForInfo);
-                PreparationForInfos.Remove(preparationForInfo);
+                preparationForInfo.PreparationForInfoType = PreparationForInfoType.Exclude;
 
-                if ((from a_preparationForInfo in this.PreparationForInfos
-                     where a_preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include
-                     select a_preparationForInfo).FirstOrDefault() == null)
-                {
-                    foreach (var servicePointpreparationForInfo in PreparationForInfos.ToList())
-                    {
-                        PreparationStation.RemovePreparationForInfo(servicePointpreparationForInfo);
-                        PreparationForInfos.Remove(servicePointpreparationForInfo);
-                    }
-                }
+                //PreparationStation.RemovePreparationForInfo(preparationForInfo);
+                //PreparationForInfos.Remove(preparationForInfo);
 
-                if (PreparationForInfos.Where(x => x.PreparationForInfoType == PreparationForInfoType.Include).FirstOrDefault() == null)
-                {
-                    var servicePointsPreparationInfoPresentation = _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>().Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
-                    if (servicePointsPreparationInfoPresentation != null)
-                    {
-                        _PreparationStationSubjects.Remove(servicePointsPreparationInfoPresentation);
-                        _PreparationStationSubjects = _PreparationStationSubjects.ToList();
-                        RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
-                    }
-                }
+                //if ((from a_preparationForInfo in this.PreparationForInfos
+                //     where a_preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include
+                //     select a_preparationForInfo).FirstOrDefault() == null)
+                //{
+                //    foreach (var servicePointpreparationForInfo in PreparationForInfos.ToList())
+                //    {
+                //        PreparationStation.RemovePreparationForInfo(servicePointpreparationForInfo);
+                //        PreparationForInfos.Remove(servicePointpreparationForInfo);
+                //    }
+                //}
+
+
+
+                foreach (var servicePointsPreparationInfoPresentation in _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>())
+                    servicePointsPreparationInfoPresentation.Refresh();
+
+
+                if (PreparationStationItems != null)
+                    PreparationStationItems.Refresh();
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+
             }
         }
 
@@ -119,10 +162,17 @@ namespace FLBManager.ViewModel.Preparation
                                       select a_preparationForInfo).FirstOrDefault();
             if (preparationForInfo != null)
             {
-                PreparationStation.RemovePreparationForInfo(preparationForInfo);
-                PreparationForInfos.Remove(preparationForInfo);
+                preparationForInfo.PreparationForInfoType = PreparationForInfoType.Include;
+
+                foreach (var servicePointsPreparationInfoPresentation in _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>())
+                    servicePointsPreparationInfoPresentation.Refresh();
+
+
+                //PreparationStation.RemovePreparationForInfo(preparationForInfo);
+                //PreparationForInfos.Remove(preparationForInfo);
             }
-            PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
+            else
+                PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
         }
 
         internal void ClearItemsPreparationInfo(IItemsCategory itemsCategory)
@@ -213,7 +263,7 @@ namespace FLBManager.ViewModel.Preparation
             if (includedItemsPreparationInfo != null)
             {
                 this.PreparationStation.RemovePreparationInfo(includedItemsPreparationInfo);
-                
+
             }
         }
 
@@ -639,7 +689,7 @@ namespace FLBManager.ViewModel.Preparation
             {
                 if (itemsPreparationInfo.AppearanceOrder != null)
                 {
-                    var value= itemsPreparationInfo.AppearanceOrder.Value;
+                    var value = itemsPreparationInfo.AppearanceOrder.Value;
                     return value;
                 }
             }
@@ -1228,7 +1278,7 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{5ba1cb84-f93d-4d8f-926d-6555579f1880}</MetaDataID>
         public readonly IPreparationStation PreparationStation;
         /// <MetaDataID>{bbc45666-8ce6-4082-aa83-15c6ee71d3a3}</MetaDataID>
-        PreparationSationsTreeNode PreparationSations;
+        internal PreparationSationsTreeNode PreparationSations;
         /// <MetaDataID>{79641c07-48c0-4b20-a96c-c8d526e6703c}</MetaDataID>
         public PreparationStationPresentation(PreparationSationsTreeNode parent, IPreparationStation preparationStation, MenuViewModel menuViewModel) : base(parent)
         {
@@ -1313,6 +1363,16 @@ namespace FLBManager.ViewModel.Preparation
 
             CheckBoxVisibility = Visibility.Collapsed;
             this.IsNodeExpanded = true;
+
+            RenameCommand = new RelayCommand((object sender) =>
+            {
+                EditMode();
+            });
+            DeleteCommand = new RelayCommand((object sender) =>
+            {
+                Delete();
+            });
+
         }
 
 
@@ -1378,7 +1438,10 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{dbeb311b-b63f-4ef4-8c4a-3fcb07045b5e}</MetaDataID>
         private void Delete()
         {
-            PreparationSations.RemovePreparationStation(this);
+            if (PreparationSations != null)
+                PreparationSations.RemovePreparationStation(this);
+            else
+                Parent.RemoveChild(this);
         }
 
         /// <MetaDataID>{cc8b09bf-a57c-4cf6-a491-f56c3a1bc04f}</MetaDataID>
@@ -1449,6 +1512,56 @@ namespace FLBManager.ViewModel.Preparation
                 return true;
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        List<MenuCommand> _EditContextMenuItems = null;
+
+        public List<MenuCommand> EditContextMenuItems
+        {
+            get
+            {
+                if (_EditContextMenuItems == null)
+                {
+                    _EditContextMenuItems = new List<MenuCommand>();
+
+                    var serviceAreaPresentations = this.PreparationSations.ServiceContextInfrastructure.ServicesContextPresentation.Members.OfType<ServiceAreaPresentation>().ToList();
+
+                    var prepareForServiceAreas = this.PreparationForInfos.Select(x => x.ServiceArea).ToList();
+
+                    var HomeDeliveryServicePresentation = this.PreparationSations.ServiceContextInfrastructure.ServicesContextPresentation.Members.OfType<HomeDeliveryServiceTreeNode>().FirstOrDefault();
+                    serviceAreaPresentations = serviceAreaPresentations.Where(x => !prepareForServiceAreas.Contains(x.ServiceArea)).ToList();
+                    foreach (var serviceAreaPresentation in serviceAreaPresentations)
+                    {
+                        var serviceAreaMenuItem = new MenuCommand();
+                        serviceAreaMenuItem.Header = serviceAreaPresentation.Name;
+                        serviceAreaMenuItem.Icon = new System.Windows.Controls.Image() { Source = serviceAreaPresentation.TreeImage, Width = 16, Height = 16 };
+                        serviceAreaMenuItem.Command = new RelayCommand((object sender) =>
+                        {
+                            IncludeServiceArea(serviceAreaPresentation.ServiceArea);
+
+                        });
+                        _EditContextMenuItems.Add(serviceAreaMenuItem);
+                    }
+
+                    if (HomeDeliveryServicePresentation != null)
+                    {
+                        var homeDeliveryServiceMenuItem = new MenuCommand();
+                        homeDeliveryServiceMenuItem.Header = HomeDeliveryServicePresentation.Name;
+                        homeDeliveryServiceMenuItem.Icon = new System.Windows.Controls.Image() { Source = HomeDeliveryServicePresentation.TreeImage, Width = 16, Height = 16 };
+                        homeDeliveryServiceMenuItem.Command = new RelayCommand((object sender) =>
+                        {
+                            Debug.WriteLine(HomeDeliveryServicePresentation.Name);
+                        });
+                        _EditContextMenuItems.Add(homeDeliveryServiceMenuItem);
+                    }
+                }
+                return _EditContextMenuItems;
+            }
+
+        }
+
+
+
 
         /// <MetaDataID>{ab86324e-b227-4c12-9630-0c039ecfd11a}</MetaDataID>
         List<MenuCommand> _ContextMenuItems;
@@ -1673,14 +1786,19 @@ namespace FLBManager.ViewModel.Preparation
         private void IncludeServiceArea(IServiceArea serviceArea)
         {
             var serviceAreaPreparationForInfo = PreparationForInfos.Where(x => x.ServiceArea == serviceArea).FirstOrDefault();
-
             if (serviceAreaPreparationForInfo == null)
             {
+                // string serviceAreaUri = ObjectStorage.GetStorageOfObject(serviceArea).GetPersistentObjectUri(serviceArea);
+
                 serviceAreaPreparationForInfo = this.PreparationStation.NewServiceAreaPreparationForInfo(serviceArea, PreparationForInfoType.Include);
                 PreparationForInfos.Add(serviceAreaPreparationForInfo);
-                _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+
+                _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this, serviceAreaPreparationForInfo, true));
                 _PreparationStationSubjects = _PreparationStationSubjects.ToList();
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+                _EditContextMenuItems = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+
             }
         }
 

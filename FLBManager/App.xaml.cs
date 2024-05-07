@@ -36,6 +36,19 @@ namespace FLBManager
         protected async override void OnStartup(StartupEventArgs e)
         {
 
+
+            //List<string> emails= new List<string>();
+            //foreach( string line in File.ReadAllLines(@"e:\emails.txt"))
+            //{
+            //    if(line.Contains("@"))
+            //    {
+            //        string email=line.Replace(" ", "");
+            //        emails.Add(email);
+            //    }
+            //}
+
+            //File.WriteAllLines(@"e:\emailsout.txt",emails);
+
             //await FlavourBusinessManager.FireBase.Init();
 
             string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
@@ -492,12 +505,12 @@ namespace FLBManager
             //        {
             //            if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName))
             //            {
-            //                objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-            //                objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+            //                objectStorage.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+            //                objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
             //            }
             //            else if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(Organization).Assembly.FullName))
             //            {
-            //                objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+            //                objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
             //            }
             //        }
             //        catch (Exception error)
@@ -506,7 +519,7 @@ namespace FLBManager
             //        }
             //    }
 
-            //    //objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName, new System.Xml.Linq.XDocument());
+            //    //objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName, new System.Xml.Linq.XDocument());
 
             //}
             //catch(System.Exception error)

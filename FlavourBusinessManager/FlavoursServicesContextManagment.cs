@@ -489,13 +489,13 @@ namespace FlavourBusinessManager
 
                         if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName) || objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(FinanceFacade.Transaction).Assembly.FullName))
                         {
-                            objectStorage.StorageMetaData.RegisterComponent(typeof(FinanceFacade.Transaction).Assembly.FullName);
-                            objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-                            objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                            objectStorage.RegisterComponent(typeof(FinanceFacade.Transaction).Assembly.FullName);
+                            objectStorage.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                            objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
                         }
                         else if (objectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(Organization).Assembly.FullName))
                         {
-                            objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                            objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
                         }
 
                         if (!string.IsNullOrWhiteSpace(organizationStorageIdentity))
@@ -503,8 +503,8 @@ namespace FlavourBusinessManager
                             var organizationObjectStorage = OOAdvantech.PersistenceLayer.ObjectStorage.OpenStorage(organizationStorageIdentity);
                             if (organizationObjectStorage.StorageMetaData.CheckForVersionUpgrate(typeof(IOrganization).Assembly.FullName))
                             {
-                                organizationObjectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-                                organizationObjectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                                organizationObjectStorage.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                                organizationObjectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
                             }
                         }
 
@@ -610,8 +610,8 @@ namespace FlavourBusinessManager
                 else
                     throw Error;
 
-                objectStorage.StorageMetaData.RegisterComponent(typeof(IOrganization).Assembly.FullName);
-                objectStorage.StorageMetaData.RegisterComponent(typeof(Organization).Assembly.FullName);
+                objectStorage.RegisterComponent(typeof(IOrganization).Assembly.FullName);
+                objectStorage.RegisterComponent(typeof(Organization).Assembly.FullName);
 
                 OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectStorage);
                 var servicesContextRunTime = (from theServicePointRun in storage.GetObjectCollection<ServicePointRunTime.ServicesContextRunTime>()

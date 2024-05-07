@@ -1,14 +1,17 @@
 using FlavourBusinessFacade.ServicesContextResources;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System;
+
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
     /// <MetaDataID>{5a7f0187-b1e8-4b95-9fe8-e79da0833aff}</MetaDataID>
     [BackwardCompatibilityID("{5a7f0187-b1e8-4b95-9fe8-e79da0833aff}")]
     [Persistent()]
-    public class PreparationForInfo : System.MarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo
+    public class PreparationForInfo : OOAdvantech.Remoting.ExtMarshalByRefObject, FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo
     {
 
         /// <exclude>Excluded</exclude>
@@ -42,6 +45,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+    
         /// <exclude>Excluded</exclude>
         string _Description;
 
@@ -96,19 +101,24 @@ namespace FlavourBusinessManager.ServicesContextResources
         IServiceArea _ServiceArea;
 
 
-
+        [JsonIgnore]
         public IServicePoint ServicePoint
         {
             get
             {
+                if (_ServiceArea == null && _ServicePoint == null)
+                    LoadServicePointsInfo();
+
                 return _ServicePoint;
             }
             set
             {
                 _ServicePoint = value;
-                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServicePoint)?.GetPersistentObjectUri(_ServicePoint);
+                ServicePointsInfoObjectUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetComputingContextPersistentUri(_ServicePoint);
             }
         }
+
+        [JsonIgnore]
         public IServiceArea ServiceArea
         {
             get
@@ -121,18 +131,25 @@ namespace FlavourBusinessManager.ServicesContextResources
             set
             {
                 _ServiceArea = value;
-                ServicePointsInfoObjectUri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(_ServiceArea)?.GetPersistentObjectUri(_ServiceArea);
+                ServicePointsInfoObjectUri = OOAdvantech.Remoting.RestApi.RemotingServices.GetComputingContextPersistentUri(_ServiceArea);
 
             }
         }
 
+        
+
         private void LoadServicePointsInfo()
         {
-            var servicPointsObjects= OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(ServicePointsInfoObjectUri);
-            if (servicPointsObjects is IServicePoint)
-                _ServicePoint = servicPointsObjects as IServicePoint;
-            if (servicPointsObjects is IServiceArea)
-                _ServiceArea = servicPointsObjects as IServiceArea;
+            if (!string.IsNullOrWhiteSpace(ServicePointsInfoObjectUri))
+            {
+                var servicPointsObjects = OOAdvantech.Remoting.RestApi.RemotingServices.GetPersistentObject(ServicePointsInfoObjectUri);
+                if (servicPointsObjects is IServicePoint)
+                    _ServicePoint = servicPointsObjects as IServicePoint;
+                if (servicPointsObjects is IServiceArea)
+                    _ServiceArea = servicPointsObjects as IServiceArea;
+
+
+            }
 
         }
     }
