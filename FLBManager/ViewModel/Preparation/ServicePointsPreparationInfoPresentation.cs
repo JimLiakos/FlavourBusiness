@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using UIBaseEx;
 using FlavourBusinessManager.ServicesContextResources;
 
+
 namespace FLBManager.ViewModel.Preparation
 {
     /// <MetaDataID>{38127261-e172-4d32-a9f9-7e052af99294}</MetaDataID>
@@ -180,11 +181,11 @@ namespace FLBManager.ViewModel.Preparation
                 else if (this.ServicePoint != null)
                     return this.ServicePoint.Description;
                 else
-                    return "All ServicePoint";
+                    return Properties.Resources.PrepareForAllServicePointLabel;
             }
             set
             {
-            }
+            } 
         }
 
 
@@ -285,6 +286,8 @@ namespace FLBManager.ViewModel.Preparation
         public ServicePointsPreparationInfoPresentation(PreparationStationPresentation preparationStationPresentation) : base(preparationStationPresentation)
         {
             PreparationStationPresentation = preparationStationPresentation;
+
+            CheckBoxVisibility=System.Windows.Visibility.Collapsed;
         }
 
         public RelayCommand DeleteCommand { get; protected set; }
@@ -293,10 +296,16 @@ namespace FLBManager.ViewModel.Preparation
         List<MenuCommand> _ContextMenuItems;
         public bool IncludeAllItemsAllowed { get; set; } = true;
 
+
+   
         public override List<MenuCommand> ContextMenuItems
         {
             get
             {
+
+
+                if (AllServicePoint)
+                    return this.PreparationStationPresentation.EditContextMenuItems;
                 if (_ContextMenuItems == null)
                 {
 

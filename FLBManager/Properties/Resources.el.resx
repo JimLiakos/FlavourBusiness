@@ -309,9 +309,6 @@
   <data name="PreparationTimeSpanLabel" xml:space="preserve">
     <value>Prepared in</value>
   </data>
-  <data name="PrepareForAllServicePointLabel" xml:space="preserve">
-    <value>All service points.</value>
-  </data>
   <data name="PriceListTitle" xml:space="preserve">
     <value>Pricelist</value>
   </data>

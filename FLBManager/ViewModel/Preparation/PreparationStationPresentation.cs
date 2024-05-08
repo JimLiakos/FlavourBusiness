@@ -39,6 +39,9 @@ namespace FLBManager.ViewModel.Preparation
                     PreparationForInfos.Remove(preparationInfoFor);
 
                 this._PreparationStationSubjects.Remove(treeNode);
+                if (_PreparationStationSubjects.Count == 1)
+                    _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this));
+
 
                 _EditContextMenuItems = null;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
@@ -1434,7 +1437,7 @@ namespace FLBManager.ViewModel.Preparation
                     _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServicePoint is IHomeDeliveryServicePoint).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
                     _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServicePoint is ITakeAwayStation).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
 
-                    if (_PreparationStationSubjects.Count == 0)
+                    if (_PreparationStationSubjects.Count == 1)
                         _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this));
                 }
  
@@ -1545,7 +1548,14 @@ namespace FLBManager.ViewModel.Preparation
                         serviceAreaMenuItem.Icon = new System.Windows.Controls.Image() { Source = serviceAreaPresentation.TreeImage, Width = 16, Height = 16 };
                         serviceAreaMenuItem.Command = new RelayCommand((object sender) =>
                         {
+                            var all = _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>().Where(x => x.AllServicePoint).FirstOrDefault();
+                            if (all != null)
+                                _PreparationStationSubjects.Remove(all);
+
                             IncludeServiceArea(serviceAreaPresentation.ServiceArea);
+
+                      
+
 
                         });
                         _EditContextMenuItems.Add(serviceAreaMenuItem);

@@ -574,6 +574,15 @@ namespace FLBManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All service points..
+        /// </summary>
+        public static string PrepareForAllServicePointLabel {
+            get {
+                return ResourceManager.GetString("PrepareForAllServicePointLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pricelist.
         /// </summary>
         public static string PriceListTitle {
