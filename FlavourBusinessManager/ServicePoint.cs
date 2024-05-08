@@ -67,7 +67,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
-        string _Description;
+        protected string _Description;
         /// <MetaDataID>{883aabfe-47f1-45db-80f6-3c3e077b862f}</MetaDataID>
         [PersistentMember(nameof(_Description)), BackwardCompatibilityID("+1")]
         public string Description

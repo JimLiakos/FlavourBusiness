@@ -63,6 +63,8 @@ namespace FLBManager.ViewModel.TakeAway
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
+
+
         /// <MetaDataID>{bd1d6ad9-e654-4595-90ba-d9e6c11b60f0}</MetaDataID>
         private void NewTakeAwaySation()
         {

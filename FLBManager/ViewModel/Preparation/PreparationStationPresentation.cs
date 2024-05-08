@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.ServicesContextResources;
+using FLBManager.ViewModel.TakeAway;
 using FloorLayoutDesigner.ViewModel;
 using MenuItemsEditor.ViewModel;
 using MenuModel;
@@ -57,7 +58,7 @@ namespace FLBManager.ViewModel.Preparation
                 try
                 {
                     var includedPreparationForInfo = (from preparationForInfo in PreparationForInfos
-                                                      where preparationForInfo.ServicePoint == servicePoint&& preparationForInfo.PreparationForInfoType==PreparationForInfoType.Include
+                                                      where preparationForInfo.ServicePoint == servicePoint && preparationForInfo.PreparationForInfoType == PreparationForInfoType.Include
                                                       select preparationForInfo).FirstOrDefault();
 
                     if (includedPreparationForInfo != null)
@@ -88,6 +89,7 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{aa0a5218-1aa5-44c1-9817-fe43628a60a9}</MetaDataID>
         internal IPreparationForInfo IncludeServicePoint(IServicePoint servicePoint)
         {
+
 
             try
             {
@@ -1429,9 +1431,14 @@ namespace FLBManager.ViewModel.Preparation
                     _PreparationStationSubjects = ItemsToChoose.ToList();
 
                     _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServiceArea is IServiceArea).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+                    _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServicePoint is IHomeDeliveryServicePoint).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+                    _PreparationStationSubjects.AddRange(PreparationForInfos.Where(x => x.ServicePoint is ITakeAwayStation).Select(x => new ServicePointsPreparationInfoPresentation(this, x, true)).OfType<FBResourceTreeNode>().ToList());
+
+                    if (_PreparationStationSubjects.Count == 0)
+                        _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this));
                 }
-
-
+ 
+                 
                 return _PreparationStationSubjects;
             }
         }
@@ -1528,6 +1535,7 @@ namespace FLBManager.ViewModel.Preparation
 
                     var prepareForServiceAreas = this.PreparationForInfos.Select(x => x.ServiceArea).ToList();
 
+
                     var HomeDeliveryServicePresentation = this.PreparationSations.ServiceContextInfrastructure.ServicesContextPresentation.Members.OfType<HomeDeliveryServiceTreeNode>().FirstOrDefault();
                     serviceAreaPresentations = serviceAreaPresentations.Where(x => !prepareForServiceAreas.Contains(x.ServiceArea)).ToList();
                     foreach (var serviceAreaPresentation in serviceAreaPresentations)
@@ -1546,15 +1554,68 @@ namespace FLBManager.ViewModel.Preparation
                     if (HomeDeliveryServicePresentation != null)
                     {
                         var homeDeliveryServiceMenuItem = new MenuCommand();
-                        homeDeliveryServiceMenuItem.Header = HomeDeliveryServicePresentation.Name;
-                        homeDeliveryServiceMenuItem.Icon = new System.Windows.Controls.Image() { Source = HomeDeliveryServicePresentation.TreeImage, Width = 16, Height = 16 };
-                        homeDeliveryServiceMenuItem.Command = new RelayCommand((object sender) =>
+
+                        if (PreparationForInfos.Where(x => x.ServicePoint as HomeDeliveryServicePoint == HomeDeliveryServicePresentation.HomeDeliveryService).Count() == 0)
                         {
-                            Debug.WriteLine(HomeDeliveryServicePresentation.Name);
-                        });
-                        _EditContextMenuItems.Add(homeDeliveryServiceMenuItem);
+                            homeDeliveryServiceMenuItem.Header = HomeDeliveryServicePresentation.Name;
+                            homeDeliveryServiceMenuItem.Icon = new System.Windows.Controls.Image() { Source = HomeDeliveryServicePresentation.TreeImage, Width = 16, Height = 16 };
+                            homeDeliveryServiceMenuItem.Command = new RelayCommand((object sender) =>
+                            {
+                                var homeDeliveryPreparationForInfo = IncludeServicePoint(HomeDeliveryServicePresentation.HomeDeliveryService);
+
+
+                                _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this, homeDeliveryPreparationForInfo, false));
+
+                                var all = _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>().Where(x => x.AllServicePoint).FirstOrDefault();
+                                if (all != null)
+                                    _PreparationStationSubjects.Remove(all);
+
+                                _PreparationStationSubjects = _PreparationStationSubjects.ToList();
+
+                                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+                                _EditContextMenuItems = null;
+                                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+
+
+
+
+                            });
+                            _EditContextMenuItems.Add(homeDeliveryServiceMenuItem);
+                        }
                     }
+
+
+
+                    var takeAwayServicePoints = this.PreparationSations.ServiceContextInfrastructure.TakeAwayStationsTreeNode.Members.OfType<TakeAwayStationPresentation>().Select(x => x).ToList();
+                    var prepareForTakeAwayServicePoints = this.PreparationForInfos.Where(x => x.ServicePoint is ITakeAwayStation).Select(x => x.ServicePoint).ToList();
+                    foreach (var prepareForTakeAwayServicePoint in takeAwayServicePoints.Where(x => !prepareForTakeAwayServicePoints.Contains(x.TakeAwayStation)))
+                    {
+                        var serviceAreaMenuItem = new MenuCommand();
+                        serviceAreaMenuItem.Header = prepareForTakeAwayServicePoint.Name;
+                        serviceAreaMenuItem.Icon = new System.Windows.Controls.Image() { Source = prepareForTakeAwayServicePoint.TreeImage, Width = 16, Height = 16 };
+                        serviceAreaMenuItem.Command = new RelayCommand((object sender) =>
+                        {
+                            var takeAwayStationPreparationForInfo = IncludeServicePoint(prepareForTakeAwayServicePoint.TakeAwayStation as IServicePoint);
+
+
+                            _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this, takeAwayStationPreparationForInfo, false));
+
+                            var all = _PreparationStationSubjects.OfType<ServicePointsPreparationInfoPresentation>().Where(x => x.AllServicePoint).FirstOrDefault();
+                            if (all != null)
+                                _PreparationStationSubjects.Remove(all);
+                            _PreparationStationSubjects = _PreparationStationSubjects.ToList();
+                            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+                            _EditContextMenuItems = null;
+                            RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationSubjects)));
+
+
+                        });
+                        _EditContextMenuItems.Add(serviceAreaMenuItem);
+                    }
+
                 }
+                if (_EditContextMenuItems?.Count == 0)
+                    return null;
                 return _EditContextMenuItems;
             }
 
@@ -1692,6 +1753,8 @@ namespace FLBManager.ViewModel.Preparation
                 return ItemsToChoose.OfType<ItemsPreparationInfoPresentation>().First().PreparationSubStations.Values.ToList();
             }
         }
+
+
 
         /// <MetaDataID>{b26cc531-aaf0-49de-bb75-0302332678b5}</MetaDataID>
         DateTime DragEnterStartTime;

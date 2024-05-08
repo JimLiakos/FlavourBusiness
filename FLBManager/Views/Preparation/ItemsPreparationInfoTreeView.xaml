@@ -14,7 +14,7 @@
         <DataTemplate x:Key="NormalTemplate">
             <ContentControl Background="Transparent" >
                 <StackPanel   AllowDrop="True" Orientation="Horizontal" Margin="4,2,4,2" d:DataContext="{d:DesignInstance local:ItemsPreparationInfoPresentation}" >
-                    <CheckBox Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
+                    <CheckBox  Visibility="{Binding CheckBoxVisibility}" IsEnabled="{Binding IncludeAllItemsAllowed}" VerticalAlignment="Center" IsChecked="{Binding CanPrepared}"></CheckBox>
                     <Image Width="16" Height="16" Source="{Binding TreeImage}" Margin="0,0,5,0"></Image>
                     <ControlsEx:EditableTextBlock Background="Transparent" IsEditable="{Binding IsEditable}"  IsInEditMode="{Binding Edit,Mode=TwoWay}" Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                     <StackPanel Orientation="Horizontal">

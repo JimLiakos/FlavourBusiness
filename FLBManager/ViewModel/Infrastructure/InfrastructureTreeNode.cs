@@ -36,7 +36,7 @@ namespace FLBManager.ViewModel.Infrastructure
         Preparation.PreparationSationsTreeNode PreparationSattionsTreeNode;
 
         /// <MetaDataID>{219c3fea-ee04-499e-8e09-4f07f9aa5435}</MetaDataID>
-        TakeAwayStationsTreeNode TakeAwayStationsTreeNode;
+        internal TakeAwayStationsTreeNode TakeAwayStationsTreeNode;
 
         /// <MetaDataID>{b4f15201-9ba7-4640-bd3f-61452b2c7788}</MetaDataID>
         public DeliveryCallCenterStationsTreeNode DeliveryCallCenterStationsTreeNode { get; }

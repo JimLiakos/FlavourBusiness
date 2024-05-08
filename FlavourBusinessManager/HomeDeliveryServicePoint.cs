@@ -92,6 +92,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+
+
         /// <exclude>Excluded</exclude> 
         Dictionary<DayOfWeek, List<OpeningHours>> _WeeklyDeliverySchedule = new Dictionary<DayOfWeek, List<OpeningHours>>();
 
@@ -368,6 +370,17 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             ServicePointRunTime.ServicesContextRunTime.Current.MealsController.NewMealCoursesInProgress += MealsController_NewMealCoursesInrogress;
 
+            if (_Description == null)
+            {
+
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    _Description = Properties.Resources.DefaultHomeDeliveryServicePointDescription; 
+                    stateTransition.Consistent = true;
+                }
+
+            }
+
 
         }
 
@@ -527,14 +540,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             var mealCourse = ServicesContextRunTime.Current.MealsController.MealCoursesInProgress.Where(x => x.Identity == scannedCode).FirstOrDefault();
             var foodShiping = (ServicesContextRunTime.Current.MealsController as MealsController).GetServingBatchesAtTheCounter().OfType<FoodShipping>().Where(x => x.MealCourse == mealCourse).FirstOrDefault();
 
-            if (foodShiping != null&&!foodShiping.IsAssigned)
+            if (foodShiping != null && !foodShiping.IsAssigned)
                 return new CourierShippingPair() { FoodShipping = foodShiping };
             if (mealCourse != null)
             {
 
                 var preparationState = mealCourse.PreparationState;
                 var foodShipping = mealCourse.ServingBatches.OfType<FoodShipping>().FirstOrDefault();
-                if (foodShipping != null&& foodShipping.IsAssigned)
+                if (foodShipping != null && foodShipping.IsAssigned)
                 {
                     var assignedCourier = (foodShipping.ShiftWork.Worker as ICourier);
                     throw new FoodShippingAlreadyAssignedException("The food shipping is assigned to " + assignedCourier?.Name, assignedCourier?.Identity, assignedCourier?.Name);

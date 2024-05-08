@@ -9,6 +9,7 @@ using WPFUIElementObjectBind;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using UIBaseEx;
+using FlavourBusinessManager.ServicesContextResources;
 
 namespace FLBManager.ViewModel.Preparation
 {
@@ -53,7 +54,7 @@ namespace FLBManager.ViewModel.Preparation
 
         //ItemsPreparationInfoPresentation ItemsPreparationInfoTreeNode;
         internal IServiceArea ServiceArea;
-        IServicePoint ServicePoint;
+        internal IServicePoint ServicePoint;
 
         //this, PreparationStationPresentation, servicePoint, SelectionCheckBox)
         public ServicePointsPreparationInfoPresentation(PreparationStationPresentation parent, IPreparationForInfo servicePointsPreparationInfo, bool selectionCheckBox) : base(parent)
@@ -62,6 +63,12 @@ namespace FLBManager.ViewModel.Preparation
             ServicePointsPreparationInfo = servicePointsPreparationInfo;
             PreparationStationPresentation = parent;
             ServiceArea = servicePointsPreparationInfo.ServiceArea;
+            ServicePoint = servicePointsPreparationInfo.ServicePoint;
+            if (ServicePoint is HomeDeliveryServicePoint)
+                IncludeAllItemsAllowed = false;
+
+            if (ServicePoint is ITakeAwayStation)
+                IncludeAllItemsAllowed = false;
 
             DeleteCommand = new RelayCommand((object sender) =>
             {
@@ -78,7 +85,17 @@ namespace FLBManager.ViewModel.Preparation
 
 
 
+        public bool AllServicePoint
+        {
+            get
+            {
+                if (ServiceArea == null && ServicePoint == null)
+                    return true;
+                else
+                    return false;
 
+            }
+        }
 
 
 
@@ -145,7 +162,9 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationStationPresentation.RemoveChild(this);
             }
 
-            if (this.ServicePoint != null)
+            if (ServicePoint is HomeDeliveryServicePoint|| ServicePoint is ITakeAwayStation)
+                PreparationStationPresentation.RemoveChild(this);
+            else if (this.ServicePoint != null)
                 this.ServicePointsPreparationInfo = PreparationStationPresentation.ExcludeServicePoint(ServicePoint);
 
         }
@@ -161,7 +180,7 @@ namespace FLBManager.ViewModel.Preparation
                 else if (this.ServicePoint != null)
                     return this.ServicePoint.Description;
                 else
-                    return "";
+                    return "All ServicePoint";
             }
             set
             {
@@ -174,8 +193,14 @@ namespace FLBManager.ViewModel.Preparation
         {
             get
             {
+
                 if (ServiceArea != null)
                     return new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServiceArea.png"));
+                else if (ServicePoint is HomeDeliveryServicePoint)
+                    return new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/delivery-bike16.png"));
+                else if (ServicePoint is ITakeAwayStation)
+                    return new BitmapImage(new Uri(@"pack://application:,,,/FLBManager;Component/Resources/Images/Metro/take-away16.png"));
+
                 else if (this.ServicePoint != null)
                     return new BitmapImage(new Uri(@"pack://application:,,,/RestaurantHallLayoutDesigner;Component/Resources/Images/Metro/ServicePoint.png"));
                 else
@@ -257,12 +282,16 @@ namespace FLBManager.ViewModel.Preparation
             });
         }
 
-
+        public ServicePointsPreparationInfoPresentation(PreparationStationPresentation preparationStationPresentation) : base(preparationStationPresentation)
+        {
+            PreparationStationPresentation = preparationStationPresentation;
+        }
 
         public RelayCommand DeleteCommand { get; protected set; }
 
         /// <exclude>Excluded</exclude>
         List<MenuCommand> _ContextMenuItems;
+        public bool IncludeAllItemsAllowed { get; set; } = true;
 
         public override List<MenuCommand> ContextMenuItems
         {
