@@ -2077,7 +2077,7 @@
 				line_color 	3342489
 				label      	(object SegLabel @25
 				    Parent_View 	@24
-				    location   	(762, 267)
+				    location   	(761, 268)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -2099,7 +2099,7 @@
 				    orientation 	0)
 				label      	(object SegLabel @26
 				    Parent_View 	@24
-				    location   	(762, 314)
+				    location   	(761, 315)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -2121,7 +2121,7 @@
 				    orientation 	0)
 				label      	(object SegLabel @27
 				    Parent_View 	@24
-				    location   	(762, 361)
+				    location   	(761, 362)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -3163,7 +3163,7 @@
 			width      	1869
 			height     	663)
 		    (object CategoryView "Logical View::FlavourBusinessInfrastructure" @58
-			location   	(4149, 726)
+			location   	(4220, 715)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3176,7 +3176,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@58
-			    location   	(3824, 614)
+			    location   	(3895, 603)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	650
@@ -3189,7 +3189,7 @@
 			width      	662
 			height     	237)
 		    (object CategoryView "Logical View::Measurement" @59
-			location   	(4168, 1431)
+			location   	(4239, 1420)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3202,7 +3202,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@59
-			    location   	(3843, 1309)
+			    location   	(3914, 1298)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	650
@@ -3241,7 +3241,7 @@
 			width      	1824
 			height     	669)
 		    (object CategoryView "Logical View::PreparationStationDevice" @61
-			location   	(2387, 1347)
+			location   	(2259, 1269)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3254,7 +3254,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@61
-			    location   	(2119, 1253)
+			    location   	(1991, 1175)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	536
@@ -3267,7 +3267,7 @@
 			width      	549
 			height     	200)
 		    (object CategoryView "Logical View::RestaurantHallLayoutModel" @62
-			location   	(4206, 1831)
+			location   	(4277, 1820)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3280,7 +3280,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@62
-			    location   	(3878, 1747)
+			    location   	(3949, 1736)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	656
@@ -3293,7 +3293,7 @@
 			width      	669
 			height     	181)
 		    (object CategoryView "Logical View::OOAdvantech" @63
-			location   	(4180, 1069)
+			location   	(4251, 1058)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3306,7 +3306,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@63
-			    location   	(3852, 975)
+			    location   	(3923, 964)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	656
@@ -3659,7 +3659,7 @@
 			supplier   	@75
 			line_style 	0)
 		    (object CategoryView "Logical View::CashierStationDevice" @80
-			location   	(2974, 1347)
+			location   	(2887, 1262)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3672,7 +3672,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@80
-			    location   	(2724, 1263)
+			    location   	(2637, 1178)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	500
@@ -3685,7 +3685,7 @@
 			width      	512
 			height     	181)
 		    (object CategoryView "Logical View::TakeAwayStationDevice" @81
-			location   	(3546, 1347)
+			location   	(3459, 1265)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3698,7 +3698,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@81
-			    location   	(3287, 1263)
+			    location   	(3200, 1181)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	518
@@ -3763,7 +3763,7 @@
 			width      	564
 			height     	180)
 		    (object CategoryView "Logical View::ServiceContextManagerApp" @84
-			location   	(2405, 1644)
+			location   	(2300, 1656)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3776,7 +3776,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@84
-			    location   	(2130, 1553)
+			    location   	(2025, 1565)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	550

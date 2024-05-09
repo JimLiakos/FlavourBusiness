@@ -235,7 +235,7 @@
                 <Style TargetType="{x:Type ContentPresenter}">
                     <Setter Property="ContentTemplate" Value="{StaticResource NormalTemplate}"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Edit}" Value="True">
+                        <DataTrigger Binding="{Binding PreparationEdit}" Value="True">
                             <Setter Property="ContentTemplate" Value="{StaticResource EditTemplate}" />
                         </DataTrigger>
                     </Style.Triggers>

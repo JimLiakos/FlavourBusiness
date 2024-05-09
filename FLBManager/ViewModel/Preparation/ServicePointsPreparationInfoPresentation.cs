@@ -296,8 +296,15 @@ namespace FLBManager.ViewModel.Preparation
         List<MenuCommand> _ContextMenuItems;
         public bool IncludeAllItemsAllowed { get; set; } = true;
 
+        public bool PreparationEdit
+        {
+            get;
+            set;
+        }
 
-   
+
+
+
         public override List<MenuCommand> ContextMenuItems
         {
             get
