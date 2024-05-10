@@ -180,7 +180,7 @@ namespace FLBManager.ViewModel.Preparation
         /// </summary>
         private void RemoveItemsPreparationInfo()
         {
-            if(EditMode)
+            if (EditMode)
             {
                 if (ItemsCategory != null)
                     PreparationStationPresentation.ClearItemsPreparationInfo(ItemsCategory);
@@ -197,7 +197,7 @@ namespace FLBManager.ViewModel.Preparation
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Tags)));
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasTags)));
-                foreach(var member in Members.OfType<ItemsPreparationInfoPresentation>())
+                foreach (var member in Members.OfType<ItemsPreparationInfoPresentation>())
                 {
                     member.Refresh();
                 }
@@ -396,10 +396,21 @@ namespace FLBManager.ViewModel.Preparation
 
         public override bool Edit
         {
-            get => base.Edit;
+            get => base.Edit; set
+            {
+                base.Edit=value;
+                _PreparationEdit=value;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _PreparationEdit;
+        public bool PreparationEdit
+        {
+            get => _PreparationEdit;
 
             set
-            {
+            { 
                 if (value)
                     _AppearanceOrderOld = _AppearanceOrder;
                 else if (_AppearanceOrderOld != _AppearanceOrder)
@@ -415,7 +426,7 @@ namespace FLBManager.ViewModel.Preparation
                     RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasAppearanceOrderValue)));
 
                 }
-                base.Edit = value;
+                _PreparationEdit = value;
             }
         }
         int? _AppearanceOrderOld;
@@ -437,7 +448,7 @@ namespace FLBManager.ViewModel.Preparation
                     if (_AppearanceOrder != null)
                         return _AppearanceOrder.Value;
                 }
-                else 
+                else
                     return _AppearanceOrder.Value;
                 return 1;
 
@@ -523,10 +534,10 @@ namespace FLBManager.ViewModel.Preparation
             {
 
                 if (this.ItemsCategory != null)
-                    return this.PreparationStationPresentation.IsCooked(this.ItemsCategory);
+                    return this.PreparationStationPresentation.ItemsIsCooked(this.ItemsCategory);
 
                 if (this.MenuItem != null)
-                    return this.PreparationStationPresentation.IsCooked(this.MenuItem);
+                    return this.PreparationStationPresentation.ItemIsCooked(this.MenuItem);
 
                 return false;
 
@@ -833,7 +844,7 @@ namespace FLBManager.ViewModel.Preparation
         /// <MetaDataID>{ff9d9100-88c5-453d-ae84-6583239e8501}</MetaDataID>
         public RelayCommand DeleteCommand { get; protected set; }
 
-        
+
         public RelayCommand RemoveItemsPreparationInfoCommand { get; protected set; }
 
         /// <MetaDataID>{21c808d9-18d9-4d71-a039-827f56f10443}</MetaDataID>
@@ -870,16 +881,16 @@ namespace FLBManager.ViewModel.Preparation
                     menuItem.Command = NewSubPreparationStationCommand;
                     _ContextMenuItems.Add(menuItem);
 
-                    if(EditMode)
+                    if (EditMode)
                     {
 
 
-                       // menuItem = new MenuCommand();
-                       // //imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
-                       // menuItem.Header = "Service Points";//Properties.Resources.ClearItemsPreparationInfoMenuHeader;
-                       // menuItem.Icon = emptyImage;// new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
-                       //// menuItem.Command = RemoveItemsPreparationInfoCommand;
-                       // _ContextMenuItems.Add(menuItem);
+                        // menuItem = new MenuCommand();
+                        // //imageSource = new BitmapImage(new Uri(@"pack://application:,,,/MenuItemsEditor;Component/Image/delete.png"));
+                        // menuItem.Header = "Service Points";//Properties.Resources.ClearItemsPreparationInfoMenuHeader;
+                        // menuItem.Icon = emptyImage;// new System.Windows.Controls.Image() { Source = imageSource, Width = 16, Height = 16 };
+                        //// menuItem.Command = RemoveItemsPreparationInfoCommand;
+                        // _ContextMenuItems.Add(menuItem);
 
 
 
@@ -1083,7 +1094,7 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrder)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(AppearanceOrderText)));
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(HasPreparationTimeSpanValue)));
-            
+
 
 
             foreach (var itemsPreparationInfoPresentation in Members.OfType<ItemsPreparationInfoPresentation>())

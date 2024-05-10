@@ -714,7 +714,7 @@ namespace FLBManager.ViewModel.Preparation
 
 
         /// <MetaDataID>{da0eb088-99e4-4619-afbc-ac6df013787d}</MetaDataID>
-        internal bool IsCooked(IMenuItem menuItem)
+        internal bool ItemIsCooked(IMenuItem menuItem)
         {
             var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(menuItem);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
@@ -726,7 +726,7 @@ namespace FLBManager.ViewModel.Preparation
         }
 
         /// <MetaDataID>{bca3f325-83e1-4775-9cd3-b982e3ffb54d}</MetaDataID>
-        internal bool IsCooked(IItemsCategory itemsCategory)
+        internal bool ItemsIsCooked(IItemsCategory itemsCategory)
         {
             var itemsPreparationInfos = PreparationStation.GetItemsPreparationInfo(itemsCategory);
             foreach (var itemsPreparationInfo in itemsPreparationInfos)
@@ -1381,6 +1381,37 @@ namespace FLBManager.ViewModel.Preparation
         }
 
 
+
+
+
+        public bool IsCooked
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+
+            }
+        }
+
+        public bool HasAppearanceOrderValue
+        {
+            get
+            {
+                return false;
+            }
+        }
+        public bool HasTags
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+
         /// <MetaDataID>{7cf76e87-7a21-44ea-b315-37547c7d9d00}</MetaDataID>
         public System.Windows.Visibility CheckBoxVisibility
         {
@@ -1440,8 +1471,8 @@ namespace FLBManager.ViewModel.Preparation
                     if (_PreparationStationSubjects.Count == 1)
                         _PreparationStationSubjects.Add(new ServicePointsPreparationInfoPresentation(this));
                 }
- 
-                 
+
+
                 return _PreparationStationSubjects;
             }
         }
@@ -1514,6 +1545,13 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+
+        public bool PreparationEdit
+        {
+            get;
+            set;
+        }
+
         /// <MetaDataID>{b6ada176-8f1e-4e6b-9ccb-3524976614a2}</MetaDataID>
         public override bool IsEditable
         {
@@ -1554,7 +1592,7 @@ namespace FLBManager.ViewModel.Preparation
 
                             IncludeServiceArea(serviceAreaPresentation.ServiceArea);
 
-                      
+
 
 
                         });
