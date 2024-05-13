@@ -1,17 +1,17 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using FlavourBusinessFacade.ServicesContextResources;
-using OOAdvantech.MetaDataRepository;
-using OOAdvantech.Transactions;
-using OOAdvantech;
-using MenuModel;
-using OOAdvantech.PersistenceLayer;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.RoomService;
-using System.Threading.Tasks;
-using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
+using MenuModel;
+using OOAdvantech;
+using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
+using OOAdvantech.Transactions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -697,7 +697,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         //List<ItemsPreparationContext> _PreparationSessions = new List<ItemsPreparationContext>();
 
         /// <MetaDataID>{7d50b4e9-05fb-460e-82e1-5e97fc810164}</MetaDataID>
-        internal List<ItemsPreparationContext> PreparationSessions
+        internal List<ItemsPreparationContext> FoodItemsInProgress
         {
             get
             {
@@ -928,7 +928,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             var predictions = GetItemToServingTimespanPredictions();
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                foreach (var preparationItem in (from prepartionSession in PreparationSessions
+                foreach (var preparationItem in (from prepartionSession in FoodItemsInProgress
                                                  from prepartionItem in prepartionSession.PreparationItems
                                                  where prepartionItem.PreparationStation == null
                                                  select prepartionItem))
@@ -947,7 +947,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 preparationStationStatus = new PreparationStationStatus()
                 {
-                    NewItemsUnderPreparationControl = PreparationSessions.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList(),
+                    NewItemsUnderPreparationControl = FoodItemsInProgress.Where(x => x.PreparationItems != null && x.PreparationItems.Count > 0).ToList(),
                     ServingTimespanPredictions = predictions
                 };
 
@@ -1251,7 +1251,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 List<ItemsPreparationContext> preparationSections = null;
                 lock (DeviceUpdateLock)
                 {
-                    preparationSections = this.PreparationSessions.ToList();
+                    preparationSections = this.FoodItemsInProgress.ToList();
                 }
                 var preparationStationItems = (from serviceSession in preparationSections
                                                from preparationItem in serviceSession.PreparationItems
@@ -1337,7 +1337,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
-            var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
+            var clientSessionsItems = (from servicePointPreparationItems in FoodItemsInProgress
                                        from itemPreparation in servicePointPreparationItems.PreparationItems
                                        where itemPreparationUris.Contains(itemPreparation.uid)
                                        group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
@@ -1380,7 +1380,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             var preparationTimeSpan = DateTime.UtcNow - PrepartionVelocityMilestone.Value;
 
-            var preparedItems = (from servicePointPreparationItems in PreparationSessions
+            var preparedItems = (from servicePointPreparationItems in FoodItemsInProgress
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
                                  where itemPreparationUris.Contains(itemPreparation.uid)
                                  select itemPreparation).ToList();
@@ -1647,7 +1647,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
+                var clientSessionsItems = (from servicePointPreparationItems in FoodItemsInProgress
                                            from itemPreparation in servicePointPreparationItems.PreparationItems
                                            where itemPreparationUris.Contains(itemPreparation.uid)
                                            group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
@@ -1669,7 +1669,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
             //ServicesContextRunTime.Current.MealsController.RebuildPreparationPlanLastTime=DateTime.UtcNow+TimeSpan.FromMinutes()
-            var preparedItems = (from servicePointPreparationItems in PreparationSessions
+            var preparedItems = (from servicePointPreparationItems in FoodItemsInProgress
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
                                  where itemPreparationUris.Contains(itemPreparation.uid) && itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.InPreparation)
                                  select itemPreparation).ToList();
@@ -1687,7 +1687,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             }
 
-            preparedItems = (from servicePointPreparationItems in PreparationSessions
+            preparedItems = (from servicePointPreparationItems in FoodItemsInProgress
                              from itemPreparation in servicePointPreparationItems.PreparationItems
                              where itemPreparationUris.Contains(itemPreparation.uid)
                              select itemPreparation).ToList();
@@ -1719,7 +1719,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             try
             {
                 SuspendsObjectChangeStateEvents = true;
-                var clientSessionsItems = (from servicePointPreparationItems in PreparationSessions
+                var clientSessionsItems = (from servicePointPreparationItems in FoodItemsInProgress
                                            from itemPreparation in servicePointPreparationItems.PreparationItems
                                            where itemPreparationUris.Contains(itemPreparation.uid)
                                            group itemPreparation by itemPreparation.ClientSession into ClientSessionItems
@@ -1741,7 +1741,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             foreach (var codeCard in codeCards)
             {
-                foreach (var servicePointPreparationItems in PreparationSessions)
+                foreach (var servicePointPreparationItems in FoodItemsInProgress)
                 {
                     if (string.IsNullOrWhiteSpace(servicePointPreparationItems.CodeCard))
                         servicePointPreparationItems.CodeCard = codeCard;

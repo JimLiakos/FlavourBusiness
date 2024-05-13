@@ -320,7 +320,7 @@ namespace FlavourBusinessManager.RoomService
                                       select slot).ToList();
 
                 #region Debug code 
-                List<ItemsPreparationContext> preparationSections = preparationStation.PreparationSessions.ToList();
+                List<ItemsPreparationContext> preparationSections = preparationStation.FoodItemsInProgress.ToList();
                 var preparationStationItems = (from serviceSession in preparationSections
                                                from preparationItem in serviceSession.PreparationItems
                                                select preparationItem).ToList();
@@ -498,7 +498,7 @@ namespace FlavourBusinessManager.RoomService
         internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
             if (!actionContext.PreparationSections.ContainsKey(preparationStation))
-                return (from preparationSection in preparationStation.PreparationSessions
+                return (from preparationSection in preparationStation.FoodItemsInProgress
                         orderby preparationSection.MealCourseStartsAt
                         select preparationSection.ToString()).ToList();
 
@@ -628,7 +628,7 @@ namespace FlavourBusinessManager.RoomService
 
         internal static void GetPreparationSections(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
-            actionContext.PreparationSections[preparationStation] = preparationStation.PreparationSessions;
+            actionContext.PreparationSections[preparationStation] = preparationStation.FoodItemsInProgress;
         }
         internal static void OptimizePreparationPlan(this PreparationStation preparationStation, PreparationPlan actionContext, bool stirTheSequence)
         {
@@ -758,7 +758,7 @@ namespace FlavourBusinessManager.RoomService
 
             #region Debug
 
-            var previous = preparationStation.PreparationSessions;
+            var previous = preparationStation.FoodItemsInProgress;
             if (actionContext.PreparationSections.ContainsKey(preparationStation))
                 previous = actionContext.PreparationSections[preparationStation];
 

@@ -155,8 +155,6 @@ namespace ServiceContextManagerApp
                 //_TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));
                 ObjectChangeState?.Invoke(this, nameof(ShiftWork));
             }
-
-
         }
         public void ExtendShiftWorkStart(double timespanInHours)
         {
