@@ -86,7 +86,7 @@ namespace FLBManager.ViewModel.Delivery
             AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(RenameCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Home Deivery Call Center Station", "Scan to register as Call Center Station") { CodeValue = this.CallcenterStationIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Home Deivery Call Center Station",null, "Scan to register as Call Center Station") { CodeValue = this.CallcenterStationIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 

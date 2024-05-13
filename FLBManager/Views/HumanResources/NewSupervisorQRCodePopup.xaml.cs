@@ -23,17 +23,21 @@ namespace FLBManager.Views.HumanResources
     public partial class NewUserQRCodePopup : StyleableWindow.Window
     {
         /// <MetaDataID>{27fd605e-efd5-49d1-8d98-eac89013fb64}</MetaDataID>
-        public NewUserQRCodePopup(string title, string prompt)
+        public NewUserQRCodePopup(string title, string subTitle, string prompt)
         {
             InitializeComponent();
 
             TitleText = title;
+            SubTitleText = subTitle;
+            SubTitleIsVisible =string.IsNullOrWhiteSpace(subTitle)? Visibility.Collapsed:Visibility.Visible;
             Prompt = prompt;
             DataContext = this;
         }
 
         /// <MetaDataID>{e947a9dd-d49e-4dda-b1fd-bba63eea1d2d}</MetaDataID>
         public string TitleText { get; set; }
+        public string SubTitleText { get; private set; }
+        public Visibility SubTitleIsVisible { get; }
 
         /// <MetaDataID>{43ecb575-8426-44e6-8fd2-570246582140}</MetaDataID>
         public string Prompt { get; set; }

@@ -53,6 +53,30 @@ namespace FLBManager.ViewModel.Preparation
             RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
         }
 
+
+
+        public override bool IsSelected
+        {
+            get => base.IsSelected;
+
+            set
+            {
+                base.IsSelected = value;
+            }
+        }
+        public string PreparationStationIdentityLabelPrefix
+        {
+            get
+            {
+                //if (SelectedSubPreparationStation != null)
+                //    return  SelectedSubPreparationStation.Name?.Trim()+" ";
+                //else
+                    return Name?.Trim() + " ";
+            }
+        }
+        
+    
+
         /// <MetaDataID>{49b5c4dc-49d7-467f-8ea3-71f736302ce1}</MetaDataID>
         internal IPreparationForInfo ExcludeServicePoint(IServicePoint servicePoint)
         {
@@ -1313,7 +1337,7 @@ namespace FLBManager.ViewModel.Preparation
             AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(EditCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Preparation Station", "Scan to register as preparation station") { CodeValue = this.PreparationStationIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Preparation Station", Name, "Scan to register as preparation station") { CodeValue = this.PreparationStationIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 
@@ -1376,6 +1400,16 @@ namespace FLBManager.ViewModel.Preparation
             DeleteCommand = new RelayCommand((object sender) =>
             {
                 Delete();
+            });
+
+
+            AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
+            {
+                System.Windows.Window win = System.Windows.Window.GetWindow(DeleteCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("Preparation Station", Name, "Scan to register as preparation station") { CodeValue = this.PreparationStationIdentity };
+                QRCodePopup.Owner = win;
+                QRCodePopup.ShowDialog();
+
             });
 
         }
@@ -1448,9 +1482,31 @@ namespace FLBManager.ViewModel.Preparation
                     var rootCategory = new ItemsPreparationInfoPresentation(this, MenuViewModel.Menu, true);
                     rootCategory.CheckBoxVisibility = Visibility.Collapsed;
                     rootCategory.IsNodeExpanded = true;
+
+                    rootCategory.PropertyChanged += PreparationStationItems_PropertyChanged;
                     _ItemsToChoose = new List<FBResourceTreeNode>() { rootCategory };
                 }
                 return _ItemsToChoose;
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        List<PreparationStationPresentation> _PreparationStations;
+        public List<PreparationStationPresentation> PreparationStations
+        {
+            get
+            {
+                if (_PreparationStations == null)
+                {
+                    
+                    List<PreparationStationPresentation> preparationStations = new List<PreparationStationPresentation>() { this };
+                    if (PreparationSubStations != null)
+                        preparationStations.AddRange(ItemsToChoose.OfType<ItemsPreparationInfoPresentation>().First().PreparationSubStations.Values);
+                    _PreparationStations=preparationStations;
+                    
+                }
+
+                return _PreparationStations;
             }
         }
         /// <exclude>Excluded</exclude> 
@@ -1483,6 +1539,7 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationSations.RemovePreparationStation(this);
             else
                 Parent.RemoveChild(this);
+
         }
 
         /// <MetaDataID>{cc8b09bf-a57c-4cf6-a491-f56c3a1bc04f}</MetaDataID>
@@ -1523,6 +1580,9 @@ namespace FLBManager.ViewModel.Preparation
             set
             {
                 PreparationStation.Description = value;
+
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStationIdentityLabelPrefix)));
+                
             }
         }
 
@@ -1532,6 +1592,20 @@ namespace FLBManager.ViewModel.Preparation
             get
             {
                 return PreparationStation.PreparationStationIdentity;
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
+        string _ShortIdentity;
+
+        public string ShortIdentity
+        {
+            get
+            {
+                if (_ShortIdentity == null)
+                        _ShortIdentity =PreparationStation.ShortIdentity;
+                return _ShortIdentity;
             }
         }
 
@@ -1778,10 +1852,21 @@ namespace FLBManager.ViewModel.Preparation
                 if (PreparationStationItems == null)
                 {
                     PreparationStationItems = new ItemsPreparationInfoPresentation(this, MenuViewModel.Menu, SelectionCheckBox);
+                    
                     PreparationStationItems.IsNodeExpanded = true;
                     PreparationStationItems.CheckBoxVisibility = Visibility.Collapsed;
+                    PreparationStationItems.PropertyChanged += PreparationStationItems_PropertyChanged;
                 }
                 return PreparationStationItems.Members;
+            }
+        }
+
+        private void PreparationStationItems_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName==nameof(ItemsPreparationInfoPresentation.PreparationSubStations))
+            {
+                _PreparationStations = null;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationStations)));
             }
         }
 

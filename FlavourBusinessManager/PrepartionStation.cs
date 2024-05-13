@@ -12,8 +12,6 @@ using FlavourBusinessFacade.RoomService;
 using System.Threading.Tasks;
 using FlavourBusinessManager.ServicePointRunTime;
 using FlavourBusinessManager.RoomService;
-using OOAdvantech.Remoting.RestApi.Serialization;
-using Microsoft.Azure.Documents.SystemFunctions;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -65,9 +63,16 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        /// <MetaDataID>{11f57521-338b-4ca3-966a-ba467eaafb79}</MetaDataID>
         protected PreparationStation()
         {
+
+        }
+
+        /// <MetaDataID>{11f57521-338b-4ca3-966a-ba467eaafb79}</MetaDataID>
+        public PreparationStation(string servicesContextIdentity)
+        {
+            _ServicesContextIdentity = servicesContextIdentity;
+            _PreparationStationIdentity = servicesContextIdentity + "_" + Guid.NewGuid().ToString("N");
 
         }
 
@@ -327,6 +332,34 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <exclude>Excluded</exclude>
+        string _ShortIdentity;
+
+        /// <MetaDataID>{8f3e7ffa-4ce7-45db-9628-9893f371502e}</MetaDataID>
+        [PersistentMember(nameof(_ShortIdentity))]
+        [BackwardCompatibilityID("+9")]
+        public string ShortIdentity
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_ShortIdentity))
+                    GetShortIdentity();
+                return _ShortIdentity;
+            }
+            set
+            {
+                if (_ShortIdentity != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ShortIdentity = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+        /// <exclude>Excluded</exclude>
         string _PreparationStationIdentity;
 
         /// <MetaDataID>{22bf5e56-fdf2-4553-ad43-fbf63146eb70}</MetaDataID>
@@ -497,14 +530,15 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{fb2d4b5b-30b5-4c63-8a11-dce1b6175baf}</MetaDataID>
         public void RemovePreparationForInfos(List<IPreparationForInfo> preparationForInfos)
         {
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 foreach (var preparationForInfo in preparationForInfos)
                 {
-                        _PreparationForInfos.Remove(preparationForInfo);
-                        ObjectStorage.DeleteObject(preparationForInfo);
+                    _PreparationForInfos.Remove(preparationForInfo);
+                    ObjectStorage.DeleteObject(preparationForInfo);
                 }
                 stateTransition.Consistent = true;
             }
@@ -696,6 +730,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (DeviceUpdateLock)
                 {
+
+                    if (_ShortIdentity == null)
+                    {
+                        GetShortIdentity();
+                    }
                     try
                     {
                         OOAdvantech.Linq.Storage servicesContextStorage = new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(this));
@@ -782,6 +821,21 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
 
             });
+        }
+
+        private void GetShortIdentity()
+        {
+            string uniqueIdsUrl = string.Format("http://{0}:8090/api/UniqueId/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, this.PreparationStationIdentity);
+            using (System.Net.WebClient wc = new System.Net.WebClient())
+            {
+                var json = wc.DownloadString(uniqueIdsUrl);
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _ShortIdentity = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
+                    stateTransition.Consistent = true;
+                }
+            }
         }
 
         /// <MetaDataID>{a16a4790-f7f7-471a-aed1-5fcf53ebe59c}</MetaDataID>
@@ -874,12 +928,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             var predictions = GetItemToServingTimespanPredictions();
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                foreach (var prepartionItem in (from prepartionSession in PreparationSessions
-                                                from prepartionItem in prepartionSession.PreparationItems
-                                                where prepartionItem.PreparationStation == null
-                                                select prepartionItem))
+                foreach (var preparationItem in (from prepartionSession in PreparationSessions
+                                                 from prepartionItem in prepartionSession.PreparationItems
+                                                 where prepartionItem.PreparationStation == null
+                                                 select prepartionItem))
                 {
-                    prepartionItem.PreparationStation = this;
+                    preparationItem.PreparationStation = this;
                 }
 
                 stateTransition.Consistent = true;
@@ -897,36 +951,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                     ServingTimespanPredictions = predictions
                 };
 
-                int numberOfPendingsToPrepareItems = (from preparationSection in preparationStationStatus.NewItemsUnderPreparationControl
+                int numberOfPendingToPrepareItems = (from preparationSection in preparationStationStatus.NewItemsUnderPreparationControl
                                                       from itemPreparation in preparationSection.PreparationItems
                                                       where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.InPreparation
                                                       select itemPreparation).Count();
-                if (numberOfPendingsToPrepareItems == 0)
+                if (numberOfPendingToPrepareItems == 0)
                     PrepartionVelocityMilestone = null;
                 else if (PrepartionVelocityMilestone == null)
                 {
                     PrepartionVelocityMilestone = DateTime.UtcNow;
                 }
             }
-            //if (PrepartionVelocityMilestone == null)
-            //{
-
-            //    var preparationStationItems = (from serviceSession in this.PreparationSessions
-            //                                   from preparationItem in serviceSession.PreparationItems.OrderByDescending(x => x.CookingTimeSpanInMin)
-            //                                   orderby preparationItem.PreparedAtForecast
-            //                                   select preparationItem).ToList();
-
-            //    if (preparationStationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation)))
-            //    {
-            //        //preparation  velocity measured only in case where there are items to prepare   
-            //        DateTime? endTime = preparationStationItems.FirstOrDefault()?.PreparedAtForecast;
-            //        DateTime startTime;
-            //        if (endTime != null)
-            //            startTime = endTime.Value - TimeSpan.FromMinutes(preparationStationItems.FirstOrDefault().PreparationTimeSpanInMin);
-            //        PrepartionVelocityMilestone = DateTime.UtcNow;
-            //    }
-
-            //}
+ 
 
             foreach (var servingSession in preparationStationStatus.NewItemsUnderPreparationControl)
             {
@@ -1027,66 +1063,25 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (itemPreparation.PreparationStation != null)
             {
                 return itemPreparation.PreparationStation;
-
-                ////the item has already been assigned to the prep station
-                //preparationData = new PreparationData()
-                //{
-                //    ItemPreparation = itemPreparation,
-                //    PreparationStationRuntime = itemPreparation.PreparationStation as IPreparationStationRuntime//,
-                //    //PreparationTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                //    //CookingTimeSpanInMin = (itemPreparation.PreparationStation as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem)
-                //};
             }
             else
             {
-
                 foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
                 {
                     //Look for the dedicated for service point  prep station to prepare the item 
                     if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
-                    {
                         return preparationStation;
-                        //preparationData = new PreparationData()
-                        //{
-                        //    ItemPreparation = itemPreparation,
-                        //    PreparationStationRuntime = preparationStation//,
-                        //    //PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                        //    //CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
-                        //};
-                    }
-                }
-                //if (preparationData == null || preparationData.PreparationStationRuntime == null)
-                {
-                    //Look for the general  prep station to prepare the item 
-                    foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
-                    {
-                        if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
-                        {
-                            //preparationData = new PreparationData()
-                            //{
-                            //    ItemPreparation = itemPreparation,
-                            //    PreparationStationRuntime = preparationStation//,
-                            //    //PreparationTimeSpanInMin = preparationStation.GetPreparationTimeSpanInMin(itemPreparation.MenuItem),
-                            //    //CookingTimeSpanInMin = preparationStation.GetCookingTimeSpanInMin(itemPreparation.MenuItem)
-                            //};
-                            return preparationStation;
-                        }
-                    }
                 }
 
+                //Look for the general  prep station to prepare the item 
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
+                {
+                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                        return preparationStation;
+                }
+
+
             }
-            //if (preparationData == null)
-            //{
-            //    preparationData = new PreparationData()
-            //    {
-            //        ItemPreparation = itemPreparation,
-            //        Duration = TimeSpan.FromMinutes(0.5)
-            //    };
-            //}
-            //else
-            //{
-            //    preparationData.Duration =.Duration = TimeSpan.FromMinutes((preparationData.PreparationStationRuntime as PreparationStation).GetPreparationTimeSpanInMin(itemPreparation.MenuItem) + (preparationData.PreparationStationRuntime as PreparationStation).GetCookingTimeSpanInMin(itemPreparation.MenuItem));
-            //}
             return null;
         }
 
@@ -1765,9 +1760,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
-                preparationStation = new PreparationStation();
+                preparationStation = new PreparationStation(_ServicesContextIdentity);
                 preparationStation.Description = Properties.Resources.DefaultSubPreparationStationDescription;
                 preparationStation.ServicesContextIdentity = ServicesContextIdentity;
+
                 OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(preparationStation);
                 _SubStations.Add(preparationStation);
                 stateTransition.Consistent = true;

@@ -87,7 +87,7 @@ namespace FLBManager.ViewModel.HumanResources
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(NewWaiterCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 string supervisorAssignKey = ServiceContextStaff.ServicesContextPresentation.ServicesContext.NewWaiter();// Organization.CurrentOrganization.NewSupervisor(ServiceContextStaff.ServicesContextPresentation.ServicesContext.ServicesContextIdentity);
-                NewWaiterQRCodePopup = new Views.HumanResources.NewUserQRCodePopup("New Waiter", "Scan to register as waiter") { CodeValue = supervisorAssignKey };
+                NewWaiterQRCodePopup = new Views.HumanResources.NewUserQRCodePopup("New Waiter",null, "Scan to register as waiter") { CodeValue = supervisorAssignKey };
                 NewWaiterQRCodePopup.Owner = win;
                 NewWaiterQRCodePopup.ShowDialog();
             }

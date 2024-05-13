@@ -9,6 +9,9 @@ namespace FlavourBusinessFacade.ServicesContextResources
     [GenerateFacadeProxy]
     public interface IPreparationStation
     {
+        /// <MetaDataID>{a361dd77-8fe0-48ee-abb0-01e87675322e}</MetaDataID>
+        string ShortIdentity { get; set; }
+
         /// <MetaDataID>{f5ae4b4f-ef6a-493e-9283-4f3ced15af67}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         double GroupingTimeSpan { get; set; }
@@ -49,7 +52,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{7b55d81f-cd95-4b08-abef-85997e459a58}</MetaDataID>
         string PreparationStationIdentity { get;  }
 
+
         
+
+
         ///// <MetaDataID>{e7c40cd7-9b03-4db2-9404-69ed0dee8e88}</MetaDataID>
         //IItemsPreparationInfo NewPreparationInfo(string itemsInfoObjectUri);
 
@@ -58,7 +64,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e20e36c9-34e7-4d91-8e5e-85399c0566ed}</MetaDataID>
         void RemovePreparationForInfo(IPreparationForInfo PreparationForInfo);
 
-        void RemovePreparationForInfos(List< IPreparationForInfo> PreparationForInfos);
+        /// <MetaDataID>{173ecea0-545e-44f8-9623-bb108c3e46aa}</MetaDataID>
+        void RemovePreparationForInfos(List<IPreparationForInfo> PreparationForInfos);
 
         /// <MetaDataID>{fbea817c-1e40-45d0-a939-deae8a96af4b}</MetaDataID>
         void RemovePreparationInfos(List<IItemsPreparationInfo> itemsPreparationInfos);

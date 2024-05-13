@@ -454,6 +454,7 @@
     <Compile Include="HumanResources\TranslationActivity.cs" />
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
+    <Compile Include="Infrastructure\GlobalResourceIdentity.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="ItemsPriceInfo.cs" />
     <Compile Include="NativeAuthUser.cs" />
@@ -577,7 +578,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
     <Folder Include="OrganizationCRM\" />
     <Folder Include="PaymentProviders\" />
   </ItemGroup>

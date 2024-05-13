@@ -42,7 +42,7 @@ namespace FLBManager.ViewModel
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(SettingsCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 var sdsd = this.HomeDeliveryService.ServicesPointIdentity;
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup(Properties.Resources.AssignCourierDeviceTitle, Properties.Resources.AssignCourierDevicePrompt) { CodeValue = this.HomeDeliveryService.ServicesPointIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup(Properties.Resources.AssignCourierDeviceTitle,null, Properties.Resources.AssignCourierDevicePrompt) { CodeValue = this.HomeDeliveryService.ServicesPointIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 

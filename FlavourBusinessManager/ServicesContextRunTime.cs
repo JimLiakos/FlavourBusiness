@@ -2099,7 +2099,15 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 var servicesContextIdentity = ServicesContextIdentity;
 
-                return PreparationStationRuntimes.Values.OfType<IPreparationStation>().ToList();
+                var preparationStations =PreparationStationRuntimes.Values.OfType<IPreparationStation>().ToList();
+
+                foreach(var subPreparationStation in preparationStations.SelectMany(x=>x.SubStations ).ToList())
+                {
+                    if(preparationStations.Contains(subPreparationStation))
+                        preparationStations.Remove(subPreparationStation);
+                }
+
+                return preparationStations;
 
                 //return (from preparationStation in servicesContextStorage.GetObjectCollection<IPreparationStation>()
                 //        where preparationStation.ServicesContextIdentity == servicesContextIdentity

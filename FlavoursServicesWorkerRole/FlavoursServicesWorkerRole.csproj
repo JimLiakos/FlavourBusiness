@@ -269,6 +269,7 @@
     <Compile Include="Controllers\MenuModelController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\StoragesController.cs" />
+    <Compile Include="Controllers\UniqueIdController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <None Include="Controllers\WebSocketMessagesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

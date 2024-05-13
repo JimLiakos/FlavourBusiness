@@ -69,7 +69,7 @@ namespace FlavourBusinessManager
                 lock (MonitoringLock)
                     InFlavoursServicesContextsMonitoring = true;
 
-                if (FlavoursServicesContextsMonitoringTimestamp==null||(DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp.Value).TotalSeconds > 20)
+                if (FlavoursServicesContextsMonitoringTimestamp == null || (DateTime.UtcNow - FlavoursServicesContextsMonitoringTimestamp.Value).TotalSeconds > 20)
                 {
 
                     foreach (var flavoursServicesContext in FlavoursServicesContext.ActiveFlavoursServicesContexts)
@@ -344,9 +344,29 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{1726fda9-eed5-4e8c-8a04-a3fc80a093bc}</MetaDataID>
         public IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationCredentialKey)
         {
-            string servicesContextIdentity = preparationStationCredentialKey.Substring(0, preparationStationCredentialKey.IndexOf("_"));
-            string preparationStationIdentity = preparationStationCredentialKey.Substring(preparationStationCredentialKey.IndexOf("_") + 1);
+            var credentialKeyParts = preparationStationCredentialKey?.Split('_');
 
+            string servicesContextIdentity = null;
+            string preparationStationIdentity = null;
+
+            if (credentialKeyParts?.Length == 2)
+            {
+                servicesContextIdentity = credentialKeyParts[0];
+                preparationStationIdentity = credentialKeyParts[1];
+            }
+            else
+            {
+                string resourceFullIdentity = GlobalResourcesIdentities.GetResourceFullIdentity(preparationStationCredentialKey);
+                credentialKeyParts = resourceFullIdentity?.Split('_');
+
+                if (credentialKeyParts?.Length == 2)
+                {
+                    servicesContextIdentity = credentialKeyParts[0];
+                    preparationStationIdentity = credentialKeyParts[1];
+                    preparationStationCredentialKey = resourceFullIdentity;
+                }
+
+            }
             IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
             if (flavoursServicesContext == null)
                 return null;
@@ -409,7 +429,7 @@ namespace FlavourBusinessManager
         {
 
             string servicesContextIdentity = null;
-            
+
             string[] servicePointIdentityParts = servicePointIdentity.Split(';');
 
 

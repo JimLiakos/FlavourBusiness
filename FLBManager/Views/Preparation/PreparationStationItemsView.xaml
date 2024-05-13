@@ -38,8 +38,8 @@
                     </Style>
                 </ContextMenu.ItemContainerStyle>
             </ContextMenu>
-            
-            
+
+
             <ContextMenu  x:Key="NodeContextMenu" ItemsSource="{Binding ContextMenuItems}">
                 <ContextMenu.ItemContainerStyle>
                     <Style TargetType="{x:Type MenuItem}">
@@ -73,8 +73,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28"/>
                     <RowDefinition Height="28"/>
-                    <RowDefinition Height="28"/>
-                    <RowDefinition Height="37"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1"/>
                     <RowDefinition/>
 
                 </Grid.RowDefinitions>
@@ -82,10 +82,31 @@
                 <Label Grid.Column="1" Grid.Row="0" Margin="3,0,3,3"  Content="{x:Static resx:Resources.PreparationStationDescriptionLabel}" VerticalAlignment="Bottom" Height="20" />
                 <wpftoolkitex:WatermarkTextBox  Grid.Row="1" Grid.Column="1"  Margin="2,0,2,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Text="{Binding Name,UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" Watermark="{x:Static resx:Resources.WritePreparationStationDescriptionPrompt}"  HorizontalAlignment="Stretch" AcceptsReturn="True" Height="24" />
                 <CheckBox FlowDirection="RightToLeft" Grid.Row="1"  x:Name="PreparationTimeVisibility" Grid.Column="2" VerticalAlignment="Center" Content="Preparation time is visible" IsChecked="{Binding PreparationTimeIsVisible}" ></CheckBox>
-                <Label Grid.Row="2" Grid.Column="1" Margin="3,0,3,3" Content="{x:Static resx:Resources.PreparationStationIdentityLabel}"   VerticalAlignment="Bottom" Height="20"/>
 
-                    
-                <TextBox Margin="2,0,2,0"  VerticalAlignment="Top" Text="{Binding PreparationStationIdentity,Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True"  HorizontalAlignment="Stretch"  Grid.Row="3" Grid.ColumnSpan="2"  Grid.Column="1" AcceptsReturn="True" Height="22" />
+
+                <ItemsControl  Grid.Row="2" HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding PreparationStations}">
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,5,0">
+                                <StackPanel Margin="3,0,0,0" VerticalAlignment="Bottom" MinWidth="150" Orientation="Horizontal"  >
+                                    <Label Grid.Row="2" Grid.Column="1" Margin="3,0,0,3" Content="{Binding PreparationStationIdentityLabelPrefix}" Height="20"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Margin="0,0,3,3" Content="{x:Static resx:Resources.PreparationStationIdentityLabel}"   Height="20"/>
+                                </StackPanel>
+                                <TextBox Margin="2,0,2,0"  VerticalAlignment="Top" Text="{Binding ShortIdentity,Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True"  HorizontalAlignment="Stretch"  Grid.Row="3" Grid.ColumnSpan="2"  Grid.Column="1" AcceptsReturn="True" Height="22" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+
+
                 <TreeView  DragEnter="DragEnter"  Drop="Drop" DragLeave="DragLeave" DragOver="DragOver"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Name="MenuItemsTreeView"  ItemsSource="{Binding PreparationStationSubjects}"  >
                     <TreeView.Resources>
                         <DataTemplate x:Key="NormalTemplate">
@@ -169,8 +190,8 @@
                             <Setter Property="ContextMenu" Value="{StaticResource TreeViewContextMenuItem}" />
                         </Style>
                     </TreeView.Resources>
-                        
-                        
+
+
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedItemChanged">
@@ -214,7 +235,7 @@
 
                             </ContentControl>
 
-                           
+
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
 

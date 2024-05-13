@@ -51,7 +51,7 @@ namespace FLBManager
 
             //await FlavourBusinessManager.FireBase.Init();
 
-            string partitionKey = FlavourBusinessManager.AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
+            string partitionKey = AuthUserRef.GetPartitionKey("J8JODyCzmjb0Nqp6guxSizWlDwv2");
 
             //UpdateStyleSheets();
 

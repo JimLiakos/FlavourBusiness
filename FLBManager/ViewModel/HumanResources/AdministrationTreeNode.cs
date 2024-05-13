@@ -72,7 +72,7 @@ namespace FLBManager.ViewModel.HumanResources
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(NewSupervisorCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
                 string supervisorAssignKey = Organization.CurrentOrganization.NewSupervisor(ServiceContextStaff.ServicesContextPresentation.ServicesContext.ServicesContextIdentity);
-                NewSupervisorQRCodePopup = new Views.HumanResources.NewUserQRCodePopup("New Supervisor", "Scan to register as supervisor") { CodeValue = supervisorAssignKey };
+                NewSupervisorQRCodePopup = new Views.HumanResources.NewUserQRCodePopup("New Supervisor",null, "Scan to register as supervisor") { CodeValue = supervisorAssignKey };
                 NewSupervisorQRCodePopup.Owner = win;
                 NewSupervisorQRCodePopup.ShowDialog();
             }

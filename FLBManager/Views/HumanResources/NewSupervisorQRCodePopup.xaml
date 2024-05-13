@@ -12,10 +12,13 @@
         Title="{Binding TitleText}" Height="600" Width="400">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock  HorizontalAlignment="Center" Text="{Binding Prompt}"   FontSize="20"></TextBlock>
-            <Image Margin="0,20,0,0" Width="240" Height="240" Source="{Binding Path=QRCodeImage}"></Image>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Visibility="{Binding SubTitleIsVisible}"  HorizontalAlignment="Center"  FontSize="24" Margin="0,0,0,10"  Content="{Binding SubTitleText}" Foreground="{StaticResource WindowForeColor}"></Label>
+            <StackPanel >
+                <TextBlock  HorizontalAlignment="Center" Text="{Binding Prompt}"   FontSize="20"></TextBlock>
+                <Image Margin="0,20,0,0" Width="240" Height="240" Source="{Binding Path=QRCodeImage}"></Image>
+            </StackPanel>
         </StackPanel>
-        
     </Grid>
 </sw:Window>

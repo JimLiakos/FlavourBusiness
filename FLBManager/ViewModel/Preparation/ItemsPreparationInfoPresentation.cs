@@ -31,6 +31,7 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationStationPresentation?.PreparationStation.RemoveSubStation((treeNode as PreparationStationPresentation).PreparationStation);
                 _Members = null;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationSubStations)));
             }
 
         }
@@ -63,6 +64,7 @@ namespace FLBManager.ViewModel.Preparation
                 PreparationSubStations.GetViewModelFor(preparationSubStation, () => { return new PreparationStationPresentation(this, preparationSubStation, PreparationStationPresentation.MenuViewModel, EditMode); });
                 _Members = null;
                 RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(Members)));
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationSubStations)));
             }
         }
 
@@ -399,7 +401,7 @@ namespace FLBManager.ViewModel.Preparation
             get => base.Edit; set
             {
                 base.Edit=value;
-                _PreparationEdit=value;
+                PreparationEdit=value;
             }
         }
 
@@ -427,6 +429,7 @@ namespace FLBManager.ViewModel.Preparation
 
                 }
                 _PreparationEdit = value;
+                RunPropertyChanged(this, new PropertyChangedEventArgs(nameof(PreparationEdit)));
             }
         }
         int? _AppearanceOrderOld;

@@ -83,7 +83,7 @@ namespace FLBManager.ViewModel.TakeAway
             AssignCommand = new WPFUIElementObjectBind.RelayCommand((object sender) =>
             {
                 System.Windows.Window win = System.Windows.Window.GetWindow(RenameCommand.UserInterfaceObjectConnection.ContainerControl as System.Windows.DependencyObject);
-                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("TakeAway Station", "Scan to register as TakeAway station") { CodeValue = this.TakeAwayStationIdentity };
+                var QRCodePopup = new Views.HumanResources.NewUserQRCodePopup("TakeAway Station", null, "Scan to register as TakeAway station") { CodeValue = this.TakeAwayStationIdentity };
                 QRCodePopup.Owner = win;
                 QRCodePopup.ShowDialog();
 
