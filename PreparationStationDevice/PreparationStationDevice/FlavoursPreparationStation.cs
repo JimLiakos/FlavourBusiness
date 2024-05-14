@@ -152,7 +152,7 @@ namespace PreparationStationDevice
                                ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                                PreparationVelocity = PreparationStation.PreparationVelocity;
                            }
-
+                            
                            var timeSpan = DateTime.UtcNow - start;
                            //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                        }
