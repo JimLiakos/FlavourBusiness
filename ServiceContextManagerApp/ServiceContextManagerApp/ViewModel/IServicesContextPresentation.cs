@@ -113,6 +113,8 @@ namespace ServiceContextManagerApp
         Task<bool> AssignFoodShipping(string foodShippingIdentity, IWorkerPresentation worker);
         Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity);
 
+        IList<IPreparationStation> PreparationStations { get; }
+
     }
 
     public delegate void DelayedMealAtTheCounterHandle(ISupervisorPresentation supervisorPresentation, string messageID);

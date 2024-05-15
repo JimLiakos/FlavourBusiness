@@ -227,6 +227,13 @@ namespace ServiceContextManagerApp
             return false;
         }
 
+        public IList<IPreparationStation> PreparationStations
+        {
+            get
+            {
+                return this.ServicesContextRuntime.PreparationStations;
+            }
+        }
 
         public async Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity)
         {

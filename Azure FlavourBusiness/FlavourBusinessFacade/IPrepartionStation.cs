@@ -7,6 +7,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     /// <MetaDataID>{bbb5694e-4424-4705-8edf-19067834682e}</MetaDataID>
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
     [GenerateFacadeProxy]
+    
     public interface IPreparationStation
     {
         /// <MetaDataID>{a361dd77-8fe0-48ee-abb0-01e87675322e}</MetaDataID>
@@ -17,6 +18,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         double GroupingTimeSpan { get; set; }
         [Association("PreparationSubStation", Roles.RoleA, "cd533f23-6824-4431-b904-818421f4eb42")]
         [RoleBMultiplicityRange(1, 1)]
+        [CachingDataOnClientSide]
+        [HttpVisible]
         List<IPreparationStation> SubStations { get; }
 
         /// <MetaDataID>{a4bb2a23-cd26-445c-b582-b277e6100c83}</MetaDataID>
@@ -43,6 +46,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{bb9df3c1-7e4a-418f-a3f4-6d9c07bf3427}</MetaDataID>
         [BackwardCompatibilityID("+2")]
         [CachingDataOnClientSide]
+        [HttpVisible]
         string Description { get; set; }
 
         /// <MetaDataID>{0d8307bb-48a8-4fb3-a327-c09d64ee426d}</MetaDataID>
