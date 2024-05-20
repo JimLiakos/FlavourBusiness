@@ -47,7 +47,7 @@ namespace PreparationStationDevice.WPF
         protected override void OnClosing(CancelEventArgs e)
         {
             OOAdvantech.Net.DeviceOOAdvantechCore.DebugDeviceID = DevicesIDS[SelectedIndex];
-
+            GenWebBrowser.WebBrowserOverlay.SetCefExtraCachePath(DevicesIDS[SelectedIndex]);
             PreparationStationApp.Startup(DevicesIDS[SelectedIndex]);
             
             MainWindow mainWindow = new MainWindow();

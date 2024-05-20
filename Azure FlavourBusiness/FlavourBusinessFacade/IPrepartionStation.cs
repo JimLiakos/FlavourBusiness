@@ -7,7 +7,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
     /// <MetaDataID>{bbb5694e-4424-4705-8edf-19067834682e}</MetaDataID>
     [BackwardCompatibilityID("{bbb5694e-4424-4705-8edf-19067834682e}")]
     [GenerateFacadeProxy]
-    
+
     public interface IPreparationStation
     {
         /// <MetaDataID>{a361dd77-8fe0-48ee-abb0-01e87675322e}</MetaDataID>
@@ -40,7 +40,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         //"6046c42e-6e1c-4fbc-86ee-8e1ef74628c0"
         [RoleBMultiplicityRange(1, 1)]
         [Association("PreparationStationItemsInfo", Roles.RoleA, "ff137010-8488-45be-b0e8-a65b28956ec0")]
-        
+
         IList<IItemsPreparationInfo> ItemsPreparationInfos { get; }
 
         /// <MetaDataID>{bb9df3c1-7e4a-418f-a3f4-6d9c07bf3427}</MetaDataID>
@@ -54,10 +54,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string ServicesContextIdentity { get; set; }
 
         /// <MetaDataID>{7b55d81f-cd95-4b08-abef-85997e459a58}</MetaDataID>
-        string PreparationStationIdentity { get;  }
+        string PreparationStationIdentity { get; }
 
 
-        
+        DeviceAppLifecycle DeviceAppState { get; }
+
 
 
         ///// <MetaDataID>{e7c40cd7-9b03-4db2-9404-69ed0dee8e88}</MetaDataID>
@@ -81,7 +82,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{7c1c1517-a551-4e9e-8a6f-0320fd0692ad}</MetaDataID>
         IPreparationForInfo NewServicePointPreparationForInfo(IServicePoint servicePoint, PreparationForInfoType PreparationForInfoType);
 
-        
+
 
 #if !FlavourBusinessDevice
         /// <MetaDataID>{7b6f9f61-6a17-4fd3-b90e-5a89e46238d1}</MetaDataID>
@@ -92,7 +93,21 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 #endif
 
-       
 
+
+    }
+}
+
+
+
+
+namespace FlavourBusinessFacade
+{
+    /// <MetaDataID>{b870fcd0-671e-4ef8-abd5-d8bb26cef2fd}</MetaDataID>
+    public enum DeviceAppLifecycle
+    {
+        InUse,
+        Sleep,
+        Shutdown
     }
 }

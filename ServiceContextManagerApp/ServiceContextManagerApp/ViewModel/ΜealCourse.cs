@@ -50,6 +50,8 @@ namespace FlavourBusinessManager.RoomService.ViewModel
             ServerSideMealCourse = serverSideMealCourse;
             FoodItemsInProgress = serverSideMealCourse.FoodItemsInProgress;
 
+          
+
             StateTimestamp = serverSideMealCourse.StateTimestamp;
 
             PartiallyUnderServingProcess = serverSideMealCourse.PartiallyUnderServingProcess;

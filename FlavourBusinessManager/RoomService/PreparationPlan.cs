@@ -536,7 +536,7 @@ namespace FlavourBusinessManager.RoomService
             return itemsToPrepare;
         }
 
-        public static void ActionsOrderCommited(this PreparationStation preparationStation, PreparationPlan actionContext)
+        public static void ActionsOrderCommitted(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
 
             bool thereArenotPendingPreparationItems = false;

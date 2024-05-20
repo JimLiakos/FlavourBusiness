@@ -1,9 +1,11 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 using MenuModel;
+using Microsoft.ServiceBus.Messaging;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
@@ -20,6 +22,49 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+
+        /// <exclude>Excluded</exclude>
+        DeviceAppLifecycle _DeviceAppState;
+        /// <MetaDataID>{d53dfc8e-8c06-49d1-8222-18f6c2c2a3a9}</MetaDataID>
+        [PersistentMember(nameof(_DeviceAppState))]
+        [BackwardCompatibilityID("+10")]
+        public DeviceAppLifecycle DeviceAppState
+        {
+            get => _DeviceAppState;
+            set
+            {
+                if (_DeviceAppState != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DeviceAppState = value;
+                        stateTransition.Consistent = true;
+                    }
+
+
+                }
+            }
+        }
+        public int AttachedDevices
+        {
+            get
+            {
+                if (_PreparationItemsChangeState != null)
+                    return _PreparationItemsChangeState.GetInvocationList().Length;
+                else
+                    return 0;
+            }
+        }
+
+        /// <MetaDataID>{bc544eec-852a-4e37-86cc-46b01705c8bb}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+12")]
+        public DateTime DeviceAppActivationTime;
+
+        /// <MetaDataID>{53ac56f3-c990-4efc-ba96-ed7c3ef5a48f}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+11")]
+        public DateTime DeviceAppSleepTime;
 
         /// <MetaDataID>{bd097583-6e84-45b4-a299-9e9abc66ae03}</MetaDataID>
         public List<ItemPreparationTimeSpan> GetPreparationTimeSpans(DateTime fromDate, DateTime toDate)
@@ -63,6 +108,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <MetaDataID>{3b24e42d-0356-4c26-a8b1-febce64ea3ec}</MetaDataID>
         protected PreparationStation()
         {
 
@@ -718,6 +764,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+
+
         /// <MetaDataID>{3fca2ab5-8bfd-4eb0-ba49-1366ad0c909a}</MetaDataID>
         TaskCompletionSource<bool> ObjectActivated = new TaskCompletionSource<bool>();
 
@@ -791,7 +839,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                 }
 
-
+                int attachedDevices = 0;
 
                 while (true)
                 {
@@ -817,12 +865,105 @@ namespace FlavourBusinessManager.ServicesContextResources
                             }
                         }
                     }
+
+                    #region DeviceAppLifecycle
+                    if (DeviceAppState == DeviceAppLifecycle.InUse && (_PreparationItemsChangeState == null || attachedDevices != AttachedDevices))
+                    {
+
+                        //with _PreparationItemsChangeState system knows indirectly when there is active connection with client device
+                        //when communication session with client device closed the server session part drops all event consumers
+                        if (attachedDevices < AttachedDevices)
+                            attachedDevices = AttachedDevices;
+
+                        if (DeviceConnectionStatusChecksNumber > 50) //25 seconds (50*500 ms)
+                        {
+                            if (_PreparationItemsChangeState == null)
+                                DeviceShutdown();
+                            if (attachedDevices != AttachedDevices)
+                            {
+                                Task.Run(() =>
+                                {
+                                    ObjectChangeState?.Invoke(this, nameof(AttachedDevices));
+                                });
+                                attachedDevices = AttachedDevices;
+                            }
+                            DeviceConnectionStatusChecksNumber = 0;
+                        }
+                        else
+                            DeviceConnectionStatusChecksNumber++;
+                    }
+                    else
+                        DeviceConnectionStatusChecksNumber = 0;
+                    #endregion
+
+
                     System.Threading.Thread.Sleep(500);
                 }
 
             });
         }
 
+        /// <MetaDataID>{caed0947-adbb-4f1d-96a9-9ed3f975cfc4}</MetaDataID>
+        object StateMachineLock = new object();
+
+        /// <MetaDataID>{4976a965-8662-450e-92cc-f857dbe7d629}</MetaDataID>
+        public void DeviceSleep()
+        {
+            DeviceAppLifecycle deviceAppState = DeviceAppLifecycle.InUse;
+            lock (StateMachineLock)
+                deviceAppState = DeviceAppState;
+            if (deviceAppState != DeviceAppLifecycle.Sleep)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    DeviceAppSleepTime = DateTime.UtcNow;
+                    lock (StateMachineLock)
+                        DeviceAppState = DeviceAppLifecycle.Sleep;
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <MetaDataID>{816503d8-233d-4779-bbef-e6c556291e59}</MetaDataID>
+        private void DeviceShutdown()
+        {
+            DeviceAppLifecycle deviceAppState = DeviceAppLifecycle.InUse;
+            lock (StateMachineLock)
+                deviceAppState = DeviceAppState;
+            if (deviceAppState != DeviceAppLifecycle.Shutdown)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    DeviceAppSleepTime = DateTime.UtcNow;
+                    lock (StateMachineLock)
+                        DeviceAppState = DeviceAppLifecycle.Shutdown;
+                    stateTransition.Consistent = true;
+                }
+            }
+        }
+
+        /// <MetaDataID>{35ced85b-49dd-49b9-b043-481a5de5b6c7}</MetaDataID>
+        public void DeviceResume()
+        {
+            DeviceAppLifecycle deviceAppState = DeviceAppLifecycle.InUse;
+            lock (StateMachineLock)
+                deviceAppState = DeviceAppState;
+            if (deviceAppState != DeviceAppLifecycle.InUse)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    DeviceAppActivationTime = DateTime.UtcNow;
+                    lock (StateMachineLock)
+                        DeviceAppState = DeviceAppLifecycle.InUse;
+                    stateTransition.Consistent = true;
+                }
+            }
+
+
+        }
+
+
+        /// <MetaDataID>{13f9e1eb-2625-4576-826a-b80f2c1532fe}</MetaDataID>
         private void GetShortIdentity()
         {
             string uniqueIdsUrl = string.Format("http://{0}:8090/api/UniqueId/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, this.PreparationStationIdentity);
@@ -888,18 +1029,32 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             OnPreparationItemsChangeState();
         }
-
+        /// <exclude>Excluded</exclude>
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
 
+        /// <summary>
+        /// Used from devices to update its state.
+        /// The number of subscribers are the number of attached devices
+        /// </summary>
         public event PreparationItemsChangeStateHandled PreparationItemsChangeState
         {
             add
             {
                 _PreparationItemsChangeState += value;
+
+                DeviceResume();
+
+                Task.Run(() =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(AttachedDevices));
+                });
             }
             remove
             {
                 _PreparationItemsChangeState -= value;
+
+
+
             }
         }
 
@@ -908,7 +1063,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <MetaDataID>{8ae5f7dd-9136-4cee-a183-060bf7120ae7}</MetaDataID>
-        DateTime? PrepartionVelocityMilestone;
+        DateTime? PreparationVelocityMilestone;
 
         /// <MetaDataID>{397cadbc-bbeb-48f4-a6b8-8a4bbbc7c9ca}</MetaDataID>
         public PreparationStationStatus GetPreparationItems(List<ItemPreparationAbbreviation> itemsOnDevice, string deviceUpdateEtag)
@@ -952,17 +1107,17 @@ namespace FlavourBusinessManager.ServicesContextResources
                 };
 
                 int numberOfPendingToPrepareItems = (from preparationSection in preparationStationStatus.NewItemsUnderPreparationControl
-                                                      from itemPreparation in preparationSection.PreparationItems
-                                                      where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.InPreparation
-                                                      select itemPreparation).Count();
+                                                     from itemPreparation in preparationSection.PreparationItems
+                                                     where itemPreparation.State == ItemPreparationState.PendingPreparation || itemPreparation.State == ItemPreparationState.InPreparation
+                                                     select itemPreparation).Count();
                 if (numberOfPendingToPrepareItems == 0)
-                    PrepartionVelocityMilestone = null;
-                else if (PrepartionVelocityMilestone == null)
+                    PreparationVelocityMilestone = null;
+                else if (PreparationVelocityMilestone == null)
                 {
-                    PrepartionVelocityMilestone = DateTime.UtcNow;
+                    PreparationVelocityMilestone = DateTime.UtcNow;
                 }
             }
- 
+
 
             foreach (var servingSession in preparationStationStatus.NewItemsUnderPreparationControl)
             {
@@ -1102,7 +1257,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{1ab40191-6416-4db1-8e60-72018f6f2945}</MetaDataID>
         object PreparationPlanStartTimeLock = new object();
 
-        /// <MetaDataID>{bb72d0ac-ccf0-4a07-98c8-5e41e5de9c1f}</MetaDataID>
+        /// <exclude>Excluded</exclude>
         DateTime? _PreparationPlanStartTime;
         /// <MetaDataID>{092f57c6-5b4c-4104-bafb-286c1be565da}</MetaDataID>
         internal DateTime? PreparationPlanStartTime
@@ -1378,7 +1533,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
 
 
-            var preparationTimeSpan = DateTime.UtcNow - PrepartionVelocityMilestone.Value;
+            var preparationTimeSpan = DateTime.UtcNow - PreparationVelocityMilestone.Value;
 
             var preparedItems = (from servicePointPreparationItems in FoodItemsInProgress
                                  from itemPreparation in servicePointPreparationItems.PreparationItems
@@ -1388,7 +1543,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             UpdateItemPreparationStatistics(preparedItems, preparationTimeSpan);
 
 
-            PrepartionVelocityMilestone = DateTime.UtcNow;
+            PreparationVelocityMilestone = DateTime.UtcNow;
 
             var clientSessionsItems = (from preparedItem in preparedItems
                                        group preparedItem by preparedItem.ClientSession into ClientSessionItems
@@ -1676,12 +1831,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             if (preparedItems.Count > 0)
             {
-                var preparationTimeSpan = DateTime.UtcNow - PrepartionVelocityMilestone.Value;
+                var preparationTimeSpan = DateTime.UtcNow - PreparationVelocityMilestone.Value;
 
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
                     UpdateItemPreparationStatistics(preparedItems, preparationTimeSpan);
-                    PrepartionVelocityMilestone = DateTime.UtcNow;
+                    PreparationVelocityMilestone = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }
 
@@ -1712,6 +1867,9 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
         /// <MetaDataID>{4175b752-9249-4adf-86a0-dd5bf2f0d069}</MetaDataID>
         volatile bool SuspendsObjectChangeStateEvents;
+        /// <MetaDataID>{11867ed0-6ab1-4df8-aa65-8d36a2e1cc7d}</MetaDataID>
+        private int DeviceConnectionStatusChecksNumber;
+
         /// <MetaDataID>{70023458-eb6b-4245-8003-3668bc9253ec}</MetaDataID>
         public Dictionary<string, ItemPreparationPlan> CancelLastPreparationStep(List<string> itemPreparationUris)
         {

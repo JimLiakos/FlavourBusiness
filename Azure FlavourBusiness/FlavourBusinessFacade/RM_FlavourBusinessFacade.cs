@@ -2745,12 +2745,14 @@ public event FlavourBusinessFacade.RoomService.MealCourseItemsStateChangedHandle
             return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
         }
         
-        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> GetMealCoursesInProgress(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.MealCourseAbbreviation> mealCoursesAtClientSide)
+        public System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse> GetMealCoursesInProgress(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.MealCourseAbbreviation> mealCoursesAtClientSide, string userLanguageCode)
         {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
             args[0] = mealCoursesAtClientSide;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.MealCourseAbbreviation>);
+            args[1] = userLanguageCode;
+            argsTypes[1] = typeof(string);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.RoomService.IMealsController), "GetMealCoursesInProgress", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IMealCourse>>(retValue);
         }
@@ -4764,6 +4766,18 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
             }
         }
         
+        // The Width property for the object.
+        public FlavourBusinessFacade.DeviceAppLifecycle DeviceAppState
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation), "get_DeviceAppState", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.DeviceAppLifecycle>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -5673,6 +5687,30 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             }
         }
         
+        // The Width property for the object.
+        public FlavourBusinessFacade.DeviceAppLifecycle DeviceAppState
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_DeviceAppState", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.DeviceAppLifecycle>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public int AttachedDevices
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "get_AttachedDevices", args, argsTypes);
+                return this.Proxy.GetValue<int>(retValue);
+            }
+        }
+        
         public OOAdvantech.Remoting.IProxy GetProxy()
         {
             object[] args = new object[0];
@@ -5750,6 +5788,20 @@ public event FlavourBusinessFacade.ServicesContextResources.PreparationItemsChan
             args[0] = codeCards;
             argsTypes[0] = typeof(System.Collections.Generic.List<string>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "AssignCodeCardsToSessions", args, argsTypes);
+        }
+        
+        public void DeviceResume()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "DeviceResume", args, argsTypes);
+        }
+        
+        public void DeviceSleep()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStationRuntime), "DeviceSleep", args, argsTypes);
         }
     }
     

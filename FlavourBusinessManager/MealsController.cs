@@ -12,6 +12,7 @@ using OOAdvantech.Remoting;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using static System.Windows.Forms.AxHost;
@@ -58,9 +59,15 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(List<MealCourseAbbreviation> mealCoursesAtClientSide)
+        public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(List<MealCourseAbbreviation> mealCoursesAtClientSide, string userLanguageCode)
         {
             var mealCourseInProgress= MealCoursesInProgress.Where(x => !mealCoursesAtClientSide.Any(y => y.Identity == x.Identity && y.TimeStamp == x.StateTimestamp)).ToList();
+
+            if (!string.IsNullOrWhiteSpace(userLanguageCode))
+            {
+                foreach (var item in mealCourseInProgress.SelectMany(x => x.FoodItems).OfType<ItemPreparation>())
+                    item.EnsurePresentationFor(CultureInfo.GetCultureInfo(userLanguageCode));
+            }
 
             return mealCourseInProgress;
         }
@@ -119,7 +126,7 @@ namespace FlavourBusinessManager.RoomService
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
-                        preparationStation.ActionsOrderCommited(preparationPlan);
+                        preparationStation.ActionsOrderCommitted(preparationPlan);
 
                         #region clear PreparationPlanStartTime in case where there are not items in state pendings to prepare 
 

@@ -180,8 +180,8 @@ namespace FlavourBusinessManager.RoomService
                     return;
                 MonitoringTask = Task.Run(() =>
                 {
-                    var sesionState = Session.SessionState;
-                    while (sesionState == SessionState.MealMonitoring)
+                    var sessionState = Session?.SessionState;
+                    while (sessionState == SessionState.MealMonitoring)
                     {
                         try
                         {
@@ -247,7 +247,7 @@ namespace FlavourBusinessManager.RoomService
                                 return;
                             }
 
-                            sesionState = Session.SessionState;
+                            sessionState = Session.SessionState;
                         }
                         catch (Exception error)
                         {

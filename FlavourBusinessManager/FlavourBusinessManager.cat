@@ -8541,7 +8541,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"10"))
+			    value      	"13"))
 		    quid       	"5D57B5C30236"
 		    external_docs 	(list external_doc_list
 			(object external_doc
@@ -8592,7 +8592,7 @@
 			    quid       	"5D6898770376"
 			    parameters 	(list Parameters
 				(object Parameter "itemsInfoObjectUri"
-				    quid       	"663F41B600C3"
+				    quid       	"6645FC4A03A8"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IItemsPreparationInfo"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -8652,7 +8652,7 @@
 			    quid       	"5F4A42950255"
 			    parameters 	(list Parameters
 				(object Parameter "menuItem"
-				    quid       	"663F41B501F2"
+				    quid       	"6645FC490182"
 				    type       	"MenuModel.IMenuItem"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
@@ -8690,7 +8690,7 @@
 			    quid       	"60DEABBB02EA"
 			    parameters 	(list Parameters
 				(object Parameter "PreparationForInfo"
-				    quid       	"663F41B600EA"
+				    quid       	"6645FC4A03D3"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -8729,9 +8729,13 @@
 				    name       	"UniqueID"
 				    value      	"610B5B48017A"))
 			    quid       	"610B5B48017A"
+			    parameters 	(list Parameters
+				(object Parameter "servicesContextIdentity"
+				    quid       	"6645FC490137"
+				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
-			    opExportControl 	"Protected"
+			    opExportControl 	"Public"
 			    uid        	0)
 			(object Operation "PreparationStation"
 			    attributes 	(list Attribute_Set
@@ -8784,10 +8788,10 @@
 			    quid       	"610B5B48029B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItem"
-				    quid       	"663F41B503B8"
+				    quid       	"6645FC4A018A"
 				    type       	"MenuModel.IMenuItem")
 				(object Parameter "servicePoint"
-				    quid       	"663F41B503C4"
+				    quid       	"6645FC4A0195"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint"))
 			    result     	"bool"
 			    concurrency 	"Sequential"
@@ -8825,10 +8829,10 @@
 			    quid       	"610B5B49000C"
 			    parameters 	(list Parameters
 				(object Parameter "servicePoint"
-				    quid       	"663F41B60369"
+				    quid       	"6645FC4C00DF"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IServicePoint")
 				(object Parameter "PreparationForInfoType"
-				    quid       	"663F41B60375"
+				    quid       	"6645FC4C00EC"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.PreparationForInfoType"))
 			    result     	"FlavourBusinessFacade.ServicesContextResources.IPreparationForInfo"
 			    concurrency 	"Sequential"
@@ -9058,7 +9062,7 @@
 			    quid       	"610B5E770100"
 			    parameters 	(list Parameters
 				(object Parameter "preparationStation"
-				    quid       	"663F41B703D7"
+				    quid       	"6645FC4E00AC"
 				    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationStation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -9077,10 +9081,10 @@
 			    quid       	"626E189C02D7"
 			    parameters 	(list Parameters
 				(object Parameter "fromDate"
-				    quid       	"663F41B501A4"
+				    quid       	"6645FC4900AC"
 				    type       	"System.DateTime")
 				(object Parameter "toDate"
-				    quid       	"663F41B501B3"
+				    quid       	"6645FC4900BE"
 				    type       	"System.DateTime"))
 			    result     	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>"
 			    concurrency 	"Sequential"
@@ -9347,7 +9351,7 @@
 				    external_doc_path 	"$dot Net Projects Path\\FlavourBusiness\\Azure FlavourBusiness\\FlavourBusinessFacade\\Room Service\\Preparation TimeSpan Statistics.docx"))
 			    parameters 	(list Parameters
 				(object Parameter "preparedItems"
-				    quid       	"663F41B70311"
+				    quid       	"6645FC4D03C6"
 				    documentation 	
 |
 |Defines the items where prepared in timespan
@@ -9355,7 +9359,7 @@
 				    
 				    type       	"System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>")
 				(object Parameter "preparationTimeSpan"
-				    quid       	"663F41B70325"
+				    quid       	"6645FC4D03DD"
 				    documentation 	
 |
 |Defines the timespan where items prepared
@@ -9427,7 +9431,7 @@
 			    
 			    parameters 	(list Parameters
 				(object Parameter "normalizedItems"
-				    quid       	"663F41B70393"
+				    quid       	"6645FC4E0060"
 				    type       	"System.Collections.Generic.List<FlavourBusinessManager.ServicesContextResources.ItemPreparationTimeSpan>"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -9489,6 +9493,36 @@
 			    result     	"double"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "PreparationStation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{3b24e42d-0356-4c26-a8b1-febce64ea3ec}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6645FC4900E2"))
+			    quid       	"6645FC4900E2"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Protected"
+			    uid        	0)
+			(object Operation "GetShortIdentity"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{13f9e1eb-2625-4576-826a-b80f2c1532fe}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6645FC4C011D"))
+			    quid       	"6645FC4C011D"
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "Description"
@@ -9754,7 +9788,7 @@
 			    quid       	"610B5B4A0097"
 			    type       	"object"
 			    exportControl 	"Public")
-			(object ClassAttribute "PreparationSessions"
+			(object ClassAttribute "FoodItemsInProgress"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -9940,7 +9974,7 @@
 				    value      	FALSE))
 			    quid       	"62BAB1080217"
 			    type       	"System.Threading.Tasks.TaskCompletionSource<bool>")
-			(object ClassAttribute "PrepartionVelocityMilestone"
+			(object ClassAttribute "PreparationVelocityMilestone"
 			    attributes 	(list Attribute_Set
 				(object Attribute
 				    tool       	"MetaData"
@@ -10100,7 +10134,90 @@
 				    name       	"As Property"
 				    value      	FALSE))
 			    quid       	"663F41BA00BF"
-			    type       	"double"))
+			    type       	"double")
+			(object ClassAttribute "DeviceAppState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d53dfc8e-8c06-49d1-8222-18f6c2c2a3a9}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6645FC4F00B6")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+10")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6645FC4F00B6"
+			    type       	"FlavourBusinessManager.EndUsers.DeviceAppLifecycle"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceAppSleepTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"664601F201E3")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{53ac56f3-c990-4efc-ba96-ed7c3ef5a48f}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+11"))
+			    quid       	"664601F201E3"
+			    type       	"System.DateTime"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceAppActivationTime"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6646027D025E")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{bc544eec-852a-4e37-86cc-46b01705c8bb}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+12"))
+			    quid       	"6646027D025E"
+			    type       	"System.DateTime"
+			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
 		    language   	"C#"

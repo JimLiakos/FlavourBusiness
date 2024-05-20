@@ -15,7 +15,7 @@ namespace WaiterApp.Droid
 {
     /// <MetaDataID>{52453757-2621-49c4-a293-43e18ae14e6a}</MetaDataID>
 
-    [Service(Name = "com.microneme.dontwaitwaiterapp.MyForeGroundService")]
+    [Service(Name = "com.microneme.dontwaitwaiterapp.MyForeGroundService",ForegroundServiceType =Android.Content.PM.ForegroundService.TypeDataSync)]
     public class MyForeGroundService : ForegroundService, IBackgroundService
     {
         public bool IsServiceStarted

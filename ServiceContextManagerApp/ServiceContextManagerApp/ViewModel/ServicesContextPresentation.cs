@@ -112,7 +112,7 @@ namespace ServiceContextManagerApp
 
         /// <MetaDataID>{17dd7c37-a140-43ec-b66e-365b5bd675ed}</MetaDataID>
         public List<ITakeawayCashierPresentation> TakeawayCashiers
-        { 
+        {
             get
             {
                 if (_TakeawayCashiers == null && ServicesContext != null)
@@ -503,7 +503,7 @@ namespace ServiceContextManagerApp
 
                     try
                     {
-                        if (ServicesContextRuntime==null)
+                        if (ServicesContextRuntime == null)
                             ServicesContextRuntime = ServicesContext.GetRunTime();
                         (ServicesContextRuntime as ITransparentProxy).Reconnected += ServicesContextPresentation_Reconnected;
                         this.ServicesContextRuntime.ObjectChangeState += ServicesContext_ObjectChangeState;
@@ -511,7 +511,7 @@ namespace ServiceContextManagerApp
 
                         _MealCoursesInProgress.OnNewViewModelWrapper += MealCoursesInProgress_OnNewViewModelWrapper;
                         GetServiceContextPresentationData();
-                        ServicesContextPresentationInittialized=true;
+                        ServicesContextPresentationInittialized = true;
                     }
                     catch (System.Exception error)
                     {
@@ -537,7 +537,8 @@ namespace ServiceContextManagerApp
 
                 var clientSideMealCourses = _MealCoursesInProgress.Keys.Select(x => new MealCourseAbbreviation() { Identity = x.Identity, TimeStamp = x.StateTimestamp }).ToList();
 
-                var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(clientSideMealCourses).Caching(mealCourses => mealCourses.Select(mealCourse => new
+                var userLanguageCode = OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+                var mealCoursesInProgress = MealsController.Fetching(mc => mc.GetMealCoursesInProgress(clientSideMealCourses, userLanguageCode).Caching(mealCourses => mealCourses.Select(mealCourse => new
                 {
                     mealCourse.Name,
                     mealCourse.ServingBatches,
@@ -555,54 +556,55 @@ namespace ServiceContextManagerApp
                     })
                 })));
 
+               
+                    //MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
 
-                //MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
+                    var mealCoursePresentations = mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x,() => { return new MealCourse(x, MealsController); })).
+                    Where(x => x.StateTimestamp != x.ServerSideMealCourse.StateTimestamp).Select(x => x.MealCourseUpdate(x.ServerSideMealCourse)).ToList();
 
-                var mealCoursePresentations = mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).Where(x => x.StateTimestamp != x.ServerSideMealCourse.StateTimestamp).Select(x => x.MealCourseUpdate(x.ServerSideMealCourse)).ToList();
+                    if (reconnectedToServer)
+                        MealCoursesUpdated?.Invoke(mealCoursePresentations);
+                    else
+                        _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 
-                if (reconnectedToServer)
-                    MealCoursesUpdated?.Invoke(mealCoursePresentations);
-                else
-                    _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+                    DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                    _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
+                    GetMessages();
 
-                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
-                GetMessages();
-
-            });
-        }
+                });
+            }
 
         private void ServicesContextPresentation_Reconnected(object sender)
-        {
-
-            MealsController.NewMealCoursesInProgress -= MealsController_NewMealCoursesInrogress;
-            MealsController.ObjectChangeState -= MealsController_ObjectChangeState;
-            MealsController.MealCourseChangeState -= MealsController_MealCourseChangeState;
-
-            MealsController = ServicesContextRuntime.MealsController;
-            _Waiters = null;
-            _Couriers = null;
-            _Supervisors = null;
-            _TakeawayCashiers = null;
-            _Supervisors = null;
-            GetServiceContextPresentationData(true);
-        }
-
-        private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
-        {
-
-
-            if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
             {
-                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
-            }
-        }
 
-        public void IWillTakeCare(string messageID)
-        {
-            _SignedInSupervisor.IWillTakeCare(messageID);
-        }
+                MealsController.NewMealCoursesInProgress -= MealsController_NewMealCoursesInrogress;
+                MealsController.ObjectChangeState -= MealsController_ObjectChangeState;
+                MealsController.MealCourseChangeState -= MealsController_MealCourseChangeState;
+
+                MealsController = ServicesContextRuntime.MealsController;
+                _Waiters = null;
+                _Couriers = null;
+                _Supervisors = null;
+                _TakeawayCashiers = null;
+                _Supervisors = null;
+                GetServiceContextPresentationData(true);
+            }
+
+            private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
+            {
+
+
+                if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
+                {
+                    DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                    _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
+                }
+            }
+
+            public void IWillTakeCare(string messageID)
+            {
+                _SignedInSupervisor.IWillTakeCare(messageID);
+            }
 
 
         public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
@@ -809,8 +811,8 @@ namespace ServiceContextManagerApp
             var serviceContextHumanResources = ServicesContext.ServiceContextHumanResources;
             //_Supervisors = serviceContextHumanResources.Supervisors.Select(x => new SupervisorPresentation(x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
 
-           
-            
+
+
             serviceContextHumanResources.Supervisors.Select(x => _Supervisors.GetViewModelFor(x, x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
             _ObjectChangeState?.Invoke(this, nameof(Supervisors));
 

@@ -3031,15 +3031,8 @@ namespace FlavourBusinessManager.EndUsers
             DelayedMealAtTheCounter
         }
     }
-    /// <MetaDataID>{b870fcd0-671e-4ef8-abd5-d8bb26cef2fd}</MetaDataID>
-    public enum DeviceAppLifecycle
-    {
-        InUse,
-        Sleep,
-        Shutdown
 
-    }
-
+  
 }
 
 

@@ -23,7 +23,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{ac6eb47d-a891-4d66-a8e1-50f5310d4e36}</MetaDataID>
         Dictionary<string, ItemPreparationPlan> ItemsServing(List<string> itemPreparationUris);
 
+        [HttpVisible]
         event ObjectChangeStateHandle ObjectChangeState;
+
+
+
 
         /// <MetaDataID>{db665dba-2fd6-4d32-a941-263cf60a5e18}</MetaDataID>
         Dictionary<string, List<MenuModel.ITag>> ItemsPreparationTags { get; }
@@ -110,6 +114,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
         /// <MetaDataID>{f917b9bc-9cdb-4d58-958c-29a20f95d173}</MetaDataID>
         double PreparationVelocity { get; }
+
+
+        void DeviceResume();
+
+        void DeviceSleep();
+        [HttpVisible]
+        DeviceAppLifecycle DeviceAppState { get; }
+
+        [HttpVisible]
+        int AttachedDevices {get;}
+
+
     }
 
     public delegate void PreparationItemsChangeStateHandled(IPreparationStationRuntime sender, string deviceUpdateEtag);
