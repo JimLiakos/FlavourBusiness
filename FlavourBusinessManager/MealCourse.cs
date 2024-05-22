@@ -1034,12 +1034,13 @@ namespace FlavourBusinessManager.RoomService
                 if(itemPreparation.PreparationStation.MainStation!=null&& itemPreparation.State == ItemPreparationState.PendingPreparation)
                 {
                     var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
-                    if (itemPreparation.ActivePreparationStation.PreparationStationIdentity != itemsPreparationContext.PreparationStationIdentity)
+                    if (itemPreparation.ActivePreparationStation.PreparationStationIdentity != itemsPreparationContext.PreparationStationIdentity&&
+                        itemsPreparationContext.PreparationItems.All(x => x.State.IsInPreviousState(ItemPreparationState.InPreparation)))
                     {
-
+                        
 
                         #region item moved from main to sub station and vice versa
-                        
+
                         if (itemPreparation.PreparationStation as PreparationStation != null && !preparationStationsHasChangeState.Contains(itemPreparation.PreparationStation as PreparationStation))
                             preparationStationsHasChangeState.Add(itemPreparation.PreparationStation as PreparationStation);
                         if (itemPreparation.PreparationStation.MainStation as PreparationStation != null && !preparationStationsHasChangeState.Contains(itemPreparation.PreparationStation.MainStation as PreparationStation))
@@ -1049,6 +1050,10 @@ namespace FlavourBusinessManager.RoomService
 
 
                         itemsPreparationContext.RemovePreparationItem(itemPreparation);
+                        
+                        if(itemsPreparationContext.PreparationItems.Count==0)
+                            _FoodItemsInProgress.Remove(itemsPreparationContext);
+                        
 
                         itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
 

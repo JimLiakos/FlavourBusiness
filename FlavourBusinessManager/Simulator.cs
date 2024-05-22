@@ -56,7 +56,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator(ServicesContextRunTime servicesContextRunTime)
         {
-            
+            return;
 
             var preparationStations = servicesContextRunTime.PreparationStations.ToList();
 

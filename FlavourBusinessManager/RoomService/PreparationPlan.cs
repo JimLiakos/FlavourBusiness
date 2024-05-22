@@ -286,10 +286,10 @@ namespace FlavourBusinessManager.RoomService
 
         static PreparationStation GetPreparationStation(this ItemsPreparationContext preparationSection)
         {
-            var preparationStation = preparationSection.PreparationItems[0].PreparationStation as PreparationStation;
+            var preparationStation = preparationSection.PreparationItems.FirstOrDefault()?.PreparationStation as PreparationStation;
             if (preparationStation == null)
             {
-
+                 
             }
 
             return preparationStation;
