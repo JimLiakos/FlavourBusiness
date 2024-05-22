@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlavourBusinessFacade
 {
+    /// <MetaDataID>{35815fe5-6439-414c-8d2b-417faeec12b1}</MetaDataID>
     public static class GlobalResourcesIdentities
     {
         public static string GetShortIdentity(string resourceFullIdentity)

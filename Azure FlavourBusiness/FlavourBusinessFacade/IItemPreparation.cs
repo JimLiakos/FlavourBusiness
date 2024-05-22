@@ -83,6 +83,9 @@ namespace FlavourBusinessFacade.RoomService
         [Association("PreparationStationItems", Roles.RoleB, "e7e482f4-cfba-45a5-8270-8346af757d7a")]
         ServicesContextResources.IPreparationStation PreparationStation { get; set; }
 
+        ServicesContextResources.IPreparationStation ActivePreparationStation { get; }
+
+
         /// <MetaDataID>{6d81b0c8-acd5-4b40-b2e4-dd29ff3dbc8c}</MetaDataID>
         [BackwardCompatibilityID("+7")]
         string SelectedMealCourseTypeUri { get; set; }

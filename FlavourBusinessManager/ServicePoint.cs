@@ -762,7 +762,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                     {
                         //When meal has change service point, may be changed the waiters which can serve the prepared meal courses  
 
-                        (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(foodServiceSession.Meal.Courses);
+                        (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealCoursesCheck(foodServiceSession.Meal.Courses);
                     }
 
 
@@ -781,7 +781,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                         Transaction.Current.TransactionCompleted += (Transaction transaction) =>
                         {
                             if (transaction.Status == TransactionStatus.Committed && servicePointLastOpenSession.Meal != null)
-                                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealcoursesCheck(servicePointLastOpenSession.Meal.Courses);
+                                (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as RoomService.MealsController).ReadyToServeMealCoursesCheck(servicePointLastOpenSession.Meal.Courses);
                         };
 
                         stateTransition.Consistent = true;

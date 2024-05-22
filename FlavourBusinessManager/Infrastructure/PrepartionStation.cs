@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Windows.Forms.AxHost;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -23,10 +24,11 @@ namespace FlavourBusinessManager.ServicesContextResources
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
 
+
         /// <exclude>Excluded</exclude>
-        DeviceAppLifecycle _DeviceAppState;
+        DeviceAppLifecycle _DeviceAppState= DeviceAppLifecycle.Shutdown;
         /// <MetaDataID>{d53dfc8e-8c06-49d1-8222-18f6c2c2a3a9}</MetaDataID>
-        [PersistentMember(nameof(_DeviceAppState))]
+        //[PersistentMember(nameof(_DeviceAppState))]
         [BackwardCompatibilityID("+10")]
         public DeviceAppLifecycle DeviceAppState
         {
@@ -40,11 +42,27 @@ namespace FlavourBusinessManager.ServicesContextResources
                         _DeviceAppState = value;
                         stateTransition.Consistent = true;
                     }
-
-
                 }
             }
         }
+
+        /// <MetaDataID>{b56dedf6-280e-4fab-96f9-b3124f957433}</MetaDataID>
+        public bool IsActive
+        {
+            get
+            {
+                if (_MainStation == null)
+                    return true;
+
+                if (DeviceAppState == DeviceAppLifecycle.InUse)
+                    return true;
+
+                return false;
+            }
+        }
+
+
+        /// <MetaDataID>{3b09f083-8182-4f23-a959-5d79631c5664}</MetaDataID>
         public int AttachedDevices
         {
             get
@@ -479,6 +497,21 @@ namespace FlavourBusinessManager.ServicesContextResources
         [BackwardCompatibilityID("+7")]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete)]
         public List<IPreparationStation> SubStations => _SubStations.ToThreadSafeList();
+
+
+        /// <exclude>Excluded</exclude>
+        Member<IPreparationStation> _MainStation=new Member<IPreparationStation>();
+
+        /// <MetaDataID>{63799a62-82dd-43a8-8dab-f2b6b9f10bc5}</MetaDataID>
+        [PersistentMember(nameof(_MainStation))]
+        [BackwardCompatibilityID("+13")]
+        
+        public IPreparationStation MainStation => _MainStation.Value;
+
+
+        ///// <MetaDataID>{63799a62-82dd-43a8-8dab-f2b6b9f10bc5}</MetaDataID>
+        //[BackwardCompatibilityID("+13")]
+        //public IPreparationStation MainStation { get => null; }
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
@@ -937,6 +970,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                     DeviceAppSleepTime = DateTime.UtcNow;
                     lock (StateMachineLock)
                         DeviceAppState = DeviceAppLifecycle.Shutdown;
+
+                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        (ServicesContextRunTime.Current.MealsController as MealsController).MealPrepStationsRedistribution();
+                    });
                     stateTransition.Consistent = true;
                 }
             }
@@ -955,6 +993,11 @@ namespace FlavourBusinessManager.ServicesContextResources
                     DeviceAppActivationTime = DateTime.UtcNow;
                     lock (StateMachineLock)
                         DeviceAppState = DeviceAppLifecycle.InUse;
+
+                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        (ServicesContextRunTime.Current.MealsController as MealsController).MealPrepStationsRedistribution();
+                    });
                     stateTransition.Consistent = true;
                 }
             }

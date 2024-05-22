@@ -10,6 +10,10 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     public interface IPreparationStation
     {
+        [Association("PreparationSubStation", Roles.RoleB, "cd533f23-6824-4431-b904-818421f4eb42")]
+        [RoleBMultiplicityRange(1, 1)]
+        IPreparationStation MainStation { get; }
+
         /// <MetaDataID>{a361dd77-8fe0-48ee-abb0-01e87675322e}</MetaDataID>
         string ShortIdentity { get; set; }
 
@@ -57,6 +61,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         string PreparationStationIdentity { get; }
 
 
+        /// <MetaDataID>{55a15f9b-ae42-4cfe-97b4-1e95dd50a278}</MetaDataID>
         DeviceAppLifecycle DeviceAppState { get; }
 
 

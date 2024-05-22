@@ -17,6 +17,7 @@ using OOAdvantech.Json.Linq;
 using MenuModel;
 using MenuModel.JsonViewModel;
 using System.IO;
+using System.Xml;
 
 
 #if DeviceDotNet
@@ -536,6 +537,22 @@ namespace PreparationStationDevice
                     break;
                 }
             }
+            var updatedPreparationItems = (from servicePointPreparationItems in servicePointsPreparationItems
+                                          from itemPreparation in servicePointPreparationItems.PreparationItems
+                                          select itemPreparation).ToList();
+
+
+            foreach (var existingPreparationItem in existingPreparationItems)
+            {
+                var updatedPreparationItem = updatedPreparationItems.Where(x => x.uid == existingPreparationItem.uid).FirstOrDefault();
+                if (updatedPreparationItem == null)
+                    (from itemsPreparationContext in ItemsPreparationContexts
+                     from preparationItem in itemsPreparationContext.PreparationItems
+                     where preparationItem == existingPreparationItem
+                     select itemsPreparationContext).FirstOrDefault()?.RemovePreparationItem(existingPreparationItem);
+            }
+            PreparationItemsLoaded?.Invoke(this);
+            ObjectChangeState?.Invoke(this, nameof(ServingTimeSpanPredictions));
 
         }
 

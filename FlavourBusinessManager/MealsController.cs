@@ -44,7 +44,7 @@ namespace FlavourBusinessManager.RoomService
                                    select mealCource).ToList();
                 TimeSpan timeSpan2 = (DateTime.UtcNow - timeStamp);
 
-                var ids= mealCourses.Select(x => x.Identity).ToList();
+                var ids = mealCourses.Select(x => x.Identity).ToList();
 
                 if (timer.IsRunning)
                 {
@@ -61,7 +61,7 @@ namespace FlavourBusinessManager.RoomService
 
         public System.Collections.Generic.List<IMealCourse> GetMealCoursesInProgress(List<MealCourseAbbreviation> mealCoursesAtClientSide, string userLanguageCode)
         {
-            var mealCourseInProgress= MealCoursesInProgress.Where(x => !mealCoursesAtClientSide.Any(y => y.Identity == x.Identity && y.TimeStamp == x.StateTimestamp)).ToList();
+            var mealCourseInProgress = MealCoursesInProgress.Where(x => !mealCoursesAtClientSide.Any(y => y.Identity == x.Identity && y.TimeStamp == x.StateTimestamp)).ToList();
 
             if (!string.IsNullOrWhiteSpace(userLanguageCode))
             {
@@ -588,7 +588,7 @@ namespace FlavourBusinessManager.RoomService
                 List<IMealCourse> mealCoursesToServe = null;
 
                 var courierState = courier.State;
-                if (courierState  == CourierState.OnTheRoad || courierState  == CourierState.NearDeliveryServicePoint)
+                if (courierState == CourierState.OnTheRoad || courierState == CourierState.NearDeliveryServicePoint)
                 {
                     mealCoursesToServe = (from mealCourse in MealCoursesInProgress
                                           from itemsPreparationContext in mealCourse.FoodItemsInProgress
@@ -921,6 +921,17 @@ namespace FlavourBusinessManager.RoomService
 
         }
 
+        /// <summary>
+        /// Redistribute all the items to available preparation stations
+        /// where its state is PendingPreparation
+        /// </summary>
+        ///<remarks>
+        ///</remarks>
+        internal void MealPrepStationsRedistribution()
+        {
+            foreach (MealCourse mealCourse in MealCoursesInProgress)
+                mealCourse.MealPrepStationsRedistribution();
+        }
 
 
         /// <summary>
@@ -931,7 +942,7 @@ namespace FlavourBusinessManager.RoomService
         /// </param>
 
         /// <MetaDataID>{17792be3-f73c-4e93-b382-6848fcef9521}</MetaDataID>
-        internal void ReadyToServeMealcoursesCheck(List<IMealCourse> mealCourses)
+        internal void ReadyToServeMealCoursesCheck(List<IMealCourse> mealCourses)
         {
 
 

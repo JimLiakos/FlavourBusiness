@@ -116,14 +116,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
         double PreparationVelocity { get; }
 
 
+        /// <MetaDataID>{a423809d-8abf-4ee4-9070-217b72d11707}</MetaDataID>
         void DeviceResume();
 
+        /// <MetaDataID>{6ce3be05-5828-4643-a91d-f45c60d25499}</MetaDataID>
         void DeviceSleep();
+        /// <MetaDataID>{50e2e06c-1048-48b3-9b03-1302791e8baf}</MetaDataID>
         [HttpVisible]
         DeviceAppLifecycle DeviceAppState { get; }
 
+        /// <MetaDataID>{0b526c3a-afd2-415a-a8bf-2dc7744603e5}</MetaDataID>
         [HttpVisible]
-        int AttachedDevices {get;}
+        int AttachedDevices { get; }
 
 
     }

@@ -56,10 +56,10 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator(ServicesContextRunTime servicesContextRunTime)
         {
-
-            //return;
-            var preparationStations = servicesContextRunTime.PreparationStations.ToList();
             
+
+            var preparationStations = servicesContextRunTime.PreparationStations.ToList();
+
             if (PreparationStationSimulatorItems == null)
             {
                 PreparationStationSimulatorItems = new List<ClientSessionPattern>() {
@@ -464,24 +464,29 @@ namespace FlavourBusinessManager.RoomService
 
                 foreach (var psItemsPattern in clientSessionPattern.PreparationStations)
                 {
-                    var preparationStation= preparationStationsItems.Keys.Where(x => x.ShortIdentity == psItemsPattern.PreparationStationIdentity).First();
+                    var preparationStation = preparationStationsItems.Keys.Where(x => x.ShortIdentity == psItemsPattern.PreparationStationIdentity).First();
                     if (psItemsPattern.NumberOfItems != null)
                     {
                         int tries = 15;
                         while (psItemsPattern.NumberOfItems > 0 && tries > 0)
                         {
                             var preparationStationItems = preparationStationsItems[preparationStation];
-
-                            var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                            var menuCanvasItem = (clientSession as FoodServiceClientSession).GraphicMenu.GetMenuCanvasFoodItem(ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem));
-                            if (menuCanvasItem != null)
+                            if (preparationStationItems.Count > 0)
                             {
-                                ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                                itemsToPrepare.Add(itemPreparation);
-                                psItemsPattern.NumberOfItems = psItemsPattern.NumberOfItems - 1;
+                                var menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                                var menuCanvasItem = (clientSession as FoodServiceClientSession).GraphicMenu.GetMenuCanvasFoodItem(ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem));
+                                if (menuCanvasItem != null)
+                                {
+                                    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                                    itemsToPrepare.Add(itemPreparation);
+                                    psItemsPattern.NumberOfItems = psItemsPattern.NumberOfItems - 1;
+                                }
+                                else
+                                    tries--;
                             }
                             else
                                 tries--;
+
                         }
                     }
                     if (psItemsPattern.ItemsPatterns != null)
@@ -491,18 +496,23 @@ namespace FlavourBusinessManager.RoomService
                             int tries = 15;
                             while (tries > 0)
                             {
-                                
-                                
+
+
                                 var preparationStationItems = preparationStationsItems[preparationStation];
 
                                 preparationStationItems = preparationStationItems.Where(x => (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) >= itemPattern.MinDuration / 2 && (preparationStation as PreparationStation).GetPreparationTimeInMin(x as MenuItem) <= itemPattern.MaxDuration / 2).ToList();
-                                IMenuItem menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
-                                var menuCanvasItem = (clientSession as FoodServiceClientSession).GraphicMenu.GetMenuCanvasFoodItem(ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem));
-                                if (menuCanvasItem != null)
+                                if (preparationStationItems.Count > 0)
                                 {
-                                    ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
-                                    itemsToPrepare.Add(itemPreparation);
-                                    break;
+                                    IMenuItem menuItem = preparationStationItems[_R.Next(preparationStationItems.Count - 1)];
+                                    var menuCanvasItem = (clientSession as FoodServiceClientSession).GraphicMenu.GetMenuCanvasFoodItem(ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem));
+                                    if (menuCanvasItem != null)
+                                    {
+                                        ItemPreparation itemPreparation = new ItemPreparation(Guid.NewGuid().ToString("N"), ObjectStorage.GetStorageOfObject(menuItem).GetPersistentObjectUri(menuItem), menuItem.Name) { Quantity = 1, SelectedMealCourseTypeUri = mainMealCourseTypeUri };
+                                        itemsToPrepare.Add(itemPreparation);
+                                        break;
+                                    }
+                                    else
+                                        tries--;
                                 }
                                 else
                                     tries--;
@@ -629,7 +639,7 @@ namespace FlavourBusinessManager.RoomService
 
         public int? NumberOfItems;
 
-     
+
 
         public string PreparationStationIdentity { get; set; }
         public string PreparationStationName { get; set; }
@@ -648,6 +658,7 @@ namespace FlavourBusinessManager.RoomService
     }
 
 
+    /// <MetaDataID>{147267b7-ceae-4c37-8526-d41ea718f1f7}</MetaDataID>
     class ClientSessionPattern
     {
         public List<PSItemsPattern> PreparationStations;

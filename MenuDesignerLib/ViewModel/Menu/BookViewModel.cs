@@ -266,7 +266,16 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                             pageImages[page.Border.PortraitImage.Uri] = page.Border.PortraitImage.Uri;
                     }
                 }
+                if (jsonRestaurantMenu.OrderPadBackground != null)
+                {
+                    if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
+                        pageImages[jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri] = jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri;
 
+                    if (jsonRestaurantMenu.OrderPadBackground.PortraitImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri))
+                        pageImages[jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri] = jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri;
+                }
+
+                
                 foreach (string uri in pageImages.Keys.ToArray())
                 {
                     var aboluteImageUri = rootUri + uri.Replace("/", @"\");
@@ -303,6 +312,13 @@ namespace MenuDesigner.ViewModel.MenuCanvas
                     }
                 }
 
+                if (jsonRestaurantMenu.OrderPadBackground!= null)
+                {
+                    if (jsonRestaurantMenu.OrderPadBackground.LandscapeImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri))
+                        jsonRestaurantMenu.OrderPadBackground.LandscapeImage = new MenuPresentationModel.MenuStyles.Resource() { Name = jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Name, Uri = pageImages[jsonRestaurantMenu.OrderPadBackground.LandscapeImage.Uri], TimeStamp = DateTime.Now };
+                    if (jsonRestaurantMenu.OrderPadBackground.PortraitImage != null && !string.IsNullOrWhiteSpace(jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri))
+                        jsonRestaurantMenu.OrderPadBackground.PortraitImage = new MenuPresentationModel.MenuStyles.Resource() { Name = jsonRestaurantMenu.OrderPadBackground.PortraitImage.Name, Uri = pageImages[jsonRestaurantMenu.OrderPadBackground.PortraitImage.Uri], TimeStamp = DateTime.Now };
+                }
 
                 List<string> menuAccentImages = new List<string>();
 
