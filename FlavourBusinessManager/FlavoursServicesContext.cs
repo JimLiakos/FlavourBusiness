@@ -384,14 +384,9 @@ namespace FlavourBusinessManager
                 return GetRunTime().FisicalParties;
             }
         }
+
         /// <MetaDataID>{9919d8d1-7601-428d-94f5-933aabf2ed42}</MetaDataID>
-        public ServiceContextResources ServiceContextResources
-        {
-            get
-            {
-                return GetRunTime().ServiceContextResources;
-            }
-        }
+        public ServiceContextResources ServiceContextResources { get=>GetRunTime().ServiceContextResources; }
 
         /// <MetaDataID>{201f8944-163a-41af-9110-b650a5bce25b}</MetaDataID>
         public ServiceContextHumanResources ServiceContextHumanResources

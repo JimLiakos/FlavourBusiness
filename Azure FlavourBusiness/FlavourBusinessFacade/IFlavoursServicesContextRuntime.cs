@@ -104,8 +104,10 @@ namespace FlavourBusinessFacade
         IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity);
 
 
-        /// <MetaDataID>{4d1c49d1-745a-4b4f-a934-0476332e894e}</MetaDataID>
         ServiceContextResources ServiceContextResources { get; }
+            
+
+        
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;

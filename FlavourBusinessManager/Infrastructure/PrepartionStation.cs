@@ -323,7 +323,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{2b80a101-a22c-46c7-b8e0-509dd8acc4ee}</MetaDataID>
         [PersistentMember(nameof(_ItemsPreparationInfos))]
         [BackwardCompatibilityID("+3")]
-        [CachingDataOnClientSide]
+        //[CachingDataOnClientSide]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         public IList<IItemsPreparationInfo> ItemsPreparationInfos
         {
@@ -455,7 +455,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{2f99ee50-7744-4e5a-85cc-0e57d1c949fa}</MetaDataID>
         [PersistentMember(nameof(_PreparationForInfos))]
         [BackwardCompatibilityID("+5")]
-        [CachingDataOnClientSide]
+        //[CachingDataOnClientSide]
         [AssociationEndBehavior(PersistencyFlag.CascadeDelete | PersistencyFlag.OnConstruction)]
         public List<IPreparationForInfo> PreparationForInfos => _PreparationForInfos.ToThreadSafeList();
 

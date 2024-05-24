@@ -2031,14 +2031,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
-        /// <MetaDataID>{f26b75fe-4231-4cc0-890d-618a20ed0f42}</MetaDataID>
-        public ServiceContextResources ServiceContextResources
-        {
-            get
-            {
-                return new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations = TakeAwayStations, PaymentTerminals = PaymentTerminals, DeliveryCallCenterStations = this.CallCenterStations };
-            }
-        }
+      
 
         /// <MetaDataID>{fa9fc77b-4d3e-40c2-a258-aa5d6d39c9b9}</MetaDataID>
         public ServiceContextHumanResources ServiceContextHumanResources
@@ -2640,6 +2633,8 @@ namespace FlavourBusinessManager.ServicePointRunTime
             //7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad
             return this.PreparationStationRuntimes[preparationStationIdentity];
         }
+
+        public ServiceContextResources ServiceContextResources { get=>new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations = TakeAwayStations, PaymentTerminals = PaymentTerminals, DeliveryCallCenterStations = this.CallCenterStations };  }
 
 
         /// <MetaDataID>{16f0ecc7-44cf-47b9-b628-c6ddbcc99d60}</MetaDataID>

@@ -146,9 +146,10 @@ namespace FLBManager.ViewModel
                 try
                 {
 
-                    ServiceContextResources = FlavoursServicesContextRuntime.ServiceContextResources;
-                    ServiceContextHumanResources = FlavoursServicesContextRuntime.ServiceContextHumanResources;
 
+            
+                    ServiceContextResources = FlavoursServicesContextRuntime.Fetching(fscRuntime => fscRuntime.ServiceContextResources.Caching(resources => resources.PreparationStations.Select(prepStation => new { prepStation.ItemsPreparationInfos, prepStation.PreparationForInfos })));
+            
                     var homeDeliveryService = FlavoursServicesContextRuntime.DeliveryServicePoint;
                     if (homeDeliveryService != null)
                         HomeDeliveryServiceTreeNode = new HomeDeliveryServiceTreeNode(this, homeDeliveryService);
