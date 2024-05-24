@@ -19,6 +19,10 @@ using OOAdvantech;
 using System.Linq.Expressions;
 using OOAdvantech.Remoting.RestApi;
 using Xamarin.Forms;
+using System.Windows.Controls;
+using System.Security.Principal;
+
+
 
 
 
@@ -231,7 +235,18 @@ namespace ServiceContextManagerApp
         {
             get
             {
-                return this.ServicesContextRuntime.PreparationStations;
+                List<IPreparationStation> preparationStations = new List<IPreparationStation>();
+
+                foreach (var station in this.ServicesContextRuntime.PreparationStations)
+                {
+                    preparationStations.Add(station);
+                    foreach (var subStation in station.SubStations)
+                    {
+                        if (!preparationStations.Contains(subStation))
+                            preparationStations.Add(subStation);
+                    }
+                }
+                return preparationStations;
             }
         }
 
@@ -556,55 +571,55 @@ namespace ServiceContextManagerApp
                     })
                 })));
 
-               
-                    //MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
 
-                    var mealCoursePresentations = mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x,() => { return new MealCourse(x, MealsController); })).
-                    Where(x => x.StateTimestamp != x.ServerSideMealCourse.StateTimestamp).Select(x => x.MealCourseUpdate(x.ServerSideMealCourse)).ToList();
+                //MealCoursesUpdated?.Invoke(new List<MealCourse>() { mealCourse });
 
-                    if (reconnectedToServer)
-                        MealCoursesUpdated?.Invoke(mealCoursePresentations);
-                    else
-                        _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+                var mealCoursePresentations = mealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, () => { return new MealCourse(x, MealsController); })).
+                Where(x => x.StateTimestamp != x.ServerSideMealCourse.StateTimestamp).Select(x => x.MealCourseUpdate(x.ServerSideMealCourse)).ToList();
 
-                    DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-                    _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
-                    GetMessages();
+                if (reconnectedToServer)
+                    MealCoursesUpdated?.Invoke(mealCoursePresentations);
+                else
+                    _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
 
-                });
-            }
+                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
+                GetMessages();
+
+            });
+        }
 
         private void ServicesContextPresentation_Reconnected(object sender)
+        {
+
+            MealsController.NewMealCoursesInProgress -= MealsController_NewMealCoursesInrogress;
+            MealsController.ObjectChangeState -= MealsController_ObjectChangeState;
+            MealsController.MealCourseChangeState -= MealsController_MealCourseChangeState;
+
+            MealsController = ServicesContextRuntime.MealsController;
+            _Waiters = null;
+            _Couriers = null;
+            _Supervisors = null;
+            _TakeawayCashiers = null;
+            _Supervisors = null;
+            GetServiceContextPresentationData(true);
+        }
+
+        private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
+        {
+
+
+            if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
             {
-
-                MealsController.NewMealCoursesInProgress -= MealsController_NewMealCoursesInrogress;
-                MealsController.ObjectChangeState -= MealsController_ObjectChangeState;
-                MealsController.MealCourseChangeState -= MealsController_MealCourseChangeState;
-
-                MealsController = ServicesContextRuntime.MealsController;
-                _Waiters = null;
-                _Couriers = null;
-                _Supervisors = null;
-                _TakeawayCashiers = null;
-                _Supervisors = null;
-                GetServiceContextPresentationData(true);
+                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
             }
+        }
 
-            private void MealsController_MealCourseChangeState(IMealCourse mealCourser, string memberName)
-            {
-
-
-                if (DelayedServingBatchesAtTheCounter?.Count > 0 == true && memberName == nameof(MealCourse.PreparationState) && mealCourser?.PreparationState == ItemPreparationState.OnRoad)
-                {
-                    DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-                    _ObjectChangeState?.Invoke(this, nameof(DelayedServingBatchesAtTheCounter));
-                }
-            }
-
-            public void IWillTakeCare(string messageID)
-            {
-                _SignedInSupervisor.IWillTakeCare(messageID);
-            }
+        public void IWillTakeCare(string messageID)
+        {
+            _SignedInSupervisor.IWillTakeCare(messageID);
+        }
 
 
         public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
@@ -1001,8 +1016,76 @@ namespace ServiceContextManagerApp
             return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
 
         }
+        public PreparationStationDeviceAssignment GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color)
+        {
+
+            string codeValue = preparationStation.PreparationStationIdentity;
+            string SigBase64 = GetQRcodeBase64Img(color, codeValue);
+            return new PreparationStationDeviceAssignment() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = preparationStation.ShortIdentity };
+
+        }
+
+        private static string GetQRcodeBase64Img(string color, string codeValue)
+        {
+            string SigBase64 = "";
+#if DeviceDotNet
+                var barcodeWriter = new BarcodeWriterGeneric()
+                {
+                    Format = ZXing.BarcodeFormat.QR_CODE,
+                    Options = new ZXing.Common.EncodingOptions
+                    {
+                        Height = 400,
+                        Width = 400
+                    }
+                };
 
 
+                var bitmapMatrix = barcodeWriter.Encode(codeValue);
+                var width = bitmapMatrix.Width;
+                var height = bitmapMatrix.Height;
+                int[] pixelsImage = new int[width * height];
+                SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
+
+                SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
+                if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
+                    fgColor = SkiaSharp.SKColors.Black;
+
+                var pixels = qrCodeImage.Pixels;
+                int k = 0;
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        if (bitmapMatrix[j, i])
+                            pixels[k++] = fgColor;
+                        else
+                            pixels[k++] = SkiaSharp.SKColors.White;
+                    }
+                }
+                qrCodeImage.Pixels = pixels;
+
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+                    d.SaveTo(ms);
+                    byte[] byteImage = ms.ToArray();
+                    SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
+                }
+#else
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            var qrCodeImage = qrCode.GetGraphic(20, color, "#FFFFFF", true);
+
+            using (System.IO.MemoryStream ms = new MemoryStream())
+            {
+                qrCodeImage.Save(ms, ImageFormat.Png);
+                byte[] byteImage = ms.ToArray();
+                SigBase64 = @"data:image/png;base64," + Convert.ToBase64String(byteImage);
+            }
+#endif
+            return SigBase64;
+        }
 
         public NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color)
         {

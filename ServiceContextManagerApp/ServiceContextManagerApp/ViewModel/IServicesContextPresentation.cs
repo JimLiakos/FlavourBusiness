@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using WaiterApp.ViewModel;
 
 namespace ServiceContextManagerApp
@@ -82,6 +83,7 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{d4999189-2e89-4ba7-b5d4-0020b56dc3f2}</MetaDataID>
         NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color);
 
+        PreparationStationDeviceAssignment GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color);
 
         // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 

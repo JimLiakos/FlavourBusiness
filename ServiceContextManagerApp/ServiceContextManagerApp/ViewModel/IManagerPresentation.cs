@@ -45,5 +45,18 @@ namespace ServiceContextManagerApp
         public string Code { get; set; }
     }
 
+    [HttpVisible]
+    public class PreparationStationDeviceAssignment
+    {
+        public string QRCode { get; set; }
+        public string PreparationStationIdentity { get; set; }
+
+        public string ShortIdentity { get; set; }
+
+
+    }
+
+    
+
 
 }
