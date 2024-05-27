@@ -248,11 +248,18 @@ namespace FlavourBusinessManager.RoomService
                 return DateTime.Now;
 
         }
-        public static ItemsPreparationContext GetReferencePreparationSection(this IMealCourse mealCourse, PreparationPlan context)
-        {
-            var pendingPreparationSessions = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
 
-            return pendingPreparationSessions.OrderBy(x => x.GetPreparationForecast(context)).LastOrDefault();
+        /// <summary>
+        /// MealCourse with many ItemsPreparationContext one from that is the reference ItemsPreparationContext. Is th ItemsPreparationContext which will prepared at latest time.  
+        /// </summary>
+        /// <param name="mealCourse"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static ItemsPreparationContext GetReferenceItemsPreparationContext(this IMealCourse mealCourse, PreparationPlan context)
+        {
+            var pendingItemsPreparationContexts = mealCourse.FoodItemsInProgress.Where(x => x.GetPreparationStation() != null).ToList();
+
+            return pendingItemsPreparationContexts.OrderBy(x => x.GetPreparationForecast(context)).LastOrDefault();
         }
 
         public static ItemsPreparationContext GetLastPlanReferencePreparationSection(this IMealCourse mealCourse, PreparationPlan context)
@@ -444,22 +451,27 @@ namespace FlavourBusinessManager.RoomService
                         previousPreparationEndsAt = previousPreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare));
 
                         //if (!stirTheSequence)       //The rearrangements doesn't allowed when we stir preparations sequence
-                        {                           
-                            //The rearrangements  produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
-                            var itemToPreparePreparationSection = itemToPrepare.FindItemsPreparationContext();
-                            if (!itemToPrepare.IsInReferencePreparationSection(actionContext))
+                        {
+                            //The rearrangements produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
+
+
+                            #region creates position interchange between two items "PositionInterchange"
+                            var itemToPrepareItemsPreparationContext = itemToPrepare.FindItemsPreparationContext();
+
+                            if (!itemToPrepare.IsInReferencePreparationSection(actionContext))//there isn't reason to interchange position of item that 
                             {
 
                                 if (itemToPrepare != itemsPendingToPrepare.Last())
                                 {
                                     ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
-                                    if (nextItemToPrepare.FindItemsPreparationContext() != itemToPreparePreparationSection)
+                                    if (nextItemToPrepare.FindItemsPreparationContext() != itemToPrepareItemsPreparationContext)
                                     {
                                         if (nextItemToPrepare.IsInReferencePreparationSection(actionContext))
                                         {
                                             TimeSpan timeSpan = itemToPrepare.MealCourse.GetPreparationForecast(actionContext) - actionContext.GetPreparationEndsAt(itemToPrepare);
                                             if (timeSpan.TotalMinutes >= preparationStation.GetPreparationTimeSpanInMin(nextItemToPrepare) * 0.9)
                                             {
+                                                //Creates a position change command.
                                                 pendingItemsRearrange = true;
                                                 pendingItemsRearrangements++;
                                                 itemsPendingToPrepare.Remove(nextItemToPrepare);
@@ -470,7 +482,8 @@ namespace FlavourBusinessManager.RoomService
                                         }
                                     }
                                 }
-                            }
+                            } 
+                            #endregion
                         }
                     }
 
@@ -484,7 +497,7 @@ namespace FlavourBusinessManager.RoomService
         }
         internal static bool IsInReferencePreparationSection(this ItemPreparation itemPreparation, PreparationPlan actionContext)
         {
-            return itemPreparation.MealCourse.GetReferencePreparationSection(actionContext) == itemPreparation.FindItemsPreparationContext();
+            return itemPreparation.MealCourse.GetReferenceItemsPreparationContext(actionContext) == itemPreparation.FindItemsPreparationContext();
         }
         internal static List<string> GetActionsToStrings(this PreparationStation preparationStation, PreparationPlan actionContext)
         {
@@ -689,7 +702,7 @@ namespace FlavourBusinessManager.RoomService
                 {
                     foreach (var preparationSection in preparationSectionsForOptimazation.ToList())
                     {
-                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferencePreparationSection(actionContext) && // the reference preparation section of meal course has change
+                        if (preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext) != preparationSection.MealCourse.GetReferenceItemsPreparationContext(actionContext) && // the reference preparation section of meal course has change
                             preparationSection.MealCourse.GetLastPlanReferencePreparationSection(actionContext).PreparationOrderCommitted) // there is reference committed preparation section
                         {
                             if (preparationSection.MealCourse.GetLastPlanPreparationForecast(actionContext) < preparationSection.MealCourse.GetPreparationForecast(actionContext))// the meal course preparation forecast is worse from the last plan
