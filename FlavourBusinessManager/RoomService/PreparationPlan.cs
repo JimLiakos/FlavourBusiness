@@ -460,7 +460,7 @@ namespace FlavourBusinessManager.RoomService
 
                             if (!itemToPrepare.IsInReferencePreparationSection(actionContext))//there isn't reason to interchange position of item that 
                             {
-
+                                 
                                 if (itemToPrepare != itemsPendingToPrepare.Last())
                                 {
                                     ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
