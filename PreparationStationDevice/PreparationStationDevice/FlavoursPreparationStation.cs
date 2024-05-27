@@ -164,7 +164,7 @@ namespace PreparationStationDevice
                                                            Description = itemsPreparationContext.MealCourseDescription,
                                                            StartsAt = itemsPreparationContext.MealCourseStartsAt,
                                                            MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                           PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                           PreparationOrder = itemsPreparationContext.PreparationOrder,
                                                            ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
                                                            ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
                                                            Uri = itemsPreparationContext.Uri,
@@ -565,6 +565,13 @@ namespace PreparationStationDevice
             set => ApplicationSettings.Current.PreparationStationTitle = value;
         }
 
+        /// <summary>
+        /// Defines the time interval between the first item forecast preparation time and the last item of group
+        /// Food preparer can filter the product where displayed on screen to decide if worth to prepare all in session.
+        /// If the food preparer uses the tags to group products, 
+        /// the time interval between the preparation time of the first prediction and the last product must not exceed the GroupingTimeSpan.
+        /// Products with a predicted preparation time that is outside the GroupingTimeSpan are not displayed.
+        /// </summary>
         /// <MetaDataID>{01b0f950-c529-4779-aa83-756893c3a356}</MetaDataID>
         [HttpVisible]
         public double GroupingTimeSpan
@@ -754,7 +761,7 @@ namespace PreparationStationDevice
                                                                         Description = itemsPreparationContext.MealCourseDescription,
                                                                         StartsAt = itemsPreparationContext.MealCourseStartsAt,
                                                                         MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                        PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                                        PreparationOrder = itemsPreparationContext.PreparationOrder,
                                                                         ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
                                                                         ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
                                                                         Uri = itemsPreparationContext.Uri,

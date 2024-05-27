@@ -1050,7 +1050,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         /// <exclude>Excluded</exclude>
         Dictionary<string, IPreparationStationRuntime> _PreparationStationRuntimes;
         [Association("ContextPreparationStationRuntime", Roles.RoleA, "471493c1-dcec-41bb-a354-e0dc03ea7101")]
-        public Dictionary<string, IPreparationStationRuntime> PreparationStationRuntimes
+        public Dictionary<string, IPreparationStationRuntime> PreparationStationRunTimes
         {
             get
             {
@@ -2092,7 +2092,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                 var servicesContextIdentity = ServicesContextIdentity;
 
-                var preparationStations =PreparationStationRuntimes.Values.OfType<IPreparationStation>().ToList();
+                var preparationStations =PreparationStationRunTimes.Values.OfType<IPreparationStation>().ToList();
 
                 foreach(var subPreparationStation in preparationStations.SelectMany(x=>x.SubStations ).ToList())
                 {
@@ -2509,7 +2509,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 objectStorage.CommitTransientObjectState(preparationStation);
                 stateTransition.Consistent = true;
             }
-            var count = PreparationStationRuntimes.Count;
+            var count = PreparationStationRunTimes.Count;
             lock (PreparationStationRuntimesLock)
             {
                 _PreparationStationRuntimes[preparationStation.PreparationStationIdentity] = preparationStation;
@@ -2537,7 +2537,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 _TakeAwayStationsDictionary[takeAwayStation.TakeAwayStationIdentity] = takeAwayStation;
             }
-            //var count = PreparationStationRuntimes.Count;
+            //var count = PreparationStationRunTimes.Count;
             return takeAwayStation;
         }
 
@@ -2615,7 +2615,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
         {
             IPreparationStationRuntime preparationStationRuntime = null;
 
-            if (!this.PreparationStationRuntimes.TryGetValue(preparationStationIdentity, out preparationStationRuntime))
+            if (!this.PreparationStationRunTimes.TryGetValue(preparationStationIdentity, out preparationStationRuntime))
             {
 
                 var objectStorage = ObjectStorage.GetStorageOfObject(this);
@@ -2627,11 +2627,11 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 if (preparationStation != null)
                 {
 
-                    this.PreparationStationRuntimes[preparationStationIdentity] = preparationStation;
+                    this.PreparationStationRunTimes[preparationStationIdentity] = preparationStation;
                 }
             }
             //7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad
-            return this.PreparationStationRuntimes[preparationStationIdentity];
+            return this.PreparationStationRunTimes[preparationStationIdentity];
         }
 
         public ServiceContextResources ServiceContextResources { get=>new ServiceContextResources() { CallerIDServer = CallerIDServer, CashierStations = CashierStations, ServiceAreas = ServiceAreas, PreparationStations = PreparationStations, TakeAwayStations = TakeAwayStations, PaymentTerminals = PaymentTerminals, DeliveryCallCenterStations = this.CallCenterStations };  }
@@ -3465,7 +3465,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
                 _CallCenterStationsDictionary[homeDeliveryCallCenterStation.CallcenterStationIdentity] = homeDeliveryCallCenterStation;
             }
-            //var count = PreparationStationRuntimes.Count;
+            //var count = PreparationStationRunTimes.Count;
             return homeDeliveryCallCenterStation;
         }
 

@@ -26,7 +26,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <exclude>Excluded</exclude>
-        DeviceAppLifecycle _DeviceAppState= DeviceAppLifecycle.Shutdown;
+        DeviceAppLifecycle _DeviceAppState = DeviceAppLifecycle.Shutdown;
         /// <MetaDataID>{d53dfc8e-8c06-49d1-8222-18f6c2c2a3a9}</MetaDataID>
         //[PersistentMember(nameof(_DeviceAppState))]
         [BackwardCompatibilityID("+10")]
@@ -107,6 +107,14 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <exclude>Excluded</exclude>
         double _GroupingTimeSpan = 5;
+
+        /// <summary>
+        /// Defines the time interval between the first item forecast preparation time and the last item of group
+        /// Food preparer can filter the product where displayed on screen to decide if worth to prepare all in session.
+        /// If the food preparer uses the tags to group products, 
+        /// the time interval between the preparation time of the first prediction and the last product must not exceed the GroupingTimeSpan.
+        /// Products with a predicted preparation time that is outside the GroupingTimeSpan are not displayed.
+        /// </summary>
         /// <MetaDataID>{341dba31-809e-4e82-9ffb-e68e6953f8d0}</MetaDataID>
         [PersistentMember(nameof(_GroupingTimeSpan))]
         [BackwardCompatibilityID("+8")]
@@ -500,12 +508,12 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         /// <exclude>Excluded</exclude>
-        Member<IPreparationStation> _MainStation=new Member<IPreparationStation>();
+        Member<IPreparationStation> _MainStation = new Member<IPreparationStation>();
 
         /// <MetaDataID>{63799a62-82dd-43a8-8dab-f2b6b9f10bc5}</MetaDataID>
         [PersistentMember(nameof(_MainStation))]
         [BackwardCompatibilityID("+13")]
-        
+
         public IPreparationStation MainStation => _MainStation.Value;
 
 
@@ -793,6 +801,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             OrderBy(x => x.MealCourseStartsAt).ToList();
 
                 }
+             
                 return itemsPreparationContexts;
             }
         }
@@ -994,10 +1003,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                     lock (StateMachineLock)
                         DeviceAppState = DeviceAppLifecycle.InUse;
 
+
                     OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                     {
                         (ServicesContextRunTime.Current.MealsController as MealsController).MealPrepStationsRedistribution();
                     });
+
                     stateTransition.Consistent = true;
                 }
             }
@@ -1164,9 +1175,6 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             foreach (var servingSession in preparationStationStatus.NewItemsUnderPreparationControl)
             {
-                foreach (var preparationItem in servingSession.PreparationItems.OfType<ItemPreparation>())
-                    preparationItem.AppearanceOrder = this.GeAppearanceOrder(preparationItem.MenuItem);
-
                 servingSession.PreparationItems = servingSession.PreparationItems.OrderBy(x => this.GeAppearanceOrder((x as ItemPreparation).MenuItem)).ToList();
                 if (servingSession.ServedAtForecast == null)
                 {
@@ -1264,7 +1272,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRunTimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
                 {
                     //Look for the dedicated for service point  prep station to prepare the item 
                     if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
@@ -1272,10 +1280,53 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
 
                 //Look for the general  prep station to prepare the item 
-                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRunTimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
                 {
                     if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
                         return preparationStation;
+                }
+
+
+            }
+            return null;
+        }
+
+
+        internal static IPreparationStation GetActivePreparationStationFor(ItemPreparation itemPreparation)
+        {
+            itemPreparation.LoadMenuItem();
+            //PreparationData preparationData = null;
+            if (itemPreparation.ActivePreparationStation != null)
+            {
+                return itemPreparation.ActivePreparationStation;
+            }
+            else
+            {
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRunTimes.Values.OfType<PreparationStation>().Where(x => x.HasServicePointsPreparationInfos))
+                {
+                    //Look for the dedicated for service point  prep station to prepare the item 
+                    if (preparationStation.CanPrepareItemFor(itemPreparation.MenuItem, itemPreparation.ClientSession.ServicePoint))
+                    {
+
+                        if (preparationStation?.MainStation != null && !(preparationStation as PreparationStation).IsActive)
+                            return preparationStation?.MainStation;
+                        else
+                            return preparationStation;
+                    }
+                }
+
+                //Look for the general  prep station to prepare the item 
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStationRunTimes.Values.OfType<PreparationStation>().Where(x => !x.HasServicePointsPreparationInfos))
+                {
+                    if (preparationStation.CanPrepareItem(itemPreparation.MenuItem))
+                    {
+
+                        if (preparationStation?.MainStation != null && !(preparationStation as PreparationStation).IsActive)
+                            return preparationStation?.MainStation;
+                        else
+                            return preparationStation;
+
+                    }
                 }
 
 
@@ -1452,7 +1503,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     preparationSections = this.FoodItemsInProgress.ToList();
                 }
                 var preparationStationItems = (from serviceSession in preparationSections
-                                               from preparationItem in serviceSession.PreparationItems
+                                               from preparationItem in serviceSession.PreparationItems.OrderBy(x => x.AppearanceOrder)
                                                select preparationItem).OfType<ItemPreparation>().ToList();
 
 
@@ -1468,7 +1519,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 foreach (var itemPreparation in preparationStationItems)
                 {
-                    if (itemPreparation.PreparationStation == null)
+                    if (itemPreparation.ActivePreparationStation == null)
                     {
 
                     }
@@ -1511,7 +1562,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     {
                         ItemPreparationPlan itemPreparationPlan = new ItemPreparationPlan()
                         {
-                            PreparationStart = actionContext.ItemPreparationsStartsAt[itemPreparation],
+                            PreparationStart = actionContext.ItemPreparationsStartsAt[itemPreparation].Starts,
                             Duration = TimeSpanEx.FromMinutes(this.GetPreparationTimeSpanInMin(itemPreparation)).TotalMinutes,
                             CookingDuration = TimeSpanEx.FromMinutes(this.GetCookingTimeSpanInMin(itemPreparation)).TotalMinutes
                         };

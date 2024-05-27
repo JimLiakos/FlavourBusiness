@@ -84,6 +84,7 @@ namespace FlavourBusinessFacade.RoomService
         public ItemsPreparationContext(IMealCourse mealCourse, IPreparationStation preparationStation, List<IItemPreparation> preparationItems)
         {
 
+
             this.SessionType = mealCourse.Meal.Session.SessionType;
             //string uri = null;
             if (mealCourse == null)
@@ -119,7 +120,9 @@ namespace FlavourBusinessFacade.RoomService
             ServicePointDescription = mealCourse.Meal.Session.ServicePoint.Description;
             MealCourseStartsAt = mealCourse.StartsAt;
             ServedAtForecast = mealCourse.ServedAtForecast;
-            PreparatioOrder = PreparatioOrder;
+            PreparationOrder = PreparationOrder;
+
+         
 
         }
 #endif
@@ -134,7 +137,7 @@ namespace FlavourBusinessFacade.RoomService
             _Uri = uri;
             // ServedAtForecast = servedAtForecast;
             MealCourseStartsAt = mealCourseStartsAt;
-            PreparatioOrder = PreparatioOrder;
+            PreparationOrder = PreparationOrder;
         }
 
         /// <MetaDataID>{b53c2414-42ee-432c-a6ba-ac82e1f6f1bd}</MetaDataID>
@@ -167,7 +170,7 @@ namespace FlavourBusinessFacade.RoomService
                 {
                     if (!_PreparationItems.Contains(flavourItem))
                     {
-                        flavourItem.PreparatioOrder = PreparatioOrder;
+                        flavourItem.PreparatioOrder = PreparationOrder;
                         _PreparationItems.Add(flavourItem);
                     }
                 }
@@ -222,36 +225,36 @@ namespace FlavourBusinessFacade.RoomService
         public DateTime PreparedAtForecast { get; set; }
 
 
-        public bool? _PreparationOrderCommited;
+        public bool? _PreparationOrderCommitted;
         public bool PreparationOrderCommitted
         {
             get
             {
-                if (_PreparationOrderCommited != null)
-                    return _PreparationOrderCommited.Value;
+                if (_PreparationOrderCommitted != null)
+                    return _PreparationOrderCommitted.Value;
                 else
-                    _PreparationOrderCommited = this.PreparationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation));
-                return _PreparationOrderCommited.Value;
+                    _PreparationOrderCommitted = this.PreparationItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.PendingPreparation));
+                return _PreparationOrderCommitted.Value;
             }
-            set => _PreparationOrderCommited = value;
+            set => _PreparationOrderCommitted = value;
         }
 
-        public int PreparatioOrder
+        public int PreparationOrder
         {
             get
             {
-                int preparatioOrder = 0;
+                int preparationOrder = 0;
                 var itemPreparation = PreparationItems.OrderBy(x => x.PreparatioOrder).LastOrDefault();
                 if (itemPreparation != null)
-                    preparatioOrder = itemPreparation.PreparatioOrder;
-                return preparatioOrder;
+                    preparationOrder = itemPreparation.PreparatioOrder;
+                return preparationOrder;
 
             }
             set
             {
                 if (PreparationOrderCommitted)
                 {
-                    if (PreparatioOrder != value)
+                    if (PreparationOrder != value)
                     {
                         System.Diagnostics.Debug.Assert(false, "Preparation order committed");
                     }

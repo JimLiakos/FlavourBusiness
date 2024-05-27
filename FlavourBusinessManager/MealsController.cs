@@ -98,6 +98,8 @@ namespace FlavourBusinessManager.RoomService
                     preparationPlan.PreparationPlanIsDoubleChecked = false;
                     bool stirTheSequence = true;
 
+
+
                     foreach (var preparationStation in ActivePreparationStations)
                         preparationStation.GetPreparationSections(preparationPlan);
 
@@ -118,17 +120,24 @@ namespace FlavourBusinessManager.RoomService
 
                         stirTheSequence = false;
                     }
-                    preparationPlan.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, DateTime>(preparationPlan.ItemPreparationsStartsAt);
+                    preparationPlan.LastPlanItemPreparationsStartsAt = new Dictionary<ItemPreparation, ItemPreparationStartsFor>(preparationPlan.ItemPreparationsStartsAt);
                     preparationPlan.PositionInterchanges.Clear();
 
 
+                    #region Clear PreparationPlanStartTime in case preparationState is inactive and there are not items to prepare
 
+                    foreach (var preparationStation in InActivePreparationStations)
+                    {
+                        if (preparationStation.FoodItemsInProgress.Count == 0)
+                            preparationStation.PreparationPlanStartTime = null;
+                    }
+                    #endregion
 
                     foreach (var preparationStation in ActivePreparationStations)
                     {
                         preparationStation.ActionsOrderCommitted(preparationPlan);
 
-                        #region clear PreparationPlanStartTime in case where there are not items in state pendings to prepare 
+                        #region clear PreparationPlanStartTime in case where there are not items in state pending to prepare 
 
                         if (preparationPlan.PreparationSections.ContainsKey(preparationStation))
                         {
@@ -167,6 +176,25 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+        List<PreparationStation> InActivePreparationStations
+        {
+            get
+            {
+                List<PreparationStation> inActivePreparationStations = new OOAdvantech.Collections.Generic.List<PreparationStation>();
+                foreach (var preparationStation in ServicesContextRunTime.Current.PreparationStations.OfType<PreparationStation>())
+                {
+                    if (!preparationStation.IsActive)
+                        inActivePreparationStations.Add(preparationStation);
+                    foreach (var subStation in preparationStation.SubStations.OfType<PreparationStation>())
+                    {
+                        if (!subStation.IsActive)
+                            inActivePreparationStations.Add(subStation);
+                    }
+                }
+                return inActivePreparationStations;
+            }
+        }
+
         /// <MetaDataID>{1c8b7c3a-e3a4-4ea4-9c77-3d61ed8d47f1}</MetaDataID>
         List<PreparationStation> ActivePreparationStations
         {
@@ -180,13 +208,12 @@ namespace FlavourBusinessManager.RoomService
                     return (from mealCourse in MealCoursesInProgress
                             from foodItemsInProgress in mealCourse.FoodItemsInProgress
                             from foodItem in foodItemsInProgress.PreparationItems
-                            where foodItem.PreparationStation != null
-                            select foodItem.PreparationStation).OfType<PreparationStation>().Distinct().ToList();
+                            where foodItem.ActivePreparationStation != null
+                            select foodItem.ActivePreparationStation).OfType<PreparationStation>().Distinct().ToList();
                 }
                 finally
                 {
                     TimeSpan timeSpan2 = DateTime.UtcNow - timeStamp;
-
                 }
             }
         }
@@ -931,6 +958,8 @@ namespace FlavourBusinessManager.RoomService
         {
             foreach (MealCourse mealCourse in MealCoursesInProgress)
                 mealCourse.MealPrepStationsRedistribution();
+
+            RebuildPreparationPlan();
         }
 
 

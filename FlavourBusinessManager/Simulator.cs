@@ -56,7 +56,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator(ServicesContextRunTime servicesContextRunTime)
         {
-            return;
+            //return ;
 
             var preparationStations = servicesContextRunTime.PreparationStations.ToList();
 
@@ -125,7 +125,7 @@ namespace FlavourBusinessManager.RoomService
 
                     IFoodServiceClientSession clientSession = null;
 
-
+                    //servicePoints=servicePoints.Where(x => x.Description == "A2").ToList();
                     int i = 0;
                     while (!EndOfSimulation && servicePoints.Count > 0)
                     {
@@ -268,7 +268,7 @@ namespace FlavourBusinessManager.RoomService
         {
             get
             {
-                var simulatorPreparationStations = ServicesContextRunTime.Current.PreparationStationRuntimes.Values.OrderBy(x => x.Description).OfType<IPreparationStation>().ToList();
+                var simulatorPreparationStations = ServicesContextRunTime.Current.PreparationStationRunTimes.Values.OrderBy(x => x.Description).OfType<IPreparationStation>().ToList();
                 return simulatorPreparationStations;
             }
         }

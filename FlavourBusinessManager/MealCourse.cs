@@ -495,12 +495,15 @@ namespace FlavourBusinessManager.RoomService
                         {
                             if (itemPreparation.PreparationStation?.MainStation != null)
                             {
-
                             }
+                            if ((itemPreparation as ItemPreparation).MenuItem == null)
+                                (itemPreparation as ItemPreparation).LoadMenuItem();
+
+                            itemPreparation.AppearanceOrder = (itemPreparation.PreparationStation as PreparationStation).GeAppearanceOrder((itemPreparation as ItemPreparation).MenuItem);
                             var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
                             if (itemsPreparationContext == null)
                             {
-                              
+                            
                                 itemsPreparationContext = new ItemsPreparationContext(this, itemPreparation.ActivePreparationStation, new List<IItemPreparation>() { itemPreparation });
                                 _FoodItemsInProgress.Add(itemsPreparationContext);
                             }
@@ -879,7 +882,9 @@ namespace FlavourBusinessManager.RoomService
                         cashierStation.AssignItemPreparation(flavourItem);
 
                     }
-
+                    if ((itemPreparation as ItemPreparation).MenuItem == null)
+                        (itemPreparation as ItemPreparation).LoadMenuItem();
+                    itemPreparation.AppearanceOrder = (itemPreparation.PreparationStation as PreparationStation).GeAppearanceOrder((itemPreparation as ItemPreparation).MenuItem);
                     var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
 
                     if (itemsPreparationContext == null)
@@ -1031,13 +1036,13 @@ namespace FlavourBusinessManager.RoomService
             List<PreparationStation> preparationStationsHasChangeState = new List<PreparationStation>();
             foreach (var itemPreparation in this.FoodItems)
             {
-                if(itemPreparation.PreparationStation.MainStation!=null&& itemPreparation.State == ItemPreparationState.PendingPreparation)
+                if (itemPreparation.PreparationStation.MainStation != null && itemPreparation.State == ItemPreparationState.PendingPreparation)
                 {
                     var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
-                    if (itemPreparation.ActivePreparationStation.PreparationStationIdentity != itemsPreparationContext.PreparationStationIdentity&&
+                    if (itemPreparation.ActivePreparationStation.PreparationStationIdentity != itemsPreparationContext.PreparationStationIdentity &&
                         itemsPreparationContext.PreparationItems.All(x => x.State.IsInPreviousState(ItemPreparationState.InPreparation)))
                     {
-                        
+
 
                         #region item moved from main to sub station and vice versa
 
@@ -1050,13 +1055,14 @@ namespace FlavourBusinessManager.RoomService
 
 
                         itemsPreparationContext.RemovePreparationItem(itemPreparation);
-                        
-                        if(itemsPreparationContext.PreparationItems.Count==0)
+
+                        if (itemsPreparationContext.PreparationItems.Count == 0)
                             _FoodItemsInProgress.Remove(itemsPreparationContext);
-                        
 
+                        if ((itemPreparation as ItemPreparation).MenuItem == null)
+                            (itemPreparation as ItemPreparation).LoadMenuItem();
                         itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
-
+                        itemPreparation.AppearanceOrder = (itemPreparation.PreparationStation as PreparationStation).GeAppearanceOrder((itemPreparation as ItemPreparation).MenuItem);
                         if (itemsPreparationContext == null)
                         {
 
@@ -1070,8 +1076,8 @@ namespace FlavourBusinessManager.RoomService
                                 FoodItemsInProgress.Add(itemsPreparationContext);
                             itemsPreparationContext.AddPreparationItem(itemPreparation);
                         }
-                        
-                        
+
+
                     }
                 }
             }

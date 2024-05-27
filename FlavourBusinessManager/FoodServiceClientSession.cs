@@ -2345,7 +2345,7 @@ namespace FlavourBusinessManager.EndUsers
 
                     CatchStateEvents();
 
-                    //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRuntimes.Values.OfType<PreparationStationRuntime>())
+                    //foreach (var preparationStation in ServicesContextRunTime.PreparationStationRunTimes.Values.OfType<PreparationStationRuntime>())
                     //    preparationStation.OnPreparationItemChangeState(flavourItem);
 
 

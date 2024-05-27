@@ -17,9 +17,19 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{a361dd77-8fe0-48ee-abb0-01e87675322e}</MetaDataID>
         string ShortIdentity { get; set; }
 
+        /// <summary>
+        /// Defines the time interval between the first item forecast preparation time and the last item of group
+        /// Food preparer can filter the product where displayed on screen to decide if worth to prepare all in session.
+        /// If the food preparer uses the tags to group products, 
+        /// the time interval between the preparation time of the first prediction and the last product must not exceed the GroupingTimeSpan.
+        /// Products with a predicted preparation time that is outside the GroupingTimeSpan are not displayed.
+        /// </summary>
         /// <MetaDataID>{f5ae4b4f-ef6a-493e-9283-4f3ced15af67}</MetaDataID>
         [BackwardCompatibilityID("+3")]
         double GroupingTimeSpan { get; set; }
+
+
+
         [Association("PreparationSubStation", Roles.RoleA, "cd533f23-6824-4431-b904-818421f4eb42")]
         [RoleBMultiplicityRange(1, 1)]
         [CachingDataOnClientSide]

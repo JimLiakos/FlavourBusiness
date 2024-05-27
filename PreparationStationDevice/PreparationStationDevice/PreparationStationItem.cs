@@ -31,6 +31,7 @@ namespace PreparationStationDevice
         {
             get
             {
+
                 return new Multilingual(_FullName);
             }
             set
