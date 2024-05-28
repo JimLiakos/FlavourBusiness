@@ -1,10 +1,13 @@
 ﻿using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicesContextResources;
+using Microsoft.Azure.Documents;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace FlavourBusinessManager.RoomService
 {
@@ -372,9 +375,7 @@ namespace FlavourBusinessManager.RoomService
                 }
                 else
                     preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
-
-
-
+                 
 
                 #region Gets items in preparation predictions
                 var lastPredictionItemsInPreparation = preparationStation.GetLastPredictionItemsInPreparation(actionContext);
@@ -450,26 +451,56 @@ namespace FlavourBusinessManager.RoomService
                         actionContext.SetPreparationStartsAt(itemToPrepare, previousPreparationEndsAt);
                         previousPreparationEndsAt = previousPreparationEndsAt + TimeSpanEx.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(itemToPrepare));
 
-                        //if (!stirTheSequence)       //The rearrangements doesn't allowed when we stir preparations sequence
-                        {
-                            //The rearrangements produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
+
+                        //The rearrangements produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
+
+                        #region creates position interchange between two items "PositionInterchange"
 
 
-                            #region creates position interchange between two items "PositionInterchange"
-                            var itemToPrepareItemsPreparationContext = itemToPrepare.FindItemsPreparationContext();
+                        #region More info
+                        //Σε ένα παρασκευαστήριο κάποιες ενότητες παρασκευής(κάθε ενότητα αντιστοιχεί σε μια παραγγελία) ανταγωνίζονται για την σειρά εκτέλεσης.
+                        //Η πρώτη Α ενότητα είναι εξαρτημένη από μια ενότητα αναφοράς σε άλλο παρασκευαστήριο.
+                        //Η Δεύτερη Β δεν έχει χρονικές δεσμεύσεις.Εάν ο ελεγκτής επιλέξει να αλλάξει την σειρά(πρώτη η Β και ύστερα η Α)
+                        //η καινούρια σειρά θα είναι βέλτιστη για το παρασκευαστήριο αλλά έχει χαθεί ο συγχρονισμός της Α με την ενότητα αναφοράς στο άλλο παρασκευαστήριο.
+                        //Για να επιτευχθούν οι δύο στόχοι πρέπει να δημιουργηθεί ένα πλάνο που μόνο μερικά είδη της ενότητας Β να προηγηθούν της ενότητας A.
+                        //Αυτό γίνεται δημιουργώντας μια εντολή ανταλλαγή θέσης μεταξύ ειδών «PositionInterchange»
+                        //Invariants
+                        //Αυτή η διαδικασία μπορεί να λάβει χώρα μόνο όταν όλα τα είδη της Α ενότητας είναι σε κατάσταση αναμονής για προετοιμασίας ή προηγούμενη.
+                        //Αυτή η διαδικασία δε μπορεί να οδηγήσει την Α ενότητα να είναι έτοιμη για σερβίρισμα σε χρόνο μεταγενέστερο από ότι πριν.
 
-                            if (!itemToPrepare.IsInReferencePreparationSection(actionContext))//there isn't reason to interchange position of item that 
+                        #endregion
+
+                        var itemToPrepareItemsPreparationContext = itemToPrepare.FindItemsPreparationContext();
+
+                        if (!itemToPrepare.IsInReferenceItemsPreparationContext(actionContext) && itemToPrepareItemsPreparationContext.PreparationItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation))
                             {
-                                 
-                                if (itemToPrepare != itemsPendingToPrepare.Last())
+                            //there isn't reason to interchange position of item that belong to the reference items preparation context
+                            //All items of itemsPreparationContext must be is in the same or previousState of PendingPreparation
+
+                            if (itemToPrepare != itemsPendingToPrepare.Last())
+                            {
+                                ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
+                                if (nextItemToPrepare.FindItemsPreparationContext() != itemToPrepareItemsPreparationContext)
                                 {
-                                    ItemPreparation nextItemToPrepare = itemsPendingToPrepare[itemsPendingToPrepare.IndexOf(itemToPrepare) + 1];
-                                    if (nextItemToPrepare.FindItemsPreparationContext() != itemToPrepareItemsPreparationContext)
+                                    if (nextItemToPrepare.IsInReferenceItemsPreparationContext(actionContext))
                                     {
-                                        if (nextItemToPrepare.IsInReferencePreparationSection(actionContext))
+                                        var itemMealCoursePreparationEndTimeForecast = itemToPrepare.MealCourse.GetPreparationForecast(actionContext);
+                                        //Defines the time where the meal course will be ready to serve. Depends from the reference ItemsPreparationContext.
+
+                                        DateTime? lastItemPreparationEndTime = itemToPrepare.FindItemsPreparationContext().PreparationItems.Select(x => actionContext.GetPreparationEndsAt(x as ItemPreparation)).OrderBy(x => x).LastOrDefault();
+                                        //Defines the time where the last item of ItemsPreparationContext (which belong the itemToPrepare), can be prepared
+
+                                        if (lastItemPreparationEndTime.HasValue)
                                         {
-                                            TimeSpan timeSpan = itemToPrepare.MealCourse.GetPreparationForecast(actionContext) - actionContext.GetPreparationEndsAt(itemToPrepare);
-                                            if (timeSpan.TotalMinutes >= preparationStation.GetPreparationTimeSpanInMin(nextItemToPrepare) * 0.9)
+                                            bool movingItemPreparationEndsAfterTheLast = actionContext.GetPreparationEndsAt(nextItemToPrepare) > lastItemPreparationEndTime.Value;
+                                            TimeSpan timeSpan = TimeSpan.FromSeconds(30);
+                                            if (movingItemPreparationEndsAfterTheLast)
+                                                timeSpan -= TimeSpan.FromMinutes(preparationStation.GetPreparationTimeSpanInMin(nextItemToPrepare) * 0.9); //timeSpan with item moving up
+
+                                            //The time that the mealCourse will be ready to serve should not be longer after the item moving up
+
+
+                                            if (timeSpan.TotalMinutes > 0)
                                             {
                                                 //Creates a position change command.
                                                 pendingItemsRearrange = true;
@@ -482,9 +513,10 @@ namespace FlavourBusinessManager.RoomService
                                         }
                                     }
                                 }
-                            } 
-                            #endregion
+                            }
                         }
+                        #endregion
+
                     }
 
                 }
@@ -493,9 +525,9 @@ namespace FlavourBusinessManager.RoomService
                 //var strings = preparationStation.GetActionsToStrings(actionContext);
             }
 
-            
+
         }
-        internal static bool IsInReferencePreparationSection(this ItemPreparation itemPreparation, PreparationPlan actionContext)
+        internal static bool IsInReferenceItemsPreparationContext(this ItemPreparation itemPreparation, PreparationPlan actionContext)
         {
             return itemPreparation.MealCourse.GetReferenceItemsPreparationContext(actionContext) == itemPreparation.FindItemsPreparationContext();
         }
@@ -599,7 +631,7 @@ namespace FlavourBusinessManager.RoomService
                 }
                 else if ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - preparationSection.GetPreparationForecast(actionContext)).GetTotalMinutes() < 1.5 * Simulator.Velocity || ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - TimeSpanEx.FromMinutes(preparationSection.GetDuration() + (2 * Simulator.Velocity))) < DateTime.UtcNow))
                 {
-               
+
                     if ((preparationSection.MealCourse.GetPreparationForecast(actionContext) - preparationSection.GetPreparationForecast(actionContext)).GetTotalMinutes() < 1.5 * Simulator.Velocity)
                     {
                     }
