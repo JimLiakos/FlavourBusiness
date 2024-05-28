@@ -375,7 +375,7 @@ namespace FlavourBusinessManager.RoomService
                 }
                 else
                     preparationPlanStartTime = preparationStation.PreparationPlanStartTime;
-                 
+
 
                 #region Gets items in preparation predictions
                 var lastPredictionItemsInPreparation = preparationStation.GetLastPredictionItemsInPreparation(actionContext);
@@ -454,7 +454,7 @@ namespace FlavourBusinessManager.RoomService
 
                         //The rearrangements produce wrong plan when the re planning is in first state when the PreparationPlanStartTime defined for preparation stations.
 
-                        #region creates position interchange between two items "PositionInterchange"
+                        #region Creates position interchange between two items "PositionInterchange"
 
 
                         #region More info
@@ -472,8 +472,8 @@ namespace FlavourBusinessManager.RoomService
 
                         var itemToPrepareItemsPreparationContext = itemToPrepare.FindItemsPreparationContext();
 
-                        if (!itemToPrepare.IsInReferenceItemsPreparationContext(actionContext) && itemToPrepareItemsPreparationContext.PreparationItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation))
-                            {
+                        if (!itemToPrepare.IsInReferenceItemsPreparationContext(actionContext) && itemToPrepareItemsPreparationContext.PreparationItems.All(x => x.State.IsInTheSameOrPreviousState(ItemPreparationState.PendingPreparation)))
+                        {
                             //there isn't reason to interchange position of item that belong to the reference items preparation context
                             //All items of itemsPreparationContext must be is in the same or previousState of PendingPreparation
 

@@ -61,7 +61,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
-		<PackageReference Include="Xamarin.Essentials" Version="1.7.4" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
 		<PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
 		<PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
 	</ItemGroup>

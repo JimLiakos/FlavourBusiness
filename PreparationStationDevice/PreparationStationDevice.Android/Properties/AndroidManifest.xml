@@ -9,4 +9,6 @@
 	<application android:label="PreparationStationDevice.Android" android:theme="@style/MainTheme" android:usesCleartextTraffic="true">"</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 </manifest>

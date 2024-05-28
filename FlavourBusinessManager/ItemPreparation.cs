@@ -12,11 +12,12 @@ using FlavourBusinessFacade.ServicesContextResources;
 using MenuModel.JsonViewModel;
 using OOAdvantech;
 using System.Globalization;
-using FlavourBusinessManager.ServicesContextResources;
+
 
 
 
 #if !FlavourBusinessDevice
+using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
 #endif
@@ -1181,7 +1182,7 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
-
+#if !FlavourBusinessDevice
         public IPreparationStation ActivePreparationStation
         {
             get
@@ -1194,6 +1195,10 @@ namespace FlavourBusinessManager.RoomService
 
             }
         }
+#else
+        public IPreparationStation ActivePreparationStation => null;
+
+#endif
 
         /// <MetaDataID>{f6245894-8a95-4b52-a9ee-892602fb6ead}</MetaDataID>
         public int AppearanceOrder { get; set; }

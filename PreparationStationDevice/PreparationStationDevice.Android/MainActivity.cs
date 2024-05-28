@@ -16,6 +16,8 @@ namespace PreparationStationDevice.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.ForeGroundService();
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

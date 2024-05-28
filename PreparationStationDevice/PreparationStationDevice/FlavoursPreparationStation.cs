@@ -18,6 +18,7 @@ using MenuModel;
 using MenuModel.JsonViewModel;
 using System.IO;
 using System.Xml;
+using System.Net.Sockets;
 
 
 #if DeviceDotNet
@@ -135,13 +136,15 @@ namespace PreparationStationDevice
                                preparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
 
 
+                               StartPrintingService();
+
                                var restaurantMenuDataSharedUri = preparationStation.RestaurantMenuDataSharedUri;
                                HttpClient httpClient = new HttpClient();
                                var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
                                getJsonTask.Wait();
                                var json = getJsonTask.Result;
                                var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                               MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+                               MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
                                GetMenuLanguages(MenuItems.Values.ToList());
                                // servicesContextManagment.
@@ -153,7 +156,7 @@ namespace PreparationStationDevice
                                ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
                                PreparationVelocity = PreparationStation.PreparationVelocity;
                            }
-                            
+
                            var timeSpan = DateTime.UtcNow - start;
                            //var menuItems = PreparationStation.GetNewerRestaurandMenuData(DateTime.MinValue);
                        }
@@ -222,6 +225,61 @@ namespace PreparationStationDevice
            });
         }
 
+        private static void StartPrintingService()
+        {
+
+            try
+            {
+                TcpClient tcpClient = new TcpClient();
+                tcpClient.Connect("10.0.0.142", 9100);
+
+            }
+            catch (Exception error)
+            {
+
+
+            }
+
+#if DeviceDotNet
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+                    try
+                    {
+                        TcpClient tcpClient = new TcpClient();
+                        tcpClient.Connect("10.0.0.142", 9100);
+
+                    }
+                    catch (Exception error)
+                    {
+
+                        
+                    }
+                    System.Net.Sockets.Socket Socket = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+                    Socket.Connect("10.0.0.142", 9100);
+                    Socket.Send(new byte[2] { 0x1b, 0x40 });
+
+                    do
+                    {
+                        System.Threading.Thread.Sleep(1000);
+
+                       
+                        if(!Socket.Connected)
+                        {
+                            System.Diagnostics.Debug.WriteLine("ds");
+                        }
+                        //Socket.Send(receiptStream);
+                        //Socket.Disconnect(false);
+
+
+                    } while (!serviceState.Terminate);
+                }), serviceState);
+            }
+#endif
+        }
 
         public async void PlayNotificationSound()
         {
@@ -538,8 +596,8 @@ namespace PreparationStationDevice
                 }
             }
             var updatedPreparationItems = (from servicePointPreparationItems in servicePointsPreparationItems
-                                          from itemPreparation in servicePointPreparationItems.PreparationItems
-                                          select itemPreparation).ToList();
+                                           from itemPreparation in servicePointPreparationItems.PreparationItems
+                                           select itemPreparation).ToList();
 
 
             foreach (var existingPreparationItem in existingPreparationItems)
@@ -677,7 +735,7 @@ namespace PreparationStationDevice
                                                                 Description = itemsPreparationContext.MealCourseDescription,
                                                                 StartsAt = itemsPreparationContext.MealCourseStartsAt,
                                                                 MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                PreparationOrder = itemsPreparationContext.PreparatioOrder,
+                                                                PreparationOrder = itemsPreparationContext.PreparationOrder,
                                                                 ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
                                                                 ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
                                                                 Uri = itemsPreparationContext.Uri,
@@ -742,6 +800,11 @@ namespace PreparationStationDevice
 
                             ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
                             PreparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
+
+#if DeviceDotNet
+                            StartPrintingService();
+#endif
+
 
                             var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
                             HttpClient httpClient = new HttpClient();
@@ -931,7 +994,7 @@ namespace PreparationStationDevice
         bool _RoastingAlert;
         public bool RoastingAlert
         {
-            get => _RoastingAlert; 
+            get => _RoastingAlert;
             set
             {
                 _RoastingAlert = value;

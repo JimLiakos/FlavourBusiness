@@ -27,7 +27,7 @@ namespace FlavourBusinessFacade.RoomService
         Dictionary<string, decimal> PaidAmounts { get; }
 
 
-  
+
 
         //[Association("ItemPayment", Roles.RoleA, "52506146-9fd6-4dde-a9fd-a7acf7871e88")]
         //[RoleAMultiplicityRange(1)]
@@ -80,10 +80,15 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{2c1b457c-28d5-475a-96cb-4f8edd7c98b8}</MetaDataID>
         [BackwardCompatibilityID("+8")]
         string Name { get; set; }
+
+
+
         [Association("PreparationStationItems", Roles.RoleB, "e7e482f4-cfba-45a5-8270-8346af757d7a")]
         ServicesContextResources.IPreparationStation PreparationStation { get; set; }
 
+#if !FlavourBusinessDevice
         ServicesContextResources.IPreparationStation ActivePreparationStation { get; }
+#endif
 
 
         /// <MetaDataID>{6d81b0c8-acd5-4b40-b2e4-dd29ff3dbc8c}</MetaDataID>
@@ -142,7 +147,7 @@ namespace FlavourBusinessFacade.RoomService
         /// <MetaDataID>{a5d18eca-428e-410b-96f0-1d9ac050af07}</MetaDataID>
         bool IsCooked { get; }
 
-        
+
     }
 
 
@@ -154,7 +159,7 @@ namespace FlavourBusinessFacade.RoomService
         /// </summary>
         New = 0,
 
-        AwaitingPaymentToCommit=10,
+        AwaitingPaymentToCommit = 10,
         /// <summary>
         /// Client committed to order this item
         /// </summary>
@@ -200,7 +205,7 @@ namespace FlavourBusinessFacade.RoomService
         /// </summary>
         IsBilled = 110,
 
-  
+
         /// <summary>
         /// the item is canceled
         /// </summary>

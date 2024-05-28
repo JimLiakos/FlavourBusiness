@@ -1029,7 +1029,7 @@ namespace CashierStationDevice
 
 
 
-        private static string GetQrcodeData(string qrData)
+        private static string GetQRCodeData(string qrData)
         {
             //Convert ASCII/Decimal
             string ESC = Convert.ToString((char)27);
