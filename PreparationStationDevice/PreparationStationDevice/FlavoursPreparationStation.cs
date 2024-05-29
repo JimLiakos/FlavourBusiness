@@ -19,6 +19,7 @@ using MenuModel.JsonViewModel;
 using System.IO;
 using System.Xml;
 using System.Net.Sockets;
+using ThermalDotNet;
 
 
 #if DeviceDotNet
@@ -36,6 +37,7 @@ namespace PreparationStationDevice
         {
             var communicationCredentialKey = this.CommunicationCredentialKey;
             PreparationVelocity = 0;
+
         }
 
 
@@ -228,49 +230,53 @@ namespace PreparationStationDevice
         private static void StartPrintingService()
         {
 
-            try
-            {
-                TcpClient tcpClient = new TcpClient();
-                tcpClient.Connect("10.0.0.142", 9100);
 
-            }
-            catch (Exception error)
-            {
-
-
-            }
 
 #if DeviceDotNet
             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             if (!device.IsBackgroundServiceStarted)
             {
+
+
+
                 BackgroundServiceState serviceState = new BackgroundServiceState();
                 device.RunInBackground(new Action(async () =>
                 {
+
+                    var printerPort = new IPort();
+                    
+                    ThermalPrinter printer = new ThermalPrinter(printerPort, 2, 180, 2);
+                 int status=   printer.GetPrinterStatus();
+
+
+                    TcpClient tcpClient = new TcpClient();
                     try
                     {
-                        TcpClient tcpClient = new TcpClient();
-                        tcpClient.Connect("10.0.0.142", 9100);
 
+                        tcpClient.Connect("10.0.0.142", 9100);
+                        var networkStream = tcpClient.GetStream();
+                        var buffer =new byte[2] { 0x1b, 0x40 };
+                        networkStream.Write(buffer, 0, buffer.Length);
+                        buffer=Encoding.ASCII.GetBytes("Liakos"+System.Environment.NewLine+System.Environment.NewLine+System.Environment.NewLine);
+                        networkStream.Write(buffer, 0, buffer.Length);
+
+                        //    NetworkStream stream = client.GetStream();
+                        //    stream(new byte[2] { 0x1b, 0x40 });
                     }
                     catch (Exception error)
                     {
-
-                        
                     }
-                    System.Net.Sockets.Socket Socket = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
-                    Socket.Connect("10.0.0.142", 9100);
-                    Socket.Send(new byte[2] { 0x1b, 0x40 });
 
                     do
                     {
-                        System.Threading.Thread.Sleep(1000);
 
-                       
-                        if(!Socket.Connected)
-                        {
-                            System.Diagnostics.Debug.WriteLine("ds");
-                        }
+                        var connected = tcpClient.Connected;
+
+                        System.Threading.Thread.Sleep(2000);
+
+
+
+
                         //Socket.Send(receiptStream);
                         //Socket.Disconnect(false);
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech;
-
+ 
 namespace MenuModel
 {
     /// <MetaDataID>{b39bddb7-8b3f-447d-a8ba-6130d048cbf0}</MetaDataID>
