@@ -231,7 +231,7 @@ namespace PreparationStationDevice
             try
             {
                 TcpClient tcpClient = new TcpClient();
-                tcpClient.Connect("10.0.0.142", 9100);
+                tcpClient.Connect("192.168.1.146", 9100);
 
             }
             catch (Exception error)

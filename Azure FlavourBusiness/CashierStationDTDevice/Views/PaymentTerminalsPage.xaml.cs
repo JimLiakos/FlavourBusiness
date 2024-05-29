@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StyleableWindow;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace CashierStationDevice.Views
     /// <summary>
     /// Interaction logic for PaymentTerminalPage.xaml
     /// </summary>
-    public partial class PaymentTerminalsPage : Page
+    public partial class PaymentTerminalsPage : PageDialogViewEmulator
     {
         public PaymentTerminalsPage()
         {
