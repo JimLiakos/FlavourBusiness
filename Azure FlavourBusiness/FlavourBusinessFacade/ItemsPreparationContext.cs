@@ -229,7 +229,7 @@ namespace FlavourBusinessFacade.RoomService
         public bool PreparationOrderCommitted
         {
             get
-            {
+            { 
                 if (_PreparationOrderCommitted != null)
                     return _PreparationOrderCommitted.Value;
                 else

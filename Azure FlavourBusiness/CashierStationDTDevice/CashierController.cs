@@ -625,7 +625,7 @@ namespace CashierStationDevice
                     // Qr code
                     if (!string.IsNullOrWhiteSpace(transaction.GetPropertyValue("QRCode")))
                     {
-                        lineString = lineString.Replace("$qrcode$", GetQrcodeData(transaction.GetPropertyValue("QRCode")));
+                        lineString = lineString.Replace("$qrcode$", GetQRCodeData(transaction.GetPropertyValue("QRCode")));
                         rawPrintingWriter.WriteLine(lineString);
                     }
                     else
@@ -896,7 +896,7 @@ namespace CashierStationDevice
 
                 string finalOrderStr = printingStringWr.ToString();
                 if (signuture != null && string.IsNullOrWhiteSpace(signuture.QRCode))
-                    finalOrderStr = finalOrderStr.Replace("qrcode", GetQrcodeData(signuture.QRCode));
+                    finalOrderStr = finalOrderStr.Replace("qrcode", GetQRCodeData(signuture.QRCode));
 
                 //System.IO.Stream OutorderPrintStream = System.IO.File.Open("\\Temp\\OutOrderWin.txt", System.IO.FileMode.OpenOrCreate);
                 //OutorderPrintStream.SetLength(0);

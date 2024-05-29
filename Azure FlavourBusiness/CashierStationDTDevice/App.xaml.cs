@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,7 +95,7 @@ namespace CashierStationDTDevice
                     System.Net.IPAddress localAddr = System.Net.IPAddress.Parse("127.0.0.1");
 
                     // TcpListener server = new TcpListener(port);
-                    server = new TcpListener(localAddr, port);
+                    server = new TcpListener(IPAddress.Any/*localAddr*/, port);
 
                     // Start listening for client requests.
                     server.Start();
