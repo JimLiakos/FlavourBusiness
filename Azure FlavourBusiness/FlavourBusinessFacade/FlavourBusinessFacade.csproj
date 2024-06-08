@@ -86,6 +86,8 @@
     <Compile Include="IPrepareFortInfo.cs" />
     <Compile Include="IPrepartionStation.cs" />
     <Compile Include="IPriceList.cs" />
+    <Compile Include="Print\IPrinting.cs" />
+    <Compile Include="Print\IPrintManager.cs" />
     <Compile Include="ISalesPoint.cs" />
     <Compile Include="IServingBatch.cs" />
     <Compile Include="IServingShiftWork.cs" />

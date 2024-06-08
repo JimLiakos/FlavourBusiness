@@ -21,6 +21,12 @@ using OOAdvantech.Remoting.RestApi;
 using Xamarin.Forms;
 using System.Windows.Controls;
 using System.Security.Principal;
+using FlavourBusinessFacade.Print;
+using FlavourBusinessManager.ServicesContextResources;
+using FlavourBusinessFacade.Printing;
+
+
+
 
 
 
@@ -230,6 +236,9 @@ namespace ServiceContextManagerApp
 
             return false;
         }
+
+
+        public IPrintManager PrintManager { get=> this.ServicesContextRuntime?.PrintManager; }
 
         public IList<IPreparationStation> PreparationStations
         {
@@ -1016,12 +1025,22 @@ namespace ServiceContextManagerApp
             return new NewUserCode() { QRCode = SigBase64, Code = codeValue };
 
         }
-        public PreparationStationDeviceAssignment GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color)
+        public DeviceAssignmentKey GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color)
         {
 
             string codeValue = preparationStation.PreparationStationIdentity;
             string SigBase64 = GetQRcodeBase64Img(color, codeValue);
-            return new PreparationStationDeviceAssignment() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = preparationStation.ShortIdentity };
+            return new DeviceAssignmentKey() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = preparationStation.ShortIdentity };
+
+        }
+
+        public DeviceAssignmentKey GetPrintManagerDeviceAssignKeyQRCode(string color)
+        {
+            DeviceAssignKeyData deviceAssignKeyData =  this.ServicesContextRuntime.PrintManager.GetPrintManagerNewCredentialKey();
+            string codeValue = deviceAssignKeyData.PrintManagerDeviceAssignFullKey;
+            string SigBase64 = GetQRcodeBase64Img(color, codeValue);
+
+            return new DeviceAssignmentKey() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = deviceAssignKeyData.PrintManagerDeviceAssignShortKey};
 
         }
 

@@ -23,6 +23,12 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+        [Association("PrepStationPrintManager", Roles.RoleA, "a1eae389-91a2-4af8-909f-8d1a3ef31b29")]
+        [RoleAMultiplicityRange(1, 1)]
+        [RoleBMultiplicityRange(1, 1)]
+        public Printing.PreparationStationPrintManager PrintManager;
+
+
 
 
         /// <exclude>Excluded</exclude>
@@ -235,7 +241,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <MetaDataID>{81e7a4d0-f597-4555-a69c-5f71cf7ecbca}</MetaDataID>
-        public IItemsPreparationInfo GetPreparationTimeitemsPreparationInfo(IMenuItem menuItem)
+        public IItemsPreparationInfo GetPreparationTimeItemsPreparationInfo(IMenuItem menuItem)
         {
 
             var itemsPreparationInfos = this.GetItemsPreparationInfo(menuItem);
@@ -472,7 +478,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             Transaction.RunOnTransactionCompleted(() =>
             {
-
+                PrintManager.OnPreparationItemsChangeState(this);
                 lock (DeviceUpdateEtagLock)
                 {
                     if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
@@ -493,6 +499,26 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        string _Printer;
+        /// <MetaDataID>{71f3f215-0707-4453-8d1d-c775ac59679c}</MetaDataID>
+        [PersistentMember(nameof(_Printer))]
+        [BackwardCompatibilityID("+14")]
+        public string Printer
+        {
+            get => _Printer; 
+            set
+            {
+                if (_Printer != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _Printer = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <MetaDataID>{a3427e2c-66a7-4010-a1e1-b0a8e8daa54e}</MetaDataID>
         public string RestaurantMenuDataSharedUri => ServicePointRunTime.ServicesContextRunTime.Current.RestaurantMenuDataSharedUri;
@@ -801,7 +827,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             OrderBy(x => x.MealCourseStartsAt).ToList();
 
                 }
-             
+
                 return itemsPreparationContexts;
             }
         }
@@ -1078,11 +1104,11 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        /// <MetaDataID>{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}</MetaDataID>
-        private void PreparationSessionChangeState(object _object, string member)
-        {
-            OnPreparationItemsChangeState();
-        }
+        ///// <MetaDataID>{ba4cf6b6-0989-49f1-adb0-b9b976ad8324}</MetaDataID>
+        //private void PreparationSessionChangeState(object _object, string member)
+        //{
+        //    OnPreparationItemsChangeState();
+        //}
         /// <exclude>Excluded</exclude>
         public event PreparationItemsChangeStateHandled _PreparationItemsChangeState;
 
@@ -1230,13 +1256,10 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (DeviceUpdateLock)
                 {
-
                     flavourItem.PreparationStation = this;
-
                     flavourItem.PreparationTimeSpanInMin = GetPreparationTimeInMin(flavourItem.MenuItem);
                     flavourItem.IsCooked = this.IsCooked(flavourItem.MenuItem);
                     flavourItem.CookingTimeSpanInMin = GetCookingTimeSpanInMin(flavourItem.MenuItem);
-
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
 
                     //var servicePointPreparationItems = _PreparationSessions.Where(x => x.MealCourse == flavourItem.MealCourse).FirstOrDefault();
@@ -1292,6 +1315,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+        /// <MetaDataID>{ef4809ba-3b6f-4644-887c-7d94d9cf3807}</MetaDataID>
         internal static IPreparationStation GetActivePreparationStationFor(ItemPreparation itemPreparation)
         {
             itemPreparation.LoadMenuItem();
@@ -1700,8 +1724,8 @@ namespace FlavourBusinessManager.ServicesContextResources
                         DurationDif = normalizedTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
                         OrgDurationDif = normalizedTimeSpan.TotalMinutes - preparedItem.PreparationTimeSpanInMin,
                         DefaultTimeSpanInMin = preparedItem.PreparationTimeSpanInMin,
-                        ItemsPreparationInfo = GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem),
-                        InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeitemsPreparationInfo(x.MenuItem) == GetPreparationTimeitemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
+                        ItemsPreparationInfo = GetPreparationTimeItemsPreparationInfo(preparedItem.MenuItem),
+                        InformationValue = ((double)preparedItems.OfType<ItemPreparation>().Where(x => this.GetPreparationTimeItemsPreparationInfo(x.MenuItem) == GetPreparationTimeItemsPreparationInfo(preparedItem.MenuItem)).Count()) / preparedItems.Count,
                         ActualTimeSpanInMin = normalizedTimeSpan.TotalMinutes
 
                     };

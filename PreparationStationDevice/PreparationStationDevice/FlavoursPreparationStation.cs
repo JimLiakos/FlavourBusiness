@@ -19,10 +19,16 @@ using MenuModel.JsonViewModel;
 using System.IO;
 using System.Xml;
 using System.Net.Sockets;
-using ThermalDotNet;
+using FlavourBusinessFacade.Print;
+using System.IO.Ports;
+using static Google.Apis.Requests.BatchRequest;
+using static FlavourBusinessFacade.Printing.Printer;
+using FlavourBusinessFacade.Printing;
+
 
 
 #if DeviceDotNet
+using ThermalDotNet;
 using OOAdvantech.AudioManager;
 using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 #endif
@@ -129,6 +135,15 @@ namespace PreparationStationDevice
                            string serverUrl = AzureServerUrl;
                            IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
                            var preparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+
+                           if (!String.IsNullOrWhiteSpace(PrintManagerDeviceCredentialKey))
+                           {
+                               PrintManager = servicesContextManagment.GetPrintManager(PrintManagerDeviceCredentialKey);
+                               if (PrintManager != null)
+                                   StartPrintingService();
+                           }
+
+
                            if (preparationStation != null)
                            {
 
@@ -138,7 +153,7 @@ namespace PreparationStationDevice
                                preparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
 
 
-                               StartPrintingService();
+                               //StartPrintingService();
 
                                var restaurantMenuDataSharedUri = preparationStation.RestaurantMenuDataSharedUri;
                                HttpClient httpClient = new HttpClient();
@@ -227,7 +242,7 @@ namespace PreparationStationDevice
            });
         }
 
-        private static void StartPrintingService()
+        private void StartPrintingService()
         {
 
 
@@ -243,33 +258,35 @@ namespace PreparationStationDevice
                 device.RunInBackground(new Action(async () =>
                 {
 
-                    var printerPort = new IPort();
-                    
-                    ThermalPrinter printer = new ThermalPrinter(printerPort, 2, 180, 2);
-                 int status=   printer.GetPrinterStatus();
+
+                    //var printerPort = new IPort();
+
+                    //ThermalPrinter printer = new ThermalPrinter(printerPort, 2, 180, 2);
+                    //int status = printer.GetPrinterStatus();
 
 
-                    TcpClient tcpClient = new TcpClient();
-                    try
-                    {
+                    //TcpClient tcpClient = new TcpClient();
+                    //try
+                    //{
 
-                        tcpClient.Connect("10.0.0.142", 9100);
-                        var networkStream = tcpClient.GetStream();
-                        var buffer =new byte[2] { 0x1b, 0x40 };
-                        networkStream.Write(buffer, 0, buffer.Length);
-                        buffer=Encoding.ASCII.GetBytes("Liakos"+System.Environment.NewLine+System.Environment.NewLine+System.Environment.NewLine);
-                        networkStream.Write(buffer, 0, buffer.Length);
+                    //    tcpClient.Connect("10.0.0.142", 9100);
+                    //    var networkStream = tcpClient.GetStream();
+                    //    var buffer = new byte[2] { 0x1b, 0x40 };
+                    //    networkStream.Write(buffer, 0, buffer.Length);
+                    //    buffer = Encoding.ASCII.GetBytes("Liakos" + System.Environment.NewLine + System.Environment.NewLine + System.Environment.NewLine);
+                    //    networkStream.Write(buffer, 0, buffer.Length);
 
-                        //    NetworkStream stream = client.GetStream();
-                        //    stream(new byte[2] { 0x1b, 0x40 });
-                    }
-                    catch (Exception error)
-                    {
-                    }
+                    //    //    NetworkStream stream = client.GetStream();
+                    //    //    stream(new byte[2] { 0x1b, 0x40 });
+                    //}
+                    //catch (Exception error)
+                    //{
+                    //}
 
                     do
                     {
-
+                        TcpClient tcpClient = new TcpClient();
+                        tcpClient.Connect("10.0.0.142", 9100);
                         var connected = tcpClient.Connected;
 
                         System.Threading.Thread.Sleep(2000);
@@ -284,7 +301,120 @@ namespace PreparationStationDevice
                     } while (!serviceState.Terminate);
                 }), serviceState);
             }
+#else
+
 #endif
+
+            //TcpClient tcpClient = new TcpClient();
+            //try
+            //{
+            //    //System.Threading.Thread.Sleep(30000);
+            //    tcpClient.Connect("192.168.1.71", 9100);
+            //    var networkStream = tcpClient.GetStream();
+            //    var buffer = new byte[2] { 0x1b, 0x40 };
+            //    networkStream.Write(buffer, 0, buffer.Length);
+            //    int count = 10;
+
+            //    while (count > 0)
+            //    {
+            //        buffer = Encoding.ASCII.GetBytes("Liakos" + System.Environment.NewLine + System.Environment.NewLine + System.Environment.NewLine);
+            //        networkStream.Write(buffer, 0, buffer.Length);
+            //        count--;
+            //        System.Threading.Thread.Sleep(10000);
+            //    }
+
+            //    tcpClient.Close();
+            //    //    NetworkStream stream = client.GetStream();
+            //    //    stream(new byte[2] { 0x1b, 0x40 });
+            //}
+            //catch (Exception error)
+            //{
+            //}
+            if (PrintingServiceTask == null || PrintingServiceTask.Status != TaskStatus.Running)
+            {
+                PrintingServiceTask = Task.Run(() =>
+                 {
+                     var printers = PrintManager.Printers;
+
+                     PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
+                     {
+
+                         //var transctions = PrintManager.GetOpenTransactions(deviceUpdateEtag);
+                     };
+                     do
+                     {
+
+
+                         try
+                         {
+
+                             foreach (var printer in printers)
+                             {
+
+                                 PrinterStatus printerStatus = PrinterStatus.OffLine;
+
+                                 try
+                                 {
+                                     string address = printer.Address.Split(':')[0];
+                                     int port = 0;
+                                     int.TryParse(printer.Address.Split(':')[1], out port);
+                                     TcpClient tcpClient = new TcpClient();
+                                     //System.Threading.Thread.Sleep(30000);
+                                     tcpClient.Connect(address, port);
+                                     var networkStream = tcpClient.GetStream();
+                                     //var buffer = new byte[2] { 0x1b, 0x40 };
+                                     //networkStream.Write(buffer, 0, buffer.Length);
+                                     //networkStream.Flush();
+
+                                     byte[] command = new byte[3] { 0x10, 0x4, 1 };//command for printer status
+                                     networkStream.Write(command, 0, 3);
+                                     networkStream.Flush();
+
+                                     byte[] response = new byte[20];
+                                     int numOfBytes = networkStream.Read(response, 0, 1);
+                                     byte printerStatusByte = response[0];
+
+
+
+
+                                     tcpClient.Close();
+
+                                     if ((printerStatusByte & (byte)0b0001000) != 0)//Offline 
+                                     {
+                                         printerStatus = PrinterStatus.OffLine;
+                                     }
+                                     else
+                                         printerStatus = PrinterStatus.Online;
+
+                                    
+                                 }
+                                 catch (Exception error)
+                                 {
+                                     printerStatus = PrinterStatus.OffLine;
+                                 }
+
+                                 if (printer.Status != printerStatus)
+                                 {
+                                     PrintManager.UpdatePrinterStatus(printer, printerStatus);
+                                     printer.Status = printerStatus;
+                                 }
+                             }
+
+                         }
+                        
+                         catch (Exception error)
+                         {
+
+                             
+                         }
+
+                         System.Threading.Thread.Sleep(5000);
+
+
+                     } while (!TerminatePrintingWatcher);
+                 });
+            }
+
         }
 
         public async void PlayNotificationSound()
@@ -457,6 +587,16 @@ namespace PreparationStationDevice
                 return true;
             });
         }
+
+        [HttpVisible]
+        public bool IsPrintingsAgentDevice
+        {
+            get
+            {
+                return PrintManager != null;
+            }
+        }
+
 
         /// <MetaDataID>{61a28e77-843c-4ce1-b1eb-ebe2ad554237}</MetaDataID>
         [HttpVisible]
@@ -694,6 +834,21 @@ namespace PreparationStationDevice
                 ApplicationSettings.Current.CommunicationCredentialKey = value;
             }
         }
+        public string PrintManagerDeviceCredentialKey
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(ApplicationSettings.Current.PrintManagerDeviceCredentialKey))
+                {
+
+                }
+                return ApplicationSettings.Current.PrintManagerDeviceCredentialKey;
+            }
+            set
+            {
+                ApplicationSettings.Current.PrintManagerDeviceCredentialKey = value;
+            }
+        }
 
 
 #if DeviceDotNet
@@ -713,49 +868,51 @@ namespace PreparationStationDevice
                 string communicationCredentialKey = "7f9bde62e6da45dc8c5661ee2220a7b0_fff069bc4ede44d9a1f08b5f998e02ad";
                 //communicationCredentialKey =result.Text;
 
-                string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-                string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
-                string serverUrl = AzureServerUrl;
-                IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
-                if (PreparationStation != null)
-                {
-                    Title = PreparationStation.Description;
-                    ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
-                    CommunicationCredentialKey = communicationCredentialKey;
-                    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
-                    HttpClient httpClient = new HttpClient();
-                    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
-                    getJsonTask.Wait();
-                    var json = getJsonTask.Result;
-                    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
-                    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
-                    GetMenuLanguages(MenuItems.Values.ToList());
-                    PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
-                    ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
-                    ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
-                    PreparationVelocity = PreparationStation.PreparationVelocity;
-                    ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
-                                                            select new ItemsPreparationContextPresentation()
-                                                            {
-                                                                Description = itemsPreparationContext.MealCourseDescription,
-                                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
-                                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
-                                                                PreparationOrder = itemsPreparationContext.PreparationOrder,
-                                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
-                                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
-                                                                Uri = itemsPreparationContext.Uri,
-                                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
-                                                            }).ToList();
+
+               return await AssignCommunicationCredentialKey(communicationCredentialKey);
+                //string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+                //string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
+                //string serverUrl = AzureServerUrl;
+                //IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                //PreparationStation = servicesContextManagment.GetPreparationStationRuntime(communicationCredentialKey);
+                //if (PreparationStation != null)
+                //{
+                //    Title = PreparationStation.Description;
+                //    ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
+                //    CommunicationCredentialKey = communicationCredentialKey;
+                //    var restaurantMenuDataSharedUri = PreparationStation.RestaurantMenuDataSharedUri;
+                //    HttpClient httpClient = new HttpClient();
+                //    var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
+                //    getJsonTask.Wait();
+                //    var json = getJsonTask.Result;
+                //    var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                //    MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
+                //    GetMenuLanguages(MenuItems.Values.ToList());
+                //    PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);
+                //    ItemsPreparationContexts = preparationStationStatus.NewItemsUnderPreparationControl.ToList();
+                //    ServingTimeSpanPredictions = preparationStationStatus.ServingTimespanPredictions;
+                //    PreparationVelocity = PreparationStation.PreparationVelocity;
+                //    ItemsPreparationContextPresentations = (from itemsPreparationContext in ItemsPreparationContexts
+                //                                            select new ItemsPreparationContextPresentation()
+                //                                            {
+                //                                                Description = itemsPreparationContext.MealCourseDescription,
+                //                                                StartsAt = itemsPreparationContext.MealCourseStartsAt,
+                //                                                MustBeServedAt = itemsPreparationContext.ServedAtForecast,
+                //                                                PreparationOrder = itemsPreparationContext.PreparationOrder,
+                //                                                ServicesContextIdentity = itemsPreparationContext.ServicePoint.ServicesContextIdentity,
+                //                                                ServicesPointIdentity = itemsPreparationContext.ServicePoint.ServicesPointIdentity,
+                //                                                Uri = itemsPreparationContext.Uri,
+                //                                                PreparationItems = itemsPreparationContext.PreparationItems.OfType<ItemPreparation>().OrderByDescending(x => x.CookingTimeSpanInMin).Select(x => new PreparationStationItem(x, itemsPreparationContext, MenuItems, ItemsPreparationTags)).OrderBy(x => x.AppearanceOrder).ToList()
+                //                                            }).ToList();
 
 
-                    return true;
-                }
-                else
-                {
-                    Title = "";
-                    return false;
-                }
+                //    return true;
+                //}
+                //else
+                //{
+                //    Title = "";
+                //    return false;
+                //}
 #else
                 return false;
 #endif
@@ -798,12 +955,12 @@ namespace PreparationStationDevice
                         string assemblyData = "FlavourBusinessManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
                         string type = "FlavourBusinessManager.FlavoursServicesContextManagment";
                         string serverUrl = AzureServerUrl;
-                        IFlavoursServicesContextManagment servicesContextManagment = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
-                        PreparationStation = servicesContextManagment.GetPreparationStationRuntime(CommunicationCredentialKey);
+                        IFlavoursServicesContextManagment servicesContextManagement = OOAdvantech.Remoting.RestApi.RemotingServices.CastTransparentProxy<IFlavoursServicesContextManagment>(OOAdvantech.Remoting.RestApi.RemotingServices.CreateRemoteInstance(serverUrl, type, assemblyData));
+                        PreparationStation = servicesContextManagement.GetPreparationStationRuntime(CommunicationCredentialKey);
                         if (PreparationStation != null)
                         {
-                            Title = PreparationStation.Description;
 
+                            Title = PreparationStation.Description;
                             ItemsPreparationTags = PreparationStation.ItemsPreparationTags;
                             PreparationStation.ObjectChangeState += PreparationStation_ObjectChangeState;
 
@@ -841,6 +998,28 @@ namespace PreparationStationDevice
                         }
                         else
                         {
+
+                            try
+                            {
+                                string printManagerDeviceCredentialKey = servicesContextManagement.AssignPrintManagerDevice(CommunicationCredentialKey);
+                                if (!string.IsNullOrWhiteSpace(printManagerDeviceCredentialKey))
+                                {
+                                    PrintManagerDeviceCredentialKey = printManagerDeviceCredentialKey;
+                                    PrintManager = servicesContextManagement.GetPrintManager(PrintManagerDeviceCredentialKey);
+                                    if (PrintManager != null)
+                                        StartPrintingService();
+
+
+                                    Title = "Printers capture";
+                                    return true;
+                                }
+                            }
+                            catch (Exception error)
+                            {
+
+                            }
+
+
                             Title = "";
                             return false;
                         }
@@ -1026,6 +1205,10 @@ namespace PreparationStationDevice
                 }
             }
         }
+
+        public static bool TerminatePrintingWatcher { get; private set; }
+        public IPrintManager PrintManager { get; private set; }
+        public Task PrintingServiceTask { get; private set; }
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);
@@ -1059,6 +1242,10 @@ namespace PreparationStationDevice
         void ItemsServing(List<ItemPreparation> itemPreparations);
         /// <MetaDataID>{f4048772-fc00-4bb3-9d59-afcf10436db5}</MetaDataID>
         void ItemsΙnPreparation(List<ItemPreparation> itemPreparations);
+
+
+        bool IsPrintingsAgentDevice { get; }
+
 
         bool RoastingAudibleAlert { get; set; }
 

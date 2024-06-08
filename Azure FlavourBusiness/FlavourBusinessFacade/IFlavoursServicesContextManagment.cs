@@ -1,4 +1,5 @@
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.Printing;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
@@ -59,7 +60,8 @@ namespace FlavourBusinessFacade
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
 
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
-        
+        IPrintManager GetPrintManager(string communicationCredentialKey);
+        string AssignPrintManagerDevice(string communicationCredentialKey);
     }
     //
     // Summary:

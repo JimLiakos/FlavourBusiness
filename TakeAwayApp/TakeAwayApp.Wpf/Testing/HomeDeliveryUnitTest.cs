@@ -73,10 +73,10 @@ namespace TakeAwayApp.Wpf
         private void FlavoursServiceOrderTakingStation_ObjectChangeState(object _object, string member)
         {
             if(member=="WatchingOrders")
-                MakeOrdersAvalableForShipping();
+                MakeOrdersAvailableForShipping();
         }
 
-        private void MakeOrdersAvalableForShipping()
+        private void MakeOrdersAvailableForShipping()
         {
 
             foreach (var watchingOrder in FlavoursServiceOrderTakingStation.WatchingOrders.Where(x => x.ServerWatchingOrder.ClientIdentity?.IndexOf("org_client_sim") == 0).ToList())

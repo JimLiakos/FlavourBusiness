@@ -844,6 +844,7 @@ namespace FlavourBusinessManager.RoomService
         public ItemPreparation SecondItemPreparation;
     }
 
+    /// <MetaDataID>{fafd0874-5846-48b8-97f1-a98bc41d350a}</MetaDataID>
     class ItemPreparationStartsFor
     {
         public readonly PreparationStation PreparationStation;

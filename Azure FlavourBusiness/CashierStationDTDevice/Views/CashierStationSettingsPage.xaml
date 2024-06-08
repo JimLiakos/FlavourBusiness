@@ -7,7 +7,9 @@
       xmlns:sw="clr-namespace:StyleableWindow;assembly=StyleableWindow" 
       xmlns:resx="clr-namespace:CashierStationDevice.Properties"
                             xmlns:ConnectableCtrl="clr-namespace:WPFUIElementObjectBind;assembly=WPFConnectableControls" 
-                            xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
+                            xmlns:ViewModel="clr-namespace:CashierStationDevice.ViewModel" 
+                            xmlns:wpftoolkitex="http://schemas.xceed.com/wpf/xaml/toolkit"
+                            xmlns:ControlsEx="clr-namespace:System.Windows.Controls;assembly=WPFConnectableControls"
                             mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="800"
       Title="CashierStationSettings">

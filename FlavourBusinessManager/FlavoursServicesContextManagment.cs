@@ -15,6 +15,7 @@ using OOAdvantech.Remoting.RestApi;
 using FlavourBusinessManager.RoomService;
 using System.ServiceModel;
 using System.ServiceProcess;
+using FlavourBusinessFacade.Print;
 
 namespace FlavourBusinessManager
 {
@@ -229,6 +230,34 @@ namespace FlavourBusinessManager
             }
         }
 
+        public string AssignPrintManagerDevice(string deviceAssignKey)
+        {
+            try
+            {
+                string[] servicePointIdentityParts = deviceAssignKey.Split(';');
+
+                if (servicePointIdentityParts.Length == 1)
+                {
+                    deviceAssignKey = GlobalResourcesIdentities.GetExpiringKeyResourceFullIdentity(deviceAssignKey);
+                    servicePointIdentityParts = deviceAssignKey.Split(';');
+                }
+
+
+
+                string servicesContextIdentity = servicePointIdentityParts[0];
+
+                IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+                var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+                return flavoursServicesContextRunTime.AssignPrintManagerDevice(deviceAssignKey);
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
+        }
+
+        
 
 
         /// <MetaDataID>{ce23edf9-4f91-4120-9a43-7e55e8edb31b}</MetaDataID>
@@ -240,8 +269,12 @@ namespace FlavourBusinessManager
 
             AuthUserRef authUserRef = AuthUserRef.GetAuthUserRef(authUser, false);
 
+            
             if (authUser == null)
                 throw new System.Security.Authentication.AuthenticationException("User isn't signed up.");
+
+            //authUserRef.HasRoleType(RoleType.Organization) || authUserRef.HasRoleType(RoleType.ServiceContextSupervisor)
+
 
             string[] servicePointIdentityParts = supervisorAssignKey.Split(';');
             string servicesContextIdentity = servicePointIdentityParts[0];
@@ -339,6 +372,44 @@ namespace FlavourBusinessManager
 
             return homeDeliveryCallCenterStation;
 
+        }
+        public FlavourBusinessFacade.Printing.IPrintManager GetPrintManager(string communicationCredentialKey)
+        {
+            
+                var credentialKeyParts = communicationCredentialKey?.Split(';');
+
+                string servicesContextIdentity = null;
+                string preparationStationIdentity = null;
+
+                if (credentialKeyParts?.Length == 2)
+                {
+                    servicesContextIdentity = credentialKeyParts[0];
+                    preparationStationIdentity = credentialKeyParts[1];
+                }
+                else
+                {
+                    string resourceFullIdentity = GlobalResourcesIdentities.GetResourceFullIdentity(communicationCredentialKey);
+                    credentialKeyParts = resourceFullIdentity?.Split(';');
+
+                    if (credentialKeyParts?.Length == 2)
+                    {
+                        servicesContextIdentity = credentialKeyParts[0];
+                        preparationStationIdentity = credentialKeyParts[1];
+                        communicationCredentialKey = resourceFullIdentity;
+                    }
+
+                }
+                IFlavoursServicesContext flavoursServicesContext = FlavoursServicesContext.GetServicesContext(servicesContextIdentity);
+                if (flavoursServicesContext == null)
+                    return null;
+
+                var flavoursServicesContextRunTime = flavoursServicesContext.GetRunTime();
+                return flavoursServicesContextRunTime.GetPrintManager(communicationCredentialKey);
+
+                
+
+
+            
         }
 
         /// <MetaDataID>{1726fda9-eed5-4e8c-8a04-a3fc80a093bc}</MetaDataID>

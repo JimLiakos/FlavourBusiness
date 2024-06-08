@@ -45,8 +45,9 @@ namespace ServiceContextManagerApp
         public string Code { get; set; }
     }
 
+    /// <MetaDataID>{b9b62f61-ee79-4369-8dcd-8fbc6298ceca}</MetaDataID>
     [HttpVisible]
-    public class PreparationStationDeviceAssignment
+    public class DeviceAssignmentKey
     {
         public string QRCode { get; set; }
         public string PreparationStationIdentity { get; set; }
@@ -56,7 +57,7 @@ namespace ServiceContextManagerApp
 
     }
 
-    
+
 
 
 }

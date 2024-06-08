@@ -1273,6 +1273,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetHomeDeliveryCallCenterStation", args, argsTypes);
             return this.Proxy.GetValue<FlavourBusinessFacade.ServicesContextResources.IHomeDeliveryCallCenterStation>(retValue);
         }
+        
+        public FlavourBusinessFacade.Printing.IPrintManager GetPrintManager(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "GetPrintManager", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.Printing.IPrintManager>(retValue);
+        }
+        
+        public string AssignPrintManagerDevice(string communicationCredentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = communicationCredentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextManagment), "AssignPrintManagerDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
     }
     
     public sealed class Pr_IFlavoursServicesContextRuntime : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IFlavoursServicesContextRuntime, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -1571,6 +1591,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_PaymentTerminals", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ServicesContextResources.IPaymentTerminal>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public FlavourBusinessFacade.Printing.IPrintManager PrintManager
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "get_PrintManager", args, argsTypes);
+                return this.Proxy.GetValue<FlavourBusinessFacade.Printing.IPrintManager>(retValue);
             }
         }
         
@@ -2137,6 +2169,26 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[1] = typeof(FlavourBusinessFacade.OrganizationStorages);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "ObjectStorageUpdate", args, argsTypes);
         }
+        
+        public string AssignPrintManagerDevice(string deviceAssignKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = deviceAssignKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "AssignPrintManagerDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
+        
+        public FlavourBusinessFacade.Printing.IPrintManager GetPrintManager(string credentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = credentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IFlavoursServicesContextRuntime), "GetPrintManager", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.Printing.IPrintManager>(retValue);
+        }
     }
     
     public sealed class Pr_IOrganization : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.IOrganization, OOAdvantech.Remoting.RestApi.ITransparentProxy
@@ -2572,6 +2624,128 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             args[0] = menuMakingAccountability;
             argsTypes[0] = typeof(FlavourBusinessFacade.HumanResources.IAccountability);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.IOrganization), "RemoveMenuMaker", args, argsTypes);
+        }
+    }
+}
+namespace FlavourBusinessFacade.Printing.Proxies
+{
+    using System;
+    
+    
+    public sealed class Pr_IPrintManager : OOAdvantech.Remoting.MarshalByRefObject, FlavourBusinessFacade.Printing.IPrintManager, OOAdvantech.Remoting.RestApi.ITransparentProxy
+    {
+        
+        private OOAdvantech.Remoting.RestApi.Proxy Proxy;
+        
+        public FlavourBusinessFacade.Printing.IPrintManager Org;
+        
+public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "add_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "remove_Reconnected",new object[] {value} , new Type[] { typeof(OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle)});
+                }
+            }
+public event FlavourBusinessFacade.Printing.DocumentPendingToPrintHandled DocumentPendingToPrint
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "add_DocumentPendingToPrint",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.Printing.DocumentPendingToPrintHandled)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "remove_DocumentPendingToPrint",new object[] {value} , new Type[] { typeof(FlavourBusinessFacade.Printing.DocumentPendingToPrintHandled)});
+                }
+            }
+public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
+            {
+                add
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "add_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+                remove
+                {
+                    this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "remove_ObjectChangeState",new object[] {value} , new Type[] { typeof(OOAdvantech.ObjectChangeStateHandle)});
+                }
+            }
+        
+        public Pr_IPrintManager(OOAdvantech.Remoting.RestApi.Proxy proxy)
+        {
+            this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public System.Collections.Generic.List<FlavourBusinessFacade.Printing.Printer> Printers
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "get_Printers", args, argsTypes);
+                return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.Printing.Printer>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public bool LocalPrintingServiceIsRunning
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "get_LocalPrintingServiceIsRunning", args, argsTypes);
+                return this.Proxy.GetValue<bool>(retValue);
+            }
+        }
+        
+        public OOAdvantech.Remoting.IProxy GetProxy()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(OOAdvantech.Remoting.RestApi.ITransparentProxy), "GetProxy", args, argsTypes);
+            return this.Proxy.GetValue<OOAdvantech.Remoting.IProxy>(retValue);
+        }
+        
+        public void DocumentPrinted(string documentIdentity)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = documentIdentity;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "DocumentPrinted", args, argsTypes);
+        }
+        
+        public FlavourBusinessFacade.Printing.DeviceAssignKeyData GetPrintManagerNewCredentialKey()
+        {
+            object[] args = new object[0];
+            System.Type[] argsTypes = new System.Type[0];
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "GetPrintManagerNewCredentialKey", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.Printing.DeviceAssignKeyData>(retValue);
+        }
+        
+        public string AssignDevice(string credentialKey)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = credentialKey;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "AssignDevice", args, argsTypes);
+            return this.Proxy.GetValue<string>(retValue);
+        }
+        
+        public void UpdatePrinterStatus(FlavourBusinessFacade.Printing.Printer printer, FlavourBusinessFacade.Printing.Printer.PrinterStatus online)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = printer;
+            argsTypes[0] = typeof(FlavourBusinessFacade.Printing.Printer);
+            args[1] = online;
+            argsTypes[1] = typeof(FlavourBusinessFacade.Printing.Printer.PrinterStatus);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "UpdatePrinterStatus", args, argsTypes);
         }
     }
 }
@@ -4636,6 +4810,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         public Pr_IPreparationStation(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string Printer
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation), "get_Printer", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IPreparationStation), "set_Printer", args, argsTypes);
+            }
         }
         
         // The Width property for the object.

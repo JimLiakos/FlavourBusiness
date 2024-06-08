@@ -888,7 +888,7 @@ namespace FlavourBusinessManager.RoomService
                     }
                 }
 
-                ServicesContextRunTime.Current.UpdateWaitersWithUnreadedMessages();
+                ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
             }
 
             if (meal.Session?.SessionType == SessionType.HomeDelivery && meal.Courses.All(x => x.PreparationState == ItemPreparationState.Serving))
@@ -942,7 +942,7 @@ namespace FlavourBusinessManager.RoomService
                 }
 
 
-                ServicesContextRunTime.Current.UpdateCouriersWithUnreadedMessages();
+                ServicesContextRunTime.Current.UpdateCouriersWithUnreadMessages();
             }
 
 

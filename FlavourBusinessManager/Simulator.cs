@@ -56,7 +56,7 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{8574ee8e-dac2-40f7-acf2-ff4f27bc5f1e}</MetaDataID>
         internal void StartSimulator(ServicesContextRunTime servicesContextRunTime)
         {
-            //return ;
+            return ;
 
             var preparationStations = servicesContextRunTime.PreparationStations.ToList();
 
@@ -169,6 +169,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{8bf3a944-b161-4484-a92f-6e1a3d59ecbb}</MetaDataID>
         public void StartClientSideSimulation(SessionType sessionType)
         {
             string defaultMealTypeUri = null;
@@ -358,6 +359,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 
+        /// <MetaDataID>{c8752344-eb31-4ca0-9ac2-924a01777767}</MetaDataID>
         private List<ClientSessionPattern> GetClientSideNextPreparationPatern(int step)
         {
             List<ClientSessionPattern> preparationPatterns = new List<ClientSessionPattern>();
@@ -546,6 +548,7 @@ namespace FlavourBusinessManager.RoomService
 
 
 
+        /// <MetaDataID>{209fe71f-91ed-4216-bfdc-c7bb82ce5872}</MetaDataID>
         private void simulateClientSideSession(string mainMealCourseTypeUri, Dictionary<IPreparationStation, List<IMenuItem>> preparationStationsItems, List<ClientSessionPattern> preparationStationSimulatorItems)
         {
 

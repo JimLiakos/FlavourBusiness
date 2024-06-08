@@ -10,6 +10,11 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
     public interface IPreparationStation
     {
+        /// <MetaDataID>{8de318d3-24de-4889-9f84-65231875f8e1}</MetaDataID>
+        [BackwardCompatibilityID("+4")]
+        string Printer { get; set; }
+
+
         [Association("PreparationSubStation", Roles.RoleB, "cd533f23-6824-4431-b904-818421f4eb42")]
         [RoleBMultiplicityRange(1, 1)]
         IPreparationStation MainStation { get; }
@@ -111,6 +116,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
     }
+
+
 }
 
 

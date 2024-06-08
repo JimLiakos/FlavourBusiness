@@ -455,6 +455,9 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="Infrastructure\GlobalResourceIdentity.cs" />
+    <Compile Include="PrintManager.cs" />
+    <Compile Include="Print\ItemsPreparationContextSnapshot.cs" />
+    <Compile Include="Print\PreparationStationPrintManager.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="ItemsPriceInfo.cs" />
     <Compile Include="NativeAuthUser.cs" />
@@ -496,6 +499,9 @@
     <Compile Include="ServiceArea.cs" />
     <Compile Include="ServicePoint.cs" />
     <Compile Include="ServicesContextRunTime.cs" />
+    <EmbeddedResource Include="Resources\InvoiceReport.repx" />
+    <EmbeddedResource Include="Resources\order.bin" />
+    <EmbeddedResource Include="Resources\Receipt.bin" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\Linq\Linq - VS10.csproj">
@@ -580,6 +586,9 @@
   <ItemGroup>
     <Folder Include="OrganizationCRM\" />
     <Folder Include="PaymentProviders\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GprinterComandChars.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.Core.2.11.2\build\Microsoft.Azure.DocumentDB.Core.targets')" />

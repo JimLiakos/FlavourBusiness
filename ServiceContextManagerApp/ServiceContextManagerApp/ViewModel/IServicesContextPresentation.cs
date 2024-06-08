@@ -1,5 +1,7 @@
 ﻿using CourierApp.ViewModel;
 using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.Print;
+using FlavourBusinessFacade.Printing;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.RoomService.ViewModel;
@@ -83,7 +85,9 @@ namespace ServiceContextManagerApp
         /// <MetaDataID>{d4999189-2e89-4ba7-b5d4-0020b56dc3f2}</MetaDataID>
         NewUserCode GetNewNativeUserQRCode(IWorkerPresentation worker, string color);
 
-        PreparationStationDeviceAssignment GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color);
+        DeviceAssignmentKey GetPreparationStationKeyQRCode(IPreparationStation preparationStation, string color);
+
+        DeviceAssignmentKey GetPrintManagerDeviceAssignKeyQRCode(string color) ;
 
         // void AddNewWaiterAsNativeUser(NewUserCode newUserCode,)
 
@@ -116,6 +120,8 @@ namespace ServiceContextManagerApp
         Task<bool> RemoveFoodShippingAssignment(string foodShippingIdentity);
 
         IList<IPreparationStation> PreparationStations { get; }
+
+        IPrintManager PrintManager { get; }
 
     }
 

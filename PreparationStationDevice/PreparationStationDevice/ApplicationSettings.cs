@@ -44,7 +44,32 @@ namespace PreparationStationDevice
             }
         }
 
-        
+        /// <exclude>Excluded</exclude>
+        string _PrintManagerDeviceCredentialKey;
+
+
+        /// <MetaDataID>{78e67562-a59b-46a0-a187-9ea24e6ac76d}</MetaDataID>
+        [PersistentMember(nameof(_PrintManagerDeviceCredentialKey))]
+        [BackwardCompatibilityID("+5")]
+        public string PrintManagerDeviceCredentialKey
+        {
+            get => _PrintManagerDeviceCredentialKey;
+            set
+            {
+                if (_PrintManagerDeviceCredentialKey != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PrintManagerDeviceCredentialKey = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
+
+
 
         /// <exclude>Excluded</exclude>
         string _PreparationStationTitle;

@@ -27,6 +27,14 @@ namespace FlavoursServicesWorkerRole.Controllers
             return GlobalResourceIdentity.GetGlobalResourceIdentity(fullIdentity, true).RowKey;
         }
 
+        [HttpGet]
+        [Route("api/ExpiringUniqueId/{fullIdentity}/{expiringTimeSpanInMinutes}")]
+        public string ExpiringShortIdentity(string fullIdentity,int expiringTimeSpanInMinutes)
+        {
+            return GlobalResourceIdentity.GetExpiringGlobalResourceIdentity(fullIdentity, expiringTimeSpanInMinutes).RowKey;
+        }
+
+
 
         [HttpGet]
         [Route("api/UniqueId/FullIDFor/{identity}")]
@@ -35,6 +43,12 @@ namespace FlavoursServicesWorkerRole.Controllers
             return GlobalResourceIdentity.GetGlobalResourceIdentityFor(identity)?.ResourceFullIdentity;
         }
 
+        [HttpGet]
+        [Route("api/UniqueId/FullIDForExpiringKey/{identity}")]
+        public string FullIDForExpiringKey(string identity)
+        {
+            return GlobalResourceIdentity.GetGlobalResourceIdentityForExpiringKey(identity)?.ResourceFullIdentity;
+        }
 
     }
 }

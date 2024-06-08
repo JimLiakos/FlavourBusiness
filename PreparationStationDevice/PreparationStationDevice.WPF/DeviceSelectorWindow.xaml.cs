@@ -35,7 +35,7 @@ namespace PreparationStationDevice.WPF
         {
             get
             {
-                return new List<string>() { "91000000296", "93000000296", "95000000296", "97000000296" };
+                return new List<string>() { "91000000296", "93000000296", "95000000296", "97000000296", "98000000296" };
             }
 
         }

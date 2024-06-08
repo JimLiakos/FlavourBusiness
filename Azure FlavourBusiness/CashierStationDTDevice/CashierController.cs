@@ -1024,11 +1024,6 @@ namespace CashierStationDevice
         {
             return string.Format("{0:N2}", price);
         }
-
-
-
-
-
         private static string GetQRCodeData(string qrData)
         {
             //Convert ASCII/Decimal

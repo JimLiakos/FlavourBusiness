@@ -4,6 +4,8 @@ using System.Net;
 using FinanceFacade;
 using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
+
+using FlavourBusinessFacade.Printing;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech;
 using OOAdvantech.Remoting;
@@ -15,6 +17,8 @@ namespace FlavourBusinessFacade
     [OOAdvantech.MetaDataRepository.GenerateFacadeProxy]
     public interface IFlavoursServicesContextRuntime
     {
+      
+
         /// <MetaDataID>{7adbeb8f-b7ac-4983-83cc-064d05f98154}</MetaDataID>
         List<IHomeDeliveryCallCenterStation> CallCenterStations { get; }
 
@@ -104,10 +108,11 @@ namespace FlavourBusinessFacade
         IPreparationStationRuntime GetPreparationStationRuntime(string preparationStationIdentity);
 
 
+        /// <MetaDataID>{e750186d-3585-49d4-aad9-dd4a0c665516}</MetaDataID>
         ServiceContextResources ServiceContextResources { get; }
-            
 
-        
+
+
 
         [RemoteEventPublish(InvokeType.Async)]
         event ObjectChangeStateHandle ObjectChangeState;
@@ -152,8 +157,9 @@ namespace FlavourBusinessFacade
         void RemoveGraphicMenu(OrganizationStorageRef graphicMenuStorageRef);
 
 
-       
 
+
+        /// <MetaDataID>{c737f1c0-7a9e-4fd2-ad60-1699d3c92eeb}</MetaDataID>
         void StorageMetaDataUpdated(OrganizationStorageRef storageRef);
 
         /// <MetaDataID>{8e7c1368-77d0-408a-9854-b31b76758af9}</MetaDataID>
@@ -232,16 +238,26 @@ namespace FlavourBusinessFacade
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
         /// <MetaDataID>{435882c5-db4c-4d32-9d44-ae0607a3fd3d}</MetaDataID>
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
+        /// <MetaDataID>{a54a6383-4b3e-42ff-a732-ec92f8e38aec}</MetaDataID>
         ICourier AssignCourierUser(string courierAssignKey, string signUpUserIdentity, string userName);
+        /// <MetaDataID>{f6004bde-1a2f-4877-9953-023e3889ae37}</MetaDataID>
         ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey, string signUpUserIdentity, string userName);
+        /// <MetaDataID>{e0ebaa00-2d92-4fdd-ae41-7d3e3ccef8a5}</MetaDataID>
         NativeUserSignInData AssignDeviceToNativeUser(string deviceAssignKey);
 
+        /// <MetaDataID>{30c39ca8-cf22-4891-b4a4-94fb94d3a2f8}</MetaDataID>
         string AssignCourierScannerDevice(string deviceAssignKey);
+        /// <MetaDataID>{b868c196-f937-41e5-93f7-9f74d73d5df4}</MetaDataID>
         UserData SignInNativeUser(string userName, string password);
+        /// <MetaDataID>{56e8d1a0-bccd-4786-a341-bb917e69f07e}</MetaDataID>
         IServicePoint GetServicePoint(string servicePointIdentity);
+        /// <MetaDataID>{97b0cf64-ed28-48ec-b1ce-125860f8c92a}</MetaDataID>
         void ObjectStorageUpdate(string storageIdentity, OrganizationStorages flavourStorageType);
-        
+        string AssignPrintManagerDevice(string deviceAssignKey);
+        IPrintManager GetPrintManager(string credentialKey);
 
+        /// <MetaDataID>{3bdaaed9-6e63-40ba-9681-f27fa1a07c0d}</MetaDataID>
+        IPrintManager PrintManager { get; }
 
 
 

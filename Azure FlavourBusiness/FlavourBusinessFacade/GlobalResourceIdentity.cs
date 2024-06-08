@@ -12,6 +12,8 @@ namespace FlavourBusinessFacade
     {
         public static string GetShortIdentity(string resourceFullIdentity)
         {
+            if (string.IsNullOrWhiteSpace(resourceFullIdentity))
+                return null;
             string uniqueIdsUrl = string.Format("http://{0}:8090/api/UniqueId/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, resourceFullIdentity);
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
@@ -24,7 +26,25 @@ namespace FlavourBusinessFacade
 
         public static string GetResourceFullIdentity(string shortIdentity)
         {
+            if (string.IsNullOrWhiteSpace(shortIdentity))
+                return null;
+
             string uniqueIdsUrl = string.Format("http://{0}:8090/api/UniqueId/FullIDFor/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, shortIdentity);
+            using (System.Net.WebClient wc = new System.Net.WebClient())
+            {
+                var json = wc.DownloadString(uniqueIdsUrl);
+                var resourceFullIdentity = OOAdvantech.Json.JsonConvert.DeserializeObject<string>(json);
+
+                return resourceFullIdentity;
+            }
+        }
+
+        public static string GetExpiringKeyResourceFullIdentity(string shortIdentity)
+        {
+            if (string.IsNullOrWhiteSpace(shortIdentity))
+                return null;
+
+            string uniqueIdsUrl = string.Format("http://{0}:8090/api/UniqueId/FullIDForExpiringKey/{1}", FlavourBusinessFacade.ComputingResources.EndPoint.Server, shortIdentity);
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 var json = wc.DownloadString(uniqueIdsUrl);

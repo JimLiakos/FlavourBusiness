@@ -44,7 +44,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"5"))
+		    value      	"6"))
 	    quid       	"5D821872026F"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "AppSettingsStorage"
@@ -249,6 +249,39 @@
 			    value      	"+4"))
 		    quid       	"6262EF4B0008"
 		    type       	"double"
+		    exportControl 	"Public")
+		(object ClassAttribute "PrintManagerDeviceCredentialKey"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{78e67562-a59b-46a0-a187-9ea24e6ac76d}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"665BFF0A0158")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+5"))
+		    quid       	"665BFF0A0158"
+		    type       	"string"
 		    exportControl 	"Public"))
 	    module     	"Component View::PreparationStationDevice::PreparationStationDevice"
 	    quidu      	"5D830A58019E"

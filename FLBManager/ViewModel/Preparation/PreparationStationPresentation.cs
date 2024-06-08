@@ -1586,6 +1586,19 @@ namespace FLBManager.ViewModel.Preparation
             }
         }
 
+        public string Printer
+        {
+            get
+            {
+                return PreparationStation.Printer;
+            }
+            set
+            {
+                PreparationStation.Printer = value;
+               
+            }
+        }
+
         /// <MetaDataID>{8c4b8fea-bd90-4f18-b84b-55c15686d403}</MetaDataID>
         public string PreparationStationIdentity
         {
