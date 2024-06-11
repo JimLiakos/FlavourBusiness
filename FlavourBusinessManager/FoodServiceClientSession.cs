@@ -1931,8 +1931,8 @@ namespace FlavourBusinessManager.EndUsers
 
 
             var sharedFlavourItem = (from storedItem in _SharedItems.OfType<RoomService.ItemPreparation>()
-                           where storedItem.uid == (item as RoomService.ItemPreparation).uid
-                           select storedItem).FirstOrDefault();
+                                     where storedItem.uid == (item as RoomService.ItemPreparation).uid
+                                     select storedItem).FirstOrDefault();
             if (sharedFlavourItem != null)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
@@ -1948,7 +1948,7 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(sharedFlavourItem.uid, sharedFlavourItem.SessionID, SessionID, sharedFlavourItem.IsShared, sharedFlavourItem.SharedInSessions);
 
-                 
+
             }
 
         }
@@ -2056,7 +2056,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
+                bool forgotten = ServicePoint != null && ServicePoint is HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
                     (DateTime.UtcNow - SessionStarts.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin) &&
                     (DateTime.UtcNow - ModificationTime.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin) &&
                     (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin);
@@ -2070,7 +2070,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                bool forgotten = ServicePoint != null && ServicePoint.ServicePointType == ServicePointType.HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
+                bool forgotten = ServicePoint != null && ServicePoint is HallServicePoint && FlavourItems.All(x => x.State == ItemPreparationState.New) &&
                     (DateTime.UtcNow - SessionStarts.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionLifeTimeSpanInMin * 3) &&
                     (DateTime.UtcNow - ModificationTime.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin * 3) &&
                     (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.ForgottenSessionDeviceSleepTimeSpanInMin * 3);
@@ -2452,7 +2452,7 @@ namespace FlavourBusinessManager.EndUsers
                     ModificationTime = DateTime.UtcNow;
                     stateTransition.Consistent = true;
                 }
-                 
+
                 if (MainSession != null)
                 {
                     foreach (var clientSession in MainSession.PartialClientSessions.Where(x => x != this))
@@ -2841,9 +2841,11 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     if (item.State.IsInPreviousState(ItemPreparationState.Committed))
                     {
+                        ((MainSession as FoodServiceSession).CashierStation as CashierStation).AssignItemPreparation(item);
                         item.State = ItemPreparationState.Committed;
                         itemsNewState[item.uid] = item.State;
                         changeStateFlavourItems.Add(item);
+                        
                     }
                 }
 
@@ -3032,7 +3034,7 @@ namespace FlavourBusinessManager.EndUsers
         }
     }
 
-  
+
 }
 
 

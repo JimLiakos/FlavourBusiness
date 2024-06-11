@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{54204B4E-9E68-4BDD-B5CE-23B75AE34D82}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreekTaxAuthority</RootNamespace>
+    <AssemblyName>GreekTaxAuthority</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="aade.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
+    <Compile Include="InvoiceDoc.cs" />
+    <Compile Include="MyDataWith.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RapidSign.cs" />
+    <Compile Include="TransactionEx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SampleXML_1.1  %28ΤΙΜ-ΠΩΛΗΣΗΣ_ΑΥΤΟΤΙΜ%29 .xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.1_taxes_per_invoice %28ΤΙΜ-ΠΩΛΗΣΗΣ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.1_taxes_per_line %28ΤΙΜ-ΠΡΟΪΟΝΤΩΝ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.1_taxes_per_line %28ΤΙΜ-ΠΩΛΗΣΗΣ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.1_taxes_per_line %28ΤΙΜ-ΠΩΛΗΣΗΣ-ΣΥΝΘΕΤΟ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.4  %28ΠΩΛΗΣΗ ΓΙΑ ΛΟΓ. ΤΡΙΤΩΝ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.5_taxes_per_invoice %28ΤΙΜ-ΕΚΚΑΘΑΡΙΣΗΣ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_1.5_taxes_per_line %28ΤΙΜ-ΕΚΚΑΘΑΡΙΣΗΣ%29 .xml" />
+    <EmbeddedResource Include="Resources\SampleXML_14_1 %28ΤΙΜ - ΕΝΔΟΚΟΙΝΟΤΙΚΕΣ ΑΠΟΚΤΗΣΕΙΣ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_17_2 %28ΤΙΜ - ΑΠΟΣΒΕΣΕΙΣ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_2.1_taxes_per_invoice %28Τ.Π.Υ%29.xml" />
+    <EmbeddedResource Include="Resources\SampleXML_2.1_taxes_per_line %28Τ.Π.Υ%29 .xml" />
+    <EmbeddedResource Include="Resources\SampleXML_5_1 %28ΠΙΣΤΩΤΙΚΟ ΜΕ ΣΥΣΧΕΤΙΖΟΜΕΝΟ%29.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PersistenceLayer\DotNetPersistenceLayer\OOAdvantech.Json\OOAdvantech.Json.csproj">
+      <Project>{f20e4565-5ddb-4e1e-a343-369927c01277}</Project>
+      <Name>OOAdvantech.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azure FlavourBusiness\FinanceFacade\FinanceFacade.csproj">
+      <Project>{bc023782-2913-447e-90c1-af934f8f2ce1}</Project>
+      <Name>FinanceFacade</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

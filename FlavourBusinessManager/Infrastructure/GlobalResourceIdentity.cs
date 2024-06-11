@@ -282,32 +282,33 @@ namespace FlavourBusinessManager.Infrastructure
     }
 
 
-    public static class RandomIdGenerator 
-{
-    private static char[] _base62chars = 
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        .ToCharArray();
-
-    private static Random _random = new Random();
-
-    public static string GetBase62(int length) 
+    /// <MetaDataID>{9870a468-a2e7-429c-bae8-5955282236b3}</MetaDataID>
+    public static class RandomIdGenerator
     {
-        var sb = new StringBuilder(length);
+        private static char[] _base62chars =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            .ToCharArray();
 
-        for (int i=0; i<length; i++) 
-            sb.Append(_base62chars[_random.Next(62)]);
+        private static Random _random = new Random();
 
-        return sb.ToString();
-    }       
+        public static string GetBase62(int length)
+        {
+            var sb = new StringBuilder(length);
 
-    public static string GetBase36(int length) 
-    {
-        var sb = new StringBuilder(length);
+            for (int i = 0; i < length; i++)
+                sb.Append(_base62chars[_random.Next(62)]);
 
-        for (int i=0; i<length; i++) 
-            sb.Append(_base62chars[_random.Next(36)]);
+            return sb.ToString();
+        }
 
-        return sb.ToString();
+        public static string GetBase36(int length)
+        {
+            var sb = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+                sb.Append(_base62chars[_random.Next(36)]);
+
+            return sb.ToString();
+        }
     }
-}
 }

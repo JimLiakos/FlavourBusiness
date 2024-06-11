@@ -655,11 +655,11 @@ namespace DontWaitApp
                     {
                         YouMustDecideMessageForward(message);
                     }
-                    if(YouMustDecideMessage==null&& _MessmatesWaitForYouToDecide!=null)
-                    {
-                        YouMustDecideMessage= new Message() { MessageID = Guid.NewGuid().ToString("N") };
-                        YouMustDecideMessageForward(YouMustDecideMessage);
-                    }
+                    //if(YouMustDecideMessage==null&& _MessmatesWaitForYouToDecide!=null)
+                    //{
+                    //    YouMustDecideMessage= new Message() { MessageID = Guid.NewGuid().ToString("N") };
+                    //    YouMustDecideMessageForward(YouMustDecideMessage);
+                    //}
 
 
                 }

@@ -1594,8 +1594,12 @@ namespace FLBManager.ViewModel.Preparation
             }
             set
             {
-                PreparationStation.Printer = value;
-               
+                if(string.IsNullOrWhiteSpace(value))
+                    PreparationStation.Printer = null;
+                else
+                    PreparationStation.Printer = value;
+
+
             }
         }
 

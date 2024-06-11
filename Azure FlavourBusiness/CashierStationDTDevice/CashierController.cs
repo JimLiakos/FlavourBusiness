@@ -2,6 +2,7 @@
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using GreekTaxAuthority;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -101,7 +102,7 @@ namespace CashierStationDevice
 
 
             int numofTries = 0;
-            Retry:
+Retry:
             try
             {
                 Issuer = (ApplicationSettings.Current.CashiersStation as ICashierStation).Issuer;
@@ -199,6 +200,8 @@ namespace CashierStationDevice
                                     transaction.SetAutoNumber(autoNumber);
                                     transaction.SetCodePage(transactionPrinter.PrinterCodePage);
                                     transaction.SetSeries(transactionPrinter.Series);
+                                    transaction.SetIssueDate(DateTime.UtcNow);
+
                                     transaction.SetTransactionTypeID("173");
                                     if (!string.IsNullOrWhiteSpace(transactionPrinter.RawPrinterAddress))
                                         transaction.SetRawPrinterAddress(transactionPrinter.RawPrinterAddress);
@@ -208,7 +211,7 @@ namespace CashierStationDevice
                                 {
                                     IServingBatch ServingBatch = ApplicationSettings.Current.CashiersStation.GetServingBatch(serviceBatchUri);
 
-                                    if (ServingBatch.ServicePoint.ServicePointType == ServicePointType.HallServicePoint)
+                                    if (ServingBatch.ServicePoint is IHallServicePoint)
                                         transaction.SetPropertyValue("ServicePointDescription", Properties.Resources.HallServicePointLabel + " " + ServingBatch.ServicePoint.Description);
                                 }
 
@@ -239,9 +242,9 @@ namespace CashierStationDevice
         {
             Task.Run(() =>
             {
-                var transctions = ApplicationSettings.Current.CashiersStation.GetOpenTransactions(deviceUpdateEtag);
+                var transactions = ApplicationSettings.Current.CashiersStation.GetOpenTransactions(deviceUpdateEtag);
 
-                AddPendingTransactionsForPrint(transctions);
+                AddPendingTransactionsForPrint(transactions);
             });
 
 
@@ -250,27 +253,25 @@ namespace CashierStationDevice
 
         List<ITransaction> PendingTransactionsForPrint = new List<ITransaction>();
 
-        public static Dictionary<string, int> VatAcounts = new Dictionary<string, int>{
-            {"a1",0},
-            {"b1",1},
-            {"c1",2},
-            {"d1",3},
-            {"C54.00.70.0006",0},
-            {"C54.00.70.0013",1},
-            {"C54.00.70.0024",2},
-            {"C54.00.70.0036",3},
-            {"C54.00.70.0000",4},
-            {"C54.00.79.0004",0},
-            {"C54.00.79.0009",1},
-            {"C54.00.79.0017",2},
-            {"C54.00.79.0025",3}
-        };
+
 
         public IFisicalParty Issuer { get; private set; }
 
         public void PrintReceipt(ITransaction transaction, IDocumentSignDevice documentSigner, CompanyHeader companyHeader)
         {
+
+
+
+            aade.SendIncomeInvoice(transaction);
+
+
+
             string printText = null;
+
+            var markResult = GreekTaxAuthority.aade.SendIncomeInvoice(transaction);
+            markResult.Wait();
+
+            string mark = markResult.Result;
 
             if (string.IsNullOrWhiteSpace(transaction.GetPropertyValue("Signature")))
             {
@@ -300,26 +301,26 @@ namespace CashierStationDevice
                 foreach (var item in transaction.Items)
                 {
                     epsilonLineData.total_to_pay_poso += item.Price;
-                    if (item.Taxes.Count > 0 && VatAcounts.ContainsKey(item.Taxes[0].AccountID))
+                    if (item.Taxes.Count > 0 && aade.VatAccounts.ContainsKey(item.Taxes[0].AccountID))
                     {
-                        if (VatAcounts[item.Taxes[0].AccountID] == 0)
+                        if (aade.VatAccounts[item.Taxes[0].AccountID] == 0)
                         {
                             epsilonLineData.vat_a += item.Taxes[0].Amount;
                             epsilonLineData.net_a += item.Price - item.Taxes[0].Amount;
                         }
-                        if (VatAcounts[item.Taxes[0].AccountID] == 1)
+                        if (aade.VatAccounts[item.Taxes[0].AccountID] == 1)
                         {
                             epsilonLineData.vat_b += item.Taxes[0].Amount;
                             epsilonLineData.net_b += item.Price - item.Taxes[0].Amount;
                         }
 
-                        if (VatAcounts[item.Taxes[0].AccountID] == 2)
+                        if (aade.VatAccounts[item.Taxes[0].AccountID] == 2)
                         {
                             epsilonLineData.vat_c += item.Taxes[0].Amount;
                             epsilonLineData.net_c += item.Price - item.Taxes[0].Amount;
                         }
 
-                        if (VatAcounts[item.Taxes[0].AccountID] == 3)
+                        if (aade.VatAccounts[item.Taxes[0].AccountID] == 3)
                         {
                             epsilonLineData.vat_d += item.Taxes[0].Amount;
                             epsilonLineData.net_d += item.Price - item.Taxes[0].Amount;
@@ -331,8 +332,8 @@ namespace CashierStationDevice
                 string afdsDoc = printText;
                 if (documentSigner.IsOnline)
                 {
-                  
-                    
+
+
                     SignatureData signature = documentSigner.SignDocument(afdsDoc, epsilonLineData);
                     if (!string.IsNullOrWhiteSpace(signature.Signuture))
                     {

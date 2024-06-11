@@ -28,9 +28,49 @@ namespace CashierStationDTDevice
 
         public CashierController CashierController { get; private set; }
 
+        public decimal GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            var _decimal=(decimal) (random.NextDouble() * (maximum - minimum) + minimum);
+            return Math.Round(_decimal, 2);
+
+        }
+
         protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            //Random random=new Random();
+            //random.NextDouble();
+            //List<decimal> decimals = new List<decimal>(); 
+            //int count = 140;
+            //while(count>0)
+            //{
+            //    count--;
+            //    decimals.Add(GetRandomNumber(1, 18));
+            //    System.Threading.Thread.Sleep(200);
+            //}
+            //decimal[] amounts = decimals.ToArray(); //new decimal[] { 4.65M, 7.33M, 12.40M, 15.44M };
+            //decimal[] netAmounts=amounts.Select(x => x/(decimal)1.13).ToArray();
+
+            //decimal[] vatAmounts = amounts.Select(x => x- x / (decimal)1.13).ToArray();
+            
+
+            //decimal[] roundedNetAmounts = netAmounts.Select(x => Math.Round(x, 2)).ToArray();
+            //decimal[] roundedVatAmounts = vatAmounts.Select(x => Math.Round(x, 2)).ToArray();
+
+            //GreekTaxAuthority.MyData.InvoicesDoc.Test(); 
+            //for (int i = 0;i<amounts.Length;i++)
+            //{
+            //    if(roundedNetAmounts[i] + roundedVatAmounts[i] != amounts[i])
+            //    {
+            //        var dif = (roundedNetAmounts[i] + roundedVatAmounts[i]) - amounts[i];
+            //    }
+            //    else
+            //    {
+
+            //    }senTe
+            //}
             FireBase.Init();
             //FireB
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

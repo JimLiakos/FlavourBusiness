@@ -1,3 +1,4 @@
+using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.RoomService;
 using OOAdvantech.MetaDataRepository;
 using System;
@@ -12,6 +13,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         [RoleAMultiplicityRange(1, 1)]
         public IMealCourse MealCourse;
 
+
+        IFoodServiceClientSession ClientSession;
 
         public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
@@ -36,6 +39,24 @@ namespace FlavourBusinessFacade.ServicesContextResources
 
 
         }
+        public ServicePointPreparationItems(IFoodServiceClientSession clientSession, System.Collections.Generic.List<RoomService.IItemPreparation> preparationItems)
+        {
+            ClientSession = clientSession;
+
+            ServicePoint = clientSession.MainSession.ServicePoint;
+            PreparationItems = preparationItems;
+
+            if (ServicePoint is IHallServicePoint)
+                _Description = (ServicePoint as IHallServicePoint).ServiceArea.Description + " / " + ServicePoint.Description;
+
+            if (ServicePoint is IHomeDeliveryServicePoint)
+                _Description = clientSession.MainSession.DeliveryPlace.Description;
+
+
+            //_Description = (ServicePoint as IHallServicePoint) .ServiceArea.Description + " / " + ServicePoint.Description;
+            _Uri = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(clientSession)?.GetPersistentObjectUri(clientSession);
+        }
+
 
         private void MealCourse_ObjectChangeState(object _object, string member)
         {
@@ -138,7 +159,8 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{c65cde2f-17f7-4077-9b40-6d29e81dac5d}</MetaDataID>
         public void AddPreparationItem(IItemPreparation flavourItem)
         {
-            PreparationItems.Add(flavourItem);
+            if(!PreparationItems.Contains(flavourItem))
+                PreparationItems.Add(flavourItem);
         }
 
         /// <MetaDataID>{b452dae6-2d24-40af-a627-633fcf7e759f}</MetaDataID>

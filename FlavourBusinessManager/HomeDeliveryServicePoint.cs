@@ -61,6 +61,18 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+        public override ServicePointType ServicePointType
+        {
+            get
+            {
+                base.ServicePointType = ServicePointType.Delivery;
+                return ServicePointType.Delivery;
+            }
+            protected set
+            {
+            }
+        }
+
         public string GeocodingApiKey { get => "AIzaSyAuon626ZLzKmYgmCCpAF3dvILvSizjaTI"; }
 
         /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>

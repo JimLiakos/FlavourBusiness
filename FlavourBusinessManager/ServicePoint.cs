@@ -557,10 +557,10 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
         /// <MetaDataID>{95d60c6b-ecf6-42f4-b9fc-87c79c614974}</MetaDataID>
         [PersistentMember(nameof(_ServicePointType))]
         [BackwardCompatibilityID("+11")]
-        public ServicePointType ServicePointType
+        public virtual ServicePointType ServicePointType
         {
             get => _ServicePointType;
-            set
+            protected set
             {
                 if (_ServicePointType != value)
                 {
@@ -729,12 +729,12 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                                       where servicePoint.ServicesPointIdentity == targetServicePointIdentity
                                       select servicePoint).OfType<ServicePoint>().FirstOrDefault();
 
-            if (ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity==targetServicePointIdentity)
-                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint as ServicePoint;
+            if (ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint.ServicesPointIdentity == targetServicePointIdentity)
+                targetServicePoint = ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint as ServicePoint;
 
 
-            if (ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x=>x.ServicesPointIdentity==targetServicePointIdentity).Count()==1)
-                targetServicePoint=ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x => x.ServicesPointIdentity==targetServicePointIdentity).FirstOrDefault() as ServicePoint;
+            if (ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x => x.ServicesPointIdentity == targetServicePointIdentity).Count() == 1)
+                targetServicePoint = ServicePointRunTime.ServicesContextRunTime.Current.TakeAwayStations.Where(x => x.ServicesPointIdentity == targetServicePointIdentity).FirstOrDefault() as ServicePoint;
 
 
 
@@ -748,15 +748,15 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
 
                 if (servicePointLastOpenSession == null)
                 {
-                    if (targetServicePoint is IHomeDeliveryServicePoint&&foodServiceSession.PartialClientSessions.Count>1)
+                    if (targetServicePoint is IHomeDeliveryServicePoint && foodServiceSession.PartialClientSessions.Count > 1)
                         throw new Exception("You cannot transform session to home delivery session");
 
-                    if (targetServicePoint is ITakeAwayStation&&foodServiceSession.PartialClientSessions.Count>1)
+                    if (targetServicePoint is ITakeAwayStation && foodServiceSession.PartialClientSessions.Count > 1)
                         throw new Exception("You cannot transform session to take away session");
 
                     (foodServiceSession as FoodServiceSession).ServicePoint = targetServicePoint;
                     targetServicePoint.UpdateState();
-                    
+
 
                     if (foodServiceSession.Meal != null)
                     {
@@ -1046,6 +1046,20 @@ namespace FlavourBusinessManager.ServicesContextResources
                 }
             }
         }
+
+        public override ServicePointType ServicePointType
+        {
+            get
+            {
+                base.ServicePointType = ServicePointType.HallServicePoint;
+                return ServicePointType.HallServicePoint;
+            }
+            protected set
+            {
+            }
+        }
+
+
 
         /// <MetaDataID>{4bcce2d4-e720-47bd-bafe-b5dea36afbc3}</MetaDataID>
         internal bool CanBeAssignedTo(IWaiter waiter, IShiftWork shiftWork)

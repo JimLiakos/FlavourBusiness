@@ -65,6 +65,17 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
+        public override ServicePointType ServicePointType
+        {
+            get
+            {
+                base.ServicePointType = ServicePointType.TakeAway;
+                return ServicePointType.TakeAway;
+            }
+            protected set
+            {
+            }
+        }
 
 
         ///// <exclude>Excluded</exclude>

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<main>
+  <vatTypes>
+    <vatType TypeId="1" Abbreviation="24%&#xD;" Description="ΦΠΑ συντελεστής 24% " myDataVatType="1" perc="24"></vatType>
+    <vatType TypeId="2" Abbreviation="13%&#xD;&#xA;" Description="ΦΠΑ συντελεστής 13% " myDataVatType="2" perc="13"></vatType>
+    <vatType TypeId="3" Abbreviation="6%&#xD;&#xA;" Description="ΦΠΑ συντελεστής 6% " myDataVatType="3" perc="6"></vatType>
+    <vatType TypeId="4" Abbreviation="17%&#xD;&#xA;" Description="ΦΠΑ συντελεστής 17% " myDataVatType="4" perc="17"></vatType>
+    <vatType TypeId="5" Abbreviation="9%&#xD;&#xA;" Description="ΦΠΑ συντελεστής 9% " myDataVatType="5" perc="9"></vatType>
+    <vatType TypeId="6" Abbreviation="4%&#xD;&#xA;" Description="ΦΠΑ συντελεστής 4% " myDataVatType="6" perc="4"></vatType>
+    <vatType TypeId="7-1" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 2 και 3 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="1" perc="0"></vatType>
+    <vatType TypeId="8" Abbreviation="Xωρίς ΦΠΑ " Description="Χωρίς ΦΠΑ " myDataVatType="8" myDataVatExemptionType="1" perc="0"></vatType>
+    <vatType TypeId="7-2" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 5 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="2" perc="0"></vatType>
+    <vatType TypeId="7-3" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 13 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="3" perc="0"></vatType>
+    <vatType TypeId="7-4" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 14 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="1" perc="0"></vatType>
+    <vatType TypeId="7-5" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 16 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="5" perc="0"></vatType>
+    <vatType TypeId="7-6" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 19 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="6" perc="0"></vatType>
+    <vatType TypeId="7-7" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 22 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="7" perc="0"></vatType>
+    <vatType TypeId="7-8" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 24 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="8" perc="0">
+      <TypeOfInvoice Initial="1.1" Converted="1.3" />
+    </vatType>
+    <vatType TypeId="7-9" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 25 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="9" perc="0"></vatType>
+    <vatType TypeId="7-10" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 26 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="10" perc="0"></vatType>
+    <vatType TypeId="7-11" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 27 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="11" perc="0"></vatType>
+    <vatType TypeId="7-12" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 27 - Πλοία Ανοικτής Θαλάσσης του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="12" perc="0"></vatType>
+    <vatType TypeId="7-13" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 27.1.γ - Πλοία Ανοικτής Θαλάσσης του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="13" perc="0"></vatType>
+    <vatType TypeId="7-14" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 28 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="14" perc="0">
+      <TypeOfInvoice Initial="1.1" Converted="1.2" />
+      <TypeOfInvoice Initial="2.1" Converted="2.2" />
+      <TypeOfIncome Initial="E3_561_001" Converted="E3_561_005" />
+      <TypeOfIncome Initial="E3_561_007" Converted="E3_561_005" />
+    </vatType>
+    <vatType TypeId="7-15" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 39 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="15" perc="0"></vatType>
+    <vatType TypeId="7-16" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 39α του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="16" perc="0"></vatType>
+    <vatType TypeId="7-17" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 40 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="17" perc="0"></vatType>
+    <vatType TypeId="7-18" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 41 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="18" perc="0"></vatType>
+    <vatType TypeId="7-19" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 47 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="19" perc="0"></vatType>
+    <vatType TypeId="7-20" Abbreviation="0%&#xD;&#xA;" Description="ΦΠΑ εμπεριεχόμενος - Άρθρο 43 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="20" perc="0"></vatType>
+    <vatType TypeId="7-21" Abbreviation="0%&#xD;&#xA;" Description="ΦΠΑ εμπεριεχόμενος - Άρθρο 44 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="21" perc="0"></vatType>
+    <vatType TypeId="7-22" Abbreviation="0%&#xD;&#xA;" Description="ΦΠΑ εμπεριεχόμενος - Άρθρο 45 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="22" perc="0"></vatType>
+    <vatType TypeId="7-23" Abbreviation="0%&#xD;&#xA;" Description="ΦΠΑ εμπεριεχόμενος - Άρθρο 46 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="23" perc="0"></vatType>
+    <vatType TypeId="7-24" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 6 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="24" perc="0"></vatType>
+    <vatType TypeId="7-25" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - ΠΟΛ.1029/1995" myDataVatType="7" myDataVatExemptionType="25" perc="0"></vatType>
+    <vatType TypeId="7-26" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - ΠΟΛ.1167/2015" myDataVatType="7" myDataVatExemptionType="26" perc="0"></vatType>
+    <vatType TypeId="7-27" Abbreviation="0%&#xD;&#xA;" Description="Λοιπές εξαιρέσεις ΦΠΑ" myDataVatType="7" myDataVatExemptionType="27" perc="0"></vatType>
+    <vatType TypeId="8" Abbreviation="0" Description="Εγγραφές χωρίς ΦΠΑ" myDataVatType="8" perc="0"></vatType>
+    <TaxType TypeId="1" Abbreviation="15%&#xD;&#xA;" Description="Περιπτ. β’- Τόκοι - 15%" myDataVatType="1" />
+    <TaxType TypeId="2" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. γ’ - Δικαιώματα - 20%" myDataVatType="1" />
+    <TaxType TypeId="3" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. δ’ - Αμοιβές Συμβουλών Διοίκησης - 20%" myDataVatType="1" />
+    <TaxType TypeId="4" Abbreviation="3%&#xD;&#xA;" Description="Περιπτ. δ’ - Τεχνικά Έργα - 3%" myDataVatType="1" />
+    <TaxType TypeId="5" Abbreviation="1%&#xD;&#xA;" Description="Υγρά καύσιμα και προϊόντα καπνοβιομηχανίας 1%" myDataVatType="1" />
+    <TaxType TypeId="6" Abbreviation="4%&#xD;&#xA;" Description="Λοιπά Αγαθά 4%" myDataVatType="1" />
+    <TaxType TypeId="7" Abbreviation="8%&#xD;&#xA;" Description="Παροχή Υπηρεσιών 8%" myDataVatType="1" />
+    <TaxType TypeId="8" Abbreviation="4%&#xD;&#xA;" Description="Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών &#xD;&#xA;Αμοιβών, για Εκπόνηση Μελετών και Σχεδίων 4%" myDataVatType="1" />
+    <TaxType TypeId="9" Abbreviation="10%" Description="Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών &#xD;&#xA;Αμοιβών, που αφορούν οποιασδήποτε άλλης φύσης έργα 10%" myDataVatType="1" />
+    <TaxType TypeId="10" Abbreviation="15%" Description="Προκαταβλητέος Φόρος στις Αμοιβές Δικηγόρων 15%" myDataVatType="1" />
+    <TaxType TypeId="11" Abbreviation="0" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 1 αρ. 15 ν. 4172/2013" myDataVatType="1" />
+    <TaxType TypeId="12" Abbreviation="15%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 -&#xD;&#xA;Αξιωματικών Εμπορικού Ναυτικού" myDataVatType="1" />
+    <TaxType TypeId="13" Abbreviation="10%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 -&#xD;&#xA;Κατώτερο Πλήρωμα Εμπορικού Ναυτικού" myDataVatType="1" />
+    <TaxType TypeId="14" Abbreviation="0" Description="Παρακράτηση Ειδικής Εισφοράς Αλληλεγγύης" myDataVatType="1" />
+    <TaxType TypeId="15" Abbreviation="0" Description="Παρακράτηση Φόρου Αποζημίωσης λόγω Διακοπής Σχέσης Εργασίας παρ. &#xD;&#xA;3 αρ. 15 ν. 4172/2013 " myDataVatType="1" />
+  </vatTypes>
+  <classificationTypes>
+    <classificationType aadeId="E3_106" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις - Καταστροφές αποθεμάτων/Εμπορεύματα" />
+    <classificationType aadeId="E3_205" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις - Καταστροφές αποθεμάτων/Πρώτες ύλες και λοιπά υλικά" />
+    <classificationType aadeId="E3_210" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις - Καταστροφές αποθεμάτων/Προϊόντα και παραγωγή σε εξέλιξη" />
+    <classificationType aadeId="E3_305" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις – Καταστροφές αποθεμάτων/Πρώτες ύλες και λοιπά υλικά" />
+    <classificationType aadeId="E3_310" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις - Καταστροφές αποθεμάτων/Προϊόντα και παραγωγή σε εξέλιξη" />
+    <classificationType aadeId="E3_318" Description="Ιδιοπαραγωγή παγίων - Αυτοπαραδόσεις - Καταστροφές αποθεμάτων/Έξοδα παραγωγής" />
+    <classificationType aadeId="E3_561_001" Description="Πωλήσεις αγαθών και υπηρεσιών Χονδρικές - Επιτηδευματιών" />
+    <classificationType aadeId="E3_561_002" Description="Πωλήσεις αγαθών και υπηρεσιών Χονδρικές βάσει άρθρου 39α παρ 5 του Κώδικα Φ.Π.Α. (Ν.2859/2000)" />
+    <classificationType aadeId="E3_561_003" Description="Πωλήσεις αγαθών και υπηρεσιών Λιανικές - Ιδιωτική Πελατεία" />
+    <classificationType aadeId="E3_561_004" Description="Πωλήσεις αγαθών και υπηρεσιών Λιανικές βάσει άρθρου 39α παρ 5 του Κώδικα Φ.Π.Α. (Ν.2859/2000)" />
+    <classificationType aadeId="E3_561_005" Description="Πωλήσεις αγαθών και υπηρεσιών Εξωτερικού Ενδοκοινοτικές" />
+    <classificationType aadeId="E3_561_006" Description="Πωλήσεις αγαθών και υπηρεσιών Εξωτερικού Τρίτες Χώρες" />
+    <classificationType aadeId="E3_561_007" Description="Πωλήσεις αγαθών και υπηρεσιών Λοιπά" />
+    <classificationType aadeId="E3_562" Description="Λοιπά συνήθη έσοδα" />
+    <classificationType aadeId="E3_563" Description="Πιστωτικοί τόκοι και συναφή έσοδα" />
+    <classificationType aadeId="E3_564" Description="Πιστωτικές συναλλαγματικές διαφορές" />
+    <classificationType aadeId="E3_565" Description="Έσοδα συμμετοχών" />
+    <classificationType aadeId="E3_566" Description="Κέρδη από διάθεση μη κυκλοφορούντων περιουσιακών στοιχείων" />
+    <classificationType aadeId="E3_567" Description="Κέρδη από αναστροφή προβλέψεων και απομειώσεων" />
+    <classificationType aadeId="E3_568" Description="Κέρδη από επιμέτρηση στην εύλογη αξία" />
+    <classificationType aadeId="E3_570" Description="Ασυνήθη έσοδα και κέρδη" />
+    <classificationType aadeId="E3_595" Description="Έξοδα σε ιδιοπαραγωγή" />
+    <classificationType aadeId="E3_596" Description="Επιδοτήσεις - Επιχορηγήσεις" />
+    <classificationType aadeId="E3_597" Description="Επιδοτήσεις - Επιχορηγήσεις για επενδυτικούς σκοπούς - κάλυψη δαπανών" />
+    <classificationType aadeId="E3_880_001" Description="Πωλήσεις Παγίων Χονδρικές" />
+    <classificationType aadeId="E3_880_002" Description="Πωλήσεις Παγίων Λιανικές" />
+    <classificationType aadeId="E3_880_003" Description="Πωλήσεις Παγίων Εξωτερικού Ενδοκοινοτικές" />
+    <classificationType aadeId="E3_880_004" Description="Πωλήσεις Παγίων Εξωτερικού Τρίτες Χώρες" />
+    <classificationType aadeId="E3_881_001" Description="Πωλήσεις για λογ/σμο Τρίτων Χονδρικές" />
+    <classificationType aadeId="E3_881_002" Description="Πωλήσεις για λογ/σμο Τρίτων Λιανικές" />
+    <classificationType aadeId="E3_881_003" Description="Πωλήσεις για λογ/σμο Τρίτων Εξωτερικού Ενδοκοινοτικές" />
+    <classificationType aadeId="E3_881_004" Description="Πωλήσεις για λογ/σμο Τρίτων Εξωτερικού Τρίτες Χώρες" />
+    <classificationType aadeId="no" Description="Εγγυοδοσία">
+      <vatCategory TypeId="7-6" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 19 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="6" />
+    </classificationType>
+    <classificationType aadeId="tax-1" Description="Παρακράτηση φόρου - Περιπτ. β’- Τόκοι - 15%">
+      <TaxType TypeId="1" Abbreviation="15%&#xD;&#xA;" Description="Περιπτ. β’- Τόκοι - 15%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-2" Description="Παρακράτηση φόρου - Περιπτ. γ’ - Δικαιώματα - 20%">
+      <TaxType TypeId="2" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. γ’ - Δικαιώματα - 20%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-3" Description="20% - Παρακράτηση φόρου - Περιπτ. δ’ - Αμοιβές Συμβουλών Διοίκησης">
+      <TaxType TypeId="3" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. δ’ - Αμοιβές Συμβουλών Διοίκησης - 20%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-4" Description="Παρακράτηση φόρου - Περιπτ. δ’ - Τεχνικά Έργα - 3%">
+      <TaxType TypeId="4" Abbreviation="3%&#xD;&#xA;" Description="Περιπτ. δ’ - Τεχνικά Έργα - 3%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-5" Description="Παρακράτηση φόρου - Υγρά καύσιμα και προϊόντα καπνοβιομηχανίας 1%">
+      <TaxType TypeId="5" Abbreviation="1%&#xD;&#xA;" Description="Υγρά καύσιμα και προϊόντα καπνοβιομηχανίας 1%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-6" Description="Παρακράτηση φόρου - Λοιπά Αγαθά 4%">
+      <TaxType TypeId="6" Abbreviation="4%&#xD;&#xA;" Description="Λοιπά Αγαθά 4%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-7" Description="Παρακράτηση φόρου - Περιπτ. β’- Τόκοι - 15%">
+      <TaxType TypeId="7" Abbreviation="8%&#xD;&#xA;" Description="Παροχή Υπηρεσιών 8%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-8" Description="4% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, για Εκπόνηση Μελετών και Σχεδίων ">
+      <TaxType TypeId="8" Abbreviation="4%&#xD;&#xA;" Description="Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών &#xD;&#xA;Αμοιβών, για Εκπόνηση Μελετών και Σχεδίων 4%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-9" Description="10% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, που αφορούν οποιασδήποτε άλλης φύσης έργα ">
+      <TaxType TypeId="9" Abbreviation="10%" Description="10% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, που αφορούν οποιασδήποτε άλλης φύσης έργα " myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-10" Description="Προκαταβλητέος Φόρος στις Αμοιβές Δικηγόρων 15%">
+      <TaxType TypeId="10" Abbreviation="15%" Description="Προκαταβλητέος Φόρος στις Αμοιβές Δικηγόρων 15%" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-11" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 1 αρ. 15 ν. 4172/2013">
+      <TaxType TypeId="11" Abbreviation="0" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 1 αρ. 15 ν. 4172/2013" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-12" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Αξιωματικών Εμπορικού Ναυτικού">
+      <TaxType TypeId="12" Abbreviation="15%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Αξιωματικών Εμπορικού Ναυτικού" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-13" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Κατώτερο Πλήρωμα Εμπορικού Ναυτικού">
+      <TaxType TypeId="13" Abbreviation="10%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Κατώτερο Πλήρωμα Εμπορικού Ναυτικού" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-14" Description="Παρακράτηση Ειδικής Εισφοράς Αλληλεγγύης">
+      <TaxType TypeId="14" Abbreviation="0" Description="Παρακράτηση Ειδικής Εισφοράς Αλληλεγγύης" myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="tax-15" Description="Παρακράτηση Φόρου Αποζημίωσης λόγω Διακοπής Σχέσης Εργασίας παρ. 3 αρ. 15 ν. 4172/2013">
+      <TaxType TypeId="15" Abbreviation="0" Description="Παρακράτηση Φόρου Αποζημίωσης λόγω Διακοπής Σχέσης Εργασίας παρ. 3 αρ. 15 ν. 4172/2013 " myDataVatType="1" />
+    </classificationType>
+    <classificationType aadeId="fees-8" Description="Περιβαλλοντικό Τέλος &amp; πλαστικής σακούλας ν. 2339/2001 αρ. 6α 0,07 ευρώ ανά τεμάχιο">
+      <FeeType TypeId="8" Abbreviation="0" Description="Περιβαλλοντικό Τέλος &amp; πλαστικής σακούλας ν. 2339/2001 αρ. 6α 0,07 ευρώ ανά τεμάχιο" />
+    </classificationType>
+  </classificationTypes>
+  <classificationCategories>
+    <classificationCategory aadeId="category1_1" Description="Έσοδα από Πώληση Εμπορευμάτων (+) / (-)" />
+    <classificationCategory aadeId="category1_2" Description="Έσοδα από Πώληση Προϊόντων (+) / (-)" />
+    <classificationCategory aadeId="category1_3" Description="Έσοδα από Παροχή Υπηρεσιών (+) / (-)" />
+    <classificationCategory aadeId="category1_4" Description="Έσοδα από Πώληση Παγίων (+) / (-)" />
+    <classificationCategory aadeId="category1_5" Description="Λοιπά Έσοδα/ Κέρδη (+) / (-)" />
+    <classificationCategory aadeId="category1_6" Description="Αυτοπαραδόσεις / Ιδιοχρησιμοποιήσεις (+) / (-)" />
+    <classificationCategory aadeId="category1_7" Description="Έσοδα για λ/σμο τρίτων (+) / (-)" />
+    <classificationCategory aadeId="category1_8" Description="Έσοδα προηγούμενων χρήσεων (+)/ (-)" />
+    <classificationCategory aadeId="category1_9" Description="Έσοδα επομένων χρήσεων (+) / (-)" />
+    <classificationCategory aadeId="category1_10" Description="Λοιπές Εγγραφές Τακτοποίησης Εσόδων (+) / (-)" />
+    <classificationCategory aadeId="category1_95" Description="Λοιπά Πληροφοριακά Στοιχεία Εσόδων (+) / (-)" />
+    <classificationCategory aadeId="fees8-category1_95" Description="Περιβαλλοντικό Τέλος &amp; πλαστικής σακούλας ν. 2339/2001 αρ. 6α 0,07 ευρώ ανά τεμάχιο">
+      <FeeType TypeId="8" Abbreviation="0" Description="Περιβαλλοντικό Τέλος &amp; πλαστικής σακούλας ν. 2339/2001 αρ. 6α 0,07 ευρώ ανά τεμάχιο" />
+    </classificationCategory>
+    <classificationCategory aadeId="no-category1_95" Description="Εγγυοδοσία">
+      <vatCategory TypeId="7-6" Abbreviation="0%&#xD;&#xA;" Description="Χωρίς ΦΠΑ - Άρθρο 19 του κώδικα ΦΠΑ" myDataVatType="7" myDataVatExemptionType="6" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-1" Description="Παρακράτηση φόρου - Περιπτ. β’- Τόκοι - 15%">
+      <TaxType TypeId="1" Abbreviation="15%&#xD;&#xA;" Description="Περιπτ. β’- Τόκοι - 15%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-2" Description="Παρακράτηση φόρου - Περιπτ. γ’ - Δικαιώματα - 20%">
+      <TaxType TypeId="2" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. γ’ - Δικαιώματα - 20%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-3" Description="20% - Παρακράτηση φόρου - Περιπτ. δ’ - Αμοιβές Συμβουλών Διοίκησης">
+      <TaxType TypeId="3" Abbreviation="20%&#xD;&#xA;" Description="Περιπτ. δ’ - Αμοιβές Συμβουλών Διοίκησης - 20%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-4" Description="Παρακράτηση φόρου - Περιπτ. δ’ - Τεχνικά Έργα - 3%">
+      <TaxType TypeId="4" Abbreviation="3%&#xD;&#xA;" Description="Περιπτ. δ’ - Τεχνικά Έργα - 3%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-5" Description="Παρακράτηση φόρου - Υγρά καύσιμα και προϊόντα καπνοβιομηχανίας 1%">
+      <TaxType TypeId="5" Abbreviation="1%&#xD;&#xA;" Description="Υγρά καύσιμα και προϊόντα καπνοβιομηχανίας 1%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-6" Description="Παρακράτηση φόρου - Λοιπά Αγαθά 4%">
+      <TaxType TypeId="6" Abbreviation="4%&#xD;&#xA;" Description="Λοιπά Αγαθά 4%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-7" Description="Παρακράτηση φόρου - Περιπτ. β’- Τόκοι - 15%">
+      <TaxType TypeId="7" Abbreviation="8%&#xD;&#xA;" Description="Παροχή Υπηρεσιών 8%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-8" Description="4% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, για Εκπόνηση Μελετών και Σχεδίων ">
+      <TaxType TypeId="8" Abbreviation="4%&#xD;&#xA;" Description="Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών &#xD;&#xA;Αμοιβών, για Εκπόνηση Μελετών και Σχεδίων 4%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-9" Description="10% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, που αφορούν οποιασδήποτε άλλης φύσης έργα ">
+      <TaxType TypeId="9" Abbreviation="10%" Description="10% Προκαταβλητέος Φόρος Αρχιτεκτόνων και Μηχανικών επί Συμβατικών Αμοιβών, που αφορούν οποιασδήποτε άλλης φύσης έργα " myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-10" Description="Προκαταβλητέος Φόρος στις Αμοιβές Δικηγόρων 15%">
+      <TaxType TypeId="10" Abbreviation="15%" Description="Προκαταβλητέος Φόρος στις Αμοιβές Δικηγόρων 15%" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-11" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 1 αρ. 15 ν. 4172/2013">
+      <TaxType TypeId="11" Abbreviation="0" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 1 αρ. 15 ν. 4172/2013" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-12" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Αξιωματικών Εμπορικού Ναυτικού">
+      <TaxType TypeId="12" Abbreviation="15%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Αξιωματικών Εμπορικού Ναυτικού" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-13" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Κατώτερο Πλήρωμα Εμπορικού Ναυτικού">
+      <TaxType TypeId="13" Abbreviation="10%" Description="Παρακράτηση Φόρου Μισθωτών Υπηρεσιών παρ. 2 αρ. 15 ν. 4172/2013 - Κατώτερο Πλήρωμα Εμπορικού Ναυτικού" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-14" Description="Παρακράτηση Ειδικής Εισφοράς Αλληλεγγύης">
+      <TaxType TypeId="14" Abbreviation="0" Description="Παρακράτηση Ειδικής Εισφοράς Αλληλεγγύης" myDataVatType="1" />
+    </classificationCategory>
+    <classificationCategory aadeId="tax-15" Description="Παρακράτηση Φόρου Αποζημίωσης λόγω Διακοπής Σχέσης Εργασίας παρ. 3 αρ. 15 ν. 4172/2013">
+      <TaxType TypeId="15" Abbreviation="0" Description="Παρακράτηση Φόρου Αποζημίωσης λόγω Διακοπής Σχέσης Εργασίας παρ. 3 αρ. 15 ν. 4172/2013 " myDataVatType="1" />
+    </classificationCategory>
+  </classificationCategories>
+  <InvoiceTypes>
+    <InvoiceType1 ForSale="1" Name="Απόδειξη Πληρωμής" TaxDocType="A143F2A87A5841FE977826DAAF6D2289" taxdoctypeid="0" invoiceType="1" />
+    <InvoiceType1 ForSale="0" Name="Απόδειξη Πληρωμής" TaxDocType="A143F2A87A5841FE977826DAAF6D2289" taxdoctypeid="0" invoiceType="1" />
+    <InvoiceType ForSale="1" Name="Τιμολόγιο αντικατάστασης Αποδείξεων" TaxDocType="B23C2D4873FC49ECA86C5CA8042969EB" taxdoctypeid="161" invoiceType="1.1" />
+    <InvoiceType1 ForSale="1" Name="Απόδειξη Είσπραξης" TaxDocType="4205DDC1EDD84545B2F134CC241DE28F" taxdoctypeid="0" invoiceType="8.1" />
+    <InvoiceType1 ForSale="0" Name="Απόδειξη Είσπραξης" TaxDocType="4205DDC1EDD84545B2F134CC241DE28F" taxdoctypeid="0" invoiceType="8.1" />
+    <InvoiceType ForSale="1" Name="Πιστωτικό Τιμολόγιο" TaxDocType="53E3DA12E16D4DC9B525FC3A537CF4F5" taxdoctypeid="169" invoiceType="5.2" />
+    <InvoiceType ForSale="0" Name="Πιστωτικό Τιμολόγιο" TaxDocType="53E3DA12E16D4DC9B525FC3A537CF4F5" taxdoctypeid="0" invoiceType="5.2" />
+    <InvoiceType ForSale="1" Name="Πιστωτικό Έκπτωσης" TaxDocType="074854AE5EDB4BEBB318F68E1F71F407" taxdoctypeid="169" invoiceType="5.2" />
+    <InvoiceType ForSale="0" Name="Πιστωτικό Έκπτωσης" TaxDocType="074854AE5EDB4BEBB318F68E1F71F407" taxdoctypeid="0" invoiceType="5.2" />
+    <InvoiceType1 ForSale="1" Name="Απόδειξη Λιανικής Πώλησης" TaxDocType="C64AA001E5A74E5BAFF74FEB0FDC02A3" taxdoctypeid="173" invoiceType="-1" />
+    <InvoiceType1 ForSale="0" Name="Απόδειξη Λιανικής Πώλησης" TaxDocType="C64AA001E5A74E5BAFF74FEB0FDC02A3" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType ForSale="1" Name="Απόδειξη Παροχής Υπηρεσιών" TaxDocType="2430E36C27574FFCB476E24473618F9A" taxdoctypeid="174" invoiceType="11.2" counterpart="false" />
+    <InvoiceType1 ForSale="0" Name="Απόδειξη Παροχής Υπηρεσιών" TaxDocType="2430E36C27574FFCB476E24473618F9A" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType1 ForSale="1" Name="Ακυρωτικό" TaxDocType="3B3B57F9202F4BC6AEA6F574B521C9F7" taxdoctypeid="165" invoiceType="-1" />
+    <InvoiceType1 ForSale="0" Name="Ακυρωτικό" TaxDocType="3B3B57F9202F4BC6AEA6F574B521C9F7" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType1 ForSale="1" Name="Δελτίο Αποστολής Επιστροφής" TaxDocType="1AE9658E62EC4A7BBCE33B9818C8A39F" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType1 ForSale="0" Name="Δελτίο Αποστολής Επιστροφής" TaxDocType="1AE9658E62EC4A7BBCE33B9818C8A39F" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType1 ForSale="1" Name="Δελτίο Ποσοτικής Παραλαβής" TaxDocType="6677CA81529F42779CAEF187F10BF1CA" taxdoctypeid="NULL" invoiceType="-1" />
+    <InvoiceType ForSale="1" Name="Τιμολόγιο - Δελτίο Αποστολής" TaxDocType="D94CB57234AD432FBE7BC349ECD5EC69" taxdoctypeid="161" invoiceType="1.1" />
+    <InvoiceType1 ForSale="1" Name="Δελτίο Αποστολής" TaxDocType="0EC0DB0992964091B6754F6A8B0BD381" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType ForSale="1" Name="Τιμολόγιο Παροχής Υπηρεσιών" TaxDocType="CF368CCC446642E0B9B57B8CC5DADB8C" taxdoctypeid="162" invoiceType="2.1" />
+    <InvoiceType ForSale="0" Name="Τιμολόγιο Παροχής Υπηρεσιών" TaxDocType="CF368CCC446642E0B9B57B8CC5DADB8C" taxdoctypeid="162" invoiceType="2.1" />
+    <InvoiceType ForSale="1" Name="Τιμολόγιο" TaxDocType="F88E417AAB6942298474D00FC0A2BFF7" taxdoctypeid="161" invoiceType="1.1" />
+    <InvoiceType ForSale="0" Name="Τιμολόγιο Πώλησης - Δελτίο Αποστολής" TaxDocType="D94CB57234AD432FBE7BC349ECD5EC69" taxdoctypeid="0" invoiceType="1.1" />
+    <InvoiceType1 ForSale="0" Name="Δελτίο Αποστολής" TaxDocType="0EC0DB0992964091B6754F6A8B0BD381" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType ForSale="0" Name="Τιμολόγιο Πώλησης" TaxDocType="F88E417AAB6942298474D00FC0A2BFF7" taxdoctypeid="161" invoiceType="1.1" />
+    <InvoiceType ForSale="1" Name="Απόδειξη επιστροφής λιανικώς πωληθέντων - Δελτίο επιστροφής" TaxDocType="7EFCD9095B7D4370A93CC3F037F39370" taxdoctypeid="175" invoiceType="11.4" counterpart="false" />
+    <InvoiceType1 ForSale="0" Name="Πάγια Έξοδα" TaxDocType="32A4ED27CFBE456AB9365408BDCC21FE" taxdoctypeid="NULL" invoiceType="-1" />
+    <InvoiceType1 ForSale="0" Name="Δελτίο Ποσοτικής Παραλαβής" TaxDocType="6677CA81529F42779CAEF187F10BF1CA" taxdoctypeid="0" invoiceType="-1" />
+    <InvoiceType ForSale="1" Name="Τιμολόγιο Παροχής Υπηρεσιών Μίσθωση" TaxDocType="791308FB13164FC49C2B35C867445CB1" taxdoctypeid="162" invoiceType="1.1" />
+  </InvoiceTypes>
+</main>

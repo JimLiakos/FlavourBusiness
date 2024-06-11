@@ -159,7 +159,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (DeviceUpdateLock)
                 {
-                    if (DeviceUpdateEtag == null)
+                    if (!string.IsNullOrWhiteSpace(DeviceUpdateEtag))
                         DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
                 }
             }
@@ -209,7 +209,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     lock (DeviceUpdateLock)
                     {
-                        if (DeviceUpdateEtag != null)
+                        if (!string.IsNullOrWhiteSpace(DeviceUpdateEtag))
                         {
                             long numberOfTicks = 0;
                             if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
@@ -243,9 +243,16 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{b68665e9-c01c-421b-97fe-5673e7691267}</MetaDataID>
         private void FlavourItem_ObjectChangeState(object _object, string member)
         {
-            ItemPreparation itemPreparation = (_object as ItemPreparation);
 
-            PrintReceiptCheck(itemPreparation);
+            OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+            {
+                ItemPreparation itemPreparation = (_object as ItemPreparation);
+                PrintReceiptCheck(itemPreparation);
+
+            });
+
+
+
         }
 
         /// <MetaDataID>{5fb73605-0c1b-4106-9abc-26c71c953de7}</MetaDataID>
@@ -255,34 +262,75 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 var printReceiptCondition = PrintReceiptsConditions.Where(x => x.ServicePointType == itemPreparation.ClientSession.MainSession.ServicePoint.ServicePointType).FirstOrDefault();
 
-                if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
+                if (printReceiptCondition.ServicePointType == ServicePointType.TakeAway)
                 {
-                    if (printReceiptCondition.IsPaid == null)
+                    if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
+                    {
+                        if (printReceiptCondition.IsPaid != true)
+                        {
+                            OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                            {
+
+                                if (itemPreparation.ClientSession != null && itemPreparation.ClientSession.FlavourItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
+                                    PrintReceipt(itemPreparation.ClientSession.FlavourItems);
+                            });
+                        }
+                        else
+                        {
+                            OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                            {
+
+                                if (itemPreparation.ClientSession != null && itemPreparation.ClientSession.FlavourItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value) && x.IsPaid))
+                                    PrintReceipt(itemPreparation.ClientSession.FlavourItems);
+                            });
+                        }
+                    }
+                    else if (printReceiptCondition.IsPaid == true)
                     {
                         OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                         {
-
-                            if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
+                            if (itemPreparation.ClientSession.MainSession.SessionType == FlavourBusinessFacade.EndUsers.SessionType.Takeaway)
+                                PrintReceipt(itemPreparation.ClientSession.FlavourItems);
+                            else if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsPaid))
                                 PrintReceipt(itemPreparation.MealCourse.FoodItems);
                         });
                     }
-                    else
+
+
+                }
+                else
+                {
+
+
+                    if (printReceiptCondition.ItemState != null && itemPreparation.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value))
+                    {
+                        if (printReceiptCondition.IsPaid != true)
+                        {
+                            OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                            {
+
+                                if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)))
+                                    PrintReceipt(itemPreparation.MealCourse.FoodItems);
+                            });
+                        }
+                        else
+                        {
+                            OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
+                            {
+
+                                if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value) && x.IsPaid))
+                                    PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                            });
+                        }
+                    }
+                    else if (printReceiptCondition.IsPaid == true)
                     {
                         OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
                         {
-
-                            if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsIntheSameOrFollowingState(printReceiptCondition.ItemState.Value)&& x.IsPaid))
-                                PrintReceipt(itemPreparation.ServedInTheBatch.PreparedItems);
+                            if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsPaid))
+                                PrintReceipt(itemPreparation.MealCourse.FoodItems);
                         });
                     }
-                }
-                else if (printReceiptCondition.IsPaid == null)
-                {
-                    OOAdvantech.Transactions.Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        if (itemPreparation.MealCourse != null && itemPreparation.MealCourse.FoodItems.OfType<ItemPreparation>().All(x => x.IsPaid))
-                            PrintReceipt(itemPreparation.MealCourse.FoodItems);
-                    });
                 }
             }
         }
@@ -358,7 +406,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 }
                                 stateTransition.Consistent = true;
                             }
-                            if (DeviceUpdateEtag == null)
+                            if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
                                 DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
 
                         }
@@ -494,14 +542,24 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (DeviceUpdateLock)
             {
-                ServicePointPreparationItems servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.MealCourse.Meal.Session.ServicePoint).FirstOrDefault();
+                ServicePointPreparationItems servicePointPreparationItems = ServicePointsPreparationItems.Where(x => x.ServicePoint == flavourItem.ClientSession.MainSession.ServicePoint).FirstOrDefault();
                 if (servicePointPreparationItems == null || !servicePointPreparationItems.PreparationItems.Contains(flavourItem))
                 {
                     flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
                     if (servicePointPreparationItems == null)
-                        ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem }));
+                    {
+
+                        if (flavourItem.MealCourse != null)
+                            ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.MealCourse, new List<IItemPreparation>() { flavourItem }));
+                        else
+                            ServicePointsPreparationItems.Add(new ServicePointPreparationItems(flavourItem.ClientSession, new List<IItemPreparation>() { flavourItem }));
+
+                    }
                     else
+                    {
                         servicePointPreparationItems.AddPreparationItem(flavourItem);
+
+                    }
                 }
             }
         }

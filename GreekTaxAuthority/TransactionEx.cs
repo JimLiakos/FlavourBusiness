@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CashierStationDevice
+namespace GreekTaxAuthority
 {
     /// <MetaDataID>{4fb2ce31-3a6d-4478-829e-062a8e167168}</MetaDataID>
     public static class TransactionEx
@@ -142,8 +142,8 @@ namespace CashierStationDevice
 
             var path = folder + "\\" + transactionFileName + ".json";
             string turi = transaction.Uri;
-            var jsonSerializerSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
-            string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializerSettings);
+            var jsonSerializeSettings = new OOAdvantech.Json.JsonSerializerSettings() { TypeNameHandling = OOAdvantech.Json.TypeNameHandling.All };
+            string json = OOAdvantech.Json.JsonConvert.SerializeObject(transaction, jsonSerializeSettings);
 
             File.WriteAllText(path, json);
         }

@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CashierStationDevice</RootNamespace>
     <AssemblyName>CashierStationDevice</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -393,6 +393,10 @@
     <ProjectReference Include="..\..\FlavourBusinessUI\FlavourBusinessUI.csproj">
       <Project>{9051ced0-791b-4d96-bce8-8d55c3566bac}</Project>
       <Name>FlavourBusinessUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GreekTaxAuthority\GreekTaxAuthority.csproj">
+      <Project>{54204b4e-9e68-4bdd-b5ce-23b75ae34d82}</Project>
+      <Name>GreekTaxAuthority</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MenuDesignerLib\MenuDesignerLib.csproj">
       <Project>{2AABB569-BFB9-4484-A3D9-38B2F930F1EC}</Project>

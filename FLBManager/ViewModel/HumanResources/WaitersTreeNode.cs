@@ -36,7 +36,7 @@ namespace FLBManager.ViewModel.HumanResources
             try
             {
 
-                foreach (var Waiter in ServiceContextStaff.ServiceContextHumanResources.Waiters)
+                foreach (var Waiter in ServiceContextStaff.ServiceContextHumanResources?.Waiters)
                     Waiters.Add(Waiter, new WaiterTreeNode(this, Waiter));
 
             }

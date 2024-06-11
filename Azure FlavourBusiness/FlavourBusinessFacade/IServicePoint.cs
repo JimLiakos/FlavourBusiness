@@ -40,7 +40,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{ffbbbbd1-7687-4c51-a022-b487f11ac0c0}</MetaDataID>
         [BackwardCompatibilityID("+9")]
         [CachingDataOnClientSide]
-        ServicePointType ServicePointType { get; set; }
+        ServicePointType ServicePointType { get;  }
 
         /// <MetaDataID>{5660d599-1687-4185-a1e9-dfba216b6823}</MetaDataID>
         System.Collections.Generic.IList<IFoodServiceClientSession> ActiveFoodServiceClientSessions
