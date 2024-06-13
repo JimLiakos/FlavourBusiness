@@ -4,6 +4,7 @@ using FlavourBusinessManager.RoomService;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace FlavourBusinessManager.Printing
     /// <MetaDataID>{1c4e0cca-adaf-4bfb-9ec8-664cb16a7f43}</MetaDataID>
     [BackwardCompatibilityID("{1c4e0cca-adaf-4bfb-9ec8-664cb16a7f43}")]
     [Persistent()]
-    public class ItemsPreparationContextSnapshot
+    public class ItemsPreparationContextSnapshots
     {
         /// <summary>
         /// Defines the identity of ItemsPreparationContext
@@ -28,19 +29,36 @@ namespace FlavourBusinessManager.Printing
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 
         /// <MetaDataID>{33cee0f7-b075-4c0e-9cb9-6f91fab9f4e8}</MetaDataID>
-        protected ItemsPreparationContextSnapshot()
+        protected ItemsPreparationContextSnapshots()
         {
 
         }
 
+        /// <MetaDataID>{7f0d2912-a88a-4eae-93fd-3f068761478d}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+            Snapshots = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemsPreparationContextSnapshot>>(SnapshotsJson);
+        }
+
+        /// <MetaDataID>{29a91b72-ef1b-43c7-a7fa-91e78f248e60}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots);
+        }
+
+
         /// <MetaDataID>{82ed8ff0-cb03-4585-b717-c0e23013ca45}</MetaDataID>
-        public ItemsPreparationContextSnapshot(ItemsPreparationContext itemsPreparationContext)
+        public ItemsPreparationContextSnapshots(ItemsPreparationContext itemsPreparationContext)
         {
             Identity = GetIdentity(itemsPreparationContext);
             this.SnapshotIdentity = GetSnapshotIdentity(itemsPreparationContext);
             Timestamp = DateTime.UtcNow;
 
             RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
+
+            Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(SnapshotIdentity, itemsPreparationContext.PreparationItems) };
         }
 
         /// <MetaDataID>{7c22a862-081d-44c7-906e-40996df8ba14}</MetaDataID>
@@ -69,7 +87,7 @@ namespace FlavourBusinessManager.Printing
 
             System.Collections.Generic.Dictionary<string, decimal> taxesSums = new System.Collections.Generic.Dictionary<string, decimal>();
 
-            var stream = typeof(ItemsPreparationContextSnapshot).Assembly.GetManifestResourceStream("FlavourBusinessManager.Resources.order.bin");
+            var stream = typeof(ItemsPreparationContextSnapshots).Assembly.GetManifestResourceStream("FlavourBusinessManager.Resources.order.bin");
             byte[] data = new byte[stream.Length];
             stream.Read(data, 0, (int)stream.Length);
 
@@ -495,6 +513,10 @@ namespace FlavourBusinessManager.Printing
         }
         /// <MetaDataID>{1e5bf834-30aa-481e-a0c8-443235fc39c5}</MetaDataID>
         public object RawPrint { get; private set; }
+
+        /// <MetaDataID>{543c4627-7319-4b2b-9652-66c84b359bd0}</MetaDataID>
+        private List<ItemsPreparationContextSnapshot> Snapshots;
+
         /// <MetaDataID>{a8f415e0-453f-4d7c-af26-0af70b08902b}</MetaDataID>
         public DateTime Timestamp { get; private set; }
         /// <MetaDataID>{0dbb2d02-d520-4fe5-8f98-94b5105b4978}</MetaDataID>
@@ -505,6 +527,11 @@ namespace FlavourBusinessManager.Printing
                 return Identity.Split(';').FirstOrDefault();
             }
         }
+
+        /// <MetaDataID>{683512d6-3824-4bad-bfe8-4a3c254c9a66}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+4")]
+        private string SnapshotsJson;
     }
 
     /// <MetaDataID>{e98a4b3a-6d2f-4883-99ba-5baed071a0d9}</MetaDataID>
@@ -632,6 +659,24 @@ namespace FlavourBusinessManager.Printing
             }
         }
 
+    }
+
+    /// <MetaDataID>{b4ac8c26-28bb-42cb-80a1-99b07d50e485}</MetaDataID>
+    public class ItemsPreparationContextSnapshot
+    {
+        /// <MetaDataID>{f54668ba-c576-4fdb-a7cb-5b4523564681}</MetaDataID>
+        public ItemsPreparationContextSnapshot(string snapshotIdentity, List<IItemPreparation> preparationItems)
+        {
+            SnapshotIdentity = snapshotIdentity;
+
+            //clone
+            PreparationItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<IItemPreparation>>(OOAdvantech.Json.JsonConvert.SerializeObject(preparationItems));
+        }
+
+        /// <MetaDataID>{64d5d6f8-42e6-4d07-8222-af43f6c0abba}</MetaDataID>
+        public string SnapshotIdentity { get; }
+        /// <MetaDataID>{3c0d3788-a91a-4ec5-9b4e-1aa0310bac7a}</MetaDataID>
+        public List<IItemPreparation> PreparationItems { get; }
     }
 
 }

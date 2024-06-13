@@ -1,4 +1,5 @@
 ﻿using FlavourBusinessManager.ServicesContextResources;
+using Microsoft.Extensions.Azure;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace FlavourBusinessManager.Printing
         {
             foreach (var itemsPreparationContext in preparationStation.FoodItemsInProgress)
             {
-                var identity = ItemsPreparationContextSnapshot.GetIdentity(itemsPreparationContext);
+                var identity = ItemsPreparationContextSnapshots.GetIdentity(itemsPreparationContext);
 
                 var snapshot = itemsPreparationContextSnapshots.Where(x => x.Identity == identity).FirstOrDefault();
                 if (snapshot == null)
@@ -24,7 +25,7 @@ namespace FlavourBusinessManager.Printing
 
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
-                        snapshot = new ItemsPreparationContextSnapshot(itemsPreparationContext);
+                        snapshot = new ItemsPreparationContextSnapshots(itemsPreparationContext);
                         OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(snapshot);
                         itemsPreparationContextSnapshots.Add(snapshot);
 
@@ -38,8 +39,10 @@ namespace FlavourBusinessManager.Printing
                         stateTransition.Consistent = true;
                     }
                 }
-                if (snapshot.SnapshotIdentity != ItemsPreparationContextSnapshot.GetSnapshotIdentity(itemsPreparationContext))
+                if (snapshot.SnapshotIdentity != ItemsPreparationContextSnapshots.GetSnapshotIdentity(itemsPreparationContext))
                 {
+                    //snapshot.AddTableServiceClient(svap)
+
                     snapshot.Update(itemsPreparationContext);
                 }
 
@@ -48,10 +51,10 @@ namespace FlavourBusinessManager.Printing
 
 
         /// <MetaDataID>{42542205-e829-42e2-94c5-20c5185861b7}</MetaDataID>
-        List<ItemsPreparationContextSnapshot> itemsPreparationContextSnapshots = new List<ItemsPreparationContextSnapshot>();
+        List<ItemsPreparationContextSnapshots> itemsPreparationContextSnapshots = new List<ItemsPreparationContextSnapshots>();
 
         /// <MetaDataID>{999312c1-0935-4ddb-9636-34c36d1bbdff}</MetaDataID>
-        public PreparationStationPrintManager(List<ItemsPreparationContextSnapshot> itemsPreparationContextSnapshots)
+        public PreparationStationPrintManager(List<ItemsPreparationContextSnapshots> itemsPreparationContextSnapshots)
         {
             this.itemsPreparationContextSnapshots = itemsPreparationContextSnapshots;
         }

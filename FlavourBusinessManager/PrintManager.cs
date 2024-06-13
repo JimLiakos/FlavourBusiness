@@ -7,6 +7,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -83,12 +84,25 @@ namespace FlavourBusinessManager.Printing
         {
             if (!string.IsNullOrWhiteSpace(PrintManagerNewCredentialKey) && credentialKey == PrintManagerNewCredentialKey)
             {
-                GetPrintManagerNewCredentialKey();//destroy credentialKe key because produce new
 
-                var ticks = new DateTime(2022, 1, 1).Ticks;
-                var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+                    GetPrintManagerNewCredentialKey();//destroy credentialKe key because produce new
 
-                PrintManagerCredentialKey = ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + ";" + uniqueId;
+                    var ticks = new DateTime(2022, 1, 1).Ticks;
+                    var uniqueId = (DateTime.Now.Ticks - ticks).ToString("x");
+
+                    PrintManagerCredentialKey = ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + ";" + uniqueId;
+
+                    Transaction.RunOnTransactionCompleted( () => {
+
+                        ObjectChangeState?.Invoke(this, nameof(AssignDevice));
+                    });
+
+                    stateTransition.Consistent = true;
+                }
+
+
                 return PrintManagerCredentialKey;
             }
             return null;
@@ -135,7 +149,7 @@ namespace FlavourBusinessManager.Printing
         internal void Init()
         {
             var preparationStations = ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.Union(ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.SelectMany(x => x.SubStations)).OfType<PreparationStation>().ToList();
-            var preparationStationItemsPreparationContextSnapshots = (from snapshot in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicePointRunTime.ServicesContextRunTime.Current)).GetObjectCollection<ItemsPreparationContextSnapshot>()
+            var preparationStationItemsPreparationContextSnapshots = (from snapshot in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicePointRunTime.ServicesContextRunTime.Current)).GetObjectCollection<ItemsPreparationContextSnapshots>()
                                                                       select snapshot).ToList().GroupBy(x => x.PreparationStationIdentity).ToList();
 
 
@@ -242,14 +256,31 @@ namespace FlavourBusinessManager.Printing
             });
         }
 
-        /// <MetaDataID>{d9a91342-0adb-4c3b-b5ff-84bb02ffce55}</MetaDataID>
-        public void DocumentPrinted(string documentIdentity)
+
+        public List<prin GetPendingPrinings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
+        {
+
+            ObjectActivated.Task.Wait();
+
+            if (deviceUpdateEtag == DeviceUpdateEtag)
+            {
+                lock (DeviceUpdateEtagLock)
+                {
+                    DeviceUpdateEtag = null;
+                    RaiseEventTimeStamp = null;
+                }
+            }
+        }
+
+
+            /// <MetaDataID>{d9a91342-0adb-4c3b-b5ff-84bb02ffce55}</MetaDataID>
+            public void DocumentPrinted(string documentIdentity)
         {
 
         }
 
         /// <MetaDataID>{56bfae80-7a37-4702-85f7-12dd170d7990}</MetaDataID>
-        internal void Print(ItemsPreparationContextSnapshot snapshot)
+        internal void Print(ItemsPreparationContextSnapshots snapshot)
         {
             PreparationStation preparationStation = GetPreparationStation(snapshot);
             preparationStation.Printer = "";
@@ -258,7 +289,7 @@ namespace FlavourBusinessManager.Printing
         }
 
         /// <MetaDataID>{c382d8ad-6fe4-439c-9f9e-47860db6d641}</MetaDataID>
-        private PreparationStation GetPreparationStation(ItemsPreparationContextSnapshot snapshot)
+        private PreparationStation GetPreparationStation(ItemsPreparationContextSnapshots snapshot)
         {
             return ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.SelectMany(x => x.SubStations).Union(ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations).Where(x => x.PreparationStationIdentity == snapshot.PreparationStationIdentity).FirstOrDefault() as PreparationStation;
         }
