@@ -43,8 +43,10 @@ namespace FlavourBusinessManager.Printing
             }
         }
 
+        /// <exclude>Excluded</exclude>
         System.Collections.Generic.List<Printer> _Printers = new System.Collections.Generic.List<Printer>();
 
+        /// <MetaDataID>{cc52b502-ab76-4ab4-ab80-fe975075bdaf}</MetaDataID>
         public System.Collections.Generic.List<Printer> Printers
         {
             get
@@ -63,12 +65,13 @@ namespace FlavourBusinessManager.Printing
 
             }
         }
+        /// <MetaDataID>{7414be20-e62d-4a9e-aabf-6b12308724ff}</MetaDataID>
         public void UpdatePrinterStatus(Printer printer, Printer.PrinterStatus status)
         {
-            lock(_Printers)
+            lock (_Printers)
             {
-                var thePrinter=_Printers.Where(x => x.Identity == printer.Identity).FirstOrDefault();
-                if(thePrinter.Status!=status)
+                var thePrinter = _Printers.Where(x => x.Identity == printer.Identity).FirstOrDefault();
+                if (thePrinter.Status!=status)
                 {
                     thePrinter.Status = status;
                     ObjectChangeState?.Invoke(this, nameof(Printers));
@@ -80,6 +83,7 @@ namespace FlavourBusinessManager.Printing
 
 
 
+        /// <MetaDataID>{14f81de9-5540-4320-a32e-f2a966850f52}</MetaDataID>
         public string AssignDevice(string credentialKey)
         {
             if (!string.IsNullOrWhiteSpace(PrintManagerNewCredentialKey) && credentialKey == PrintManagerNewCredentialKey)
@@ -94,7 +98,8 @@ namespace FlavourBusinessManager.Printing
 
                     PrintManagerCredentialKey = ServicePointRunTime.ServicesContextRunTime.Current.ServicesContextIdentity + ";" + uniqueId;
 
-                    Transaction.RunOnTransactionCompleted( () => {
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
 
                         ObjectChangeState?.Invoke(this, nameof(AssignDevice));
                     });
@@ -146,9 +151,11 @@ namespace FlavourBusinessManager.Printing
 
         }
 
+        /// <MetaDataID>{21426f33-ee15-4ca2-bdf4-8702dd728273}</MetaDataID>
         internal void Init()
         {
             var preparationStations = ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.Union(ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.SelectMany(x => x.SubStations)).OfType<PreparationStation>().ToList();
+
             var preparationStationItemsPreparationContextSnapshots = (from snapshot in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicePointRunTime.ServicesContextRunTime.Current)).GetObjectCollection<ItemsPreparationContextSnapshots>()
                                                                       select snapshot).ToList().GroupBy(x => x.PreparationStationIdentity).ToList();
 
@@ -222,10 +229,10 @@ namespace FlavourBusinessManager.Printing
             add
             {
                 var objectChangeState = !(_PrintingPending?.GetInvocationList().Length > 0);
-                
+
                 _PrintingPending += value;
 
-                if(objectChangeState)
+                if (objectChangeState)
                     ObjectChangeState?.Invoke(this, nameof(LocalPrintingServiceIsRunning));
             }
             remove
@@ -257,10 +264,11 @@ namespace FlavourBusinessManager.Printing
         }
 
 
-        public List<prin GetPendingPrinings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
+        /// <MetaDataID>{5c07c27f-d532-49cf-aeae-b359dcd9ccbe}</MetaDataID>
+        public void GetPendingPrintings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
         {
 
-            ObjectActivated.Task.Wait();
+            //ObjectActivated.Task.Wait();
 
             if (deviceUpdateEtag == DeviceUpdateEtag)
             {
@@ -269,12 +277,57 @@ namespace FlavourBusinessManager.Printing
                     DeviceUpdateEtag = null;
                     RaiseEventTimeStamp = null;
                 }
+
+
+                var preparationStations = ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.Union(ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.SelectMany(x => x.SubStations)).OfType<PreparationStation>().ToList();
+
+                var preparationStationItemsPreparationContextSnapshots = (from snapshot in new OOAdvantech.Linq.Storage(ObjectStorage.GetStorageOfObject(ServicePointRunTime.ServicesContextRunTime.Current)).GetObjectCollection<ItemsPreparationContextSnapshots>()
+                                                                          select snapshot).ToList().GroupBy(x => x.PreparationStationIdentity).ToList();
+
+
+
+                foreach (var itemsPreparationContextSnapshotsGroup in preparationStationItemsPreparationContextSnapshots)
+                {
+
+                    var preparationStation = preparationStations.Where(x => x.PreparationStationIdentity==itemsPreparationContextSnapshotsGroup.Key).FirstOrDefault();
+
+
+                    foreach (var itemsPreparationContextSnapshots in itemsPreparationContextSnapshotsGroup)
+                    {
+                        bool printedItemsHasChanged = itemsPreparationContextSnapshots.Snapshots.Where(x => x.Printed).Count() > 0;
+                        var lastItemsPreparationContextSnapshot = itemsPreparationContextSnapshots.Snapshots.OrderBy(x => x.SnapshotIdentity).Last();
+
+                        var rawData= itemsPreparationContextSnapshots.GeRawPrint(lastItemsPreparationContextSnapshot.PreparationItems, new CompanyHeader(), "", "");
+                        FlavourBusinessFacade.Print.Printing printing = new FlavourBusinessFacade.Print.Printing();
+                        printing.RawData=System.Text.Encoding.UTF8.GetBytes(rawData);
+                        printing.Printer=preparationStation.Printer;
+                        printing.PrinterType=FlavourBusinessFacade.Print.PrinterType.ESCPOS;
+
+
+
+
+
+                    }
+
+
+                    if (preparationStation.Printer.Split(':').Length==2)
+                    {
+
+                    }
+
+
+
+
+
+                }
+
+
             }
         }
 
 
-            /// <MetaDataID>{d9a91342-0adb-4c3b-b5ff-84bb02ffce55}</MetaDataID>
-            public void DocumentPrinted(string documentIdentity)
+        /// <MetaDataID>{d9a91342-0adb-4c3b-b5ff-84bb02ffce55}</MetaDataID>
+        public void DocumentPrinted(string documentIdentity)
         {
 
         }
@@ -344,6 +397,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{15c65eed-3a80-4186-8d1d-7f90f7bd218b}</MetaDataID>
         public DateTime? RaiseEventTimeStamp { get; private set; }
 
+        /// <MetaDataID>{fe838beb-efb9-4ade-898d-f87258be8b7f}</MetaDataID>
         public bool LocalPrintingServiceIsRunning => _PrintingPending?.GetInvocationList().Length>0;
     }
 }

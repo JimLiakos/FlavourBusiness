@@ -478,7 +478,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             Transaction.RunOnTransactionCompleted(() =>
             {
-                PrintManager.OnPreparationItemsChangeState(this);
+                PrintManager?.OnPreparationItemsChangeState(this);
                 lock (DeviceUpdateEtagLock)
                 {
                     if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
@@ -516,6 +516,10 @@ namespace FlavourBusinessManager.ServicesContextResources
                         _Printer = value;
                         stateTransition.Consistent = true;
                     }
+                    Transaction.RunOnTransactionCompleted(() =>
+                    {
+                        PrintManager?.OnPreparationItemsChangeState(this);
+                    });
                 }
             }
         }

@@ -39,6 +39,7 @@ namespace FlavourBusinessFacade.Printing
         [HttpVisible]
         event ObjectChangeStateHandle ObjectChangeState;
 
+        /// <MetaDataID>{a401819e-3949-4dfd-b5f4-916f2b1c6728}</MetaDataID>
         [HttpVisible]
         bool LocalPrintingServiceIsRunning { get; }
 

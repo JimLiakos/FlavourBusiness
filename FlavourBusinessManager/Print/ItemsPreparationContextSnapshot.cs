@@ -23,7 +23,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{5c6c332d-2ef9-4a46-b0b3-ec3b5dbce1a3}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+2")]
-        public readonly string Identity;
+        public  string Identity;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -53,12 +53,17 @@ namespace FlavourBusinessManager.Printing
         public ItemsPreparationContextSnapshots(ItemsPreparationContext itemsPreparationContext)
         {
             Identity = GetIdentity(itemsPreparationContext);
-            this.SnapshotIdentity = GetSnapshotIdentity(itemsPreparationContext);
+
             Timestamp = DateTime.UtcNow;
 
-            RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
+            MealCourse=itemsPreparationContext.MealCourse;
 
-            Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(SnapshotIdentity, itemsPreparationContext.PreparationItems) };
+
+
+
+            Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems) };
+
+            SnapshotIdentity=Snapshots[0].SnapshotIdentity;
         }
 
         /// <MetaDataID>{7c22a862-081d-44c7-906e-40996df8ba14}</MetaDataID>
@@ -70,7 +75,7 @@ namespace FlavourBusinessManager.Printing
         }
 
         /// <MetaDataID>{cbf59990-2602-4edc-8f1c-508f1a03e5ae}</MetaDataID>
-        public static string GetSnapshotIdentity(ItemsPreparationContext itemsPreparationContext)
+        public static string GetSnapshotSignature(ItemsPreparationContext itemsPreparationContext)
         {
             string snapshotIdentity = "";
             foreach (ItemPreparation itemPreparation in itemsPreparationContext.PreparationItems)
@@ -81,9 +86,23 @@ namespace FlavourBusinessManager.Printing
             }
             return snapshotIdentity;
         }
-        /// <MetaDataID>{89e1c246-7a46-414f-8173-732b9ab81894}</MetaDataID>
-        public static string GeRawPrint(FlavourBusinessFacade.RoomService.ItemsPreparationContext transaction, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string tableLine, string comments)
+
+        public static string GetSnapshotSignature(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot)
         {
+            string snapshotIdentity = "";
+            foreach (ItemPreparation itemPreparation in itemsPreparationContextSnapshot.PreparationItems)
+            {
+                snapshotIdentity += itemPreparation.uid + "_" + itemPreparation.Quantity;
+                foreach (var optionChange in itemPreparation.OptionsChanges)
+                    snapshotIdentity += (optionChange as OptionChange).OptionUri + (optionChange as OptionChange).NewLevelUri;
+            }
+            return snapshotIdentity;
+        }
+        /// <MetaDataID>{89e1c246-7a46-414f-8173-732b9ab81894}</MetaDataID>
+        public  string GeRawPrint( List<IItemPreparation> preparationItems, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string tableLine, string comments)
+        {
+
+            //RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
 
             System.Collections.Generic.Dictionary<string, decimal> taxesSums = new System.Collections.Generic.Dictionary<string, decimal>();
 
@@ -176,7 +195,7 @@ namespace FlavourBusinessManager.Printing
                 //Order Code
                 if (lineString.IndexOf("~") != -1)
                 {
-                    string orderCode = transaction.MealCourse.SortID.ToString();
+                    string orderCode = preparationItems.First().MealCourse.SortID.ToString();
 
                     if (!string.IsNullOrWhiteSpace(orderCode))
                         lineString = FixLengthReplace(orderCode, lineString, "~");
@@ -200,7 +219,7 @@ namespace FlavourBusinessManager.Printing
             }
 
 
-            foreach (var transactionItem in transaction.PreparationItems.OfType<ItemPreparation>())
+            foreach (var transactionItem in preparationItems.OfType<ItemPreparation>())
             {
                 //foreach (var taxAmount in transactionItem.Taxes)
                 //{
@@ -255,7 +274,7 @@ namespace FlavourBusinessManager.Printing
 
                 #endregion
 
-                decimal amount = GetAmount(transaction);
+                decimal amount = GetAmount(preparationItems);
                 // Total
                 if (lineString.IndexOf("?") != -1)
                     lineString = FixLengthReplace(GetPriceAsString(amount), lineString, "?");
@@ -263,7 +282,7 @@ namespace FlavourBusinessManager.Printing
 
                 //string thankfull message,
                 if (lineString.IndexOf("¥") != -1)
-                    lineString = FixLengthReplace(companyHeader.Thankfull, lineString, "¥").Trim();
+                    lineString = FixLengthReplace(companyHeader.Thankful, lineString, "¥").Trim();
 
 
                 // Comments
@@ -311,7 +330,7 @@ namespace FlavourBusinessManager.Printing
                 else if (lineString.IndexOf("$qrcode$") != -1)
                 {
                     // Qr code
-                    string QRCode = GetQRCodeData(GetQRCode(transaction));
+                    string QRCode = GetQRCodeData(GetQRCode(preparationItems.First().FindItemsPreparationContext()));
                     if (!string.IsNullOrWhiteSpace(QRCode))
                     {
                         lineString = lineString.Replace("$qrcode$", QRCode);
@@ -356,9 +375,9 @@ namespace FlavourBusinessManager.Printing
         }
 
         /// <MetaDataID>{ab559476-eb87-4015-87de-e5bdfba32a9e}</MetaDataID>
-        private static decimal GetAmount(ItemsPreparationContext transaction)
+        private static decimal GetAmount(List<IItemPreparation> preparationItems)
         {
-            decimal amount = transaction.PreparationItems.OfType<ItemPreparation>().Sum(x => (decimal)(x.ModifiedItemPrice * x.Quantity));
+            decimal amount = preparationItems.OfType<ItemPreparation>().Sum(x => (decimal)(x.ModifiedItemPrice * x.Quantity));
             return amount;
         }
 
@@ -484,9 +503,37 @@ namespace FlavourBusinessManager.Printing
         internal void Update(ItemsPreparationContext itemsPreparationContext)
         {
 
-            SnapshotIdentity = GetSnapshotIdentity(itemsPreparationContext);
-            RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
-            Timestamp = DateTime.UtcNow;
+            var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
+            ItemsPreparationContextSnapshot newSnapShot = null;
+
+            lock (Snapshots)
+            {
+                if (!ContainsSnapshotWithSignature(snapshotSignature))
+                {
+                    newSnapShot =new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
+                    this.Snapshots.Add(newSnapShot);
+                }
+            }
+            if (newSnapShot!=null)
+            {
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    SnapshotIdentity=newSnapShot.SnapshotIdentity; 
+                    stateTransition.Consistent = true;
+                }
+
+                //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
+                Timestamp = DateTime.UtcNow;
+                //}
+            }
+
+
+        }
+
+        internal bool ContainsSnapshotWithSignature(string signature)
+        {
+            return Snapshots.Where(x => GetSnapshotSignature(x)==signature).FirstOrDefault()!=null;
+
         }
 
 
@@ -515,10 +562,32 @@ namespace FlavourBusinessManager.Printing
         public object RawPrint { get; private set; }
 
         /// <MetaDataID>{543c4627-7319-4b2b-9652-66c84b359bd0}</MetaDataID>
-        private List<ItemsPreparationContextSnapshot> Snapshots;
+        public List<ItemsPreparationContextSnapshot> Snapshots;
 
         /// <MetaDataID>{a8f415e0-453f-4d7c-af26-0af70b08902b}</MetaDataID>
         public DateTime Timestamp { get; private set; }
+
+        /// <exclude>Excluded</exclude>
+        IMealCourse _MealCourse;
+
+        public IMealCourse MealCourse
+        {
+            get
+            {
+                if(_MealCourse==null)
+                {
+                   string mealCourseUri= Identity.Split(';')[0];
+                    _MealCourse=OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetObject(mealCourseUri) as MealCourse;
+                }
+                return _MealCourse;
+            }
+            private set
+            {
+                _MealCourse=value;
+            }
+        }
+
+
         /// <MetaDataID>{0dbb2d02-d520-4fe5-8f98-94b5105b4978}</MetaDataID>
         public string PreparationStationIdentity
         {
@@ -641,18 +710,18 @@ namespace FlavourBusinessManager.Printing
         }
 
         /// <MetaDataID>{8e63f3db-c59c-4ec9-a865-84b8ea7de1b0}</MetaDataID>
-        string _Thankfull;
+        string _Thankful;
         /// <MetaDataID>{4cb9c309-6d2e-4927-9c56-d42c6f24b011}</MetaDataID>
-        public string Thankfull
+        public string Thankful
         {
-            get => _Thankfull;
+            get => _Thankful;
             set
             {
-                if (_Thankfull != value)
+                if (_Thankful != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _Thankfull = value;
+                        _Thankful = value;
                         stateTransition.Consistent = true;
                     }
                 }
@@ -665,18 +734,40 @@ namespace FlavourBusinessManager.Printing
     public class ItemsPreparationContextSnapshot
     {
         /// <MetaDataID>{f54668ba-c576-4fdb-a7cb-5b4523564681}</MetaDataID>
-        public ItemsPreparationContextSnapshot(string snapshotIdentity, List<IItemPreparation> preparationItems)
+        public ItemsPreparationContextSnapshot(List<IItemPreparation> preparationItems)
         {
-            SnapshotIdentity = snapshotIdentity;
+            //SnapshotIdentity = snapshotIdentity;
 
+            var lastChangedItem = preparationItems.OfType<ItemPreparation>().OrderBy(x => x.StateTimestamp).Last();
+
+            var ticks = new DateTime(2022, 1, 1).Ticks;
+            var uniqueId = (lastChangedItem.StateTimestamp.Ticks - ticks).ToString("x");
+
+            SnapshotIdentity=lastChangedItem.uid+"_"+uniqueId;
             //clone
             PreparationItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<IItemPreparation>>(OOAdvantech.Json.JsonConvert.SerializeObject(preparationItems));
         }
+
+        public DateTime TimeStamp
+        {
+            get
+            {
+                var lastChangedItem = PreparationItems.OfType<ItemPreparation>().OrderBy(x => x.StateTimestamp).Last();
+
+                return lastChangedItem.StateTimestamp;
+
+            }
+        }
+
+
 
         /// <MetaDataID>{64d5d6f8-42e6-4d07-8222-af43f6c0abba}</MetaDataID>
         public string SnapshotIdentity { get; }
         /// <MetaDataID>{3c0d3788-a91a-4ec5-9b4e-1aa0310bac7a}</MetaDataID>
         public List<IItemPreparation> PreparationItems { get; }
+
+        /// <MetaDataID>{1da758ba-a7ce-4669-ad43-8f3fe2a2add0}</MetaDataID>
+        public bool Printed { get; set; }
     }
 
 }

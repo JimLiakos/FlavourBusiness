@@ -37,13 +37,13 @@ namespace FlavourBusinessFacade.Print
         }
 
         /// <exclude>Excluded</exclude>
-        byte _RawData;
+        byte[] _RawData;
 
         /// <MetaDataID>{7feab22e-c370-44f5-979c-52dba64047b2}</MetaDataID>
         /// <summary>
         /// Defines printing as raw data used for esc/pos printers
         /// </summary>
-        public byte RawData
+        public byte[] RawData
         {
             get => _RawData;
             set
