@@ -160,6 +160,12 @@
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\PreparationStationItem.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\PreparationStationItem.cs</Link>
     </Compile>
+    <Compile Include="..\PreparationStationDevice\PreparationStationDevice\Printing\PrinterController.cs">
+      <Link>Printing\PrinterController.cs</Link>
+    </Compile>
+    <Compile Include="..\PreparationStationDevice\PreparationStationDevice\Printing\PrintingLocalService.cs">
+      <Link>Printing\PrintingLocalService.cs</Link>
+    </Compile>
     <Compile Include="..\PreparationStationDevice\PreparationStationDevice\ServicePointInfo.cs">
       <Link>PreparationStationDevice.WPF\ViewModel\ServicePointInfo.cs</Link>
     </Compile>

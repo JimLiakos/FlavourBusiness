@@ -265,10 +265,12 @@ namespace FlavourBusinessManager.Printing
 
 
         /// <MetaDataID>{5c07c27f-d532-49cf-aeae-b359dcd9ccbe}</MetaDataID>
-        public void GetPendingPrintings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
+        public List<FlavourBusinessFacade.Print.Printing> GetPendingPrintings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
         {
+            if (printingsOnLocalSpooler == null)
+                printingsOnLocalSpooler = new List<string>();
 
-            //ObjectActivated.Task.Wait();
+            List<FlavourBusinessFacade.Print.Printing> pendingPrintings = new List<FlavourBusinessFacade.Print.Printing>();
 
             if (deviceUpdateEtag == DeviceUpdateEtag)
             {
@@ -277,7 +279,6 @@ namespace FlavourBusinessManager.Printing
                     DeviceUpdateEtag = null;
                     RaiseEventTimeStamp = null;
                 }
-
 
                 var preparationStations = ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.Union(ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.SelectMany(x => x.SubStations)).OfType<PreparationStation>().ToList();
 
@@ -288,10 +289,7 @@ namespace FlavourBusinessManager.Printing
 
                 foreach (var itemsPreparationContextSnapshotsGroup in preparationStationItemsPreparationContextSnapshots)
                 {
-
                     var preparationStation = preparationStations.Where(x => x.PreparationStationIdentity==itemsPreparationContextSnapshotsGroup.Key).FirstOrDefault();
-
-
                     foreach (var itemsPreparationContextSnapshots in itemsPreparationContextSnapshotsGroup)
                     {
                         bool printedItemsHasChanged = itemsPreparationContextSnapshots.Snapshots.Where(x => x.Printed).Count() > 0;
@@ -302,27 +300,16 @@ namespace FlavourBusinessManager.Printing
                         printing.RawData=System.Text.Encoding.UTF8.GetBytes(rawData);
                         printing.Printer=preparationStation.Printer;
                         printing.PrinterType=FlavourBusinessFacade.Print.PrinterType.ESCPOS;
-
-
-
-
-
+                        pendingPrintings.Add(printing);
                     }
-
-
                     if (preparationStation.Printer.Split(':').Length==2)
                     {
 
                     }
-
-
-
-
-
                 }
 
-
             }
+            return pendingPrintings;
         }
 
 

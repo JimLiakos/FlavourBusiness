@@ -100,4 +100,9 @@
 	<ItemGroup>
 	  <EmbeddedResource Include="..\..\AngularProjects\dont-wait\projects\PreparationStationDeviceWeb\src\assets\i18n\el.json" Link="i18n\el.json" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="FlavourBusinessFacade">
+	    <HintPath>..\..\Azure FlavourBusiness\FlavourBusinessFacade\bin\Debug\FlavourBusinessFacade.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 </Project>

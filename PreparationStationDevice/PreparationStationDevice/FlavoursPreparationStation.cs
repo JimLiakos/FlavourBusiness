@@ -24,6 +24,7 @@ using System.IO.Ports;
 using static Google.Apis.Requests.BatchRequest;
 using static FlavourBusinessFacade.Printing.Printer;
 using FlavourBusinessFacade.Printing;
+using PreparationStationDevice.Printing;
 
 
 
@@ -138,9 +139,15 @@ namespace PreparationStationDevice
 
                            if (!String.IsNullOrWhiteSpace(PrintManagerDeviceCredentialKey))
                            {
-                               PrintManager = servicesContextManagment.GetPrintManager(PrintManagerDeviceCredentialKey);
-                               if (PrintManager != null)
-                                   StartPrintingService();
+
+                             var printManager = servicesContextManagment.GetPrintManager(PrintManagerDeviceCredentialKey);
+
+                               if (printManager != null)
+                               {
+                                   PrintingService = new Printing.PrintingLocalService(printManager);
+                                   PrintingService.StartPrintingService();
+                               }
+
                            }
 
 
@@ -240,181 +247,6 @@ namespace PreparationStationDevice
                return null;
 
            });
-        }
-
-        private void StartPrintingService()
-        {
-
-
-
-#if DeviceDotNet
-            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            if (!device.IsBackgroundServiceStarted)
-            {
-
-
-
-                BackgroundServiceState serviceState = new BackgroundServiceState();
-                device.RunInBackground(new Action(async () =>
-                {
-
-
-                    //var printerPort = new IPort();
-
-                    //ThermalPrinter printer = new ThermalPrinter(printerPort, 2, 180, 2);
-                    //int status = printer.GetPrinterStatus();
-
-
-                    //TcpClient tcpClient = new TcpClient();
-                    //try
-                    //{
-
-                    //    tcpClient.Connect("10.0.0.142", 9100);
-                    //    var networkStream = tcpClient.GetStream();
-                    //    var buffer = new byte[2] { 0x1b, 0x40 };
-                    //    networkStream.Write(buffer, 0, buffer.Length);
-                    //    buffer = Encoding.ASCII.GetBytes("Liakos" + System.Environment.NewLine + System.Environment.NewLine + System.Environment.NewLine);
-                    //    networkStream.Write(buffer, 0, buffer.Length);
-
-                    //    //    NetworkStream stream = client.GetStream();
-                    //    //    stream(new byte[2] { 0x1b, 0x40 });
-                    //}
-                    //catch (Exception error)
-                    //{
-                    //}
-
-                    do
-                    {
-                        TcpClient tcpClient = new TcpClient();
-                        tcpClient.Connect("10.0.0.142", 9100);
-                        var connected = tcpClient.Connected;
-
-                        System.Threading.Thread.Sleep(2000);
-
-
-
-
-                        //Socket.Send(receiptStream);
-                        //Socket.Disconnect(false);
-
-
-                    } while (!serviceState.Terminate);
-                }), serviceState);
-            }
-#else
-
-#endif
-
-            //TcpClient tcpClient = new TcpClient();
-            //try
-            //{
-            //    //System.Threading.Thread.Sleep(30000);
-            //    tcpClient.Connect("192.168.1.71", 9100);
-            //    var networkStream = tcpClient.GetStream();
-            //    var buffer = new byte[2] { 0x1b, 0x40 };
-            //    networkStream.Write(buffer, 0, buffer.Length);
-            //    int count = 10;
-
-            //    while (count > 0)
-            //    {
-            //        buffer = Encoding.ASCII.GetBytes("Liakos" + System.Environment.NewLine + System.Environment.NewLine + System.Environment.NewLine);
-            //        networkStream.Write(buffer, 0, buffer.Length);
-            //        count--;
-            //        System.Threading.Thread.Sleep(10000);
-            //    }
-
-            //    tcpClient.Close();
-            //    //    NetworkStream stream = client.GetStream();
-            //    //    stream(new byte[2] { 0x1b, 0x40 });
-            //}
-            //catch (Exception error)
-            //{
-            //}
-            if (PrintingServiceTask == null || PrintingServiceTask.Status != TaskStatus.Running)
-            {
-                PrintingServiceTask = Task.Run(() =>
-                 {
-                     var printers = PrintManager.Printers;
-
-                     PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
-                     {
-
-                         //var transctions = PrintManager.GetOpenTransactions(deviceUpdateEtag);
-                     };
-                     do
-                     {
-
-
-                         try
-                         {
-
-                             foreach (var printer in printers)
-                             {
-
-                                 PrinterStatus printerStatus = PrinterStatus.OffLine;
-
-                                 try
-                                 {
-                                     string address = printer.Address.Split(':')[0];
-                                     int port = 0;
-                                     int.TryParse(printer.Address.Split(':')[1], out port);
-                                     TcpClient tcpClient = new TcpClient();
-                                     //System.Threading.Thread.Sleep(30000);
-                                     tcpClient.Connect(address, port);
-                                     var networkStream = tcpClient.GetStream();
-                                     //var buffer = new byte[2] { 0x1b, 0x40 };
-                                     //networkStream.Write(buffer, 0, buffer.Length);
-                                     //networkStream.Flush();
-
-                                     byte[] command = new byte[3] { 0x10, 0x4, 1 };//command for printer status
-                                     networkStream.Write(command, 0, 3);
-                                     networkStream.Flush();
-
-                                     byte[] response = new byte[20];
-                                     int numOfBytes = networkStream.Read(response, 0, 1);
-                                     byte printerStatusByte = response[0];
-
-
-
-
-                                     tcpClient.Close();
-
-                                     if ((printerStatusByte & (byte)0b0001000) != 0)//Offline 
-                                     {
-                                         printerStatus = PrinterStatus.OffLine;
-                                     }
-                                     else
-                                         printerStatus = PrinterStatus.Online;
-
-                                    
-                                 }
-                                 catch (Exception error)
-                                 {
-                                     printerStatus = PrinterStatus.OffLine;
-                                 }
-
-                                 if (printer.Status != printerStatus)
-                                 {
-                                     PrintManager.UpdatePrinterStatus(printer, printerStatus);
-                                     printer.Status = printerStatus;
-                                 }
-                             }
-
-                         }
-                        
-                         catch (Exception error)
-                         {
-
-                             
-                         }
-
-                         System.Threading.Thread.Sleep(5000);
-
-
-                     } while (!TerminatePrintingWatcher);
-                 });
-            }
-
         }
 
         public async void PlayNotificationSound()
@@ -593,7 +425,7 @@ namespace PreparationStationDevice
         {
             get
             {
-                return PrintManager != null;
+                return PrintingService != null;
             }
         }
 
@@ -1005,9 +837,14 @@ namespace PreparationStationDevice
                                 if (!string.IsNullOrWhiteSpace(printManagerDeviceCredentialKey))
                                 {
                                     PrintManagerDeviceCredentialKey = printManagerDeviceCredentialKey;
-                                    PrintManager = servicesContextManagement.GetPrintManager(PrintManagerDeviceCredentialKey);
-                                    if (PrintManager != null)
-                                        StartPrintingService();
+
+                                    var printManager = servicesContextManagement.GetPrintManager(PrintManagerDeviceCredentialKey);
+                                    if (printManager != null)
+                                    {
+                                        PrintingService = new Printing.PrintingLocalService(printManager);
+                                        PrintingService.StartPrintingService();
+                                    }
+
 
 
                                     Title = "Printers capture";
@@ -1207,8 +1044,9 @@ namespace PreparationStationDevice
         }
 
         public static bool TerminatePrintingWatcher { get; private set; }
-        public IPrintManager PrintManager { get; private set; }
+        //public IPrintManager PrintManager { get; private set; }
         public Task PrintingServiceTask { get; private set; }
+        internal PrintingLocalService PrintingService { get; private set; }
     }
 
     public delegate void PreparationItemsLoadedHandle(FlavoursPreparationStation sender);

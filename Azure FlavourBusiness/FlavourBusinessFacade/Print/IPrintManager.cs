@@ -44,6 +44,9 @@ namespace FlavourBusinessFacade.Printing
         bool LocalPrintingServiceIsRunning { get; }
 
 
+        List<FlavourBusinessFacade.Print.Printing> GetPendingPrintings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag);
+
+
     }
 
     /// <MetaDataID>{72632049-59b3-4ba9-bcd9-43a5ec30d518}</MetaDataID>
