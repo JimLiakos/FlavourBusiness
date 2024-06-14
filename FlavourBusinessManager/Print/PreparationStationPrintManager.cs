@@ -30,7 +30,7 @@ namespace FlavourBusinessManager.Printing
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                     {
                         itemsPreparationContextSnapshots = new ItemsPreparationContextSnapshots(itemsPreparationContext);
-                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(snapshot);
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(itemsPreparationContextSnapshots);
                         itemsPreparationContextPrintings.Add(itemsPreparationContextSnapshots);
 
                         Transaction.RunOnTransactionCompleted(() =>
