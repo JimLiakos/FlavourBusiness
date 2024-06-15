@@ -2747,6 +2747,18 @@ public event OOAdvantech.ObjectChangeStateHandle ObjectChangeState
             argsTypes[1] = typeof(FlavourBusinessFacade.Printing.Printer.PrinterStatus);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "UpdatePrinterStatus", args, argsTypes);
         }
+        
+        public System.Collections.Generic.List<FlavourBusinessFacade.Print.Printing> GetPendingPrintings(System.Collections.Generic.List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = printingsOnLocalSpooler;
+            argsTypes[0] = typeof(System.Collections.Generic.List<string>);
+            args[1] = deviceUpdateEtag;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.Printing.IPrintManager), "GetPendingPrintings", args, argsTypes);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.Print.Printing>>(retValue);
+        }
     }
 }
 namespace FlavourBusinessFacade.RoomService.Proxies

@@ -18,7 +18,7 @@ namespace PreparationStationDevice.Printing
         {
             PrintManager = printManager;
             if (PrintManager != null)
-                Printers = PrintManager.Printers .Select(x=>new PrinterController(x, printManager)).ToList();
+                Printers = PrintManager.Printers.Select(x => new PrinterController(x, printManager)).ToList();
         }
 
         public Task PrintingServiceTask { get; private set; }
@@ -88,51 +88,66 @@ namespace PreparationStationDevice.Printing
 #else
 
 #endif
-
- 
-            if (PrintingServiceTask == null || PrintingServiceTask.Status != TaskStatus.Running)
+            foreach (var printer in Printers)
             {
-                PrintingServiceTask = Task.Run(() =>
-                {
-                    foreach(var printer in Printers )
-                    {
-                        printer.Run();
-                    }
-
-                    PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
-                    {
-
-                        var printings = PrintManager.GetPendingPrintings(null, deviceUpdateEtag);
-
-                        //var transctions = PrintManager.GetOpenTransactions(deviceUpdateEtag);
-                    };
-                    do
-                    {
-
-
-                        try
-                        {
-
-                            foreach (var printer in printers)
-                            {
-
-                            
-                            }
-
-                        }
-
-                        catch (Exception error)
-                        {
-
-
-                        }
-
-                        System.Threading.Thread.Sleep(5000);
-
-
-                    } while (!TerminatePrintingWatcher);
-                });
+                printer.Run();
             }
+
+            PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
+            {
+
+                var printingsIDs = Printers.SelectMany(x => x.Printings).Select(x => x.ID).ToList();
+                foreach (var printing in PrintManager.GetPendingPrintings(printingsIDs, deviceUpdateEtag))
+                {
+                    Printers.Where(x=>x.PrintManager)
+                }
+
+            };
+
+
+            //    if (PrintingServiceTask == null || PrintingServiceTask.Status != TaskStatus.Running)
+            //{
+            //    PrintingServiceTask = Task.Run(() =>
+            //    {
+            //        foreach(var printer in Printers )
+            //        {
+            //            printer.Run();
+            //        }
+
+            //        PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
+            //        {
+
+            //            var printings = PrintManager.GetPendingPrintings(null, deviceUpdateEtag);
+
+            //            //var transctions = PrintManager.GetOpenTransactions(deviceUpdateEtag);
+            //        };
+            //        do
+            //        {
+
+
+            //            try
+            //            {
+
+            //                foreach (var printer in printers)
+            //                {
+
+
+            //                }
+
+            //            }
+
+            //            catch (Exception error)
+            //            {
+
+
+            //            }
+
+            //            System.Threading.Thread.Sleep(5000);
+
+
+            //        } while (!TerminatePrintingWatcher);
+            //    });
+
 
         }
 
