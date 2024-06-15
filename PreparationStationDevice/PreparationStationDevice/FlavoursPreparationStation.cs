@@ -1054,7 +1054,7 @@ namespace PreparationStationDevice
 
     /// <MetaDataID>{7b4504d8-bb4c-4b28-b953-1f01d996289d}</MetaDataID>
     public class Language
-    {
+    {  
         /// <MetaDataID>{6b6675fa-7d7a-46b6-923c-7cd0a0756207}</MetaDataID>
         public string Code { get; set; }
 

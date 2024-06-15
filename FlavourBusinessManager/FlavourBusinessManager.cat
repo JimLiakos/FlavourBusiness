@@ -34975,7 +34975,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+					(object Message "ItemsServing( )"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -34997,7 +34997,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+					(object Message "RaiseItemsStateChanged( )"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35019,7 +35019,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
+					(object Message "ItemsServing( )"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35041,7 +35041,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35086,7 +35086,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -38884,7 +38884,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -38970,7 +38970,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+				label      	"RaiseItemsStateChanged( )"
 				pctDist    	1.554996
 				height     	56
 				orientation 	0)
@@ -39056,7 +39056,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<string>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -39142,7 +39142,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -39391,7 +39391,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -57386,7 +57386,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"666B01BF028A"
 				    messages   	(list Messages
-					(object Message "OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+					(object Message "OnPreparationItemsChangeState( )"
 					    quid       	"666B0249017A"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57408,7 +57408,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"666B083C02B9"
 				    messages   	(list Messages
-					(object Message "Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+					(object Message "Update( )"
 					    quid       	"666B08830115"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57778,35 +57778,7 @@
 			    line_style 	3
 			    origin_attachment 	(2999, 1066)
 			    terminal_attachment 	(2999, 612))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::Print::ItemsPreparationContextSnapshots" @845
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1356, 1693)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@845
-				location   	(974, 1590)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	764
-				justify    	0
-				label      	"ItemsPreparationContextSnapshots")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"665873B901CD"
-			    width      	782
-			    height     	231
-			    annotation 	8)
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::Print::ItemsPreparationContextSnapshot" @846
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::Print::ItemsPreparationContextSnapshot" @845
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(2669, 2099)
 			    font       	(object Font
@@ -57820,7 +57792,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@846
+				Parent_View 	@845
 				location   	(2284, 1999)
 				fill_color 	16777215
 				nlines     	1
@@ -57833,6 +57805,34 @@
 			    quidu      	"666AEAE400AC"
 			    width      	788
 			    height     	225
+			    annotation 	8)
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::Print::ItemsPreparationContextSnapshots" @846
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1356, 1693)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@846
+				location   	(974, 1590)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	764
+				justify    	0
+				label      	"ItemsPreparationContextSnapshots")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"665873B901CD"
+			    width      	782
+			    height     	231
 			    annotation 	8)
 			(object AssociationViewNew "$UNNAMED$25" @847
 			    location   	(2020, 1897)
@@ -57889,7 +57889,7 @@
 				    line_color 	3342489
 				    quidu      	"666AFEA00136"
 				    client     	@847
-				    supplier   	@846
+				    supplier   	@845
 				    line_style 	0)
 				(object RoleView "$UNNAMED$26" @850
 				    Parent_View 	@847
@@ -57898,14 +57898,14 @@
 				    line_color 	3342489
 				    quidu      	"666AFEA00139"
 				    client     	@847
-				    supplier   	@845
+				    supplier   	@846
 				    line_style 	0)))
 			(object UsesView "" @851
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"666AFF65032E"
 			    client     	@834
-			    supplier   	@845
+			    supplier   	@846
 			    line_style 	0)))
 		(object ClassDiagram "Update client side for changes, asynchronously"
 		    quid       	"665811520146"
@@ -58098,7 +58098,7 @@
 			    line_color 	3342489
 			    label      	(object SegLabel @859
 				Parent_View 	@858
-				location   	(1295, 131)
+				location   	(1296, 132)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -58112,9 +58112,9 @@
 				quidu      	"666B0249017A"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	1907
+				max_width  	656
 				justify    	0
-				label      	"OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+				label      	"OnPreparationItemsChangeState( )"
 				pctDist    	6.317808
 				height     	433
 				orientation 	0)
@@ -58161,9 +58161,9 @@
 				quidu      	"666B08830115"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	1307
+				max_width  	206
 				justify    	0
-				label      	"Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+				label      	"Update( )"
 				pctDist    	5.210177
 				height     	102
 				orientation 	0)
