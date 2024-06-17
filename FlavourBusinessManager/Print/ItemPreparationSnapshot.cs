@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlavourBusinessManager.Print
+namespace FlavourBusinessManager.Printing
 {
     /// <MetaDataID>{6e353cd0-e2f5-4a52-826b-6a0c7789dcce}</MetaDataID>
     public class ItemPreparationSnapshot

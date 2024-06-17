@@ -2837,20 +2837,25 @@ namespace FlavourBusinessManager.EndUsers
 
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
+
+                var uncommittedItems = flavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).ToList();
                 foreach (var item in flavourItems)
                 {
                     if (item.State.IsInPreviousState(ItemPreparationState.Committed))
                     {
-                        ((MainSession as FoodServiceSession).CashierStation as CashierStation).AssignItemPreparation(item);
+                        ((MainSession as FoodServiceSession)?.CashierStation as CashierStation)?.AssignItemPreparation(item);
                         item.State = ItemPreparationState.Committed;
                         itemsNewState[item.uid] = item.State;
                         changeStateFlavourItems.Add(item);
-                        
+
                     }
                 }
-
                 if (_MainSession.Value == null)
                     AutoMealParticipation();
+
+                foreach (var item in uncommittedItems)
+                    ((MainSession as FoodServiceSession)?.CashierStation as CashierStation)?.AssignItemPreparation(item);
+
 
                 AllItemsCommited();
                 stateTransition.Consistent = true;

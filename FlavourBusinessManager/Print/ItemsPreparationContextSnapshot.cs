@@ -1,6 +1,6 @@
 using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
-using FlavourBusinessManager.Print;
+using FlavourBusinessManager.Printing;
 using FlavourBusinessManager.RoomService;
 using MenuModel.JsonViewModel;
 using OOAdvantech.Json;
