@@ -56,7 +56,7 @@ namespace WebhooksToLocalServer
     [ServiceBehavior(Name = "DeviceMessageServer", Namespace = "https://samples.microsoft.com/ServiceModel/Relay/")]
     class DeviceMessageServer : IDeviceMessageServer
     {
-        static string _lock = "lock";
+        static object _lock = new object();
 
         Task<string> PhoneCallerIdTask;
         Task<string> PreparationStationTask;

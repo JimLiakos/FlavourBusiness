@@ -341,7 +341,7 @@ namespace MenuPresentationModel
 
             fileManager.Copy(storageRef.StorageUrl.Replace(fileManager.RootUri + "/", ""), xmlFileName);
             //serverStorageFolder
-            json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings);
+            json = JsonConvert.SerializeObject(jsonRestaurantMenu, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefSerializeSettings);
 
             //OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings
 

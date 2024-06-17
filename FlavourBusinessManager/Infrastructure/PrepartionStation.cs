@@ -478,7 +478,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             Transaction.RunOnTransactionCompleted(() =>
             {
-                PrintManager?.OnPreparationItemsChangeState(this);
+                PrintManager?.UpdateItemsPreparationContextSnapshots(this);
                 lock (DeviceUpdateEtagLock)
                 {
                     if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
@@ -518,7 +518,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     Transaction.RunOnTransactionCompleted(() =>
                     {
-                        PrintManager?.OnPreparationItemsChangeState(this);
+                        PrintManager?.UpdateItemsPreparationContextSnapshots(this);
                     });
                 }
             }
@@ -904,6 +904,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             //    preparationSection.ObjectChangeState += PreparationSessionChangeState;
                             //}
                         }
+
                     }
                     finally
                     {

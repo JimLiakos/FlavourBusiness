@@ -9,13 +9,14 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static FlavourBusinessFacade.Printing.Printer;
 
 namespace PreparationStationDevice.Printing
 {
     public class PrinterController
     {
-        private Printer Printer;
+        public readonly Printer Printer;
 
         public IPrintManager PrintManager { get; }
 
@@ -23,6 +24,69 @@ namespace PreparationStationDevice.Printing
         {
             Printer = printer;
             PrintManager = printManager;
+            try
+            {
+
+                string localAppFolder = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+                string printerLocalAppFolder = localAppFolder;
+                if (localAppFolder.IndexOf('\\') > -1)
+                {
+
+                    printerLocalAppFolder += @"\printingLocalService\" + printer.Identity;
+                    if (!System.IO.Directory.Exists(printerLocalAppFolder))
+                        System.IO.Directory.CreateDirectory(printerLocalAppFolder);
+                    printerLocalAppFolder += @"\";
+
+                }
+                else
+                {
+                    printerLocalAppFolder += "/printingLocalService/" + printer.Identity;
+                    if (!System.IO.Directory.Exists(printerLocalAppFolder))
+                        System.IO.Directory.CreateDirectory(printerLocalAppFolder);
+                    printerLocalAppFolder += "/";
+
+                }
+                PrinterFolder = printerLocalAppFolder;
+
+                var dir = new System.IO.DirectoryInfo(PrinterFolder);
+                foreach (var file in dir.GetFiles().OrderBy(x => x.LastWriteTime))
+                {
+                    try
+                    {
+
+                        lock (Spooler)
+                            Spooler.Enqueue(OOAdvantech.Json.JsonConvert.DeserializeObject<FlavourBusinessFacade.Print.Printing>(System.IO.File.ReadAllText(file.FullName)));
+                    }
+                    catch (Exception error)
+                    {
+                    }
+                }
+
+
+            }
+            catch (Exception error)
+            {
+
+                
+            }            
+            lock (PrintedDocumentIds)
+            {
+                string filePath = PrinterFolder + "PrintedDocumentIds.dat";
+                try
+                {
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        string printedDocumentIdsJson = System.IO.File.ReadAllText(filePath);
+                        PrintedDocumentIds.AddRange(OOAdvantech.Json.JsonConvert.DeserializeObject<List<string>>(printedDocumentIdsJson));
+                    }
+                }
+                catch (Exception error)
+                {
+
+                    throw;
+                }
+            }
 
         }
 
@@ -40,11 +104,12 @@ namespace PreparationStationDevice.Printing
 
         public Task PrinterStatusControllerTask { get; private set; }
 
+       internal   List<string> PrintedDocumentIds = new List<string>();
         internal void Run()
         {
             lock (this)
             {
-                if (PrinterStatusControllerTask!=null)
+                if (PrinterStatusControllerTask != null)
                     return;
 
 
@@ -57,7 +122,12 @@ namespace PreparationStationDevice.Printing
                        {
                            try
                            {
-                               if (UpdatePinterStatus()==PrinterStatus.Online)
+                               bool pendingPrintings = false;
+                               lock (Spooler)
+                                   pendingPrintings = Spooler.Count > 0; 
+                                   
+
+                               if (pendingPrintings&&UpdatePinterStatus() == PrinterStatus.Online)
                                {
                                    FlavourBusinessFacade.Print.Printing printing = null;
                                    lock (Spooler)
@@ -66,8 +136,15 @@ namespace PreparationStationDevice.Printing
                                    }
                                    if (Print(printing.RawData))
                                    {
-                                       this.PrintManager.DocumentPrinted(printing.ID);
+                                       lock (Spooler)
+                                       {
+                                           printing = Spooler.Dequeue();
+                                           PrintedDocumentIds.Add(printing.ID);
+                                           SavePrintedDocumentIds();
 
+                                       }
+                                       this.PrintManager.DocumentPrinted(printing.ID);
+                                       PrintedDocumentIds.Remove(printing.ID);
                                    }
                                }
                            }
@@ -87,6 +164,17 @@ namespace PreparationStationDevice.Printing
             }
         }
 
+        private void SavePrintedDocumentIds()
+        {
+            lock (PrintedDocumentIds)
+            {
+                string filePath = PrinterFolder + "PrintedDocumentIds.dat";
+                string printedDocumentIdsJson = OOAdvantech.Json.JsonConvert.SerializeObject(PrintedDocumentIds);
+                System.IO.File.WriteAllText(filePath, printedDocumentIdsJson);
+            }
+
+        }
+
         private bool Print(byte[] rawData)
         {
             throw new NotImplementedException();
@@ -104,8 +192,8 @@ namespace PreparationStationDevice.Printing
 
 
 
-                address ="10.0.0.142";
-                port=9100;
+                address = "10.0.0.142";
+                port = 9100;
                 //System.Threading.Thread.Sleep(30000);
                 System.Diagnostics.Debug.WriteLine("try to connect Printer.Address");
                 var connectTask = tcpClient.ConnectAsync(address, port);
@@ -191,6 +279,29 @@ namespace PreparationStationDevice.Printing
             {
             }
             return printerStatus;
+        }
+
+        internal void PrintOut(FlavourBusinessFacade.Print.Printing printing)
+        {
+             
+
+            lock (Spooler)
+            {
+
+                Save(printing);
+                Spooler.Enqueue(printing);
+            }
+        }
+
+        string PrinterFolder;
+
+        private void Save(FlavourBusinessFacade.Print.Printing printing)
+        {
+            string filePath = PrinterFolder + printing.ID + ".dat";
+            string printingJson = OOAdvantech.Json.JsonConvert.SerializeObject(printing);
+            System.IO.File.WriteAllText(filePath, printingJson);
+
+
         }
     }
 }

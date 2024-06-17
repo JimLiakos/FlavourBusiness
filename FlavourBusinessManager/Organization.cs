@@ -1429,7 +1429,7 @@ namespace FlavourBusinessManager
 
 
 
-            var jSettings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings;
+            var jSettings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefSerializeSettings;
             string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(priceList, jSettings);
             if (fileManager.Exist(previousVersionJsonFileName))
             {

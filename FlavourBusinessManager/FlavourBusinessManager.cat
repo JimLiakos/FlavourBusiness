@@ -57638,7 +57638,7 @@
 				    supplier   	"$UNNAMED$31"
 				    quidu      	"666B08BA0037"
 				    messages   	(list Messages
-					(object Message "GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+					(object Message "GetPendingPrintings(  )"
 					    quid       	"666B168D01A1"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -58306,7 +58306,7 @@
 			    line_color 	3342489
 			    label      	(object SegLabel @860
 				Parent_View 	@859
-				location   	(1295, 131)
+				location   	(1296, 132)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -58516,9 +58516,9 @@
 				quidu      	"666B168D01A1"
 				anchor_loc 	1
 				nlines     	1
-				max_width  	1269
+				max_width  	453
 				justify    	0
-				label      	"GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+				label      	"GetPendingPrintings(  )"
 				pctDist    	0.423940
 				height     	97
 				orientation 	0)

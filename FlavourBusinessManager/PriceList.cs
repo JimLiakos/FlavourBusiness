@@ -358,7 +358,7 @@ namespace FlavourBusinessManager.PriceList
         {
             get
             {
-                string json = JsonConvert.SerializeObject(this, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefSerializeSettings);
+                string json = JsonConvert.SerializeObject(this, Formatting.None, OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefSerializeSettings);
                 return json;
             }
         }

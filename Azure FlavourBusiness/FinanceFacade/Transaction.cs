@@ -6,7 +6,7 @@ using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Json;
-using JsonSerializerSettings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings;
+using JsonSerializerSettings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings;
 
 namespace FinanceFacade
 {

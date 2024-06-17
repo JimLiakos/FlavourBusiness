@@ -167,7 +167,7 @@ namespace PreparationStationDevice
                                var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
                                getJsonTask.Wait();
                                var json = getJsonTask.Result;
-                               var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                               var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefDeserializeSettings;
                                MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 
                                GetMenuLanguages(MenuItems.Values.ToList());
@@ -806,7 +806,7 @@ namespace PreparationStationDevice
                             var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
                             getJsonTask.Wait();
                             var json = getJsonTask.Result;
-                            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefDeserializeSettings;
                             MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
                             GetMenuLanguages(MenuItems.Values.ToList());
                             PreparationStationStatus preparationStationStatus = PreparationStation.GetPreparationItems(new List<ItemPreparationAbbreviation>(), null);

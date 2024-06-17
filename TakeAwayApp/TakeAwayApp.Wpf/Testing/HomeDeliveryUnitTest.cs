@@ -34,7 +34,7 @@ namespace TakeAwayApp.Wpf
             var getJsonTask = httpClient.GetStringAsync(restaurantMenuDataSharedUri);
             getJsonTask.Wait();
             var json = getJsonTask.Result;
-            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+            var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefDeserializeSettings;
 
             MenuItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<MenuModel.JsonViewModel.MenuFoodItem>>(json, jSetttings).ToDictionary(x => x.Uri);
 

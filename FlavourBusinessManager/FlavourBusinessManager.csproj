@@ -456,6 +456,7 @@
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="Infrastructure\GlobalResourceIdentity.cs" />
     <Compile Include="PrintManager.cs" />
+    <Compile Include="Print\ItemPreparationSnapshot.cs" />
     <Compile Include="Print\ItemsPreparationContextSnapshot.cs" />
     <Compile Include="Print\PreparationStationPrintManager.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />

@@ -101,7 +101,8 @@ namespace FlavourBusinessFacade.Print
         [BackwardCompatibilityID("+1")]
         public string Printer
         {
-            get => _Printer; set
+            get => _Printer;
+            set
             {
                 if (_Printer != value)
                 {
@@ -128,7 +129,8 @@ namespace FlavourBusinessFacade.Print
         [BackwardCompatibilityID("+5")]
         public string ID
         {
-            get => _ID; set
+            get => _ID;
+            set
             {
                 if (_ID != value)
                 {
@@ -167,6 +169,8 @@ namespace FlavourBusinessFacade.Print
                 }
             }
         }
+
+        public string PrinterID { get; set; }
     }
 
     /// <MetaDataID>{4abd478a-f782-4063-b0a9-62ca03328c2c}</MetaDataID>

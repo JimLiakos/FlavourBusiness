@@ -93,14 +93,11 @@ namespace PreparationStationDevice.Printing
                 printer.Run();
             }
 
+            GetPendingPrintingsFromServer(null);
+
             PrintManager.DocumentPendingToPrint += (IPrintManager sender, string deviceUpdateEtag) =>
             {
-
-                var printingsIDs = Printers.SelectMany(x => x.Printings).Select(x => x.ID).ToList();
-                foreach (var printing in PrintManager.GetPendingPrintings(printingsIDs, deviceUpdateEtag))
-                {
-                    Printers.Where(x=>x.PrintManager)
-                }
+                GetPendingPrintingsFromServer(deviceUpdateEtag);
 
             };
 
@@ -151,5 +148,16 @@ namespace PreparationStationDevice.Printing
 
         }
 
+        private void GetPendingPrintingsFromServer(string deviceUpdateEtag)
+        {
+            var printingsIDs = Printers.SelectMany(x => x.Printings).Select(x => x.ID).ToList();
+            printingsIDs.AddRange(Printers.SelectMany(x => x.PrintedDocumentIds));
+
+            foreach (var printing in PrintManager.GetPendingPrintings(printingsIDs, deviceUpdateEtag))
+            {
+                var printer = Printers.Where(x => x.Printer.Identity == printing.PrinterID).FirstOrDefault();
+                 printer?.PrintOut(printing);
+            }
+        }
     }
 }

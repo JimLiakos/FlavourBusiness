@@ -1,12 +1,17 @@
 using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.Print;
 using FlavourBusinessManager.RoomService;
+using MenuModel.JsonViewModel;
+using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 
 namespace FlavourBusinessManager.Printing
 {
@@ -23,7 +28,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{5c6c332d-2ef9-4a46-b0b3-ec3b5dbce1a3}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+2")]
-        public  string Identity;
+        public string Identity;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
@@ -38,7 +43,20 @@ namespace FlavourBusinessManager.Printing
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-            Snapshots = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemsPreparationContextSnapshot>>(SnapshotsJson);
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(SnapshotsJson))
+                    Snapshots = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemsPreparationContextSnapshot>>(SnapshotsJson);
+                else
+                    Snapshots = new List<ItemsPreparationContextSnapshot>();
+
+
+            }
+            catch (Exception error)
+            {
+
+                throw;
+            }
         }
 
         /// <MetaDataID>{29a91b72-ef1b-43c7-a7fa-91e78f248e60}</MetaDataID>
@@ -56,14 +74,15 @@ namespace FlavourBusinessManager.Printing
 
             Timestamp = DateTime.UtcNow;
 
-            MealCourse=itemsPreparationContext.MealCourse;
+            MealCourse = itemsPreparationContext.MealCourse;
+            ItemsPreparationContext = itemsPreparationContext;
 
 
 
 
             Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems) };
 
-            SnapshotIdentity=Snapshots[0].SnapshotIdentity;
+            SnapshotIdentity = Snapshots[0].SnapshotIdentity;
         }
 
         /// <MetaDataID>{7c22a862-081d-44c7-906e-40996df8ba14}</MetaDataID>
@@ -90,18 +109,18 @@ namespace FlavourBusinessManager.Printing
         public static string GetSnapshotSignature(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot)
         {
             string snapshotIdentity = "";
-            foreach (ItemPreparation itemPreparation in itemsPreparationContextSnapshot.PreparationItems)
+            foreach (ItemPreparationSnapshot itemPreparation in itemsPreparationContextSnapshot.PreparationItems)
             {
                 snapshotIdentity += itemPreparation.uid + "_" + itemPreparation.Quantity;
                 foreach (var optionChange in itemPreparation.OptionsChanges)
-                    snapshotIdentity += (optionChange as OptionChange).OptionUri + (optionChange as OptionChange).NewLevelUri;
+                    snapshotIdentity += (optionChange as OptionChangeSnapshot).OptionUri + (optionChange as OptionChangeSnapshot).NewLevelUri;
             }
             return snapshotIdentity;
         }
         /// <MetaDataID>{89e1c246-7a46-414f-8173-732b9ab81894}</MetaDataID>
-        public  string GeRawPrint( List<IItemPreparation> preparationItems, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string tableLine, string comments)
+        public string GeRawPrint(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string tableLine, string comments)
         {
-
+            List<ItemPreparationSnapshot> preparationItems = itemsPreparationContextSnapshot.PreparationItems;
             //RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
 
             System.Collections.Generic.Dictionary<string, decimal> taxesSums = new System.Collections.Generic.Dictionary<string, decimal>();
@@ -195,7 +214,7 @@ namespace FlavourBusinessManager.Printing
                 //Order Code
                 if (lineString.IndexOf("~") != -1)
                 {
-                    string orderCode = preparationItems.First().MealCourse.SortID.ToString();
+                    string orderCode = MealCourse.SortID.ToString();
 
                     if (!string.IsNullOrWhiteSpace(orderCode))
                         lineString = FixLengthReplace(orderCode, lineString, "~");
@@ -219,7 +238,7 @@ namespace FlavourBusinessManager.Printing
             }
 
 
-            foreach (var transactionItem in preparationItems.OfType<ItemPreparation>())
+            foreach (var preparationItem in preparationItems)
             {
                 //foreach (var taxAmount in transactionItem.Taxes)
                 //{
@@ -233,9 +252,9 @@ namespace FlavourBusinessManager.Printing
 
 
                 string currOrderItemLine = transactionItemTemplateLine;
-                currOrderItemLine = FixLengthReplace(((double)transactionItem.Quantity).ToString(), currOrderItemLine, "&", null, TextJustify.Right);
-                currOrderItemLine = FixLengthReplace(transactionItem.Name, currOrderItemLine, "*");
-                currOrderItemLine = FixLengthReplace(GetPriceAsString(transactionItem.Price), currOrderItemLine, "!", "!!", TextJustify.Right);
+                currOrderItemLine = FixLengthReplace(((double)preparationItem.Quantity).ToString(), currOrderItemLine, "&", null, TextJustify.Right);
+                currOrderItemLine = FixLengthReplace(preparationItem.Description, currOrderItemLine, "*");
+                currOrderItemLine = FixLengthReplace(GetPriceAsString(preparationItem.ModifiedItemPrice), currOrderItemLine, "!", "!!", TextJustify.Right);
 
                 //foreach (var taxAmount in transactionItem.Taxes)
                 currOrderItemLine = FixLengthReplace("", currOrderItemLine, "|", null, TextJustify.Right);
@@ -330,7 +349,7 @@ namespace FlavourBusinessManager.Printing
                 else if (lineString.IndexOf("$qrcode$") != -1)
                 {
                     // Qr code
-                    string QRCode = GetQRCodeData(GetQRCode(preparationItems.First().FindItemsPreparationContext()));
+                    string QRCode = GetQRCodeData(GetQRCode(ItemsPreparationContext));
                     if (!string.IsNullOrWhiteSpace(QRCode))
                     {
                         lineString = lineString.Replace("$qrcode$", QRCode);
@@ -368,14 +387,16 @@ namespace FlavourBusinessManager.Printing
 
         }
 
+
+
         /// <MetaDataID>{b7cea776-6ede-4208-a202-08e57e95e3d9}</MetaDataID>
-        private static string GetQRCode(ItemsPreparationContext transaction)
+        private static string GetQRCode(ItemsPreparationContext itemsPreparationContext)
         {
             return "";
         }
 
         /// <MetaDataID>{ab559476-eb87-4015-87de-e5bdfba32a9e}</MetaDataID>
-        private static decimal GetAmount(List<IItemPreparation> preparationItems)
+        private static decimal GetAmount(List<ItemPreparationSnapshot> preparationItems)
         {
             decimal amount = preparationItems.OfType<ItemPreparation>().Sum(x => (decimal)(x.ModifiedItemPrice * x.Quantity));
             return amount;
@@ -510,18 +531,20 @@ namespace FlavourBusinessManager.Printing
             {
                 if (!ContainsSnapshotWithSignature(snapshotSignature))
                 {
-                    newSnapShot =new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
+                    newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
                     this.Snapshots.Add(newSnapShot);
                 }
             }
-            if (newSnapShot!=null)
+            if (newSnapShot != null)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    SnapshotIdentity=newSnapShot.SnapshotIdentity; 
+                    SnapshotIdentity = newSnapShot.SnapshotIdentity;
                     stateTransition.Consistent = true;
                 }
 
+
+                (ServicePointRunTime.ServicesContextRunTime.Current.PrintManager as PrintManager).OnNewPrinting();
                 //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
                 Timestamp = DateTime.UtcNow;
                 //}
@@ -532,7 +555,19 @@ namespace FlavourBusinessManager.Printing
 
         internal bool ContainsSnapshotWithSignature(string signature)
         {
-            return Snapshots.Where(x => GetSnapshotSignature(x)==signature).FirstOrDefault()!=null;
+            return Snapshots.Where(x => GetSnapshotSignature(x) == signature).FirstOrDefault() != null;
+
+        }
+
+        internal void SnapshotPrinted(string documentIdentity)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                var snapshot = Snapshots.Where(x => x.SnapshotIdentity == documentIdentity).FirstOrDefault();
+                snapshot.Printed = true;
+                stateTransition.Consistent = true;
+            }
 
         }
 
@@ -574,18 +609,20 @@ namespace FlavourBusinessManager.Printing
         {
             get
             {
-                if(_MealCourse==null)
+                if (_MealCourse == null)
                 {
-                   string mealCourseUri= Identity.Split(';')[0];
-                    _MealCourse=OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetObject(mealCourseUri) as MealCourse;
+                    string mealCourseUri = Identity.Split(';')[1];
+                    _MealCourse = OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).GetObject(mealCourseUri) as MealCourse;
                 }
                 return _MealCourse;
             }
             private set
             {
-                _MealCourse=value;
+                _MealCourse = value;
             }
         }
+
+        public ItemsPreparationContext ItemsPreparationContext { get; private set; }
 
 
         /// <MetaDataID>{0dbb2d02-d520-4fe5-8f98-94b5105b4978}</MetaDataID>
@@ -743,16 +780,26 @@ namespace FlavourBusinessManager.Printing
             var ticks = new DateTime(2022, 1, 1).Ticks;
             var uniqueId = (lastChangedItem.StateTimestamp.Ticks - ticks).ToString("x");
 
-            SnapshotIdentity=lastChangedItem.uid+"_"+uniqueId;
+            SnapshotIdentity = lastChangedItem.uid + "_" + uniqueId;
             //clone
-            PreparationItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<IItemPreparation>>(OOAdvantech.Json.JsonConvert.SerializeObject(preparationItems));
+
+            PreparationItems = preparationItems.OfType<ItemPreparation>().Select(x => new ItemPreparationSnapshot(x)).ToList();
+
+            //string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(preparationItems, JSonSerializeSettings.TypeRefSerializeSettings);
+
+            //PreparationItems = OOAdvantech.Json.JsonConvert.DeserializeObject<List<IItemPreparation>>(jsonEx, JSonSerializeSettings.TypeRefDeserializeSettings);
+        }
+        public ItemsPreparationContextSnapshot()
+        {
+
         }
 
+        [JsonIgnore]
         public DateTime TimeStamp
         {
             get
             {
-                var lastChangedItem = PreparationItems.OfType<ItemPreparation>().OrderBy(x => x.StateTimestamp).Last();
+                var lastChangedItem = PreparationItems.OfType<ItemPreparationSnapshot>().OrderBy(x => x.StateTimestamp).Last();
 
                 return lastChangedItem.StateTimestamp;
 
@@ -762,9 +809,9 @@ namespace FlavourBusinessManager.Printing
 
 
         /// <MetaDataID>{64d5d6f8-42e6-4d07-8222-af43f6c0abba}</MetaDataID>
-        public string SnapshotIdentity { get; }
+        public string SnapshotIdentity { get; set; }
         /// <MetaDataID>{3c0d3788-a91a-4ec5-9b4e-1aa0310bac7a}</MetaDataID>
-        public List<IItemPreparation> PreparationItems { get; }
+        public List<ItemPreparationSnapshot> PreparationItems { get; set; }
 
         /// <MetaDataID>{1da758ba-a7ce-4669-ad43-8f3fe2a2add0}</MetaDataID>
         public bool Printed { get; set; }

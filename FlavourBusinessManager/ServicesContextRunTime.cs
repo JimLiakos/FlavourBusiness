@@ -1729,7 +1729,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             var meneuItemsNames = menuFoodItems.Select(X => X.Name).ToList();
 
-            var jSettings = JsonSerializerSettings.TypeRefSerializeSettings;
+            var jSettings = JSonSerializeSettings.TypeRefSerializeSettings;
             string jsonEx = OOAdvantech.Json.JsonConvert.SerializeObject(menuFoodItems, jSettings);
 
             Stream previousVersionJsonStream = fileManager.GetBlobStream(previousVersionJsonFileName);
@@ -3457,7 +3457,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     {
 
                         var json = wc.DownloadString(storageUrl);
-                        var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JsonSerializerSettings.TypeRefDeserializeSettings;
+                        var jSetttings = OOAdvantech.Remoting.RestApi.Serialization.JSonSerializeSettings.TypeRefDeserializeSettings;
                         //new OOAdvantech.Json.JsonSerializerSettings { ReferenceLoopHandling = OOAdvantech.Json.ReferenceLoopHandling.Serialize, PreserveReferencesHandling = OOAdvantech.Json.PreserveReferencesHandling.All };
 
 

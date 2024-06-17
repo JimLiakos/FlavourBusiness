@@ -398,7 +398,7 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{4d4c3b27-e4f0-444c-a22f-167003e2e14d}</MetaDataID>
-        static string lockObj = "lock";
+        static object lockObj = new object();
 
         /// <MetaDataID>{9af4d2e0-c30c-451c-a932-5fff125e1467}</MetaDataID>
         public static ObjectStorage OpenFlavourBusinessesStorage()

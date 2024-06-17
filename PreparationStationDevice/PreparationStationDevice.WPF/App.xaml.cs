@@ -28,10 +28,21 @@ namespace PreparationStationDevice.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
+           
+
+
+
+
             
 
 
             SerializeTaskScheduler.RunAsync();
+
+
+
+
+            var dolder = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             DeviceSelectorWindow mainWindow = new DeviceSelectorWindow();
             mainWindow.Show();

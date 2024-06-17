@@ -13,7 +13,7 @@ namespace FlavourBusinessManager.Printing
     public class PreparationStationPrintManager
     {
         /// <MetaDataID>{f3adcb85-71e5-454c-a9fb-a232b76364f2}</MetaDataID>
-        internal void OnPreparationItemsChangeState(PreparationStation preparationStation)
+        internal void UpdateItemsPreparationContextSnapshots(PreparationStation preparationStation)
         {
             if (string.IsNullOrWhiteSpace(preparationStation.Printer))
                 return;
@@ -33,18 +33,11 @@ namespace FlavourBusinessManager.Printing
                         OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(itemsPreparationContextSnapshots);
                         itemsPreparationContextPrintings.Add(itemsPreparationContextSnapshots);
 
-                        Transaction.RunOnTransactionCompleted(() =>
-                        {
-                            (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).Print(itemsPreparationContextSnapshots);
-                        });
-
                         stateTransition.Consistent = true;
                     }
                 }
 
                 itemsPreparationContextSnapshots.Update(itemsPreparationContext);
-                
-
             }
         }
 
@@ -61,7 +54,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{88a295a9-3298-419d-aafb-3ec763529850}</MetaDataID>
         public PreparationStationPrintManager(PreparationStation preparationStation)
         {
-            OnPreparationItemsChangeState(preparationStation);
+            UpdateItemsPreparationContextSnapshots(preparationStation);
         }
     }
 
