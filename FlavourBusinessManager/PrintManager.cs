@@ -297,7 +297,9 @@ namespace FlavourBusinessManager.Printing
                 var preparationStation = preparationStations.Where(x => x.PreparationStationIdentity == itemsPreparationContextSnapshotsGroup.Key).FirstOrDefault();
                 foreach (var itemsPreparationContextSnapshots in itemsPreparationContextSnapshotsGroup)
                 {
-                    bool printedItemsHasChanged = itemsPreparationContextSnapshots.Snapshots.Where(x => x.Printed).Count() > 0;
+
+                    bool printedItemsHasChanged = itemsPreparationContextSnapshots.Snapshots.Where(x => x.Printed|| printingsOnLocalSpooler.Contains(x.SnapshotIdentity)).Count() > 0;
+
                     var lastItemsPreparationContextSnapshot = itemsPreparationContextSnapshots.Snapshots.OrderBy(x => x.SnapshotIdentity).Last();
 
                     if (!lastItemsPreparationContextSnapshot.Printed&& !printingsOnLocalSpooler.Contains(lastItemsPreparationContextSnapshot.SnapshotIdentity))

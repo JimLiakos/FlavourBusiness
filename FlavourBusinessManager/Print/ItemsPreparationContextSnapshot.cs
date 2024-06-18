@@ -77,12 +77,10 @@ namespace FlavourBusinessManager.Printing
             MealCourse = itemsPreparationContext.MealCourse;
             ItemsPreparationContext = itemsPreparationContext;
 
-
-
-
             Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems) };
 
             SnapshotIdentity = Snapshots[0].SnapshotIdentity;
+            SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots);
         }
 
         /// <MetaDataID>{7c22a862-081d-44c7-906e-40996df8ba14}</MetaDataID>
@@ -542,16 +540,16 @@ namespace FlavourBusinessManager.Printing
                     SnapshotIdentity = newSnapShot.SnapshotIdentity;
                     stateTransition.Consistent = true;
                 }
+                 
 
-
-                (ServicePointRunTime.ServicesContextRunTime.Current.PrintManager as PrintManager).OnNewPrinting();
+                (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
                 //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
                 Timestamp = DateTime.UtcNow;
                 //}
             }
 
 
-        }
+        } 
 
         internal bool ContainsSnapshotWithSignature(string signature)
         {
