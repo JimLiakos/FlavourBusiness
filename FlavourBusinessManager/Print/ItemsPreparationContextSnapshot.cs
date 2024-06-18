@@ -556,7 +556,10 @@ namespace FlavourBusinessManager.Printing
 
         internal bool ContainsSnapshotWithSignature(string signature)
         {
-            return Snapshots.Where(x => GetSnapshotSignature(x) == signature).FirstOrDefault() != null;
+            var lastSnapshot= Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
+            return lastSnapshot!=null&&GetSnapshotSignature(lastSnapshot)==signature;
+
+                
 
         }
 

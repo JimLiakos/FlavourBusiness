@@ -144,8 +144,8 @@ namespace PreparationStationDevice.Printing
 
             //        } while (!TerminatePrintingWatcher);
             //    });
-
-
+ 
+             
         }
 
         private void GetPendingPrintingsFromServer(string deviceUpdateEtag)

@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using FlavourBusinessFacade;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessToolKit;
 using FLBManager.ViewModel.HumanResources;
 using FLBManager.ViewModel.Infrastructure;
 using FloorLayoutDesigner.ViewModel;
@@ -107,6 +108,8 @@ namespace FLBManager.ViewModel
                 FlavoursServicesContextRuntime = ServicesContext.GetRunTime();
 
             FlavoursServicesContextRuntime.ObjectChangeState += ServicesContext_ObjectChangeState;
+
+            
 
             IsNodeExpanded = true;
 

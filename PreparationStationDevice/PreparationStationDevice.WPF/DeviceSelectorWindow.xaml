@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PreparationStationDevice.WPF"
         mc:Ignorable="d"
-        Title="DeviceSelectorWindow" Height="138" Width="448">
+        Title="Preparation DeviceSelectorWindow" Height="138" Width="448">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="147*"/>
