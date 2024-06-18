@@ -66,7 +66,10 @@ namespace FlavourBusinessManager.Printing
             SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemsPreparationContext"></param>
         /// <MetaDataID>{82ed8ff0-cb03-4585-b717-c0e23013ca45}</MetaDataID>
         public ItemsPreparationContextSnapshots(ItemsPreparationContext itemsPreparationContext)
         {
