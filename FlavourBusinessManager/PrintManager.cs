@@ -269,6 +269,12 @@ namespace FlavourBusinessManager.Printing
         }
 
 
+
+        public void CheckSnapshotsThatAreOnHoldForPrinting()
+        {
+
+        }
+
         /// <MetaDataID>{5c07c27f-d532-49cf-aeae-b359dcd9ccbe}</MetaDataID>
         public List<FlavourBusinessFacade.Print.Printing> GetPendingPrintings(List<string> printingsOnLocalSpooler, string deviceUpdateEtag)
         {

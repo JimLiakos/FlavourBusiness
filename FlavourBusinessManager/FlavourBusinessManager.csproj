@@ -458,6 +458,7 @@
     <Compile Include="PrintManager.cs" />
     <Compile Include="Print\ItemPreparationSnapshot.cs" />
     <Compile Include="Print\ItemsPreparationContextSnapshot.cs" />
+    <Compile Include="Print\PrintDocumentGenerator.cs" />
     <Compile Include="Print\PreparationStationPrintManager.cs" />
     <Compile Include="ItemPreparationTimeSpan.cs" />
     <Compile Include="ItemsPriceInfo.cs" />

@@ -57148,39 +57148,6 @@
 			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "SnapshotIdentity"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{aabeeddd-771b-4add-af9c-e65dc1246dc1}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"665AD06E03BD")
-				(object Attribute
-				    tool       	"C#"
-				    name       	"As Property"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateGetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"GenerateSetOperation"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+1"))
-			    quid       	"665AD06E03BD"
-			    type       	"string"
-			    exportControl 	"Public")
 			(object ClassAttribute "RawPrint"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -58306,7 +58273,7 @@
 			    line_color 	3342489
 			    label      	(object SegLabel @860
 				Parent_View 	@859
-				location   	(1296, 132)
+				location   	(703, 161)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -58323,8 +58290,8 @@
 				max_width  	656
 				justify    	0
 				label      	"OnPreparationItemsChangeState( )"
-				pctDist    	6.317808
-				height     	433
+				pctDist    	1.960274
+				height     	160
 				orientation 	0)
 			    object_arc 	@858
 			    pctDist    	0.410088
@@ -58355,7 +58322,7 @@
 			    line_color 	3342489
 			    label      	(object SegLabel @863
 				Parent_View 	@862
-				location   	(2019, 400)
+				location   	(1515, 400)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -58372,8 +58339,8 @@
 				max_width  	206
 				justify    	0
 				label      	"Update( )"
-				pctDist    	5.210177
-				height     	102
+				pctDist    	1.021018
+				height     	67
 				orientation 	0)
 			    object_arc 	@861
 			    pctDist    	0.381379

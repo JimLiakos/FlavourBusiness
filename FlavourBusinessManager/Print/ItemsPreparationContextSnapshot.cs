@@ -15,7 +15,12 @@ using System.Text;
 
 namespace FlavourBusinessManager.Printing
 {
-
+    /// <summary>
+    /// Specifies the snapshots of the items group which are related to meal course and prepared at specific preparation station.
+    /// When the user commits to the items of the order, then for the part of the items that concerns a preparation station,
+    /// the software creates a snapshot and print it. 
+    /// In case user adds new item or change an already exist item, the software  create another snapshot and print it with Heading, order change.   
+    /// </summary>
     /// <MetaDataID>{1c4e0cca-adaf-4bfb-9ec8-664cb16a7f43}</MetaDataID>
     [BackwardCompatibilityID("{1c4e0cca-adaf-4bfb-9ec8-664cb16a7f43}")]
     [Persistent()]
@@ -67,9 +72,13 @@ namespace FlavourBusinessManager.Printing
         }
 
         /// <summary>
-        /// 
+        /// Creates an object of "ItemsPreparationContextSnapshots" for the snapshots of items which prepared,
+        /// at the preparation station and are related to specific meal course.
         /// </summary>
-        /// <param name="itemsPreparationContext"></param>
+        /// <param name="itemsPreparationContext">
+        /// Defines the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// </param>
         /// <MetaDataID>{82ed8ff0-cb03-4585-b717-c0e23013ca45}</MetaDataID>
         public ItemsPreparationContextSnapshots(ItemsPreparationContext itemsPreparationContext)
         {
@@ -83,9 +92,20 @@ namespace FlavourBusinessManager.Printing
             Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems) };
 
             SnapshotIdentity = Snapshots[0].SnapshotIdentity;
-            SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots);
+            SnapshotsJson = JsonConvert.SerializeObject(Snapshots);
         }
 
+        /// <summary>
+        /// Creates the identity of the items group which are related to meal course and prepared at specific preparation station
+        /// The identity is the combine of the preparation station identity  and the persistent uri of meal course.
+        /// </summary>
+        /// <param name="itemsPreparationContext">
+        /// Defines the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// </param>
+        /// <returns>
+        /// Return the combined identity
+        /// </returns>
         /// <MetaDataID>{7c22a862-081d-44c7-906e-40996df8ba14}</MetaDataID>
         public static string GetIdentity(ItemsPreparationContext itemsPreparationContext)
         {
@@ -94,6 +114,17 @@ namespace FlavourBusinessManager.Printing
             return preparationStationIdentity + ";" + mealCourseUri;
         }
 
+        /// <summary>
+        /// This operation produce a signature for items snapshot
+        /// Each snapshot has a specific signature related to the items, the items quantities and the options change
+        /// </summary>
+        /// <param name="itemsPreparationContext">
+        /// Defines the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// </param>
+        /// <returns>
+        /// The snapshot signature
+        /// </returns>
         /// <MetaDataID>{cbf59990-2602-4edc-8f1c-508f1a03e5ae}</MetaDataID>
         public static string GetSnapshotSignature(ItemsPreparationContext itemsPreparationContext)
         {
@@ -107,6 +138,16 @@ namespace FlavourBusinessManager.Printing
             return snapshotIdentity;
         }
 
+        /// <summary>
+        /// This operation produce a signature for items snapshot
+        /// Each snapshot has a specific signature related to the items, the items quantities and the options change
+        /// </summary>
+        /// <param name="itemsPreparationContextSnapshot">
+        /// Defines a items preparation snapshot
+        /// </param>
+        /// <returns>
+        /// The snapshot signature
+        /// </returns>
         public static string GetSnapshotSignature(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot)
         {
             string snapshotIdentity = "";
@@ -118,8 +159,17 @@ namespace FlavourBusinessManager.Printing
             }
             return snapshotIdentity;
         }
+
+        /// <summary>
+        ///Creates a printing document for the snapshot 
+        /// </summary>
+        /// <param name="itemsPreparationContextSnapshot"></param>
+        /// <param name="companyHeader"></param>
+        /// <param name="servicePointDescriptionLine"></param>
+        /// <param name="comments"></param>
+        /// <returns></returns>
         /// <MetaDataID>{89e1c246-7a46-414f-8173-732b9ab81894}</MetaDataID>
-        public string GeRawPrint(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string tableLine, string comments)
+        public string GeRawPrint(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot, FlavourBusinessManager.Printing.CompanyHeader companyHeader, string servicePointDescriptionLine, string comments)
         {
             List<ItemPreparationSnapshot> preparationItems = itemsPreparationContextSnapshot.PreparationItems;
             //RawPrint = GeRawPrint(itemsPreparationContext, new CompanyHeader(), "", "");
@@ -521,6 +571,14 @@ namespace FlavourBusinessManager.Printing
             return lineString;
         }
 
+        /// <summary>
+        /// This operation updates the snapshots of the items which prepared
+        /// at the preparation station and are related to specific meal course. 
+        /// </summary>
+        /// <param name="itemsPreparationContext">
+        /// Defines the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// </param>
         /// <MetaDataID>{d722d9cc-448b-4a30-802e-87a3c7d008d9}</MetaDataID>
         internal void Update(ItemsPreparationContext itemsPreparationContext)
         {
@@ -530,7 +588,7 @@ namespace FlavourBusinessManager.Printing
 
             lock (Snapshots)
             {
-                if (!ContainsSnapshotWithSignature(snapshotSignature))
+                if (!LastSnapshotHasTheSameSignature(snapshotSignature))
                 {
                     newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
                     this.Snapshots.Add(newSnapShot);
@@ -538,12 +596,6 @@ namespace FlavourBusinessManager.Printing
             }
             if (newSnapShot != null)
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                {
-                    SnapshotIdentity = newSnapShot.SnapshotIdentity;
-                    stateTransition.Consistent = true;
-                }
-                 
 
                 (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
                 //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
@@ -552,17 +604,23 @@ namespace FlavourBusinessManager.Printing
             }
 
 
-        } 
+        }
 
-        internal bool ContainsSnapshotWithSignature(string signature)
+        internal bool LastSnapshotHasTheSameSignature(string signature)
         {
-            var lastSnapshot= Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
-            return lastSnapshot!=null&&GetSnapshotSignature(lastSnapshot)==signature;
+            var lastSnapshot = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
+            return lastSnapshot != null && GetSnapshotSignature(lastSnapshot) == signature;
 
-                
+
 
         }
 
+        /// <summary>
+        /// This operation update the specific snapshot that it has been printed.
+        /// </summary>
+        /// <param name="documentIdentity">
+        /// Defines the identity of snapshot
+        /// </param>
         internal void SnapshotPrinted(string documentIdentity)
         {
 
@@ -576,43 +634,38 @@ namespace FlavourBusinessManager.Printing
         }
 
 
-        /// <exclude>Excluded</exclude>
-        string _SnapshotIdentity;
-
-        /// <MetaDataID>{aabeeddd-771b-4add-af9c-e65dc1246dc1}</MetaDataID>
-        [PersistentMember(nameof(_SnapshotIdentity))]
-        [BackwardCompatibilityID("+1")]
-        public string SnapshotIdentity
-        {
-            get => _SnapshotIdentity;
-            private set
-            {
-                if (_SnapshotIdentity != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _SnapshotIdentity = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
+     
         /// <MetaDataID>{1e5bf834-30aa-481e-a0c8-443235fc39c5}</MetaDataID>
         public object RawPrint { get; private set; }
 
-        /// <MetaDataID>{543c4627-7319-4b2b-9652-66c84b359bd0}</MetaDataID>
+
+        /// <summary>
+        /// Defines the snapshots of the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// Any time where client change the items which prepared
+        /// at the preparation station and are related to specific meal course
+        /// the software produce a  new snapshot 
+        /// </summary>
+        // <MetaDataID>{543c4627-7319-4b2b-9652-66c84b359bd0}</MetaDataID>
         public List<ItemsPreparationContextSnapshot> Snapshots;
 
+        /// <summary>
+        ///  Defines the date where ItemsPreparationContextSnapshots created
+        /// </summary>
         /// <MetaDataID>{a8f415e0-453f-4d7c-af26-0af70b08902b}</MetaDataID>
         public DateTime Timestamp { get; private set; }
 
         /// <exclude>Excluded</exclude>
         IMealCourse _MealCourse;
 
+        /// <summary>
+        /// Defines the mealcoure of items
+        /// </summary>
         public IMealCourse MealCourse
         {
             get
             {
+
                 if (_MealCourse == null)
                 {
                     string mealCourseUri = Identity.Split(';')[1];
@@ -626,9 +679,15 @@ namespace FlavourBusinessManager.Printing
             }
         }
 
+        /// <summary>
+        /// Defines the items which prepared
+        /// at the preparation station and are related to specific meal course.
+        /// </summary>
         public ItemsPreparationContext ItemsPreparationContext { get; private set; }
 
-
+        /// <summary>
+        /// Defines the identity of preparation station where  prepared the items of snapshots
+        /// </summary>
         /// <MetaDataID>{0dbb2d02-d520-4fe5-8f98-94b5105b4978}</MetaDataID>
         public string PreparationStationIdentity
         {
@@ -642,6 +701,11 @@ namespace FlavourBusinessManager.Printing
         [PersistentMember]
         [BackwardCompatibilityID("+4")]
         private string SnapshotsJson;
+
+
+
+
+        
     }
 
     /// <MetaDataID>{e98a4b3a-6d2f-4883-99ba-5baed071a0d9}</MetaDataID>
@@ -797,6 +861,9 @@ namespace FlavourBusinessManager.Printing
         {
 
         }
+
+
+
 
         [JsonIgnore]
         public DateTime TimeStamp
