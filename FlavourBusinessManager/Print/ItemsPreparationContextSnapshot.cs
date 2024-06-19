@@ -91,7 +91,7 @@ namespace FlavourBusinessManager.Printing
 
             Snapshots = new List<ItemsPreparationContextSnapshot>() { new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems) };
 
-            SnapshotIdentity = Snapshots[0].SnapshotIdentity;
+
             SnapshotsJson = JsonConvert.SerializeObject(Snapshots);
         }
 
@@ -191,7 +191,7 @@ namespace FlavourBusinessManager.Printing
 
             #region writes receipt header area
             while (lineString != null && lineString.IndexOf("&") == -1)//Ampersand & defines the end of header area and the start of details
-            {
+            {  
 
                 #region DateTime line
                 if (lineString.IndexOf("^") != -1 || lineString.IndexOf("%") != -1)
@@ -229,8 +229,8 @@ namespace FlavourBusinessManager.Printing
                 #region Defines the table (service point) description 
                 if (lineString.IndexOf("`") != -1)
                 {
-                    if (!string.IsNullOrEmpty(tableLine))
-                        lineString = FixLengthReplace(tableLine, lineString, "`");
+                    if (!string.IsNullOrEmpty(servicePointDescriptionLine))
+                        lineString = FixLengthReplace(servicePointDescriptionLine, lineString, "`");
                     else
                     {
                         lineString = report.ReadLine();
