@@ -880,7 +880,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 if ( commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
                     return;
-
+                 
                 double fromFirstCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
                                                                                 orderby session.ModificationTime
                                                                                 select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
