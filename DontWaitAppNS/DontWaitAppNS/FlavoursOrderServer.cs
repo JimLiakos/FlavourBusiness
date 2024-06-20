@@ -662,8 +662,24 @@ namespace DontWaitApp
                 device.MessageReceived += Device_MessageReceived;
 #endif
 
-                foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions)
-                    foodServicesClientSession.FlavoursOrderServer = this;
+                foreach (var foodServicesClientSession in ApplicationSettings.Current.ActiveSessions.ToList())
+                {
+                    var duplicateFoodServicesClientSession = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServicesClientSession.ClientSessionID && x != foodServicesClientSession).FirstOrDefault();
+                    if (duplicateFoodServicesClientSession != null)
+                    {
+                        if (duplicateFoodServicesClientSession.OrderItems.Count < foodServicesClientSession.OrderItems.Count)
+                        {
+                            ApplicationSettings.Current.RemoveClientSession(duplicateFoodServicesClientSession);
+                            foodServicesClientSession.FlavoursOrderServer = this;
+                        }
+                        else
+                            ApplicationSettings.Current.RemoveClientSession(foodServicesClientSession);
+                    }
+                    else
+                        foodServicesClientSession.FlavoursOrderServer = this;
+                }
+
+                
 
                 var displayedFoodServicesClientSession = ApplicationSettings.Current.DisplayedFoodServicesClientSession;
                 FoodServicesClientSessionViewModel = displayedFoodServicesClientSession;
@@ -677,13 +693,14 @@ namespace DontWaitApp
                         Path = "";
                 }
 
-                if(await displayedFoodServicesClientSession?.IsActive()!=true)
+                if (displayedFoodServicesClientSession != null)
                 {
-
-                    ApplicationSettings.Current.DisplayedFoodServicesClientSession = null;
-                    Path = "";
-                    _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
-
+                    if (await displayedFoodServicesClientSession.IsActive() != true)
+                    {
+                        ApplicationSettings.Current.DisplayedFoodServicesClientSession = null;
+                        Path = "";
+                        _ObjectChangeState?.Invoke(this, nameof(FoodServicesClientSessionViewModel));
+                    }
                 }
             });
 
@@ -1884,7 +1901,7 @@ namespace DontWaitApp
                     if (clientSessionData == null)
                         return null;
                     var foodServiceClientSessionUri = RemotingServices.GetComputingContextPersistentUri(clientSessionData.Value.FoodServiceClientSession);
-                    var foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.FoodServiceClientSessionUri == foodServiceClientSessionUri).FirstOrDefault();
+                    var foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == clientSessionData.Value.SessionID).FirstOrDefault();
                     if (foodServicesClientSessionViewModel != null)
                     {
                         foodServicesClientSessionViewModel.FlavoursOrderServer = this;

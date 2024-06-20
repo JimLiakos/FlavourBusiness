@@ -306,7 +306,7 @@ namespace DontWaitApp
         /// <exclude>Excluded</exclude>
         static ObjectStorage _AppSettingsStorage;
         /// <MetaDataID>{da878c84-7957-48fd-a7ac-fef703351615}</MetaDataID>
-        public static OOAdvantech.PersistenceLayer.ObjectStorage AppSettingsStorage
+        public static ObjectStorage AppSettingsStorage
         {
             get
             {

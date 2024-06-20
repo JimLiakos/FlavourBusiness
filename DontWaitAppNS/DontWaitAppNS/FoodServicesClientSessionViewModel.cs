@@ -1216,6 +1216,14 @@ namespace DontWaitApp
                     }
                 }
 
+                if(FlavoursOrderServer==null)
+                {
+                    if(!ApplicationSettings.Current.ActiveSessions.Contains(this))
+                    {
+
+                    }
+                }
+
                 if (_FoodServicesClientSession == null && value != null && FlavoursOrderServer.AppType != AppType.OrderTaking)
                     value.DeviceResume();
 
@@ -1707,7 +1715,7 @@ namespace DontWaitApp
             foreach (var itemNewState in itemsNewState)
             {
                 var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                item.State = item.State;
+                item.State = itemNewState.Value;
             }
             return true;
 

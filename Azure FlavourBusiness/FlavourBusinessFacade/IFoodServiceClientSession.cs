@@ -364,6 +364,8 @@ namespace FlavourBusinessFacade.EndUsers
 
         /// <MetaDataID>{385f4b82-c101-49bc-b129-cca21db47ca7}</MetaDataID>
         public OrganizationStorageRef PriceList;
+
+        public string SessionID { get; set; }
     }
 
 
