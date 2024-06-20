@@ -1710,7 +1710,7 @@ namespace DontWaitApp
 
             //}
             //else
-
+             
             var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
             foreach (var itemNewState in itemsNewState)
             {
