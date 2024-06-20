@@ -756,6 +756,15 @@ namespace FlavourBusinessManager.EndUsers
                         //StandbyOnPartialCommitMeal();
                     }
 
+                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null &&
+                        MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring &&
+                        DeviceAppState != DeviceAppLifecycle.InUse)
+                    {
+                        //One of the messmates commits event
+                        SessionState = ClientSessionState.UrgesToDecide;
+                        //StandbyOnPartialCommitMeal();
+                    }
+
                     if (SessionState == ClientSessionState.ConversationStandy && DeviceAppState == DeviceAppLifecycle.InUse)
                     {
                         //Device resume event
@@ -774,7 +783,10 @@ namespace FlavourBusinessManager.EndUsers
                     }
 
                     if (SessionState == ClientSessionState.UrgesToDecide &&
-                         MainSession != null && MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
+                         MainSession != null && 
+                         MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
+                         MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring &&
+
                          DeviceAppState != DeviceAppLifecycle.InUse)
                     {
                         //Device resume event
@@ -858,7 +870,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{5d67c1ab-dc97-4fd4-9685-d9a485f81642}</MetaDataID>
         internal void UrgesToDecideRun()
         {
-
+             
             if (SessionState == ClientSessionState.UrgesToDecide)
             {
                 List<IFoodServiceClientSession> commitedItemsSessions = new List<IFoodServiceClientSession>();
@@ -866,7 +878,7 @@ namespace FlavourBusinessManager.EndUsers
                 if (MainSession != null)
                     commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).ToList();
 
-                if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
+                if ( commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
                     return;
 
                 double fromFirstCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
