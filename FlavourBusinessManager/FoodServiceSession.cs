@@ -636,7 +636,42 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         private void CheckForMealCourseUncommittedItemsTimeout()
         {
-            var ss = Meal?.Courses.FirstOrDefault();
+            if (SessionState == SessionState.MealMonitoring&&SessionType==SessionType.Hall)
+            {
+                List<ItemsMealCourseAssignment> uncommittedItemsMealCourseAssignment = (Meal as Meal)?.GetUncommittedItemsMealCourseAssignment();
+
+                var uncommittedItems = uncommittedItemsMealCourseAssignment.Where(x => x.MealCourse!=null).SelectMany(x => x.ItemsPreparations).Where(x => (x.ClientSession as EndUsers.FoodServiceClientSession).DeviceAppState!=DeviceAppLifecycle.InUse).ToList();
+
+                if (uncommittedItems.Count>0)
+                    if ((System.DateTime.UtcNow- (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime).TotalSeconds>30)
+                    {
+
+                        if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
+                        {
+                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                            {
+                                if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                                {
+                                    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                                    ServicesContextRunTime.Current.MealCourseUncommittedChangesTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                                }
+                            }
+
+                        }
+                        else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                        {
+                            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                            ServicesContextRunTime.Current.MealCourseUncommittedChangesTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                        }
+
+                        
+
+
+                    }
+
+
+
+            }
         }
 
         private void CheckForMeaConversationTimeout()
@@ -673,7 +708,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         /// <MetaDataID>{09474811-aa43-4545-88a7-ffb0285b2fcd}</MetaDataID>
         DateTime UrgesToDecideToWaiterTimeStamp = DateTime.MinValue;
 
@@ -885,13 +922,11 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{888779e0-26b1-4fda-95a9-2bb47b7a9efd}</MetaDataID>
         public void AddPayment(FinanceFacade.IPayment payment)
         {
-
             using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
             {
                 _BillingPayments.Add(payment);
                 stateTransition.Consistent = true;
             }
-
         }
 
         /// <MetaDataID>{4a963a47-520a-4a30-811b-ce78fe4834a1}</MetaDataID>

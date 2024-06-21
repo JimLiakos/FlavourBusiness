@@ -878,39 +878,50 @@ namespace FlavourBusinessManager.EndUsers
                 List<IFoodServiceClientSession> commitedItemsSessions = new List<IFoodServiceClientSession>();
 
                 if (MainSession != null)
+                {
                     commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).ToList();
 
-                if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
-                    return;
+                    //if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
+                    //    return;
 
-                double fromFirstCommittedItemsSessionInMin = 0;
 
-                fromFirstCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                          orderby session.ModificationTime
-                                                                          select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
+                    if (commitedItemsSessions.Count>0)
+                    {
 
-                double fromLastCommittedItemsSessionInMin = 0;
-                fromLastCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                         orderby session.ModificationTime
-                                                                         select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
+                        double fromFirstCommittedItemsSessionInMin = 0;
+                        double fromLastCommittedItemsSessionInMin = 0;
+                        fromFirstCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                                  orderby session.ModificationTime
+                                                                                  select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                double fromDeviceSleep = 0;
-                if (DeviceAppState != DeviceAppLifecycle.InUse)
-                    fromDeviceSleep = (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()).TotalMinutes;
+                        fromLastCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                                 orderby session.ModificationTime
+                                                                                 select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                bool fromLastCommittedItemsSessionExpired = fromLastCommittedItemsSessionInMin > 3;
-                bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
+                        double fromDeviceSleep = 0;
+                        if (DeviceAppState != DeviceAppLifecycle.InUse)
+                            fromDeviceSleep = (DateTime.UtcNow - DeviceAppSleepTime.ToUniversalTime()).TotalMinutes;
 
-                TimeSpan mealConversationTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
-                TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
-                TimeSpan fromLastRequest = DateTime.UtcNow - DateTimeOfLastRequest.ToUniversalTime();
+                        double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                if (fromLastCommittedItemsSessionExpired && fromDeviceSleepExpired)
-                    UrgesToDecideMessage();
-                else if(MainSession?.SessionState==FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring)
-                    UrgesToDecideMessage();
+                        bool fromLastCommittedItemsSessionExpired = fromLastCommittedItemsSessionInMin > 3;
+                        bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
+
+                        TimeSpan mealConversationTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
+                        TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
+                        TimeSpan fromLastRequest = DateTime.UtcNow - DateTimeOfLastRequest.ToUniversalTime();
+
+                        if (fromLastCommittedItemsSessionExpired && fromDeviceSleepExpired)
+                        {
+                            UrgesToDecideMessage();
+                            return;
+                        }
+                    }
+
+                    if (MainSession?.SessionState==FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring)
+                        UrgesToDecideMessage();
+                }
             }
 
         }

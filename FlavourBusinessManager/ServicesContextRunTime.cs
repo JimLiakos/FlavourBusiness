@@ -1234,6 +1234,58 @@ namespace FlavourBusinessManager.ServicePointRunTime
             }
         }
 
+        internal void MealCourseUncommittedChangesTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
+        {
+            var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
+            if (activeWaiters.Count == 0 && servicePoint is HallServicePoint)
+                activeWaiters = (from shiftWork in GetActiveShiftWorks()
+                                 where shiftWork.Worker is IWaiter && (servicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                 select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+
+
+            foreach (var waiter in activeWaiters)
+            {
+                var waiterActiveShiftWork = waiter.ShiftWork;
+                if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
+                {
+                    Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.MealConversationTimeout) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
+                    if (clientMessage == null)
+                    {
+                        clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Data["SessionIdentity"] = sessionIdentity;
+
+                        clientMessage.Notification = new Notification() { Title = "Meal conversation is over time" };
+                    }
+                    waiter.PushMessage(clientMessage);
+                    if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
+                    {
+                        CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            {
+                                message.NotificationsNum += 1;
+                                message.NotificationTimestamp = DateTime.UtcNow;
+                            }
+
+                            stateTransition.Consistent = true;
+                        }
+                        this.UpdateWaitersWithUnreadMessages();
+
+
+                    }
+
+                }
+                //}
+            }
+
+        }
+
+
+
         /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
         internal void MealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
         {
