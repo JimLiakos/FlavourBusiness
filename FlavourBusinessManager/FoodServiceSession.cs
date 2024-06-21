@@ -619,32 +619,12 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         select itemPreparation).FirstOrDefault();
             if (SessionType == SessionType.Hall)
             {
-                if (firstItemPreparation != null &&
-                    (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
-                    (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
-                {
-                    if (ServicePoint.State == ServicePointState.Conversation)
-                        (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
+                CheckForMeaConversationTimeout();
 
-                    if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
-                    {
-                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
-                        {
-                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                            {
-                                UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                            }
-                        }
+                CheckForMealCourseUncommittedItemsTimeout();
 
-                    }
-                    else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                    {
-                        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                    }
-                }
             }
+
             #endregion
             if (firstItemPreparation != null && SessionState == SessionState.MealValidationDelay && MealValidationDelayTask != null && MealValidationDelayTask.Status == TaskStatus.Faulted)
             {
@@ -652,6 +632,45 @@ namespace FlavourBusinessManager.ServicesContextResources
                 MealValidationDelayRun();
             }
 
+        }
+
+        private void CheckForMealCourseUncommittedItemsTimeout()
+        {
+            var ss = Meal?.Courses.FirstOrDefault();
+        }
+
+        private void CheckForMeaConversationTimeout()
+        {
+            var firstItemPreparation = (from partialClientSession in PartialClientSessions
+                                        from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
+                                        orderby itemPreparation.StateTimestamp
+                                        select itemPreparation).FirstOrDefault();
+
+            if (firstItemPreparation != null &&
+                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
+                (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
+            {
+                if (ServicePoint.State == ServicePointState.Conversation)
+                    (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
+
+                if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
+                {
+                    if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                    {
+                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                        {
+                            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                            ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                        }
+                    }
+
+                }
+                else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                {
+                    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                }
+            }
         }
 
 

@@ -22,6 +22,7 @@ using Microsoft.Azure.Documents.Spatial;
 using MenuPresentationModel;
 using FlavourBusinessManager.HumanResources;
 using OOAdvantech.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -783,7 +784,7 @@ namespace FlavourBusinessManager.EndUsers
                     }
 
                     if (SessionState == ClientSessionState.UrgesToDecide &&
-                         MainSession != null && 
+                         MainSession != null &&
                          MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                          MainSession.SessionState != FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring &&
 
@@ -815,17 +816,18 @@ namespace FlavourBusinessManager.EndUsers
 
             }
 
-
-
         }
 
         /// <summary>
         /// Checks for long time meal conversation and update the waiters
         /// Meal conversation timeout check, occurs only when there isn't main session
+        /// In case where there is main session the conservation timeouts controlled from Main in monitoring operation
         /// </summary>
         /// <MetaDataID>{49299fee-7bcb-4053-92c1-73eab19a4d1f}</MetaDataID>
         private bool CheckForMealConversationTimeout()
         {
+
+            /// In case where there is main session the conservation timeouts controlled from Main in monitoring operation
             if (MainSession == null || SessionState == ClientSessionState.ConversationStandy)
             {
                 var firstItemPreparation = (from itemPreparation in FlavourItems.OfType<ItemPreparation>()
@@ -870,7 +872,7 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{5d67c1ab-dc97-4fd4-9685-d9a485f81642}</MetaDataID>
         internal void UrgesToDecideRun()
         {
-             
+
             if (SessionState == ClientSessionState.UrgesToDecide)
             {
                 List<IFoodServiceClientSession> commitedItemsSessions = new List<IFoodServiceClientSession>();
@@ -878,16 +880,19 @@ namespace FlavourBusinessManager.EndUsers
                 if (MainSession != null)
                     commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).ToList();
 
-                if ( commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
+                if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
                     return;
-                 
-                double fromFirstCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                                orderby session.ModificationTime
-                                                                                select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                double fromLastCommitedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
-                                                                               orderby session.ModificationTime
-                                                                               select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
+                double fromFirstCommittedItemsSessionInMin = 0;
+
+                fromFirstCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                          orderby session.ModificationTime
+                                                                          select session).First().ModificationTime.ToUniversalTime()).TotalMinutes;
+
+                double fromLastCommittedItemsSessionInMin = 0;
+                fromLastCommittedItemsSessionInMin = (DateTime.UtcNow - (from session in commitedItemsSessions
+                                                                         orderby session.ModificationTime
+                                                                         select session).Last().ModificationTime.ToUniversalTime()).TotalMinutes;
 
                 double fromDeviceSleep = 0;
                 if (DeviceAppState != DeviceAppLifecycle.InUse)
@@ -895,53 +900,62 @@ namespace FlavourBusinessManager.EndUsers
 
                 double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
 
-                bool fromLastCommitedItemsSessionExpired = fromLastCommitedItemsSessionInMin > 3;
+                bool fromLastCommittedItemsSessionExpired = fromLastCommittedItemsSessionInMin > 3;
                 bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
 
-                TimeSpan mealConversetionTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
+                TimeSpan mealConversationTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
                 TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
                 TimeSpan fromLastRequest = DateTime.UtcNow - DateTimeOfLastRequest.ToUniversalTime();
 
-                if (fromLastCommitedItemsSessionExpired && fromDeviceSleepExpired)
-                {
-
-                    if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 2)
-                    {
-
-                        var clientMessage = Messages.Where(x => ((ClientMessages)(int)x.Data["ClientMessageType"]) == ClientMessages.YouMustDecide).FirstOrDefault();
-
-
-                        if (clientMessage == null)
-                        {
-                            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                            {
-
-                                clientMessage = new Message();
-                                OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(clientMessage);
-                                clientMessage.Data["ClientMessageType"] = ClientMessages.YouMustDecide;
-                                clientMessage.Data["ClientSessionID"] = SessionID;
-                                clientMessage.Notification = new Notification() { Title = "Don't wait the waiter", Body = "You must press send button to send order" };
-                                PushMessage(clientMessage);
-                                if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                                    YouMustDecideMessagesNumber += 1;
-                                stateTransition.Consistent = true;
-                            }
-
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                                YouMustDecideMessagesNumber += 1;
-                        }
-                        if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                            CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
-                        _MessageReceived?.Invoke(this);
-                        PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
-
-                    }
-                }
+                if (fromLastCommittedItemsSessionExpired && fromDeviceSleepExpired)
+                    UrgesToDecideMessage();
+                else if(MainSession?.SessionState==FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring)
+                    UrgesToDecideMessage();
             }
 
+        }
+
+        /// <summary>
+        /// This method sends prompts to decide message
+        /// There is a time limit for sending a message.
+        /// You cannot send a message before a minimum amount of time has passed
+        /// </summary>
+        private void UrgesToDecideMessage()
+        {
+            if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 2)
+            {
+
+                var clientMessage = Messages.Where(x => ((ClientMessages)(int)x.Data["ClientMessageType"]) == ClientMessages.YouMustDecide).FirstOrDefault();
+
+
+                if (clientMessage == null)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+
+                        clientMessage = new Message();
+                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(clientMessage);
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.YouMustDecide;
+                        clientMessage.Data["ClientSessionID"] = SessionID;
+                        clientMessage.Notification = new Notification() { Title = "Don't wait the waiter", Body = "You must press send button to send order" };
+                        PushMessage(clientMessage);
+                        if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                            YouMustDecideMessagesNumber += 1;
+                        stateTransition.Consistent = true;
+                    }
+
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                        YouMustDecideMessagesNumber += 1;
+                }
+                if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                    CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                _MessageReceived?.Invoke(this);
+                PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
+
+            }
         }
 
         /// <MetaDataID>{e0560b3d-7c5c-47d4-84de-2deb81334af0}</MetaDataID>

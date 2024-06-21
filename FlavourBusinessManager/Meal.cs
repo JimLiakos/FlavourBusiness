@@ -2,6 +2,7 @@ using ComputationalResources;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using MenuModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
@@ -278,43 +279,40 @@ namespace FlavourBusinessManager.RoomService
                              from itemPreparation in foodServiceClientSession.FlavourItems.OfType<ItemPreparation>()
                              where itemPreparation.State == ItemPreparationState.Committed
                              select itemPreparation).ToList();
+
             if (mealItems.Count > 0)
             {
                 MenuModel.MealType mealType = ObjectStorage.GetObjectFromUri<MenuModel.MealType>(_MealTypeUri);
 
-
-                foreach (var mealCourseItems in (from mealItem in mealItems
+                foreach (var mealCourseTypesItems in (from mealItem in mealItems
                                                  group mealItem by mealItem.SelectedMealCourseTypeUri into mealCourseItems
                                                  select mealCourseItems))
                 {
-                    var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseItems.Key).First();
+                    var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseTypesItems.Key).First();
 
 
-                    MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseItems.Key).FirstOrDefault();
-                    if (mealCourse == null || mealCourseItems.Any(x => mealCourse.ItsTooLateForChange(x)))
+                    MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseTypesItems.Key).FirstOrDefault();
+                    if (mealCourse == null || mealCourseTypesItems.Any(x => mealCourse.ItsTooLateForChange(x)))
                     {
                         using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                         {
-                            mealCourse = new MealCourse(mealCourseType, mealCourseItems.ToList(), this);
+                            mealCourse = new MealCourse(mealCourseType, mealCourseTypesItems.ToList(), this);
                             mealCourse.StartsAt = DateTime.UtcNow;
 
                             newMealCourses.Add(mealCourse);
-
                             _Courses.Add(mealCourse);
                             stateTransition.Consistent = true;
                         }
                     }
                     else
                     {
-
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            foreach (var mealCourseItem in mealCourseItems)
+                            foreach (var mealCourseItem in mealCourseTypesItems)
                                 mealCourse.AddItem(mealCourseItem);
 
                             stateTransition.Consistent = true;
                         }
-
                     }
                 }
             }
@@ -323,8 +321,10 @@ namespace FlavourBusinessManager.RoomService
                 (ServicePointRunTime.ServicesContextRunTime.Current.MealsController as MealsController).OnNewMealCoursesInProgress(newMealCourses);
 
             MakeTradeItemsAvailableForServing();
-
         }
+
+
+
         /// <summary>
         /// Search for trade item that are by default prepared available for serving
         /// </summary>
@@ -420,5 +420,19 @@ namespace FlavourBusinessManager.RoomService
             ///// <MetaDataID>{df1bef38-aa51-450a-a6c2-bdb6b6f960a5}</MetaDataID>
             //public IFoodServiceSession Session => throw new System.NotImplementedException();
         }
+    }
+
+    public class NewItemsMealCourseAssignment
+    {
+        public MealCourseType MealCourseType { get; }
+
+        public MealCourse MealCourse{ get; }
+
+        public List<ItemPreparation> ItemsPreparation { get; }
+
+        public NewItemsMealCourseAssignment(MealCourseType mealCourseType, MealCourse mealCourse, List<ItemPreparation> ItemsPreparation {)
+
+
+
     }
 }
