@@ -5587,26 +5587,6 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         }
         
         // The Width property for the object.
-        public System.DateTime WillTakeCareTimestamp
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "get_WillTakeCareTimestamp", args, argsTypes);
-                return this.Proxy.GetValue<System.DateTime>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(System.DateTime);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.ServicesContextResources.IFoodServiceSession), "set_WillTakeCareTimestamp", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
         public string SessionID
         {
             get
@@ -6910,6 +6890,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string WorkerAssignKey
         {
             get
@@ -7649,6 +7641,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_Messages", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -8432,6 +8436,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
         public string OAuthUserIdentity
         {
             get
@@ -9072,6 +9088,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_Messages", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -9753,6 +9781,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_Messages", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         
@@ -10719,6 +10759,18 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_Messages", args, argsTypes);
                 return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.Message>>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string DeviceToken
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IMessageConsumer), "get_DeviceToken", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
             }
         }
         

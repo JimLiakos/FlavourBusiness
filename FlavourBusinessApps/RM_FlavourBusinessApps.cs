@@ -309,14 +309,16 @@ namespace ServiceContextManagerApp.Proxies
     public sealed class CNSPr_IServicesContextPresentation_MealConversationTimeExceeded : OOAdvantech.Remoting.EventConsumerHandler
     {
         
-        public void Invoke(ServiceContextManagerApp.ISupervisorPresentation supervisorPresentation, string messageID)
+        public void Invoke(ServiceContextManagerApp.ISupervisorPresentation supervisorPresentation, string messageID, string servicePointIdentity)
         {
-            object[] args = new object[2];
-            System.Type[] argsTypes = new System.Type[2];
+            object[] args = new object[3];
+            System.Type[] argsTypes = new System.Type[3];
             args[0] = supervisorPresentation;
             argsTypes[0] = typeof(ServiceContextManagerApp.ISupervisorPresentation);
             args[1] = messageID;
             argsTypes[1] = typeof(string);
+            args[2] = servicePointIdentity;
+            argsTypes[2] = typeof(string);
             object retValue = this.Invoke(typeof(ServiceContextManagerApp.MealConversationTimeExceededHandle), "Invoke", args, argsTypes);
         }
         

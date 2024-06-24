@@ -174,6 +174,7 @@ namespace ServiceContextManagerApp
             {
                 if (_Supervisors == null && ServicesContext != null)
                 {
+                    _Supervisors=new ViewModelWrappers<IServiceContextSupervisor, SupervisorPresentation>();
                     ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => _Supervisors.GetViewModelFor(x, x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
 
                     var signedInSupervisor = SignedInSupervisor;
@@ -185,6 +186,7 @@ namespace ServiceContextManagerApp
                     return _Supervisors.Values.OfType<ISupervisorPresentation>().ToList();
                 else
                     return new List<ISupervisorPresentation>();
+
 
 
             }
@@ -665,13 +667,12 @@ namespace ServiceContextManagerApp
                             _SignedInSupervisor.RemoveMessage(message.MessageID);
                         else
                         {
+                            string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+                            
                             if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
                             {
 
-
-                                
-                                
-                                MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID);
+                                MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID, servicesPointIdentity);
                                 
                                 return;
                             }

@@ -152,13 +152,13 @@ namespace FlavourBusinessManager
 
                                     }
                                 }
-                                else
+                                else 
                                 {
                                     if ((DateTime.UtcNow - TimeOfLastMessageSendToSupervisor.ToUniversalTime()) > MaximumTimeForCareGiverToAct)
                                     {
                                         TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                         SendRemindMessageToSupervisor(careGivers.Select(x => x.Worker).ToList());
-                                    }
+                                    } 
                                 }
 
                             }
