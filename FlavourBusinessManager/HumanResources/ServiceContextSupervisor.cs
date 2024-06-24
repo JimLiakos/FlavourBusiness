@@ -42,6 +42,8 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public string DeviceToken => DeviceFirebaseToken;
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<Message> _Messages = new OOAdvantech.Collections.Generic.Set<Message>();
 
@@ -736,6 +738,36 @@ namespace FlavourBusinessManager.HumanResources
                 }
 
 
+            }
+
+
+            if (message != null && message.Data["ClientMessageType"].Equals(ClientMessages.MealConversationTimeout))
+            {
+                using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                {
+
+                    string sessionID = message.GetDataValue<string>("SessionIdentity");
+                    var session = ServicePointRunTime.ServicesContextRunTime.Current.OpenSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
+                    if (session == null)
+                    {
+                        var clientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == sessionID).FirstOrDefault();
+                        if (clientSession != null)
+                        {
+                            if (clientSession.Caregivers.Where(x => x.Worker == this && x.CareGiving == EndUsers.Caregiver.CareGivingType.ConversationCheck).Count() == 0)
+                                clientSession.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.ConversationCheck);
+                        }
+                    }
+                    else
+                    {
+
+                        if (session.Caregivers.Where(x => x.Worker == this && x.CareGiving == EndUsers.Caregiver.CareGivingType.ConversationCheck).Count() == 0)
+                            session.AddCaregiver(this, EndUsers.Caregiver.CareGivingType.ConversationCheck);
+                    }
+
+
+                    RemoveMessage(messageId);
+                    stateTransition.Consistent = true;
+                }
             }
         }
 

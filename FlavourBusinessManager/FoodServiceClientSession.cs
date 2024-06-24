@@ -182,6 +182,10 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        public string DeviceToken => DeviceFirebaseToken;
+
+
+
         /// <exclude>Excluded</exclude>
         bool _IsWaiterSession;
 
@@ -848,14 +852,14 @@ namespace FlavourBusinessManager.EndUsers
                             if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                             {
                                 UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                                ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                                ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                             }
                         }
                     }
                     else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                     {
                         UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                        ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+                        ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                     }
                     return true;
                 }
@@ -3065,7 +3069,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{074975bc-5a6c-4890-a835-6a7c7876504f}</MetaDataID>
-        public CareGivingType CareGiving;
+        public CareGivingType CareGiving { get; set; }
 
         public enum CareGivingType
         {

@@ -460,6 +460,7 @@ namespace FlavourBusinessManager.RoomService
         }
     }
 
+    /// <MetaDataID>{6bb09914-7910-49f5-a67a-c97b8471634c}</MetaDataID>
     public class ItemsMealCourseAssignment
     {
         public MealCourseType MealCourseType { get; }
@@ -470,9 +471,9 @@ namespace FlavourBusinessManager.RoomService
 
         public ItemsMealCourseAssignment(MealCourseType mealCourseType, List<ItemPreparation> itemsPreparations, MealCourse mealCourse)
         {
-            MealCourseType=mealCourseType;
-            ItemsPreparations=itemsPreparations;
-            MealCourse=mealCourse;
+            MealCourseType = mealCourseType;
+            ItemsPreparations = itemsPreparations;
+            MealCourse = mealCourse;
         }
 
 

@@ -467,6 +467,7 @@
     <Compile Include="Place.cs" />
     <Compile Include="PlaceData.cs" />
     <Compile Include="PriceList.cs" />
+    <Compile Include="ReminderForCaregiving.cs" />
     <Compile Include="RoomService\PreparationPlan.cs" />
     <Compile Include="ServiceContextPaymentFinder.cs" />
     <Compile Include="ServingBatch.cs" />

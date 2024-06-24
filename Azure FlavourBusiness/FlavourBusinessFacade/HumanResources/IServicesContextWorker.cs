@@ -51,5 +51,6 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{d2bfcb05-fdc1-4ca3-9bbf-e9fb6da31696}</MetaDataID>
         [CachingDataOnClientSide]
         bool NativeUser { get; set; }
+
     }
 }

@@ -238,7 +238,7 @@ namespace ServiceContextManagerApp
         }
 
 
-        public IPrintManager PrintManager { get=> this.ServicesContextRuntime?.PrintManager; }
+        public IPrintManager PrintManager { get => this.ServicesContextRuntime?.PrintManager; }
 
         public IList<IPreparationStation> PreparationStations
         {
@@ -632,6 +632,8 @@ namespace ServiceContextManagerApp
 
 
         public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
+
+        public event MealConversationTimeExceededHandle MealConversationTimeExceeded;
         object MessagesLock = new object();
         private void GetMessages()
         {
@@ -648,74 +650,89 @@ namespace ServiceContextManagerApp
                         {
                             if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
                             {
-
-
-
-
-                                //string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
-
                                 DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
                                 DelayedMealAtTheCounter?.Invoke(SignedInSupervisor, message.MessageID);
-                                //PartOfMealRequestMessageForward(message);
+                                
                                 return;
                             }
                         }
+
+
+                    }
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout)
+                    {
+                        if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                            _SignedInSupervisor.RemoveMessage(message.MessageID);
+                        else
+                        {
+                            if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
+                            {
+
+
+                                
+                                
+                                MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID);
+                                
+                                return;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+
+
+            private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
+            {
+
+                GetMessages();
+
+            }
+
+            /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>
+            private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> sender, IMealCourse key, MealCourse value)
+            {
+
+                value.MealCourseUpdated += OnMealCourseUpdated;
+                value.ItemsStateChanged += OnItemsStateChanged;
+            }
+
+
+
+
+            /// <MetaDataID>{b8625da6-194e-4943-b4ee-5c4a434741cc}</MetaDataID>
+            private void MealsController_ObjectChangeState(object _object, string member)
+            {
+
+
+
+                if (member == nameof(IMealsController.MealCoursesInProgress))
+                {
+                    foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
+                    {
+                        mealCourseInProgress.MealCourseUpdated -= OnMealCourseUpdated;
+                        mealCourseInProgress.ItemsStateChanged -= OnItemsStateChanged;
                     }
 
+                    _MealCoursesInProgress.Clear();
+
+                    MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
+                    _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
                 }
             }
-        }
 
-
-
-        private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
-        {
-
-            GetMessages();
-
-        }
-
-        /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>
-        private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> sender, IMealCourse key, MealCourse value)
-        {
-
-            value.MealCourseUpdated += OnMealCourseUpdated;
-            value.ItemsStateChanged += OnItemsStateChanged;
-        }
-
-
-
-
-        /// <MetaDataID>{b8625da6-194e-4943-b4ee-5c4a434741cc}</MetaDataID>
-        private void MealsController_ObjectChangeState(object _object, string member)
-        {
-
-
-
-            if (member == nameof(IMealsController.MealCoursesInProgress))
+            /// <MetaDataID>{58f876a1-ba32-41f9-9161-0aaf1efa07f8}</MetaDataID>
+            private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
             {
-                foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
-                {
-                    mealCourseInProgress.MealCourseUpdated -= OnMealCourseUpdated;
-                    mealCourseInProgress.ItemsStateChanged -= OnItemsStateChanged;
-                }
-
-                _MealCoursesInProgress.Clear();
-
-                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
-                _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
+                mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
             }
-        }
 
-        /// <MetaDataID>{58f876a1-ba32-41f9-9161-0aaf1efa07f8}</MetaDataID>
-        private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
-        {
-            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
-            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
-        }
-
-        /// <MetaDataID>{e6a39536-5932-4a67-ac6b-4f303a3da563}</MetaDataID>
-        List<IHallLayout> _Halls;
+            /// <MetaDataID>{e6a39536-5932-4a67-ac6b-4f303a3da563}</MetaDataID>
+            List<IHallLayout> _Halls;
         /// <MetaDataID>{aa3fa3fd-8063-48af-8492-4425a1effc7c}</MetaDataID>
         public IList<IHallLayout> Halls
         {
@@ -1036,11 +1053,11 @@ namespace ServiceContextManagerApp
 
         public DeviceAssignmentKey GetPrintManagerDeviceAssignKeyQRCode(string color)
         {
-            DeviceAssignKeyData deviceAssignKeyData =  this.ServicesContextRuntime.PrintManager.GetPrintManagerNewCredentialKey();
+            DeviceAssignKeyData deviceAssignKeyData = this.ServicesContextRuntime.PrintManager.GetPrintManagerNewCredentialKey();
             string codeValue = deviceAssignKeyData.PrintManagerDeviceAssignFullKey;
             string SigBase64 = GetQRcodeBase64Img(color, codeValue);
 
-            return new DeviceAssignmentKey() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = deviceAssignKeyData.PrintManagerDeviceAssignShortKey};
+            return new DeviceAssignmentKey() { QRCode = SigBase64, PreparationStationIdentity = codeValue, ShortIdentity = deviceAssignKeyData.PrintManagerDeviceAssignShortKey };
 
         }
 

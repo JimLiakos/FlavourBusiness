@@ -35,11 +35,18 @@ namespace FlavourBusinessFacade.ServicesContextResources
         double ForgottenSessionLastChangeTimeSpanInMin { get; set; }
 
         /// <summary>
-        /// Defines the minimum time span between meal conversation timeout reminders
+        /// Defines the minimum time span between  meal conversation timeout waiter reminders
         /// </summary>
         /// <MetaDataID>{3b1b42ac-62c6-4dc1-b174-eb2155bfd1aa}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+5")]
+        [BackwardCompatibilityID("+5")]
         double MealConversationTimeoutWaitersUpdateTimeSpanInMin { get; set; }
+
+        /// <summary>
+        /// Defines the minimum time span between the two remind messages for care giving worker of long time conversation
+        /// </summary>
+        /// <MetaDataID>{4b780f51-7d65-4672-b144-80bcbe1d379c}</MetaDataID>
+        [BackwardCompatibilityID("+7")]
+        double MealConversationTimeoutCareGivingUpdateTimeSpanInMin { get; set; }
 
         /// <summary>
         /// Defines the meal conversation available time before system  start the waiters reminder 
@@ -47,6 +54,21 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{e1882094-aa09-46cb-b015-3f3a3897e79a}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         double MealConversationTimeoutInMin { get; set; }
+
+
+        /// <summary>
+        /// Defines the maximum time where session can be in UrgeToDecide state, before the system initiates the reminders to waiters.
+        /// </summary>
+        /// <MetaDataID>{f0b390e2-5feb-4f38-8189-381c30d88a32}</MetaDataID>
+        [BackwardCompatibilityID("+9")]
+        double UrgesToDecideTimeoutInMin { get; set; }
+
+        /// <summary>
+        /// Defines the meal conversation available time before system  start the supervisor reminder 
+        /// </summary>
+        /// <MetaDataID>{4c2cb394-4f65-4e9e-8e06-f0dc753b6cec}</MetaDataID>
+        [BackwardCompatibilityID("+8")]
+        double MealConversationTimeoutInMinForSupervisor { get; set; }
     }
 
 }

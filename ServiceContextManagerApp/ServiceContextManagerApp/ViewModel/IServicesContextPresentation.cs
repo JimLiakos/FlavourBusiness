@@ -108,6 +108,9 @@ namespace ServiceContextManagerApp
         [GenerateEventConsumerProxy]
         event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
 
+        [GenerateEventConsumerProxy]
+        event MealConversationTimeExceededHandle MealConversationTimeExceeded;
+
         List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; }
 
         FoodShippingPresentation GetFoodShipping(DelayedServingBatchAbbreviation delayedServingBatch);
@@ -126,6 +129,8 @@ namespace ServiceContextManagerApp
     }
 
     public delegate void DelayedMealAtTheCounterHandle(ISupervisorPresentation supervisorPresentation, string messageID);
+    public delegate void MealConversationTimeExceededHandle(ISupervisorPresentation supervisorPresentation, string messageID, string servicePointIdentity);
+    
     public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
 
 }

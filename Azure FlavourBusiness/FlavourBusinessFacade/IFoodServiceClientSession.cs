@@ -312,7 +312,7 @@ namespace FlavourBusinessFacade.EndUsers
         YouMustDecide = 1,
         MenuItemProposal = 2,
         ShareItemHasChange = 3,
-        LaytheTable = 4,
+        LayTheTable = 4,
         ItemsReadyToServe = 5,
         MealConversationTimeout = 6,
         DelayedMealAtTheCounter=7

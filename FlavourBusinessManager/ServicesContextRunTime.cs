@@ -656,7 +656,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 //Load CashierStations
                 var cashierStations = CashierStations;
 
-  
+
                 if (this._PrintManager == null)
                 {
                     this._PrintManager = new PrintManager();
@@ -913,7 +913,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
             foreach (var worker in workersWithUnreadMessages)
             {
-                var workerlayMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable &&
+                var workerlayMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable &&
                                                     !x.MessageReaded && x.NotificationsNum <= 5).ToList();
                 if (workerlayMessages.Count > 0)
                 {
@@ -1286,8 +1286,59 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
 
+        internal void InformSupervisorMealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
+        {
+
+            var activeSupervisors = caregivers.Where(x => x.Worker is ServiceContextSupervisor && x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Select(x => x.Worker as ServiceContextSupervisor).ToList();
+
+            if (activeSupervisors.Count == 0 && servicePoint is HallServicePoint)
+                activeSupervisors = (from shiftWork in GetActiveShiftWorks()
+                                     where shiftWork.Worker is ServiceContextSupervisor
+                                     select shiftWork.Worker).OfType<HumanResources.ServiceContextSupervisor>().ToList();
+
+            foreach (var supervisor in activeSupervisors)
+            {
+                var supervisorActiveShiftWork = supervisor.ShiftWork;
+                if (supervisorActiveShiftWork != null && DateTime.UtcNow > supervisorActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < supervisorActiveShiftWork.EndsAt.ToUniversalTime())
+                {
+                    Message clientMessage = supervisor.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.MealConversationTimeout) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
+                    if (clientMessage == null)
+                    {
+                        clientMessage = new Message();
+                        clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                        clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
+                        clientMessage.Data["SessionIdentity"] = sessionIdentity;
+
+                        clientMessage.Notification = new Notification() { Title = "Meal conversation is over time" };
+                    }
+                    supervisor.PushMessage(clientMessage);
+                    if (!string.IsNullOrWhiteSpace(supervisor.DeviceFirebaseToken))
+                    {
+                        CloudNotificationManager.SendMessage(clientMessage, supervisor.DeviceFirebaseToken);
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            foreach (var message in supervisor.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            {
+                                message.NotificationsNum += 1;
+                                message.NotificationTimestamp = DateTime.UtcNow;
+                            }
+
+                            stateTransition.Consistent = true;
+                        }
+                        this.UpdateWaitersWithUnreadMessages();
+
+                    }
+
+                }
+
+
+
+            }
+
+        }
+
         /// <MetaDataID>{d71eaa49-3fce-4cf4-8cf6-bad7d22a3bb6}</MetaDataID>
-        internal void MealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
+        internal void InformWaitersMealConversationTimeout(ServicePoint servicePoint, string sessionIdentity, List<Caregiver> caregivers)
         {
             var activeWaiters = caregivers.Where(x => x.Worker is HumanResources.Waiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Select(x => x.Worker as HumanResources.Waiter).ToList();
             if (activeWaiters.Count == 0 && servicePoint is HallServicePoint)
@@ -1315,7 +1366,6 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     if (!string.IsNullOrWhiteSpace(waiter.DeviceFirebaseToken))
                     {
                         CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
-
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
                             foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
@@ -1328,11 +1378,10 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         }
                         this.UpdateWaitersWithUnreadMessages();
 
-
                     }
 
                 }
-                //}
+
             }
 
         }
@@ -1368,7 +1417,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 _WaitersWithUnreadMessages = (from activeWaiter in activeWaiters
                                               from message in activeWaiter.Messages
                                               where
-                                              (message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable ||
+                                              (message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable ||
                                               message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout ||
                                               message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe
                                               )
@@ -1474,12 +1523,12 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var waiterActiveShiftWork = waiter.ShiftWork;
                     if (waiterActiveShiftWork != null && DateTime.UtcNow > waiterActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiterActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.LaytheTable) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
+                        Message clientMessage = waiter.Messages.Where(x => x.HasDataValue<ClientMessages>("ClientMessageType", ClientMessages.LayTheTable) && x.HasDataValue<string>("ServicesPointIdentity", servicePoint.ServicesPointIdentity)).FirstOrDefault();
 
                         if (clientMessage == null)
                         {
                             clientMessage = new Message();
-                            clientMessage.Data["ClientMessageType"] = ClientMessages.LaytheTable;
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.LayTheTable;
                             clientMessage.Data["ServicesPointIdentity"] = servicePoint.ServicesPointIdentity;
                             clientMessage.Notification = new Notification() { Title = "Lay the Table" };
                         }
@@ -1491,7 +1540,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !x.MessageReaded))
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !x.MessageReaded))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -1501,7 +1550,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             }
                             var waitersWithUnreadMessages = (from activeWaiter in activeWaiters
                                                              from message in activeWaiter.Messages
-                                                             where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && !message.MessageReaded
+                                                             where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !message.MessageReaded
                                                              select activeWaiter).ToList();
                         }
                     }
@@ -2309,13 +2358,29 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                     ForgottenSessionLastChangeTimeSpanInMin = 10,
                                     ForgottenSessionLifeTimeSpanInMin = 20,
                                     MealConversationTimeoutInMin = 10,
-                                    MealConversationTimeoutWaitersUpdateTimeSpanInMin = 4
+                                    MealConversationTimeoutWaitersUpdateTimeSpanInMin = 4,
+                                    MealConversationTimeoutCareGivingUpdateTimeSpanInMin= 12,
+                                    MealConversationTimeoutInMinForSupervisor=15
+
                                 };
 
                                 ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(_Settings);
                                 stateTransition.Consistent = true;
                             }
+
+
                         }
+
+                        if (_Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin == 0)
+                            _Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin = 12;
+
+                        if (_Settings.MealConversationTimeoutInMinForSupervisor == 0)
+                            _Settings.MealConversationTimeoutInMinForSupervisor = 15;
+
+
+                        if (_Settings.MealConversationTimeoutInMin== 0)
+                            _Settings.MealConversationTimeoutInMin = 10;
+
                     }
                     return _Settings;
                 }

@@ -34,10 +34,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <MetaDataID>{eb4da815-da0f-48a4-bd0a-edab7d76c371}</MetaDataID>
         void RemovePayment(IPayment payment);
 
-        /// <MetaDataID>{57dcf2ab-8af0-470f-a50a-b6c812373164}</MetaDataID>
-        [BackwardCompatibilityID("+7")]
-        DateTime WillTakeCareTimestamp { get; set; }
-
+      
         /// <MetaDataID>{47ec6550-33af-4b17-9d14-fc5b9f3dca9f}</MetaDataID>
         [BackwardCompatibilityID("+6")]
         string SessionID { get; }

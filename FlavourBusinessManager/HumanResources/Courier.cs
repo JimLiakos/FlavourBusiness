@@ -398,6 +398,8 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        public string DeviceToken => DeviceFirebaseToken;
+
         /// <exclude>Excluded</exclude>
         OOAdvantech.ObjectStateManagerLink StateManagerLink;
 

@@ -1,18 +1,20 @@
-using System;
-using System.Collections.Generic;
+using FlavourBusinessFacade;
 using FlavourBusinessFacade.EndUsers;
+using FlavourBusinessFacade.HumanResources;
+using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.EndUsers;
+using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using FlavourBusinessFacade.RoomService;
-using FlavourBusinessManager.EndUsers;
+using System.Net;
 using System.Threading.Tasks;
-using FlavourBusinessFacade;
-using OOAdvantech;
-using FlavourBusinessManager.ServicePointRunTime;
-using FlavourBusinessFacade.HumanResources;
 
 
 namespace FlavourBusinessManager.ServicesContextResources
@@ -617,13 +619,18 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
                                         orderby itemPreparation.StateTimestamp
                                         select itemPreparation).FirstOrDefault();
+
+
+            #region check session for open orders and informs the waiters to take care
             if (SessionType == SessionType.Hall)
             {
+
                 CheckForMeaConversationTimeout();
 
-                CheckForMealCourseUncommittedItemsTimeout();
+                // CheckForMealCourseUncommittedItemsTimeout();
 
             }
+            #endregion
 
             #endregion
             if (firstItemPreparation != null && SessionState == SessionState.MealValidationDelay && MealValidationDelayTask != null && MealValidationDelayTask.Status == TaskStatus.Faulted)
@@ -634,21 +641,27 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         }
 
+        /// <summary>
+        ///This method check if session in the state where the meal is in state of preparation 
+        ///and one client has changed its order and has forgot to send his changes. 
+        ///If session is in this state then method send message to the available waiter to take care for this situation.  
+        /// </summary>
+
         private void CheckForMealCourseUncommittedItemsTimeout()
         {
-            if (SessionState == SessionState.MealMonitoring&&SessionType==SessionType.Hall)
+            if (SessionState == SessionState.MealMonitoring && SessionType == SessionType.Hall)
             {
                 List<ItemsMealCourseAssignment> uncommittedItemsMealCourseAssignment = (Meal as Meal)?.GetUncommittedItemsMealCourseAssignment();
 
-                var uncommittedItems = uncommittedItemsMealCourseAssignment.Where(x => x.MealCourse!=null).SelectMany(x => x.ItemsPreparations).Where(x => (x.ClientSession as EndUsers.FoodServiceClientSession).DeviceAppState!=DeviceAppLifecycle.InUse).ToList();
+                var uncommittedItems = uncommittedItemsMealCourseAssignment.Where(x => x.MealCourse != null).SelectMany(x => x.ItemsPreparations).Where(x => (x.ClientSession as EndUsers.FoodServiceClientSession).DeviceAppState != DeviceAppLifecycle.InUse).ToList();
 
-                if (uncommittedItems.Count>0)
-                    if ((System.DateTime.UtcNow- (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime).TotalSeconds>30)
+                if (uncommittedItems.Count > 0)
+                    if ((System.DateTime.UtcNow - (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime).TotalSeconds > 30)
                     {
 
                         if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
                         {
-                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
+                            if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
                             {
                                 if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
                                 {
@@ -663,10 +676,6 @@ namespace FlavourBusinessManager.ServicesContextResources
                             UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
                             ServicesContextRunTime.Current.MealCourseUncommittedChangesTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                         }
-
-                        
-
-
                     }
 
 
@@ -674,6 +683,14 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
+
+        /// <summary>
+        /// This method watching session if it is in state where 
+        /// one or more client have commit his/her order and the other client has forget to commit his/her order for long time.
+        /// The order can't prepared becouse there is a client with open order.
+        /// If session is in this state then method send message to the available waiter to take care for this situation.  
+        ///  </summary>
+        /// <MetaDataID>{c5711d7e-9c69-43d2-bbf0-edea91e36735}</MetaDataID>
         private void CheckForMeaConversationTimeout()
         {
             var firstItemPreparation = (from partialClientSession in PartialClientSessions
@@ -681,40 +698,147 @@ namespace FlavourBusinessManager.ServicesContextResources
                                         orderby itemPreparation.StateTimestamp
                                         select itemPreparation).FirstOrDefault();
 
+            var lastItemPreparation = (from partialClientSession in PartialClientSessions
+                                       from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
+                                       orderby itemPreparation.StateTimestamp
+                                       select itemPreparation).LastOrDefault();
+
+
             if (firstItemPreparation != null &&
-                (SessionState == SessionState.Conversation || SessionState == SessionState.UrgesToDecide) && Meal == null &&
-                (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
+                Meal == null &&
+                (
+                // Conversation timeout
+                (SessionState == SessionState.Conversation &&
+                (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin)) ||
+                //UrgesToDecide  maximum time
+                (SessionState == SessionState.UrgesToDecide &&
+                (DateTime.UtcNow - lastItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.UrgesToDecideTimeoutInMin))
+                ))
+
             {
+
+                DateTime reminderStartTime = DateTime.UtcNow;
+
+                if (SessionState == SessionState.Conversation)
+                    reminderStartTime = firstItemPreparation.StateTimestamp.ToUniversalTime() + TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin);
+
+                if (SessionState == SessionState.UrgesToDecide)
+                    reminderStartTime = lastItemPreparation.StateTimestamp.ToUniversalTime() + TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.UrgesToDecideTimeoutInMin);
+
+
                 if (ServicePoint.State == ServicePointState.Conversation)
                     (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
 
-                if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
-                {
-                    if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
-                    {
-                        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                        {
-                            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                            ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                        }
-                    }
 
-                }
-                else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
+                if (ReminderForMealConversationTimeoutCareGiving == null)
                 {
-                    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    ServicesContextRunTime.Current.MealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
+
+                    var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                         where shiftWork.Worker is IWaiter && (ServicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                         select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+                    var activeSupervisors = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                             where shiftWork.Worker is ServiceContextSupervisor
+                                             select shiftWork.Worker).OfType<IServiceContextSupervisor>().ToList();
+
+                    var messagePattern = new Message();
+                    messagePattern.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                    messagePattern.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
+                    messagePattern.Data["SessionIdentity"] = SessionID;
+                    messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
+
+                    ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving<Waiter>(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                        reminderStartTime,
+                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
+                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+                    ReminderForMealConversationTimeoutCareGiving.Start();
                 }
+
+
+
+                //if (FirstTimeUrgesToDecideWaiterMessage == null)
+                //    FirstTimeUrgesToDecideWaiterMessage = DateTime.UtcNow;
+
+                ////Conversation overtime can be happens more than one time
+                ////To find the system caregivers for Conversation overtime at this time, the care givers WillTakeCareTimestamp must be greater than FirstTimeUrgesToDecideWaiterMessage
+                ////FirstTimeUrgesToDecideWaiterMessage is about current Conversation 
+
+                //var mealConversationTimeoutWaitersUpdateTimeSpan = TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin);
+                //if (ServicePoint.State == ServicePointState.ConversationTimeout)
+                //{
+
+
+                //    var waiterCareGivers = Caregivers.Where(x => x.Worker is IWaiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
+                //    // careGivers are about current Conversation 
+                //    if (waiterCareGivers.Any())
+                //    {
+                //        //minimum time span between the two remind messages for care giving waiter of long time conversation
+                //        if ((DateTime.UtcNow - waiterCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
+                //        {
+
+                //            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                //            ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                //        }
+
+                //    }
+                //    else if ((DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
+                //    {
+                //        //There aren't care giver for this conversation
+                //        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                //        ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                //    }
+
+                //    if ((DateTime.UtcNow - FirstTimeUrgesToDecideWaiterMessage) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor))
+                //    {
+                //        //Inform supervisor
+                //        var supervisorCareGivers = Caregivers.Where(x => x.Worker is IServiceContextSupervisor && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
+                //        if (supervisorCareGivers.Any())
+                //        {
+                //            if ((DateTime.UtcNow - supervisorCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
+                //            {
+
+                //                UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
+                //                ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, supervisorCareGivers);
+                //            }
+
+                //        }
+                //        else if ((DateTime.UtcNow - UrgesToDecideToSupervisorTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
+                //        {
+                //            //There aren't care giver for this conversation
+                //            UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
+                //            ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                //        }
+
+
+                //    }
+
+
+                //}
+            }
+            else
+            {
+
+                ReminderForMealConversationTimeoutCareGiving?.Stop();
+                ReminderForMealConversationTimeoutCareGiving = null;
+
+                FirstTimeUrgesToDecideWaiterMessage = null;
             }
         }
 
         /// <summary>
-        /// 
+        ///Specifies the last time the UrgesToDecide message was sent to waiters
         /// </summary>
         /// <MetaDataID>{09474811-aa43-4545-88a7-ffb0285b2fcd}</MetaDataID>
         DateTime UrgesToDecideToWaiterTimeStamp = DateTime.MinValue;
 
+        DateTime UrgesToDecideToSupervisorTimeStamp = DateTime.MinValue;
 
+
+        /// <summary>
+        /// Defines the first time where waiters informed for UrgesToDecide is about current Conversation
+        /// </summary>
+        public DateTime? FirstTimeUrgesToDecideWaiterMessage { get; private set; }
 
         /// <MetaDataID>{90895d63-996c-4aaa-a041-d9621efcf018}</MetaDataID>
         object CaregiversLock = new object();
@@ -728,44 +852,26 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
 
-        /// <exclude>Excluded</exclude>
-        DateTime _WillTakeCareTimestamp;
 
-
-        /// <MetaDataID>{11154b0f-0798-4d5d-af09-b2ea1690f07b}</MetaDataID>
-        [BackwardCompatibilityID("+12")]
-        [PersistentMember(nameof(_WillTakeCareTimestamp))]
-
-        public System.DateTime WillTakeCareTimestamp
-        {
-            get => _WillTakeCareTimestamp; set
-            {
-                if (_WillTakeCareTimestamp != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _WillTakeCareTimestamp = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
 
 
 
 
         /// <MetaDataID>{5bb24d64-6784-4f87-948f-e37b638d423c}</MetaDataID>
-        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType caregivingType)
+        public void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType careGivingType)
         {
             lock (CaregiversLock)
             {
                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                 {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = caregivingType, WillTakeCareTimestamp = DateTime.UtcNow });
-                    if (caregivingType == Caregiver.CareGivingType.ConversationCheck)
-                        WillTakeCareTimestamp = DateTime.UtcNow;
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
 
                     stateTransition.Consistent = true;
+                }
+
+                if (careGivingType == Caregiver.CareGivingType.ConversationCheck)
+                {
+                    ReminderForMealConversationTimeoutCareGiving?.AddCaregiver(caregiver, careGivingType);
                 }
             }
         }
@@ -855,6 +961,10 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
 
+
+
+
+
         /// <MetaDataID>{d47efdba-03b6-4e84-83ba-82f194341ebb}</MetaDataID>
         [PersistentMember()]
         [BackwardCompatibilityID("+17")]
@@ -876,6 +986,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{598b3be1-30b6-493c-be76-2328a110a602}</MetaDataID>
         object PartialSessionsLock = new object();
+        private ReminderForCareGiving<Waiter> ReminderForMealConversationTimeoutCareGiving;
+
         /// <MetaDataID>{129d63d1-6ade-452e-b2e9-7e0601d6b728}</MetaDataID>
         internal void Merge(IFoodServiceSession foodServiceSession)
         {

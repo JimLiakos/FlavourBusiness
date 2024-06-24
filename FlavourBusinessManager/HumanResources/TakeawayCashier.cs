@@ -50,6 +50,7 @@ namespace FlavourBusinessManager.HumanResources
 
             }
         }
+        public string DeviceToken => DeviceFirebaseToken;
 
         public bool NativeUser { get; set; }
 

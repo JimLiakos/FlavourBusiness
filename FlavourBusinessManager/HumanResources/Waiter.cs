@@ -99,6 +99,7 @@ namespace FlavourBusinessManager.HumanResources
 
             }
         }
+        public string DeviceToken => DeviceFirebaseToken;
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<Message> _Messages;
@@ -887,7 +888,7 @@ namespace FlavourBusinessManager.HumanResources
             if (servicePoint == null)
                 throw new ArgumentException(string.Format("there isn't services point with identity '{0}'", servicesPointIdentity));
 
-            var message = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable && x.GetDataValue<string>("ServicesPointIdentity") == servicePoint.ServicesPointIdentity).FirstOrDefault();
+            var message = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && x.GetDataValue<string>("ServicesPointIdentity") == servicePoint.ServicesPointIdentity).FirstOrDefault();
 
             if (message != null)
                 RemoveMessage(message.MessageID);

@@ -28,6 +28,12 @@ namespace FlavourBusinessFacade.EndUsers
         void PushMessage(Message message);
 
         event MessageReceivedHandle MessageReceived;
+
+        /// <summary>
+        /// Defines the Device Token used from notification subsystem
+        /// </summary>
+        string DeviceToken { get; }
+
     }
 
     public delegate void MessageReceivedHandle(IMessageConsumer sender);

@@ -1477,7 +1477,7 @@ namespace WaiterApp.ViewModel
                 if (Waiter != null)
                 {
                     var message = Waiter.PeekMessage();
-                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LaytheTable)
+                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable)
                     {
                         var tmp = (DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes;
                         if ((DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 40)

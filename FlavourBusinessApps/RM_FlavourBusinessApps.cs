@@ -306,6 +306,31 @@ namespace ServiceContextManagerApp.Proxies
         }
     }
     
+    public sealed class CNSPr_IServicesContextPresentation_MealConversationTimeExceeded : OOAdvantech.Remoting.EventConsumerHandler
+    {
+        
+        public void Invoke(ServiceContextManagerApp.ISupervisorPresentation supervisorPresentation, string messageID)
+        {
+            object[] args = new object[2];
+            System.Type[] argsTypes = new System.Type[2];
+            args[0] = supervisorPresentation;
+            argsTypes[0] = typeof(ServiceContextManagerApp.ISupervisorPresentation);
+            args[1] = messageID;
+            argsTypes[1] = typeof(string);
+            object retValue = this.Invoke(typeof(ServiceContextManagerApp.MealConversationTimeExceededHandle), "Invoke", args, argsTypes);
+        }
+        
+        public override void AddEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.AddEventHandler(target, new ServiceContextManagerApp.MealConversationTimeExceededHandle(this.Invoke));
+        }
+        
+        public override void RemoveEventHandler(object target, System.Reflection.EventInfo eventInfo)
+        {
+            eventInfo.RemoveEventHandler(target, new ServiceContextManagerApp.MealConversationTimeExceededHandle(this.Invoke));
+        }
+    }
+    
     public sealed class CNSPr_ISupervisorPresentation_ObjectChangeState : OOAdvantech.Remoting.EventConsumerHandler
     {
         
