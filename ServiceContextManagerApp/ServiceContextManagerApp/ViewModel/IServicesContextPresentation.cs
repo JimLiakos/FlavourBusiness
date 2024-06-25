@@ -48,6 +48,8 @@ namespace ServiceContextManagerApp
 
         void IWillTakeCare(string messageID);
 
+        void MessageHasBeenRead(string messageID);
+
 
 
         /// <MetaDataID>{d97fe7f6-6751-4709-99f7-86ab667f7e94}</MetaDataID>

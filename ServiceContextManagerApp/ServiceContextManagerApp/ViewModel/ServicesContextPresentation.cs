@@ -530,7 +530,10 @@ namespace ServiceContextManagerApp
         {
 
             if (_SignedInSupervisor != null)
+            {
+                _SignedInSupervisor.MessageReceived -= SignedInSupervisor_MessageReceived;
                 _SignedInSupervisor.MessageReceived += SignedInSupervisor_MessageReceived;
+            }
 
             if (!ServicesContextPresentationInittialized)
             {
@@ -643,6 +646,11 @@ namespace ServiceContextManagerApp
             _SignedInSupervisor.IWillTakeCare(messageID);
         }
 
+
+        public void MessageHasBeenRead(string messageID)
+        {
+            _SignedInSupervisor.RemoveMessage(messageID);
+        }
 
         public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
 
