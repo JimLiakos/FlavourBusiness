@@ -1,6 +1,7 @@
 ﻿using FlavourBusinessFacade.EndUsers;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessManager.EndUsers;
+using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech.Transactions;
 using System;
@@ -127,7 +128,12 @@ namespace FlavourBusinessManager
                         else if ((DateTime.UtcNow - TimeOfLastMessageSendToCareGiver.ToUniversalTime()) > DelayTimeBetweenTriesToFindCareGiver)
                         {
                             TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
-                            SendMessageToFindCareGiver(CandidatesForCareGiving);
+                            List<IServicesContextWorker> candidatesForCareGiving = null; ;
+                            
+                            lock (this)
+                                candidatesForCareGiving = CandidatesForCareGiving.ToList();
+
+                            SendMessageToFindCareGiver(candidatesForCareGiving);
                         }
                         #endregion
 
@@ -164,11 +170,15 @@ namespace FlavourBusinessManager
                             }
                             else if ((DateTime.UtcNow - TimeOfLastMessageSendToSupervisor.ToUniversalTime()) > DelayTimeBetweenTriesToFindCareGiver)
                             {
+                                List<IServiceContextSupervisor> supervisorsForCareGiving=null;
+                                lock(this)
+                                    supervisorsForCareGiving = SupervisorsForCareGiving.ToList();
+
                                 TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
-                                SendMessageToFindSupervisor(SupervisorsForCareGiving);
+                                SendMessageToFindSupervisor(supervisorsForCareGiving);
                             }
 
-
+                             
                         }
 
                         #endregion
@@ -207,6 +217,7 @@ namespace FlavourBusinessManager
                         foreach (var entry in this.MessagePattern.Data)
                             clientMessage.Data[entry.Key] = entry.Value;
 
+                        clientMessage.Data["ReminderID"] = UniqueId;
                         clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
                     }
                     (worker as IMessageConsumer).PushMessage(clientMessage);
@@ -285,6 +296,7 @@ namespace FlavourBusinessManager
                         foreach (var entry in this.MessagePattern.Data)
                             clientMessage.Data[entry.Key] = entry.Value;
 
+                        clientMessage.Data["ReminderID"] = UniqueId;
                         clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
                     }
                     (worker as IMessageConsumer).PushMessage(clientMessage);
@@ -323,6 +335,7 @@ namespace FlavourBusinessManager
                         foreach (var entry in this.MessagePattern.Data)
                             clientMessage.Data[entry.Key] = entry.Value;
 
+                        clientMessage.Data["ReminderID"] = UniqueId;
                         clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
                     }
                     (worker as IMessageConsumer).PushMessage(clientMessage);
@@ -360,6 +373,14 @@ namespace FlavourBusinessManager
                 _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
 
 
+            }
+        }
+        internal void UpdateActiveWorkers(List<IServicesContextWorker> candidatesForCareGiving, List<IServiceContextSupervisor> supervisorsForCareGiving)
+        {
+            lock(this)
+            {
+                CandidatesForCareGiving = candidatesForCareGiving;
+                SupervisorsForCareGiving = supervisorsForCareGiving;
             }
         }
     }

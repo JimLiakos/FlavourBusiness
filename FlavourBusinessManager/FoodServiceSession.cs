@@ -730,16 +730,15 @@ namespace FlavourBusinessManager.ServicesContextResources
                     (ServicePoint as ServicePoint).ChangeServicePointState(ServicePointState.ConversationTimeout);
 
 
+                var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                     where shiftWork.Worker is IWaiter && (ServicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
+                                     select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
+                var activeSupervisors = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
+                                         where shiftWork.Worker is ServiceContextSupervisor
+                                         select shiftWork.Worker).OfType<IServiceContextSupervisor>().ToList();
+
                 if (ReminderForMealConversationTimeoutCareGiving == null)
                 {
-
-                    var activeWaiters = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                         where shiftWork.Worker is IWaiter && (ServicePoint as HallServicePoint).CanBeAssignedTo(shiftWork.Worker as IWaiter, shiftWork)
-                                         select shiftWork.Worker).OfType<HumanResources.Waiter>().ToList();
-                    var activeSupervisors = (from shiftWork in ServicesContextRunTime.Current.GetActiveShiftWorks()
-                                             where shiftWork.Worker is ServiceContextSupervisor
-                                             select shiftWork.Worker).OfType<IServiceContextSupervisor>().ToList();
-
                     var messagePattern = new Message();
                     messagePattern.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
                     messagePattern.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
@@ -754,67 +753,72 @@ namespace FlavourBusinessManager.ServicesContextResources
                         TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
                     ReminderForMealConversationTimeoutCareGiving.Start();
                 }
+                else
+                    ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
+
+
+
 
 
 
                 //if (FirstTimeUrgesToDecideWaiterMessage == null)
                 //    FirstTimeUrgesToDecideWaiterMessage = DateTime.UtcNow;
 
-                ////Conversation overtime can be happens more than one time
-                ////To find the system caregivers for Conversation overtime at this time, the care givers WillTakeCareTimestamp must be greater than FirstTimeUrgesToDecideWaiterMessage
-                ////FirstTimeUrgesToDecideWaiterMessage is about current Conversation 
+                    ////Conversation overtime can be happens more than one time
+                    ////To find the system caregivers for Conversation overtime at this time, the care givers WillTakeCareTimestamp must be greater than FirstTimeUrgesToDecideWaiterMessage
+                    ////FirstTimeUrgesToDecideWaiterMessage is about current Conversation 
 
-                //var mealConversationTimeoutWaitersUpdateTimeSpan = TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin);
-                //if (ServicePoint.State == ServicePointState.ConversationTimeout)
-                //{
-
-
-                //    var waiterCareGivers = Caregivers.Where(x => x.Worker is IWaiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
-                //    // careGivers are about current Conversation 
-                //    if (waiterCareGivers.Any())
-                //    {
-                //        //minimum time span between the two remind messages for care giving waiter of long time conversation
-                //        if ((DateTime.UtcNow - waiterCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
-                //        {
-
-                //            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                //            ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
-                //        }
-
-                //    }
-                //    else if ((DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
-                //    {
-                //        //There aren't care giver for this conversation
-                //        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                //        ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
-                //    }
-
-                //    if ((DateTime.UtcNow - FirstTimeUrgesToDecideWaiterMessage) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor))
-                //    {
-                //        //Inform supervisor
-                //        var supervisorCareGivers = Caregivers.Where(x => x.Worker is IServiceContextSupervisor && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
-                //        if (supervisorCareGivers.Any())
-                //        {
-                //            if ((DateTime.UtcNow - supervisorCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
-                //            {
-
-                //                UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
-                //                ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, supervisorCareGivers);
-                //            }
-
-                //        }
-                //        else if ((DateTime.UtcNow - UrgesToDecideToSupervisorTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
-                //        {
-                //            //There aren't care giver for this conversation
-                //            UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
-                //            ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
-                //        }
+                    //var mealConversationTimeoutWaitersUpdateTimeSpan = TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin);
+                    //if (ServicePoint.State == ServicePointState.ConversationTimeout)
+                    //{
 
 
-                //    }
+                    //    var waiterCareGivers = Caregivers.Where(x => x.Worker is IWaiter && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
+                    //    // careGivers are about current Conversation 
+                    //    if (waiterCareGivers.Any())
+                    //    {
+                    //        //minimum time span between the two remind messages for care giving waiter of long time conversation
+                    //        if ((DateTime.UtcNow - waiterCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
+                    //        {
+
+                    //            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                    //            ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                    //        }
+
+                    //    }
+                    //    else if ((DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
+                    //    {
+                    //        //There aren't care giver for this conversation
+                    //        UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
+                    //        ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                    //    }
+
+                    //    if ((DateTime.UtcNow - FirstTimeUrgesToDecideWaiterMessage) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor))
+                    //    {
+                    //        //Inform supervisor
+                    //        var supervisorCareGivers = Caregivers.Where(x => x.Worker is IServiceContextSupervisor && x.CareGiving == Caregiver.CareGivingType.ConversationCheck && x.WillTakeCareTimestamp > FirstTimeUrgesToDecideWaiterMessage).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
+                    //        if (supervisorCareGivers.Any())
+                    //        {
+                    //            if ((DateTime.UtcNow - supervisorCareGivers.First().WillTakeCareTimestamp.Value.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin))
+                    //            {
+
+                    //                UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
+                    //                ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, supervisorCareGivers);
+                    //            }
+
+                    //        }
+                    //        else if ((DateTime.UtcNow - UrgesToDecideToSupervisorTimeStamp.ToUniversalTime()) > mealConversationTimeoutWaitersUpdateTimeSpan)
+                    //        {
+                    //            //There aren't care giver for this conversation
+                    //            UrgesToDecideToSupervisorTimeStamp = DateTime.UtcNow;
+                    //            ServicesContextRunTime.Current.InformSupervisorMealConversationTimeout(ServicePoint as ServicePoint, SessionID, waiterCareGivers);
+                    //        }
 
 
-                //}
+                    //    }
+
+
+                    //}
             }
             else
             {

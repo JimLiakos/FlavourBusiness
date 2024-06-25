@@ -179,6 +179,17 @@ namespace ServiceContextManagerApp
 
                     var signedInSupervisor = SignedInSupervisor;
 
+                    if (_SignedInSupervisor != null)
+                    {
+                        (SignedInSupervisor as SupervisorPresentation).GetActiveShiftWork();
+                        var inActiveShiftWork = SignedInSupervisor.InActiveShiftWork;
+                        if (inActiveShiftWork)
+                            init();
+                        else
+                            SignedInSupervisor.ObjectChangeState += ServicesContextPresentation_ObjectChangeState;
+                    }
+                    else
+                        init();
 
                     return _Supervisors.Values.OfType<ISupervisorPresentation>().ToList();
                 }
