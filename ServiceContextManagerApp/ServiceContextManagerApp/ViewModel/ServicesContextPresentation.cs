@@ -174,7 +174,7 @@ namespace ServiceContextManagerApp
             {
                 if (_Supervisors == null && ServicesContext != null)
                 {
-                    _Supervisors=new ViewModelWrappers<IServiceContextSupervisor, SupervisorPresentation>();
+                    _Supervisors = new ViewModelWrappers<IServiceContextSupervisor, SupervisorPresentation>();
                     ServicesContext.ServiceContextHumanResources.Supervisors.Select(x => _Supervisors.GetViewModelFor(x, x, ServicesContextRuntime)).OfType<ISupervisorPresentation>().ToList();
 
                     var signedInSupervisor = SignedInSupervisor;
@@ -652,9 +652,42 @@ namespace ServiceContextManagerApp
             _SignedInSupervisor.RemoveMessage(messageID);
         }
 
-        public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter;
+        /// <exclude>Excluded</exclude>
+        event DelayedMealAtTheCounterHandle _DelayedMealAtTheCounter;
 
-        public event MealConversationTimeExceededHandle MealConversationTimeExceeded;
+        public event DelayedMealAtTheCounterHandle DelayedMealAtTheCounter
+        {
+            add
+            {
+                if (_DelayedMealAtTheCounter == null)
+                {
+                    _DelayedMealAtTheCounter += value;
+                    GetMessages();
+                }
+                else
+                    _DelayedMealAtTheCounter += value;
+            }
+            remove { _DelayedMealAtTheCounter -= value; }
+        }
+
+        /// <exclude>Excluded</exclude>
+        event MealConversationTimeExceededHandle _MealConversationTimeExceeded;
+        public event MealConversationTimeExceededHandle MealConversationTimeExceeded
+        {
+            add
+            {
+                if (_MealConversationTimeExceeded == null)
+                {
+                    _MealConversationTimeExceeded += value;
+                    GetMessages();
+                }
+                else
+                    _MealConversationTimeExceeded += value;
+            }
+            remove { _MealConversationTimeExceeded -= value; }
+        }
+
+
         object MessagesLock = new object();
         private void GetMessages()
         {
@@ -662,97 +695,103 @@ namespace ServiceContextManagerApp
             {
                 if (_SignedInSupervisor != null)
                 {
-                    var message = _SignedInSupervisor.PeekMessage();
-                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter)
+                    do
                     {
-                        if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
-                            _SignedInSupervisor.RemoveMessage(message.MessageID);
-                        else
+                        var message = _SignedInSupervisor.PeekMessage();
+                        if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter)
                         {
-                            if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
+                            if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                                _SignedInSupervisor.RemoveMessage(message.MessageID);
+                            else
                             {
-                                DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
-                                DelayedMealAtTheCounter?.Invoke(SignedInSupervisor, message.MessageID);
-                                
-                                return;
+                                if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
+                                {
+                                    DelayedServingBatchesAtTheCounter = MealsController.GetDelayedServingBatchesAtTheCounter(4);
+                                    _DelayedMealAtTheCounter?.Invoke(SignedInSupervisor, message.MessageID);
+
+                                    return;
+                                }
+
+                                break;
+                            }
+
+                        }
+                        else if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout)
+                        {
+                            if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
+                                _SignedInSupervisor.RemoveMessage(message.MessageID);
+                            else
+                            {
+                                string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
+
+                                if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
+                                {
+
+                                    _MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID, servicesPointIdentity);
+
+                                    return;
+                                }
+                                break;
                             }
                         }
-
-
-                    }
-                    if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout)
-                    {
-                        if ((System.DateTime.UtcNow - message.MessageTimestamp.ToUniversalTime()).TotalMinutes > 20)
-                            _SignedInSupervisor.RemoveMessage(message.MessageID);
                         else
-                        {
-                            string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
-                            
-                            if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
-                            {
+                            break;
 
-                                MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID, servicesPointIdentity);
-                                
-                                return;
-                            }
-                        }
-
-
-                    }
+                    } while (true);
                 }
             }
         }
 
 
 
-            private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
+        private void SignedInSupervisor_MessageReceived(FlavourBusinessFacade.EndUsers.IMessageConsumer sender)
+        {
+
+            GetMessages();
+
+        }
+
+        /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>
+        private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> sender, IMealCourse key, MealCourse value)
+        {
+
+            value.MealCourseUpdated += OnMealCourseUpdated;
+            value.ItemsStateChanged += OnItemsStateChanged;
+        }
+
+
+
+
+        /// <MetaDataID>{b8625da6-194e-4943-b4ee-5c4a434741cc}</MetaDataID>
+        private void MealsController_ObjectChangeState(object _object, string member)
+        {
+
+
+
+            if (member == nameof(IMealsController.MealCoursesInProgress))
             {
-
-                GetMessages();
-
-            }
-
-            /// <MetaDataID>{f71132d5-0dac-4929-82bc-03294e24dc21}</MetaDataID>
-            private void MealCoursesInProgress_OnNewViewModelWrapper(UIBaseEx.ViewModelWrappers<IMealCourse, MealCourse> sender, IMealCourse key, MealCourse value)
-            {
-
-                value.MealCourseUpdated += OnMealCourseUpdated;
-                value.ItemsStateChanged += OnItemsStateChanged;
-            }
-
-
-
-
-            /// <MetaDataID>{b8625da6-194e-4943-b4ee-5c4a434741cc}</MetaDataID>
-            private void MealsController_ObjectChangeState(object _object, string member)
-            {
-
-
-
-                if (member == nameof(IMealsController.MealCoursesInProgress))
+                foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
                 {
-                    foreach (var mealCourseInProgress in _MealCoursesInProgress.Values)
-                    {
-                        mealCourseInProgress.MealCourseUpdated -= OnMealCourseUpdated;
-                        mealCourseInProgress.ItemsStateChanged -= OnItemsStateChanged;
-                    }
-
-                    _MealCoursesInProgress.Clear();
-
-                    MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
-                    _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
+                    mealCourseInProgress.MealCourseUpdated -= OnMealCourseUpdated;
+                    mealCourseInProgress.ItemsStateChanged -= OnItemsStateChanged;
                 }
-            }
 
-            /// <MetaDataID>{58f876a1-ba32-41f9-9161-0aaf1efa07f8}</MetaDataID>
-            private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
-            {
-                mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
-                _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
-            }
+                _MealCoursesInProgress.Clear();
 
-            /// <MetaDataID>{e6a39536-5932-4a67-ac6b-4f303a3da563}</MetaDataID>
-            List<IHallLayout> _Halls;
+                MealsController.MealCoursesInProgress.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
+                _ObjectChangeState?.Invoke(this, nameof(IMealsController.MealCoursesInProgress));
+            }
+        }
+
+        /// <MetaDataID>{58f876a1-ba32-41f9-9161-0aaf1efa07f8}</MetaDataID>
+        private void MealsController_NewMealCoursesInrogress(IList<IMealCourse> mealCoursers)
+        {
+            mealCoursers.Select(x => _MealCoursesInProgress.GetViewModelFor(x, x, MealsController)).ToList();
+            _ObjectChangeState?.Invoke(this, nameof(MealCoursesInProgress));
+        }
+
+        /// <MetaDataID>{e6a39536-5932-4a67-ac6b-4f303a3da563}</MetaDataID>
+        List<IHallLayout> _Halls;
         /// <MetaDataID>{aa3fa3fd-8063-48af-8492-4425a1effc7c}</MetaDataID>
         public IList<IHallLayout> Halls
         {

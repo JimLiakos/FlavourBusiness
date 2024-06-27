@@ -3,6 +3,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicePointRunTime;
+using OOAdvantech;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,12 @@ namespace FlavourBusinessManager
     /// The care giving reminder takes care to find someone
     /// </summary>
     /// <MetaDataID>{18981145-54b1-4925-8204-7f9173d1a5c6}</MetaDataID>
-    internal class ReminderForCareGiving<T> where T : IServicesContextWorker
+    internal class ReminderForCareGiving//<T> where T : IServicesContextWorker
     {
 
-
-        public ReminderForCareGiving(List<IServicesContextWorker> candidatesForCareGiving,
+        public ClientMessages MessageType;
+        public ReminderForCareGiving(ClientMessages messageType,
+            List<IServicesContextWorker> candidatesForCareGiving,
             List<IServiceContextSupervisor> supervisorsForCareGiving,
             Message messagePattern,
             DateTime reminderStartTime,
@@ -31,6 +33,7 @@ namespace FlavourBusinessManager
             TimeSpan delayTimeBetweenTriesToFindSupervisor,
             TimeSpan maximumTimeBeforeSupervisorTakeCare)
         {
+            MessageType = messageType;
             CandidatesForCareGiving = candidatesForCareGiving;
             SupervisorsForCareGiving = supervisorsForCareGiving;
             MessagePattern = messagePattern;
@@ -43,6 +46,9 @@ namespace FlavourBusinessManager
             MaximumTimeBeforeSupervisorTakeCare = maximumTimeBeforeSupervisorTakeCare;
         }
 
+
+        public event ObjectChangeStateHandle ObjectChangeState;
+
         List<IServicesContextWorker> CandidatesForCareGiving;
         List<IServiceContextSupervisor> SupervisorsForCareGiving;
         TimeSpan DelayTimeBetweenTriesToFindCareGiver;
@@ -51,13 +57,16 @@ namespace FlavourBusinessManager
 
         TimeSpan MaximumTimeBeforeSupervisorTakeCare = TimeSpan.FromMinutes(12);
 
-        DateTime TimeOfLastMessageSendToCareGiver = DateTime.MinValue;
+       public  DateTime TimeOfLastMessageSendToCareGiver { get; set; } = DateTime.MinValue;
 
-        DateTime TimeOfLastMessageSendToSupervisor = DateTime.MinValue;
+        DateTime TimeOfLastMessageSendToSupervisor { get; set; } = DateTime.MinValue;
 
         TimeSpan DelayTimeBetweenTriesToFindSupervisor;
         private string UniqueId;
-        DateTime StartedAt = DateTime.UtcNow;
+        
+        public DateTime StartedAt { get; set; } = DateTime.UtcNow;
+
+        public int? DurationInMin;
 
 
         object CaregiversLock = new object();
@@ -79,6 +88,7 @@ namespace FlavourBusinessManager
 
         Message MessagePattern;
 
+        Type WorkerType;
 
         bool TerminateThread = false;
         public void Start()
@@ -98,7 +108,7 @@ namespace FlavourBusinessManager
                     try
                     {
                         #region Workers
-                        var careGivers = Caregivers.Where(x => x.Worker is T).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
+                        var careGivers = Caregivers.Where(x =>  !(x.Worker is IServiceContextSupervisor)).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
 
                         if (careGivers.Any())
                         {
@@ -111,7 +121,7 @@ namespace FlavourBusinessManager
 
                                     TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
                                     SendRemindMessageToCareGiver(careGivers.Select(x => x.Worker).ToList());
-
+                                    ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
                                 }
                             }
                             else
@@ -120,6 +130,7 @@ namespace FlavourBusinessManager
                                 {
                                     TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
                                     SendRemindMessageToCareGiver(careGivers.Select(x => x.Worker).ToList());
+                                    ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
                                 }
                             }
 
@@ -134,6 +145,7 @@ namespace FlavourBusinessManager
                                 candidatesForCareGiving = CandidatesForCareGiving.ToList();
 
                             SendMessageToFindCareGiver(candidatesForCareGiving);
+                            ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
                         }
                         #endregion
 
@@ -155,6 +167,7 @@ namespace FlavourBusinessManager
 
                                         TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                         SendRemindMessageToSupervisor(careGivers.Select(x => x.Worker).ToList());
+                                        ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
 
                                     }
                                 }
@@ -164,7 +177,9 @@ namespace FlavourBusinessManager
                                     {
                                         TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                         SendRemindMessageToSupervisor(careGivers.Select(x => x.Worker).ToList());
-                                    } 
+                                        ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
+
+                                    }
                                 }
 
                             }
@@ -176,11 +191,10 @@ namespace FlavourBusinessManager
 
                                 TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                 SendMessageToFindSupervisor(supervisorsForCareGiving);
+                                ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
+
                             }
-
-                             
                         }
-
                         #endregion
 
                     }
@@ -362,7 +376,10 @@ namespace FlavourBusinessManager
         public void Stop()
         {
             lock (this)
+            {
                 TerminateThread = true;
+                DurationInMin= (DateTime.UtcNow - StartedAt.ToUniversalTime()).Minutes;
+            }
         }
 
         internal void AddCaregiver(IServicesContextWorker caregiver, Caregiver.CareGivingType careGivingType)

@@ -745,7 +745,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     messagePattern.Data["SessionIdentity"] = SessionID;
                     messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
-                    ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving<Waiter>(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                    ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout, activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
                         reminderStartTime,
                         TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                         TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
@@ -822,11 +822,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
                 ReminderForMealConversationTimeoutCareGiving = null;
-
-                FirstTimeUrgesToDecideWaiterMessage = null;
             }
         }
 
@@ -839,10 +836,6 @@ namespace FlavourBusinessManager.ServicesContextResources
         DateTime UrgesToDecideToSupervisorTimeStamp = DateTime.MinValue;
 
 
-        /// <summary>
-        /// Defines the first time where waiters informed for UrgesToDecide is about current Conversation
-        /// </summary>
-        public DateTime? FirstTimeUrgesToDecideWaiterMessage { get; private set; }
 
         /// <MetaDataID>{90895d63-996c-4aaa-a041-d9621efcf018}</MetaDataID>
         object CaregiversLock = new object();
@@ -990,7 +983,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{598b3be1-30b6-493c-be76-2328a110a602}</MetaDataID>
         object PartialSessionsLock = new object();
-        private ReminderForCareGiving<Waiter> ReminderForMealConversationTimeoutCareGiving;
+        private ReminderForCareGiving ReminderForMealConversationTimeoutCareGiving;
 
         /// <MetaDataID>{129d63d1-6ade-452e-b2e9-7e0601d6b728}</MetaDataID>
         internal void Merge(IFoodServiceSession foodServiceSession)
