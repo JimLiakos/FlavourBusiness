@@ -1003,7 +1003,7 @@ namespace TakeAwayApp.ViewModel
         /// <MetaDataID>{77cc5b05-dca8-4c49-a7e7-4a0a0c7c16d6}</MetaDataID>
         public async void TakeAwayOrderCommitted()
         {
-            if (_TakeAwaySession?.FoodServicesClientSession?.SessionState == ClientSessionState.ItemsCommited)
+            if (_TakeAwaySession?.FoodServicesClientSession?.SessionState == ClientSessionState.ItemsCommitted)
             {
                 IDeviceOOAdvantechCore device = Xamarin.Forms.DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 _TakeAwaySession = await FlavoursOrderServer.GetFoodServicesClientSessionViewModel(TakeAwayStation.GetUncommittedFoodServiceClientSession(TakeAwayStation.Description, device.DeviceID, FlavourBusinessFacade.DeviceType.Desktop, device.FirebaseToken));

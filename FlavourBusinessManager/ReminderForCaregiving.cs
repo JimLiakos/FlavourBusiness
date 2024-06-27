@@ -400,5 +400,28 @@ namespace FlavourBusinessManager
                 SupervisorsForCareGiving = supervisorsForCareGiving;
             }
         }
+
+        internal void Init(ClientMessages messageType,
+            List<IServicesContextWorker> candidatesForCareGiving,
+            List<IServiceContextSupervisor> supervisorsForCareGiving,
+            Message messagePattern,
+            DateTime reminderStartTime,
+            TimeSpan delayTimeBetweenTriesToFindCareGiver,
+            TimeSpan maximumTimeForCareGiverToAct,
+            TimeSpan delayTimeBetweenTriesToFindSupervisor,
+            TimeSpan maximumTimeBeforeSupervisorTakeCare)
+        {
+            MessageType = messageType;
+            CandidatesForCareGiving = candidatesForCareGiving;
+            SupervisorsForCareGiving = supervisorsForCareGiving;
+            MessagePattern = messagePattern;
+
+            StartedAt = reminderStartTime;
+
+            DelayTimeBetweenTriesToFindCareGiver = delayTimeBetweenTriesToFindCareGiver;
+            MaximumTimeForCareGiverToAct = maximumTimeForCareGiverToAct;
+            DelayTimeBetweenTriesToFindSupervisor = delayTimeBetweenTriesToFindSupervisor;
+            MaximumTimeBeforeSupervisorTakeCare = maximumTimeBeforeSupervisorTakeCare;
+        }
     }
 }

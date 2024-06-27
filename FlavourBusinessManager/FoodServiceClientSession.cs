@@ -286,27 +286,6 @@ namespace FlavourBusinessManager.EndUsers
 
 
 
-        /// <exclude>Excluded</exclude>
-        DateTime _WillTakeCareTimestamp;
-
-        /// <MetaDataID>{941cf7d4-3c5e-4589-87cf-a01362e26dc0}</MetaDataID>
-        [PersistentMember(nameof(_WillTakeCareTimestamp))]
-        [BackwardCompatibilityID("+25")]
-        public System.DateTime WillTakeCareTimestamp
-        {
-            get => _WillTakeCareTimestamp;
-            set
-            {
-                if (_WillTakeCareTimestamp != value)
-                {
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                    {
-                        _WillTakeCareTimestamp = value;
-                        stateTransition.Consistent = true;
-                    }
-                }
-            }
-        }
 
 
 
@@ -724,7 +703,7 @@ namespace FlavourBusinessManager.EndUsers
                     if (SessionState == ClientSessionState.Conversation && DeviceAppState == DeviceAppLifecycle.InUse && allItemsCommitted)
                     {
                         //Commit items  event
-                        SessionState = ClientSessionState.ItemsCommited;
+                        SessionState = ClientSessionState.ItemsCommitted;
                     }
 
                     if (SessionState == ClientSessionState.Conversation && DeviceAppState != DeviceAppLifecycle.InUse)
@@ -732,7 +711,7 @@ namespace FlavourBusinessManager.EndUsers
                         if (this.FlavourItems.Count > 0)
                         {
                             //Device standby event
-                            SessionState = ClientSessionState.ConversationStandy;
+                            SessionState = ClientSessionState.ConversationStandby;
                         }
                         else
                         {
@@ -752,7 +731,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
                     #region  ClientSessionState.ConversationStandy
-                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null && !ImplicitMealParticipation &&
+                    if (SessionState == ClientSessionState.ConversationStandby && MainSession != null && !ImplicitMealParticipation &&
                       MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                       DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -761,7 +740,7 @@ namespace FlavourBusinessManager.EndUsers
                         //StandbyOnPartialCommitMeal();
                     }
 
-                    if (SessionState == ClientSessionState.ConversationStandy && MainSession != null &&
+                    if (SessionState == ClientSessionState.ConversationStandby && MainSession != null &&
                         MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.MealMonitoring &&
                         DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -770,7 +749,7 @@ namespace FlavourBusinessManager.EndUsers
                         //StandbyOnPartialCommitMeal();
                     }
 
-                    if (SessionState == ClientSessionState.ConversationStandy && DeviceAppState == DeviceAppLifecycle.InUse)
+                    if (SessionState == ClientSessionState.ConversationStandby && DeviceAppState == DeviceAppLifecycle.InUse)
                     {
                         //Device resume event
                         SessionState = ClientSessionState.Conversation;
@@ -795,7 +774,7 @@ namespace FlavourBusinessManager.EndUsers
                          DeviceAppState != DeviceAppLifecycle.InUse)
                     {
                         //Device resume event
-                        SessionState = ClientSessionState.ConversationStandy;
+                        SessionState = ClientSessionState.ConversationStandby;
 
                     }
                     #endregion
@@ -808,7 +787,7 @@ namespace FlavourBusinessManager.EndUsers
                     }
 
 
-                    if (SessionState == ClientSessionState.ItemsCommited && !allItemsCommitted)
+                    if (SessionState == ClientSessionState.ItemsCommitted && !allItemsCommitted)
                     {
                         //Item change event
                         SessionState = ClientSessionState.Conversation;
@@ -822,6 +801,8 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
+        internal List<ReminderForCareGiving> Reminders { get; private set; } = new List<ReminderForCareGiving>();
+
         /// <summary>
         /// Checks for long time meal conversation and update the waiters
         /// Meal conversation timeout check, occurs only when there isn't main session
@@ -832,13 +813,13 @@ namespace FlavourBusinessManager.EndUsers
         {
 
             /// In case where there is main session the conservation timeouts controlled from Main in monitoring operation
-            if (MainSession == null || SessionState == ClientSessionState.ConversationStandy)
+            if (MainSession == null || SessionState == ClientSessionState.ConversationStandby)
             {
                 var firstItemPreparation = (from itemPreparation in FlavourItems.OfType<ItemPreparation>()
                                             orderby itemPreparation.StateTimestamp
                                             select itemPreparation).FirstOrDefault();
                 if (firstItemPreparation != null &&
-                    (SessionState == ClientSessionState.ConversationStandy) &&
+                    (SessionState == ClientSessionState.ConversationStandby) &&
                     (DateTime.UtcNow - firstItemPreparation.StateTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMin))
                 {
                     if (ServicePoint.State == ServicePointState.Conversation)
@@ -863,18 +844,34 @@ namespace FlavourBusinessManager.EndUsers
                         messagePattern.Data["SessionIdentity"] = SessionID;
                         messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
-                        ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
-                            activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
-                            reminderStartTime,
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+                        ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
 
-                        var json = JsonConvert.SerializeObject(ReminderForMealConversationTimeoutCareGiving);
+                        if (ReminderForMealConversationTimeoutCareGiving==null)
+                        {
+                            ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
+                                activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                                reminderStartTime,
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+
+                            Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+                        }
+                        else
+                            ReminderForMealConversationTimeoutCareGiving.Init(ClientMessages.MealConversationTimeout,
+                                activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                                reminderStartTime,
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+
+
                         ReminderForMealConversationTimeoutCareGiving.Start();
+
                         ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
-                        //CareGivingReminders = new List<ReminderForCareGiving>();
+
                     }
                     else
                         ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
@@ -904,15 +901,30 @@ namespace FlavourBusinessManager.EndUsers
             }
             else
             {
+
+                if (ReminderForMealConversationTimeoutCareGiving==null)
+                {
+                    ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
+                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+                }
+
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
+                ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
                 ReminderForMealConversationTimeoutCareGiving = null;
+
                 return SessionState == ClientSessionState.UrgesToDecide;
             }
         }
 
         private void ReminderForCareGiving_ObjectChangeState(object _object, string member)
         {
-            
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+
+                stateTransition.Consistent = true;
+            }
+
         }
 
         /// <summary>
@@ -929,7 +941,7 @@ namespace FlavourBusinessManager.EndUsers
 
                 if (MainSession != null)
                 {
-                    commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommited).ToList();
+                    commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommitted).ToList();
 
                     //if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
                     //    return;
@@ -1096,8 +1108,6 @@ namespace FlavourBusinessManager.EndUsers
                     DateTimeOfLastRequest = partialSession.DateTimeOfLastRequest;
 
 
-                if (WillTakeCareTimestamp < partialSession.WillTakeCareTimestamp)
-                    WillTakeCareTimestamp = partialSession.WillTakeCareTimestamp;
 
 
                 if (UrgesToDecideToWaiterTimeStamp < partialSession.UrgesToDecideToWaiterTimeStamp)
@@ -1846,7 +1856,12 @@ namespace FlavourBusinessManager.EndUsers
             lock (CaregiversLock)
             {
                 if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
-                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(WillTakeCareWorkersJson);
+                {
+                    Reminders = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ReminderForCareGiving>>(WillTakeCareWorkersJson);
+
+
+
+                }
             }
         }
 
@@ -1888,7 +1903,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             lock (CaregiversLock)
             {
-                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
+                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
             }
         }
 
@@ -2879,7 +2894,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
         internal ReminderForCareGiving ReminderForMealConversationTimeoutCareGiving { get; private set; }
-     //   public List<FlavourBusinessManager.ReminderForCareGiving> CareGivingReminders { get; private set; }
+        //   public List<FlavourBusinessManager.ReminderForCareGiving> CareGivingReminders { get; private set; }
 
         public Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations)
         {
@@ -2987,7 +3002,7 @@ namespace FlavourBusinessManager.EndUsers
         private void AllItemsCommited()
         {
             if (SessionState == ClientSessionState.Conversation)
-                SessionState = ClientSessionState.ItemsCommited;
+                SessionState = ClientSessionState.ItemsCommitted;
         }
         /// <summary></summary>
         /// <param name="deliveryPlace"></param>

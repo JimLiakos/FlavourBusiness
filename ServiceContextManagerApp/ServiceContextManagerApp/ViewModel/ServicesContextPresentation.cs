@@ -811,7 +811,7 @@ namespace ServiceContextManagerApp
 
                 return _Halls;
             }
-        }
+        } 
 
         public List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; private set; }
 

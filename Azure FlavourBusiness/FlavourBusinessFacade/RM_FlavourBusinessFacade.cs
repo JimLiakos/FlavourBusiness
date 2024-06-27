@@ -10439,26 +10439,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
-        public System.DateTime WillTakeCareTimestamp
-        {
-            get
-            {
-                object[] args = new object[0];
-                System.Type[] argsTypes = new System.Type[0];
-                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "get_WillTakeCareTimestamp", args, argsTypes);
-                return this.Proxy.GetValue<System.DateTime>(retValue);
-            }
-            set
-            {
-                object[] args = new object[1];
-                System.Type[] argsTypes = new System.Type[1];
-                args[0] = value;
-                argsTypes[0] = typeof(System.DateTime);
-                this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "set_WillTakeCareTimestamp", args, argsTypes);
-            }
-        }
-        
-        // The Width property for the object.
         public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IItemPreparation> SharedItems
         {
             get

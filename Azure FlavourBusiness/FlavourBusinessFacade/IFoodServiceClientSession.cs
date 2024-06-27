@@ -70,9 +70,7 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+8")]
         DateTime ModificationTime { get; set; }
 
-        /// <MetaDataID>{ef8859a3-d4d8-4daf-93e5-0154cf3a541b}</MetaDataID>
-        [BackwardCompatibilityID("+12")]
-        DateTime WillTakeCareTimestamp { get; set; }
+        
 
         /// <MetaDataID>{3ee751a4-b32a-442d-a159-67ce755c127e}</MetaDataID>
         void RemoveSharingItem(IItemPreparation item);
@@ -289,8 +287,8 @@ namespace FlavourBusinessFacade.EndUsers
     public enum ClientSessionState
     {
         Conversation = 0,
-        ItemsCommited = 1,
-        ConversationStandy = 2,
+        ItemsCommitted = 1,
+        ConversationStandby = 2,
         UrgesToDecide = 3,
         Inactive = 4,
         Closed = 100

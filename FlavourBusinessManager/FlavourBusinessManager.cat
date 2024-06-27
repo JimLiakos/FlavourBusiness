@@ -16064,24 +16064,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@45
-				location   	(5436, 614)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	0)
 			    width      	625
 			    height     	400
 			    annotation 	8)
@@ -16506,24 +16488,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"620214A90260"
-			    compartment 	(object Compartment
-				Parent_View 	@66
-				location   	(884, 1857)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	10
-				max_width  	0)
 			    width      	719
 			    height     	556
 			    annotation 	8)
@@ -23363,24 +23327,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@300
-				location   	(1489, 1046)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	55
-				max_width  	0)
 			    width      	638
 			    height     	369
 			    annotation 	8)
@@ -23779,24 +23725,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5BF913870050"
-			    compartment 	(object Compartment
-				Parent_View 	@319
-				location   	(105, 1077)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	14
-				max_width  	0)
 			    width      	764
 			    height     	526
 			    annotation 	8)
@@ -24296,24 +24224,6 @@
 			    line_color 	3342489
 			    fill_color 	4227327
 			    quidu      	"5C06122402B6"
-			    compartment 	(object Compartment
-				Parent_View 	@343
-				location   	(187, 407)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    charSet    	161
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Decoration"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	55
-				max_width  	0)
 			    width      	719
 			    height     	431
 			    annotation 	8)
@@ -32378,27 +32288,6 @@
 			    quid       	"6208E0A703C6"
 			    type       	"bool"
 			    exportControl 	"Public")
-			(object ClassAttribute "WillTakeCareTimestamp"
-			    attributes 	(list Attribute_Set
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"MetaObjectID"
-				    value      	"{941cf7d4-3c5e-4589-87cf-a01362e26dc0}")
-				(object Attribute
-				    tool       	"MetaData"
-				    name       	"UniqueID"
-				    value      	"620CE993021E")
-				(object Attribute
-				    tool       	"Persistent"
-				    name       	"Persistent"
-				    value      	TRUE)
-				(object Attribute
-				    tool       	"C#"
-				    name       	"Identity"
-				    value      	"+25"))
-			    quid       	"620CE993021E"
-			    type       	"System.DateTime"
-			    exportControl 	"Public")
 			(object ClassAttribute "Caregivers"
 			    attributes 	(list Attribute_Set
 				(object Attribute
@@ -35118,7 +35007,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35140,7 +35029,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged( )"
+					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35162,7 +35051,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing( )"
+					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35184,7 +35073,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35229,7 +35118,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe( )"
+					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -39027,7 +38916,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -39113,7 +39002,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged( )"
+				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
 				pctDist    	1.554996
 				height     	56
 				orientation 	0)
@@ -39199,7 +39088,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing( )"
+				label      	"ItemsServing(System.Collections.Generic.List<string>)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -39285,7 +39174,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -39534,7 +39423,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe( )"
+				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -57654,7 +57543,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"666B01BF028A"
 				    messages   	(list Messages
-					(object Message "OnPreparationItemsChangeState( )"
+					(object Message "OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
 					    quid       	"666B0249017A"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57676,7 +57565,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"666B083C02B9"
 				    messages   	(list Messages
-					(object Message "Update( )"
+					(object Message "Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
 					    quid       	"666B08830115"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57748,7 +57637,7 @@
 				    supplier   	"$UNNAMED$31"
 				    quidu      	"666B08BA0037"
 				    messages   	(list Messages
-					(object Message "GetPendingPrintings(  )"
+					(object Message "GetPendingPrintings(System.Collections.Generic.List<string>, string)"
 					    quid       	"666B168D01A1"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -58432,7 +58321,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"OnPreparationItemsChangeState( )"
+				label      	"OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
 				pctDist    	1.960274
 				height     	160
 				orientation 	0)
@@ -58481,7 +58370,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"Update( )"
+				label      	"Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
 				pctDist    	1.021018
 				height     	67
 				orientation 	0)
@@ -58628,7 +58517,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetPendingPrintings(  )"
+				label      	"GetPendingPrintings(System.Collections.Generic.List<string>, string)"
 				pctDist    	0.423940
 				height     	97
 				orientation 	0)
