@@ -1622,7 +1622,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{1a978c97-bdb0-4ad9-8de6-358bf86d2fa4}</MetaDataID>
-        public async void RefreshMessmates()
+        public async Task RefreshMessmates()
         {
             await GetMessmatesFromServer();
         }

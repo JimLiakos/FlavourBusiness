@@ -682,9 +682,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                             messagePattern.Data["SessionIdentity"] = SessionID;
                             messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
-                            ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
+                            ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
-                            if (ReminderForMealConversationTimeoutCareGiving==null)
+                            if (ReminderForMealConversationTimeoutCareGiving == null)
                             {
                                 ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
                                     activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
@@ -806,9 +806,9 @@ namespace FlavourBusinessManager.ServicesContextResources
                     messagePattern.Data["SessionIdentity"] = SessionID;
                     messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
-                    ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
+                    ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
-                    if (ReminderForMealConversationTimeoutCareGiving==null)
+                    if (ReminderForMealConversationTimeoutCareGiving == null)
                     {
                         ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
                             activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
@@ -831,7 +831,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     ReminderForMealConversationTimeoutCareGiving.Start();
 
 
-                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState+=ReminderForCareGiving_ObjectChangeState;
+                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
 
                 }
                 else
@@ -903,14 +903,17 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-                if (ReminderForMealConversationTimeoutCareGiving==null)
+                if (ReminderForMealConversationTimeoutCareGiving == null)
                 {
-                    ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
-                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+                    ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
+
+                    if (ReminderForMealConversationTimeoutCareGiving != null)
+                        ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
                 }
 
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
-                ReminderForMealConversationTimeoutCareGiving.ObjectChangeState-=ReminderForCareGiving_ObjectChangeState;
+                if (ReminderForMealConversationTimeoutCareGiving != null)
+                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
                 ReminderForMealConversationTimeoutCareGiving = null;
             }
         }

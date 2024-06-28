@@ -56,7 +56,7 @@ namespace DontWaitApp
         Task<bool> SendItemsForPreparation();
 
         /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
-        void RefreshMessmates();
+        Task RefreshMessmates();
 
 
         /// <MetaDataID>{3cbedb95-504f-48f5-bfdf-597798842253}</MetaDataID>

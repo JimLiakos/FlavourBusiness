@@ -327,7 +327,7 @@ namespace FlavourBusinessManager.EndUsers
                 throw new AuthenticationException("invalid token or token expired");
 
             MakePartOfMeal(messmateClientSesion);
-
+             
             if (mainSessionUpdate)
                 ObjectChangeState?.Invoke(this, nameof(MainSession));
 
@@ -844,9 +844,9 @@ namespace FlavourBusinessManager.EndUsers
                         messagePattern.Data["SessionIdentity"] = SessionID;
                         messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
-                        ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
+                        ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
-                        if (ReminderForMealConversationTimeoutCareGiving==null)
+                        if (ReminderForMealConversationTimeoutCareGiving == null)
                         {
                             ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
                                 activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
@@ -902,14 +902,16 @@ namespace FlavourBusinessManager.EndUsers
             else
             {
 
-                if (ReminderForMealConversationTimeoutCareGiving==null)
+                if (ReminderForMealConversationTimeoutCareGiving == null)
                 {
-                    ReminderForMealConversationTimeoutCareGiving= Reminders.Where(x => x.MessageType==ClientMessages.MealConversationTimeout&&x.DurationInMin==null).FirstOrDefault();
-                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+                    ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
+                    if (ReminderForMealConversationTimeoutCareGiving != null)
+                        ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
                 }
 
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
-                ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
+                if (ReminderForMealConversationTimeoutCareGiving != null)
+                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
                 ReminderForMealConversationTimeoutCareGiving = null;
 
                 return SessionState == ClientSessionState.UrgesToDecide;
@@ -1706,12 +1708,12 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{c90103fc-2f5a-452e-bc5e-0a5c452d20c4}</MetaDataID>
         public IList<IFoodServiceClientSession> GetPeopleNearMe()
         {
-            var peopole = ServicePoint.GetServicePointOtherPeople(this);
+            var people = ServicePoint.GetServicePointOtherPeople(this);
 
             foreach (var clientSession in GetMealParticipants())
-                peopole.Remove(clientSession);
+                people.Remove(clientSession);
 
-            return peopole;
+            return people;
         }
         /// <MetaDataID>{ea91d597-b0a0-40fe-a413-b1307b56ff8d}</MetaDataID>
         public IList<IFoodServiceClientSession> GetServicePointParticipants()
