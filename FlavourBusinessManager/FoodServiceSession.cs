@@ -607,7 +607,6 @@ namespace FlavourBusinessManager.ServicesContextResources
             lock (CaregiversLock)
             {
                 WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
-
             }
         }
         /// <MetaDataID>{a9c1e448-ba0d-4491-8520-0dc47dfdc530}</MetaDataID>
@@ -627,7 +626,7 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 CheckForMeaConversationTimeout();
 
-                // CheckForMealCourseUncommittedItemsTimeout();
+                CheckForMealCourseUncommittedItemsTimeout();
 
             }
             #endregion
@@ -656,7 +655,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                 var uncommittedItems = uncommittedItemsMealCourseAssignment.Where(x => x.MealCourse != null).SelectMany(x => x.ItemsPreparations).Where(x => (x.ClientSession as EndUsers.FoodServiceClientSession).DeviceAppState != DeviceAppLifecycle.InUse).ToList();
 
                 if (uncommittedItems.Count > 0)
-                    if ((System.DateTime.UtcNow - (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime).TotalSeconds > 30)
+                    if ((System.DateTime.UtcNow - (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime.ToUniversalTime()).TotalSeconds > 30)
                     {
 
 

@@ -46,7 +46,7 @@ namespace FlavourBusinessManager
             MaximumTimeBeforeSupervisorTakeCare = maximumTimeBeforeSupervisorTakeCare;
         }
 
-
+         
         public event ObjectChangeStateHandle ObjectChangeState;
 
         List<IServicesContextWorker> CandidatesForCareGiving;
