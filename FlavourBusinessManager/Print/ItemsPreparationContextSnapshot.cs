@@ -138,6 +138,45 @@ namespace FlavourBusinessManager.Printing
             return snapshotIdentity;
         }
 
+
+        public static string GetSnapshotStringSignature(ItemsPreparationContext itemsPreparationContext)
+        {
+            string snapshotIdentity = "";
+            foreach (ItemPreparation itemPreparation in itemsPreparationContext.PreparationItems)
+            {
+                if (!string.IsNullOrWhiteSpace(snapshotIdentity))
+                    snapshotIdentity+=Environment.NewLine;
+                snapshotIdentity += itemPreparation.Quantity+" X " + itemPreparation.Name;
+                foreach (var optionChange in itemPreparation.OptionsChanges)
+                {
+                    snapshotIdentity+=Environment.NewLine;
+                    snapshotIdentity += (optionChange as OptionChange).NewLevel?.Name+" "+(optionChange as OptionChange).Description; 
+                }
+            }
+            snapshotIdentity+=Environment.NewLine;
+            return snapshotIdentity;
+        }
+
+        public static string GetSnapshotStringSignature(ItemsPreparationContextSnapshot itemsPreparationContextSnapshot)
+        {
+            string snapshotIdentity = "";
+            foreach (var itemPreparation in itemsPreparationContextSnapshot.PreparationItems)
+            {
+                if (!string.IsNullOrWhiteSpace(snapshotIdentity))
+                    snapshotIdentity+=Environment.NewLine;
+                snapshotIdentity += itemPreparation.Quantity+" X " + itemPreparation.Description;
+                foreach (var optionChange in itemPreparation.OptionsChanges)
+                {
+                    snapshotIdentity+=Environment.NewLine;
+                    snapshotIdentity += optionChange.Description;
+                }
+            }
+            snapshotIdentity+=Environment.NewLine;
+            return snapshotIdentity;
+        }
+
+        
+
         /// <summary>
         /// This operation produce a signature for items snapshot
         /// Each snapshot has a specific signature related to the items, the items quantities and the options change
@@ -191,7 +230,7 @@ namespace FlavourBusinessManager.Printing
 
             #region writes receipt header area
             while (lineString != null && lineString.IndexOf("&") == -1)//Ampersand & defines the end of header area and the start of details
-            {  
+            {
 
                 #region DateTime line
                 if (lineString.IndexOf("^") != -1 || lineString.IndexOf("%") != -1)
@@ -582,34 +621,44 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{d722d9cc-448b-4a30-802e-87a3c7d008d9}</MetaDataID>
         internal void Update(ItemsPreparationContext itemsPreparationContext)
         {
-            if (itemsPreparationContext.PreparationItems.Any(x => x.InEditState))
+            if (itemsPreparationContext.PreparationItems.Any(x => x.InEditState)||itemsPreparationContext.PreparationItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
                 return;
 
-            var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
-            ItemsPreparationContextSnapshot newSnapShot = null;
 
-            lock (Snapshots)
-            {
-                if (!LastSnapshotHasTheSameSignature(snapshotSignature))
+           
+
+                var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
+
+                var snapshotSignatureText = GetSnapshotStringSignature(itemsPreparationContext);
+                ItemsPreparationContextSnapshot newSnapShot = null;
+
+                lock (Snapshots)
                 {
-
-                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    if (!LastSnapshotHasTheSameSignature(snapshotSignature))
                     {
-                        newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
-                        this.Snapshots.Add(newSnapShot); 
-                        stateTransition.Consistent = true;
-                    }
 
+                        var last = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
+                        if(last != null)
+                        {
+                            var lastSnapshotSignatureText = GetSnapshotStringSignature(last);
+                        }
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
+                            this.Snapshots.Add(newSnapShot);
+                            stateTransition.Consistent = true;
+                        }
+                    } 
                 }
-            }
-            if (newSnapShot != null)
-            {
-
-                (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
-                //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
-                Timestamp = DateTime.UtcNow;
-                //}
-            }
+                if (newSnapShot != null)
+                {
+                    (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
+                    //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
+                    Timestamp = DateTime.UtcNow;
+                    //}
+                }
+         
 
 
         }
@@ -642,7 +691,7 @@ namespace FlavourBusinessManager.Printing
         }
 
 
-     
+
         /// <MetaDataID>{1e5bf834-30aa-481e-a0c8-443235fc39c5}</MetaDataID>
         public object RawPrint { get; private set; }
 
@@ -713,7 +762,7 @@ namespace FlavourBusinessManager.Printing
 
 
 
-        
+
     }
 
     /// <MetaDataID>{e98a4b3a-6d2f-4883-99ba-5baed071a0d9}</MetaDataID>

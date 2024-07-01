@@ -17,28 +17,32 @@ namespace FlavourBusinessManager.Printing
         {
             if (string.IsNullOrWhiteSpace(preparationStation.Printer))
                 return;
-            
-            foreach (var itemsPreparationContext in preparationStation.FoodItemsInProgress)
+
+            Transaction.RunOnTransactionCompleted(()=>
             {
-                var identity = ItemsPreparationContextSnapshots.GetIdentity(itemsPreparationContext);
-
-                ItemsPreparationContextSnapshots itemsPreparationContextSnapshots = itemsPreparationContextPrintings.Where(x => x.Identity == identity).FirstOrDefault();
-                
-                if (itemsPreparationContextSnapshots  == null)
+                foreach (var itemsPreparationContext in preparationStation.FoodItemsInProgress)
                 {
+                    var identity = ItemsPreparationContextSnapshots.GetIdentity(itemsPreparationContext);
 
-                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    ItemsPreparationContextSnapshots itemsPreparationContextSnapshots = itemsPreparationContextPrintings.Where(x => x.Identity == identity).FirstOrDefault();
+
+                    if (itemsPreparationContextSnapshots  == null)
                     {
-                        itemsPreparationContextSnapshots = new ItemsPreparationContextSnapshots(itemsPreparationContext);
-                        OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(itemsPreparationContextSnapshots);
-                        itemsPreparationContextPrintings.Add(itemsPreparationContextSnapshots);
 
-                        stateTransition.Consistent = true;
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            itemsPreparationContextSnapshots = new ItemsPreparationContextSnapshots(itemsPreparationContext);
+                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(itemsPreparationContextSnapshots);
+                            itemsPreparationContextPrintings.Add(itemsPreparationContextSnapshots);
+
+                            stateTransition.Consistent = true;
+                        }
                     }
+
+                    itemsPreparationContextSnapshots.Update(itemsPreparationContext);
                 }
 
-                itemsPreparationContextSnapshots.Update(itemsPreparationContext);
-            }
+            });
         }
 
 

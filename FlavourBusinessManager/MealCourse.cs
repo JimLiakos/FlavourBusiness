@@ -855,68 +855,73 @@ namespace FlavourBusinessManager.RoomService
         /// <MetaDataID>{fa1a0f37-108e-478c-83d4-4f095498cef6}</MetaDataID>
         public void AddItem(IItemPreparation itemPreparation)
         {
-            ItemPreparation flavourItem = itemPreparation as ItemPreparation;
+            ItemPreparation newMealCourseItem = itemPreparation as ItemPreparation;
+
             lock (FoodItemsInProgressLock)
             {
-                if (!_FoodItems.Contains(flavourItem))
+                if (!_FoodItems.Contains(newMealCourseItem))
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _FoodItems.Add(flavourItem);
+                        _FoodItems.Add(newMealCourseItem);
                         stateTransition.Consistent = true;
                     }
+                }
+                else
+                    return;
+            }
 
-                    if (flavourItem.State == ItemPreparationState.Committed)
-                    {
-                        if (flavourItem.MenuItem == null)
-                            flavourItem.LoadMenuItem();
+            if (newMealCourseItem.State == ItemPreparationState.Committed)
+            {
+                if (newMealCourseItem.MenuItem == null)
+                    newMealCourseItem.LoadMenuItem();
 
-                        var preparationStationRuntime = PreparationStation.GetPreparationStationFor(flavourItem);
-                        if (preparationStationRuntime != null)
-                        {
-                            (preparationStationRuntime as PreparationStation).AssignItemPreparation(flavourItem);
-                            flavourItem.State = ItemPreparationState.PreparationDelay;
-                        }
-                        else
-                        {
-                            flavourItem.State = ItemPreparationState.IsPrepared;
-                            flavourItem.PreparedAtForecast = DateTime.UtcNow;
-                        }
-
-                        CashierStation cashierStation = (Meal.Session as FoodServiceSession).CashierStation as CashierStation;
-                        cashierStation.AssignItemPreparation(flavourItem);
-
-                    }
-                    if ((itemPreparation as ItemPreparation).MenuItem == null)
-                        (itemPreparation as ItemPreparation).LoadMenuItem();
-                    itemPreparation.AppearanceOrder = (itemPreparation.PreparationStation as PreparationStation).GeAppearanceOrder((itemPreparation as ItemPreparation).MenuItem);
-                    var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
-
-                    if (itemsPreparationContext == null)
-                    {
-
-                        itemsPreparationContext = new ItemsPreparationContext(this, itemPreparation.ActivePreparationStation, new List<IItemPreparation>() { itemPreparation });
-                        _FoodItemsInProgress.Add(itemsPreparationContext);
-
-                    }
-                    else
-                    {
-                        if (!_FoodItemsInProgress.Contains(itemsPreparationContext))
-                            FoodItemsInProgress.Add(itemsPreparationContext);
-                        itemsPreparationContext.AddPreparationItem(itemPreparation);
-                    }
-                    RunFoodItemsChanged();
-
-                    Transaction.RunOnTransactionCompleted(() =>
-                    {
-                        flavourItem.ObjectChangeState += FlavourItem_ObjectChangeState;
-
-                    });
-
-
+                var preparationStationRuntime = PreparationStation.GetPreparationStationFor(newMealCourseItem);
+                if (preparationStationRuntime != null)
+                {
+                    (preparationStationRuntime as PreparationStation).AssignItemPreparation(newMealCourseItem);
+                    newMealCourseItem.State = ItemPreparationState.PreparationDelay;
+                }
+                else
+                {
+                    newMealCourseItem.State = ItemPreparationState.IsPrepared;
+                    newMealCourseItem.PreparedAtForecast = DateTime.UtcNow;
                 }
 
+                CashierStation cashierStation = (Meal.Session as FoodServiceSession).CashierStation as CashierStation;
+                cashierStation.AssignItemPreparation(newMealCourseItem);
+
             }
+            if ((itemPreparation as ItemPreparation).MenuItem == null)
+                (itemPreparation as ItemPreparation).LoadMenuItem();
+            itemPreparation.AppearanceOrder = (itemPreparation.PreparationStation as PreparationStation).GeAppearanceOrder((itemPreparation as ItemPreparation).MenuItem);
+            var itemsPreparationContext = itemPreparation.FindItemsPreparationContext();
+
+            if (itemsPreparationContext == null)
+            {
+
+                itemsPreparationContext = new ItemsPreparationContext(this, itemPreparation.ActivePreparationStation, new List<IItemPreparation>() { itemPreparation });
+                _FoodItemsInProgress.Add(itemsPreparationContext);
+
+            }
+            else
+            {
+                if (!_FoodItemsInProgress.Contains(itemsPreparationContext))
+                    FoodItemsInProgress.Add(itemsPreparationContext);
+                itemsPreparationContext.AddPreparationItem(itemPreparation);
+            }
+            RunFoodItemsChanged();
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                newMealCourseItem.ObjectChangeState += FlavourItem_ObjectChangeState;
+
+            });
+
+
+
+
+
         }
 
         /// <MetaDataID>{5ed61513-4bc7-4a3a-9987-955a0d30cbe3}</MetaDataID>

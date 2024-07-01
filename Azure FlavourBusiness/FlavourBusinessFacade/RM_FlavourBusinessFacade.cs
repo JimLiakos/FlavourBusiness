@@ -10815,13 +10815,14 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "RemoveItem", args, argsTypes);
         }
         
-        public void ItemChanged(FlavourBusinessFacade.RoomService.IItemPreparation item)
+        public FlavourBusinessFacade.ItemPreparationStateAbbreviation ItemChanged(FlavourBusinessFacade.RoomService.IItemPreparation item)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = item;
             argsTypes[0] = typeof(FlavourBusinessFacade.RoomService.IItemPreparation);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "ItemChanged", args, argsTypes);
+            return this.Proxy.GetValue<FlavourBusinessFacade.ItemPreparationStateAbbreviation>(retValue);
         }
         
         public void AddItem(FlavourBusinessFacade.RoomService.IItemPreparation item)
@@ -10945,17 +10946,17 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<FlavourBusinessFacade.RoomService.IItemPreparation>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> Commit(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations)
+        public System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationStateAbbreviation> Commit(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations)
         {
             object[] args = new object[1];
             System.Type[] argsTypes = new System.Type[1];
             args[0] = itemPreparations;
             argsTypes[0] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "Commit", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationStateAbbreviation>>(retValue);
         }
         
-        public System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> CommitNewSessionType(FlavourBusinessFacade.EndUsers.SessionType sessionType, System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations)
+        public System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationStateAbbreviation> CommitNewSessionType(FlavourBusinessFacade.EndUsers.SessionType sessionType, System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation> itemPreparations)
         {
             object[] args = new object[2];
             System.Type[] argsTypes = new System.Type[2];
@@ -10964,7 +10965,7 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             args[1] = itemPreparations;
             argsTypes[1] = typeof(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>);
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "CommitNewSessionType", args, argsTypes);
-            return this.Proxy.GetValue<System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>>(retValue);
+            return this.Proxy.GetValue<System.Collections.Generic.List<FlavourBusinessFacade.ItemPreparationStateAbbreviation>>(retValue);
         }
         
         public void MenuItemProposal(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession messmateClientSesion, string menuItemUri)
