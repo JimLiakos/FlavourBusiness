@@ -598,7 +598,7 @@ namespace DontWaitApp
 
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
         internal void GetMessages()
-        {  
+        {
             lock (MessagesLock)
             {
 
@@ -701,13 +701,13 @@ namespace DontWaitApp
                 });
             }
         }
-         
+
 
         FlavourBusinessFacade.EndUsers.Message ShareItemHasChangeMessage;
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
-            if (_SharedItemChanged!=null)
+            if (_SharedItemChanged != null)
             {
                 string itemUid = message.GetDataValue<string>("SharedItemUid");
                 string itemOwningSession = message.GetDataValue<string>("ItemOwningSession");
@@ -1216,9 +1216,9 @@ namespace DontWaitApp
                     }
                 }
 
-                if(FlavoursOrderServer==null)
+                if (FlavoursOrderServer == null)
                 {
-                    if(!ApplicationSettings.Current.ActiveSessions.Contains(this))
+                    if (!ApplicationSettings.Current.ActiveSessions.Contains(this))
                     {
 
                     }
@@ -1695,7 +1695,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{8e9519da-bc4b-4953-8bde-7f95bea4a1f5}</MetaDataID>
-        public async System.Threading.Tasks.Task<bool> SendItemsForPreparation()
+        public async System.Threading.Tasks.Task<FoodServiceSessionCommitResponse> SendItemsForPreparation()
         {
 
             //if (this.SessionType==SessionType.HomeDelivery||this.SessionType==SessionType.HomeDeliveryGuest&&PayOption==PayOptions.PayOnCheckout)
@@ -1710,14 +1710,27 @@ namespace DontWaitApp
 
             //}
             //else
-             
+
+            FoodServiceSessionCommitResponse foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionCommitted;
+
+            if (OrderItems.All(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
+                foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionCommitted;
+            else if (OrderItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
+                foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionNewItemsCommitted;
+            else if (OrderItems.Any(x => x.InEditState))
+                foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionChangesCommitted;
+
+
             var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
             foreach (var itemNewState in itemsNewState)
             {
-                var item = this.OrderItems.Where(x => x.uid == itemNewState.Key).FirstOrDefault();
-                item.State = itemNewState.Value;
+                var item = this.OrderItems.Where(x => x.uid == itemNewState.uid).FirstOrDefault();
+                item.State = itemNewState.State;
+                item.InEditState = itemNewState.InEditState;
+                item.StateTimestamp = itemNewState.StateTimeStamp;
             }
-            return true;
+            _ObjectChangeState?.Invoke(this, null);
+            return foodServiceSessionCommitResponse;
 
         }
 
@@ -1728,6 +1741,14 @@ namespace DontWaitApp
             if (this.SessionType != sessionType)
             {
                 var itemsNewState = FoodServicesClientSession.CommitNewSessionType(sessionType, OrderItems.OfType<IItemPreparation>().ToList());
+                foreach (var itemNewState in itemsNewState)
+                {
+                    var item = this.OrderItems.Where(x => x.uid == itemNewState.uid).FirstOrDefault();
+                    item.State = itemNewState.State;
+                    item.InEditState = itemNewState.InEditState;
+                    item.StateTimestamp = itemNewState.StateTimeStamp;
+                }
+
                 FoodServicesClientSession = FoodServicesClientSession;
             }
             return true;
@@ -1882,7 +1903,10 @@ namespace DontWaitApp
                     {
                         try
                         {
-                            FoodServicesClientSession.ItemChanged(item);
+                            var itemState = FoodServicesClientSession.ItemChanged(item);
+                            item.State = itemState.State;
+                            item.InEditState=itemState.InEditState;
+                            item.StateTimestamp = itemState.StateTimeStamp;
                             break;
                         }
                         catch (System.Net.WebException commError)
@@ -1895,6 +1919,7 @@ namespace DontWaitApp
                             await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                         }
                     }
+                    _ObjectChangeState?.Invoke(this, null);
                     return true;
                 });
             }
@@ -2294,6 +2319,7 @@ namespace DontWaitApp
         public DontWaitApp.FlavoursOrderServer FlavoursOrderServer { get; internal set; }
 
     }
+
 
 
 

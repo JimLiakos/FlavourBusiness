@@ -53,7 +53,7 @@ namespace DontWaitApp
         Task<bool> CommitNewSessionType(SessionType sessionType);
 
         /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
-        Task<bool> SendItemsForPreparation();
+        Task<FoodServiceSessionCommitResponse> SendItemsForPreparation();
 
         /// <MetaDataID>{a2590c45-f6aa-404e-9547-897155c1ed10}</MetaDataID>
         Task RefreshMessmates();
@@ -175,5 +175,15 @@ namespace DontWaitApp
         public string ISOCurrencySymbol { get; set; }
     }
 
-   
+
+
+    public enum FoodServiceSessionCommitResponse
+    {
+        SessionCommitted = 0,
+        SessionChangesCommitted = 1,
+        SessionNewItemsCommitted = 2
+
+
+    }
+
 }

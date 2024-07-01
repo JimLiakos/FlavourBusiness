@@ -87,6 +87,7 @@ namespace FlavourBusinessFacade.RoomService
         ServicesContextResources.IPreparationStation PreparationStation { get; set; }
 
 #if !FlavourBusinessDevice
+        /// <MetaDataID>{559328d8-ebe2-4de3-8c58-267b7dbb38d6}</MetaDataID>
         ServicesContextResources.IPreparationStation ActivePreparationStation { get; }
 #endif
 
@@ -142,7 +143,9 @@ namespace FlavourBusinessFacade.RoomService
         [BackwardCompatibilityID("+14")]
         string CodeCard { get; set; }
 
-
+        /// <MetaDataID>{e4780f0d-d67a-4cc4-abf2-6fba60196c7b}</MetaDataID>
+        [BackwardCompatibilityID("+23")]
+        bool InEditState { get; }
 
         /// <MetaDataID>{a5d18eca-428e-410b-96f0-1d9ac050af07}</MetaDataID>
         bool IsCooked { get; }

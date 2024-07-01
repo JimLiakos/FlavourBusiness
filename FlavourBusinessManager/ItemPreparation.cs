@@ -926,6 +926,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
+
+
         //PaidAmount
 
 
@@ -1184,6 +1186,7 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 #if !FlavourBusinessDevice
+        /// <MetaDataID>{87e4df68-e4a0-40eb-ba7c-2923a9167991}</MetaDataID>
         public IPreparationStation ActivePreparationStation
         {
             get
@@ -1235,6 +1238,37 @@ namespace FlavourBusinessManager.RoomService
 
         /// <MetaDataID>{3393c0e9-7404-4097-be16-5d9e678a9bdb}</MetaDataID>
         public bool IsCooked { get; set; }
+
+
+
+        /// <exclude>Excluded</exclude>
+        bool _InEditState;
+
+        /// <MetaDataID>{460750e3-47e8-4234-977a-4a2a8c539680}</MetaDataID>
+        [PersistentMember(nameof(_InEditState))]
+        [BackwardCompatibilityID("+38")]
+        public bool InEditState
+        {
+            get => _InEditState; 
+            set
+            {
+                if (_InEditState != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _InEditState = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+                Transaction.RunOnTransactionCompleted(() =>
+                {
+                    ObjectChangeState?.Invoke(this, nameof(InEditState));
+                });
+
+
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         OOAdvantech.Member<IServingBatch> _ServedInTheBatch = new OOAdvantech.Member<IServingBatch>();
@@ -1305,6 +1339,7 @@ namespace FlavourBusinessManager.RoomService
         }
 
 #if !FlavourBusinessDevice
+        /// <MetaDataID>{7e458fbc-06a1-4e0e-97e7-ed4ff8d59e11}</MetaDataID>
         [JsonIgnore]
         public bool IsPaid
         {

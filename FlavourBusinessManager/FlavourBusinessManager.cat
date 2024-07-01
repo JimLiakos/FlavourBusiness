@@ -25937,7 +25937,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"38")
+			    value      	"39")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -26085,8 +26085,8 @@
 			    quid       	"6102792A001B"
 			    parameters 	(list Parameters
 				(object Parameter "menuItems"
-				    quid       	"642D93260307"
-				    type       	"System.Collections.Generic.Dictionary<string, MenuModel.JsonViewModel.MenuFoodItem>"))
+				    quid       	"66812C4D03C6"
+				    type       	"System.Collections.Generic.Dictionary<string,MenuModel.JsonViewModel.MenuFoodItem>"))
 			    result     	"MenuModel.IMenuItem"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -26282,6 +26282,25 @@
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
+			    uid        	0)
+			(object Operation "EnsurePresentationFor"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{a12bbfc9-246b-43ba-8f61-d61f589d0806}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"66812C4E00CE"))
+			    quid       	"66812C4E00CE"
+			    parameters 	(list Parameters
+				(object Parameter "culture"
+				    quid       	"66812C4E00E3"
+				    type       	"System.Globalization.CultureInfo"))
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "MenuItemUri"
@@ -27393,7 +27412,7 @@
 				    name       	"GenerateSetOperation"
 				    value      	TRUE))
 			    quid       	"642D932900AD"
-			    type       	"System.Collections.Generic.Dictionary<string, decimal>"
+			    type       	"System.Collections.Generic.Dictionary<string,decimal>"
 			    exportControl 	"Public")
 			(object ClassAttribute "MultilingualDescription"
 			    attributes 	(list Attribute_Set
@@ -27460,6 +27479,61 @@
 				    value      	"+37"))
 			    quid       	"643164E7026C"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "ActivePreparationStation"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{87e4df68-e4a0-40eb-ba7c-2923a9167991}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"66812C4F0216"))
+			    quid       	"66812C4F0216"
+			    type       	"FlavourBusinessFacade.ServicesContextResources.IPreparationStation"
+			    exportControl 	"Public")
+			(object ClassAttribute "InEditState"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{460750e3-47e8-4234-977a-4a2a8c539680}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"66812C4F0278")
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+38"))
+			    quid       	"66812C4F0278"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "IsPaid"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{7e458fbc-06a1-4e0e-97e7-ed4ff8d59e11}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"66812C4F03D4")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"66812C4F03D4"
+			    type       	"bool"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"
 		    quidu      	"5A71E29001B9"
@@ -35007,7 +35081,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+					(object Message "ItemsServing( )"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35029,7 +35103,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+					(object Message "RaiseItemsStateChanged( )"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35051,7 +35125,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
+					(object Message "ItemsServing( )"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35073,7 +35147,7 @@
 				    supplier   	"$UNNAMED$20"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35118,7 +35192,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35746,7 +35820,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "" @451
+				(object RoleView "FlavourItems" @451
 				    Parent_View 	@446
 				    location   	(624, 50)
 				    font       	(object Font
@@ -35772,13 +35846,12 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					hidden     	TRUE
 					anchor     	1
 					anchor_loc 	1
 					nlines     	1
 					max_width  	250
 					justify    	0
-					label      	""
+					label      	"+FlavourItems"
 					pctDist    	0.800000
 					height     	42
 					orientation 	0)
@@ -38916,7 +38989,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -39002,7 +39075,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+				label      	"RaiseItemsStateChanged( )"
 				pctDist    	1.554996
 				height     	56
 				orientation 	0)
@@ -39088,7 +39161,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<string>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -39174,7 +39247,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -39423,7 +39496,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -57543,7 +57616,7 @@
 				    supplier   	"$UNNAMED$28"
 				    quidu      	"666B01BF028A"
 				    messages   	(list Messages
-					(object Message "OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+					(object Message "OnPreparationItemsChangeState( )"
 					    quid       	"666B0249017A"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57565,7 +57638,7 @@
 				    supplier   	"$UNNAMED$29"
 				    quidu      	"666B083C02B9"
 				    messages   	(list Messages
-					(object Message "Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+					(object Message "Update( )"
 					    quid       	"666B08830115"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -57637,7 +57710,7 @@
 				    supplier   	"$UNNAMED$31"
 				    quidu      	"666B08BA0037"
 				    messages   	(list Messages
-					(object Message "GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+					(object Message "GetPendingPrintings(  )"
 					    quid       	"666B168D01A1"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -58321,7 +58394,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+				label      	"OnPreparationItemsChangeState( )"
 				pctDist    	1.960274
 				height     	160
 				orientation 	0)
@@ -58370,7 +58443,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+				label      	"Update( )"
 				pctDist    	1.021018
 				height     	67
 				orientation 	0)
@@ -58517,7 +58590,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+				label      	"GetPendingPrintings(  )"
 				pctDist    	0.423940
 				height     	97
 				orientation 	0)

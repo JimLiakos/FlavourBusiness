@@ -96,7 +96,7 @@ namespace FlavourBusinessFacade.EndUsers
 
 
         /// <MetaDataID>{9bc00ae4-359d-4dab-8e0d-62f715d04e0f}</MetaDataID>
-        void ItemChanged(IItemPreparation item);
+        ItemPreparationStateAbbreviation ItemChanged(IItemPreparation item);
 
         /// <MetaDataID>{1558c42a-ea8c-44e5-8c15-83563c6468dc}</MetaDataID>
         void AddItem(IItemPreparation item);
@@ -228,9 +228,9 @@ namespace FlavourBusinessFacade.EndUsers
         IItemPreparation GetItem(string itemUid);
 
         /// <MetaDataID>{b8ad8261-1dc2-4065-aaf9-3648bfa5d9c0}</MetaDataID>
-        Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations);
+        List<ItemPreparationStateAbbreviation> Commit(List<IItemPreparation> itemPreparations);
 
-        Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations);
+        List<ItemPreparationStateAbbreviation> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations);
         
 
 

@@ -327,7 +327,7 @@ namespace FlavourBusinessManager.EndUsers
                 throw new AuthenticationException("invalid token or token expired");
 
             MakePartOfMeal(messmateClientSesion);
-             
+
             if (mainSessionUpdate)
                 ObjectChangeState?.Invoke(this, nameof(MainSession));
 
@@ -2059,7 +2059,7 @@ namespace FlavourBusinessManager.EndUsers
 
 
         /// <MetaDataID>{18d66316-cbc0-4673-8b25-5e0af87b32a0}</MetaDataID>
-        public void ItemChanged(IItemPreparation item)
+        public ItemPreparationStateAbbreviation ItemChanged(IItemPreparation item)
         {
             try
             {
@@ -2072,13 +2072,18 @@ namespace FlavourBusinessManager.EndUsers
                 //    existingItem = (from flavourItem in _SharedItems.OfType<RoomService.ItemPreparation>() where flavourItem.uid == item.uid select flavourItem).FirstOrDefault();
 
                 if (existingItem == null)
-                    return;
+                    return new ItemPreparationStateAbbreviation() { uid = item.uid, State = item.State, StateTimeStamp = item.StateTimestamp, InEditState = item.InEditState };
+
                 var itemSharingChanged = existingItem.IsShared != item.IsShared;
                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                 {
 
                     if (existingItem.Update(item as RoomService.ItemPreparation))
                     {
+                        if (existingItem.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed))
+                            existingItem.InEditState = true;
+
+
 
                         if (!string.IsNullOrWhiteSpace(this.UserLanguageCode))
                             existingItem.EnsurePresentationFor(CultureInfo.GetCultureInfo(this.UserLanguageCode));
@@ -2087,6 +2092,8 @@ namespace FlavourBusinessManager.EndUsers
                         (existingItem as ItemPreparation).StateTimestamp = DateTime.UtcNow;
                         if (_FlavourItems.Where(x => x.State.IsInPreviousState(ItemPreparationState.Committed)).Count() > 0)
                             CatchStateEvents();
+
+
                     }
 
 
@@ -2104,7 +2111,7 @@ namespace FlavourBusinessManager.EndUsers
                 foreach (var clientSession in (ServicePoint as ServicePoint).OpenClientSessions.Where(x => x.IsWaiterSession && x != this && (MainSession != x.MainSession || MainSession == null)))
                     clientSession.RaiseItemStateChanged(item.uid, existingItem.SessionID, SessionID, existingItem.IsShared, existingItem.SharedInSessions);
 
-
+                return new ItemPreparationStateAbbreviation() { uid = existingItem.uid, State = existingItem.State, StateTimeStamp = existingItem.StateTimestamp, InEditState = existingItem.InEditState };
             }
             catch (AbortException error)
             {
@@ -2898,9 +2905,9 @@ namespace FlavourBusinessManager.EndUsers
         internal ReminderForCareGiving ReminderForMealConversationTimeoutCareGiving { get; private set; }
         //   public List<FlavourBusinessManager.ReminderForCareGiving> CareGivingReminders { get; private set; }
 
-        public Dictionary<string, ItemPreparationState> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations)
+        public List<ItemPreparationStateAbbreviation> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations)
         {
-            Dictionary<string, ItemPreparationState> items = new Dictionary<string, ItemPreparationState>();
+            List<ItemPreparationStateAbbreviation> items = new List<ItemPreparationStateAbbreviation>();
             if (SessionType != sessionType)
             {
 
@@ -2925,9 +2932,9 @@ namespace FlavourBusinessManager.EndUsers
             return items;
         }
         /// <MetaDataID>{2c628c7e-9219-4b2e-9c46-ca7610b14b7f}</MetaDataID>
-        public Dictionary<string, ItemPreparationState> Commit(List<IItemPreparation> itemPreparations)
+        public List<ItemPreparationStateAbbreviation> Commit(List<IItemPreparation> itemPreparations)
         {
-            var itemsNewState = new Dictionary<string, ItemPreparationState>();
+            var itemsNewState = new List<ItemPreparationStateAbbreviation>();
 
             var itemsIDS = itemPreparations.Select(x => x.uid).ToList();
             var flavourItems = (from storedItem in _FlavourItems.OfType<RoomService.ItemPreparation>()
@@ -2949,10 +2956,17 @@ namespace FlavourBusinessManager.EndUsers
                     {
                         ((MainSession as FoodServiceSession)?.CashierStation as CashierStation)?.AssignItemPreparation(item);
                         item.State = ItemPreparationState.Committed;
-                        itemsNewState[item.uid] = item.State;
+                        (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
+                        itemsNewState.Add(new ItemPreparationStateAbbreviation() { uid = item.uid, State = item.State, InEditState = item.InEditState, StateTimeStamp = item.StateTimestamp });
                         changeStateFlavourItems.Add(item);
-
                     }
+                    else
+                    {
+                        item.InEditState = false;
+                        (item as ItemPreparation).StateTimestamp = DateTime.UtcNow;
+                        itemsNewState.Add(new ItemPreparationStateAbbreviation() { uid = item.uid, State = item.State, InEditState = item.InEditState, StateTimeStamp = item.StateTimestamp });
+                    }
+
                 }
                 if (_MainSession.Value == null)
                     AutoMealParticipation();

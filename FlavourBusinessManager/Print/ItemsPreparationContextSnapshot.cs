@@ -582,6 +582,8 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{d722d9cc-448b-4a30-802e-87a3c7d008d9}</MetaDataID>
         internal void Update(ItemsPreparationContext itemsPreparationContext)
         {
+            if (itemsPreparationContext.PreparationItems.Any(x => x.InEditState))
+                return;
 
             var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
             ItemsPreparationContextSnapshot newSnapShot = null;
@@ -590,8 +592,14 @@ namespace FlavourBusinessManager.Printing
             {
                 if (!LastSnapshotHasTheSameSignature(snapshotSignature))
                 {
-                    newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
-                    this.Snapshots.Add(newSnapShot);
+
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
+                        this.Snapshots.Add(newSnapShot); 
+                        stateTransition.Consistent = true;
+                    }
+
                 }
             }
             if (newSnapShot != null)

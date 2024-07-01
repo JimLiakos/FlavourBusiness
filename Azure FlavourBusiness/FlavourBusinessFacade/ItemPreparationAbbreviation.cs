@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavourBusinessFacade.RoomService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,14 @@ namespace FlavourBusinessFacade
 
     }
 
+    public class ItemPreparationStateAbbreviation
+    {
+        public string uid;
+        public DateTime StateTimeStamp;
+        public bool InEditState;
+        public ItemPreparationState State;
+    }
+
     /// <MetaDataID>{e9560d4a-6ddf-4200-a06c-9a2ee2f6798d}</MetaDataID>
     public class SessionItemPreparationAbbreviation
     {
@@ -28,6 +37,7 @@ namespace FlavourBusinessFacade
         public bool IsShared;
 
         public double? Quantity;
+
 
     }
 }
