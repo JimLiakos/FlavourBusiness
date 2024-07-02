@@ -9686,7 +9686,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"15"))
+			    value      	"16"))
 		    quid       	"5D57B5C30236"
 		    external_docs 	(list external_doc_list
 			(object external_doc
@@ -11562,6 +11562,52 @@
 				    name       	"Identity"
 				    value      	"+14"))
 			    quid       	"665B27FB03C2"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PrinterDeviceUpdateEtag"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{b469630b-4295-4e3f-add8-23de4cf50af8}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"668392A30142")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Generate Backward ID"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+15"))
+			    quid       	"668392A30142"
+			    documentation 	
+|
+|Device update mechanism operates asynchronously
+|When the state of preparation station change the change marked as timestamp
+|The device update mechanism raise event after 3 seconds.
+|The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+|the PreparationStationRuntime clear PrinterDeviceUpdateEtag
+|
+			    
 			    type       	"string"
 			    exportControl 	"Public"))
 		    module     	"Component View::FlavourBusinessManager::FlavourBusinessManager"

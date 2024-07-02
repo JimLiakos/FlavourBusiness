@@ -666,8 +666,10 @@ namespace FlavourBusinessManager.Printing
         internal bool LastSnapshotHasTheSameSignature(string signature)
         {
             var lastSnapshot = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
-            return lastSnapshot != null && GetSnapshotSignature(lastSnapshot) == signature;
-
+            if(lastSnapshot != null) 
+                return lastSnapshot != null && GetSnapshotSignature(lastSnapshot) == signature;
+            
+            return false;
 
 
         }

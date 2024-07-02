@@ -13,7 +13,7 @@ namespace FlavourBusinessManager.Printing
     public class PreparationStationPrintManager
     {
         /// <MetaDataID>{f3adcb85-71e5-454c-a9fb-a232b76364f2}</MetaDataID>
-        internal void UpdateItemsPreparationContextSnapshots(PreparationStation preparationStation)
+        internal void UpdateItemsPreparationContextSnapshots(PreparationStation preparationStation, string printerDeviceUpdateEtag)
         {
             if (string.IsNullOrWhiteSpace(preparationStation.Printer))
                 return;
@@ -40,6 +40,9 @@ namespace FlavourBusinessManager.Printing
                     }
 
                     itemsPreparationContextSnapshots.Update(itemsPreparationContext);
+
+                    
+                    preparationStation.PrintManagerUpdated(printerDeviceUpdateEtag);
                 }
 
             });
@@ -58,7 +61,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{88a295a9-3298-419d-aafb-3ec763529850}</MetaDataID>
         public PreparationStationPrintManager(PreparationStation preparationStation)
         {
-            UpdateItemsPreparationContextSnapshots(preparationStation);
+            UpdateItemsPreparationContextSnapshots(preparationStation, null);
         }
     }
 

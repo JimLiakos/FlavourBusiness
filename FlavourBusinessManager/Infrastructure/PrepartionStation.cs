@@ -23,6 +23,8 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class PreparationStation : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IPreparationStation, IPreparationStationRuntime
     {
+       
+
         [Association("PrepStationPrintManager", Roles.RoleA, "a1eae389-91a2-4af8-909f-8d1a3ef31b29")]
         [RoleAMultiplicityRange(1, 1)]
         [RoleBMultiplicityRange(1, 1)]
@@ -164,6 +166,10 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{c0c5c15b-9f3d-43b3-a176-57a165523002}</MetaDataID>
         object DeviceUpdateEtagLock = new object();
+
+
+
+
         /// <exclude>Excluded</exclude>
         string _DeviceUpdateEtag;
         /// <MetaDataID>{c78c2bbe-02f2-4094-9f11-6b1660e1f47c}</MetaDataID>
@@ -203,6 +209,37 @@ namespace FlavourBusinessManager.ServicesContextResources
                             _DeviceUpdateEtag = value;
                             stateTransition.Consistent = true;
                         }
+                    }
+                }
+            }
+        }
+
+
+
+        /// <exclude>Excluded</exclude>
+        string _PrinterDeviceUpdateEtag;
+
+        /// <MetaDataID>{b469630b-4295-4e3f-add8-23de4cf50af8}</MetaDataID>
+        /// <summary>
+        /// Device update mechanism operates asynchronously
+        /// When the state of preparation station change the change marked as timestamp
+        /// The device update mechanism raise event after 3 seconds.
+        /// The device catch the event end gets the changes for timestamp (DeviceUpdateEtag) 
+        /// the PreparationStationRuntime clear PrinterDeviceUpdateEtag
+        /// </summary>
+        [PersistentMember(nameof(_PrinterDeviceUpdateEtag))]
+        [BackwardCompatibilityID("+15")]
+        public string PrinterDeviceUpdateEtag
+        {
+            get => _PrinterDeviceUpdateEtag;
+            set
+            {
+                if (_PrinterDeviceUpdateEtag != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _PrinterDeviceUpdateEtag = value;
+                        stateTransition.Consistent = true;
                     }
                 }
             }
@@ -478,11 +515,15 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             Transaction.RunOnTransactionCompleted(() =>
             {
-                PrintManager?.UpdateItemsPreparationContextSnapshots(this);
+                
                 lock (DeviceUpdateEtagLock)
                 {
                     if (string.IsNullOrWhiteSpace(DeviceUpdateEtag))
                         DeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
+                    if (string.IsNullOrWhiteSpace(PrinterDeviceUpdateEtag))
+                        PrinterDeviceUpdateEtag = System.DateTime.Now.Ticks.ToString();
+
                 }
             });
         }
@@ -518,7 +559,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     Transaction.RunOnTransactionCompleted(() =>
                     {
-                        PrintManager?.UpdateItemsPreparationContextSnapshots(this);
+                        PrintManager?.UpdateItemsPreparationContextSnapshots(this,DeviceUpdateEtag);
                     });
                 }
             }
@@ -918,25 +959,41 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     lock (DeviceUpdateLock)
                     {
-
-
                         long numberOfTicks = 0;
                         if (long.TryParse(DeviceUpdateEtag, out numberOfTicks))
                         {
-                            if (_Description == "Pasta & Rice")
-                            {
-
-                            }
                             DateTime myDate = new DateTime(numberOfTicks);
                             if ((DateTime.Now - myDate).TotalSeconds > 3)
                             {
                                 if (RaiseEventTimeStamp == null || (DateTime.UtcNow - RaiseEventTimeStamp.Value).TotalSeconds > 10)
                                 {
-                                    _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+                                    try
+                                    {
+                                        _PreparationItemsChangeState?.Invoke(this, DeviceUpdateEtag);
+                                    }
+                                    catch (Exception error){}
+
                                     RaiseEventTimeStamp = DateTime.UtcNow;
                                 }
                             }
                         }
+                        if (long.TryParse(PrinterDeviceUpdateEtag, out numberOfTicks))
+                        {
+                            DateTime myDate = new DateTime(numberOfTicks);
+                            if ((DateTime.Now - myDate).TotalSeconds > 3)
+                            {
+                                if (PrinterRaiseEventTimeStamp == null || (DateTime.UtcNow - PrinterRaiseEventTimeStamp.Value).TotalSeconds > 10)
+                                {
+                                    try
+                                    {
+                                        PrintManager?.UpdateItemsPreparationContextSnapshots(this, PrinterDeviceUpdateEtag);
+                                    }
+                                    catch (Exception error) { }
+                                    PrinterRaiseEventTimeStamp = DateTime.UtcNow;
+                                }
+                            }
+                        }
+
                     }
 
                     #region DeviceAppLifecycle
@@ -1145,6 +1202,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
         /// <MetaDataID>{dab03fa5-a035-4c91-a2ac-c70b12865a93}</MetaDataID>
         DateTime? RaiseEventTimeStamp;
+
+        DateTime? PrinterRaiseEventTimeStamp;
 
 
         /// <MetaDataID>{8ae5f7dd-9136-4cee-a183-060bf7120ae7}</MetaDataID>
@@ -2063,6 +2122,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                 {
                     _SubStations.Remove(preparationStation);
                     stateTransition.Consistent = true;
+                }
+            }
+
+        }
+
+        /// <MetaDataID>{8fecded2-b3a2-4f45-bbc5-60a003820de2}</MetaDataID>
+        internal void PrintManagerUpdated(string printerDeviceUpdateEtag)
+        {
+            ObjectActivated.Task.Wait();
+
+            if (printerDeviceUpdateEtag == PrinterDeviceUpdateEtag)
+            {
+                lock (DeviceUpdateEtagLock)
+                {
+                    PrinterDeviceUpdateEtag = null;
+                    PrinterRaiseEventTimeStamp = null;
                 }
             }
 
