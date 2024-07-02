@@ -1,4 +1,6 @@
-﻿using FlavourBusinessManager.ServicesContextResources;
+﻿using FlavourBusinessFacade.RoomService;
+using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicesContextResources;
 using Microsoft.Extensions.Azure;
 using OOAdvantech.Transactions;
 using System;
@@ -49,6 +51,45 @@ namespace FlavourBusinessManager.Printing
         }
 
 
+        internal void UpdateItemsPreparationContextSnapshots(PreparationStation preparationStation, Meal meal)
+        {
+            if (string.IsNullOrWhiteSpace(preparationStation.Printer))
+                return;
+
+            Transaction.RunOnTransactionCompleted(() =>
+            {
+                List<ItemsPreparationContext> foodItemsInProgress = null;
+
+                if(meal==null)
+                    foodItemsInProgress= preparationStation.FoodItemsInProgress.ToList();
+                else
+                    foodItemsInProgress= preparationStation.FoodItemsInProgress.Where(x => x.MealCourse.Meal==meal).ToList();
+
+                foreach (var itemsPreparationContext in foodItemsInProgress)
+                {
+                    var identity = ItemsPreparationContextSnapshots.GetIdentity(itemsPreparationContext);
+
+                    ItemsPreparationContextSnapshots itemsPreparationContextSnapshots = itemsPreparationContextPrintings.Where(x => x.Identity == identity).FirstOrDefault();
+
+                    if (itemsPreparationContextSnapshots  == null)
+                    {
+
+                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        {
+                            itemsPreparationContextSnapshots = new ItemsPreparationContextSnapshots(itemsPreparationContext);
+                            OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(itemsPreparationContext.MealCourse).CommitTransientObjectState(itemsPreparationContextSnapshots);
+                            itemsPreparationContextPrintings.Add(itemsPreparationContextSnapshots);
+
+                            stateTransition.Consistent = true;
+                        }
+                    }
+                    itemsPreparationContextSnapshots.Update(itemsPreparationContext);
+                }
+            });
+        }
+
+
+
         /// <MetaDataID>{42542205-e829-42e2-94c5-20c5185861b7}</MetaDataID>
         List<ItemsPreparationContextSnapshots> itemsPreparationContextPrintings = new List<ItemsPreparationContextSnapshots>();
 
@@ -61,7 +102,7 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{88a295a9-3298-419d-aafb-3ec763529850}</MetaDataID>
         public PreparationStationPrintManager(PreparationStation preparationStation)
         {
-            UpdateItemsPreparationContextSnapshots(preparationStation, null);
+            UpdateItemsPreparationContextSnapshots(preparationStation, default(Meal));
         }
     }
 

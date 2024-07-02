@@ -624,9 +624,21 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (SessionType == SessionType.Hall)
             {
 
-                CheckForMeaConversationTimeout();
+                if (!CheckForMeaConversationTimeout()&& !CheckForMealCourseUncommittedItemsTimeout()) 
+                {
+                    if (ReminderForMealConversationTimeoutCareGiving == null)
+                    {
+                        ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
-                CheckForMealCourseUncommittedItemsTimeout();
+                        if (ReminderForMealConversationTimeoutCareGiving != null)
+                            ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+                    }
+
+                    ReminderForMealConversationTimeoutCareGiving?.Stop();
+                    if (ReminderForMealConversationTimeoutCareGiving != null)
+                        ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
+                    ReminderForMealConversationTimeoutCareGiving = null;
+                }
 
             }
             #endregion
@@ -646,7 +658,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         ///If session is in this state then method send message to the available waiter to take care for this situation.  
         /// </summary>
 
-        private void CheckForMealCourseUncommittedItemsTimeout()
+        private bool CheckForMealCourseUncommittedItemsTimeout()
         {
             if (SessionState == SessionState.MealMonitoring && SessionType == SessionType.Hall)
             {
@@ -711,12 +723,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         }
                         else
-                            ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
-
-
-
-
-
+                            ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors); 
+                        
 
 
                         if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
@@ -736,11 +744,14 @@ namespace FlavourBusinessManager.ServicesContextResources
                             UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
                             ServicesContextRunTime.Current.MealCourseUncommittedChangesTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
                         }
+
+                        return true;
                     }
 
 
 
             }
+            return false;
         }
 
 
@@ -751,7 +762,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// If session is in this state then method send message to the available waiter to take care for this situation.  
         ///  </summary>
         /// <MetaDataID>{c5711d7e-9c69-43d2-bbf0-edea91e36735}</MetaDataID>
-        private void CheckForMeaConversationTimeout()
+        private bool CheckForMeaConversationTimeout()
         {
             var firstItemPreparation = (from partialClientSession in PartialClientSessions
                                         from itemPreparation in partialClientSession.FlavourItems.OfType<ItemPreparation>()
@@ -837,7 +848,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
 
 
-
+                return true;
 
 
 
@@ -902,18 +913,9 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-                if (ReminderForMealConversationTimeoutCareGiving == null)
-                {
-                    ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
+                
 
-                    if (ReminderForMealConversationTimeoutCareGiving != null)
-                        ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
-                }
-
-                ReminderForMealConversationTimeoutCareGiving?.Stop();
-                if (ReminderForMealConversationTimeoutCareGiving != null)
-                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
-                ReminderForMealConversationTimeoutCareGiving = null;
+                return false;
             }
         }
 

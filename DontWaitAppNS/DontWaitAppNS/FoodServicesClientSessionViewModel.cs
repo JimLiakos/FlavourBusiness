@@ -1900,9 +1900,9 @@ namespace DontWaitApp
 
                     int tries = 30;
                     while (tries > 0)
-                    {
+                    {  
                         try
-                        {
+                        { 
                             var itemState = FoodServicesClientSession.ItemChanged(item);
                             item.State = itemState.State;
                             item.InEditState=itemState.InEditState;

@@ -2,6 +2,8 @@ using ComputationalResources;
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessFacade.ServicesContextResources;
+using FlavourBusinessManager.Printing;
+using FlavourBusinessManager.ServicesContextResources;
 using MenuModel;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
@@ -231,13 +233,35 @@ namespace FlavourBusinessManager.RoomService
 
 
                                 foreach (var mealCourse in Courses.ToList())
-                                    (mealCourse as MealCourse).Monitoring();
+                                {
+                                    try
+                                    {
+                                        (mealCourse as MealCourse).Monitoring();
+                                    }
+                                    catch (Exception error)
+                                    {
+
+                                        ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message + Environment.NewLine + error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
+                                    }
+                                }
 
                             }
                             catch (Exception error)
                             {
                                 ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message + Environment.NewLine + error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
                             }
+
+                            foreach (var preparationStation in ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.OfType<PreparationStation>().Where(x => x.PrintManager!=null))
+                            {
+                                try
+                                {
+                                    preparationStation.PrintManager?.UpdateItemsPreparationContextSnapshots(preparationStation, this);
+                                }
+                                catch (Exception error)
+                                {
+                                }
+                            }
+
 
                             (Session?.ServicePoint as ServicesContextResources.ServicePoint)?.UpdateState();
 
@@ -256,7 +280,7 @@ namespace FlavourBusinessManager.RoomService
                         }
                     }
                 });
-                 
+
 
             }
 

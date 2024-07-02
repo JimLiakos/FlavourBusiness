@@ -559,7 +559,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                     }
                     Transaction.RunOnTransactionCompleted(() =>
                     {
-                        PrintManager?.UpdateItemsPreparationContextSnapshots(this,DeviceUpdateEtag);
+                        PrintManager?.UpdateItemsPreparationContextSnapshots(this,default(Meal));
                     });
                 }
             }
@@ -977,22 +977,22 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 }
                             }
                         }
-                        if (long.TryParse(PrinterDeviceUpdateEtag, out numberOfTicks))
-                        {
-                            DateTime myDate = new DateTime(numberOfTicks);
-                            if ((DateTime.Now - myDate).TotalSeconds > 3)
-                            {
-                                if (PrinterRaiseEventTimeStamp == null || (DateTime.UtcNow - PrinterRaiseEventTimeStamp.Value).TotalSeconds > 10)
-                                {
-                                    try
-                                    {
-                                        PrintManager?.UpdateItemsPreparationContextSnapshots(this, PrinterDeviceUpdateEtag);
-                                    }
-                                    catch (Exception error) { }
-                                    PrinterRaiseEventTimeStamp = DateTime.UtcNow;
-                                }
-                            }
-                        }
+                        //if (long.TryParse(PrinterDeviceUpdateEtag, out numberOfTicks))
+                        //{
+                        //    DateTime myDate = new DateTime(numberOfTicks);
+                        //    if ((DateTime.Now - myDate).TotalSeconds > 3)
+                        //    {
+                        //        if (PrinterRaiseEventTimeStamp == null || (DateTime.UtcNow - PrinterRaiseEventTimeStamp.Value).TotalSeconds > 10)
+                        //        {
+                        //            try
+                        //            {
+                        //                PrintManager?.UpdateItemsPreparationContextSnapshots(this, PrinterDeviceUpdateEtag);
+                        //            }
+                        //            catch (Exception error) { }
+                        //            PrinterRaiseEventTimeStamp = DateTime.UtcNow;
+                        //        }
+                        //    }
+                        //}
 
                     }
 
@@ -2142,6 +2142,8 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
 
         }
+
+       
     }
 
 
