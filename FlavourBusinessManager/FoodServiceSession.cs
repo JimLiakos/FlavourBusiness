@@ -24,6 +24,9 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession, FinanceFacade.IPaymentSubject
     {
+        [Association("SessionCargivingReminders", Roles.RoleA, "8738bddf-b968-48f7-813c-f55896663049")]
+        [MetaDataRepository.RoleBMultiplicityRange(0, 1)]
+        public List<RoomService.ReminderForCareGiving> Reminders;
 
 
         /// <exclude>Excluded</exclude>

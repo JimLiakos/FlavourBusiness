@@ -17,6 +17,7 @@ namespace FlavourBusinessFacade
 
     }
 
+    /// <MetaDataID>{8c10d93a-c0cd-4e9a-8a13-4441eb1e546f}</MetaDataID>
     public class ItemPreparationStateAbbreviation
     {
         public string uid;
