@@ -2,6 +2,8 @@ using FinanceFacade;
 using FlavourBusinessFacade.RoomService;
 using FlavourBusinessManager.Printing;
 using FlavourBusinessManager.RoomService;
+using FlavourBusinessManager.ServicePointRunTime;
+using FlavourBusinessToolKit;
 using MenuModel.JsonViewModel;
 using OOAdvantech.Json;
 using OOAdvantech.MetaDataRepository;
@@ -9,7 +11,9 @@ using OOAdvantech.Remoting.RestApi.Serialization;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 
@@ -44,14 +48,48 @@ namespace FlavourBusinessManager.Printing
 
         }
 
+        /// <exclude>Excluded</exclude>
+        static IFileManager _FileManager;
+        static IFileManager FileManager
+        {
+            get
+            {
+                if (_FileManager == null)
+                    _FileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+
+                return _FileManager;
+            }
+        }
+
         /// <MetaDataID>{7f0d2912-a88a-4eae-93fd-3f068761478d}</MetaDataID>
         [ObjectActivationCall]
         public void ObjectActivation()
         {
             try
             {
+                //ItemsPreparationContextSnapshot
                 if (!string.IsNullOrWhiteSpace(SnapshotsJson))
-                    Snapshots = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ItemsPreparationContextSnapshot>>(SnapshotsJson);
+                {
+                    Snapshots = new List<ItemsPreparationContextSnapshot>();
+                    var snapshotsIds = OOAdvantech.Json.JsonConvert.DeserializeObject<List<string>>(SnapshotsJson);
+
+                    foreach (var snapshotId in snapshotsIds)
+                    {
+                        string blobName = string.Format("usersfolder/{0}/PrintDocuments/{1}/{2}.json", ServicesContextRunTime.Current.OrganizationIdentity, this.PreparationStationIdentity, snapshotId);
+                        IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+                        var snapShotStream = fileManager.GetBlobStream(blobName);
+
+                        byte[] buffer = new byte[snapShotStream.Length];
+                        snapShotStream.Position = 0;
+                        snapShotStream.Read(buffer, 0, (int)snapShotStream.Length);
+                        snapShotStream.Close();
+                        string snapShotJson = Encoding.UTF8.GetString(buffer);
+
+                        Snapshots.Add(OOAdvantech.Json.JsonConvert.DeserializeObject<ItemsPreparationContextSnapshot>(snapShotJson));
+
+                    }
+
+                }
                 else
                     Snapshots = new List<ItemsPreparationContextSnapshot>();
 
@@ -62,13 +100,13 @@ namespace FlavourBusinessManager.Printing
 
                 throw;
             }
-        }
+        } 
 
         /// <MetaDataID>{29a91b72-ef1b-43c7-a7fa-91e78f248e60}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         public void BeforeCommitObjectState()
         {
-            SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots);
+            SnapshotsJson = OOAdvantech.Json.JsonConvert.SerializeObject(Snapshots.Select(x => x.SnapshotIdentity).ToList());
         }
 
         /// <summary>
@@ -145,15 +183,15 @@ namespace FlavourBusinessManager.Printing
             foreach (ItemPreparation itemPreparation in itemsPreparationContext.PreparationItems)
             {
                 if (!string.IsNullOrWhiteSpace(snapshotIdentity))
-                    snapshotIdentity+=Environment.NewLine;
-                snapshotIdentity += itemPreparation.Quantity+" X " + itemPreparation.Name;
+                    snapshotIdentity += Environment.NewLine;
+                snapshotIdentity += itemPreparation.Quantity + " X " + itemPreparation.Name;
                 foreach (var optionChange in itemPreparation.OptionsChanges)
                 {
-                    snapshotIdentity+=Environment.NewLine;
-                    snapshotIdentity += (optionChange as OptionChange).NewLevel?.Name+" "+(optionChange as OptionChange).Description; 
+                    snapshotIdentity += Environment.NewLine;
+                    snapshotIdentity += (optionChange as OptionChange).NewLevel?.Name + " " + (optionChange as OptionChange).Description;
                 }
             }
-            snapshotIdentity+=Environment.NewLine;
+            snapshotIdentity += Environment.NewLine;
             return snapshotIdentity;
         }
 
@@ -163,19 +201,19 @@ namespace FlavourBusinessManager.Printing
             foreach (var itemPreparation in itemsPreparationContextSnapshot.PreparationItems)
             {
                 if (!string.IsNullOrWhiteSpace(snapshotIdentity))
-                    snapshotIdentity+=Environment.NewLine;
-                snapshotIdentity += itemPreparation.Quantity+" X " + itemPreparation.Description;
+                    snapshotIdentity += Environment.NewLine;
+                snapshotIdentity += itemPreparation.Quantity + " X " + itemPreparation.Description;
                 foreach (var optionChange in itemPreparation.OptionsChanges)
                 {
-                    snapshotIdentity+=Environment.NewLine;
+                    snapshotIdentity += Environment.NewLine;
                     snapshotIdentity += optionChange.Description;
                 }
             }
-            snapshotIdentity+=Environment.NewLine;
+            snapshotIdentity += Environment.NewLine;
             return snapshotIdentity;
         }
 
-        
+
 
         /// <summary>
         /// This operation produce a signature for items snapshot
@@ -621,54 +659,78 @@ namespace FlavourBusinessManager.Printing
         /// <MetaDataID>{d722d9cc-448b-4a30-802e-87a3c7d008d9}</MetaDataID>
         internal void Update(ItemsPreparationContext itemsPreparationContext)
         {
-            if (itemsPreparationContext.PreparationItems.Any(x => x.InEditState)||itemsPreparationContext.PreparationItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
+            if (itemsPreparationContext.PreparationItems.Any(x => x.InEditState) || itemsPreparationContext.PreparationItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
                 return;
 
 
-           
 
-                var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
 
-                var snapshotSignatureText = GetSnapshotStringSignature(itemsPreparationContext);
-                ItemsPreparationContextSnapshot newSnapShot = null;
+            var snapshotSignature = GetSnapshotSignature(itemsPreparationContext);
 
-                lock (Snapshots)
+            var snapshotSignatureText = GetSnapshotStringSignature(itemsPreparationContext);
+            ItemsPreparationContextSnapshot newSnapShot = null;
+
+            lock (Snapshots)
+            {
+                if (!LastSnapshotHasTheSameSignature(snapshotSignature))
                 {
-                    if (!LastSnapshotHasTheSameSignature(snapshotSignature))
+
+                    var last = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
+                    if (last != null)
                     {
+                        var lastSnapshotSignatureText = GetSnapshotStringSignature(last);
+                    }
 
-                        var last = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
-                        if(last != null)
-                        {
-                            var lastSnapshotSignatureText = GetSnapshotStringSignature(last);
-                        }
-
-                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                        {
-                            newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
-                            this.Snapshots.Add(newSnapShot);
-                            stateTransition.Consistent = true;
-                        }
-                    } 
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        newSnapShot = new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems);
+                        AddSnapShot(newSnapShot);
+                        this.Snapshots.Add(newSnapShot);
+                        stateTransition.Consistent = true;
+                    }
                 }
-                if (newSnapShot != null)
-                {
-                    (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
-                    //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
-                    Timestamp = DateTime.UtcNow;
-                    //}
-                }
-         
+            }
+            if (newSnapShot != null)
+            {
+                (ServicePointRunTime.ServicesContextRunTime.Current.InternalPrintManager as PrintManager).OnNewPrinting();
+                //new ItemsPreparationContextSnapshot(itemsPreparationContext.PreparationItems)
+                Timestamp = DateTime.UtcNow;
+                //}
+            }
 
+
+
+        }
+
+        private void AddSnapShot(ItemsPreparationContextSnapshot newSnapShot)
+        {
+
+
+            string blobName = string.Format("usersfolder/{0}/PrintDocuments/{1}/{2}.json", ServicesContextRunTime.Current.OrganizationIdentity, this.PreparationStationIdentity, newSnapShot.SnapshotIdentity);
+
+            IFileManager fileManager = new BlobFileManager(FlavourBusinessManagerApp.CloudBlobStorageAccount, FlavourBusinessManagerApp.RootContainer);
+
+            string snapShotJson = OOAdvantech.Json.JsonConvert.SerializeObject(newSnapShot);
+
+            MemoryStream snapShotJsonStream = new MemoryStream();
+            byte[] jsonBuffer = System.Text.Encoding.UTF8.GetBytes(snapShotJson);
+            snapShotJsonStream.Write(jsonBuffer, 0, jsonBuffer.Length);
+            snapShotJsonStream.Position = 0;
+
+            fileManager.Upload(blobName, snapShotJsonStream, "application/json");
+
+        }
+        private void RemoveAddSnapShot(ItemsPreparationContextSnapshot newSnapShot)
+        {
 
         }
 
         internal bool LastSnapshotHasTheSameSignature(string signature)
         {
             var lastSnapshot = Snapshots.OrderBy(x => x.TimeStamp).LastOrDefault();
-            if(lastSnapshot != null) 
+            if (lastSnapshot != null)
                 return lastSnapshot != null && GetSnapshotSignature(lastSnapshot) == signature;
-            
+
             return false;
 
 

@@ -20,7 +20,7 @@ namespace FlavourBusinessManager
         public static string FlavourBusinessStoragesLocation;
 
         /// <MetaDataID>{9af6c9da-a163-47fb-9dea-70ff6193ef7e}</MetaDataID>
-        public static void Init(string flavourBusinessStoragesAccountName, string flavourBusinessStoragesAccountkey, string flavourBusinessStoragesLocation, string rootContainer)
+        public static void Init(string flavourBusinessStoragesAccountName, string flavourBusinessStoragesAccountKey, string flavourBusinessStoragesLocation, string rootContainer)
         {
 
        
@@ -32,10 +32,10 @@ namespace FlavourBusinessManager
             }
             else
             {
-                CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey), true);
+                CloudBlobStorageAccount = new Microsoft.Azure.Storage.CloudStorageAccount(new Microsoft.Azure.Storage.Auth.StorageCredentials(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountKey), true);
 
                 Uri endPoint = new Uri(string.Format("https://{0}.table.core.windows.net", flavourBusinessStoragesAccountName));
-                TablesAccount = new Azure.Data.Tables.TableServiceClient(endPoint, new Azure.Data.Tables.TableSharedKeyCredential(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey));
+                TablesAccount = new Azure.Data.Tables.TableServiceClient(endPoint, new Azure.Data.Tables.TableSharedKeyCredential(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountKey));
 
                 RootContainer = rootContainer;
             }
@@ -43,7 +43,7 @@ namespace FlavourBusinessManager
 
 
             FlavourBusinessStoragesAccountName = flavourBusinessStoragesAccountName;
-            FlavourBusinessStoragesAccountkey = flavourBusinessStoragesAccountkey;
+            FlavourBusinessStoragesAccountkey = flavourBusinessStoragesAccountKey;
             FlavourBusinessStoragesLocation = flavourBusinessStoragesLocation;
 
             OOAdvantech.Remoting.RestApi.Serialization.SerializationBinder.NamesTypesDictionary["FlavourBusinessManager.RoomService.ItemPreparation"] = typeof(FlavourBusinessManager.RoomService.ItemPreparation);
@@ -55,7 +55,7 @@ namespace FlavourBusinessManager
             //var businessesResourcesInitTask = Task.Run(() =>
             //{
 
-            var objectsStorage = OpenFlavourBusinessesResourcesStorage(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountkey, flavourBusinessStoragesLocation);
+            var objectsStorage = OpenFlavourBusinessesResourcesStorage(flavourBusinessStoragesAccountName, flavourBusinessStoragesAccountKey, flavourBusinessStoragesLocation);
             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(objectsStorage);
 
 

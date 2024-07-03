@@ -57775,8 +57775,8 @@
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
-		    origin_x   	725
-		    origin_y   	0
+		    origin_x   	531
+		    origin_y   	1081
 		    items      	(list diagram_item_list
 			(object NoteView @832
 			    location   	(1375, 359)
