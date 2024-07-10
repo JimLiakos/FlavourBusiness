@@ -853,27 +853,27 @@ namespace WaiterApp.ViewModel
                 IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
                 var isInSleepMode = device.IsinSleepMode;
 
-                Task.Run(() =>
-                {
+                //Task.Run(() =>
+                //{
 
-                    ringtoneService.Play();
+                //    ringtoneService.Play();
 
-                    int count = 4;
-                    if (!isInSleepMode)
-                        count = 1;
+                //    int count = 4;
+                //    if (!isInSleepMode)
+                //        count = 1;
 
-                    var duration = TimeSpan.FromSeconds(2);
-                    while (count > 0)
-                    {
-                        count--;
-                        Vibration.Vibrate(duration);
-                        System.Threading.Thread.Sleep(3000);
-                        Vibration.Cancel();
-                        System.Threading.Thread.Sleep(3000);
-                    }
-                    ringtoneService.Stop();
+                //    var duration = TimeSpan.FromSeconds(2);
+                //    while (count > 0)
+                //    {
+                //        count--;
+                //        Vibration.Vibrate(duration);
+                //        System.Threading.Thread.Sleep(3000);
+                //        Vibration.Cancel();
+                //        System.Threading.Thread.Sleep(3000);
+                //    }
+                //    ringtoneService.Stop();
 
-                });
+                //});
             }
             catch (Exception error)
             {
