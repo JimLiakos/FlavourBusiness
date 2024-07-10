@@ -23,6 +23,28 @@ namespace FlavourBusinessManager.HumanResources
     public class Waiter : MarshalByRefObject, IWaiter, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
+        /// <exclude>Excluded</exclude>
+        string _UserLanguageCode;
+
+        /// <MetaDataID>{1afc6fa9-23a4-4321-a997-8761b8e1afe1}</MetaDataID>
+        [PersistentMember(nameof(_UserLanguageCode))]
+        [BackwardCompatibilityID("+23")]
+        public string UserLanguageCode
+        {
+            get => _UserLanguageCode;
+            set
+            {
+                if (_UserLanguageCode != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserLanguageCode = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
 
 
         /// <exclude>Excluded</exclude>
@@ -34,6 +56,7 @@ namespace FlavourBusinessManager.HumanResources
         public List<IAccountability> Responsibilities => _Responsibilities.ToThreadSafeList();
 
 
+        /// <MetaDataID>{4e370b0c-7aba-46cb-bb2f-b0c2a81857fa}</MetaDataID>
         public bool NativeUser { get; set; }
 
         /// <exclude>Excluded</exclude>
@@ -99,6 +122,7 @@ namespace FlavourBusinessManager.HumanResources
 
             }
         }
+        /// <MetaDataID>{c580ee3f-e389-4c81-aa19-e2c151440d4c}</MetaDataID>
         public string DeviceToken => DeviceFirebaseToken;
 
         /// <exclude>Excluded</exclude>

@@ -97,6 +97,16 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Closed=4
     }
 
+    public enum CaregivingMessageType
+    {
+        SearchForDelayedMealConversation,
+        SearchForDelayedClientsDecision,
+        SearchForDelayedClientCommitChanges,
+        RemindDelayedMealConversation,
+        RemindDelayedClientsDecision,
+        RemindDelayedClientCommitChanges
+    }
+
 
 
 

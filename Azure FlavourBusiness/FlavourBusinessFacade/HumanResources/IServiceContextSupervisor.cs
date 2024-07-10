@@ -34,6 +34,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{ded978ff-be44-4d88-955f-e71821410aa7}</MetaDataID>
         FlavourBusinessFacade.IFlavoursServicesContext ServicesContext { get; }
 
+        /// <MetaDataID>{bbda1053-6cc6-4a60-bace-58a955af82ab}</MetaDataID>
         void IWillTakeCare(string messageID);
     }
 }

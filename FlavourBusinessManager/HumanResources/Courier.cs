@@ -32,6 +32,27 @@ namespace FlavourBusinessManager.HumanResources
     {
 
         /// <exclude>Excluded</exclude>
+        string _UserLanguageCode;
+        /// <MetaDataID>{166cbf0a-733f-428f-af53-6a7dafa1c865}</MetaDataID>
+        [PersistentMember(nameof(_UserLanguageCode))]
+        [BackwardCompatibilityID("+21")]
+        public string UserLanguageCode
+        {
+            get => _UserLanguageCode;
+            set
+            {
+                if (_UserLanguageCode != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserLanguageCode = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
         DateTime _StateTimestamp;
         /// <MetaDataID>{3fcdfbf5-8dc7-408d-9d57-0583cddd517c}</MetaDataID>
         [PersistentMember(nameof(_StateTimestamp))]
@@ -398,6 +419,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{969e2ac6-6d6d-4722-aa8e-fb59818914ce}</MetaDataID>
         public string DeviceToken => DeviceFirebaseToken;
 
         /// <exclude>Excluded</exclude>
@@ -1258,6 +1280,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{c6418c1a-451e-4842-b7f3-f4b3c9cef916}</MetaDataID>
         public void AssignAndCommitFoodShippings(List<IFoodShipping> foodShippings, string apiKey)
         {
             if (ShiftWork is ServingShiftWork)
@@ -1501,8 +1524,9 @@ namespace FlavourBusinessManager.HumanResources
             }
 
         }
+        /// <MetaDataID>{e29e812d-3ff8-4aee-9bd7-abdfb801024d}</MetaDataID>
         [OnDemandCachingDataOnClientSide]
-        public IHomeDeliveryServicePoint HomeDeliveryServicePoint=>ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint ;
+        public IHomeDeliveryServicePoint HomeDeliveryServicePoint => ServicePointRunTime.ServicesContextRunTime.Current.DeliveryServicePoint;
     }
 
 

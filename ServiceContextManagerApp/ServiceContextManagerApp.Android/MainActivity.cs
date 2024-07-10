@@ -15,13 +15,17 @@ using Android.Gms.Extensions;
 using Android.Views.InputMethods;
 
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using System.Threading.Tasks;
 
 namespace ServiceContextManagerApp.Droid
 {
     [Activity(Label = "ServiceContextManagerApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, Android.Gms.Tasks.IOnCompleteListener, IOnFailureListener
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        internal static readonly string CHANNEL_ID = "my_notification_channel";
+        internal static readonly int NOTIFICATION_ID = 100;
+
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
 
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -41,7 +45,12 @@ namespace ServiceContextManagerApp.Droid
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
 
 
-            var token = FirebaseInstanceId.Instance.Token;
+            var token = await Task<string>.Run(() =>
+            {
+                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            });
+
+            
 
             //OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
@@ -72,7 +81,7 @@ namespace ServiceContextManagerApp.Droid
             var tt = FirebaseAuth.Instance.CurrentUser;
         }
 
-        public void OnComplete(Task task)
+        public void OnComplete(Android.Gms.Tasks.Task task)
         {
             if (task.IsSuccessful)
             {

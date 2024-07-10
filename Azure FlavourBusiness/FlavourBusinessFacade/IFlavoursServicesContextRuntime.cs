@@ -256,12 +256,14 @@ namespace FlavourBusinessFacade
         string AssignPrintManagerDevice(string deviceAssignKey);
         IPrintManager GetPrintManager(string credentialKey);
 
-        /// <MetaDataID>{3bdaaed9-6e63-40ba-9681-f27fa1a07c0d}</MetaDataID>
-        IPrintManager PrintManager { get; }
+
 
 
 
 #endif
+
+        /// <MetaDataID>{3bdaaed9-6e63-40ba-9681-f27fa1a07c0d}</MetaDataID>
+        IPrintManager PrintManager { get; }
     }
 
 

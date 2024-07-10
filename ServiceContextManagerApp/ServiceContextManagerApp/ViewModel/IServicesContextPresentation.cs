@@ -11,7 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+
+#if DeviceDotNet
+#else
 using System.Windows.Controls;
+#endif
+
 using WaiterApp.ViewModel;
 
 namespace ServiceContextManagerApp
@@ -131,8 +136,8 @@ namespace ServiceContextManagerApp
     }
 
     public delegate void DelayedMealAtTheCounterHandle(ISupervisorPresentation supervisorPresentation, string messageID);
-    public delegate void MealConversationTimeExceededHandle(ISupervisorPresentation supervisorPresentation, string messageID, string servicePointIdentity);
-    
+    public delegate void MealConversationTimeExceededHandle(ISupervisorPresentation supervisorPresentation, string messageID, string servicePointIdentity, CaregivingMessageType caregivingMessageType,  List<string> namesOfDelayedCustomers);
+
     public delegate void ServicePointChangeStateHandle(IServicesContextPresentation servicesContextPresentation, string servicePointIdentity, ServicePointState newState);
 
 }

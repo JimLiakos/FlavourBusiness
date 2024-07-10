@@ -8,7 +8,9 @@ using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.RoomService;
 using FlavourBusinessManager.ServicePointRunTime;
 using OOAdvantech;
+
 using OOAdvantech.MetaDataRepository;
+using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
 using System;
 using System.Collections.Generic;
@@ -24,9 +26,21 @@ namespace FlavourBusinessManager.ServicesContextResources
     [Persistent()]
     public class FoodServiceSession : MarshalByRefObject, OOAdvantech.Remoting.IExtMarshalByRefObject, IFoodServiceSession, FinanceFacade.IPaymentSubject
     {
-        [Association("SessionCargivingReminders", Roles.RoleA, "8738bddf-b968-48f7-813c-f55896663049")]
-        [MetaDataRepository.RoleBMultiplicityRange(0, 1)]
-        public List<RoomService.ReminderForCareGiving> Reminders;
+        /// <exclude>Excluded</exclude>
+        OOAdvantech.Collections.Generic.Set<ReminderForCareGiving> _Reminders = new OOAdvantech.Collections.Generic.Set<ReminderForCareGiving>();
+
+        [RoleAMultiplicityRange(0)]
+        [PersistentMember(nameof(_Reminders))]
+        [Association("SessionCareGivingReminders", Roles.RoleA, "8738bddf-b968-48f7-813c-f55896663049")]
+        [RoleBMultiplicityRange(0, 1)]
+        public List<ReminderForCareGiving> Reminders
+        {
+            get
+            {
+                return _Reminders.ToThreadSafeList();
+
+            }
+        }
 
 
         /// <exclude>Excluded</exclude>
@@ -331,6 +345,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{fbe827bb-85e5-4ac5-a527-028149b7e116}</MetaDataID>
         object StateMachineLock = new object();
 
+        /// <MetaDataID>{4e0a2296-3d40-4569-a8da-23db29310377}</MetaDataID>
         object PaymentLock = new object();
 
         /// <MetaDataID>{dd202b7b-1e56-45fe-a4a9-f3f26dcc645a}</MetaDataID>
@@ -596,8 +611,8 @@ namespace FlavourBusinessManager.ServicesContextResources
 
             lock (CaregiversLock)
             {
-                if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
-                    Reminders = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ReminderForCareGiving>>(WillTakeCareWorkersJson);
+                //if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
+                //    Reminders = OOAdvantech.Json.JsonConvert.DeserializeObject<List<ReminderForCareGiving>>(WillTakeCareWorkersJson);
 
             }
 
@@ -609,7 +624,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (CaregiversLock)
             {
-                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
+                // WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
             }
         }
         /// <MetaDataID>{a9c1e448-ba0d-4491-8520-0dc47dfdc530}</MetaDataID>
@@ -627,19 +642,12 @@ namespace FlavourBusinessManager.ServicesContextResources
             if (SessionType == SessionType.Hall)
             {
 
-                if (!CheckForMeaConversationTimeout()&& !CheckForMealCourseUncommittedItemsTimeout()) 
+                if (!CheckForMeaConversationTimeout() && !CheckForMealCourseUncommittedItemsTimeout())
                 {
                     if (ReminderForMealConversationTimeoutCareGiving == null)
-                    {
                         ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
-                        if (ReminderForMealConversationTimeoutCareGiving != null)
-                            ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
-                    }
-
                     ReminderForMealConversationTimeoutCareGiving?.Stop();
-                    if (ReminderForMealConversationTimeoutCareGiving != null)
-                        ReminderForMealConversationTimeoutCareGiving.ObjectChangeState -= ReminderForCareGiving_ObjectChangeState;
                     ReminderForMealConversationTimeoutCareGiving = null;
                 }
 
@@ -656,24 +664,23 @@ namespace FlavourBusinessManager.ServicesContextResources
         }
 
         /// <summary>
-        ///This method check if session in the state where the meal is in state of preparation 
-        ///and one client has changed its order and has forgot to send his changes. 
-        ///If session is in this state then method send message to the available waiter to take care for this situation.  
-        /// </summary>
+        /// This method check if session in the state where the meal is in state of preparation 
+        /// and one client has changed its order and has forgot to send his changes. 
+        /// If session is in this state then method send message to the available waiter to take care for this situation.  
+        ///  </summary>
+        /// <MetaDataID>{bae4643d-e9ad-4561-8cf1-ce4cd4df6009}</MetaDataID>
 
         private bool CheckForMealCourseUncommittedItemsTimeout()
         {
             if (SessionState == SessionState.MealMonitoring && SessionType == SessionType.Hall)
             {
-                List<ItemsMealCourseAssignment> uncommittedItemsMealCourseAssignment = (Meal as Meal)?.GetUncommittedItemsMealCourseAssignment();
+                List<ItemsMealCourseAssignment> uncommittedItemsMealCourseAssignment = (Meal as Meal)?.GetUncommittedOrInEditItemsMealCourseAssignment();
 
                 var uncommittedItems = uncommittedItemsMealCourseAssignment.Where(x => x.MealCourse != null).SelectMany(x => x.ItemsPreparations).Where(x => (x.ClientSession as EndUsers.FoodServiceClientSession).DeviceAppState != DeviceAppLifecycle.InUse).ToList();
 
                 if (uncommittedItems.Count > 0)
                     if ((System.DateTime.UtcNow - (uncommittedItems.First().ClientSession as FoodServiceClientSession).DeviceAppSleepTime.ToUniversalTime()).TotalSeconds > 30)
                     {
-
-
 
                         var firstItemPreparation = uncommittedItems.First();
 
@@ -690,29 +697,30 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                         if (ReminderForMealConversationTimeoutCareGiving == null)
                         {
-                            var messagePattern = new Message();
-                            messagePattern.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
-                            messagePattern.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
-                            messagePattern.Data["SessionIdentity"] = SessionID;
-                            messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
                             ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
                             if (ReminderForMealConversationTimeoutCareGiving == null)
                             {
-                                ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
-                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
-                                    reminderStartTime,
-                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
-                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
 
-                                Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+                                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                                {
+                                    ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
+                                                        activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors,
+                                                        reminderStartTime,
+                                                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
+                                                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                                        TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+                                    ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(ReminderForMealConversationTimeoutCareGiving);
+                                    _Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+                                    stateTransition.Consistent = true;
+                                }
+
                             }
                             else
                                 ReminderForMealConversationTimeoutCareGiving.Init(ClientMessages.MealConversationTimeout,
-                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors,
                                     reminderStartTime,
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
@@ -720,14 +728,74 @@ namespace FlavourBusinessManager.ServicesContextResources
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
 
 
+                            ReminderForMealConversationTimeoutCareGiving.BuildMessage = (MessageCreationData args) =>
+                            {
+                                Message clientMessage = (args.Worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", ReminderForMealConversationTimeoutCareGiving.UniqueId)).FirstOrDefault();
+                                if (clientMessage == null)
+                                {
+                                    clientMessage = new Message();
+                                    clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                                    clientMessage.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
+                                    clientMessage.Data["SessionIdentity"] = SessionID;
+                                    clientMessage.Data["ReminderID"] = ReminderForMealConversationTimeoutCareGiving.UniqueId;
+
+                                 
+                                }
+                                string title = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedMealConversationMessageTitle");
+                                title = string.Format(title, ServicePoint.Description);
+
+
+                                string remindTitle = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.RemindForTableTitle");
+                                remindTitle = string.Format(remindTitle, ServicePoint.Description);
+
+                                string body = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedClientCommitChangesMessageBody");
+
+                                List<string> customersNames = uncommittedItems.Select(x=>x.ClientSession).Distinct().Where(x=>x.Worker==null).Select(x=>x.ClientName).ToList();
+                                
+                                clientMessage.Data["NamesOfDelayedCustomers"] = customersNames;
+                                
+                                customersNames.AddRange(customersNames);
+                                if (customersNames.Count == 1)
+                                {
+                                    string customerName = customersNames[0];
+                                    body = string.Format(body, customerName);
+                                }
+                                else
+                                {
+                                    body = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedClientsCommitChangesMessageHtmlBody");
+                                    string customersNamesText = null;
+
+                                    foreach (string customerName in customersNames)
+                                    {
+                                        if (customersNamesText != null)
+                                            customersNamesText += ", ";
+                                        customersNamesText += customerName;
+                                    }
+                                    body = string.Format(body, customersNamesText);
+
+                                }
+
+                                if (args.TypeOfCaregivingMessage == TypeOfCaregivingMessage.SearchFor)
+                                {
+                                    clientMessage.Notification = new Notification() { Title = title, Body = body };
+                                    clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.SearchForDelayedClientCommitChanges;
+                                }
+                                else
+                                {
+                                    clientMessage.Notification = new Notification() { Title = remindTitle, Body = body };
+                                    clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.RemindDelayedClientCommitChanges;
+                                }
+                                return clientMessage;
+                            };
+
                             ReminderForMealConversationTimeoutCareGiving.Start();
 
-                            ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+
 
                         }
                         else
-                            ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors); 
-                        
+                            ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
+
 
 
                         if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
@@ -813,38 +881,92 @@ namespace FlavourBusinessManager.ServicesContextResources
 
                 if (ReminderForMealConversationTimeoutCareGiving == null)
                 {
-                    var messagePattern = new Message();
-                    messagePattern.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
-                    messagePattern.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
-                    messagePattern.Data["SessionIdentity"] = SessionID;
-                    messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
 
                     ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
                     if (ReminderForMealConversationTimeoutCareGiving == null)
                     {
-                        ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
-                            activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
-                            reminderStartTime,
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
-                            TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
-                        Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+
+                        using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                        {
+                            ReminderForMealConversationTimeoutCareGiving = new ReminderForCareGiving(ClientMessages.MealConversationTimeout,
+                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors,
+                                    reminderStartTime,
+                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
+                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
+                                    TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+
+                            ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(ReminderForMealConversationTimeoutCareGiving);
+
+                            _Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+                            stateTransition.Consistent = true;
+                        }
+
                     }
                     else
                         ReminderForMealConversationTimeoutCareGiving.Init(ClientMessages.MealConversationTimeout,
-                            activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, messagePattern,
+                            activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors,
                             reminderStartTime,
                             TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                             TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
                             TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                             TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
+
+                    ReminderForMealConversationTimeoutCareGiving.BuildMessage = (MessageCreationData args) =>
+                    {
+                        bool thereIsClientWhichWait = this.PartialClientSessions.Any(x => x.FlavourItems.All(y => y.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed) && !y.InEditState));
+
+                        Message clientMessage = (args.Worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", ReminderForMealConversationTimeoutCareGiving.UniqueId)).FirstOrDefault();
+
+                        if (clientMessage == null)
+                        {
+                            clientMessage = new Message();
+                            clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
+                            clientMessage.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
+                            clientMessage.Data["SessionIdentity"] = SessionID;
+                            clientMessage.Data["ReminderID"] = ReminderForMealConversationTimeoutCareGiving.UniqueId;
+                        }
+
+                        string title = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedMealConversationMessageTitle");
+                        title = string.Format(title, ServicePoint.Description);
+
+
+                        string remindTitle = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.RemindForTableTitle");
+                        remindTitle = string.Format(remindTitle, ServicePoint.Description);
+
+
+                        string body = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedMealConversationMessageBody");
+                        if (thereIsClientWhichWait)
+                            body = Localization.I18nLocalization.Current.GetString(args.Worker.UserLanguageCode, "RoomService.HallServicePoint.DelayedClientsDecisionMessageBody");
+
+                        if (args.TypeOfCaregivingMessage == TypeOfCaregivingMessage.SearchFor)
+                        {
+                            clientMessage.Notification = new Notification() { Title = title, Body = body };
+                            if (thereIsClientWhichWait)
+                                clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.SearchForDelayedClientsDecision;
+                            else
+                                clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.SearchForDelayedMealConversation;
+
+                        }
+                        else
+                        {
+                            clientMessage.Notification = new Notification() { Title = remindTitle, Body = body };
+                            if (thereIsClientWhichWait)
+                                clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.RemindDelayedClientsDecision;
+                            else
+                                clientMessage.Data["CaregivingMessageType"] = CaregivingMessageType.RemindDelayedMealConversation;
+
+                        }
+
+
+                        return clientMessage;
+                    };
 
                     ReminderForMealConversationTimeoutCareGiving.Start();
 
 
-                    ReminderForMealConversationTimeoutCareGiving.ObjectChangeState += ReminderForCareGiving_ObjectChangeState;
+
 
                 }
                 else
@@ -916,7 +1038,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
             else
             {
-                
+
 
                 return false;
             }
@@ -964,22 +1086,18 @@ namespace FlavourBusinessManager.ServicesContextResources
         {
             lock (CaregiversLock)
             {
-                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
-                {
-                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
+                //using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                //{
+                //    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
 
-                    stateTransition.Consistent = true;
-                }
+                //    stateTransition.Consistent = true;
+                //}
 
                 if (careGivingType == Caregiver.CareGivingType.ConversationCheck)
-                {
                     ReminderForMealConversationTimeoutCareGiving?.AddCaregiver(caregiver, careGivingType);
-                }
             }
         }
 
-        /// <exclude>Excluded</exclude>
-        List<Caregiver> _Caregivers = new List<Caregiver>();
 
 
         /// <MetaDataID>{2a450ea3-c23a-42dd-9eac-3a8e1fcb327d}</MetaDataID>
@@ -989,7 +1107,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 lock (CaregiversLock)
                 {
-                    return _Caregivers.ToList();
+                    return _Reminders.ToThreadSafeList().SelectMany(x => x.Caregivers).ToList();
                 }
             }
         }
@@ -1062,7 +1180,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             }
         }
 
-        internal List<ReminderForCareGiving> Reminders { get; private set; } = new List<ReminderForCareGiving>();
+        // public DateTime WillTakeCareTimestamp { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -1191,5 +1309,6 @@ namespace FlavourBusinessManager.ServicesContextResources
 
 
         }
+
     }
 }

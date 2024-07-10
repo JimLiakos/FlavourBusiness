@@ -92,7 +92,7 @@
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\OpeningHours.cs" Link="OpeningHours.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\OrganizationsManager.cs" Link="OrganizationsManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Print\IPrinting.cs" Link="Print\IPrinting.cs" />
-    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Print\IPrintManager.cs" Link="Print\IPrintManager.cs" />
+    <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\Print\IPrintManager.cs" Link="IPrintManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ResourceManager.cs" Link="ResourceManager.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\HumanResources\ServiceContextHumanResources.cs" Link="HumanResources\ServiceContextHumanResources.cs" />
     <Compile Include="..\..\Azure FlavourBusiness\FlavourBusinessFacade\ServiceContextResources.cs" Link="ServiceContextResources.cs" />

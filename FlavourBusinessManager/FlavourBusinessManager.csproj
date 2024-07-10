@@ -455,6 +455,7 @@
     <Compile Include="HumanResources\Translator.cs" />
     <Compile Include="HumanResources\Waiter.cs" />
     <Compile Include="Infrastructure\GlobalResourceIdentity.cs" />
+    <Compile Include="Localization\i18nLocalization.cs" />
     <Compile Include="PrintManager.cs" />
     <Compile Include="Print\ItemPreparationSnapshot.cs" />
     <Compile Include="Print\ItemsPreparationContextSnapshot.cs" />
@@ -477,6 +478,12 @@
     <Compile Include="HumanResources\TakeawayCashier.cs" />
     <Compile Include="Infrastructure\TakeAwayStation.cs" />
     <Compile Include="Webhookservice.cs" />
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\el.json">
+      <Link>i18n\el.json</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AngularProjects\dont-wait\projects\dontwait-library\src\assets\i18n\en.json">
+      <Link>i18n\en.json</Link>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="FlavourBusinessManager.cat" />
     <None Include="FlavourBusinessManager.sub" />

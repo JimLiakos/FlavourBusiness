@@ -112,13 +112,13 @@ namespace WaiterApp.ViewModel
 
         public event ObjectChangeStateHandle ObjectChangeState;
 
-        public event LaytheTableRequestHandle LayTheTableRequest;
+        public event LayTheTableRequestHandle LayTheTableRequest;
 
-        public event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
+        public event ItemsReadyToServeRequestHandle ItemsReadyToServeRequest;
 
         public event ServicePointChangeStateHandle ServicePointChangeState;
 
-        public event MealConversationTimeoutHandle MealConversationTimeout;
+        public event MealConversationTimeExceededHandle MealConversationTimeExceeded;
 
         /// <MetaDataID>{4d17380a-0570-480d-a1ec-b2140d0ca76a}</MetaDataID>
         internal void ServingBatchUpdated(ServingBatchPresentation servingBatchPresentation)
@@ -457,6 +457,8 @@ namespace WaiterApp.ViewModel
                             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                             Waiter.DeviceFirebaseToken = device.FirebaseToken;
 #endif
+
+                            Waiter.UserLanguageCode = Language;
                             (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = Waiter;
                             //ApplicationSettings.Current.FriendlyName = Waiter.FullName;
                             GetMessages();
@@ -511,7 +513,7 @@ namespace WaiterApp.ViewModel
                                 if (Waiter?.OAuthUserIdentity != UserData.OAuthUserIdentity)
                                     Waiter = null;
 #else
-                                
+
 #endif
 
                                 if (Waiter == null)
@@ -551,6 +553,8 @@ namespace WaiterApp.ViewModel
                                     }), serviceState);
                                 }
 #endif
+
+                                Waiter.UserLanguageCode = Language;
                                 ActiveShiftWork = Waiter.ShiftWork;
                                 UpdateServingBatches(Waiter.GetServingBatches());
                                 (this.FlavoursOrderServer as FlavoursOrderServer).SignedInFlavourBusinessUser = Waiter;
@@ -1065,7 +1069,7 @@ namespace WaiterApp.ViewModel
                 return nativeUsers as IList<UserData>;
             });
 
-            
+
             //return new List<UserData>();
         }
 
@@ -1141,8 +1145,8 @@ namespace WaiterApp.ViewModel
 
             //return ConnectToServicePointTask.Task;
 #else
-             
-            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3a907b91e2a3475f8df94af5127e6342";
+            var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3cecf8c9d2624b1f9c218602e929fa0d";
+            //var deviceAssignKey = "7f9bde62e6da45dc8c5661ee2220a7b0;3a907b91e2a3475f8df94af5127e6342";
 
             try
             {
@@ -1154,12 +1158,12 @@ namespace WaiterApp.ViewModel
 
                 NativeUserSignInData nativeUserData = servicesContextManagment.AssignDeviceToNativeUser(deviceAssignKey);
 
-                
+
                 ApplicationSettings.Current.ServiceContextDevice = nativeUserData.ServiceContextIdentity;
 
                 lock (this)
-                    NativeUsers=null;
-                return new UserData() { Email =nativeUserData.FireBaseUserName, Password= nativeUserData.FireBasePasword };
+                    NativeUsers = null;
+                return new UserData() { Email = nativeUserData.FireBaseUserName, Password = nativeUserData.FireBasePasword };
             }
             catch (Exception error)
             {
@@ -1253,7 +1257,7 @@ namespace WaiterApp.ViewModel
         IShiftWork ActiveShiftWork;
 
         /// <MetaDataID>{4d1af4d2-ecbb-4ef9-a0ee-8a43a3a7d137}</MetaDataID>
-        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches ;
+        ViewModelWrappers<IServingBatch, ServingBatchPresentation> _ServingBatches;
 
 
         /// <MetaDataID>{dd252805-6fb8-4285-9393-644a55911ee3}</MetaDataID>
@@ -1527,7 +1531,10 @@ namespace WaiterApp.ViewModel
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
                                 string sessionIdentity = message.GetDataValue<string>("SessionIdentity");
-                                MealConversationTimeout?.Invoke(this, message.MessageID, servicesPointIdentity, sessionIdentity);
+                                List<string> namesOfDelayedCustomers = message.GetDataValue<List<string>>("NamesOfDelayedCustomers");
+                                CaregivingMessageType caregivingMessageType = message.GetDataValue<CaregivingMessageType>("CaregivingMessageType");
+                                MealConversationTimeExceeded?.Invoke(this, message.MessageID, servicesPointIdentity, sessionIdentity,caregivingMessageType, namesOfDelayedCustomers);
+
                                 //PartOfMealRequestMessageForward(message);
                                 return;
                             }
@@ -1537,6 +1544,12 @@ namespace WaiterApp.ViewModel
             }
         }
 
+
+
+        public Notification GetMessageNotification(string messageId)
+        {
+            return Waiter.GetMessage(messageId).Notification;
+        }
 
         private async Task GenerateLocalNotificationAsync()
         {
@@ -1880,7 +1893,7 @@ namespace WaiterApp.ViewModel
 
         //public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServicesClientSessionViewModel foodServicesClientSessionPresentation)
         //{
-            
+
         //    return this.Waiter.GetBill(itemPreparations, (foodServicesClientSessionPresentation as FoodServicesClientSessionViewModel).FoodServicesClientSession);
         //}
 

@@ -32,6 +32,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <summary>
         /// Defines the Device Token used from notification subsystem
         /// </summary>
+        /// <MetaDataID>{61daa106-c52a-4e73-adcd-15e0347d087a}</MetaDataID>
         string DeviceToken { get; }
 
     }

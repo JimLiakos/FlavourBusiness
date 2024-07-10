@@ -6902,6 +6902,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_UserLanguageCode", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public string WorkerAssignKey
         {
             get
@@ -7489,6 +7509,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
                 System.Type[] argsTypes = new System.Type[0];
                 object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.ICourier), "get_State", args, argsTypes);
                 return this.Proxy.GetValue<FlavourBusinessFacade.HumanResources.CourierState>(retValue);
+            }
+        }
+        
+        // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_UserLanguageCode", args, argsTypes);
             }
         }
         
@@ -8284,6 +8324,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_UserLanguageCode", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public string WorkerAssignKey
         {
             get
@@ -8940,6 +9000,26 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
         }
         
         // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_UserLanguageCode", args, argsTypes);
+            }
+        }
+        
+        // The Width property for the object.
         public string WorkerAssignKey
         {
             get
@@ -9368,6 +9448,26 @@ public event OOAdvantech.Remoting.RestApi.ProxyRecconectedHandle Reconnected
         public Pr_IServicesContextWorker(OOAdvantech.Remoting.RestApi.Proxy proxy)
         {
             this.Proxy = proxy;
+        }
+        
+        // The Width property for the object.
+        public string UserLanguageCode
+        {
+            get
+            {
+                object[] args = new object[0];
+                System.Type[] argsTypes = new System.Type[0];
+                object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "get_UserLanguageCode", args, argsTypes);
+                return this.Proxy.GetValue<string>(retValue);
+            }
+            set
+            {
+                object[] args = new object[1];
+                System.Type[] argsTypes = new System.Type[1];
+                args[0] = value;
+                argsTypes[0] = typeof(string);
+                this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IServicesContextWorker), "set_UserLanguageCode", args, argsTypes);
+            }
         }
         
         // The Width property for the object.

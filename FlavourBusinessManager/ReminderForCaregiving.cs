@@ -22,8 +22,34 @@ namespace FlavourBusinessManager
     /// <MetaDataID>{18981145-54b1-4925-8204-7f9173d1a5c6}</MetaDataID>
     [BackwardCompatibilityID("{18981145-54b1-4925-8204-7f9173d1a5c6}")]
     [Persistent()]
-    internal class ReminderForCareGiving//<T> where T : IServicesContextWorker
+    public class ReminderForCareGiving//<T> where T : IServicesContextWorker
     {
+
+
+
+        /// <exclude>Excluded</exclude>
+        int? _DurationInMin;
+
+        /// <MetaDataID>{dadc072f-7824-4c02-92dd-c1a039dbc422}</MetaDataID>
+        [PersistentMember(nameof(_DurationInMin))]
+        [BackwardCompatibilityID("+6")]
+        public int? DurationInMin
+        {
+            get => _DurationInMin;
+            set
+            {
+                if (_DurationInMin != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _DurationInMin = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+
+            }
+        }
+
         /// <exclude>Excluded</exclude>
         ObjectStateManagerLink StateManagerLink;
 
@@ -35,7 +61,7 @@ namespace FlavourBusinessManager
         public ReminderForCareGiving(ClientMessages messageType,
         List<IServicesContextWorker> candidatesForCareGiving,
         List<IServiceContextSupervisor> supervisorsForCareGiving,
-        Message messagePattern,
+        
         DateTime reminderStartTime,
         TimeSpan delayTimeBetweenTriesToFindCareGiver,
         TimeSpan maximumTimeForCareGiverToAct,
@@ -45,7 +71,7 @@ namespace FlavourBusinessManager
             MessageType = messageType;
             CandidatesForCareGiving = candidatesForCareGiving;
             SupervisorsForCareGiving = supervisorsForCareGiving;
-            MessagePattern = messagePattern;
+            //MessagePattern = messagePattern;
 
             StartedAt = reminderStartTime;
 
@@ -55,8 +81,13 @@ namespace FlavourBusinessManager
             MaximumTimeBeforeSupervisorTakeCare = maximumTimeBeforeSupervisorTakeCare;
         }
 
+        /// <MetaDataID>{ab3047c9-b5cf-46a1-b39e-14e89de5c8bc}</MetaDataID>
+        protected ReminderForCareGiving()
+        {
 
-        public event ObjectChangeStateHandle ObjectChangeState;
+        }
+
+
 
         /// <MetaDataID>{3a9a654a-cf28-44b7-82a5-4a80800639be}</MetaDataID>
         List<IServicesContextWorker> CandidatesForCareGiving;
@@ -82,30 +113,48 @@ namespace FlavourBusinessManager
         {
             get => _TimeOfLastMessageSendToCareGiver; set
             {
-                if (_TimeOfLastMessageSendToCareGiver!=value)
+                if (_TimeOfLastMessageSendToCareGiver != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _TimeOfLastMessageSendToCareGiver=value;
+                        _TimeOfLastMessageSendToCareGiver = value;
                         stateTransition.Consistent = true;
                     }
                 }
             }
         }
 
+        /// <exclude>Excluded</exclude>
+        DateTime _TimeOfLastMessageSendToSupervisor = DateTime.MinValue;
+
         /// <MetaDataID>{7a1628e7-5ee2-46a8-99da-c2e9d1a9b09f}</MetaDataID>
-        DateTime TimeOfLastMessageSendToSupervisor { get; set; } = DateTime.MinValue;
+        [PersistentMember(nameof(_TimeOfLastMessageSendToSupervisor))]
+        [BackwardCompatibilityID("+5")]
+        DateTime TimeOfLastMessageSendToSupervisor
+        {
+            get => _TimeOfLastMessageSendToSupervisor; set
+            {
+                if (_TimeOfLastMessageSendToSupervisor != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _TimeOfLastMessageSendToSupervisor = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <MetaDataID>{1e7ef94e-05b4-4c57-b25a-f6719f3efdc3}</MetaDataID>
         TimeSpan DelayTimeBetweenTriesToFindSupervisor;
         /// <MetaDataID>{e1434619-5735-4724-b958-967fe468910c}</MetaDataID>
         [PersistentMember]
         [BackwardCompatibilityID("+4")]
-        private string UniqueId;
+        internal string UniqueId;
 
 
         /// <exclude>Excluded</exclude>
-        DateTime                                                                                                                                             _StartedAt;
+        DateTime _StartedAt;
         /// <MetaDataID>{1250373f-eb5c-4d91-8cb6-855d967b168c}</MetaDataID>
         [PersistentMember(nameof(_StartedAt))]
         [BackwardCompatibilityID("+2")]
@@ -113,18 +162,18 @@ namespace FlavourBusinessManager
         {
             get => _StartedAt; set
             {
-                if (_StartedAt!=value)
+                if (_StartedAt != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _StartedAt=value;
+                        _StartedAt = value;
                         stateTransition.Consistent = true;
                     }
                 }
-            } } 
+            }
+        }
 
-        /// <MetaDataID>{dadc072f-7824-4c02-92dd-c1a039dbc422}</MetaDataID>
-        public int? DurationInMin;
+
 
 
         /// <MetaDataID>{c08ba60a-9f75-4059-845e-70d2bc8cff77}</MetaDataID>
@@ -144,17 +193,21 @@ namespace FlavourBusinessManager
                 }
             }
         }
-        FlavourBusinessFacade.EndUsers.FlavourBusinessFacade.EndUsers.Message MessagePattern;
+        ///// <MetaDataID>{ad9fe9cb-acd1-4472-afbd-1fe1138ead79}</MetaDataID>
+        //public Message MessagePattern;
 
         /// <MetaDataID>{ff311198-e710-46e8-a7a6-741749432a18}</MetaDataID>
         Type WorkerType;
+
+
+        /// <MetaDataID>{386c7e3d-4d62-41af-905b-eeeda954fe90}</MetaDataID>
+        public Func<MessageCreationData, Message> BuildMessage;
 
         /// <MetaDataID>{46f8bbc1-315b-4601-aaa2-6ac8bd6cad6e}</MetaDataID>
         bool TerminateThread = false;
         /// <MetaDataID>{95544461-86c7-4628-b977-a4a1bdb6d774}</MetaDataID>
         public void Start()
         {
-
             var ticks = new DateTime(2022, 1, 1).Ticks;
             UniqueId = GetHashCode().ToString("x") + "_" + (DateTime.Now.Ticks - ticks).ToString("x");
 
@@ -182,7 +235,6 @@ namespace FlavourBusinessManager
 
                                     TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
                                     SendRemindMessageToCareGiver(careGivers.Select(x => x.Worker).ToList());
-                                    ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
                                 }
                             }
                             else
@@ -191,22 +243,27 @@ namespace FlavourBusinessManager
                                 {
                                     TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
                                     SendRemindMessageToCareGiver(careGivers.Select(x => x.Worker).ToList());
-                                    ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
+
                                 }
                             }
+
+
 
 
                         }
                         else if ((DateTime.UtcNow - TimeOfLastMessageSendToCareGiver.ToUniversalTime()) > DelayTimeBetweenTriesToFindCareGiver)
                         {
+
                             TimeOfLastMessageSendToCareGiver = DateTime.UtcNow;
-                            List<IServicesContextWorker> candidatesForCareGiving = null; ;
+                            List<IServicesContextWorker> candidatesForCareGiving = null;
 
                             lock (this)
                                 candidatesForCareGiving = CandidatesForCareGiving.ToList();
 
                             SendMessageToFindCareGiver(candidatesForCareGiving);
-                            ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
+
+
+
                         }
                         #endregion
 
@@ -220,6 +277,8 @@ namespace FlavourBusinessManager
                             var supervisorCareGivers = Caregivers.Where(x => x.Worker is IServiceContextSupervisor).OrderByDescending(x => x.WillTakeCareTimestamp).ToList();
                             if (supervisorCareGivers.Any())
                             {
+
+
                                 if (supervisorCareGivers.First().WillTakeCareTimestamp > TimeOfLastMessageSendToSupervisor)
                                 {
 
@@ -228,7 +287,6 @@ namespace FlavourBusinessManager
 
                                         TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                         SendRemindMessageToSupervisor(careGivers.Select(x => x.Worker).ToList());
-                                        ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
 
                                     }
                                 }
@@ -238,21 +296,23 @@ namespace FlavourBusinessManager
                                     {
                                         TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                         SendRemindMessageToSupervisor(careGivers.Select(x => x.Worker).ToList());
-                                        ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
 
                                     }
                                 }
 
+
+
                             }
                             else if ((DateTime.UtcNow - TimeOfLastMessageSendToSupervisor.ToUniversalTime()) > DelayTimeBetweenTriesToFindCareGiver)
                             {
+
+
                                 List<IServiceContextSupervisor> supervisorsForCareGiving = null;
                                 lock (this)
                                     supervisorsForCareGiving = SupervisorsForCareGiving.ToList();
 
                                 TimeOfLastMessageSendToSupervisor = DateTime.UtcNow;
                                 SendMessageToFindSupervisor(supervisorsForCareGiving);
-                                ObjectChangeState?.Invoke(this, nameof(TimeOfLastMessageSendToCareGiver));
 
                             }
                         }
@@ -278,40 +338,45 @@ namespace FlavourBusinessManager
         /// <MetaDataID>{fd096624-714b-460d-a6c4-a953a9acaeb3}</MetaDataID>
         private void SendRemindMessageToSupervisor(List<IServicesContextWorker> servicesContextWorkers)
         {
-            foreach (var worker in servicesContextWorkers)
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                var workerActiveShiftWork = worker.ShiftWork;
-                if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
+                foreach (var worker in servicesContextWorkers)
                 {
-
-                    Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
-
-
-                    if (clientMessage == null)
+                    var workerActiveShiftWork = worker.ShiftWork;
+                    if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        clientMessage = new Message();
-                        foreach (var entry in this.MessagePattern.Data)
-                            clientMessage.Data[entry.Key] = entry.Value;
+                        Message clientMessage = BuildMessage?.Invoke(new MessageCreationData() { Worker = worker, TypeOfCaregivingMessage = TypeOfCaregivingMessage.Remind });
 
-                        clientMessage.Data["ReminderID"] = UniqueId;
-                        clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
-                    }
-                    (worker as IMessageConsumer).PushMessage(clientMessage);
-                    if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
-                    {
-                        CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        //Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
+
+                        //if (clientMessage == null)
+                        //{
+                        //    clientMessage = new Message();
+                        //    foreach (var entry in this.MessagePattern.Data)
+                        //        clientMessage.Data[entry.Key] = entry.Value;
+
+                        //    clientMessage.Data["ReminderID"] = UniqueId;
+                        //    clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
+                        //}
+
+                        (worker as IMessageConsumer).PushMessage(clientMessage);
+                        if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                message.NotificationsNum += 1;
-                                message.NotificationTimestamp = DateTime.UtcNow;
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                innerStateTransition.Consistent = true;
                             }
+                            ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
 
-                            stateTransition.Consistent = true;
                         }
-                        ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
-
                     }
                 }
             }
@@ -321,78 +386,103 @@ namespace FlavourBusinessManager
         private void SendMessageToFindSupervisor(List<IServiceContextSupervisor> candidatesForCareGiving)
         {
 
-            foreach (var worker in candidatesForCareGiving)
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-
-                var workerActiveShiftWork = worker.ShiftWork;
-
-                if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
+                foreach (var worker in candidatesForCareGiving)
                 {
-                    Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
-                    if (clientMessage == null)
-                    {
-                        clientMessage = new Message();
-                        foreach (var entry in this.MessagePattern.Data)
-                            clientMessage.Data[entry.Key] = entry.Value;
 
-                        clientMessage.Data["ReminderID"] = UniqueId;
-                        clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
-                    }
-                    (worker as IMessageConsumer).PushMessage(clientMessage);
-                    if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
+                    var workerActiveShiftWork = worker.ShiftWork;
+
+                    if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+
+                        Message clientMessage = BuildMessage?.Invoke(new MessageCreationData() { Worker = worker, TypeOfCaregivingMessage = TypeOfCaregivingMessage.SearchFor });
+
+
+                        //Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
+                        //if (clientMessage == null)
+                        //{
+
+
+
+
+                        //    clientMessage = new Message();
+                        //    foreach (var entry in this.MessagePattern.Data)
+                        //        clientMessage.Data[entry.Key] = entry.Value;
+
+                        //    clientMessage.Data["ReminderID"] = UniqueId;
+                        //    clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
+                        //}
+                        (worker as IMessageConsumer).PushMessage(clientMessage);
+                        if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                message.NotificationsNum += 1;
-                                message.NotificationTimestamp = DateTime.UtcNow;
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                innerStateTransition.Consistent = true;
                             }
+                            ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
 
-                            stateTransition.Consistent = true;
                         }
-                        ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
-
                     }
                 }
+                stateTransition.Consistent = true;
             }
+
+
+
         }
 
         /// <MetaDataID>{a9b0ed25-c71a-49b1-baa9-4f132b3e941a}</MetaDataID>
         private void SendRemindMessageToCareGiver(List<IServicesContextWorker> servicesContextWorkers)
         {
-            foreach (var worker in servicesContextWorkers)
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                var workerActiveShiftWork = worker.ShiftWork;
-                if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
+
+                var tt = Localization.I18nLocalization.Current.GetString("el", "RoomService.HallsViewTitle");
+
+                foreach (var worker in servicesContextWorkers)
                 {
-                    Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
-                    if (clientMessage == null)
+                    var workerActiveShiftWork = worker.ShiftWork;
+                    if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        clientMessage = new Message();
-                        foreach (var entry in this.MessagePattern.Data)
-                            clientMessage.Data[entry.Key] = entry.Value;
 
-                        clientMessage.Data["ReminderID"] = UniqueId;
-                        clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
-                    }
-                    (worker as IMessageConsumer).PushMessage(clientMessage);
-                    if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
-                    {
-                        CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        Message clientMessage = BuildMessage?.Invoke(new MessageCreationData() { Worker = worker, TypeOfCaregivingMessage = TypeOfCaregivingMessage.Remind });
+                        //Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
+                        //if (clientMessage == null)
+                        //{
+                        //    clientMessage = new Message();
+                        //    foreach (var entry in this.MessagePattern.Data)
+                        //        clientMessage.Data[entry.Key] = entry.Value;
+
+                        //    clientMessage.Data["ReminderID"] = UniqueId;
+                        //    clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
+                        //}
+                        (worker as IMessageConsumer).PushMessage(clientMessage);
+                        if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                message.NotificationsNum += 1;
-                                message.NotificationTimestamp = DateTime.UtcNow;
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                innerStateTransition.Consistent = true;
                             }
+                            ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
 
-                            stateTransition.Consistent = true;
                         }
-                        ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
-
                     }
                 }
             }
@@ -402,40 +492,40 @@ namespace FlavourBusinessManager
         private void SendMessageToFindCareGiver(List<IServicesContextWorker> candidatesForCareGiving)
         {
 
-            foreach (var worker in candidatesForCareGiving)
+
+            using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
             {
-                var workerActiveShiftWork = worker.ShiftWork;
-                if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
+                foreach (var worker in candidatesForCareGiving)
                 {
-                    Message clientMessage = (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId)).FirstOrDefault();
-                    if (clientMessage == null)
+                    var workerActiveShiftWork = worker.ShiftWork;
+                    if (workerActiveShiftWork != null && workerActiveShiftWork.IsActive())// DateTime.UtcNow > workerActiveShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < workerActiveShiftWork.EndsAt.ToUniversalTime())
                     {
-                        clientMessage = new Message();
-                        foreach (var entry in this.MessagePattern.Data)
-                            clientMessage.Data[entry.Key] = entry.Value;
 
-                        clientMessage.Data["ReminderID"] = UniqueId;
-                        clientMessage.Notification = new Notification() { Title = this.MessagePattern.Notification.Title };
-                    }
-                    (worker as IMessageConsumer).PushMessage(clientMessage);
-                    if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
-                    {
-                        CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
-                        using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                        Message clientMessage = BuildMessage?.Invoke(new MessageCreationData() { Worker = worker, TypeOfCaregivingMessage = TypeOfCaregivingMessage.SearchFor });
+
+
+                        (worker as IMessageConsumer).PushMessage(clientMessage);
+                        if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                message.NotificationsNum += 1;
-                                message.NotificationTimestamp = DateTime.UtcNow;
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                {
+                                    message.NotificationsNum += 1;
+                                    message.NotificationTimestamp = DateTime.UtcNow;
+                                }
+
+                                innerStateTransition.Consistent = true;
                             }
+                            ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
 
-                            stateTransition.Consistent = true;
                         }
-                        ServicesContextRunTime.Current.UpdateWaitersWithUnreadMessages();
-
                     }
                 }
+                stateTransition.Consistent = true;
             }
+
         }
 
         /// <MetaDataID>{cbe1dfd0-44bd-48e4-af20-d63e91ffc3f7}</MetaDataID>
@@ -444,7 +534,7 @@ namespace FlavourBusinessManager
             lock (this)
             {
                 TerminateThread = true;
-                DurationInMin= (DateTime.UtcNow - StartedAt.ToUniversalTime()).Minutes;
+                DurationInMin = (DateTime.UtcNow - StartedAt.ToUniversalTime()).Minutes;
             }
         }
 
@@ -454,7 +544,13 @@ namespace FlavourBusinessManager
             lock (CaregiversLock)
             {
 
-                _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
+
+                using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                {
+                    _Caregivers.Add(new Caregiver() { Worker = caregiver, CareGiving = careGivingType, WillTakeCareTimestamp = DateTime.UtcNow });
+                    stateTransition.Consistent = true;
+                }
+
 
 
             }
@@ -470,20 +566,20 @@ namespace FlavourBusinessManager
         }
 
         /// <MetaDataID>{d3288653-39b3-48f6-b89f-68a9c32f7724}</MetaDataID>
-        internal void Init(FlavourBusinessFacade.EndUsers.FlavourBusinessFacade.EndUsers.ClientMessages messageType,
-System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServicesContextWorker> candidatesForCareGiving,
-System.Collections.Generic.List<FlavourBusinessFacade.HumanResources.IServiceContextSupervisor> supervisorsForCareGiving,
-FlavourBusinessFacade.EndUsers.FlavourBusinessFacade.EndUsers.Message messagePattern,
-System.DateTime reminderStartTime,
-System.TimeSpan delayTimeBetweenTriesToFindCareGiver,
-System.TimeSpan maximumTimeForCareGiverToAct,
-System.TimeSpan delayTimeBetweenTriesToFindSupervisor,
-System.TimeSpan maximumTimeBeforeSupervisorTakeCare)
+        internal void Init(ClientMessages messageType,
+        List<IServicesContextWorker> candidatesForCareGiving,
+        List<IServiceContextSupervisor> supervisorsForCareGiving,
+        
+        DateTime reminderStartTime,
+        TimeSpan delayTimeBetweenTriesToFindCareGiver,
+        TimeSpan maximumTimeForCareGiverToAct,
+        TimeSpan delayTimeBetweenTriesToFindSupervisor,
+        TimeSpan maximumTimeBeforeSupervisorTakeCare)
         {
             MessageType = messageType;
             CandidatesForCareGiving = candidatesForCareGiving;
             SupervisorsForCareGiving = supervisorsForCareGiving;
-            MessagePattern = messagePattern;
+            
 
             StartedAt = reminderStartTime;
 
@@ -492,5 +588,51 @@ System.TimeSpan maximumTimeBeforeSupervisorTakeCare)
             DelayTimeBetweenTriesToFindSupervisor = delayTimeBetweenTriesToFindSupervisor;
             MaximumTimeBeforeSupervisorTakeCare = maximumTimeBeforeSupervisorTakeCare;
         }
+
+        /// <MetaDataID>{17764c9e-540f-4459-96c4-43d20589730d}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+7")]
+        private string WillTakeCareWorkersJson;
+
+        [ObjectActivationCall]
+        internal void OnActivated()
+        {
+
+            lock (CaregiversLock)
+            {
+                if (!string.IsNullOrWhiteSpace(WillTakeCareWorkersJson))
+                    _Caregivers = OOAdvantech.Json.JsonConvert.DeserializeObject<List<Caregiver>>(WillTakeCareWorkersJson);
+
+            }
+
+
+        }
+
+        [BeforeCommitObjectStateInStorageCall]
+        internal void OnBeforeObjectStateCommitted()
+        {
+            lock (CaregiversLock)
+            {
+                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(_Caregivers);
+            }
+        }
+    }
+
+
+    /// <MetaDataID>{ab2928f7-8523-46a5-9b92-1a8a1212d6ea}</MetaDataID>
+    public enum TypeOfCaregivingMessage
+    {
+        SearchFor,
+        Remind
+    }
+
+    /// <MetaDataID>{bb34d2d8-f915-4f24-9ee5-d279e621b6bb}</MetaDataID>
+    public class MessageCreationData
+    {
+
+        /// <MetaDataID>{39e97a01-a112-4e13-8407-d0f2e5003e47}</MetaDataID>
+        public TypeOfCaregivingMessage TypeOfCaregivingMessage;
+        /// <MetaDataID>{9ac6bc49-3130-46d0-9ec3-5192104d79bc}</MetaDataID>
+        public IServicesContextWorker Worker;
     }
 }

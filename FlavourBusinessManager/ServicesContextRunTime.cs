@@ -3499,7 +3499,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             var fisicalParty = new FisicalParty();
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                fisicalParty.Name = Properties.Resources.DefaultFisicalPartName;
+                fisicalParty.Name = Properties.Resources.DefaultFiscalPartName;
                 objectStorage.CommitTransientObjectState(fisicalParty);
                 stateTransition.Consistent = true;
             }

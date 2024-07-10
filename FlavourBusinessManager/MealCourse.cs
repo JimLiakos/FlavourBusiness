@@ -673,7 +673,7 @@ namespace FlavourBusinessManager.RoomService
             {
                 var preparationStationRuntime = PreparationStation.GetPreparationStationFor(itemPreparation);
 
-                if (preparationStationRuntime != null)
+                if (preparationStationRuntime != null&& _FoodItemsInProgress!=null)
                 {
                     var itemsPreparationContext = _FoodItemsInProgress.Where(x => x.PreparationStationIdentity == (preparationStationRuntime as IPreparationStation).PreparationStationIdentity).FirstOrDefault();
 

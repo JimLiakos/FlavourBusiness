@@ -20,7 +20,29 @@ namespace FlavourBusinessManager.HumanResources
     [Persistent()]
     public class TakeawayCashier : MarshalByRefObject, ITakeawayCashier, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <exclude>Excluded</exclude>
+        string _UserLanguageCode;
 
+        /// <MetaDataID>{44c5afe4-bf75-43c5-b0d5-6687e11aa998}</MetaDataID>
+        [PersistentMember(nameof(_UserLanguageCode))]
+        [BackwardCompatibilityID("+19")]
+        public string UserLanguageCode
+        {
+            get => _UserLanguageCode;
+            set
+            {
+                if (_UserLanguageCode != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserLanguageCode = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <MetaDataID>{3e4cddef-dd90-45fd-88f3-40fb8ee780ef}</MetaDataID>
         public TakeawayCashier()
         {
 
@@ -50,8 +72,10 @@ namespace FlavourBusinessManager.HumanResources
 
             }
         }
+        /// <MetaDataID>{805e08f0-ec9e-4502-af95-4868e8c3f118}</MetaDataID>
         public string DeviceToken => DeviceFirebaseToken;
 
+        /// <MetaDataID>{91e97924-f3a6-4709-9893-9b2efb474f3f}</MetaDataID>
         public bool NativeUser { get; set; }
 
         /// <exclude>Excluded</exclude>
@@ -128,6 +152,7 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
         }
+        /// <MetaDataID>{84e13835-7ac9-4c80-83ba-bf00fd7a5f8f}</MetaDataID>
         public IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations, IFoodServiceClientSession foodServicesClientSession)
         {
             return Bill.GetBillFor(itemPreparations, foodServicesClientSession as FoodServiceClientSession);

@@ -168,5 +168,14 @@ namespace MenuDesigner.ViewModel.Preview
             throw new NotImplementedException();
         }
 
+        Task IFoodServicesClientSessionViewModel.RefreshMessmates()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<FoodServiceSessionCommitResponse> IFoodServicesClientSessionViewModel.SendItemsForPreparation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

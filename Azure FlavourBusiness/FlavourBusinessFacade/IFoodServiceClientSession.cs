@@ -230,8 +230,9 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{b8ad8261-1dc2-4065-aaf9-3648bfa5d9c0}</MetaDataID>
         List<ItemPreparationStateAbbreviation> Commit(List<IItemPreparation> itemPreparations);
 
+        /// <MetaDataID>{e79c0172-ea36-4beb-b498-8cce8bbe989b}</MetaDataID>
         List<ItemPreparationStateAbbreviation> CommitNewSessionType(SessionType sessionType, List<IItemPreparation> itemPreparations);
-        
+
 
 
         /// <MetaDataID>{5e5aa9fa-5b59-43f6-9e62-0852f60c6c4b}</MetaDataID>

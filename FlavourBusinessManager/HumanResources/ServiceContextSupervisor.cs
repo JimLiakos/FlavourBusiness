@@ -19,6 +19,27 @@ namespace FlavourBusinessManager.HumanResources
     [OOAdvantech.MetaDataRepository.Persistent()]
     public class ServiceContextSupervisor : MarshalByRefObject, IServiceContextSupervisor, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
+        /// <exclude>Excluded</exclude>
+        string _UserLanguageCode;
+
+        /// <MetaDataID>{7ab920d5-9c97-403c-b0fe-1306eacab8a5}</MetaDataID>
+        [PersistentMember(nameof(_UserLanguageCode))]
+        [BackwardCompatibilityID("+21")]
+        public string UserLanguageCode
+        {
+            get => _UserLanguageCode;
+            set
+            {
+                if (_UserLanguageCode != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserLanguageCode = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
 
         /// <exclude>Excluded</exclude>
         string _DeviceFirebaseToken;
@@ -42,6 +63,7 @@ namespace FlavourBusinessManager.HumanResources
             }
         }
 
+        /// <MetaDataID>{d0863992-14b0-4526-a97f-e39a41c8d0e0}</MetaDataID>
         public string DeviceToken => DeviceFirebaseToken;
 
         /// <exclude>Excluded</exclude>
@@ -619,6 +641,7 @@ namespace FlavourBusinessManager.HumanResources
 
 
 
+        /// <MetaDataID>{ee84c1eb-e635-4551-b8f0-e44e0d54b5ee}</MetaDataID>
         bool AllowMessage = false;
 
         /// <MetaDataID>{6011d725-57c4-4d80-9b7b-49d70c2cdbbe}</MetaDataID>
@@ -659,7 +682,7 @@ namespace FlavourBusinessManager.HumanResources
                     if (ShiftWork != null && DateTime.UtcNow > ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < ShiftWork.EndsAt.ToUniversalTime())
                     {
                         var clientMessage = Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
-                        if ( clientMessage == null)
+                        if (clientMessage == null)
                         {
                             clientMessage = new Message();
                             clientMessage.Data["ClientMessageType"] = ClientMessages.DelayedMealAtTheCounter;
@@ -713,6 +736,7 @@ namespace FlavourBusinessManager.HumanResources
                 }
             }
         }
+        /// <MetaDataID>{adda6cc9-027c-4193-aeef-e7bd6052a14e}</MetaDataID>
         public void IWillTakeCare(string messageId)
         {
             var message = Messages.Where(x => x.MessageID == messageId).FirstOrDefault();

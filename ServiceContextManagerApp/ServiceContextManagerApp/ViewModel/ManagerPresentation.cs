@@ -19,6 +19,12 @@ using FlavourBusinessFacade.RoomService;
 using System.Linq.Expressions;
 using Xamarin.Forms;
 using System.Drawing;
+using FlavourBusinessFacade.ViewModel;
+using OOAdvantech.Json.Linq;
+using System.Reflection;
+
+
+
 
 
 
@@ -48,7 +54,7 @@ namespace ServiceContextManagerApp
 
 
     /// <MetaDataID>{57c59ee6-4bcb-45a9-9635-06d1d922efea}</MetaDataID>
-    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
+    public class ManagerPresentation : MarshalByRefObject, INotifyPropertyChanged, IManagerPresentation,ILocalization, FlavourBusinessFacade.ViewModel.ISecureUser, IFontsResolver, OOAdvantech.Remoting.IExtMarshalByRefObject
     {
 
 
@@ -846,6 +852,7 @@ namespace ServiceContextManagerApp
                                         foreach (var supervisorRole in roles)
                                         {
                                             ServiceContextSupervisor = RemotingServices.CastTransparentProxy<IServiceContextSupervisor>(supervisorRole.User);
+                                            ServiceContextSupervisor.UserLanguageCode = Language;
                                             var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
                                             if (!UserServiceContextSupervisorRoles.ContainsKey(servicesContextIdentity))
                                             {
@@ -882,6 +889,7 @@ namespace ServiceContextManagerApp
 
                                             var servicesContextIdentity = ServiceContextSupervisor.ServicesContextIdentity;
                                             Organization = RemotingServices.CastTransparentProxy<IOrganization>(role.User);
+                                            
                                             _ServicesContexts = Organization.ServicesContexts.Select(x => new ServicesContextPresentation(x, ServiceContextSupervisor)).OfType<IServicesContextPresentation>().ToList();
                                             OOAdvantech.Debug.Logger.Log(new List<string>() { "Organization servicesContextPresentations" });
                                             if (_ServicesContexts.Count > 1)
@@ -1085,6 +1093,19 @@ namespace ServiceContextManagerApp
                     return "";
             }
         }
+
+        string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+        public string Language { get { return lan; } }
+
+
+        /// <exclude>Excluded</exclude>
+        string deflan = "en";
+
+        public string DefaultLanguage { get { return deflan; } }
+
+
+        public string AppIdentity => "com.microneme.dontwaitmanager";
+
         /// <MetaDataID>{1b8248d1-e683-4862-8cbd-7834de81cc4e}</MetaDataID>
         public async Task<bool> AssignSupervisor()
         {
@@ -1113,6 +1134,122 @@ namespace ServiceContextManagerApp
             }
             return fontData;
         }
+
+        Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
+
+        public string GetTranslation(string langCountry)
+        {
+            if (Translations.ContainsKey(langCountry))
+                return Translations[langCountry].ToString();
+            string json = "{}";
+            var assembly = Assembly.GetExecutingAssembly();
+
+#if DeviceDotNet
+            string path = "WaiterApp.i18n";
+#else
+            string path = "WaiterApp.WPF.i18n";
+#endif
+
+            string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains(path) && x.Contains(langCountry + ".json")).FirstOrDefault();
+
+            //string jsonName = assembly.GetManifestResourceNames().Where(x => x.Contains("WaiterApp.WPF.i18n") && x.Contains(langCountry + ".json")).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(jsonName))
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(jsonName), Encoding.UTF8))
+                {
+                    json = reader.ReadToEnd();
+                    Translations[langCountry] = JObject.Parse(json);
+                    // Do something with the value
+                }
+            }
+            return json;
+
+        }
+
+
+        public string GetString(string langCountry, string key)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return null;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            return (jToken as JValue).Value as string;
+                    }
+                    return null;
+                }
+
+                if (jObject.TryGetValue(member, out jToken))
+                {
+                    jObject = jToken as JObject;
+
+                }
+                else
+                    return null;
+                i++;
+            }
+
+            return null;
+        }
+
+
+        public void SetString(string langCountry, string key, string newValue)
+        {
+            JObject jObject = null;
+            if (!Translations.TryGetValue(langCountry, out jObject))
+            {
+                GetTranslation(langCountry);
+                jObject = Translations[langCountry];
+
+            }
+
+            var keyParts = key.Split('.');
+            int i = 0;
+            foreach (string member in keyParts)
+            {
+                if (jObject == null)
+                    return;
+                JToken jToken = null;
+                if (i == keyParts.Length - 1)
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                    {
+                        if (jToken is JValue)
+                            (jToken as JValue).Value = newValue;
+                    }
+                    else
+                        jObject.Add(member, new JValue(newValue));
+                }
+                else
+                {
+                    if (jObject.TryGetValue(member, out jToken))
+                        jObject = jToken as JObject;
+                    else
+                    {
+                        jObject.Add(member, new JObject());
+                        jObject = jObject[member] as JObject;
+                    }
+                }
+                i++;
+            }
+
+        }
+
 
         /// <MetaDataID>{6d9638e3-723b-4fd2-b8c7-e42e76a99381}</MetaDataID>
         IServiceContextSupervisor ServiceContextSupervisor;

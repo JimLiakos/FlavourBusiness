@@ -18,6 +18,7 @@ namespace FlavourBusinessFacade.HumanResources
     public interface ICourier : IServicesContextWorker, EndUsers.IMessageConsumer, IUser
     {
 
+        /// <MetaDataID>{8edbf711-6591-4139-bc41-47ffb850d69a}</MetaDataID>
         IHomeDeliveryServicePoint HomeDeliveryServicePoint { get; }
 
         [RemoteEventPublish(InvokeType.Async)]
@@ -47,7 +48,8 @@ namespace FlavourBusinessFacade.HumanResources
         /// <MetaDataID>{71a003c6-49aa-435b-bef2-8aec8d26b833}</MetaDataID>
         void AssignAndCommitFoodShipping(IFoodShipping foodShipping);
 
-        void AssignAndCommitFoodShippings(List<IFoodShipping> foodShippings,string apiKey);
+        /// <MetaDataID>{7b471ab0-6818-4781-8c54-a1090b23f707}</MetaDataID>
+        void AssignAndCommitFoodShippings(List<IFoodShipping> foodShippings, string apiKey);
 
         /// <MetaDataID>{afb21fc6-2563-4fc0-b82b-04f40bffff7b}</MetaDataID>
         void FoodShippingReturn(IFoodShipping foodShipping, string returnReasonIdentity, string customReturnReasonDescription = null);
@@ -68,6 +70,7 @@ namespace FlavourBusinessFacade.HumanResources
         /// <summary>
         /// The courier informs that he has returned
         /// </summary>
+        /// <MetaDataID>{a11d2fe7-4757-4ca8-b426-420eb5b1a98a}</MetaDataID>
         // <MetaDataID>{215e7bea-ba6a-4879-9368-d2b61f0422cb}</MetaDataID>
         void ImBack();
 

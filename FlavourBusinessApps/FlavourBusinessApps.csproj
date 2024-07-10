@@ -561,6 +561,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Courier.Wpf\i18n\" />
+    <Folder Include="ServiceContextManagerApp.WPF\i18n\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

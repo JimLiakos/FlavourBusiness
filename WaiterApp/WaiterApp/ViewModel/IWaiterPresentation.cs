@@ -2,6 +2,7 @@
 using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessFacade.ServicesContextResources;
 using OOAdvantech.MetaDataRepository;
+using ServiceContextManagerApp;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,26 +11,27 @@ using System.Threading.Tasks;
 namespace WaiterApp.ViewModel
 {
 
-    public delegate void LaytheTableRequestHandle(IWaiterPresentation waiterPresentation, string messageID,string servicePointIdentity);
-    public delegate void ItemsReadyToServeRequesttHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
-    public delegate void MealConversationTimeoutHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity, string sessionIdentity);
+    public delegate void LayTheTableRequestHandle(IWaiterPresentation waiterPresentation, string messageID,string servicePointIdentity);
+    public delegate void ItemsReadyToServeRequestHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity);
+    public delegate void MealConversationTimeExceededHandle(IWaiterPresentation waiterPresentation, string messageID, string servicePointIdentity, string sessionIdentity, CaregivingMessageType caregivingMessageType, List<string> namesOfDelayedCustomers);
+    
     public delegate void ServicePointChangeStateHandle(IWaiterPresentation waiterPresentation, string servicePointIdentity, ServicePointState newState);
     /// <MetaDataID>{981df64d-06d2-47af-9900-792dd6492ef0}</MetaDataID>
     [HttpVisible]
     public interface IWaiterPresentation
     {
         [GenerateEventConsumerProxy]
-        event LaytheTableRequestHandle LayTheTableRequest;
+        event LayTheTableRequestHandle LayTheTableRequest;
 
         [GenerateEventConsumerProxy]
         event ServicePointChangeStateHandle ServicePointChangeState;
 
         [GenerateEventConsumerProxy]
-        event ItemsReadyToServeRequesttHandle ItemsReadyToServeRequest;
+        event ItemsReadyToServeRequestHandle ItemsReadyToServeRequest;
 
 
         [GenerateEventConsumerProxy]
-        event MealConversationTimeoutHandle MealConversationTimeout;
+        event MealConversationTimeExceededHandle MealConversationTimeExceeded;
 
         /// <MetaDataID>{4f9504ee-2809-4910-b6fd-7f6356eb649b}</MetaDataID>
         void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity);
@@ -113,7 +115,7 @@ namespace WaiterApp.ViewModel
         void TableIsLay(string servicesPointIdentity);
 
 
-
+        FlavourBusinessFacade.EndUsers.Notification GetMessageNotification(string messageId);
 
 
     }

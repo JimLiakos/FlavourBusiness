@@ -251,7 +251,7 @@ namespace FlavourBusinessManager.RoomService
                                 ComputingCluster.WriteOnEventLog("MealMonitoring", error.Message + Environment.NewLine + error.StackTrace, System.Diagnostics.EventLogEntryType.Error);
                             }
 
-                            foreach (var preparationStation in ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.OfType<PreparationStation>().Where(x => x.PrintManager!=null))
+                            foreach (var preparationStation in ServicePointRunTime.ServicesContextRunTime.Current.PreparationStations.OfType<PreparationStation>().Where(x => x.PrintManager != null))
                             {
                                 try
                                 {
@@ -295,7 +295,8 @@ namespace FlavourBusinessManager.RoomService
             }
         }
 
-        internal List<ItemsMealCourseAssignment> GetUncommittedItemsMealCourseAssignment()
+
+        internal List<ItemsMealCourseAssignment> GetUncommittedOrInEditItemsMealCourseAssignment()
         {
 
             List<ItemsMealCourseAssignment> itemsMealCourseAssignments = new List<ItemsMealCourseAssignment>();
@@ -303,7 +304,7 @@ namespace FlavourBusinessManager.RoomService
             List<IMealCourse> newMealCourses = new List<IMealCourse>();
             var mealItems = (from foodServiceClientSession in Session.PartialClientSessions
                              from itemPreparation in foodServiceClientSession.FlavourItems.OfType<ItemPreparation>()
-                             where itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.Committed)
+                             where foodServiceClientSession.Worker == null && (itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.Committed) || itemPreparation.InEditState)
                              select itemPreparation).ToList();
 
             if (mealItems.Count > 0)
@@ -332,6 +333,44 @@ namespace FlavourBusinessManager.RoomService
             }
             return itemsMealCourseAssignments;
         }
+
+        //internal List<ItemsMealCourseAssignment> GetUncommittedItemsMealCourseAssignment()
+        //{
+
+        //    List<ItemsMealCourseAssignment> itemsMealCourseAssignments = new List<ItemsMealCourseAssignment>();
+
+        //    List<IMealCourse> newMealCourses = new List<IMealCourse>();
+        //    var mealItems = (from foodServiceClientSession in Session.PartialClientSessions
+        //                     from itemPreparation in foodServiceClientSession.FlavourItems.OfType<ItemPreparation>()
+        //                     where itemPreparation.State.IsInTheSameOrPreviousState(ItemPreparationState.Committed)
+        //                     select itemPreparation).ToList();
+
+        //    if (mealItems.Count > 0)
+        //    {
+        //        MenuModel.MealType mealType = ObjectStorage.GetObjectFromUri<MenuModel.MealType>(_MealTypeUri);
+
+        //        foreach (var mealCourseTypesItems in (from mealItem in mealItems
+        //                                              group mealItem by mealItem.SelectedMealCourseTypeUri into mealCourseItems
+        //                                              select mealCourseItems))
+        //        {
+        //            var mealCourseType = mealType.Courses.OfType<MenuModel.MealCourseType>().Where(x => ObjectStorage.GetStorageOfObject(x)?.GetPersistentObjectUri(x) == mealCourseTypesItems.Key).First();
+
+
+        //            MealCourse mealCourse = _Courses.OfType<MealCourse>().Where(x => x.MealCourseTypeUri == mealCourseTypesItems.Key).FirstOrDefault();
+        //            if (mealCourse == null || mealCourseTypesItems.Any(x => mealCourse.ItsTooLateForChange(x)))
+        //            {
+        //                ItemsMealCourseAssignment itemsMealCourseAssignment = new ItemsMealCourseAssignment(mealCourseType, mealCourseTypesItems.ToList(), null);
+        //                itemsMealCourseAssignments.Add(itemsMealCourseAssignment);
+        //            }
+        //            else
+        //            {
+        //                ItemsMealCourseAssignment itemsMealCourseAssignment = new ItemsMealCourseAssignment(mealCourseType, mealCourseTypesItems.ToList(), mealCourse);
+        //                itemsMealCourseAssignments.Add(itemsMealCourseAssignment);
+        //            }
+        //        }
+        //    }
+        //    return itemsMealCourseAssignments;
+        //}
 
         /// <MetaDataID>{09ccf99d-b9a6-4d3a-b26a-3b1c931b682c}</MetaDataID>
         private void CheckForNewItems()

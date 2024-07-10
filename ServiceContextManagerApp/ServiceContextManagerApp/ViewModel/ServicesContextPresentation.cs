@@ -19,10 +19,7 @@ using OOAdvantech;
 using System.Linq.Expressions;
 using OOAdvantech.Remoting.RestApi;
 using Xamarin.Forms;
-using System.Windows.Controls;
-using System.Security.Principal;
-using FlavourBusinessFacade.Print;
-using FlavourBusinessManager.ServicesContextResources;
+
 using FlavourBusinessFacade.Printing;
 
 
@@ -43,6 +40,10 @@ using MarshalByRefObject = OOAdvantech.Remoting.MarshalByRefObject;
 using ZXing;
 using WaiterApp.ViewModel;
 #else
+using System.Windows.Controls;
+using System.Security.Principal;
+using FlavourBusinessFacade.Print;
+using FlavourBusinessManager.ServicesContextResources;
 using FlavourBusinessManager.Shipping;
 using MarshalByRefObject = System.MarshalByRefObject;
 using System.Drawing.Imaging;
@@ -727,8 +728,10 @@ namespace ServiceContextManagerApp
                                 if (message != null && SignedInSupervisor?.InActiveShiftWork == true)
                                 {
 
-                                    _MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID, servicesPointIdentity);
+                                    CaregivingMessageType caregivingMessageType = message.GetDataValue<CaregivingMessageType>("CaregivingMessageType");
+                                    List<string> namesOfDelayedCustomers = message.GetDataValue<List<string>>("NamesOfDelayedCustomers");
 
+                                    _MealConversationTimeExceeded?.Invoke(SignedInSupervisor, message.MessageID, servicesPointIdentity, caregivingMessageType, namesOfDelayedCustomers);
                                     return;
                                 }
                                 break;
@@ -811,7 +814,7 @@ namespace ServiceContextManagerApp
 
                 return _Halls;
             }
-        } 
+        }
 
         public List<DelayedServingBatchAbbreviation> DelayedServingBatchesAtTheCounter { get; private set; }
 
@@ -1124,48 +1127,48 @@ namespace ServiceContextManagerApp
         {
             string SigBase64 = "";
 #if DeviceDotNet
-                var barcodeWriter = new BarcodeWriterGeneric()
+            var barcodeWriter = new BarcodeWriterGeneric()
+            {
+                Format = ZXing.BarcodeFormat.QR_CODE,
+                Options = new ZXing.Common.EncodingOptions
                 {
-                    Format = ZXing.BarcodeFormat.QR_CODE,
-                    Options = new ZXing.Common.EncodingOptions
-                    {
-                        Height = 400,
-                        Width = 400
-                    }
-                };
-
-
-                var bitmapMatrix = barcodeWriter.Encode(codeValue);
-                var width = bitmapMatrix.Width;
-                var height = bitmapMatrix.Height;
-                int[] pixelsImage = new int[width * height];
-                SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
-
-                SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
-                if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
-                    fgColor = SkiaSharp.SKColors.Black;
-
-                var pixels = qrCodeImage.Pixels;
-                int k = 0;
-                for (int i = 0; i < height; i++)
-                {
-                    for (int j = 0; j < width; j++)
-                    {
-                        if (bitmapMatrix[j, i])
-                            pixels[k++] = fgColor;
-                        else
-                            pixels[k++] = SkiaSharp.SKColors.White;
-                    }
+                    Height = 400,
+                    Width = 400
                 }
-                qrCodeImage.Pixels = pixels;
+            };
 
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+
+            var bitmapMatrix = barcodeWriter.Encode(codeValue);
+            var width = bitmapMatrix.Width;
+            var height = bitmapMatrix.Height;
+            int[] pixelsImage = new int[width * height];
+            SkiaSharp.SKBitmap qrCodeImage = new SkiaSharp.SKBitmap(width, height);
+
+            SkiaSharp.SKColor fgColor = SkiaSharp.SKColors.Black;
+            if (!SkiaSharp.SKColor.TryParse(color, out fgColor))
+                fgColor = SkiaSharp.SKColors.Black;
+
+            var pixels = qrCodeImage.Pixels;
+            int k = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
                 {
-                    SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-                    d.SaveTo(ms);
-                    byte[] byteImage = ms.ToArray();
-                    SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
+                    if (bitmapMatrix[j, i])
+                        pixels[k++] = fgColor;
+                    else
+                        pixels[k++] = SkiaSharp.SKColors.White;
                 }
+            }
+            qrCodeImage.Pixels = pixels;
+
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                SkiaSharp.SKData d = SkiaSharp.SKImage.FromBitmap(qrCodeImage).Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+                d.SaveTo(ms);
+                byte[] byteImage = ms.ToArray();
+                SigBase64 = @"data:image/png;base64," + System.Convert.ToBase64String(byteImage);
+            }
 #else
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeValue, QRCodeGenerator.ECCLevel.Q);

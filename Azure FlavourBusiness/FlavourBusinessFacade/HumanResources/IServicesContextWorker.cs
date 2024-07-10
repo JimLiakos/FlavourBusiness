@@ -9,6 +9,10 @@ namespace FlavourBusinessFacade.HumanResources
     [GenerateFacadeProxy]
     public interface IServicesContextWorker : IParty
     {
+        /// <MetaDataID>{b166ebd0-afeb-40af-b8cb-324fffad2a0d}</MetaDataID>
+        [BackwardCompatibilityID("+5")]
+        string UserLanguageCode { get; set; }
+
         /// <MetaDataID>{adc60835-ab6b-4576-89a2-3f6a7e4aa9f9}</MetaDataID>
         [BackwardCompatibilityID("+4")]
         string WorkerAssignKey { get; set; }

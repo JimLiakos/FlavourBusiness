@@ -128,7 +128,7 @@
     <value>Courier</value>
     <comment>Specifies the name of the 'courier' when it is created.</comment>
   </data>
-  <data name="DefaultFisicalPartName" xml:space="preserve">
+  <data name="DefaultFiscalPartName" xml:space="preserve">
     <value>Company</value>
     <comment>Specifies the name of the 'fisical party' when it is created.</comment>
   </data>
@@ -181,6 +181,9 @@
     <value>Waiter</value>
     <comment>Specifies the name of the 'waiter' when it is created.</comment>
   </data>
+  <data name="DelayedClientsDecisionMessage" xml:space="preserve">
+    <value />
+  </data>
   <data name="DelayedFoodshippingAtTheCounter" xml:space="preserve">
     <value>Delay of order pick-up from the counter</value>
   </data>
@@ -192,6 +195,9 @@
   </data>
   <data name="FlavoursServicePointDefaultName" xml:space="preserve">
     <value>Restaurant</value>
+  </data>
+  <data name="SessionDelaydConversetionMessage" xml:space="preserve">
+    <value />
   </data>
   <data name="TablePaymentDescription" xml:space="preserve">
     <value>Table {0}</value>
