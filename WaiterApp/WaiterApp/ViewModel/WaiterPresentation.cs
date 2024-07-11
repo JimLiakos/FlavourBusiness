@@ -137,7 +137,7 @@ namespace WaiterApp.ViewModel
         {
             this.ServingBatchUpdated(_object as ServingBatchPresentation);
         }
-
+         
         public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity)
         {
             this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity, sessionIdentity);

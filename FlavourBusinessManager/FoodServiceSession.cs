@@ -754,7 +754,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                                 
                                 clientMessage.Data["NamesOfDelayedCustomers"] = customersNames;
                                 
-                                customersNames.AddRange(customersNames);
+                                //customersNames.AddRange(customersNames);
                                 if (customersNames.Count == 1)
                                 {
                                     string customerName = customersNames[0];
