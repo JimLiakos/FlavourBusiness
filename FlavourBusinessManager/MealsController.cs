@@ -861,7 +861,7 @@ namespace FlavourBusinessManager.RoomService
                 {
                     if (waiter.ShiftWork != null && DateTime.UtcNow > waiter.ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < waiter.ShiftWork.EndsAt.ToUniversalTime())
                     {
-                        var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        var clientMessage = waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageHasBeenRead).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
                         if (clientMessage == null)
                         {
                             clientMessage = new Message();
@@ -876,7 +876,7 @@ namespace FlavourBusinessManager.RoomService
                             CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -914,7 +914,7 @@ namespace FlavourBusinessManager.RoomService
                 {
                     if (courier.ShiftWork != null && DateTime.UtcNow > courier.ShiftWork.StartsAt.ToUniversalTime() && DateTime.UtcNow < courier.ShiftWork.EndsAt.ToUniversalTime())
                     {
-                        var clientMessage = courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
+                        var clientMessage = courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageHasBeenRead).OrderBy(x => x.MessageTimestamp).FirstOrDefault();
                         if (clientMessage == null)
                         {
                             clientMessage = new Message();
@@ -929,7 +929,7 @@ namespace FlavourBusinessManager.RoomService
                             CloudNotificationManager.SendMessage(clientMessage, courier.DeviceFirebaseToken);
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageReaded))
+                                foreach (var message in courier.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;

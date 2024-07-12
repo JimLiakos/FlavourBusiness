@@ -363,10 +363,15 @@ namespace FlavourBusinessManager
                         (worker as IMessageConsumer).PushMessage(clientMessage);
                         if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+
+                            Task.Delay(2000).ContinueWith(t => {
+                                if(!clientMessage.MessageHasBeenRead)
+                                    CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            });
+                            
                             using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -417,10 +422,17 @@ namespace FlavourBusinessManager
                         (worker as IMessageConsumer).PushMessage(clientMessage);
                         if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            
+
+                            Task.Delay(2000).ContinueWith(t => {
+                                if (!clientMessage.MessageHasBeenRead)
+                                    CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            });
+
+
                             using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -469,10 +481,16 @@ namespace FlavourBusinessManager
                         (worker as IMessageConsumer).PushMessage(clientMessage);
                         if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+
+                            Task.Delay(2000).ContinueWith(t => {
+                                if (!clientMessage.MessageHasBeenRead)
+                                    CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            });
+
+
                             using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -507,10 +525,17 @@ namespace FlavourBusinessManager
                         (worker as IMessageConsumer).PushMessage(clientMessage);
                         if (!string.IsNullOrWhiteSpace((worker as IMessageConsumer).DeviceToken))
                         {
-                            CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+
+                            Task.Delay(2000).ContinueWith(t => {
+                                if (!clientMessage.MessageHasBeenRead)
+                                    CloudNotificationManager.SendMessage(clientMessage, (worker as IMessageConsumer).DeviceToken);
+                            });
+
+ 
+                            
                             using (SystemStateTransition innerStateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageReaded))
+                                foreach (var message in (worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", UniqueId) && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;

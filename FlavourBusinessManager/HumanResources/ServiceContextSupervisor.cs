@@ -695,7 +695,7 @@ namespace FlavourBusinessManager.HumanResources
                                 CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
                                 using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                                 {
-                                    foreach (var message in Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter && !x.MessageReaded))
+                                    foreach (var message in Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter && !x.MessageHasBeenRead))
                                     {
                                         message.NotificationsNum += 1;
                                         message.NotificationTimestamp = DateTime.UtcNow;
@@ -807,7 +807,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
             if (message != null)
-                message.MessageReaded = true;
+                message.MessageHasBeenRead = true;
             return message;
         }
 

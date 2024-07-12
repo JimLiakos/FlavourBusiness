@@ -914,7 +914,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
             foreach (var worker in workersWithUnreadMessages)
             {
                 var workerlayMessages = worker.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable &&
-                                                    !x.MessageReaded && x.NotificationsNum <= 5).ToList();
+                                                    !x.MessageHasBeenRead && x.NotificationsNum <= 5).ToList();
                 if (workerlayMessages.Count > 0)
                 {
                     string deviceFirebaseToken = null;
@@ -926,14 +926,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var layMessage = workerlayMessages[0];
                     if (!string.IsNullOrWhiteSpace(deviceFirebaseToken))
                     {
-                        var last = workerlayMessages.Where(x => !x.MessageReaded).OrderByDescending(x => x.NotificationTimestamp).Last();
+                        var last = workerlayMessages.Where(x => !x.MessageHasBeenRead).OrderByDescending(x => x.NotificationTimestamp).Last();
                         if (System.DateTime.UtcNow - last.NotificationTimestamp.ToUniversalTime() > TimeSpan.FromMinutes(2))
                         {
                             CloudNotificationManager.SendMessage(layMessage, deviceFirebaseToken);
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
 
-                                foreach (var message in workerlayMessages.Where(x => !x.MessageReaded))
+                                foreach (var message in workerlayMessages.Where(x => !x.MessageHasBeenRead))
                                 {
                                     message.NotificationTimestamp = DateTime.UtcNow;
                                     message.NotificationsNum += 1;
@@ -948,7 +948,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
 
                 var workerServingMessages = worker.Messages.Where(x => (x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe || x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter) &&
-                                                !x.MessageReaded && x.NotificationsNum <= 5).ToList();
+                                                !x.MessageHasBeenRead && x.NotificationsNum <= 5).ToList();
                 if (workerServingMessages.Count > 0)
                 {
                     string deviceFirebaseToken = null;
@@ -964,14 +964,14 @@ namespace FlavourBusinessManager.ServicePointRunTime
                     var servingMessage = workerServingMessages[0];
                     if (!string.IsNullOrWhiteSpace(deviceFirebaseToken))
                     {
-                        var last = workerServingMessages.Where(x => !x.MessageReaded).OrderByDescending(x => x.NotificationTimestamp).Last();
+                        var last = workerServingMessages.Where(x => !x.MessageHasBeenRead).OrderByDescending(x => x.NotificationTimestamp).Last();
                         if (System.DateTime.UtcNow - last.NotificationTimestamp.ToUniversalTime() > TimeSpan.FromMinutes(2))
                         {
                             CloudNotificationManager.SendMessage(servingMessage, deviceFirebaseToken);
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
 
-                                foreach (var message in workerServingMessages.Where(x => !x.MessageReaded))
+                                foreach (var message in workerServingMessages.Where(x => !x.MessageHasBeenRead))
                                 {
                                     message.NotificationTimestamp = DateTime.UtcNow;
                                     message.NotificationsNum += 1;
@@ -1265,7 +1265,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageHasBeenRead))
                             {
                                 message.NotificationsNum += 1;
                                 message.NotificationTimestamp = DateTime.UtcNow;
@@ -1317,7 +1317,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         CloudNotificationManager.SendMessage(clientMessage, supervisor.DeviceFirebaseToken);
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            foreach (var message in supervisor.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            foreach (var message in supervisor.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageHasBeenRead))
                             {
                                 message.NotificationsNum += 1;
                                 message.NotificationTimestamp = DateTime.UtcNow;
@@ -1368,7 +1368,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                         CloudNotificationManager.SendMessage(clientMessage, waiter.DeviceFirebaseToken);
                         using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                         {
-                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageReaded))
+                            foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout && !x.MessageHasBeenRead))
                             {
                                 message.NotificationsNum += 1;
                                 message.NotificationTimestamp = DateTime.UtcNow;
@@ -1421,7 +1421,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                               message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.MealConversationTimeout ||
                                               message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe
                                               )
-                                              && !message.MessageReaded
+                                              && !message.MessageHasBeenRead
                                               select activeWaiter).ToList();
 
 
@@ -1462,7 +1462,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                                from message in activeCourier.Messages
                                                where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe
 
-                                               && !message.MessageReaded
+                                               && !message.MessageHasBeenRead
                                                select activeCourier).ToList();
             }
         }
@@ -1498,7 +1498,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                 _SupervisorsWithUnreadMessages = (from activeCourier in activeSupervisors
                                                   from message in activeCourier.Messages
                                                   where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.DelayedMealAtTheCounter
-                                                  && !message.MessageReaded
+                                                  && !message.MessageHasBeenRead
                                                   select activeCourier).ToList();
             }
         }
@@ -1540,7 +1540,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
 
                             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
                             {
-                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !x.MessageReaded))
+                                foreach (var message in waiter.Messages.Where(x => x.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !x.MessageHasBeenRead))
                                 {
                                     message.NotificationsNum += 1;
                                     message.NotificationTimestamp = DateTime.UtcNow;
@@ -1550,7 +1550,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                             }
                             var waitersWithUnreadMessages = (from activeWaiter in activeWaiters
                                                              from message in activeWaiter.Messages
-                                                             where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !message.MessageReaded
+                                                             where message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.LayTheTable && !message.MessageHasBeenRead
                                                              select activeWaiter).ToList();
                         }
                     }

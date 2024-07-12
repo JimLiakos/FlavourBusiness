@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 
@@ -61,22 +62,21 @@ namespace FlavourBusinessFacade.EndUsers
         }
 
         /// <exclude>Excluded</exclude>
-        bool _MessageReaded;
+       Member<bool> _MessageHasBeenRead = new Member<bool>();
 
         /// <MetaDataID>{42704d5d-6c2e-4013-a03c-1338f195c35f}</MetaDataID>
-        [PersistentMember(nameof(_MessageReaded))]
+        [PersistentMember(nameof(_MessageHasBeenRead))]
         [BackwardCompatibilityID("+5")]
-        public bool MessageReaded
+        public bool MessageHasBeenRead
         {
-            get => _MessageReaded;
+            get => _MessageHasBeenRead.Value;
             set
             {
-
-                if (_MessageReaded != value)
+                if (_MessageHasBeenRead != value)
                 {
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
-                        _MessageReaded = value;
+                        _MessageHasBeenRead.Value = value;
                         stateTransition.Consistent = true;
                     }
                 }

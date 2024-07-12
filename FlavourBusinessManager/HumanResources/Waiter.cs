@@ -142,7 +142,7 @@ namespace FlavourBusinessManager.HumanResources
         {
             var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
             if (message != null)
-                message.MessageReaded = true;
+                message.MessageHasBeenRead = true;
             return message;
         }
 
