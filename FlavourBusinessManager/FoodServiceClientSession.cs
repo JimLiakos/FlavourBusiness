@@ -1076,7 +1076,7 @@ namespace FlavourBusinessManager.EndUsers
                     CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
-
+                 
             }
         }
 

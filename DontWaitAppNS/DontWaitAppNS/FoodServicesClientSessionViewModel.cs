@@ -1711,17 +1711,18 @@ namespace DontWaitApp
             //}
             //else
 
+            var orderItems = OrderItems.Where(x => x.SessionID == SessionID).ToList();
             FoodServiceSessionCommitResponse foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionCommitted;
 
-            if (OrderItems.All(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
+            if (orderItems.All(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
                 foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionCommitted;
-            else if (OrderItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
+            else if (orderItems.Any(x => x.State.IsInPreviousState(ItemPreparationState.Committed)))
                 foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionNewItemsCommitted;
-            else if (OrderItems.Any(x => x.InEditState))
+            else if (orderItems.Any(x => x.InEditState))
                 foodServiceSessionCommitResponse = FoodServiceSessionCommitResponse.SessionChangesCommitted;
 
 
-            var itemsNewState = this.FoodServicesClientSession.Commit(OrderItems.OfType<IItemPreparation>().ToList());
+            var itemsNewState = this.FoodServicesClientSession.Commit(orderItems.OfType<IItemPreparation>().ToList());
             foreach (var itemNewState in itemsNewState)
             {
                 var item = this.OrderItems.Where(x => x.uid == itemNewState.uid).FirstOrDefault();
