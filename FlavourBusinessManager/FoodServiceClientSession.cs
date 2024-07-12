@@ -23,6 +23,7 @@ using MenuPresentationModel;
 using FlavourBusinessManager.HumanResources;
 using OOAdvantech.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Google.Api.Gax;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -38,7 +39,7 @@ namespace FlavourBusinessManager.EndUsers
     public class FoodServiceClientSession : MarshalByRefObject, IFoodServiceClientSession, OOAdvantech.Remoting.IExtMarshalByRefObject, OOAdvantech.PersistenceLayer.IObjectStateEventsConsumer, FinanceFacade.IPaymentGateway
     {
         /// <exclude>Excluded</exclude>
-        private OOAdvantech.Collections.Generic.Set<ReminderForCareGiving> _Reminders=new OOAdvantech.Collections.Generic.Set<ReminderForCareGiving>();
+        private OOAdvantech.Collections.Generic.Set<ReminderForCareGiving> _Reminders = new OOAdvantech.Collections.Generic.Set<ReminderForCareGiving>();
 
 
         [Association("ClientSessionCareGivingReminders", Roles.RoleA, "aec71be6-ff81-43cf-a1e4-c6a7fbff3172")]
@@ -47,7 +48,7 @@ namespace FlavourBusinessManager.EndUsers
         public List<ReminderForCareGiving> Reminders
         {
             get => _Reminders.ToThreadSafeList();
-           
+
         }
 
         /// <exclude>Excluded</exclude>
@@ -732,7 +733,7 @@ namespace FlavourBusinessManager.EndUsers
                         }
                     }
 
-                    if (SessionState == ClientSessionState.Conversation && MainSession != null && !ImplicitMealParticipation &&
+                    if (SessionState == ClientSessionState.Conversation && MainSession != null&&!Scheduled && !ImplicitMealParticipation &&
                                     MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                                     DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -814,7 +815,7 @@ namespace FlavourBusinessManager.EndUsers
 
         }
 
-    
+
         /// <summary>
         /// Checks for long time meal conversation and update the waiters
         /// Meal conversation timeout check, occurs only when there isn't main session
@@ -864,7 +865,7 @@ namespace FlavourBusinessManager.EndUsers
                             ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
 
 
-                            
+
 
                             if (ReminderForMealConversationTimeoutCareGiving == null)
                             {
@@ -891,13 +892,13 @@ namespace FlavourBusinessManager.EndUsers
                             }
                             else
                                 ReminderForMealConversationTimeoutCareGiving.Init(ClientMessages.MealConversationTimeout,
-                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors,                                     reminderStartTime,
+                                    activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, reminderStartTime,
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
 
-                           
+
                             ReminderForMealConversationTimeoutCareGiving.BuildMessage = (MessageCreationData args) =>
                             {
                                 Message clientMessage = (args.Worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", ReminderForMealConversationTimeoutCareGiving.UniqueId)).FirstOrDefault();
@@ -973,7 +974,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
-     
+
 
         /// <summary>
         /// Urges client to decide when session is in this state and
@@ -1076,7 +1077,7 @@ namespace FlavourBusinessManager.EndUsers
                     CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
-                 
+
             }
         }
 
@@ -2953,6 +2954,31 @@ namespace FlavourBusinessManager.EndUsers
 
         /// <MetaDataID>{93ffa5f1-c031-4237-b775-42d214fc4447}</MetaDataID>
         internal ReminderForCareGiving ReminderForMealConversationTimeoutCareGiving { get; private set; }
+        /// <summary>
+        /// Client session is scheduled when has main session and in main session has been defined service time
+        /// </summary>
+
+        public bool Scheduled
+        {
+            get
+            {
+                return MainSession?.ServiceTime!=null&&MainSession.ServiceTime.Value.ToUniversalTime()<=DateTime.UtcNow;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool InProgress
+        { 
+            get
+            {
+                if (!Scheduled&& MainSession!=null&&MainSession.PartialClientSessions.Count>2&&this.FlavourItems.Count>0)
+                    return true;
+                if(FlavourItems.Any)
+                return false;
+            }
+        }
+
         //   public List<FlavourBusinessManager.ReminderForCareGiving> CareGivingReminders { get; private set; }
 
         /// <MetaDataID>{97c3a1ab-7155-465e-9acf-ad11b75f8bcc}</MetaDataID>
