@@ -29,6 +29,8 @@ using System.Net;
 
 using static System.Net.WebRequestMethods;
 using FinanceFacade;
+using DeviceType = FlavourBusinessFacade.DeviceType;
+
 
 
 
@@ -1871,10 +1873,14 @@ namespace DontWaitApp
                     {
                         try
                         {
+
+                            DeviceOS deviceOS = OOAdvantech.DeviceCore.DeviceOS;
+
+
                             if (flavoursServices != null)
-                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, FlavourBusinessFacade.DeviceType.Phone, device.FirebaseToken, null, null, !WaiterView, create);
+                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, DeviceType.Phone,deviceOS ,device.FirebaseToken, null, null, !WaiterView, create);
                             else
-                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, FlavourBusinessFacade.DeviceType.Phone, device.FirebaseToken, !WaiterView, create);
+                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, DeviceType.Phone,deviceOS, device.FirebaseToken, !WaiterView, create);
 
                         }
                         catch (System.Net.WebException connectionError)

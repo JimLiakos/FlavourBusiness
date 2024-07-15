@@ -117,7 +117,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         /// <returns>
         /// return the client session
         /// </returns>
-        IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false);
+        IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, OOAdvantech.DeviceOS deviceOS, string deviceFirebaseToken, bool endUser, bool create = false);
 
 
         /// <MetaDataID>{56809dc3-ae5d-4abb-a1ec-14a9cabc6e44}</MetaDataID>

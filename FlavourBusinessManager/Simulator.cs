@@ -462,7 +462,7 @@ namespace FlavourBusinessManager.RoomService
             IFoodServiceClientSession clientSession = null;
             using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
             {
-                clientSession = ServicesContextRunTime.Current.GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, DeviceType.Phone, null, ServicesContextRunTime.Current.OrganizationIdentity, ServicesContextRunTime.Current.GraphicMenus, true, true).FoodServiceClientSession;
+                clientSession = ServicesContextRunTime.Current.GetClientSession(servicesPointIdentity, null, clientName, clientDeviceID, DeviceType.Phone,DeviceOS.iOS,  null, ServicesContextRunTime.Current.OrganizationIdentity, ServicesContextRunTime.Current.GraphicMenus, true, true).FoodServiceClientSession;
 
                 foreach (var psItemsPattern in clientSessionPattern.PreparationStations)
                 {

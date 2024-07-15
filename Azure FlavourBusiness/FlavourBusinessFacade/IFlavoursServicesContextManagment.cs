@@ -34,7 +34,7 @@ namespace FlavourBusinessFacade
         ICashiersStationRuntime GetCashiersStationRuntime(string communicationCredentialKey);
 
         /// <MetaDataID>{2f1dea32-0587-40be-8b27-148c1962fcab}</MetaDataID>
-        ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser,  bool create);
+        ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, DeviceType deviceType, DeviceOS deviceOS, string deviceFirebaseToken, bool endUser,  bool create);
         /// <MetaDataID>{918bd192-2efb-4ff5-adbe-ea6bbe041465}</MetaDataID>
         IHallLayout GetHallLayout(string servicePoint);
 
@@ -98,6 +98,6 @@ namespace FlavourBusinessFacade
     }
 
 
-
+   
 
 }

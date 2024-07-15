@@ -7,7 +7,7 @@ using FlavourBusinessFacade.UnitTest;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.ServicePointRunTime;
 using MenuPresentationModel;
-
+using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
 using System;
@@ -317,7 +317,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             throw new NotImplementedException();
         }
 
-        public IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint)
+        public IFoodServiceClientSession GetFoodServicesClientSession(string clientName, string clientDeviceID, DeviceType deviceType, DeviceOS deviceOS, string deviceFirebaseToken, HomeDeliveryServicePointAbbreviation homeDeliveryServicePoint)
         {
 
             string servicePointIdentity = homeDeliveryServicePoint.ServicesContextIdentity + ";" + homeDeliveryServicePoint.ServicesPointIdentity;
@@ -325,7 +325,7 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 var servicePoint = HomeDeliveryServicePoints.Where(x => x.ServicesContextIdentity == homeDeliveryServicePoint.ServicesContextIdentity && x.ServicesPointIdentity == homeDeliveryServicePoint.ServicesPointIdentity).FirstOrDefault();
 
-                return servicePoint.GetFoodServiceClientSession(clientName, null, clientDeviceID, deviceType, deviceFirebaseToken, true, true);
+                return servicePoint.GetFoodServiceClientSession(clientName, null, clientDeviceID, deviceType, deviceOS, deviceFirebaseToken, true, true);
                 // servicePoint.GetFoodServiceClientSession()
             }
 

@@ -24,6 +24,7 @@ using FlavourBusinessManager.HumanResources;
 using OOAdvantech.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Google.Api.Gax;
+using OOAdvantech;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -733,7 +734,7 @@ namespace FlavourBusinessManager.EndUsers
                         }
                     }
 
-                    if (SessionState == ClientSessionState.Conversation && MainSession != null&&!Scheduled && !ImplicitMealParticipation &&
+                    if (SessionState == ClientSessionState.Conversation && MainSession != null && !Scheduled && !ImplicitMealParticipation &&
                                     MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
                                     DeviceAppState != DeviceAppLifecycle.InUse)
                     {
@@ -904,7 +905,7 @@ namespace FlavourBusinessManager.EndUsers
                                 Message clientMessage = (args.Worker as IMessageConsumer).Messages.Where(x => x.HasDataValue<string>("ReminderID", ReminderForMealConversationTimeoutCareGiving.UniqueId)).FirstOrDefault();
                                 if (clientMessage == null)
                                 {
-                                    clientMessage  = new Message();
+                                    clientMessage = new Message();
                                     clientMessage.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
                                     clientMessage.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
                                     clientMessage.Data["SessionIdentity"] = SessionID;
@@ -2957,27 +2958,54 @@ namespace FlavourBusinessManager.EndUsers
         /// <summary>
         /// Client session is scheduled when has main session and in main session has been defined service time
         /// </summary>
+        /// <MetaDataID>{1043f1f8-6b5d-4410-b901-bd247cd88d1a}</MetaDataID>
 
         public bool Scheduled
         {
             get
             {
-                return MainSession?.ServiceTime!=null&&MainSession.ServiceTime.Value.ToUniversalTime()<=DateTime.UtcNow;
+                return MainSession?.ServiceTime != null && MainSession.ServiceTime.Value.ToUniversalTime() <= DateTime.UtcNow;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool InProgress
-        { 
+        /// <summary></summary>
+        /// <MetaDataID>{171c6a8c-396c-42f4-aad1-8610cce71c38}</MetaDataID>
+        public bool ClientSideMonitoringEnabled
+        {
             get
             {
-                if (!Scheduled&& MainSession!=null&&MainSession.PartialClientSessions.Count>2&&this.FlavourItems.Count>0)
+                //if (this.os)
+                    if (!Scheduled && MainSession != null && MainSession.PartialClientSessions.Count > 2 && this.FlavourItems.Count > 0)
+                        return true;
+                if (FlavourItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed)))
                     return true;
-                if(FlavourItems.Any)
+
                 return false;
             }
         }
+
+        /// <exclude>Excluded</exclude>
+        DeviceOS _ClientDeviceOS;
+
+        /// <MetaDataID>{12fd3dfa-4269-48d4-857e-2587a1f54368}</MetaDataID>
+        [PersistentMember(nameof(_ClientDeviceOS))]
+        [BackwardCompatibilityID("+32")]
+        public DeviceOS ClientDeviceOS
+        {
+            get => _ClientDeviceOS;
+            internal set
+            {
+                if (_ClientDeviceOS != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _ClientDeviceOS = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+
 
         //   public List<FlavourBusinessManager.ReminderForCareGiving> CareGivingReminders { get; private set; }
 

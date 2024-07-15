@@ -30094,7 +30094,7 @@
 			(object Attribute
 			    tool       	"MetaData"
 			    name       	"LastMemberID"
-			    value      	"32")
+			    value      	"33")
 			(object Attribute
 			    tool       	"C#"
 			    name       	"Identity"
@@ -30187,7 +30187,7 @@
 			    quid       	"5D22326D01D5"
 			    parameters 	(list Parameters
 				(object Parameter "message"
-				    quid       	"64DBC743029C"
+				    quid       	"6691F7CB019E"
 				    type       	"FlavourBusinessFacade.EndUsers.Message"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30314,10 +30314,10 @@
 			    quid       	"5D31519500B6"
 			    parameters 	(list Parameters
 				(object Parameter "clientSessionToken"
-				    quid       	"64DBC7410349"
+				    quid       	"6691F7CB0084"
 				    type       	"string")
 				(object Parameter "messmateClientSesion"
-				    quid       	"64DBC7410378"
+				    quid       	"6691F7CB00A4"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30336,7 +30336,7 @@
 			    quid       	"5D3D2B980270"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"64DBC743020C"
+				    quid       	"6691F7CB015F"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.EndUsers.Message"
 			    concurrency 	"Sequential"
@@ -30355,7 +30355,7 @@
 			    quid       	"5D3D2B98029C"
 			    parameters 	(list Parameters
 				(object Parameter "messageId"
-				    quid       	"64DBC743025C"
+				    quid       	"6691F7CB017E"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30493,7 +30493,7 @@
 			    quid       	"5D3D2B990111"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"64DBC7460241"
+				    quid       	"6691F7CB02D7"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30512,7 +30512,7 @@
 			    quid       	"5D3D2B99013B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"64DBC74702C4"
+				    quid       	"6691F7CB0345"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30531,9 +30531,9 @@
 			    quid       	"5D46A46F035B"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"64DBC746028B"
+				    quid       	"6691F68C02C5"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
-			    result     	"void"
+			    result     	"FlavourBusinessFacade.ItemPreparationStateAbbreviation"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0)
@@ -30550,7 +30550,7 @@
 			    quid       	"5D46A46F03C7"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"64DBC7470367"
+				    quid       	"6691F7CB0383"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30569,7 +30569,7 @@
 			    quid       	"5D46A470001A"
 			    parameters 	(list Parameters
 				(object Parameter "item"
-				    quid       	"64DBC74703AC"
+				    quid       	"6691F7CB03A2"
 				    type       	"FlavourBusinessFacade.RoomService.IItemPreparation"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30685,7 +30685,7 @@
 			    quid       	"5FB8DAFC0123"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"64DBC7440320"
+				    quid       	"6691F7CB01FD"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30704,10 +30704,10 @@
 			    quid       	"5FB8DAFC0265"
 			    parameters 	(list Parameters
 				(object Parameter "messmateClientSesion"
-				    quid       	"64DBC7440392"
+				    quid       	"6691F7CB022B"
 				    type       	"FlavourBusinessFacade.EndUsers.IFoodServiceClientSession")
 				(object Parameter "menuItemUri"
-				    quid       	"64DBC74403BD"
+				    quid       	"6691F7CB023B"
 				    type       	"string"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -30726,7 +30726,7 @@
 			    quid       	"5FB8DAFD0105"
 			    parameters 	(list Parameters
 				(object Parameter "itemUid"
-				    quid       	"64DBC747031E"
+				    quid       	"6691F7CB0364"
 				    type       	"string"))
 			    result     	"FlavourBusinessFacade.RoomService.IItemPreparation"
 			    concurrency 	"Sequential"
@@ -31189,6 +31189,7 @@
 |
 |Checks for long time meal conversation and update the waiters
 |Meal conversation timeout check, occurs only when there isn't main session
+|In case where there is main session the conservation timeouts controlled from Main in monitoring operation
 |
 			    
 			    result     	"bool"
@@ -31208,11 +31209,11 @@
 			    quid       	"620CF52503CE"
 			    parameters 	(list Parameters
 				(object Parameter "caregiver"
-				    quid       	"620CF5260008"
+				    quid       	"6691F68B00AA"
 				    type       	"FlavourBusinessFacade.HumanResources.IServicesContextWorker")
 				(object Parameter "caregivingType"
-				    quid       	"620CF526001C"
-				    type       	"FlavourBusinessManager.EndUsers.Caregiver.CaregivingType"))
+				    quid       	"6691F68B00C1"
+				    type       	"FlavourBusinessManager.EndUsers.Caregiver.CareGivingType"))
 			    result     	"void"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -31443,7 +31444,7 @@
 			    quid       	"63CD916901F7"
 			    parameters 	(list Parameters
 				(object Parameter "location"
-				    quid       	"64DBC73F0329"
+				    quid       	"6691F7CB0055"
 				    type       	"FlavourBusinessFacade.EndUsers.Coordinate"))
 			    result     	"FlavourBusinessFacade.EndUsers.ChangeDeliveryPlaceResponse"
 			    concurrency 	"Sequential"
@@ -31462,7 +31463,7 @@
 			    quid       	"63CD916F011D"
 			    parameters 	(list Parameters
 				(object Parameter "deliveryPlace"
-				    quid       	"64DBC7490074"
+				    quid       	"6691F7CC0076"
 				    type       	"FlavourBusinessFacade.EndUsers.IPlace"))
 			    result     	"void"
 			    concurrency 	"Sequential"
@@ -31572,6 +31573,84 @@
 				    value      	"64DBC7490190"))
 			    quid       	"64DBC7490190"
 			    result     	"System.Collections.Generic.Dictionary`2[[System.String,mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089][FlavourBusinessFacade.RoomService.ItemPreparationState,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "UrgesToDecideMessage"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{0c8a6c6a-ba0f-4f96-8bbd-821d66867b78}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68B026D"))
+			    quid       	"6691F68B026D"
+			    documentation 	
+|
+|This method sends prompts to decide message
+|There is a time limit for sending a message.
+|You cannot send a message before a minimum amount of time has passed
+|
+			    
+			    result     	"void"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "GetBill"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{d0c50afe-b00c-4562-b6d5-0c24fca9f0f1}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68D01C2"))
+			    quid       	"6691F68D01C2"
+			    parameters 	(list Parameters
+				(object Parameter "itemPreparations"
+				    quid       	"6691F68D01D6"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.SessionItemPreparationAbbreviation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"FlavourBusinessFacade.RoomService.IBill"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "CommitNewSessionType"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{97c3a1ab-7155-465e-9acf-ad11b75f8bcc}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68D0201"))
+			    quid       	"6691F68D0201"
+			    parameters 	(list Parameters
+				(object Parameter "sessionType"
+				    quid       	"6691F68D0212"
+				    type       	"FlavourBusinessFacade.EndUsers.SessionType")
+				(object Parameter "itemPreparations"
+				    quid       	"6691F68D0228"
+				    type       	"System.Collections.Generic.List`1[[FlavourBusinessFacade.RoomService.IItemPreparation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"))
+			    result     	"System.Collections.Generic.List`1[[FlavourBusinessFacade.ItemPreparationStateAbbreviation,{0072F0D5-644D-4343-A34D-03AE24EBA9FE}]]"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "GetSessionDeliveryPlace"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{296a0924-6e52-449c-bcee-7fbd9b4bbdd0}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68D0296"))
+			    quid       	"6691F68D0296"
+			    result     	"FlavourBusinessFacade.EndUsers.IPlace"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -32049,7 +32128,7 @@
 				    name       	"Identity"
 				    value      	"+16"))
 			    quid       	"5F460BE102EE"
-			    type       	"FlavourBusinessManager.EndUsers.DeviceAppLifecycle"
+			    type       	"FlavourBusinessFacade.DeviceAppLifecycle"
 			    exportControl 	"Public")
 			(object ClassAttribute "DeviceAppSleepTime"
 			    attributes 	(list Attribute_Set
@@ -32759,6 +32838,137 @@
 				    value      	"+31"))
 			    quid       	"64DBC74C0250"
 			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "DeviceToken"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{11c99024-89af-41a5-b7cc-e0bcaddcbfbe}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68D0325"))
+			    quid       	"6691F68D0325"
+			    type       	"string"
+			    exportControl 	"Public")
+			(object ClassAttribute "PriceList"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{56eed0de-b662-4715-96a2-32e94f23f6fa}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68F0046"))
+			    quid       	"6691F68F0046"
+			    type       	"FlavourBusinessFacade.OrganizationStorageRef"
+			    exportControl 	"Public")
+			(object ClassAttribute "ReminderForMealConversationTimeoutCareGiving"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{93ffa5f1-c031-4237-b775-42d214fc4447}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68F0092")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE))
+			    quid       	"6691F68F0092"
+			    type       	"FlavourBusinessManager.ReminderForCareGiving"
+			    exportControl 	"Implementation")
+			(object ClassAttribute "Scheduled"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{1043f1f8-6b5d-4410-b901-bd247cd88d1a}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68F012A")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"6691F68F012A"
+			    documentation 	
+|
+|Client session is scheduled when has main session and in main session has been defined service time
+|
+			    
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ClientSideMonitoringEnabled"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{171c6a8c-396c-42f4-aad1-8610cce71c38}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68F01B6")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE))
+			    quid       	"6691F68F01B6"
+			    type       	"bool"
+			    exportControl 	"Public")
+			(object ClassAttribute "ClientDeviceOS"
+			    attributes 	(list Attribute_Set
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"MetaObjectID"
+				    value      	"{12fd3dfa-4269-48d4-857e-2587a1f54368}")
+				(object Attribute
+				    tool       	"MetaData"
+				    name       	"UniqueID"
+				    value      	"6691F68F0220")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateGetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"GenerateSetOperation"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"Persistent"
+				    name       	"Persistent"
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Identity"
+				    value      	"+32"))
+			    quid       	"6691F68F0220"
+			    type       	"FlavourBusinessFacade.DeviceOS"
 			    exportControl 	"Public"))
 		    statemachine 	(object State_Machine "State/Activity Model"
 			quid       	"60A747FC0350"
@@ -35813,7 +36023,15 @@
 				(object Attribute
 				    tool       	"C#"
 				    name       	"GenerateGetOperation"
-				    value      	TRUE))
+				    value      	TRUE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"ContainerClass"
+				    value      	"System.Collections.Generic.List<FlavourBusinessManager.ReminderForCareGiving>")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"6686D5C100C8"
 			    label      	"Reminders"
 			    supplier   	"Logical View::FlavourBusinessManager::RoomService::ReminderForCareGiving"
@@ -35829,7 +36047,15 @@
 				(object Attribute
 				    tool       	"MetaData"
 				    name       	"MetaObjectID"
-				    value      	"{bdadf8f6-d58c-4e5a-9f39-dfb857e43f35}"))
+				    value      	"{bdadf8f6-d58c-4e5a-9f39-dfb857e43f35}")
+				(object Attribute
+				    tool       	"C#"
+				    name       	"As Property"
+				    value      	FALSE)
+				(object Attribute
+				    tool       	"C#"
+				    name       	"Indexer"
+				    value      	FALSE))
 			    quid       	"6686D5C100D3"
 			    supplier   	"Logical View::FlavourBusinessManager::RoomService::FoodServiceClientSession"
 			    quidu      	"5C06341E032D"
@@ -35844,7 +36070,7 @@
 				    supplier   	"ClientSation"
 				    quidu      	"6517E19D0011"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+					(object Message "ItemsServing( )"
 					    quid       	"6517E34A02EE"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35866,7 +36092,7 @@
 				    supplier   	"mealCourse"
 				    quidu      	"6517E6A401CF"
 				    messages   	(list Messages
-					(object Message "RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+					(object Message "RaiseItemsStateChanged( )"
 					    quid       	"6517E6C90316"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35888,7 +36114,7 @@
 				    supplier   	"PreparationStation"
 				    quidu      	"6517E0CE00B9"
 				    messages   	(list Messages
-					(object Message "ItemsServing(System.Collections.Generic.List<string>)"
+					(object Message "ItemsServing( )"
 					    quid       	"65183FCF0173"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35910,7 +36136,7 @@
 				    supplier   	"$UNNAMED$22"
 				    quidu      	"6517E75301A1"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"6517E77A010D"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -35955,7 +36181,7 @@
 				    supplier   	"$UNNAMED$24"
 				    quidu      	"6518052B02EE"
 				    messages   	(list Messages
-					(object Message "MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+					(object Message "MealItemsReadyToServe( )"
 					    quid       	"65180545016B"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -37407,44 +37633,7 @@
 			    line_style 	3
 			    origin_attachment 	(347, 1574)
 			    terminal_attachment 	(347, 473))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceClientSession" @492
-			    ShowCompartmentStereotypes 	TRUE
-			    location   	(1385, 1359)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				charSet    	161
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@492
-				location   	(1090, 1283)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	590
-				justify    	0
-				label      	"FoodServiceClientSession")
-			    icon_style 	"Decoration"
-			    line_color 	3342489
-			    fill_color 	4227327
-			    quidu      	"5C06341E032D"
-			    width      	608
-			    height     	174
-			    annotation 	8)
-			(object RealizeView "" @493
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    quidu      	"5C063470011E"
-			    client     	@492
-			    supplier   	@442
-			    line_style 	3
-			    origin_attachment 	(1371, 1271)
-			    terminal_attachment 	(1371, 514))
-			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ReminderForCareGiving" @494
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::ReminderForCareGiving" @492
 			    ShowCompartmentStereotypes 	TRUE
 			    location   	(1147, 2216)
 			    font       	(object Font
@@ -37458,7 +37647,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@494
+				Parent_View 	@492
 				location   	(831, 2119)
 				fill_color 	13434879
 				nlines     	1
@@ -37472,7 +37661,7 @@
 			    width      	650
 			    height     	219
 			    annotation 	8)
-			(object AssociationViewNew "SessionCareGivingReminders" @495
+			(object AssociationViewNew "SessionCareGivingReminders" @493
 			    location   	(756, 1951)
 			    font       	(object Font
 				size       	10
@@ -37484,8 +37673,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @496
-				Parent_View 	@495
+			    label      	(object SegLabel @494
+				Parent_View 	@493
 				location   	(756, 1892)
 				font       	(object Font
 				    size       	10
@@ -37510,8 +37699,8 @@
 			    line_color 	3342489
 			    quidu      	"668525CE02B1"
 			    roleview_list 	(list RoleViews
-				(object RoleView "Reminders" @497
-				    Parent_View 	@495
+				(object RoleView "Reminders" @495
+				    Parent_View 	@493
 				    location   	(394, 265)
 				    font       	(object Font
 					size       	10
@@ -37523,8 +37712,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @498
-					Parent_View 	@497
+				    label      	(object SegLabel @496
+					Parent_View 	@495
 					location   	(955, 1979)
 					font       	(object Font
 					    size       	10
@@ -37548,11 +37737,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"668525CF01B6"
-				    client     	@495
-				    supplier   	@494
+				    client     	@493
+				    supplier   	@492
 				    line_style 	0
-				    label      	(object SegLabel @499
-					Parent_View 	@497
+				    label      	(object SegLabel @497
+					Parent_View 	@495
 					location   	(991, 2046)
 					font       	(object Font
 					    size       	10
@@ -37573,8 +37762,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "$UNNAMED$19" @500
-				    Parent_View 	@495
+				(object RoleView "$UNNAMED$19" @498
+				    Parent_View 	@493
 				    location   	(394, 265)
 				    font       	(object Font
 					size       	10
@@ -37589,11 +37778,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"668525CF01B9"
-				    client     	@495
+				    client     	@493
 				    supplier   	@489
 				    line_style 	0
-				    label      	(object SegLabel @501
-					Parent_View 	@500
+				    label      	(object SegLabel @499
+					Parent_View 	@498
 					location   	(580, 1769)
 					font       	(object Font
 					    size       	10
@@ -37614,6 +37803,43 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))))
+			(object ClassView "Class" "Logical View::FlavourBusinessManager::RoomService::FoodServiceClientSession" @500
+			    ShowCompartmentStereotypes 	TRUE
+			    location   	(1385, 1359)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				charSet    	161
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@500
+				location   	(1090, 1283)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	590
+				justify    	0
+				label      	"FoodServiceClientSession")
+			    icon_style 	"Decoration"
+			    line_color 	3342489
+			    fill_color 	4227327
+			    quidu      	"5C06341E032D"
+			    width      	608
+			    height     	174
+			    annotation 	8)
+			(object RealizeView "" @501
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"5C063470011E"
+			    client     	@500
+			    supplier   	@442
+			    line_style 	3
+			    origin_attachment 	(1371, 1271)
+			    terminal_attachment 	(1371, 514))
 			(object AssociationViewNew "ClientSessionCareGivingReminders" @502
 			    location   	(1267, 1776)
 			    font       	(object Font
@@ -37691,7 +37917,7 @@
 				    line_color 	3342489
 				    quidu      	"6686D5C100C8"
 				    client     	@502
-				    supplier   	@494
+				    supplier   	@492
 				    line_style 	0
 				    label      	(object SegLabel @506
 					Parent_View 	@504
@@ -37732,7 +37958,7 @@
 				    line_color 	3342489
 				    quidu      	"6686D5C100D3"
 				    client     	@502
-				    supplier   	@492
+				    supplier   	@500
 				    line_style 	0
 				    label      	(object SegLabel @508
 					Parent_View 	@507
@@ -40064,7 +40290,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<FlavourBusinessFacade.RoomService.IItemPreparation>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.494764
 				height     	44
 				orientation 	0)
@@ -40150,7 +40376,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string,FlavourBusinessFacade.RoomService.ItemPreparationState>)"
+				label      	"RaiseItemsStateChanged( )"
 				pctDist    	1.554996
 				height     	56
 				orientation 	0)
@@ -40236,7 +40462,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"ItemsServing(System.Collections.Generic.List<string>)"
+				label      	"ItemsServing( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -40322,7 +40548,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.554636
 				height     	3
 				orientation 	1)
@@ -40571,7 +40797,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"MealItemsReadyToServe(FlavourBusinessManager.ServicesContextResources.ServicePoint)"
+				label      	"MealItemsReadyToServe( )"
 				pctDist    	0.500000
 				height     	45
 				orientation 	0)
@@ -58691,7 +58917,7 @@
 				    supplier   	"$UNNAMED$30"
 				    quidu      	"666B01BF028A"
 				    messages   	(list Messages
-					(object Message "OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+					(object Message "OnPreparationItemsChangeState( )"
 					    quid       	"666B0249017A"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -58713,7 +58939,7 @@
 				    supplier   	"$UNNAMED$31"
 				    quidu      	"666B083C02B9"
 				    messages   	(list Messages
-					(object Message "Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+					(object Message "Update( )"
 					    quid       	"666B08830115"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -58785,7 +59011,7 @@
 				    supplier   	"$UNNAMED$33"
 				    quidu      	"666B08BA0037"
 				    messages   	(list Messages
-					(object Message "GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+					(object Message "GetPendingPrintings(  )"
 					    quid       	"666B168D01A1"
 					    frequency  	"Aperiodic"
 					    synchronization 	"Simple"
@@ -59469,7 +59695,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"OnPreparationItemsChangeState(FlavourBusinessManager.ServicesContextResources.PreparationStation)"
+				label      	"OnPreparationItemsChangeState( )"
 				pctDist    	1.960274
 				height     	160
 				orientation 	0)
@@ -59518,7 +59744,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"Update(FlavourBusinessFacade.RoomService.ItemsPreparationContext)"
+				label      	"Update( )"
 				pctDist    	1.021018
 				height     	67
 				orientation 	0)
@@ -59665,7 +59891,7 @@
 				nlines     	1
 				max_width  	10
 				justify    	0
-				label      	"GetPendingPrintings(System.Collections.Generic.List<string>, string)"
+				label      	"GetPendingPrintings(  )"
 				pctDist    	0.423940
 				height     	97
 				orientation 	0)

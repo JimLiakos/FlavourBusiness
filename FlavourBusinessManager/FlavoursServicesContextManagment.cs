@@ -93,7 +93,7 @@ namespace FlavourBusinessManager
         public event ObjectChangeStateHandle ObjectChangeState;
 
         /// <MetaDataID>{665cfb4a-ee22-4494-9cfc-b0b6ad526bab}</MetaDataID>
-        public ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create)
+        public ClientSessionData GetClientSession(string servicePointIdentity, string clientName, string clientDeviceID, DeviceType deviceType,DeviceOS deviceOS, string deviceFirebaseToken, bool endUser, bool create)
         {
             string servicesContextIdentity = null;
             string mealInvitationSessionID = null;
@@ -122,7 +122,7 @@ namespace FlavourBusinessManager
 
             string orgIdentity = flavoursServicesContext.Owner.Identity;
 
-            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceType, deviceFirebaseToken, orgIdentity, graphicMenus, endUser, create);
+            var clientSession = flavoursServicesContextRunTime.GetClientSession(servicePointIdentity, mealInvitationSessionID, clientName, clientDeviceID, deviceType,deviceOS, deviceFirebaseToken, orgIdentity, graphicMenus, endUser, create);
 
             return clientSession;
         }

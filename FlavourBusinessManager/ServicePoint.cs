@@ -337,7 +337,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// return the client session
         /// </returns>
         /// <MetaDataID>{d9fdfbcc-661f-4f13-a29d-2c7e42a886aa}</MetaDataID>
-        public virtual IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, string deviceFirebaseToken, bool endUser, bool create = false)
+        public virtual IFoodServiceClientSession GetFoodServiceClientSession(string clientName, string mealInvitationSessionID, string clientDeviceID, DeviceType deviceType, DeviceOS deviceOS, string deviceFirebaseToken, bool endUser, bool create = false)
         {
             AuthUserRef authUserRef = AuthUserRef.GetCallContextAuthUserRef(false);
             FlavourBusinessFacade.IUser user = null;
@@ -489,6 +489,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                 }
             }
             fsClientSession.ClientDeviceType = deviceType;
+            fsClientSession.ClientDeviceOS = deviceOS;
             return fsClientSession;
         }
 
@@ -920,7 +921,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
 
                         EndUsers.FoodServiceClientSession targetServicePointExistingPartialSession = null;
                         if (partialSession.IsWaiterSession)
-                            targetServicePointExistingPartialSession = targetServicePoint.GetFoodServiceClientSession(partialSession.ClientName, null, partialSession.ClientDeviceID, partialSession.ClientDeviceType, partialSession.DeviceFirebaseToken, !partialSession.IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
+                            targetServicePointExistingPartialSession = targetServicePoint.GetFoodServiceClientSession(partialSession.ClientName, null, partialSession.ClientDeviceID, partialSession.ClientDeviceType, partialSession.ClientDeviceOS, partialSession.DeviceFirebaseToken, !partialSession.IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
 
                         if (targetServicePointExistingPartialSession != null)
                         {
@@ -947,7 +948,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
 
                     foreach (var item in itemsForTransfer)
                     {
-                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceType, (item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken, !(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
+                        var foodServiceClientSession = targetServicePoint.GetFoodServiceClientSession((item.ClientSession as EndUsers.FoodServiceClientSession).ClientName, null, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceID, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceType, (item.ClientSession as EndUsers.FoodServiceClientSession).ClientDeviceOS,(item.ClientSession as EndUsers.FoodServiceClientSession).DeviceFirebaseToken, !(item.ClientSession as EndUsers.FoodServiceClientSession).IsWaiterSession, true) as EndUsers.FoodServiceClientSession;
                         foodServiceClientSession.Merge(item);
                     }
 

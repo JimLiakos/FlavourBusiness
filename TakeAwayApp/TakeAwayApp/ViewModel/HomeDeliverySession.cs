@@ -11,6 +11,8 @@ using Xamarin.Forms;
 using OOAdvantech.Transactions;
 using OOAdvantech.Json;
 using System.Threading.Tasks;
+using OOAdvantech;
+
 
 
 #if DeviceDotNet
@@ -146,9 +148,14 @@ namespace TakeAwayApp.ViewModel
                 }
                 else
                 {
+                    DeviceOS deviceOS = DeviceOS.Windows;
+#if  DeviceDotNet
+                            deviceOS =
+#endif
+
                     OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
-                    (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop, device.FirebaseToken, _HomeDeliveryServicePoint);
+                    (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop,deviceOS, device.FirebaseToken, _HomeDeliveryServicePoint);
 
                     if (FoodServiceClientSession.FoodServicesClientSession != null)
                         _DeliveryPlace = FoodServiceClientSession.FoodServicesClientSession.GetSessionDeliveryPlace() as Place;
@@ -303,11 +310,16 @@ namespace TakeAwayApp.ViewModel
 
             set
             {
+                DeviceOS deviceOS = DeviceOS.Windows;
+#if  DeviceDotNet
+                            deviceOS =
+#endif
+
                 _HomeDeliveryServicePoint = value;
                 if (FoodServiceClientSession.FoodServicesClientSession == null && SessionClient != null)
                 {
                     OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop, device.FirebaseToken, _HomeDeliveryServicePoint);
+                    (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop,deviceOS, device.FirebaseToken, _HomeDeliveryServicePoint);
 
                 }
             }
