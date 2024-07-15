@@ -304,7 +304,7 @@ https://play.google.com/store/apps/details?id=com.arion.deliveries;sp=servicepoi
                             ServicePoint = new ServicePointAbbreviation() { Description = Description,  ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity  },
                             MealCourses = foodServicesSession.Meal.Courses,
                             TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
-                            State = WatchingOrderState.InProggres,
+                            State = WatchingOrderState.InProgress,
                             OrderTotal = Bill.GetTotal(foodServicesSession)
 
                         }).ToList();

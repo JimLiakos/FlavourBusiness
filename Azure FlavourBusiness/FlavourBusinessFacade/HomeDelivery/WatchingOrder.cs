@@ -36,7 +36,7 @@ namespace FlavourBusinessFacade
     public enum WatchingOrderState
     {
         Scheduled = 1,
-        InProggres = 2
+        InProgress = 2
     }
     /// <MetaDataID>{f8b64534-b67c-4224-87e8-1d4ad2f57330}</MetaDataID>
     public class WatchingOrderAbbreviation

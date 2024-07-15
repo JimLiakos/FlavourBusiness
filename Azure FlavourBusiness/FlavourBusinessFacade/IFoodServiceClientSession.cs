@@ -54,7 +54,8 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+9")]
         bool IsWaiterSession { get; }
 
-     
+
+        bool ClientSideMonitoringEnabled { get; }
 
         [Association("WorkerServiceSession", Roles.RoleA, "892bb54a-e901-429f-85fb-bb5d14cd92fc")]
         HumanResources.IServicesContextWorker Worker { get; }

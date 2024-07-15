@@ -33,6 +33,9 @@ using FinanceFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessFacade;
+using FlavourBusinessManager.HumanResources;
+using OOAdvantech;
+using Xamarin.Forms;
 
 
 
@@ -756,10 +759,12 @@ namespace DontWaitApp
                     preparationItem.State = entry.Value;
                 }
 
-            }
+            } 
             _ObjectChangeState?.Invoke(this, null);
+
         }
 
+      
         [OOAdvantech.MetaDataRepository.HttpInVisible]
         event OOAdvantech.ObjectChangeStateHandle _ObjectChangeState;
 
@@ -1344,6 +1349,42 @@ namespace DontWaitApp
                 FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
 
 
+                //if (_FoodServicesClientSession?.ClientSideMonitoringEnabled==true)
+                {
+
+
+#if DeviceDotNet
+                    IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    if (!device.IsBackgroundServiceStarted)
+                    {
+                        BackgroundServiceState serviceState = new BackgroundServiceState();
+                        device.RunInBackground(new Action(async () =>
+                        {
+
+                            //FoodServicesClientSession.MessageReceived +=MessageReceived;
+                            do
+                            {
+                                System.Threading.Thread.Sleep(1000);
+
+                            } while (!serviceState.Terminate);
+
+                            // FoodServicesClientSession.MessageReceived -=MessageReceived;
+                        }), serviceState);
+
+                    }
+#endif
+
+                }
+                //            else
+                //            {
+
+                //#if DeviceDotNet
+                //                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+                //                device.StopBackgroundService();
+                //#endif
+                //            }
+
 
 
 
@@ -1901,9 +1942,9 @@ namespace DontWaitApp
 
                     int tries = 30;
                     while (tries > 0)
-                    {  
+                    {
                         try
-                        { 
+                        {
                             var itemState = FoodServicesClientSession.ItemChanged(item);
                             item.State = itemState.State;
                             item.InEditState=itemState.InEditState;

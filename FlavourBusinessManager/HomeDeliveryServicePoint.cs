@@ -510,7 +510,7 @@ namespace FlavourBusinessManager.ServicesContextResources
                             ServicePoint = new HomeDeliveryServicePointAbbreviation() { Description = Description, DistanceInKm = GetRouteDistanceInKm(foodServicesSession.DeliveryPlace), Location = PlaceOfDistribution?.Location ?? default(Coordinate), ServicesContextIdentity = ServicesContextIdentity, ServicesPointIdentity = ServicesPointIdentity, OutOfDeliveryRange = IsOutOfDeliveryRange(foodServicesSession.DeliveryPlace, serviceAreaMapPolyGon) },
                             MealCourses = foodServicesSession.Meal.Courses,
                             TimeStamp = (foodServicesSession.PartialClientSessions.OrderByDescending(x => x.ModificationTime).FirstOrDefault()?.ModificationTime.Ticks - new DateTime(2022, 1, 1).Ticks)?.ToString("x"),
-                            State = WatchingOrderState.InProggres,
+                            State = WatchingOrderState.InProgress,
                             OrderTotal = Bill.GetTotal(foodServicesSession)
 
                         }).ToList();
