@@ -25,6 +25,7 @@ using Firebase.Messaging;
 using Android.Gms.Extensions;
 using Android.Gms.Tasks;
 using OOAdvantech.Authentication.Droid;
+using Android.Gms.Common;
 
 namespace DontWaitAppNS.Droid
 {
@@ -53,53 +54,14 @@ namespace DontWaitAppNS.Droid
         internal static readonly string CHANNEL_ID = "my_notification_channel";
         internal static readonly int NOTIFICATION_ID = 100;
 
+ 
 
-        private bool isStarted;
-        private Intent startServiceIntent;
-        private Intent stopServiceIntent;
 
-        public bool ForegroundService => true;
+   
 
-        public bool IsForegroundServiceStarted
-        {
-            get
-            {
-                Bitmap sds;
-                return GetRunningServices().Contains("com.xamarin.dontwaitapp.TimestampService");
-            }
-        }
-        protected override void OnNewIntent(Intent intent)
-        {
-            base.OnNewIntent(intent);
-            NotificationClickedOn(intent);
-        }
 
-        void NotificationClickedOn(Intent intent)
-        {
-            //if (intent.Action == "ASushiNotification" && intent.HasExtra("MessageFromSushiHangover"))
-            //{
-            //    /// Do something now that you know the user clicked on the notification...
 
-            //    var notificationMessage = intent.Extras.GetString("MessageFromSushiHangover");
-            //    var winnerToast = Toast.MakeText(this, $"{notificationMessage}.\n\n🍣 Please send 2 BitCoins to SushiHangover to process your winning ticket! 🍣", ToastLength.Long);
-            //    winnerToast.SetGravity(Android.Views.GravityFlags.Center, 0, 0);
-            //    winnerToast.Show();
-            //}
-        }
-
-        internal System.Collections.Generic.List<string> GetRunningServices()
-        {
-            var manager = (ActivityManager)GetSystemService(ActivityService);
-            return manager.GetRunningServices(int.MaxValue).Select(
-                service => service.Service.ClassName).ToList();
-        }
-
-        public override ComponentName StartForegroundService(Intent service)
-        {
-            return base.StartForegroundService(service);
-        }
-
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -118,73 +80,62 @@ namespace DontWaitAppNS.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             UserDialogs.Init(this);
 
-            // Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
+
+            await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
+
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
+
+
+            var token = await Task<string>.Run(() =>
+            {
+                return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
+            });
+
+            string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
+            OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+
             FirebaseApp.InitializeApp(this);
             AndroidAppLinks.Init(this);
             OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
 
-            //var token = await Task<string>.Run(() =>
-            //{
-            //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            //});
-
-
             getDeviceUniqueID();
+            
+            
+            LoadApplication(new DontWaitApp.App());
+
+            
+    
 
 
+        }
+        string msgText;
 
-
-
-            if (Intent.Extras != null)
+        public bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
             {
-                foreach (var key in Intent.Extras.KeySet())
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+
+                    msgText = GoogleApiAvailability.Instance.GetErrorString(resultCode);
+                else
                 {
-                    var value = Intent.Extras.GetString(key);
-                    // Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
+                    msgText = "This device is not supported";
+                    Finish();
                 }
+                return false;
             }
-
-            FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
-
-
-            // string token = FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            // //InitForgroundService(savedInstanceState);
-            CreateNotificationChannel();
-
-            var app = new DontWaitApp.App();
-
-            LoadApplication(app);
-
-            FirebaseMessaging.Instance.GetToken();
-
-            //var tokenTask = Task<string>.Run(() =>
-            //{
-            //    return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
-            //});
-
-            //tokenTask.Wait();
-            //string token = tokenTask.Result;
-            //string token = await tokenTask;
-
-            //  OOAdvantech.Droid.DeviceOOAdvantechCore.SetFirebaseToken(token);
-            string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
-
-            OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
-            OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, null, webClientID);
-            //OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, FirebaseInstanceId.Instance.Token, webClientID);
-
-
-            //var appLink = GetAppLink();
-            //Xamarin.Forms.Application.Current.AppLinks.RegisterLink(appLink);
-
-
-
-
+            else
+            {
+                msgText = "Google Play Services is available.";
+                return true;
+            }
         }
         private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
         {

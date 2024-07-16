@@ -1354,24 +1354,7 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-                    IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                    if (!device.IsBackgroundServiceStarted)
-                    {
-                        BackgroundServiceState serviceState = new BackgroundServiceState();
-                        device.RunInBackground(new Action(async () =>
-                        {
-
-                            //FoodServicesClientSession.MessageReceived +=MessageReceived;
-                            do
-                            {
-                                System.Threading.Thread.Sleep(1000);
-
-                            } while (!serviceState.Terminate);
-
-                            // FoodServicesClientSession.MessageReceived -=MessageReceived;
-                        }), serviceState);
-
-                    }
+                   
 #endif
 
                 }

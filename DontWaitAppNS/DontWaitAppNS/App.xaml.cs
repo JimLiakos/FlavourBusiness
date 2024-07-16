@@ -34,7 +34,28 @@ namespace DontWaitApp
         {
             InitializeComponent();
 
-        
+
+
+
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+
+                    //FoodServicesClientSession.MessageReceived +=MessageReceived;
+                    do
+                    {
+                        System.Threading.Thread.Sleep(1000);
+
+                    } while (!serviceState.Terminate);
+
+                    // FoodServicesClientSession.MessageReceived -=MessageReceived;
+                }), serviceState);
+
+            }
+
 
             //using (WebClient wc = new WebClient())
             //{
@@ -56,7 +77,7 @@ namespace DontWaitApp
 
             //}
 
-             
+
 
             //HybridWebView.WebAppUpdate("http://dontwaitwaiter.com/img/DontWaitWebv1.zip");
 
@@ -157,6 +178,10 @@ namespace DontWaitApp
                     //}, _NSURLErrorFailingURLSessionTaskErrorKey = LocalDataTask < 6CF91F8F - 33F5 - 4F6B - B500 - D05CBEB3404D >.< 1 >, _NSURLErrorRelatedURLSessionTaskErrorKey = (\n "LocalDataTask <6CF91F8F-33F5-4F6B-B500-D05CBEB3404D>.<1>"\n), NSLocalizedDescription = The Internet connection appears to be offline., NSErrorFailingURLStringKey = http://10.0.0.13:8090/api/values, NSErrorFailingURLKey=http://10.0.0.13:8090/api/values, _kCFStreamErrorDomainKey=1}\n   --- End of inner exception stack trace ---\n  at System.Net.Http.NSUrlSessionHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x001ad] in /Library/Frameworks/Xamarin.iOS.framework/Versions/16.0.0.75/src/Xamarin.iOS/Foundation/NSUrlSessionHandler.cs:529 \n  at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered (System.Threading.Tasks.Task`1[TResult] sendTask, System.Net.Http.HttpRequestMessage request, System.Threading.CancellationTokenSource cts, System.Boolean disposeCts) [0x000b3] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:531 \n  at System.Net.Http.HttpClient.GetStringAsyncCore (System.Threading.Tasks.Task`1[TResult] getTask) [0x0002e] in /Library/Frameworks/Xamarin.iOS.framework/Versions/Current/src/Xamarin.iOS/external/corefx/src/System.Net.Http/src/System/Net/Http/HttpClient.cs:147 \n  at DontWaitApp.FlavoursOrderServer.Initialize () [0x0007d] in F:\myproject\terpo\OpenVersions\FlavourBusiness\DontWaitAppNS\DontWaitAppNS\FlavoursOrderServer.cs:674 }
                 }
             }
+
+          
+
+
             //try
             //{
             //    OOAdvantech.FileSystem.WriteAllText(@"\Demo.log", "hello");
@@ -214,6 +239,8 @@ namespace DontWaitApp
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
             //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
+
+
 
 
             bool delete = false;

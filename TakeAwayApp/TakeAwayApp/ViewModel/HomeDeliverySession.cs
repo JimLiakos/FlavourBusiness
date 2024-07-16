@@ -145,7 +145,7 @@ namespace TakeAwayApp.ViewModel
                         _HomeDeliveryServicePoint = GetHomeDeliveryServicePoint((FoodServiceClientSession as FoodServicesClientSessionViewModel));
                     }
 
-                }
+                } 
                 else
                 {
                     DeviceOS deviceOS = DeviceOS.Windows;

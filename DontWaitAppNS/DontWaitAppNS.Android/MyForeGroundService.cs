@@ -16,7 +16,7 @@ namespace DontWaitAppNS.Droid
     /// <MetaDataID>{52453757-2621-49c4-a293-43e18ae14e6a}</MetaDataID>
 
     
-    [Service(Enabled = true, Name = "com.microneme.dontwait.android.MyForeGroundService", ForegroundServiceType = Android.Content.PM.ForegroundService.TypeDataSync)]
+    [Service(Name = "com.microneme.dontwait.android.MyForeGroundService", ForegroundServiceType = Android.Content.PM.ForegroundService.TypeDataSync)]
     public class MyForeGroundService : ForegroundService, IBackgroundService
     {
         public bool IsServiceStarted
