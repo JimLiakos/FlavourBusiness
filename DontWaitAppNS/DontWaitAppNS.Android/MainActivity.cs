@@ -354,60 +354,7 @@ namespace DontWaitAppNS.Droid
                 this.RequestPermissions(notiPermission, requestLocationId);
             }
         }
-        //protected override void OnRestart()
-        //{
-        //    base.OnRestart();
-        //}
-
-        //protected override void OnSaveInstanceState(Bundle outState)
-        //{
-        //    outState.PutBoolean(Constants.SERVICE_STARTED_KEY, isStarted);
-        //    base.OnSaveInstanceState(outState);
-        //}
-        private void InitForgroundService(Bundle savedInstanceState)
-        {
-            if (savedInstanceState != null)
-            {
-                isStarted = savedInstanceState.GetBoolean(Constants.SERVICE_STARTED_KEY, false);
-            }
-
-            startServiceIntent = new Intent(this, typeof(TimestampService));
-            startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);
-
-            stopServiceIntent = new Intent(this, typeof(TimestampService));
-            stopServiceIntent.SetAction(Constants.ACTION_STOP_SERVICE);
-
-
-
-            //stopServiceButton = FindViewById<Button>(Resource.Id.stop_timestamp_service_button);
-            //startServiceButton = FindViewById<Button>(Resource.Id.start_timestamp_service_button);
-            //if (isStarted)
-            //{
-            //    stopServiceButton.Click += StopServiceButton_Click;
-            //    stopServiceButton.Enabled = true;
-            //    startServiceButton.Enabled = false;
-            //}
-            //else
-            //{
-            //    startServiceButton.Click += StartServiceButton_Click;
-            //    startServiceButton.Enabled = true;
-            //    stopServiceButton.Enabled = false;
-            //}
-        }
-
-        public void StartForegroundService()
-        {
-
-            //StartService(startServiceIntent);
-            //isStarted = true;
-        }
-
-        public void StopForegroundService()
-        {
-            StopService(stopServiceIntent);
-            isStarted = false;
-        }
-
+    
         public void OnSuccess(Java.Lang.Object result)
         {
             string token = result.ToString();
