@@ -88,63 +88,31 @@ namespace WaiterApp.Droid
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
 
             await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
+
+
             VivaWalletPos.Android.VivaWalletAppPos.callback = "deliveriescallbackscheme://result";
 
             IsPlayServicesAvailable();
             CreateNotificationChannel();
 
-            //  var token = FirebaseInstanceId.Instance.Token;// FirebaseMessaging.Instance.GetToken().AsAsync<Java.Lang.String>();
-
+       
 
             var token = await Task<string>.Run(() =>
             {
                 return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
             });
 
-            //Firebase / Authentication / sign-in method / Sign-in providers / Google:Web SDK configuration
 
 
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
-            //Search for package name
-            //"google-services.json   {client[1].oauth_client[where client_type=3].client_id "
 
             var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.NativeUser, SignInProvider.Google, SignInProvider.Facebook, SignInProvider.Twitter , SignInProvider.Email };
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID, providers);
 
-            OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
+            
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
-
             OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
-            //OOAdvantech.Droid.ForegroundService.ServiceState serviceState = new OOAdvantech.Droid.ForegroundService.ServiceState()
-            //{
-            //    NotificationTitle = "Δέστω πέστω",
-            //    NotificationContentText = "The started service is running.",
-            //    NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopServiceCommandTitle = "Stop Service",
-            //    StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
-            //    StopActionID = "DestoPesto.action.STOP_SERVICE",
-            //    DelayBetweenLogMessage = 5000, // milliseconds,
-            //    ServiceRunningNotificationID = 10000,
-            //    ActionsMainActivity = "DestoPesto.action.MAIN_ACTIVITY",
-            //    ServiceStartedKey = "has_service_been_started",
-            //    Terminate = false
-
-            //};
-            //serviceState.Runnable = new Action(async () =>
-            //{
-            //    do
-            //    {
-            //        System.Threading.Thread.Sleep(1000);
-
-            //    } while (!serviceState.Terminate);
-            //});
-
-            //new Droid.MyForeGroundService().StartForegroundService(this, "DestoPesto.action.START_SERVICE", serviceState);
-
-            //Android.Net.Uri uri = RingtoneManager.GetDefaultUri(RingtoneType.Ringtone);
-            //Ringtone rt = RingtoneManager.GetRingtone(this.ApplicationContext, uri);
-            //rt.Play();
 
 
             LoadApplication(new App());
