@@ -870,16 +870,16 @@ namespace FlavourBusinessManager.ServicePointRunTime
             {
 
                 Simulator.StartSimulator(this);
-                foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
-                {
-                    try
-                    {
-                        clientSession.MonitorTick();
-                    }
-                    catch (Exception error)
-                    {
-                    }
-                }
+                //foreach (var clientSession in OpenClientSessions.Where(x => x.MainSession == null))
+                //{
+                //    try
+                //    {
+                //        clientSession.MonitorTick();
+                //    }
+                //    catch (Exception error)
+                //    {
+                //    }
+                //}
                 foreach (var mealSession in OpenSessions)
                 {
                     try

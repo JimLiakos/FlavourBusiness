@@ -149,11 +149,11 @@ namespace TakeAwayApp.ViewModel
                 else
                 {
                     DeviceOS deviceOS = DeviceOS.Windows;
-#if  DeviceDotNet
-                            deviceOS =
+#if DeviceDotNet
+                    deviceOS = OOAdvantech.DeviceCore.DeviceOS;
 #endif
 
-                    OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 
                     (FoodServiceClientSession as FoodServicesClientSessionViewModel).FoodServicesClientSession = FlavoursServiceOrderTakingStation.HomeDeliveryCallCenterStation.GetFoodServicesClientSession(SessionClient.FullName, SessionClient.Identity, DeviceType.Desktop,deviceOS, device.FirebaseToken, _HomeDeliveryServicePoint);
 
