@@ -16,7 +16,7 @@ using System;
 using Acr.UserDialogs;
 using Firebase;
 using Xamarin.Forms.Platform.Android.AppLinks;
-
+using System.Linq;
 
 
 //using Android.App;
@@ -90,12 +90,15 @@ namespace DontWaitAppNS.Droid
             global::OOAdvantech.Droid.HybridWebViewRenderer.Init();
             global::OOAdvantech.Droid.DeviceInstantiator.Init();
 
-            await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
+            
 
             IsPlayServicesAvailable();
             CreateNotificationChannel();
+            AndroidAppLinks.Init(this);
+            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
+            LoadApplication(new DontWaitApp.App());
 
-
+            await FirebaseMessaging.Instance.GetToken().AddOnSuccessListener(this, this);
             var token = await Task<string>.Run(() =>
             {
                 return FirebaseInstanceId.Instance.GetToken("881594421690", "FCM");
@@ -105,18 +108,24 @@ namespace DontWaitAppNS.Droid
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID);
 
             
-            AndroidAppLinks.Init(this);
-            OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
+            
+            
 
           
 
           
 
-            LoadApplication(new DontWaitApp.App());
+            
 
 
         }
 
+
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+        }
 
         public bool IsPlayServicesAvailable()
         {
@@ -173,9 +182,15 @@ namespace DontWaitAppNS.Droid
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (permissions.Contains(Android.Manifest.Permission.PostNotifications))
+            {
+                OOAdvantech.Droid.DeviceOOAdvantechCore.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+            else
+            {
+                Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent data)

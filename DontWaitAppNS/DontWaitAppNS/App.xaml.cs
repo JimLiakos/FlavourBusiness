@@ -95,13 +95,12 @@ namespace DontWaitApp
         }
 
 
-        protected override  void OnStart()
+        protected override async  void OnStart()
         {
 
+        
 
-          
 
-          
 
 
             //try
@@ -138,7 +137,7 @@ namespace DontWaitApp
             //catch (Exception error)
             //{
 
-          
+
             //"Error Domain=NSURLErrorDomain Code=-1009 \"The Internet connection appears to be offline.\" UserInfo={_kCFStreamErrorCodeKey=50, NSUnderlyingError=0x28057c0c0 {Error Domain=kCFErrorDomainCFNetwork Code=-1009 \"(null)\" UserInfo={_NSURLErrorNWPathKey=satisfied (Path is satisfied), viable, interface: en0, ipv4, dns, _kCFStreamErrorCodeKey=50, _kCFStreamErrorDomainKey=1}}, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <63194186-2F2B-4936-B2E1-FE537D9C3863>.<1>, _NSURLErrorRelatedURLSessionTaskErrorKey=(\n    \"LocalDataTask <63194186-2F2B-4936-B2E1-FE537D9C3863>.<1>\"\n), NSLocalizedDescription=The Internet connection appears to be offline., NSErrorFailingURLStringKey=http://192.168.1.8:8090/api/values, NSErrorFailingURLKey=http://192.168.1.8:8090/api/values, _kCFStreamErrorDomainKey=1}"
 
             SerializeTaskScheduler.RunAsync();
@@ -147,7 +146,10 @@ namespace DontWaitApp
             //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
 
 
-
+            if (await device.RemoteNotificationsPermissionsCheck() ==Xamarin.Essentials.PermissionStatus.Denied)
+            {
+                var result = await device.RemoteNotificationsPermissionsRequest();
+            }
 
             bool delete = false;
 

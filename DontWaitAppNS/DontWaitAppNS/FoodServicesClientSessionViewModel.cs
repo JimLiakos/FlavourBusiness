@@ -1466,25 +1466,35 @@ namespace DontWaitApp
             }
         }
 
-        private static void SessionMonitoring()
+        private static async void SessionMonitoring()
         {
 #if DeviceDotNet
             IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             if (!device.IsBackgroundServiceStarted)
             {
-                BackgroundServiceState serviceState = new BackgroundServiceState();
-                device.RunInBackground(new Action(async () =>
-                {
 
-                    //FoodServicesClientSession.MessageReceived +=MessageReceived;
-                    do
+                Device.BeginInvokeOnMainThread(
+                    async () =>
                     {
-                        System.Threading.Thread.Sleep(1000);
 
-                    } while (!serviceState.Terminate);
+                        
 
-                    // FoodServicesClientSession.MessageReceived -=MessageReceived;
-                }), serviceState);
+
+                        BackgroundServiceState serviceState = new BackgroundServiceState();
+                        device.RunInBackground(new Action(async () =>
+                        {
+
+                            //FoodServicesClientSession.MessageReceived +=MessageReceived;
+                            do
+                            {
+                                System.Threading.Thread.Sleep(1000);
+
+                            } while (!serviceState.Terminate);
+
+                            // FoodServicesClientSession.MessageReceived -=MessageReceived;
+                        }), serviceState);
+
+                    });
 
             }
 #endif

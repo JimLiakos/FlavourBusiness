@@ -33,20 +33,20 @@ namespace DontWaitAppNS.Droid
                 // Code to run on the main thread
             });
 
-            
-
-            
 
 
 
-            Log.Debug(TAG, "From: " + message.From);
 
-            if (message.GetNotification() != null)
-            {
-                var body = message.GetNotification().Body;
-                Log.Debug(TAG, "Notification Message Body: " + body);
-                SendNotification(body, message.Data);
-            }
+
+
+            //Log.Debug(TAG, "From: " + message.From);
+
+            //if (message.GetNotification() != null)
+            //{
+            //    var body = message.GetNotification().Body;
+            //    Log.Debug(TAG, "Notification Message Body: " + body);
+            //    SendNotification(body, message.Data);
+            //}
 
             var remoteMessage = new OOAdvantech.Droid.RemoteMessage
             {
