@@ -314,7 +314,7 @@ namespace DontWaitApp
 
 
 
-            SerializeTaskScheduler.AddTask(async () =>
+             SerializeTaskScheduler.AddTask(async () =>
             {
 
 #if DeviceDotNet

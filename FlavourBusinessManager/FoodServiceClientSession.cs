@@ -537,13 +537,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-        /// <MetaDataID>{9d7c7058-1582-4dbf-8727-14540094ec56}</MetaDataID>
-        internal void MonitorTick()
-        {
-            if (MainSession == null)
-                CheckForMealConversationTimeout();
-
-        }
+    
 
 
         ///// <MetaDataID>{56afdc1c-d6ee-42f0-9b81-44125cc8a57a}</MetaDataID>
@@ -682,9 +676,17 @@ namespace FlavourBusinessManager.EndUsers
                             }
                             catch (Exception error)
                             {
-
-
                             }
+
+                            try
+                            {
+                                if (MainSession == null)
+                                    NotifyCaregiversWhenMealConversationTimeout();
+                            }
+                            catch (Exception  error)
+                            {
+                            }
+
                             System.Threading.Thread.Sleep(5000);
                         }
                     }
@@ -823,7 +825,7 @@ namespace FlavourBusinessManager.EndUsers
         /// In case where there is main session the conservation timeouts controlled from Main in monitoring operation
         /// </summary>
         /// <MetaDataID>{49299fee-7bcb-4053-92c1-73eab19a4d1f}</MetaDataID>
-        private bool CheckForMealConversationTimeout()
+        private void NotifyCaregiversWhenMealConversationTimeout()
         {
 
             /// In case where there is main session the conservation timeouts controlled from Main in monitoring operation
@@ -854,24 +856,10 @@ namespace FlavourBusinessManager.EndUsers
 
                         if (ReminderForMealConversationTimeoutCareGiving == null)
                         {
-                            //var messagePattern = new Message();
-                            //messagePattern.Data["ClientMessageType"] = ClientMessages.MealConversationTimeout;
-                            //messagePattern.Data["ServicesPointIdentity"] = ServicePoint.ServicesPointIdentity;
-                            //messagePattern.Data["SessionIdentity"] = SessionID;
-                            //messagePattern.Notification = new Notification() { Title = "Meal conversation is over time" };
-
-                            //Localization.I18nLocalization.Current.GetString("el", "RoomService.HallsViewTitle");
-
-
                             ReminderForMealConversationTimeoutCareGiving = Reminders.Where(x => x.MessageType == ClientMessages.MealConversationTimeout && x.DurationInMin == null).FirstOrDefault();
-
-
-
-
                             if (ReminderForMealConversationTimeoutCareGiving == null)
                             {
-
-
+                                #region Creates a new care giving reminder care givers are the waiters at first and the supervisor at the end
                                 using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                                 {
 
@@ -884,21 +872,24 @@ namespace FlavourBusinessManager.EndUsers
                                         TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
 
                                     ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(ReminderForMealConversationTimeoutCareGiving);
-
                                     _Reminders.Add(ReminderForMealConversationTimeoutCareGiving);
+
+
                                     stateTransition.Consistent = true;
                                 }
 
-
+                                #endregion                            }
                             }
                             else
+                            {
+                                // update the reminder, it useful when there a new shift work  
                                 ReminderForMealConversationTimeoutCareGiving.Init(ClientMessages.MealConversationTimeout,
                                     activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors, reminderStartTime,
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutCareGivingUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin),
                                     TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutInMinForSupervisor));
-
+                            }
 
                             ReminderForMealConversationTimeoutCareGiving.BuildMessage = (MessageCreationData args) =>
                             {
@@ -940,27 +931,8 @@ namespace FlavourBusinessManager.EndUsers
                             ReminderForMealConversationTimeoutCareGiving.UpdateActiveWorkers(activeWaiters.OfType<IServicesContextWorker>().ToList(), activeSupervisors);
                     }
 
-
-                    //if (Caregivers.Where(x => x.CareGiving == Caregiver.CareGivingType.ConversationCheck).Count() > 0)
-                    //{
-                    //    //When there is care giving the reminding message is sent after extra time interval from care giving time stamp   
-                    //    if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - WillTakeCareTimestamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin * 3))
-                    //    {
-                    //        if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                    //        {
-                    //            UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    //            ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                    //        }
-                    //    }
-                    //}
-                    //else if (ServicePoint.State == ServicePointState.ConversationTimeout && (DateTime.UtcNow - UrgesToDecideToWaiterTimeStamp.ToUniversalTime()) > TimeSpan.FromMinutes(ServicesContextRunTime.Current.Settings.MealConversationTimeoutWaitersUpdateTimeSpanInMin))
-                    //{
-                    //    UrgesToDecideToWaiterTimeStamp = DateTime.UtcNow;
-                    //    ServicesContextRunTime.Current.InformWaitersMealConversationTimeout(ServicePoint as ServicePoint, SessionID, Caregivers);
-                    //}
-                    //return true;
                 }
-                return false;
+                
             }
             else
             {
@@ -971,7 +943,7 @@ namespace FlavourBusinessManager.EndUsers
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
                 ReminderForMealConversationTimeoutCareGiving = null;
 
-                return SessionState == ClientSessionState.UrgesToDecide;
+                
             }
         }
 
@@ -993,9 +965,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommitted).ToList();
 
-                    //if (commitedItemsSessions.Count == 0) // the state of other sessions changes asynchronously 
-                    //    return;
-
+ 
 
                     if (commitedItemsSessions.Count > 0)
                     {
@@ -1075,7 +1045,11 @@ namespace FlavourBusinessManager.EndUsers
                         YouMustDecideMessagesNumber += 1;
                 }
                 if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                    CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                    Task.Delay(2000).ContinueWith(t => {
+                        if (!clientMessage.MessageHasBeenRead)
+                            CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                    });
+                
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
 
@@ -2248,7 +2222,9 @@ namespace FlavourBusinessManager.EndUsers
         {
             get
             {
-                return CheckForMealConversationTimeout();
+                NotifyCaregiversWhenMealConversationTimeout();
+
+                return SessionState == ClientSessionState.UrgesToDecide;
             }
         }
         /// <exclude>Excluded</exclude>
@@ -2974,8 +2950,8 @@ namespace FlavourBusinessManager.EndUsers
             get
             {
                 //if (this.os)
-                    if (!Scheduled && MainSession != null && MainSession.PartialClientSessions.Count > 2 && this.FlavourItems.Count > 0)
-                        return true;
+                if (!Scheduled && MainSession != null && MainSession.PartialClientSessions.Count >= 2 && this.FlavourItems.Count > 0)
+                    return true;
                 if (FlavourItems.Any(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed)))
                     return true;
 

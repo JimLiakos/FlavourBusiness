@@ -33,7 +33,7 @@ using FinanceFacade;
 using FlavourBusinessFacade.ServicesContextResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessFacade;
-using FlavourBusinessManager.HumanResources;
+
 using OOAdvantech;
 using Xamarin.Forms;
 
@@ -759,12 +759,12 @@ namespace DontWaitApp
                     preparationItem.State = entry.Value;
                 }
 
-            } 
+            }
             _ObjectChangeState?.Invoke(this, null);
 
         }
 
-      
+
         [OOAdvantech.MetaDataRepository.HttpInVisible]
         event OOAdvantech.ObjectChangeStateHandle _ObjectChangeState;
 
@@ -1277,6 +1277,23 @@ namespace DontWaitApp
                 _FoodServicesClientSession = value;
                 if (_FoodServicesClientSession != null && FlavoursOrderServer != null && clientSessionData.UserLanguageCode != FlavoursOrderServer.Language)
                     _FoodServicesClientSession.UpdateSessionUser(FlavoursOrderServer.Language);
+
+
+                if (_FoodServicesClientSession?.ClientSideMonitoringEnabled == true)
+                {
+#if DeviceDotNet
+                    SessionMonitoring();
+#endif
+                }
+                else
+                {
+#if DeviceDotNet
+                    IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    if (device.IsBackgroundServiceStarted)
+                        device.StopBackgroundService();
+#endif
+                }
+
                 if (_FoodServicesClientSession?.SessionType == SessionType.HomeDelivery)
                 {
                     if (DeliveryPlace == null)
@@ -1348,25 +1365,20 @@ namespace DontWaitApp
                 FoodServicesClientSession.ItemStateChanged += FoodServicesClientSessionItemStateChanged;
                 FoodServicesClientSession.ItemsStateChanged += FoodServicesClientSessionItemsStateChanged;
 
-
-                //if (_FoodServicesClientSession?.ClientSideMonitoringEnabled==true)
+                if (_FoodServicesClientSession?.ClientSideMonitoringEnabled == true)
                 {
-
-
 #if DeviceDotNet
-                   
+                    SessionMonitoring();
 #endif
-
                 }
-                //            else
-                //            {
-
-                //#if DeviceDotNet
-                //                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-
-                //                device.StopBackgroundService();
-                //#endif
-                //            }
+                else
+                {
+#if DeviceDotNet
+                    IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                    if (device.IsBackgroundServiceStarted)
+                        device.StopBackgroundService();
+#endif
+                }
 
 
 
@@ -1452,6 +1464,30 @@ namespace DontWaitApp
                 _ObjectChangeState?.Invoke(this, nameof(MenuData));
                 GetMessages();
             }
+        }
+
+        private static void SessionMonitoring()
+        {
+#if DeviceDotNet
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            if (!device.IsBackgroundServiceStarted)
+            {
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+
+                    //FoodServicesClientSession.MessageReceived +=MessageReceived;
+                    do
+                    {
+                        System.Threading.Thread.Sleep(1000);
+
+                    } while (!serviceState.Terminate);
+
+                    // FoodServicesClientSession.MessageReceived -=MessageReceived;
+                }), serviceState);
+
+            }
+#endif
         }
 
         /// <exclude>Excluded</exclude>
@@ -1930,7 +1966,7 @@ namespace DontWaitApp
                         {
                             var itemState = FoodServicesClientSession.ItemChanged(item);
                             item.State = itemState.State;
-                            item.InEditState=itemState.InEditState;
+                            item.InEditState = itemState.InEditState;
                             item.StateTimestamp = itemState.StateTimeStamp;
                             break;
                         }
