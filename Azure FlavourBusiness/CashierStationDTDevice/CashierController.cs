@@ -262,7 +262,7 @@ Retry:
 
 
 
-            aade.SendIncomeInvoice(transaction);
+            
 
 
 

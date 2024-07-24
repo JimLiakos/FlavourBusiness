@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOAdvantech.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,20 +37,21 @@ namespace GreekTaxAuthority.RapidSign
     }
 
     /// <MetaDataID>{f1cfb0c3-ab5c-47f6-8f22-01e69b7c25d6}</MetaDataID>
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class InvoiceDetail
     {
         public int Line { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public int MUnitId { get; set; }
+        public int MUnitId { get; set; } = 7;
         public double Qty { get; set; }
         public double ItemPrc { get; set; }
         public double TotPrcAfterDisc { get; set; }
         public double NetValue { get; set; }
         public double VatAmount { get; set; }
         public int VatCatId { get; set; }
-        public int IncomeCatId { get; set; }
-        public int IncomeValId { get; set; }
+        public int? IncomeCatId { get; set; }
+        public int? IncomeValId { get; set; }
     }
 
     /// <MetaDataID>{c96a594d-a353-4a11-80a6-3336405f3df4}</MetaDataID>
@@ -91,16 +93,16 @@ namespace GreekTaxAuthority.RapidSign
     /// <MetaDataID>{6eec626b-ed7b-4565-962f-15e1d51b5225}</MetaDataID>
     public class Invoice
     {
-        public string Guid { get; set; }
+        public string Guid { get; set; } = System.Guid.NewGuid().ToString();
         public bool TransmissionFailure { get; set; }
-        public int Template { get; set; }
-        public int FileType { get; set; }
+        public int Template { get; set; } = 3;
+        public int FileType { get; set; } = 2;
         public int PaymentStatus { get; set; }
         public InvoiceHeader InvoiceHeader { get; set; } = new RapidSign.InvoiceHeader();
         public Issuer Issuer { get; set; } = new Issuer();
         public Counterpart Counterpart { get; set; }
         public Shipping Shipping { get; set; }
-        public List<InvoiceDetail> InvoiceDetails { get; set; }=new List<InvoiceDetail>();
+        public List<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
         public List<PaymentMethod> PaymentMethods { get; set; }
     }
 

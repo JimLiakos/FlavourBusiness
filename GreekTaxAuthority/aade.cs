@@ -40,8 +40,8 @@ namespace GreekTaxAuthority
                 MyData.Invoice invoice = new MyData.Invoice();
                 invoicesDoc.Invoices.Add(invoice);
                 invoice.InvoiceHeader.InvoiceType = "8.6";
-                r_Invoice.InvoiceHeader.InvoiceTypeId = 26; //"8.6"; 
-
+                r_Invoice.InvoiceHeader.InvoiceTypeId = 19; //"8.6"; 
+                r_Invoice.InvoiceHeader.IncludesVat = true;
                 invoice.InvoiceHeader.Series = transaction.GetSeries();
 
                 if (invoice.InvoiceHeader.Series == null)
@@ -87,6 +87,10 @@ namespace GreekTaxAuthority
 
                     invoiceDetails.NetValue = Math.Round(item.Amount, 2) - Math.Round(item.Taxes.Sum(x => x.Amount), 2);
                     r_invoiceDetails.NetValue = (double)(Math.Round(item.Amount, 2) - Math.Round(item.Taxes.Sum(x => x.Amount), 2));
+                    r_invoiceDetails.TotPrcAfterDisc=r_invoiceDetails.NetValue+r_invoiceDetails.VatAmount;
+                    r_invoiceDetails.Name= item.Name;
+                    r_invoiceDetails.Code= item.Sku;
+                    r_invoiceDetails.Qty=(double)item.Quantity;
 
                     invoiceDetails.VatCategory = aade.VatAccounts[vatTax.AccountID];
                     r_invoiceDetails.VatCatId = aade.VatAccounts[vatTax.AccountID];
@@ -97,13 +101,29 @@ namespace GreekTaxAuthority
                     incomeClassification.Amount = invoiceDetails.NetValue;
                     invoiceDetails.IncomeClassifications.Add(incomeClassification);
 
-                    r_invoiceDetails.IncomeCatId = 1;
-                    r_invoiceDetails.IncomeValId = 8;
+
+                    var incomeTax = item.Taxes.Where(x => aade.IncomeCatIds.ContainsKey(x.AccountID)).First();
+                    if (incomeTax!=null)
+                        r_invoiceDetails.IncomeCatId = aade.IncomeCatIds[incomeTax.AccountID];//
+
 
                     invoice.InvoiceDetails.Add(invoiceDetails);
                     r_Invoice.InvoiceDetails.Add(r_invoiceDetails);
 
                 }
+
+                RapidSign.PaymentMethod r_PaymentMethod = new RapidSign.PaymentMethod();
+
+                //" \"jsonData\": {\"idNames\": [{\"id\": 0,\"name\": \"Παρακαλώ επιλέξτε...\"},{\"id\": 1,\"name\": \"Επαγ. Λογαριασμός Πληρωμών Ημεδαπής\"},{\"id\": 2,\"name\": \"Επαγ. Λογαριασμός Πληρωμών Αλλοδαπής\"},{\"id\": 3,\"name\": \"Μετρητά\"},{\"id\": 4,\"name\": \"Επιταγή\"},{\"id\": 5,\"name\": \"Επί Πιστώσει\"},{\"id\": 6,\"name\": \"Web banking\"},{\"id\": 7,\"name\": \"POS / e-POS\"}]"
+
+
+                r_PaymentMethod.PaymentId=3;//μετρητά
+                r_PaymentMethod.PayGuid=Guid.NewGuid().ToString();
+                //{ "profilen": null, "extCode": 100, "statusDescription": "SUCCESS", "message": "SUCCESS", "extraData": "", "token": "", "jsonData": { "idNames": [ { "id": 103, "name": "Euronet Merchant Services" }, { "id": 104, "name": "ProCredit Bank (Bulgaria)" }, { "id": 108, "name": "NBG PAY" }, { "id": 109, "name": "Worldline Merchant Acquiring" }, { "id": 110, "name": "Cosmote Payments" }, { "id": 111, "name": "Everypay" }, { "id": 113, "name": "Συνεταιριστική Τράπεζα Καρδίτσας" }, { "id": 114, "name": "Attica Bank" }, { "id": 116, "name": "Viva Υπηρεσίες Πληρωμών" }, { "id": 117, "name": "Συνεταιριστική Τράπεζα Ηπείρου" }, { "id": 118, "name": "Συνεταριστική Τράπεζα Κεντρικής Μακεδονίας" }, { "id": 120, "name": "Euronet Card Services" }, { "id": 122, "name": "CardLink" }, { "id": 127, "name": "EDPS" }, { "id": 128, "name": "Καινοτόμες Λύσεις και Υπηρεσίες ΜΕΠΕ INSS" }, { "id": 130, "name": "Mellon Technologies" }, { "id": 137, "name": "Nexi Greece Processing Services" }, { "id": 138, "name": "Nexi Πληρωμών Ελλάς" }, { "id": 143, "name": "TORA Direct" }, { "id": 619, "name": "myPOS Limited" }, { "id": 624, "name": "myPOS Technologies" }, { "id": 651, "name": "Adyen N.V." } ], "data": null, "matException": null, "dataLite": null, "providersSignature": null, "invRaw": null, "invoiceStatus": null, "orderStatus": null } }
+                r_PaymentMethod.AcquirerId=116;
+                r_PaymentMethod.Amount=
+
+
                 invoice.CalculateInvoiceSummary();
 
                 string invoicesDocXML = invoicesDoc.Serialize().ToString();
@@ -114,7 +134,7 @@ namespace GreekTaxAuthority
 
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, "https://dev.rapidsign.com.gr/api/v1.0/provider/PostUnsignedInvoice?debug=true");
-                
+
                 request.Headers.Add("Authorization", $"Bearer {token}");
                 var content = new StringContent(r_invoiceJson);
                 request.Content = content;
@@ -122,7 +142,7 @@ namespace GreekTaxAuthority
                 response.EnsureSuccessStatusCode();
 
                 var resonse = await response.Content.ReadAsStringAsync();
-                
+
 
 
             }
@@ -198,6 +218,24 @@ namespace GreekTaxAuthority
             {"C54.00.79.0009",1},
             {"C54.00.79.0017",2},
             {"C54.00.79.0025",3}
+        };
+
+        //The IncomeCategoryId from /api/v{version}/provider/IncomeCategories endpoint
+
+        public static Dictionary<string, int> IncomeCatIds = new Dictionary<string, int>{
+            {"a1",1},
+            {"b1",1},
+            {"c1",1},
+            {"d1",1},
+            {"C54.00.70.0006",1},
+            {"C54.00.70.0013",1},
+            {"C54.00.70.0024",1},
+            {"C54.00.70.0036",1},
+            {"C54.00.70.0000",1},
+            {"C54.00.79.0004",1},
+            {"C54.00.79.0009",1},
+            {"C54.00.79.0017",1},
+            {"C54.00.79.0025",1}
         };
         private static RBSToken rbsToken;
     }
