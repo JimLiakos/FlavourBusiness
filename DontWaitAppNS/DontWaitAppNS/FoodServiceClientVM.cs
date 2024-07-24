@@ -274,7 +274,7 @@ namespace DontWaitApp
                     return true;
 #else
             var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            return ((PermissionStatus)locationInUsePermisions) == PermissionStatus.Granted;
 
 #endif
 #else
@@ -289,7 +289,7 @@ namespace DontWaitApp
         {
 #if DeviceDotNet
             var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            return ((PermissionStatus)locationInUsePermisions) == PermissionStatus.Granted;
 #else
             return await Task<bool>.FromResult(true);
 #endif

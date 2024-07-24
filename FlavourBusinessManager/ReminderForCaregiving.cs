@@ -3,6 +3,7 @@ using FlavourBusinessFacade.HumanResources;
 using FlavourBusinessManager.EndUsers;
 using FlavourBusinessManager.HumanResources;
 using FlavourBusinessManager.ServicePointRunTime;
+using Newtonsoft.Json;
 using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.Transactions;
@@ -177,6 +178,7 @@ namespace FlavourBusinessManager
 
 
         /// <MetaDataID>{c08ba60a-9f75-4059-845e-70d2bc8cff77}</MetaDataID>
+        [JsonIgnore]
         object CaregiversLock = new object();
 
         /// <exclude>Excluded</exclude>
@@ -201,6 +203,7 @@ namespace FlavourBusinessManager
 
 
         /// <MetaDataID>{386c7e3d-4d62-41af-905b-eeeda954fe90}</MetaDataID>
+        [JsonIgnore]
         public Func<MessageCreationData, Message> BuildMessage;
 
         /// <MetaDataID>{46f8bbc1-315b-4601-aaa2-6ac8bd6cad6e}</MetaDataID>
@@ -619,6 +622,7 @@ namespace FlavourBusinessManager
         [BackwardCompatibilityID("+7")]
         private string WillTakeCareWorkersJson;
 
+        /// <MetaDataID>{b22376b3-1059-41b4-8a73-ddd748e6d02d}</MetaDataID>
         [ObjectActivationCall]
         internal void OnActivated()
         {
@@ -633,6 +637,7 @@ namespace FlavourBusinessManager
 
         }
 
+        /// <MetaDataID>{4b47e0f4-e57c-4b1c-885e-b637198ec69a}</MetaDataID>
         [BeforeCommitObjectStateInStorageCall]
         internal void OnBeforeObjectStateCommitted()
         {

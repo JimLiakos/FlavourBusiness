@@ -355,7 +355,7 @@ namespace DontWaitApp
             }
         }
 
-        
+
 
         /// <exclude>Excluded</exclude>
         protected static ApplicationSettings _Current;
@@ -391,7 +391,7 @@ namespace DontWaitApp
 
                     using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Suppress))
                     {
-                
+
                         try
                         {
                             OOAdvantech.Linq.Storage storage = new OOAdvantech.Linq.Storage(AppSettingsStorage);
@@ -480,7 +480,7 @@ namespace DontWaitApp
         /// <MetaDataID>{d527686e-187a-4e4f-9128-7cc0d2275d63}</MetaDataID>
         [PersistentMember(nameof(_FriendlyName))]
         [BackwardCompatibilityID("+12")]
-         string FriendlyName
+        string FriendlyName
         {
             get
             {
@@ -506,5 +506,72 @@ namespace DontWaitApp
 
         /// <MetaDataID>{a20dfd91-81e2-4fab-9ddd-293b5a60b460}</MetaDataID>
         public static string ExtraStoragePath { get; internal set; }
+
+
+        /// <exclude>Excluded</exclude>
+        bool _UserDenyCameraPermission;
+
+        /// <MetaDataID>{5a4d97ab-3430-4126-b475-521692144605}</MetaDataID>
+        [PersistentMember(nameof(_UserDenyCameraPermission))]
+        [BackwardCompatibilityID("+17")]
+        public bool UserDenyCameraPermission
+        {
+            get => _UserDenyCameraPermission;
+            internal set
+            {
+                if (_UserDenyCameraPermission != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserDenyCameraPermission = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        DateTime? _LastTimeWhereUserDenyRemoteNotifications;
+
+        /// <MetaDataID>{854c1451-f130-4c81-8a68-9668266207bb}</MetaDataID>
+        [PersistentMember(nameof(_LastTimeWhereUserDenyRemoteNotifications))]
+        [BackwardCompatibilityID("+19")]
+        public DateTime? LastTimeWhereUserDenyRemoteNotifications
+        {
+            get => _LastTimeWhereUserDenyRemoteNotifications;
+            set
+            {
+                if (_LastTimeWhereUserDenyRemoteNotifications != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _LastTimeWhereUserDenyRemoteNotifications = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
+
+        /// <exclude>Excluded</exclude>
+        bool _UserDenyRemoteNotificationsPermission;
+
+        /// <MetaDataID>{e5de0a0d-065b-4e95-90db-8e57d4befbc2}</MetaDataID>
+        [PersistentMember(nameof(_UserDenyRemoteNotificationsPermission))]
+        [BackwardCompatibilityID("+18")]
+        public bool UserDenyRemoteNotificationsPermission
+        {
+            get => _UserDenyRemoteNotificationsPermission;
+            internal set
+            {
+                if (_UserDenyRemoteNotificationsPermission != value)
+                {
+                    using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+                    {
+                        _UserDenyRemoteNotificationsPermission = value;
+                        stateTransition.Consistent = true;
+                    }
+                }
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ using static FlavourBusinessFacade.Printing.Printer;
 
 namespace PreparationStationDevice.Printing
 {
+    /// <MetaDataID>{7b009871-b2bb-4242-be83-bae5867aa204}</MetaDataID>
     public class PrinterController
     {
         public readonly Printer Printer;
@@ -68,8 +69,8 @@ namespace PreparationStationDevice.Printing
             catch (Exception error)
             {
 
-                
-            }            
+
+            }
             lock (PrintedDocumentIds)
             {
                 string filePath = PrinterFolder + "PrintedDocumentIds.dat";
@@ -104,7 +105,7 @@ namespace PreparationStationDevice.Printing
 
         public Task PrinterStatusControllerTask { get; private set; }
 
-       internal   List<string> PrintedDocumentIds = new List<string>();
+        internal List<string> PrintedDocumentIds = new List<string>();
         internal void Run()
         {
             lock (this)
@@ -124,10 +125,10 @@ namespace PreparationStationDevice.Printing
                            {
                                bool pendingPrintings = false;
                                lock (Spooler)
-                                   pendingPrintings = Spooler.Count > 0; 
-                                   
+                                   pendingPrintings = Spooler.Count > 0;
 
-                               if (pendingPrintings&&UpdatePinterStatus() == PrinterStatus.Online)
+
+                               if (pendingPrintings && UpdatePinterStatus() == PrinterStatus.Online)
                                {
                                    FlavourBusinessFacade.Print.Printing printing = null;
                                    lock (Spooler)
@@ -283,7 +284,7 @@ namespace PreparationStationDevice.Printing
 
         internal void PrintOut(FlavourBusinessFacade.Print.Printing printing)
         {
-             
+
 
             lock (Spooler)
             {

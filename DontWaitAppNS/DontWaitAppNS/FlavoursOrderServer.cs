@@ -123,7 +123,7 @@ namespace DontWaitApp
 
             return NeighborhoodFoodServersTask;
         }
-         
+
 
 
         /// <MetaDataID>{aa0d2f51-3139-4cf2-8abf-7b6d91896e72}</MetaDataID>
@@ -200,6 +200,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{2e2edcd5-958e-4e85-adff-a819b1e3ba8e}</MetaDataID>
         [CachingDataOnClientSide]
         public AppType AppType { get; }
         /// <MetaDataID>{cc704161-f4c2-454b-9ff6-010d1e190a4b}</MetaDataID>
@@ -242,7 +243,7 @@ namespace DontWaitApp
                             catch (OOAdvantech.Remoting.MissingServerObjectException error)
                             {
 #if DeviceDotNet
-                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "DeviceResume :"+ error.Message, error.StackTrace });
+                                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { "DeviceResume :" + error.Message, error.StackTrace });
 #endif
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
@@ -314,38 +315,38 @@ namespace DontWaitApp
 
 
 
-             SerializeTaskScheduler.AddTask(async () =>
-            {
+            SerializeTaskScheduler.AddTask(async () =>
+           {
 
 #if DeviceDotNet
-                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+               OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
 #endif
-                int tries = 30;
-                while (tries > 0)
-                {
-                    try
-                    {
+               int tries = 30;
+               while (tries > 0)
+               {
+                   try
+                   {
 #if DeviceDotNet
-                        if (device.IsinSleepMode)
-                            FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
+                       if (device.IsinSleepMode)
+                           FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
 #else
                         FoodServicesClientSessionViewModel?.FoodServicesClientSession?.DeviceSleep();
 #endif
 
-                        break;
-                    }
-                    catch (System.Net.WebException commError)
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                    }
-                    catch (Exception error)
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                    }
-                    tries--;
-                }
-                return true;
-            });
+                       break;
+                   }
+                   catch (System.Net.WebException commError)
+                   {
+                       await Task.Delay(TimeSpan.FromSeconds(1));
+                   }
+                   catch (Exception error)
+                   {
+                       await Task.Delay(TimeSpan.FromSeconds(1));
+                   }
+                   tries--;
+               }
+               return true;
+           });
 
         }
 
@@ -363,7 +364,7 @@ namespace DontWaitApp
         public event WebViewLoadedHandle OnWebViewLoaded;
 
         /// <MetaDataID>{d52da524-96a8-4f0b-ae0f-703be4348ff2}</MetaDataID>
-        string lan = "el";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
+        string lan = "en";// OOAdvantech.CultureContext.CurrentNeutralCultureInfo.Name;
 
 
         /// <MetaDataID>{0cff47a2-3b96-4019-bfab-e15d448b603f}</MetaDataID>
@@ -579,6 +580,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{15ef5004-02b2-4d96-b24f-9fe9900b8a32}</MetaDataID>
         private void EndUser_ObjectChangeState(object _object, string member)
         {
             this._ObjectChangeState?.Invoke(this, member);
@@ -681,7 +683,7 @@ namespace DontWaitApp
                         foodServicesClientSession.FlavoursOrderServer = this;
                 }
 
-                
+
 
                 var displayedFoodServicesClientSession = ApplicationSettings.Current.DisplayedFoodServicesClientSession;
                 FoodServicesClientSessionViewModel = displayedFoodServicesClientSession;
@@ -861,6 +863,7 @@ namespace DontWaitApp
 
         }
 
+        /// <MetaDataID>{890dad96-6f22-42c1-8b87-f289a8ea4e6b}</MetaDataID>
         FoodServicesClientSessionViewModel _FoodServicesClientSessionViewModel;
         /// <MetaDataID>{636f2c8c-bead-4c32-abbe-36fb33977ac0}</MetaDataID>
         IFoodServicesClientSessionViewModel FoodServicesClientSessionViewModel
@@ -1478,66 +1481,156 @@ namespace DontWaitApp
 
         #region Permissions
 
+        /// <MetaDataID>{e4b7741f-3137-403d-bddd-7fb68386e09c}</MetaDataID>
+        bool AskPermissionsToScanFirstTime = true;
         /// <MetaDataID>{11b11a15-ce5b-4d4f-aaaf-ff6e6427b9f1}</MetaDataID>
-        public async Task<bool> CheckPermissionsForServicePointScan()
+        public async Task<PermissionStatus> CheckPermissionsForServicePointScan()
         {
 #if DeviceDotNet
-            //#if IOSEmulator
-            //                    return true;
-            //#else
 
-            var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.Camera>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            try
+            {
+
+                var locationInUsePermissions = await Permissions.CheckStatusAsync<Permissions.Camera>();
+
+                if (locationInUsePermissions != Xamarin.Essentials.PermissionStatus.Granted)
+                {
+                    if (ApplicationSettings.Current.UserDenyCameraPermission && !AskPermissionsToScanFirstTime)
+                        return PermissionStatus.UserDeny;
+                    return (PermissionStatus)locationInUsePermissions;
+                }
+
+                return PermissionStatus.Granted;
+            }
+            finally
+            {
+                AskPermissionsToScanFirstTime = false;
+            }
 
 
             //var status = await Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Camera);
             //return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
             //#endif
 #else
-            return await Task<bool>.FromResult(false);
+            return await Task<bool>.FromResult(PermissionStatus.Denied);
 #endif
         }
 
         /// <MetaDataID>{d20a2a27-4af2-4642-a402-373c188de241}</MetaDataID>
-        public async Task<bool> RequestPermissionsForServicePointScan()
+        public async Task<PermissionStatus> RequestPermissionsForServicePointScan()
         {
 #if DeviceDotNet
 
-            var locationInUsePermisions = await Permissions.RequestAsync<Permissions.Camera>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            var requestStartTime = DateTime.UtcNow;
+            var locationInUsePermissions = await Permissions.RequestAsync<Permissions.Camera>();
 
-            //var status = (await Plugin.Permissions.CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Camera))[Plugin.Permissions.Abstractions.Permission.Camera];
-            //return status == Plugin.Permissions.Abstractions.PermissionStatus.Granted;
+            bool theRequestPermissionDialogAppeared = (DateTime.UtcNow - requestStartTime).TotalSeconds > 2;
+
+            if (locationInUsePermissions != Xamarin.Essentials.PermissionStatus.Granted)
+            {
+                if (!theRequestPermissionDialogAppeared && ApplicationSettings.Current.UserDenyCameraPermission)
+                    return PermissionStatus.UserDeny;
+
+                ApplicationSettings.Current.UserDenyCameraPermission = true;
+                return (PermissionStatus)locationInUsePermissions;
+            }
+
+            return PermissionStatus.Granted;
+
+
 #else
-            return await Task<bool>.FromResult(true);
+            return await Task.FromResult(PermissionStatus.Granted);
 #endif
+        }
+        /// <MetaDataID>{0019b8f9-e78e-4123-bb75-c29a90d6c055}</MetaDataID>
+        public void OpenApplicationPermissionsPage()
+        {
+
+#if DeviceDotNet
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            device.OpenAppSettings();
+#endif
+
+
         }
 
 
+
         /// <MetaDataID>{7fd664dc-cdda-488a-ab38-6670e874af11}</MetaDataID>
-        public Task<bool> CheckPermissionsPassivePushNotification()
+        public async Task<PermissionStatus> CheckPermissionsForPushNotification()
         {
 
-#if DeviceDotNet2
-            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            OOAdvantech.IBatteryInfo batteryInfo = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IBatteryInfo)) as OOAdvantech.IBatteryInfo;
-            return Task<bool>.Run(()=> { return batteryInfo.CheckIsEnableBatteryOptimizations(); });
+#if DeviceDotNet
+
+            try
+            {
+
+                IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+
+                var remoteNotificationsPermissions = await device.RemoteNotificationsPermissionsCheck();
+
+                if (remoteNotificationsPermissions != Xamarin.Essentials.PermissionStatus.Granted)
+                {
+                    if (ApplicationSettings.Current.UserDenyRemoteNotificationsPermission)
+                    {
+                        if (ApplicationSettings.Current.LastTimeWhereUserDenyRemoteNotifications == null)
+                            ApplicationSettings.Current.LastTimeWhereUserDenyRemoteNotifications = DateTime.UtcNow;
+                        if ((DateTime.UtcNow - ApplicationSettings.Current.LastTimeWhereUserDenyRemoteNotifications.Value.ToUniversalTime()).TotalMinutes > 2)
+                        {
+                            ApplicationSettings.Current.LastTimeWhereUserDenyRemoteNotifications = DateTime.UtcNow;
+                            return PermissionStatus.UserDeny;
+                        }
+                        else
+                            return PermissionStatus.Disabled;
+                    }
+                    return (PermissionStatus)remoteNotificationsPermissions;
+                }
+                else
+                    return PermissionStatus.Granted;
+            }
+            finally
+            {
+                AskPermissionsForRemoteNotifications = false;
+            }
+
 #else
-            return Task<bool>.FromResult(true);
+            return PermissionStatus.UserDeny;
 #endif
 
         }
         /// <MetaDataID>{c6fbb6fd-26d1-4a63-bb9a-1b68e79f780c}</MetaDataID>
-        public async Task<bool> RequestPermissionsPassivePushNotification()
+        public async Task<PermissionStatus> RequestPermissionsForPushNotification()
         {
+
 #if DeviceDotNet
-            var deviceInstantiator = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
-            OOAdvantech.IBatteryInfo batteryInfo = deviceInstantiator.GetDeviceSpecific(typeof(OOAdvantech.IBatteryInfo)) as OOAdvantech.IBatteryInfo;
-            batteryInfo.StartSetting();
-            return await CheckPermissionsPassivePushNotification();
+
+            var requestStartTime = DateTime.UtcNow;
+
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+            var remoteNotificationsPermissions = await device.RemoteNotificationsPermissionsRequest();
+            bool theRequestPermissionDialogAppeared = (DateTime.UtcNow - requestStartTime).TotalSeconds > 2;
+
+            if (remoteNotificationsPermissions != Xamarin.Essentials.PermissionStatus.Granted)
+            {
+                if (!theRequestPermissionDialogAppeared && ApplicationSettings.Current.UserDenyRemoteNotificationsPermission)
+                {
+                    ApplicationSettings.Current.LastTimeWhereUserDenyRemoteNotifications = DateTime.UtcNow;
+                    return PermissionStatus.UserDeny;
+                }
+
+                ApplicationSettings.Current.UserDenyRemoteNotificationsPermission = true;
+                return (PermissionStatus)remoteNotificationsPermissions;
+            }
+
+            return PermissionStatus.Granted;
+
+
 #else
-            return await Task<bool>.FromResult(true);
+            return await Task.FromResult(PermissionStatus.Denied);
 #endif
+
+
+
         }
 
         /// <MetaDataID>{bccd130a-67c8-4f46-a550-cb9d10103eb1}</MetaDataID>
@@ -1549,7 +1642,7 @@ namespace DontWaitApp
                     return true;
 #else
             var locationInUsePermisions = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            return ((PermissionStatus)locationInUsePermisions) == PermissionStatus.Granted;
 
 #endif
 #else
@@ -1564,7 +1657,7 @@ namespace DontWaitApp
         {
 #if DeviceDotNet
             var locationInUsePermisions = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            return locationInUsePermisions == PermissionStatus.Granted;
+            return ((PermissionStatus)locationInUsePermisions) == PermissionStatus.Granted;
 #else
             return await Task<bool>.FromResult(true);
 #endif
@@ -1732,7 +1825,7 @@ namespace DontWaitApp
             get
             {
 #if DeviceDotNet
-                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get in"});
+                OOAdvantech.DeviceApplication.Current.Log(new List<string>() { " ActiveSessions get in" });
 #endif
 
                 return Task<List<IFoodServicesClientSessionViewModel>>.Run(async () =>
@@ -1775,6 +1868,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{eea25c40-c824-423e-9a7b-fb1873463b7e}</MetaDataID>
         public bool UseAssignedPaymentTerminal { get; private set; }
 
         /// <MetaDataID>{3b8f1bd2-0697-4d3e-81d2-e304771ac9b6}</MetaDataID>
@@ -1839,6 +1933,9 @@ namespace DontWaitApp
             }
         }
 
+        public bool AskPermissionsForRemoteNotifications = true;
+
+        /// <MetaDataID>{80d94252-217f-4882-8e4e-0ef34540b67d}</MetaDataID>
         public IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(OrganizationStorageRef menu)
         {
 
@@ -1878,9 +1975,9 @@ namespace DontWaitApp
 
 
                             if (flavoursServices != null)
-                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, DeviceType.Phone,deviceOS ,device.FirebaseToken, null, null, !WaiterView, create);
+                                clientSessionData = flavoursServices.GetClientSession(servicePointIdentity, null, await GetFriendlyName(), device.DeviceID, DeviceType.Phone, deviceOS, device.FirebaseToken, null, null, !WaiterView, create);
                             else
-                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, DeviceType.Phone,deviceOS, device.FirebaseToken, !WaiterView, create);
+                                clientSessionData = ServicesContextManagment.GetClientSession(servicePointIdentity, await GetFriendlyName(), device.DeviceID, DeviceType.Phone, deviceOS, device.FirebaseToken, !WaiterView, create);
 
                         }
                         catch (System.Net.WebException connectionError)
@@ -1911,7 +2008,7 @@ namespace DontWaitApp
                     if (foodServicesClientSessionViewModel != null)
                     {
                         foodServicesClientSessionViewModel.FlavoursOrderServer = this;
-                        if(foodServicesClientSessionViewModel.FoodServicesClientSession != clientSessionData.Value.FoodServiceClientSession)
+                        if (foodServicesClientSessionViewModel.FoodServicesClientSession != clientSessionData.Value.FoodServiceClientSession)
                             foodServicesClientSessionViewModel.FoodServicesClientSession = clientSessionData.Value.FoodServiceClientSession;
                     }
                     else
@@ -1941,6 +2038,7 @@ namespace DontWaitApp
 
 
 
+        /// <MetaDataID>{d163bf94-d7ea-4f99-bb39-b473f2caff10}</MetaDataID>
         public Task<IFoodServicesClientSessionViewModel> GetFoodServicesClientSessionViewModel(IFoodServiceClientSession foodServiceClientSession)
         {
             FoodServicesClientSessionViewModel foodServicesClientSessionViewModel = ApplicationSettings.Current.ActiveSessions.Where(x => x.ClientSessionID == foodServiceClientSession.SessionID).FirstOrDefault();
@@ -2099,7 +2197,7 @@ namespace DontWaitApp
                 {
                     RemotingServices.InvalidateCacheData(payment as MarshalByRefObject);
                     var state = payment.State;
-                    if (state==FinanceFacade.PaymentState.Completed)
+                    if (state == FinanceFacade.PaymentState.Completed)
                     {
                         System.Diagnostics.Debug.WriteLine("FinanceFacade.PaymentState.Completed");
                     }

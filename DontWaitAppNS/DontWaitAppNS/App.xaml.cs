@@ -44,7 +44,31 @@ namespace DontWaitApp
             MainPage = new NavigationPage(new DontWaitApp.HybridWebViewPage());
             //MainPage = new NavigationPage(new MainPage());
 
+            
+            //IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+            //device.OpenAppSettings();
+            //if (!device.IsBackgroundServiceStarted)
+            //{
 
+
+
+
+            //    BackgroundServiceState serviceState = new BackgroundServiceState();
+            //    device.RunInBackground(new Action(async () =>
+            //    {
+
+            //        //FoodServicesClientSession.MessageReceived +=MessageReceived;
+            //        do
+            //        {
+            //            System.Threading.Thread.Sleep(1000);
+
+            //        } while (!serviceState.Terminate);
+
+            //        // FoodServicesClientSession.MessageReceived -=MessageReceived;
+            //    }), serviceState);
+
+
+            //}
         }
 
         private static void InitializeRemoteTypes()
@@ -146,10 +170,6 @@ namespace DontWaitApp
             //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
 
 
-            if (await device.RemoteNotificationsPermissionsCheck() ==Xamarin.Essentials.PermissionStatus.Denied)
-            {
-                var result = await device.RemoteNotificationsPermissionsRequest();
-            }
 
             bool delete = false;
 

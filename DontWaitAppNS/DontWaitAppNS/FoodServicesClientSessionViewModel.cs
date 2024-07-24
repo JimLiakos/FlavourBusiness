@@ -597,6 +597,7 @@ namespace DontWaitApp
         /// <MetaDataID>{9714f9b4-1950-4bd5-9a10-a482c42d355e}</MetaDataID>
         object MessagesLock = new object();
 
+        /// <MetaDataID>{9ea2e886-c7c2-4d02-bc9c-5558175f7399}</MetaDataID>
         Message YouMustDecideMessage;
 
         /// <MetaDataID>{ca16b127-1d5f-46e5-aac6-633a14ae9794}</MetaDataID>
@@ -706,6 +707,7 @@ namespace DontWaitApp
         }
 
 
+        /// <MetaDataID>{b49ad97e-80ec-4fb0-8379-46aed343e6e0}</MetaDataID>
         FlavourBusinessFacade.EndUsers.Message ShareItemHasChangeMessage;
         /// <MetaDataID>{24360209-3b94-4a93-8d33-364f5c406bae}</MetaDataID>
         private void ShareItemHasChangeMessageForward(FlavourBusinessFacade.EndUsers.Message message)
@@ -1466,6 +1468,7 @@ namespace DontWaitApp
             }
         }
 
+        /// <MetaDataID>{e2e2f65a-b144-4c15-a673-db94fe998260}</MetaDataID>
         private static async void SessionMonitoring()
         {
 #if DeviceDotNet
@@ -1473,28 +1476,23 @@ namespace DontWaitApp
             if (!device.IsBackgroundServiceStarted)
             {
 
-                Device.BeginInvokeOnMainThread(
-                    async () =>
+
+
+
+                BackgroundServiceState serviceState = new BackgroundServiceState();
+                device.RunInBackground(new Action(async () =>
+                {
+
+                    //FoodServicesClientSession.MessageReceived +=MessageReceived;
+                    do
                     {
+                        System.Threading.Thread.Sleep(1000);
 
-                        
+                    } while (!serviceState.Terminate);
 
+                    // FoodServicesClientSession.MessageReceived -=MessageReceived;
+                }), serviceState);
 
-                        BackgroundServiceState serviceState = new BackgroundServiceState();
-                        device.RunInBackground(new Action(async () =>
-                        {
-
-                            //FoodServicesClientSession.MessageReceived +=MessageReceived;
-                            do
-                            {
-                                System.Threading.Thread.Sleep(1000);
-
-                            } while (!serviceState.Terminate);
-
-                            // FoodServicesClientSession.MessageReceived -=MessageReceived;
-                        }), serviceState);
-
-                    });
 
             }
 #endif
@@ -1807,6 +1805,7 @@ namespace DontWaitApp
 
 
 
+        /// <MetaDataID>{2914d508-04c2-41ca-8403-aeb157f82d91}</MetaDataID>
         public async Task<bool> CommitNewSessionType(SessionType sessionType)
         {
             if (this.SessionType != sessionType)

@@ -10,6 +10,7 @@ using static FlavourBusinessFacade.Printing.Printer;
 
 namespace PreparationStationDevice.Printing
 {
+    /// <MetaDataID>{bda3d6ce-765b-4126-9baf-c11b53800a86}</MetaDataID>
     internal class PrintingLocalService
     {
 
@@ -144,8 +145,8 @@ namespace PreparationStationDevice.Printing
 
             //        } while (!TerminatePrintingWatcher);
             //    });
- 
-             
+
+
         }
 
         private void GetPendingPrintingsFromServer(string deviceUpdateEtag)
@@ -156,7 +157,7 @@ namespace PreparationStationDevice.Printing
             foreach (var printing in PrintManager.GetPendingPrintings(printingsIDs, deviceUpdateEtag))
             {
                 var printer = Printers.Where(x => x.Printer.Identity == printing.PrinterID).FirstOrDefault();
-                 printer?.PrintOut(printing);
+                printer?.PrintOut(printing);
             }
         }
     }

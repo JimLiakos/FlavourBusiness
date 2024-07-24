@@ -1928,7 +1928,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             lock (CaregiversLock)
             {
-                WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
+              //  WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
             }
         }
 

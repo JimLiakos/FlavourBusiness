@@ -43,12 +43,16 @@ namespace FlavourBusinessFacade
         /// <MetaDataID>{9879b845-4ce0-421c-974d-0054a8664a83}</MetaDataID>
         HumanResources.IWaiter AssignWaiterUser(string waiterAssignKey);
 
+        /// <MetaDataID>{4cdb7ee6-1bd5-4934-b508-9763a7709397}</MetaDataID>
         HumanResources.ICourier AssignCourierUser(string courierAssignKey);
 
+        /// <MetaDataID>{38cbcdad-de02-457a-a66f-e6ca091569f3}</MetaDataID>
         HumanResources.ITakeawayCashier AssignTakeawayCashierUser(string takeawayCashierAssignKey);
 
+        /// <MetaDataID>{d069c037-24d2-4048-84da-84d0e1ad2579}</MetaDataID>
         NativeUserSignInData AssignDeviceToNativeUser(string DeviceAssignKey);
 
+        /// <MetaDataID>{2362f914-c15a-43ce-a0e0-afb387e14982}</MetaDataID>
         string AssignCourierScannerDevice(string deviceAssignKey);
 
 
@@ -56,11 +60,16 @@ namespace FlavourBusinessFacade
 
         /// <MetaDataID>{f1791b25-d9b2-423a-b4d2-b6a5b4012d70}</MetaDataID>
         System.Collections.Generic.List<HomeDeliveryServicePointInfo> GetNeighborhoodFoodServers(Coordinate location);
+        /// <MetaDataID>{4cf584e3-f979-4cf3-b794-c47c0d28cd14}</MetaDataID>
         IFoodServiceClientSession GetMealInvitationInviter(string invitationUri);
+        /// <MetaDataID>{98820e1c-37ed-4356-ae38-880fc04487ea}</MetaDataID>
         ITakeAwayStation GetTakeAwayStation(string takeAwayStationCredentialKey);
 
+        /// <MetaDataID>{b43bf8e6-020b-41b2-8e30-41eca785fc83}</MetaDataID>
         IHomeDeliveryCallCenterStation GetHomeDeliveryCallCenterStation(string deliveryCallCenterCredentialKey);
+        /// <MetaDataID>{21324cd9-ce6d-4710-88e8-ec1c84b3353e}</MetaDataID>
         IPrintManager GetPrintManager(string communicationCredentialKey);
+        /// <MetaDataID>{8d6df886-eee4-44a2-b134-762790fa3e84}</MetaDataID>
         string AssignPrintManagerDevice(string communicationCredentialKey);
     }
     //

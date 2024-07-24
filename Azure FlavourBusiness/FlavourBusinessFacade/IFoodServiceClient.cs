@@ -55,6 +55,7 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{c9ddeac9-2051-4618-a520-0defcb6bb398}</MetaDataID>
         [BackwardCompatibilityID("+8")]
         string DeviceFirebaseToken { get; set; }
+        /// <MetaDataID>{65db2494-267a-4cf0-bba5-cb621a3d7ba8}</MetaDataID>
         bool IsPlatformClient { get; }
 
         /// <MetaDataID>{a12366be-3156-4489-881d-5ac188559fc7}</MetaDataID>

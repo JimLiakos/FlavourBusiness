@@ -32,7 +32,7 @@
 		(object Attribute
 		    tool       	"MetaData"
 		    name       	"LastMemberID"
-		    value      	"17")
+		    value      	"20")
 		(object Attribute
 		    tool       	"C#"
 		    name       	"Identity"
@@ -443,7 +443,106 @@
 			    name       	"As Property"
 			    value      	FALSE))
 		    quid       	"651D15A5018A"
-		    type       	"System.Threading.Tasks.Task<DontWaitApp.ApplicationSettings>"))
+		    type       	"System.Threading.Tasks.Task<DontWaitApp.ApplicationSettings>")
+		(object ClassAttribute "UserDenyCameraPermission"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{5a4d97ab-3430-4126-b475-521692144605}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"669B4E5002E0")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+17"))
+		    quid       	"669B4E5002E0"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "UserDenyRemoteNotificationsPermission"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{e5de0a0d-065b-4e95-90db-8e57d4befbc2}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"669B4E50037C")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+18"))
+		    quid       	"669B4E50037C"
+		    type       	"bool"
+		    exportControl 	"Public")
+		(object ClassAttribute "LastTimeWhereUserDenyRemoteNotifications"
+		    attributes 	(list Attribute_Set
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"MetaObjectID"
+			    value      	"{854c1451-f130-4c81-8a68-9668266207bb}")
+			(object Attribute
+			    tool       	"MetaData"
+			    name       	"UniqueID"
+			    value      	"669CE3790183")
+			(object Attribute
+			    tool       	"C#"
+			    name       	"As Property"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateGetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"GenerateSetOperation"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"Persistent"
+			    name       	"Persistent"
+			    value      	TRUE)
+			(object Attribute
+			    tool       	"C#"
+			    name       	"Identity"
+			    value      	"+19"))
+		    quid       	"669CE3790183"
+		    type       	"System.Nullable<System.DateTime>"
+		    exportControl 	"Public"))
 	    module     	"Component View::DontWaitApp::DontWaitApp"
 	    quidu      	"5EFCA653000D"
 	    language   	"C#"
@@ -3964,8 +4063,8 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
-	    origin_y   	0
+	    origin_x   	419
+	    origin_y   	41
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::DontWaitApp::IFlavoursOrderServer" @1
 		    ShowCompartmentStereotypes 	TRUE
@@ -4372,6 +4471,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5F01680702E2"
+		    compartment 	(object Compartment
+			Parent_View 	@18
+			location   	(3576, 373)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	578)
 		    width      	782
 		    height     	462
 		    annotation 	8)
@@ -4402,6 +4519,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"5CDA68D10304"
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(2180, 436)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	65
+			max_width  	2000)
 		    width      	744
 		    height     	262
 		    annotation 	8)
@@ -4546,6 +4681,24 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"62CF8F5F0018"
+		    compartment 	(object Compartment
+			Parent_View 	@26
+			location   	(56, 818)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    charSet    	161
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Decoration"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	575)
 		    width      	550
 		    height     	431
 		    annotation 	8)

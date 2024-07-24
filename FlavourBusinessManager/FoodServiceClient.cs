@@ -494,6 +494,7 @@ namespace FlavourBusinessManager.EndUsers
             }
         }
 
+        /// <MetaDataID>{46c50fe0-d88d-47e7-8f57-bbe03d79e435}</MetaDataID>
         public bool IsPlatformClient
         {
             get

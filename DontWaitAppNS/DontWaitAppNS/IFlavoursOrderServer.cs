@@ -23,7 +23,7 @@ using FlavourBusinessManager.RoomService;
 
 #if DeviceDotNet
 using Xamarin.Forms;
-using Xamarin.Essentials;
+
 using ZXing.Net.Mobile.Forms;
 using ZXing;
 using ZXing.QrCode;
@@ -69,7 +69,7 @@ namespace DontWaitApp
     [HttpVisible]
     public interface IFlavoursOrderServer
     {
-         /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
+        /// <MetaDataID>{3bbf03c4-e258-4f8f-89f7-68ad0e1c8e1b}</MetaDataID>
         void WebViewLoaded();
 
         /// <MetaDataID>{d1d313ab-62a7-4401-985d-e82be2a48f57}</MetaDataID>
@@ -123,7 +123,7 @@ namespace DontWaitApp
         /// else return false
         /// </returns>
         /// <MetaDataID>{f5ade777-4b64-49ed-8a59-248d2140ec49}</MetaDataID>
-        Task<bool> CheckPermissionsForServicePointScan();
+        Task<PermissionStatus> CheckPermissionsForServicePointScan();
 
         /// <summary>
         /// Request Permission to access infrastructure for service point scanning 
@@ -133,12 +133,17 @@ namespace DontWaitApp
         /// else return false
         /// </returns>
         /// <MetaDataID>{ba8d35eb-61c2-4e41-9464-66a58f9e7e7b}</MetaDataID>
-        Task<bool> RequestPermissionsForServicePointScan();
+        Task<PermissionStatus> RequestPermissionsForServicePointScan();
+
 
         /// <MetaDataID>{55d5e7c5-5e7f-45c5-a6cc-9e9dcb322cd0}</MetaDataID>
-        Task<bool> CheckPermissionsPassivePushNotification();
+        Task<PermissionStatus> CheckPermissionsForPushNotification();
         /// <MetaDataID>{1f1dc909-3bb8-480d-897b-8b48b65ad373}</MetaDataID>
-        Task<bool> RequestPermissionsPassivePushNotification();
+        Task<PermissionStatus> RequestPermissionsForPushNotification();
+
+
+        /// <MetaDataID>{2e2e44b7-d751-4374-b070-7dac4d173c64}</MetaDataID>
+        void OpenApplicationPermissionsPage();
 
 
         /// <MetaDataID>{a330bb9e-1b46-439b-b7a8-1792b7bb011f}</MetaDataID>
@@ -207,15 +212,15 @@ namespace DontWaitApp
         /// <MetaDataID>{10656240-faac-4a11-94d7-168b7788c05b}</MetaDataID>
         string Trademark { get; set; }
 
-    
-
- 
 
 
 
-   
 
-     
+
+
+
+
+
 
 
         /// <MetaDataID>{232e53ac-ddc8-4e58-9083-dbbb26002e43}</MetaDataID>
@@ -246,7 +251,7 @@ namespace DontWaitApp
 
 
 
-  
+
 
 
 
@@ -296,8 +301,8 @@ namespace DontWaitApp
             string middleName,
             string familyName,
             string nameSuffix,
-            IEnumerable<ContactPhone> phones,
-            IEnumerable<ContactEmail> email,
+            IEnumerable<Xamarin.Essentials.ContactPhone> phones,
+            IEnumerable<Xamarin.Essentials.ContactEmail> email,
             string displayName = null)
         {
             Id = id;
@@ -306,7 +311,7 @@ namespace DontWaitApp
             MiddleName = middleName;
             FamilyName = familyName;
             NameSuffix = nameSuffix;
-            Phones.AddRange(phones?.Select(x=>x.PhoneNumber).ToList());
+            Phones.AddRange(phones?.Select(x => x.PhoneNumber).ToList());
             Emails.AddRange(email?.Select(x => x.EmailAddress).ToList());
             DisplayName = displayName;
         }
@@ -578,8 +583,39 @@ namespace DontWaitApp
         DontWaitApp = 1,
         WaiterApp = 2,
         OrderTaking = 3,
-        GraphicPreview=4
+        GraphicPreview = 4
+
+    }
+    /// <MetaDataID>{6d42868d-42de-446b-821d-5b8a4d9e9f90}</MetaDataID>
+    public enum PermissionStatus
+    {
+        //
+        // Summary:
+        //     The permission hasn't been granted or requested and is in an unknown state.
+        Unknown,
+        //
+        // Summary:
+        //     The permission is Denied 
+        Denied,
+        //
+        // Summary:
+        //     The permission is disabled for the app.
+        Disabled,
+        //
+        // Summary:
+        //     The user has granted permission.
+        Granted,
+        //
+        // Summary:
+        //     The permission is in a restricted state.
+        Restricted,
+
+        // Summary:
+        //     The user has denied the permission.
+        UserDeny
 
     }
 }
+
+
 

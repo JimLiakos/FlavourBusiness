@@ -143,7 +143,7 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         /// <MetaDataID>{11890a9b-d496-434b-a493-9d0907c2f68d}</MetaDataID>
-        public Task<bool> CheckPermissionsPassivePushNotification()
+        public Task<bool> CheckPermissionsForPushNotification()
         {
             return Task.FromResult(true);
         }
@@ -243,7 +243,7 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         /// <MetaDataID>{cccc4bf5-a1d2-41c9-8da2-f52774909903}</MetaDataID>
-        public Task<bool> RequestPermissionsPassivePushNotification()
+        public Task<bool> RequestPermissionsForPushNotification()
         {
             throw new NotImplementedException();
         }
@@ -458,6 +458,31 @@ namespace MenuDesigner.ViewModel.Preview
         }
 
         public IFoodServicesClientSessionViewModel GetFoodServicesClientSessionViewModel(FlavourBusinessFacade.OrganizationStorageRef menu)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PermissionStatus> IFlavoursOrderServer.CheckPermissionsForServicePointScan()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PermissionStatus> IFlavoursOrderServer.RequestPermissionsForServicePointScan()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PermissionStatus> IFlavoursOrderServer.CheckPermissionsForPushNotification()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PermissionStatus> IFlavoursOrderServer.RequestPermissionsForPushNotification()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenApplicationPermissionsPage()
         {
             throw new NotImplementedException();
         }

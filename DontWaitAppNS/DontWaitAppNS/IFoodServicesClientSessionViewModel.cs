@@ -50,6 +50,7 @@ namespace DontWaitApp
         /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
         void EndOfMenuItemProposal(Messmate messmate, string messageID);
 
+        /// <MetaDataID>{64fe935d-ffbf-4f58-a474-4bee412b24f2}</MetaDataID>
         Task<bool> CommitNewSessionType(SessionType sessionType);
 
         /// <MetaDataID>{89a16f62-175a-41b9-bb83-31c88100e6b8}</MetaDataID>
@@ -177,6 +178,7 @@ namespace DontWaitApp
 
 
 
+    /// <MetaDataID>{e321a477-b121-4cec-b915-138e8e28d2ca}</MetaDataID>
     public enum FoodServiceSessionCommitResponse
     {
         SessionCommitted = 0,

@@ -97,6 +97,7 @@ namespace FlavourBusinessFacade.ServicesContextResources
         Closed=4
     }
 
+    /// <MetaDataID>{60b44031-2514-4f78-bf83-f335bfd63214}</MetaDataID>
     public enum CaregivingMessageType
     {
         SearchForDelayedMealConversation,
