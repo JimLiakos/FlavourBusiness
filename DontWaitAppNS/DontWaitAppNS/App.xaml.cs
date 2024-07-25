@@ -26,6 +26,7 @@ namespace DontWaitApp
 
         public event EventHandler ApplicationResuming;
         public event EventHandler ApplicationSleeping;
+        
         SerializeTaskScheduler IAppLifeTime.SerializeTaskScheduler => SerializeTaskScheduler;
 
         public static OOAdvantech.SerializeTaskScheduler SerializeTaskScheduler = new OOAdvantech.SerializeTaskScheduler();
@@ -167,6 +168,22 @@ namespace DontWaitApp
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
             device.IsinSleepMode = false;
+
+
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "OnStart" });
+#endif
+
+            try
+            {
+                device.IsinSleepMode = false;
+                
+            }
+            catch (Exception error)
+            {
+            }
+
+
             //OnAppLinkRequestReceived(new Uri("http://192.168.2.8:4300/#/launch-app?mealInvitation=True&sc=7f9bde62e6da45dc8c5661ee2220a7b0&sp=fe51ba7e30954ee08209bd89a03469a8&cs=6126a9565db94a88ade1e604172a683b"));
 
 

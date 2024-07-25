@@ -211,7 +211,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{01f8d08e-6e0b-434c-88f3-7da0722f7af5}</MetaDataID>
-        private void ApplicationResuming(object sender, EventArgs e)
+        internal void ApplicationResuming(object sender, EventArgs e)
         {
 
 #if DeviceDotNet
@@ -277,6 +277,8 @@ namespace DontWaitApp
 
 
         }
+
+
         /// <exclude>Excluded</exclude>
         IList<IHallLayout> _Halls;
 
@@ -308,7 +310,7 @@ namespace DontWaitApp
         }
 
         /// <MetaDataID>{efa7ab05-f66c-42a1-850c-c825f70ce948}</MetaDataID>
-        private void ApplicationSleeping(object sender, EventArgs e)
+        internal void ApplicationSleeping(object sender, EventArgs e)
         {
             //var run = SerializeTaskScheduler.Runs;
             //var remainingTasks = SerializeTaskScheduler.RemainingTasks;
@@ -662,6 +664,7 @@ namespace DontWaitApp
 
                 (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
                 (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+                
 
                 device.MessageReceived += Device_MessageReceived;
 #endif

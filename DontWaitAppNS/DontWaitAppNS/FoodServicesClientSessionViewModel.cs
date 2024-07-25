@@ -680,29 +680,59 @@ namespace DontWaitApp
         {
             if (message.Notification != null)
             {
-                FoodServicesClientSession.RemoveMessage(message.MessageID);
-                Task.Run(() =>
+                var deviceInstantiate = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                if (device.IsinSleepMode)
                 {
-                    try
+
+                    //IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
+                    var isInSleepMode = device.IsinSleepMode;
+                    Task.Run(() =>
                     {
-                        var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
-                                         select new Messmate(clientSession, OrderItems)).ToList();
+                        //ringtoneService.Play();
+                        int count = 4;
+                        if (!isInSleepMode)
+                            count = 1;
+                        var duration = TimeSpan.FromSeconds(2);
+                        while (count > 0)
+                        {
+                            count--;
+                            Vibration.Vibrate(duration);
+                            System.Threading.Thread.Sleep(3000);
+                            Vibration.Cancel();
+                            System.Threading.Thread.Sleep(3000);
+                        }
+                        //ringtoneService.Stop();
+                    });
 
-                        messmates = (from messmate in messmates
-                                     where !messmate.WaiterSession
-                                     from preparationItem in messmate.PreparationItems
-                                     where preparationItem.State == ItemPreparationState.Committed
-                                     select messmate).Distinct().ToList();
+                }
+                else
+                {
 
-                        while (_MessmatesWaitForYouToDecide == null)
-                            System.Threading.Thread.Sleep(1000);
-
-                        _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
-                    }
-                    catch (Exception error)
+                    FoodServicesClientSession.RemoveMessage(message.MessageID);
+                    Task.Run(() =>
                     {
-                    }
-                });
+                        try
+                        {
+                            var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
+                                             select new Messmate(clientSession, OrderItems)).ToList();
+
+                            messmates = (from messmate in messmates
+                                         where !messmate.WaiterSession
+                                         from preparationItem in messmate.PreparationItems
+                                         where preparationItem.State == ItemPreparationState.Committed
+                                         select messmate).Distinct().ToList();
+
+                            while (_MessmatesWaitForYouToDecide == null)
+                                System.Threading.Thread.Sleep(1000);
+
+                            _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
+                        }
+                        catch (Exception error)
+                        {
+                        }
+                    });
+                }
             }
         }
 
@@ -1083,7 +1113,10 @@ namespace DontWaitApp
 
             var foodServiceClientSession = RemotingServices.CastTransparentProxy<IFoodServiceClientSession>(sender);
 
-            try
+
+
+#if DeviceDotNet
+   try
             {
                 var deviceInstantiate = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -1097,8 +1130,6 @@ namespace DontWaitApp
             {
             }
 
-
-#if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new List<string> { "befor order items" });
 #endif
 

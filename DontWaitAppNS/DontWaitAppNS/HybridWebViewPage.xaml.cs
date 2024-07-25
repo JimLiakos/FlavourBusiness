@@ -37,8 +37,16 @@ namespace DontWaitApp
                 int rr = 0;
             });
 
+
+            if (FlavoursOrderServer==null)
+                FlavoursOrderServer=new FlavoursOrderServer(AppType.DontWaitApp, false);
+            else
+                FlavoursOrderServer.ApplicationResuming(App.Current, EventArgs.Empty);
+
             FlavoursOrderServer.Trademark = "Arionas";
             this.BindingContext = FlavoursOrderServer;
+
+
 
             EventTest eventTest = new EventTest();
 
@@ -185,6 +193,8 @@ namespace DontWaitApp
             }
         }
 
+        
+
         bool check = false;
         protected override async void OnAppearing()
         {
@@ -250,7 +260,7 @@ namespace DontWaitApp
 
         }
 
-        FlavoursOrderServer FlavoursOrderServer = new FlavoursOrderServer(AppType.DontWaitApp, false);
+        static FlavoursOrderServer FlavoursOrderServer  ;
         protected override bool OnBackButtonPressed()
         {
             //hybridWebView.NativeWebBrowser.InvockeJSMethod("NavigationButtonPress", new object[] { 1 });

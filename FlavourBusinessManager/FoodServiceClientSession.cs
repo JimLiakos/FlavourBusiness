@@ -1038,17 +1038,21 @@ namespace FlavourBusinessManager.EndUsers
                         stateTransition.Consistent = true;
                     }
 
+                    CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+
+                    //if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                    //    Task.Delay(10000).ContinueWith(t => {
+                    //        if (!clientMessage.MessageHasBeenRead)
+                    //            CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
+                    //    });
+
                 }
                 else
                 {
                     if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
                         YouMustDecideMessagesNumber += 1;
                 }
-                if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                    Task.Delay(10000).ContinueWith(t => {
-                        if (!clientMessage.MessageHasBeenRead)
-                            CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
-                    });
+               
                  
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
