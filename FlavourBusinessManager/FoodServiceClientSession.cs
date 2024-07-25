@@ -1045,11 +1045,11 @@ namespace FlavourBusinessManager.EndUsers
                         YouMustDecideMessagesNumber += 1;
                 }
                 if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                    Task.Delay(2000).ContinueWith(t => {
+                    Task.Delay(10000).ContinueWith(t => {
                         if (!clientMessage.MessageHasBeenRead)
                             CloudNotificationManager.SendMessage(clientMessage, DeviceFirebaseToken);
                     });
-                
+                 
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
 
@@ -1181,6 +1181,8 @@ namespace FlavourBusinessManager.EndUsers
             var message = Messages.OrderBy(x => x.MessageTimestamp).FirstOrDefault();
             if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.YouMustDecide)
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
+            if (message != null)
+                message.MessageHasBeenRead = true;
             return message;
         }
 

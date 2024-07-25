@@ -1083,6 +1083,20 @@ namespace DontWaitApp
 
             var foodServiceClientSession = RemotingServices.CastTransparentProxy<IFoodServiceClientSession>(sender);
 
+            try
+            {
+                var deviceInstantiate = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
+                IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+
+                if (device.IsinSleepMode)
+                    foodServiceClientSession.DeviceSleep();
+                else
+                    foodServiceClientSession.DeviceResume();
+            }
+            catch (Exception error)
+            {
+            }
+
 
 #if DeviceDotNet
             OOAdvantech.DeviceApplication.Current.Log(new List<string> { "befor order items" });
@@ -1119,6 +1133,7 @@ namespace DontWaitApp
             var clientSessionData = FoodServicesClientSession.ClientSessionData;
             FoodServicesClientSession = clientSessionData.FoodServiceClientSession;
             ClientSessionToken = clientSessionData.Token;
+
 
             //var menuData = this.MenuData;
             //menuData.OrderItems = OrderItems.ToList();
