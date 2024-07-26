@@ -664,8 +664,8 @@ namespace DontWaitApp
 
                 (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
                 (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
-                
 
+                device.MessageReceived -= Device_MessageReceived;
                 device.MessageReceived += Device_MessageReceived;
 #endif
 
@@ -711,7 +711,7 @@ namespace DontWaitApp
                 }
             });
 
-            await InitializationTask;
+            
 
             await InitializationTask;
         }
@@ -2236,6 +2236,11 @@ namespace DontWaitApp
             else
                 return false;
 
+        }
+
+        internal void ClearInitialization()
+        {
+            Initialized=false;
         }
 
         /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>

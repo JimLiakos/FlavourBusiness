@@ -698,9 +698,14 @@ namespace DontWaitApp
                         {
                             count--;
                             Vibration.Vibrate(duration);
-                            System.Threading.Thread.Sleep(3000);
+                            System.Threading.Thread.Sleep(1500);
+
                             Vibration.Cancel();
                             System.Threading.Thread.Sleep(3000);
+
+                            if (!device.IsinSleepMode)
+                                break;
+
                         }
                         //ringtoneService.Stop();
                     });
@@ -1116,7 +1121,7 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-   try
+            try
             {
                 var deviceInstantiate = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;

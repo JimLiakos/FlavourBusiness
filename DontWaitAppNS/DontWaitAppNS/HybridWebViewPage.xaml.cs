@@ -38,10 +38,13 @@ namespace DontWaitApp
             });
 
 
-            if (FlavoursOrderServer==null)
-                FlavoursOrderServer=new FlavoursOrderServer(AppType.DontWaitApp, false);
+            if (FlavoursOrderServer == null)
+                FlavoursOrderServer = new FlavoursOrderServer(AppType.DontWaitApp, false);
             else
+            {
+                FlavoursOrderServer.ClearInitialization();
                 FlavoursOrderServer.ApplicationResuming(App.Current, EventArgs.Empty);
+            }
 
             FlavoursOrderServer.Trademark = "Arionas";
             this.BindingContext = FlavoursOrderServer;
