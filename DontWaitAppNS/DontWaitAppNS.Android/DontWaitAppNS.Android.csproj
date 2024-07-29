@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="MyForeGroundService.cs" />
-    <Compile Include="TimestampService.cs" />
     <Compile Include="UtcTimestamper.cs" />
     <None Include="Application.cs" />
     <Compile Include="MainActivity.cs" />
@@ -121,6 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="OutputLog.txt" />
+    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter_white16.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter16.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter_white16.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter16.png" />
     <GoogleServicesJson Include="google-services.json" />
     <None Include="Resources\AboutResources.txt" />
     <Content Include="Assets\AboutAssets.txt">
@@ -168,34 +171,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_action_restart_timer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_stat_name.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_action_restart_timer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_stat_name.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_restart_timer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_stat_name.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_action_restart_timer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_stat_name.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

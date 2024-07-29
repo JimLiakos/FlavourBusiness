@@ -50,6 +50,12 @@ namespace DontWaitApp
         /// <MetaDataID>{d7ff4093-88ba-4478-93a2-fe911236cb04}</MetaDataID>
         void EndOfMenuItemProposal(Messmate messmate, string messageID);
 
+
+        void MessageHasBeenRead(string messageID);
+
+
+        void MessageHasBeenDisplayed(string messageID);
+
         /// <MetaDataID>{64fe935d-ffbf-4f58-a474-4bee412b24f2}</MetaDataID>
         Task<bool> CommitNewSessionType(SessionType sessionType);
 

@@ -79,6 +79,11 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{2699b4f5-a3ce-442e-8c61-19c2a32d5d67}</MetaDataID>
         void AddSharingItem(IItemPreparation item);
 
+
+        /// <summary>
+        /// Shared items are items that belong to another session, have been marked as shared, 
+        /// and the user of this session wants the shared items to be part of their meal.
+        /// </summary>
         [Association("ClientsSharedItems", Roles.RoleA, "d3f8b87e-0f43-4373-939e-950dd9db19b2")]
         [RoleBMultiplicityRange(1)]
         [IgnoreErrorCheck]

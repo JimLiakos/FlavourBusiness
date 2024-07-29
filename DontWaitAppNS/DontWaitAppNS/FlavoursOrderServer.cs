@@ -58,7 +58,7 @@ namespace DontWaitApp
 {
 
     /// <MetaDataID>{cab2cac1-0d34-4bcd-b2c4-81e4a9f915c3}</MetaDataID>
-    public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject
+    public class FlavoursOrderServer : MarshalByRefObject, IFlavoursOrderServer, FlavourBusinessFacade.ViewModel.ILocalization, OOAdvantech.Remoting.IExtMarshalByRefObject, IBoundObject, INativeConsole
     {
 
         /// <MetaDataID>{03115271-880a-448a-8d34-e29ab8586c17}</MetaDataID>
@@ -248,8 +248,22 @@ namespace DontWaitApp
                                 return await ConnectToServicePoint(this.FoodServicesClientSessionViewModel.MenuData.ServicePointIdentity);
                             }
                         }
+
+                        
                         if (FoodServicesClientSessionViewModel != null)
+                        {
+                            
+#if DeviceDotNet
+                            DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine}GetMessage" });
+#endif
                             _FoodServicesClientSessionViewModel.GetMessages();
+                        }
+                        else
+                        {
+#if DeviceDotNet
+                            DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine}_FoodServicesClientSessionViewModel==null" });
+#endif
+                        }
                         break;
                     }
                     catch (System.Net.WebException commError)
@@ -662,8 +676,10 @@ namespace DontWaitApp
 
 #if DeviceDotNet
 
-                (Application.Current as IAppLifeTime).ApplicationSleeping += ApplicationSleeping;
-                (Application.Current as IAppLifeTime).ApplicationResuming += ApplicationResuming;
+                device.ApplicationSleeping -= ApplicationSleeping;
+                device.ApplicationSleeping += ApplicationSleeping;
+                device.ApplicationResuming -= ApplicationResuming;
+                device.ApplicationResuming += ApplicationResuming;
 
                 device.MessageReceived -= Device_MessageReceived;
                 device.MessageReceived += Device_MessageReceived;
@@ -2241,6 +2257,16 @@ namespace DontWaitApp
         internal void ClearInitialization()
         {
             Initialized=false;
+        }
+
+        public void Log(List<string> lines)
+        {
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(lines );
+
+            
+#endif
+
         }
 
         /// <MetaDataID>{2121552a-8aa5-4ff3-9d14-e6b8aeeee28e}</MetaDataID>

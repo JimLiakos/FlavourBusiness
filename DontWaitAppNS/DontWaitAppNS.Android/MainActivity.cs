@@ -34,7 +34,7 @@ using System.Linq;
 
 namespace DontWaitAppNS.Droid
 {
-    [Activity(Label = "DontWaitAppNS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "DontWaitAppNS", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
 
     [IntentFilter(new[] { Android.Content.Intent.ActionView },
     DataScheme = "http",

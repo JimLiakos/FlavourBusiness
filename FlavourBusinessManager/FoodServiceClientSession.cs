@@ -25,6 +25,7 @@ using OOAdvantech.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Google.Api.Gax;
 using OOAdvantech;
+using System.ServiceModel.Configuration;
 
 
 namespace FlavourBusinessManager.EndUsers
@@ -537,7 +538,7 @@ namespace FlavourBusinessManager.EndUsers
         }
 
 
-    
+
 
 
         ///// <MetaDataID>{56afdc1c-d6ee-42f0-9b81-44125cc8a57a}</MetaDataID>
@@ -683,7 +684,7 @@ namespace FlavourBusinessManager.EndUsers
                                 if (MainSession == null)
                                     NotifyCaregiversWhenMealConversationTimeout();
                             }
-                            catch (Exception  error)
+                            catch (Exception error)
                             {
                             }
 
@@ -932,7 +933,7 @@ namespace FlavourBusinessManager.EndUsers
                     }
 
                 }
-                
+
             }
             else
             {
@@ -943,7 +944,7 @@ namespace FlavourBusinessManager.EndUsers
                 ReminderForMealConversationTimeoutCareGiving?.Stop();
                 ReminderForMealConversationTimeoutCareGiving = null;
 
-                
+
             }
         }
 
@@ -965,7 +966,7 @@ namespace FlavourBusinessManager.EndUsers
                 {
                     commitedItemsSessions = MainSession.PartialClientSessions.Where(x => x.SessionState == ClientSessionState.ItemsCommitted).ToList();
 
- 
+
 
                     if (commitedItemsSessions.Count > 0)
                     {
@@ -988,7 +989,7 @@ namespace FlavourBusinessManager.EndUsers
                         double fromLastModificationMin = (DateTime.UtcNow - ModificationTime.ToUniversalTime()).TotalMinutes;
 
                         bool fromLastCommittedItemsSessionExpired = fromLastCommittedItemsSessionInMin > 3;
-                        bool fromDeviceSleepExpired = fromDeviceSleep > 1.5;
+                        bool fromDeviceSleepExpired = fromDeviceSleep > 0.8;
 
                         TimeSpan mealConversationTime = DateTime.UtcNow - MainSession.SessionStarts.ToUniversalTime();
                         TimeSpan fromStartOfSession = DateTime.UtcNow - SessionStarts.ToUniversalTime();
@@ -1016,8 +1017,36 @@ namespace FlavourBusinessManager.EndUsers
         /// <MetaDataID>{0c8a6c6a-ba0f-4f96-8bbd-821d66867b78}</MetaDataID>
         private void UrgesToDecideMessage()
         {
-            if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 2)
+            if (!PreviousYouMustDecideMessageTime.HasValue || (DateTime.UtcNow - PreviousYouMustDecideMessageTime.Value).TotalMinutes > 1)
             {
+
+
+                var messmateSessions = (from clientSession in GetMealParticipants()
+                                        where clientSession.Worker == null && clientSession.FlavourItems.All(x => x.State.IsIntheSameOrFollowingState(ItemPreparationState.Committed))
+                                        select clientSession).ToList();
+
+
+
+                string remindTitle = Localization.I18nLocalization.Current.GetString(UserLanguageCode, "RoomService.HallServicePoint.MessmateWaitsTheClientToDecideTitle");
+                string body = null;
+                
+                string messmateNames = null;
+
+                foreach (var session in messmateSessions)
+                {
+                    if (messmateNames != null)
+                        messmateNames += ",";
+
+                    messmateNames += session.ClientName;
+                }
+
+                if (messmateSessions.Count ==1)
+                    body = string.Format(Localization.I18nLocalization.Current.GetString(UserLanguageCode, "RoomService.HallServicePoint.MessmateWaitsTheClientToDecideMessageBody"),messmateNames);
+                else
+                    body = string.Format(Localization.I18nLocalization.Current.GetString(UserLanguageCode, "RoomService.HallServicePoint.MessmatesWaitsTheClientToDecideMessageBody"), messmateNames);
+
+
+
 
                 var clientMessage = Messages.Where(x => ((ClientMessages)(int)x.Data["ClientMessageType"]) == ClientMessages.YouMustDecide).FirstOrDefault();
 
@@ -1027,11 +1056,13 @@ namespace FlavourBusinessManager.EndUsers
                     using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
                     {
 
+
+
                         clientMessage = new Message();
                         OOAdvantech.PersistenceLayer.ObjectStorage.GetStorageOfObject(this).CommitTransientObjectState(clientMessage);
                         clientMessage.Data["ClientMessageType"] = ClientMessages.YouMustDecide;
                         clientMessage.Data["ClientSessionID"] = SessionID;
-                        clientMessage.Notification = new Notification() { Title = "Don't wait the waiter", Body = "You must press send button to send order" };
+                        clientMessage.Notification = new Notification() { Title = remindTitle, Body = body };
                         PushMessage(clientMessage);
                         if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
                             YouMustDecideMessagesNumber += 1;
@@ -1049,11 +1080,28 @@ namespace FlavourBusinessManager.EndUsers
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
-                        YouMustDecideMessagesNumber += 1;
+
+
+                    using (SystemStateTransition stateTransition = new SystemStateTransition(TransactionOption.Required))
+                    {
+
+                        Notification notification = clientMessage.Notification;
+                        notification.Title = remindTitle;
+                        notification.Body = body;
+                        clientMessage.Notification = notification; ;
+
+                        if (!string.IsNullOrWhiteSpace(DeviceFirebaseToken))
+                            YouMustDecideMessagesNumber += 1;
+
+
+                        stateTransition.Consistent = true;
+                    }
+
+
+
                 }
-               
-                 
+
+
                 _MessageReceived?.Invoke(this);
                 PreviousYouMustDecideMessageTime = System.DateTime.UtcNow;
 
@@ -1672,6 +1720,10 @@ namespace FlavourBusinessManager.EndUsers
         /// <exclude>Excluded</exclude>
         OOAdvantech.Collections.Generic.Set<IItemPreparation> _SharedItems = new OOAdvantech.Collections.Generic.Set<IItemPreparation>();
 
+        /// <summary>
+        /// Shared items are items that belong to another session, have been marked as shared, 
+        /// and the user of this session wants the shared items to be part of their meal.
+        /// </summary>
         /// <MetaDataID>{ec6bbded-86a2-4248-8726-bc11385af338}</MetaDataID>
         [PersistentMember(nameof(_SharedItems))]
         [AssociationEndBehavior(PersistencyFlag.OnConstruction | PersistencyFlag.CascadeDelete | PersistencyFlag.ReferentialIntegrity)]
@@ -1934,7 +1986,7 @@ namespace FlavourBusinessManager.EndUsers
         {
             lock (CaregiversLock)
             {
-              //  WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
+                //  WillTakeCareWorkersJson = OOAdvantech.Json.JsonConvert.SerializeObject(Reminders);
             }
         }
 
