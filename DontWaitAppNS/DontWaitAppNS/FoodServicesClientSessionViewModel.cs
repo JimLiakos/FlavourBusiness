@@ -1698,7 +1698,7 @@ namespace DontWaitApp
             //}
             //this.FlavoursOrderServer.Pay(Payment);
 
-
+             
         }
         /// <MetaDataID>{fa575847-542b-44f2-96c2-51398a146e95}</MetaDataID>
         public async Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)

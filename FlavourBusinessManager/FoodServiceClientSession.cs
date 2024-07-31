@@ -751,7 +751,8 @@ namespace FlavourBusinessManager.EndUsers
                     #region  ClientSessionState.ConversationStandy
                     if (SessionState == ClientSessionState.ConversationStandby && MainSession != null && !ImplicitMealParticipation &&
                       MainSession.SessionState == FlavourBusinessFacade.ServicesContextResources.SessionState.UrgesToDecide &&
-                      DeviceAppState != DeviceAppLifecycle.InUse)
+                      DeviceAppState != DeviceAppLifecycle.InUse&&
+                      GetMealParticipants().Any(x=>x.SessionState==ClientSessionState.ItemsCommitted))
                     {
                         //One of the messmates commits event
                         SessionState = ClientSessionState.UrgesToDecide;
