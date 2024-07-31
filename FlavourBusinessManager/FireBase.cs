@@ -15,9 +15,9 @@ namespace FlavourBusinessManager
         static object InitLock = new object();
         static Task InitTask;
         public static Task Init()
-        {
+        { 
             lock (InitLock)
-            {
+            { 
                 if (InitTask==null)
                 {
                     InitTask=Task.Run(async () =>
