@@ -26,6 +26,8 @@ using OOAdvantech;
 using OOAdvantech.Web;
 using OOAdvantech.Pay;
 using FinanceFacade;
+using static Xamarin.Essentials.Permissions;
+
 
 
 
@@ -607,7 +609,7 @@ namespace DontWaitApp
             {
 
 #if DeviceDotNet
-                OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "In GetMessage" });
+                DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "In GetMessage" });
 #endif
                 if (FoodServicesClientSession != null)
                 {
@@ -621,7 +623,12 @@ namespace DontWaitApp
                         OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { "there is not message" });
 #endif
 
-
+                    }
+                    else
+                    {
+#if DeviceDotNet
+                        OOAdvantech.DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $" message with id : {message.MessageID}" });
+#endif
                     }
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.PartOfMealRequest)
                     {
@@ -675,6 +682,8 @@ namespace DontWaitApp
             }
         }
 
+        List<Message> UrgesToDecideMessage = new List<Message>();
+
         /// <MetaDataID>{4a4ab174-50dd-4220-88c1-cb6e1d925628}</MetaDataID>
         private void YouMustDecideMessageForward(FlavourBusinessFacade.EndUsers.Message message)
         {
@@ -684,57 +693,124 @@ namespace DontWaitApp
                 IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
                 if (device.IsinSleepMode)
                 {
+#if DeviceDotNet
+                    DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine}IsinSleepMode vibrate" });
+#endif
 
                     //IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
                     var isInSleepMode = device.IsinSleepMode;
-                    Task.Run(() =>
+                    lock (MessagesLock)
                     {
-                        //ringtoneService.Play();
-                        int count = 4;
-                        if (!isInSleepMode)
-                            count = 1;
-                        var duration = TimeSpan.FromSeconds(2);
-                        while (count > 0)
+                        if (!VibrateOn)
                         {
-                            count--;
-                            Vibration.Vibrate(duration);
-                            System.Threading.Thread.Sleep(3000);
-                            Vibration.Cancel();
-                            System.Threading.Thread.Sleep(3000);
+                            VibrateOn = true;
+                            Task.Run(() =>
+                            {
+                                //ringtoneService.Play();
+                                try
+                                {
+                                    int count = 4;
+                                    if (!isInSleepMode)
+                                        count = 1;
+                                    var duration = TimeSpan.FromSeconds(2);
+#if DeviceDotNet
+                                    while (count > 0)
+                                    {
+                                        count--;
+                                        Vibration.Vibrate(duration);
+                                        System.Threading.Thread.Sleep(1000);
+
+                                        Vibration.Cancel();
+                                        System.Threading.Thread.Sleep(2000);
+
+                                        if (!device.IsinSleepMode)
+                                            break;
+
+                                    }
+#endif
+                                }
+                                finally
+                                {
+                                    lock (MessagesLock)
+                                        VibrateOn = false;
+                                }
+                                //ringtoneService.Stop();
+                            });
                         }
-                        //ringtoneService.Stop();
-                    });
+                    }
 
                 }
                 else
                 {
-
-                    FoodServicesClientSession.RemoveMessage(message.MessageID);
-                    Task.Run(() =>
+                    bool thereAreUrgesToDecideMessages = false;
+                    lock (UrgesToDecideMessage)
                     {
-                        try
-                        {
-                            var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
-                                             select new Messmate(clientSession, OrderItems)).ToList();
+                        if (UrgesToDecideMessage.Where(x => x.MessageID == message.MessageID).FirstOrDefault() == null)
+                            UrgesToDecideMessage.Add(message);
+                        thereAreUrgesToDecideMessages = UrgesToDecideMessage.Any();
+                    }
+                    lock (MessagesLock)
+                    {
+                        if (YouMustDecideMessageForwardTask?.Status == TaskStatus.Running)
+                            return;
 
-                            messmates = (from messmate in messmates
-                                         where !messmate.WaiterSession
-                                         from preparationItem in messmate.PreparationItems
-                                         where preparationItem.State == ItemPreparationState.Committed
-                                         select messmate).Distinct().ToList();
+                        YouMustDecideMessageForwardTask = Task.Run(() =>
+                     {
+                         try
+                         {
 
-                            while (_MessmatesWaitForYouToDecide == null)
-                                System.Threading.Thread.Sleep(1000);
 
-                            _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
-                        }
-                        catch (Exception error)
-                        {
-                        }
-                    });
+                             while (thereAreUrgesToDecideMessages)
+                             {
+                                 lock (UrgesToDecideMessage)
+                                     message = UrgesToDecideMessage.FirstOrDefault();
+
+                                 FoodServicesClientSession.RemoveMessage(message.MessageID);
+
+                                 var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
+                                                  select new Messmate(clientSession, OrderItems)).ToList();
+
+                                 messmates = (from messmate in messmates
+                                              where !messmate.WaiterSession
+                                              from preparationItem in messmate.PreparationItems
+                                              where preparationItem.State == ItemPreparationState.Committed
+                                              select messmate).Distinct().ToList();
+                                 bool raiseEventWithTimeOut = _MessmatesWaitForYouToDecide == null;
+                                 while (_MessmatesWaitForYouToDecide == null)
+                                     System.Threading.Thread.Sleep(1000);
+#if DeviceDotNet
+                                 if (_MessmatesWaitForYouToDecide == null)
+                                     DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine} there is not subscriptions for  _MessmatesWaitForYouToDecide" });
+                                 else
+                                     DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine} propagate the message" });
+#endif
+                                 _MessmatesWaitForYouToDecide?.Invoke(this, messmates, message.MessageID);
+
+                                 System.Threading.Thread.Sleep(3000);
+                                 lock (UrgesToDecideMessage)
+                                 {
+                                     thereAreUrgesToDecideMessages = UrgesToDecideMessage.Any();
+                                 }
+                             }
+                             lock (MessagesLock)
+                                 YouMustDecideMessageForwardTask = null;
+
+                         }
+                         catch (Exception error)
+                         {
+#if DeviceDotNet
+                             DeviceApplication.Current.Log(new System.Collections.Generic.List<string>() { $"##YouMustDecide##{System.Environment.NewLine} error on raise MessmatesWaitForYouToDecide" });
+#endif
+                         }
+                     });
+                    }
                 }
             }
         }
+
+
+
+
 
 
         /// <MetaDataID>{b49ad97e-80ec-4fb0-8379-46aed343e6e0}</MetaDataID>
@@ -1116,7 +1192,7 @@ namespace DontWaitApp
 
 
 #if DeviceDotNet
-   try
+            try
             {
                 var deviceInstantiate = Xamarin.Forms.DependencyService.Get<OOAdvantech.IDeviceInstantiator>();
                 IDeviceOOAdvantechCore device = deviceInstantiate.GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
@@ -1622,7 +1698,7 @@ namespace DontWaitApp
             //}
             //this.FlavoursOrderServer.Pay(Payment);
 
-
+             
         }
         /// <MetaDataID>{fa575847-542b-44f2-96c2-51398a146e95}</MetaDataID>
         public async Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
@@ -2264,6 +2340,22 @@ namespace DontWaitApp
             GetMessages();
         }
 
+
+
+        public void MessageHasBeenRead(string messageID)
+        {
+            FoodServicesClientSession.RemoveMessage(messageID);
+        }
+        public void MessageHasBeenDisplayed(string messageID)
+        {
+            lock (UrgesToDecideMessage)
+            {
+                var message = UrgesToDecideMessage.Where(x => x.MessageID == messageID).FirstOrDefault();
+                UrgesToDecideMessage.Remove(message);
+            }
+        }
+
+
         /// <MetaDataID>{c36bf954-e18c-4f82-aef4-ea94b18a4747}</MetaDataID>
         public void SuggestMenuItem(DontWaitApp.Messmate messmate, string menuItemUri)
         {
@@ -2433,7 +2525,8 @@ namespace DontWaitApp
         private MenuData lastServicePoinMenuData;
         /// <MetaDataID>{b57c2c39-f423-4c81-b4d4-e6459daed045}</MetaDataID>
         public DontWaitApp.FlavoursOrderServer FlavoursOrderServer { get; internal set; }
-
+        public bool VibrateOn { get; private set; }
+        public Task YouMustDecideMessageForwardTask { get; private set; }
     }
 
 

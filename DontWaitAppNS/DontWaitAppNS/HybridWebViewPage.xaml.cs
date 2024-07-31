@@ -23,11 +23,15 @@ namespace DontWaitApp
             //"http://192.168.2.10/WebPart/index.html" 
             //"http://10.0.0.10/WebPart/index.html" 
 
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "start of HybridWebViewPage ctr" });
+#endif
+
             InitializeComponent();
-            this.SizeChanged+=HybridWebViewPage_SizeChanged;
+            this.SizeChanged += HybridWebViewPage_SizeChanged;
             hybridWebView.RegisterAction(async (string data) =>
             {
-                string res = await hybridWebView.NativeWebBrowser.InvockeJSMethod("logA", new[] { data });
+                string res = await hybridWebView.NativeWebBrowser.InvokeJSMethod("logA", new[] { data });
                 Device.BeginInvokeOnMainThread(async () =>
                 {
 
@@ -38,10 +42,18 @@ namespace DontWaitApp
             });
 
 
-            if (FlavoursOrderServer==null)
-                FlavoursOrderServer=new FlavoursOrderServer(AppType.DontWaitApp, false);
+            if (FlavoursOrderServer == null)
+                FlavoursOrderServer = new FlavoursOrderServer(AppType.DontWaitApp, false);
             else
-                FlavoursOrderServer.ApplicationResuming(App.Current, EventArgs.Empty);
+            {
+                FlavoursOrderServer.ClearInitialization();
+
+
+                OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
+                device.OnStart();
+
+
+            }
 
             FlavoursOrderServer.Trademark = "Arionas";
             this.BindingContext = FlavoursOrderServer;
@@ -65,7 +77,7 @@ namespace DontWaitApp
                 url = "http://localhost/DontWaitWeb/";
                 //hybridWebView.Uri = "http://192.168.2.3/DontWaitWeb/";
 
-                 
+
                 url = "http://192.168.2.4/DontWaitWeb/#/";
                 url = "http://192.168.2.4:4300/#/";
                 url = "http://10.0.0.13:4300/#/";
@@ -87,7 +99,7 @@ namespace DontWaitApp
                 //System.Reflection.DispatchProxy dispatchProxy;
 
                 string path = FlavoursOrderServer.Path;
-               // Refresh=true;
+                // Refresh=true;
                 //path = "";
                 if (path != null && path.Split('/').Length > 0 &&
                 path.Split('/')[0] == ApplicationSettings.Current.DisplayedFoodServicesClientSession?.ServicePointIdentity)
@@ -111,13 +123,16 @@ namespace DontWaitApp
                 OOAdvantech.Remoting.RestApi.Connectivity.GetConnectivity(AzureServerUrl).ConnectivityChanged += ConnectivityChanged;
 
             }
+#if DeviceDotNet
+            OOAdvantech.DeviceApplication.Current.Log(new List<string> { "end of HybridWebViewPage ctr" });
+#endif
 
 
         }
 
         private bool HybridWebView_ShouldOverrideUrlLoading(string url)
         {
-            Navigation.PushAsync(new WebPageHost(url),true);
+            Navigation.PushAsync(new WebPageHost(url), true);
             return true;
         }
 
@@ -153,7 +168,7 @@ namespace DontWaitApp
             catch (Exception error)
             {
 
-                
+
             }
         }
 
@@ -176,7 +191,7 @@ namespace DontWaitApp
         }
         private void HybridWebViewPage_SizeChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         bool Refresh;
@@ -188,12 +203,12 @@ namespace DontWaitApp
 
             if (Refresh)
             {
-                Refresh=false;
+                Refresh = false;
                 hybridWebView.RefreshPage();
             }
         }
 
-        
+
 
         bool check = false;
         protected override async void OnAppearing()
@@ -260,7 +275,7 @@ namespace DontWaitApp
 
         }
 
-        static FlavoursOrderServer FlavoursOrderServer  ;
+        static FlavoursOrderServer FlavoursOrderServer;
         protected override bool OnBackButtonPressed()
         {
             //hybridWebView.NativeWebBrowser.InvockeJSMethod("NavigationButtonPress", new object[] { 1 });
@@ -270,7 +285,7 @@ namespace DontWaitApp
             //return base.OnBackButtonPressed();
         }
 
-      
+
     }
     public class EventTest
     {

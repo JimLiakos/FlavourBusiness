@@ -23,6 +23,7 @@ namespace DontWaitAppNS.Droid
         {
             get
             {
+                
                 return isStarted;
             }
         }
@@ -33,9 +34,9 @@ namespace DontWaitAppNS.Droid
             {
                 NotificationTitle = "Don't wait waiter live order",
                 NotificationContentText = "Main work is to keep you updated for order progress.",
-                NotificationSmallIcon = Resource.Drawable.com_facebook_button_icon,
+                NotificationSmallIcon = Resource.Mipmap.logo_waiter16,
                 StopServiceCommandTitle = "Stop Service",
-                StopServiceCommandIcon = Resource.Drawable.com_facebook_button_icon,
+                StopServiceCommandIcon = Resource.Mipmap.logo_waiter16,
                 StopActionID = "dontwaitapp.action.STOP_SERVICE",
                 DelayBetweenLogMessage = 5000, // milliseconds,
                 ServiceRunningNotificationID = 10000,
