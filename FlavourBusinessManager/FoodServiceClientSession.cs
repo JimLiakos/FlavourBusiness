@@ -111,6 +111,7 @@ namespace FlavourBusinessManager.EndUsers
 
         /// <MetaDataID>{d7711e10-32f3-43d6-bc37-0005e7a4f1ed}</MetaDataID>
         [PersistentMember(nameof(_ImplicitMealParticipation))]
+        [CachingDataOnClientSide]
         [BackwardCompatibilityID("+24")]
         public bool ImplicitMealParticipation
         {
@@ -125,6 +126,10 @@ namespace FlavourBusinessManager.EndUsers
                         _ImplicitMealParticipation = value;
                         stateTransition.Consistent = true;
                     }
+                    Transaction.RunOnTransactionCompleted(() => {
+
+                        ObjectChangeState.Invoke(this, nameof(ImplicitMealParticipation));
+                    });
                 }
             }
         }

@@ -984,6 +984,8 @@ namespace DontWaitApp
         /// <MetaDataID>{0dce1877-b96f-4558-98b6-66fb704a80f1}</MetaDataID>
         private void FoodServicesClientSessionChangeState(object _object, string member)
         {
+            if (FoodServicesClientSession != null)
+                ImplicitMealParticipation = FoodServicesClientSession.ImplicitMealParticipation;
             if (member == nameof(IFoodServiceClientSession.FlavourItems))
             {
 
@@ -1401,8 +1403,8 @@ namespace DontWaitApp
                 _FoodServicesClientSession = value;
                 if (_FoodServicesClientSession != null && FlavoursOrderServer != null && clientSessionData.UserLanguageCode != FlavoursOrderServer.Language)
                     _FoodServicesClientSession.UpdateSessionUser(FlavoursOrderServer.Language);
-
-
+                if (_FoodServicesClientSession != null)
+                    ImplicitMealParticipation = FoodServicesClientSession.ImplicitMealParticipation;
                 if (_FoodServicesClientSession?.ClientSideMonitoringEnabled == true)
                 {
 #if DeviceDotNet
@@ -1698,7 +1700,7 @@ namespace DontWaitApp
             //}
             //this.FlavoursOrderServer.Pay(Payment);
 
-             
+
         }
         /// <MetaDataID>{fa575847-542b-44f2-96c2-51398a146e95}</MetaDataID>
         public async Task<FlavourBusinessFacade.RoomService.IBill> GetBill(List<SessionItemPreparationAbbreviation> itemPreparations)
@@ -2527,6 +2529,7 @@ namespace DontWaitApp
         public DontWaitApp.FlavoursOrderServer FlavoursOrderServer { get; internal set; }
         public bool VibrateOn { get; private set; }
         public Task YouMustDecideMessageForwardTask { get; private set; }
+        public bool ImplicitMealParticipation { get; private set; }
     }
 
 

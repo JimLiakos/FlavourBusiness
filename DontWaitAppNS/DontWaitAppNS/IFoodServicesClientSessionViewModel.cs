@@ -113,8 +113,10 @@ namespace DontWaitApp
         IList<Messmate> GetCandidateMessmates();
 
 
+        bool ImplicitMealParticipation { get; }
 
-        [GenerateEventConsumerProxy]
+
+       [GenerateEventConsumerProxy]
         event MenuItemProposalHandle MenuItemProposal;
 
         [GenerateEventConsumerProxy]

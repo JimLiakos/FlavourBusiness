@@ -23,6 +23,8 @@ namespace DontWaitApp
             MainSessionID = ClientSession.MainSession?.SessionID;
             WaiterSession = ClientSession.IsWaiterSession;
             MealConversationTimeout = clientSession.MealConversationTimeout;
+            ImplicitMealParticipation=clientSession.ImplicitMealParticipation;
+
             foreach (var preparationItem in ClientSession.FlavourItems.OfType<ItemPreparation>().ToList())
             {
 
@@ -127,7 +129,9 @@ namespace DontWaitApp
         public string MainSessionID { get; set; }
 
         public bool WaiterSession { get; set; }
+        
         public bool MealConversationTimeout { get; private set; }
+        public bool ImplicitMealParticipation { get; private set; }
 
         public IList<ItemPreparation> Items
         {

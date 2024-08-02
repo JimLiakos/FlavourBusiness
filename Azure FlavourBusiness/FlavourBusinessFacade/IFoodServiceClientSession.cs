@@ -38,7 +38,17 @@ namespace FlavourBusinessFacade.EndUsers
         /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
         FlavourBusinessFacade.RoomService.IBill GetBill();
 
+
+
+
         /// <MetaDataID>{0251075a-b9d0-47c0-b664-36acf13674ac}</MetaDataID>
+        /// <summary>
+        /// The customer of this session participate in meal explicitly.
+        /// There are two types of meal participations.
+        /// Explicit participation, when a customer invites another to participate.
+        /// Implicit participation, when two or more people sit at the table at the same time and 
+        /// the meal control system makes them implicitly participate in the meal
+        /// </summary>
         [BackwardCompatibilityID("+10")]
         bool ImplicitMealParticipation { get; set; }
 
@@ -71,7 +81,7 @@ namespace FlavourBusinessFacade.EndUsers
         [BackwardCompatibilityID("+8")]
         DateTime ModificationTime { get; set; }
 
-        
+
 
         /// <MetaDataID>{3ee751a4-b32a-442d-a159-67ce755c127e}</MetaDataID>
         void RemoveSharingItem(IItemPreparation item);
@@ -116,7 +126,7 @@ namespace FlavourBusinessFacade.EndUsers
         event OOAdvantech.ObjectChangeStateHandle ObjectChangeState;
 
 
-    
+
 
         ///// <summary>
         ///// Creates a payment order for the items o payment parameter
@@ -320,7 +330,7 @@ namespace FlavourBusinessFacade.EndUsers
         LayTheTable = 4,
         ItemsReadyToServe = 5,
         MealConversationTimeout = 6,
-        DelayedMealAtTheCounter=7
+        DelayedMealAtTheCounter = 7
 
 
     }
@@ -383,7 +393,7 @@ namespace FlavourBusinessFacade.EndUsers
         public string Token;
 
         ///// <MetaDataID>{575e68f6-b3ad-4ae7-9ca0-63d3f81d26ad}</MetaDataID>
-        
+
         //public IFoodServiceSession FoodServiceSession;
 
         /// <MetaDataID>{86cd02d5-d2d1-4fc4-b4d0-becbe44500c0}</MetaDataID>
