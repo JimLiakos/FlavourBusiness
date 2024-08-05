@@ -36,7 +36,7 @@ namespace FlavourBusinessFacade.EndUsers
         ChangeDeliveryPlaceResponse CanChangeDeliveryPlace(Coordinate location);
 
         /// <MetaDataID>{69baa441-a731-4945-bca0-15bae4e7eadb}</MetaDataID>
-        FlavourBusinessFacade.RoomService.IBill GetBill();
+        IBill GetBill();
 
 
 
@@ -189,12 +189,12 @@ namespace FlavourBusinessFacade.EndUsers
         [Association("SessionClient", Roles.RoleA, "adc4931c-7835-4dac-bed0-0ec8d8278847")]
         EndUsers.IFoodServiceClient Client { get; set; }
 
-        /// <MetaDataID>{b949486a-408d-4c4b-875d-0f40b8ad374d}</MetaDataID>
-        void RaiseItemStateChanged(string uid, string itemOwningSession, string itemChangeSession, bool isShared, List<string> shareInSessions);
+        ///// <MetaDataID>{b949486a-408d-4c4b-875d-0f40b8ad374d}</MetaDataID>
+        //void RaiseItemStateChanged(string uid, string itemOwningSession, string itemChangeSession, bool isShared, List<string> shareInSessions);
 
 
-        /// <MetaDataID>{3fd7e6b9-b785-4397-8826-8907fcaec907}</MetaDataID>
-        void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
+        ///// <MetaDataID>{3fd7e6b9-b785-4397-8826-8907fcaec907}</MetaDataID>
+        //void RaiseItemsStateChanged(Dictionary<string, ItemPreparationState> newItemsState);
 
         /// <MetaDataID>{8426fcc3-a1c9-435c-87d4-e2f77d8e5566}</MetaDataID>
         [Association("FoodServiceSession", Roles.RoleB, "93808acd-1c78-45da-8c44-dd7666ae0128")]
@@ -287,6 +287,8 @@ namespace FlavourBusinessFacade.EndUsers
         void UpdateSessionUser(string userLanguageCode);
         /// <MetaDataID>{a0d63757-8ce0-44c1-b4cd-132867c59a63}</MetaDataID>
         IBill GetBill(List<SessionItemPreparationAbbreviation> itemPreparations);
+        
+
         //IFoodServiceClientSession CommitSessionTypeChange(SessionType sessionType, List<IItemPreparation> itemPreparations);
 
 

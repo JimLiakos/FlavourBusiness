@@ -335,9 +335,25 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        public void SaveHallLayoutScale(string hallLayoutUri, bool rotated, double scale)
+        {
+
+            ApplicationSettings.Current.SetHallLayoutScale(hallLayoutUri, rotated, scale);
+
+        }
+
+        public double? GetHallLayoutScale(string hallLayoutUri, bool rotated)
+        {
+            return ApplicationSettings.Current.GetHallLayoutScale(hallLayoutUri,rotated);
+        }
+
+
+
+
+
         /// <MetaDataID>{fac71003-9d13-430a-880e-956874e37449}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.HttpVisible]
-        [OOAdvantech.MetaDataRepository.CachingDataOnClientSide]
+        [HttpVisible]
+        [CachingDataOnClientSide]
         public string PhoneNumber
         {
             get
@@ -1901,7 +1917,7 @@ namespace WaiterApp.ViewModel
         {
 #if DeviceDotNet
  
-            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+            return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == Xamarin.Essentials.PermissionStatus.Granted;
 #else
             return false;
 #endif
@@ -1910,7 +1926,7 @@ namespace WaiterApp.ViewModel
         public async Task<bool> RequestPermissionsForQRCodeScan()
         {
 #if DeviceDotNet
-            return (await Permissions.RequestAsync<Permissions.Camera>()) == PermissionStatus.Granted;
+            return (await Permissions.RequestAsync<Permissions.Camera>()) == Xamarin.Essentials.PermissionStatus.Granted;
 #else
             return true;
 #endif

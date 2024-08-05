@@ -249,6 +249,8 @@ namespace FlavourBusinessManager.HumanResources
                     HallLayout hallLayout = serviceContextHalls.Where(x => x.HallLayoutUri == serviceArea.HallLayoutUri).FirstOrDefault() as HallLayout;  //.OOAdvantech.PersistenceLayer.ObjectStorage.GetObjectFromUri(serviceArea.HallLayoutUri) as HallLayout;
                     if (hallLayout == null)
                         continue;
+
+                    serviceArea.UpdateServicePointsState( hallLayout);
                     halls.Add(hallLayout);
 
                     //hallLayout.ServiceArea = serviceArea;
@@ -268,6 +270,12 @@ namespace FlavourBusinessManager.HumanResources
             return halls;
         }
 
+        public bool MakeExplicitMealParticipation(string clientSessionID)
+        {
+            var clientSession = ServicePointRunTime.ServicesContextRunTime.Current.OpenClientSessions.Where(x => x.SessionID == clientSessionID).FirstOrDefault();
+            clientSession.ImplicitMealParticipation = false;
+            return true;
+        }
 
         /// <MetaDataID>{847f53b5-59fb-4d9f-9d5a-5fed074d5d41}</MetaDataID>
         public Dictionary<string, ServicePointState> HallsServicePointsState

@@ -27,6 +27,8 @@ using OOAdvantech.Web;
 using OOAdvantech.Pay;
 using FinanceFacade;
 using static Xamarin.Essentials.Permissions;
+using FlavourBusinessFacade.HumanResources;
+
 
 
 
@@ -38,6 +40,8 @@ using FlavourBusinessFacade;
 
 using OOAdvantech;
 using Xamarin.Forms;
+using FlavourBusinessFacade.HumanResources;
+
 
 
 
@@ -1659,7 +1663,7 @@ namespace DontWaitApp
 
 
         /// <MetaDataID>{d1b44dee-1753-48a2-89ba-fa7df5d31ecc}</MetaDataID>
-        IList<Messmate> Messmates = new List<Messmate>();
+        IList<Messmate> Messmates { get; set; } = new List<Messmate>();
         /// <MetaDataID>{af6e8091-4784-46b6-82af-70336ac8b8fd}</MetaDataID>
         public System.Collections.Generic.IList<DontWaitApp.Messmate> GetMessmates()
         {
@@ -1828,6 +1832,8 @@ namespace DontWaitApp
                 {
                     if (FoodServicesClientSession != null)
                     {
+
+
 
                         var messmates = (from clientSession in FoodServicesClientSession.GetMealParticipants()
                                          select new Messmate(clientSession, OrderItems)).ToList();
@@ -2367,6 +2373,21 @@ namespace DontWaitApp
 
             clientSession.MenuItemProposal(FoodServicesClientSession, menuItemUri);
 
+        }
+
+        /// <summary>
+        /// This method change the meal participation from implicit to explicit
+        /// </summary>
+        /// <param name="clientSessionID">
+        /// Defines the id of clientSession that participate in meal implicitly 
+        /// </param>
+        /// <returns>
+        /// return true if clientSession changed from implicit participation to explicit  
+        /// </returns>
+        public Task<bool> MakeExplicitMealParticipation(string clientSessionID)
+        {
+
+            return Task<bool>.Run(() => { return (FoodServicesClientSession.Worker as IWaiter).MakeExplicitMealParticipation(clientSessionID); });
         }
 
 

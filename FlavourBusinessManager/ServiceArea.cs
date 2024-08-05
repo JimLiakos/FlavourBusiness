@@ -11,6 +11,7 @@ using OOAdvantech;
 using OOAdvantech.MetaDataRepository;
 using OOAdvantech.PersistenceLayer;
 using OOAdvantech.Transactions;
+using RestaurantHallLayoutModel;
 
 namespace FlavourBusinessManager.ServicesContextResources
 {
@@ -368,6 +369,17 @@ namespace FlavourBusinessManager.ServicesContextResources
             {
                 PricelistStorageRefs.Remove(fbStorage);
                 stateTransition.Consistent = true;
+            }
+        }
+
+        internal void UpdateServicePointsState(HallLayout hallLayout)
+        {
+            foreach(var servicePoint in ServicePoints)
+            {
+                var servicePointShape= hallLayout.Shapes.Where(x => x.ServicesPointIdentity == servicePoint.ServicesPointIdentity).FirstOrDefault();
+                if (servicePointShape != null)
+                    servicePointShape.ServicesPointState = servicePoint.State; 
+
             }
         }
     }

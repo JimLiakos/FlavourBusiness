@@ -1618,7 +1618,7 @@ namespace FlavourBusinessManager.ServicePointRunTime
                                 if (servicePoint != null)
                                 {
 
-                                    if (servicePoint.State != ServicePointState.Free && OpenClientSessions.Where(x => x.ServicePoint.ServicesPointIdentity == servicePoint.ServicesContextIdentity).Count() == 0)
+                                    if (servicePoint.State != ServicePointState.Free && OpenClientSessions.Where(x => x.ServicePoint.ServicesPointIdentity == servicePoint.ServicesPointIdentity).Count() == 0)
                                         servicePoint.State = ServicePointState.Free;
                                     servicePointShape.ServicesPointState = servicePoint.State;
                                 }

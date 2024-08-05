@@ -50,7 +50,7 @@ namespace WaiterApp
 
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            device.IsinSleepMode = false;
+            device.OnStart();
             //MainPage = new FacebookSignIn();
             //MainPage = new MainPage();
             MainPage = new NavigationPage(new MainPage());
@@ -70,7 +70,7 @@ namespace WaiterApp
 
             SerializeTaskScheduler.RunAsync();
             OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-            device.IsinSleepMode = false;
+            device.OnStart();
 
 
         
@@ -82,7 +82,7 @@ namespace WaiterApp
             try
             {
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                device.IsinSleepMode = true;
+                device.OnSleep();
                 ApplicationSleeping?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception error)
@@ -97,7 +97,7 @@ namespace WaiterApp
             try
             {
                 OOAdvantech.IDeviceOOAdvantechCore device = DependencyService.Get<OOAdvantech.IDeviceInstantiator>().GetDeviceSpecific(typeof(OOAdvantech.IDeviceOOAdvantechCore)) as OOAdvantech.IDeviceOOAdvantechCore;
-                device.IsinSleepMode = false;
+                device.OnResume();
 
                 ApplicationResuming?.Invoke(this, EventArgs.Empty);
             }

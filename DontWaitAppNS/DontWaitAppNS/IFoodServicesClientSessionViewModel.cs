@@ -22,8 +22,16 @@ namespace DontWaitApp
         [Association("FoofServiceSessionDeliverPlace", Roles.RoleA, "fe596f30-a4c4-44cb-91c6-4f0b7200fd8f")]
         IPlace DeliveryPlace { get; set; }
 
-       
-
+        /// <summary>
+        /// This method change the meal participation from implicit to explicit
+        /// </summary>
+        /// <param name="clientSessionID">
+        /// Defines the id of clientSession that participate in meal implicitly 
+        /// </param>
+        /// <returns>
+        /// return true if clientSession changed from implicit participation to explicit  
+        /// </returns>
+        Task<bool> MakeExplicitMealParticipation(string clientSessionID);
 
         /// <MetaDataID>{ad945fbe-f52f-4c07-9b70-bfa13139db91}</MetaDataID>
         string DeliveryComment { get; set; }

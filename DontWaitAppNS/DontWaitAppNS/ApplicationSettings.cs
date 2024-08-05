@@ -8,6 +8,7 @@ using FlavourBusinessManager.RoomService;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using FlavourBusinessFacade.HumanResources;
+using System.Collections.Generic;
 
 namespace DontWaitApp
 {
@@ -421,6 +422,56 @@ namespace DontWaitApp
             });
                 return AppSettingsTask;
             }
+        }
+
+        /// <MetaDataID>{ee5bee48-b903-46fd-b6b8-1b9fa541e998}</MetaDataID>
+        Dictionary<string, double> HallsLayoutsScales = new Dictionary<string, double>();
+
+        /// <MetaDataID>{90ca154a-efe4-41bc-83fc-60b104ec0c1c}</MetaDataID>
+        public void SetHallLayoutScale(string hallLayoutUri, bool rotated, double scale)
+        {
+
+            using (ObjectStateTransition stateTransition = new ObjectStateTransition(this))
+            {
+                string hallKey = $"{hallLayoutUri};{rotated}";
+                HallsLayoutsScales[hallKey] = scale; 
+                stateTransition.Consistent = true;
+            }
+        }
+
+        public double? GetHallLayoutScale(string hallLayoutUri, bool rotated )
+        {
+            double scale =0;
+            string hallKey = $"{hallLayoutUri};{rotated}";
+            if (HallsLayoutsScales.TryGetValue(hallKey, out scale))
+                return scale;
+            else
+                return null;
+        }
+
+
+        /// <MetaDataID>{e56acb3b-c09e-4e57-b928-74b2649c7b87}</MetaDataID>
+        [PersistentMember]
+        [BackwardCompatibilityID("+20")]
+        string HallsLayoutsScalesJson;
+
+
+        /// <MetaDataID>{f7d26ffa-ef57-446e-8de6-aed8cb8a76c9}</MetaDataID>
+        [ObjectActivationCall]
+        public void ObjectActivation()
+        {
+
+            if (!string.IsNullOrWhiteSpace(HallsLayoutsScalesJson))
+                HallsLayoutsScales = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, double>>(HallsLayoutsScalesJson);
+
+        }
+
+
+        /// <MetaDataID>{2924ab14-e8d1-46d1-b500-b010c3ce7f1a}</MetaDataID>
+        [BeforeCommitObjectStateInStorageCall]
+        public void BeforeCommitObjectState()
+        {
+            HallsLayoutsScalesJson = OOAdvantech.Json.JsonConvert.SerializeObject(HallsLayoutsScales);
         }
 
 

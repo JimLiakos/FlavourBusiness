@@ -34,7 +34,7 @@ namespace FlavourBusinessFacade.HumanResources
         ///// <MetaDataID>{29fff726-6815-43a3-a0e3-cd1fbd138357}</MetaDataID>
         //void AddClientSession(EndUsers.IFoodServiceClientSession clientSession);
 
-     
+        bool MakeExplicitMealParticipation(string clientSessionID);
 
 
         [RemoteEventPublish(InvokeType.Async)]

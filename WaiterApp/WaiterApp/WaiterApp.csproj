@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\UserInterface\WPFUserInterfaceLibrary\WindowsBaseEx\ViewModelWrappers.cs" Link="UIBaseEx\ViewModelWrappers.cs" />
-    <Compile Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
+    <None Include="..\..\DontWaitAppNS\DontWaitAppNS\ApplicationSettings.cs" Link="ViewModel\ApplicationSettings.cs" />
     <Compile Include="..\..\MenuModel\JsonViewModel\Tag.cs" Link="MenuModel\Tag.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\IItemWithPrice.cs" Link="MenuModel\IItemWithPrice.cs" />
     <Compile Include="..\..\MenuModel\MenuModelFacade\ILevel.cs">

@@ -20,6 +20,8 @@ namespace WaiterApp.ViewModel
     [HttpVisible]
     public interface IWaiterPresentation
     {
+
+
         [GenerateEventConsumerProxy]
         event LayTheTableRequestHandle LayTheTableRequest;
 
@@ -55,6 +57,16 @@ namespace WaiterApp.ViewModel
 
         /// <MetaDataID>{c884e466-102c-4758-b223-70b88e29d47e}</MetaDataID>
         Dictionary<string, ServicePointState> HallsServicePointsState { get; }
+
+
+
+        void SaveHallLayoutScale(string hallLayoutUri, bool rotated, double scale);
+
+        double? GetHallLayoutScale(string hallLayoutUri, bool rotated);
+
+
+
+
         /// <MetaDataID>{030650aa-927d-4f55-bfc3-5c6b03a2a01f}</MetaDataID>
         List<ServingBatchPresentation> ServingBatches
         {

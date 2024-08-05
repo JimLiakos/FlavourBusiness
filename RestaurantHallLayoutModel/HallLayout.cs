@@ -342,6 +342,8 @@ namespace RestaurantHallLayoutModel
             return shapes;
         }
 
+        
+
         /// <exclude>Excluded</exclude>
         string _HallLayoutUri;
         public string HallLayoutUri

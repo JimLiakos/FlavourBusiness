@@ -153,5 +153,7 @@ namespace DontWaitApp
         {
             MealConversationTimeout = ClientSession.MealConversationTimeout;
         }
+
+       
     }
 }
