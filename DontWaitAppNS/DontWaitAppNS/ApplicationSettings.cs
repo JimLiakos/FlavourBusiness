@@ -460,7 +460,7 @@ namespace DontWaitApp
         [ObjectActivationCall]
         public void ObjectActivation()
         {
-
+ 
             if (!string.IsNullOrWhiteSpace(HallsLayoutsScalesJson))
                 HallsLayoutsScales = OOAdvantech.Json.JsonConvert.DeserializeObject<Dictionary<string, double>>(HallsLayoutsScalesJson);
 
