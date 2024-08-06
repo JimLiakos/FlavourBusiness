@@ -441,6 +441,7 @@ namespace DontWaitApp
 
         public double? GetHallLayoutScale(string hallLayoutUri, bool rotated )
         {
+            return null;
             double scale =0;
             string hallKey = $"{hallLayoutUri};{rotated}";
             if (HallsLayoutsScales.TryGetValue(hallKey, out scale))
