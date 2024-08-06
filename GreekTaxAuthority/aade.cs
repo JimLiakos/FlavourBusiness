@@ -121,7 +121,7 @@ namespace GreekTaxAuthority
                 r_PaymentMethod.PayGuid=Guid.NewGuid().ToString();
                 //{ "profilen": null, "extCode": 100, "statusDescription": "SUCCESS", "message": "SUCCESS", "extraData": "", "token": "", "jsonData": { "idNames": [ { "id": 103, "name": "Euronet Merchant Services" }, { "id": 104, "name": "ProCredit Bank (Bulgaria)" }, { "id": 108, "name": "NBG PAY" }, { "id": 109, "name": "Worldline Merchant Acquiring" }, { "id": 110, "name": "Cosmote Payments" }, { "id": 111, "name": "Everypay" }, { "id": 113, "name": "Συνεταιριστική Τράπεζα Καρδίτσας" }, { "id": 114, "name": "Attica Bank" }, { "id": 116, "name": "Viva Υπηρεσίες Πληρωμών" }, { "id": 117, "name": "Συνεταιριστική Τράπεζα Ηπείρου" }, { "id": 118, "name": "Συνεταριστική Τράπεζα Κεντρικής Μακεδονίας" }, { "id": 120, "name": "Euronet Card Services" }, { "id": 122, "name": "CardLink" }, { "id": 127, "name": "EDPS" }, { "id": 128, "name": "Καινοτόμες Λύσεις και Υπηρεσίες ΜΕΠΕ INSS" }, { "id": 130, "name": "Mellon Technologies" }, { "id": 137, "name": "Nexi Greece Processing Services" }, { "id": 138, "name": "Nexi Πληρωμών Ελλάς" }, { "id": 143, "name": "TORA Direct" }, { "id": 619, "name": "myPOS Limited" }, { "id": 624, "name": "myPOS Technologies" }, { "id": 651, "name": "Adyen N.V." } ], "data": null, "matException": null, "dataLite": null, "providersSignature": null, "invRaw": null, "invoiceStatus": null, "orderStatus": null } }
                 r_PaymentMethod.AcquirerId=116;
-                r_PaymentMethod.Amount=
+                r_PaymentMethod.Amount = 0;
 
 
                 invoice.CalculateInvoiceSummary();
