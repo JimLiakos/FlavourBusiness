@@ -1449,13 +1449,19 @@ namespace WaiterApp.ViewModel
             }
         }
 
+        DateTime? _ActiveShiftWorkEndsAt;
         /// <MetaDataID>{993f9cef-4758-4957-92bc-a524fe03c3b8}</MetaDataID>
         public DateTime ActiveShiftWorkEndsAt
         {
             get
             {
                 if (InActiveShiftWork)
-                    return ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                {
+                    if(_ActiveShiftWorkEndsAt==null)
+                        _ActiveShiftWorkEndsAt=ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    return _ActiveShiftWorkEndsAt.Value;
+
+                }
                 else
                     return DateTime.MinValue;
             }

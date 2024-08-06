@@ -30,7 +30,7 @@ namespace FlavourBusinessFacade.HumanResources
         IServicesContextWorker Worker { get; }
 
         /// <MetaDataID>{c9ce9f96-f8c9-45f9-bc85-58e42a2e9e3e}</MetaDataID>
-        [OOAdvantech.MetaDataRepository.BackwardCompatibilityID("+1")]
+        [BackwardCompatibilityID("+1")]
         System.DateTime StartsAt { get; }
 
         /// <MetaDataID>{6a244954-71e1-4d1f-a22a-bd1781a99a01}</MetaDataID>

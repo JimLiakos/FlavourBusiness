@@ -116,6 +116,7 @@ namespace FlavourBusinessManager.ServicesContextResources
         /// <MetaDataID>{2d69bfb6-e6f7-46b4-89bf-32fc44e3c3ce}</MetaDataID>
         [PersistentMember(300, nameof(_ServicesContextIdentity))]
         [BackwardCompatibilityID("+3")]
+        [CachingDataOnClientSide]
         public string ServicesContextIdentity
         {
             get
