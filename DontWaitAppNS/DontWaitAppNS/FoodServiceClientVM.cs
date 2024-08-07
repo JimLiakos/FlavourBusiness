@@ -28,9 +28,24 @@ namespace DontWaitApp
     {
         [GenerateEventConsumerProxy]
         public event ObjectChangeStateHandle ObjectChangeState;
-
-        public string OAuthUserIdentity { get; set; }
-
+        
+        string _OAuthUserIdentity;
+        
+        public string OAuthUserIdentity
+        {
+            get
+            {
+                return _OAuthUserIdentity;// ApplicationSettings.Current.SignInUserIdentity;
+            }
+            set
+            {
+                if (_OAuthUserIdentity != value)
+                {
+                    _OAuthUserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
+                    ObjectChangeState?.Invoke(this, nameof(OAuthUserIdentity));
+                }
+            }
+        }
         List<OOAdvantech.SIMCardData> SIMCards;
 
         IFlavoursOrderServer FlavoursOrderServer;

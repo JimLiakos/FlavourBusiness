@@ -7239,6 +7239,16 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.ServicesContextResources.IHallLayout>>(retValue);
         }
         
+        public bool MakeExplicitMealParticipation(string clientSessionID)
+        {
+            object[] args = new object[1];
+            System.Type[] argsTypes = new System.Type[1];
+            args[0] = clientSessionID;
+            argsTypes[0] = typeof(string);
+            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.HumanResources.IWaiter), "MakeExplicitMealParticipation", args, argsTypes);
+            return this.Proxy.GetValue<bool>(retValue);
+        }
+        
         public System.Collections.Generic.IList<FlavourBusinessFacade.RoomService.IServingBatch> GetServingBatches()
         {
             object[] args = new object[0];
@@ -11032,32 +11042,6 @@ public event FlavourBusinessFacade.EndUsers.MessageReceivedHandle MessageReceive
             System.Type[] argsTypes = new System.Type[0];
             object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "GetServicePointParticipants", args, argsTypes);
             return this.Proxy.GetValue<System.Collections.Generic.IList<FlavourBusinessFacade.EndUsers.IFoodServiceClientSession>>(retValue);
-        }
-        
-        public void RaiseItemStateChanged(string uid, string itemOwningSession, string itemChangeSession, bool isShared, System.Collections.Generic.List<string> shareInSessions)
-        {
-            object[] args = new object[5];
-            System.Type[] argsTypes = new System.Type[5];
-            args[0] = uid;
-            argsTypes[0] = typeof(string);
-            args[1] = itemOwningSession;
-            argsTypes[1] = typeof(string);
-            args[2] = itemChangeSession;
-            argsTypes[2] = typeof(string);
-            args[3] = isShared;
-            argsTypes[3] = typeof(bool);
-            args[4] = shareInSessions;
-            argsTypes[4] = typeof(System.Collections.Generic.List<string>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "RaiseItemStateChanged", args, argsTypes);
-        }
-        
-        public void RaiseItemsStateChanged(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState> newItemsState)
-        {
-            object[] args = new object[1];
-            System.Type[] argsTypes = new System.Type[1];
-            args[0] = newItemsState;
-            argsTypes[0] = typeof(System.Collections.Generic.Dictionary<string, FlavourBusinessFacade.RoomService.ItemPreparationState>);
-            object retValue = this.Proxy.Invoke(typeof(FlavourBusinessFacade.EndUsers.IFoodServiceClientSession), "RaiseItemsStateChanged", args, argsTypes);
         }
         
         public FlavourBusinessFacade.RoomService.IItemPreparation GetItem(string itemUid)

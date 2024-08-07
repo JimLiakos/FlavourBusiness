@@ -276,7 +276,11 @@ namespace WaiterApp.ViewModel
             }
             set
             {
-                _OAuthUserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
+                if (_OAuthUserIdentity != value)
+                {
+                    _OAuthUserIdentity = value;// ApplicationSettings.Current.SignInUserIdentity = value;
+                    ObjectChangeState?.Invoke(this, nameof(OAuthUserIdentity));
+                }
             }
         }
 
@@ -414,7 +418,7 @@ namespace WaiterApp.ViewModel
                 OAuthUserIdentity = Waiter?.OAuthUserIdentity;
                 return true;
             }
-
+             
             if (OnSignIn && SignInTask != null)
                 return await SignInTask;
             else

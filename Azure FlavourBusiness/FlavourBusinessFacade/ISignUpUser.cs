@@ -72,7 +72,8 @@ namespace FlavourBusinessFacade.ViewModel
 
 
         /// <MetaDataID>{ea0d5857-2842-403e-8b46-3d285e2dd6f0}</MetaDataID>
-        
+
+        [CachingDataOnClientSide]
         string OAuthUserIdentity { get; set; }
 
         /// <MetaDataID>{701c9f86-e958-431c-abf2-4a66777d6255}</MetaDataID>
