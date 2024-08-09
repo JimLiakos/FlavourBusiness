@@ -39,14 +39,14 @@ namespace WaiterApp.Droid
 
 
 
-            Log.Debug(TAG, "From: " + message.From);
+            //Log.Debug(TAG, "From: " + message.From);
 
-            if (message.GetNotification() != null)
-            {
-                var body = message.GetNotification().Body;
-                Log.Debug(TAG, "Notification Message Body: " + body);
-                SendNotification(body, message.Data);
-            }
+            //if (message.GetNotification() != null)
+            //{
+            //    var body = message.GetNotification().Body;
+            //    Log.Debug(TAG, "Notification Message Body: " + body);
+            //    SendNotification(body, message.Data);
+            //}
 
             var remoteMessage = new OOAdvantech.Droid.RemoteMessage
             {
@@ -70,7 +70,7 @@ namespace WaiterApp.Droid
                 intent.PutExtra(key, data[key]);
             }
 
-            var pendingIntent = PendingIntent.GetActivity(this, MainActivity.NOTIFICATION_ID, intent, PendingIntentFlags.OneShot);
+            var pendingIntent = PendingIntent.GetActivity(this, MainActivity.NOTIFICATION_ID, intent, PendingIntentFlags.Immutable);
 
             //var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
             //                          .SetSmallIcon(Resource.Drawable.ic_stat_ic_notification)

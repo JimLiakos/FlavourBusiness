@@ -358,6 +358,12 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\main.bcb8fe30ce936ae5742d.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter16.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter_white16.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter16.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter_white16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

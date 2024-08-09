@@ -1,182 +1,186 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A365D740-F879-47E4-9B40-A99342F98EE0}</ProjectGuid>
-    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>DontWaitAppNS.Droid</RootNamespace>
-    <AssemblyName>DontWaitAppNS.Android</AssemblyName>
-    <AndroidApplication>True</AndroidApplication>
-    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
-    <AndroidResgenClass>Resource</AndroidResgenClass>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
-    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
-    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
-    <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidUseAapt2>true</AndroidUseAapt2>
-    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AndroidManagedSymbols>true</AndroidManagedSymbols>
-    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Mono.Android" />
-    <Reference Include="Mono.Android.Export" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs">
-      <Version>7.2.0.564</Version>
-    </PackageReference>
-    <PackageReference Include="Plugin.Permissions">
-      <Version>6.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="SkiaSharp">
-      <Version>2.80.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
-      <Version>2.3.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.MediaRouter">
-      <Version>1.1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Essentials">
-      <Version>1.7.5</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Facebook.Android">
-      <Version>7.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Firebase.Iid">
-      <Version>121.1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Firebase.Messaging">
-      <Version>122.0.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Forms.AppLinks">
-      <Version>5.0.0.2196</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Google.Android.Material">
-      <Version>1.4.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.GooglePlayServices.Base">
-      <Version>117.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="ZXing.Net.Mobile">
-      <Version>2.4.1</Version>
-    </PackageReference>
-    <PackageReference Include="ZXing.Net.Mobile.Forms">
-      <Version>2.4.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="MyForeGroundService.cs" />
-    <Compile Include="UtcTimestamper.cs" />
-    <None Include="Application.cs" />
-    <Compile Include="MainActivity.cs" />
-    <Compile Include="MyFirebaseIIDService.cs" />
-    <Compile Include="MyFirebaseMessagingService.cs" />
-    <Compile Include="NotificationsService.cs" />
-    <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="OutputLog.txt" />
-    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter_white16.png" />
-    <AndroidResource Include="Resources\mipmap-hdpi\logo_waiter16.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter_white16.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\logo_waiter16.png" />
-    <GoogleServicesJson Include="google-services.json" />
-    <None Include="Resources\AboutResources.txt" />
-    <Content Include="Assets\AboutAssets.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Properties\AndroidManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\Tabbar.axml" />
-    <AndroidResource Include="Resources\layout\Toolbar.axml" />
-    <AndroidResource Include="Resources\values\styles.xml" />
-    <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
-    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
-    <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
-    <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Content\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.Droid\OOAdvantech.NetStandard.Droid.csproj">
-      <Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
-      <Name>OOAdvantech.NetStandard.Droid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
-      <Project>{98c53533-8117-40c2-b9a6-bbe3d5dee050}</Project>
-      <Name>OOAdvantech.NetStandard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.Droid\OOAdvantech.Pay.Droid.csproj">
-      <Project>{942e7dc9-075a-4e8f-8150-adb7d725dbcd}</Project>
-      <Name>OOAdvantech.Pay.Droid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
-      <Project>{EA6F820B-FA25-446F-8E4E-0DE2CF89BE75}</Project>
-      <Name>DontWaitAppNS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" />
-    </VisualStudio>
-  </ProjectExtensions>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{A365D740-F879-47E4-9B40-A99342F98EE0}</ProjectGuid>
+		<ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+		<TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
+		<OutputType>Library</OutputType>
+
+
+
+		<RootNamespace>DontWaitAppNS.Droid</RootNamespace>
+		<AssemblyName>DontWaitAppNS.Android</AssemblyName>
+		<AndroidApplication>True</AndroidApplication>
+		<AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+		<AndroidResgenClass>Resource</AndroidResgenClass>
+		<AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+		<MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+		<AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+		<TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
+		<AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
+		<AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
+		<NuGetPackageImportStamp>
+		</NuGetPackageImportStamp>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>portable</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<AndroidLinkMode>None</AndroidLinkMode>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>portable</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<AndroidManagedSymbols>true</AndroidManagedSymbols>
+		<AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Mono.Android" />
+		<Reference Include="Mono.Android.Export" />
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System.Numerics" />
+		<Reference Include="System.Numerics.Vectors" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Acr.UserDialogs">
+			<Version>7.2.0.564</Version>
+		</PackageReference>
+		<PackageReference Include="Plugin.Permissions">
+			<Version>6.0.1</Version>
+		</PackageReference>
+		<PackageReference Include="SkiaSharp">
+			<Version>2.80.1</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
+			<Version>2.3.1.1</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.MediaRouter">
+			<Version>1.1.0.1</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Essentials">
+			<Version>1.7.5</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Facebook.Android">
+			<Version>7.1.0</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Firebase.Iid">
+			<Version>121.1.0.1</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Firebase.Messaging">
+			<Version>122.0.0.3</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
+		<PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
+		<PackageReference Include="Xamarin.Forms.AppLinks">
+			<Version>5.0.0.2196</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Google.Android.Material">
+			<Version>1.4.0.3</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Base">
+			<Version>117.1.0</Version>
+		</PackageReference>
+		<PackageReference Include="ZXing.Net.Mobile">
+			<Version>2.4.1</Version>
+		</PackageReference>
+		<PackageReference Include="ZXing.Net.Mobile.Forms">
+			<Version>2.4.1</Version>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Constants.cs" />
+		<Compile Include="MyForeGroundService.cs" />
+		<Compile Include="UtcTimestamper.cs" />
+		<None Include="Application.cs" />
+		<Compile Include="MainActivity.cs" />
+		<Compile Include="MyFirebaseIIDService.cs" />
+		<Compile Include="MyFirebaseMessagingService.cs" />
+		<Compile Include="NotificationsService.cs" />
+		<Compile Include="Resources\Resource.designer.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="OutputLog.txt" />
+		<AndroidResource Include="Resources\mipmap-hdpi\logo_waiter_white16.png" />
+		<AndroidResource Include="Resources\mipmap-hdpi\logo_waiter16.png" />
+		<AndroidResource Include="Resources\mipmap-mdpi\logo_waiter_white16.png" />
+		<AndroidResource Include="Resources\mipmap-mdpi\logo_waiter16.png" />
+		<GoogleServicesJson Include="google-services.json" />
+		<None Include="Resources\AboutResources.txt" />
+		<Content Include="Assets\AboutAssets.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<None Include="Properties\AndroidManifest.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<AndroidResource Include="Resources\layout\Tabbar.axml" />
+		<AndroidResource Include="Resources\layout\Toolbar.axml" />
+		<AndroidResource Include="Resources\values\styles.xml" />
+		<AndroidResource Include="Resources\values\colors.xml" />
+		<AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
+		<AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
+		<AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
+		<AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
+		<AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
+		<AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
+		<AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
+		<AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
+		<AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
+		<AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
+		<AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
+		<AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Assets\Content\" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard.Droid\OOAdvantech.NetStandard.Droid.csproj">
+			<Project>{c654adf4-39de-4084-bc46-2a9268b0068c}</Project>
+			<Name>OOAdvantech.NetStandard.Droid</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.NetStandard\OOAdvantech.NetStandard.csproj">
+			<Project>{98c53533-8117-40c2-b9a6-bbe3d5dee050}</Project>
+			<Name>OOAdvantech.NetStandard</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\..\..\PersistenceLayer\Xamarin\OOAdvantech.Pay.Droid\OOAdvantech.Pay.Droid.csproj">
+			<Project>{942e7dc9-075a-4e8f-8150-adb7d725dbcd}</Project>
+			<Name>OOAdvantech.Pay.Droid</Name>
+		</ProjectReference>
+		<ProjectReference Include="..\DontWaitAppNS\DontWaitAppNS.csproj">
+			<Project>{EA6F820B-FA25-446F-8E4E-0DE2CF89BE75}</Project>
+			<Name>DontWaitAppNS</Name>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<AndroidResource Include="Resources\values\Strings.xml" />
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties TriggeredFromHotReload="False" />
+		</VisualStudio>
+	</ProjectExtensions>
 </Project>

@@ -18,6 +18,7 @@ using Android.Media;
 using Android.Gms.Tasks;
 using Firebase.Messaging;
 using OOAdvantech.Authentication;
+using System.Linq;
 
 namespace WaiterApp.Droid
 {
@@ -39,7 +40,7 @@ namespace WaiterApp.Droid
                     msgText = GoogleApiAvailability.Instance.GetErrorString(resultCode);
                 else
                 {
-                    msgText= "This device is not supported";
+                    msgText = "This device is not supported";
                     Finish();
                 }
                 return false;
@@ -95,7 +96,7 @@ namespace WaiterApp.Droid
             IsPlayServicesAvailable();
             CreateNotificationChannel();
 
-       
+
 
             var token = await Task<string>.Run(() =>
             {
@@ -106,10 +107,10 @@ namespace WaiterApp.Droid
 
             string webClientID = "881594421690-a1j78aqdr924gb82btoboblipfjur9i5.apps.googleusercontent.com";
 
-            var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.NativeUser, SignInProvider.Google, SignInProvider.Facebook, SignInProvider.Twitter , SignInProvider.Email };
+            var providers = new System.Collections.Generic.List<SignInProvider> { SignInProvider.NativeUser, SignInProvider.Google, SignInProvider.Facebook, SignInProvider.Twitter, SignInProvider.Email };
             OOAdvantech.Droid.DeviceOOAdvantechCore.InitFirebase(this, token, webClientID, providers);
 
-            
+
             OOAdvantech.Droid.DeviceOOAdvantechCore.PrintHashKey(this);
             OOAdvantech.Droid.DeviceOOAdvantechCore.ForegroundServiceManager = new Droid.MyForeGroundService();
 
@@ -121,7 +122,10 @@ namespace WaiterApp.Droid
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (permissions.Contains(Android.Manifest.Permission.PostNotifications))
+                OOAdvantech.Droid.DeviceOOAdvantechCore.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            else
+                Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }

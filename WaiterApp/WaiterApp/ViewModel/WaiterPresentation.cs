@@ -19,6 +19,10 @@ using UIBaseEx;
 using RestaurantHallLayoutModel;
 using FlavourBusinessManager;
 using FlavourBusinessManager.RoomService;
+using OOAdvantech.AudioManager;
+using static Xamarin.Essentials.Permissions;
+
+
 
 
 
@@ -137,7 +141,7 @@ namespace WaiterApp.ViewModel
         {
             this.ServingBatchUpdated(_object as ServingBatchPresentation);
         }
-         
+
         public void WillTakeCareMealConversationTimeout(string servicePointIdentity, string sessionIdentity)
         {
             this.Waiter.WillTakeCareMealConversationTimeout(servicePointIdentity, sessionIdentity);
@@ -348,7 +352,7 @@ namespace WaiterApp.ViewModel
 
         public double? GetHallLayoutScale(string hallLayoutUri, bool rotated)
         {
-            return ApplicationSettings.Current.GetHallLayoutScale(hallLayoutUri,rotated);
+            return ApplicationSettings.Current.GetHallLayoutScale(hallLayoutUri, rotated);
         }
 
 
@@ -418,7 +422,7 @@ namespace WaiterApp.ViewModel
                 OAuthUserIdentity = Waiter?.OAuthUserIdentity;
                 return true;
             }
-             
+
             if (OnSignIn && SignInTask != null)
                 return await SignInTask;
             else
@@ -1102,7 +1106,7 @@ namespace WaiterApp.ViewModel
         }
         public async Task<UserData> AssignDeviceToNativeUserWaiter()
         {
-#if DeviceDotNet
+#if _DeviceDotNet
             string deviceAssignKey = null;
             try
             {
@@ -1461,8 +1465,8 @@ namespace WaiterApp.ViewModel
             {
                 if (InActiveShiftWork)
                 {
-                    if(_ActiveShiftWorkEndsAt==null)
-                        _ActiveShiftWorkEndsAt=ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
+                    if (_ActiveShiftWorkEndsAt == null)
+                        _ActiveShiftWorkEndsAt = ActiveShiftWork.StartsAt + TimeSpan.FromHours(ActiveShiftWork.PeriodInHours);
                     return _ActiveShiftWorkEndsAt.Value;
 
                 }
@@ -1523,10 +1527,13 @@ namespace WaiterApp.ViewModel
                                 else
                                     Waiter.RemoveMessage(message.MessageID);
                                 //PartOfMealRequestMessageForward(message);
+                                AudioVibrationSignal(ClientMessages.LayTheTable);
 
                                 return;
                             }
                         }
+
+                        //audio signal
                     }
                     if (message != null && message.GetDataValue<ClientMessages>("ClientMessageType") == ClientMessages.ItemsReadyToServe)
                     {
@@ -1540,7 +1547,7 @@ namespace WaiterApp.ViewModel
 
                                 string servicesPointIdentity = message.GetDataValue<string>("ServicesPointIdentity");
                                 ItemsReadyToServeRequest?.Invoke(this, message.MessageID, servicesPointIdentity);
-                                //PartOfMealRequestMessageForward(message);
+                                AudioVibrationSignal(ClientMessages.ItemsReadyToServe);
                                 return;
                             }
                         }
@@ -1559,8 +1566,9 @@ namespace WaiterApp.ViewModel
                                 string sessionIdentity = message.GetDataValue<string>("SessionIdentity");
                                 List<string> namesOfDelayedCustomers = message.GetDataValue<List<string>>("NamesOfDelayedCustomers");
                                 CaregivingMessageType caregivingMessageType = message.GetDataValue<CaregivingMessageType>("CaregivingMessageType");
-                                MealConversationTimeExceeded?.Invoke(this, message.MessageID, servicesPointIdentity, sessionIdentity,caregivingMessageType, namesOfDelayedCustomers);
+                                MealConversationTimeExceeded?.Invoke(this, message.MessageID, servicesPointIdentity, sessionIdentity, caregivingMessageType, namesOfDelayedCustomers);
 
+                                AudioVibrationSignal(ClientMessages.ItemsReadyToServe);
                                 //PartOfMealRequestMessageForward(message);
                                 return;
                             }
@@ -1571,6 +1579,50 @@ namespace WaiterApp.ViewModel
         }
 
 
+        private void AudioVibrationSignal(ClientMessages messageType)
+        {
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+            var isInSleepMode = device.IsinSleepMode;
+            lock (MessagesLock)
+            {
+                if (!VibrateOn)
+                {
+                    VibrateOn = true;
+                    Task.Run(() =>
+                    {
+                        //ringtoneService.Play();
+                        try
+                        {
+                            int count = 4;
+                            if (!isInSleepMode)
+                                count = 1;
+                            var duration = TimeSpan.FromSeconds(2);
+#if DeviceDotNet
+                            while (count > 0)
+                            {
+                                count--;
+                                Vibration.Vibrate(duration);
+                                System.Threading.Thread.Sleep(1000);
+
+                                Vibration.Cancel();
+                                System.Threading.Thread.Sleep(2000);
+
+                                if (!device.IsinSleepMode)
+                                    break;
+
+                            }
+#endif
+                        }
+                        finally
+                        {
+                            lock (MessagesLock)
+                                VibrateOn = false;
+                        }
+                        //ringtoneService.Stop();
+                    });
+                }
+            }
+        }
 
         public Notification GetMessageNotification(string messageId)
         {
@@ -1817,6 +1869,7 @@ namespace WaiterApp.ViewModel
 
         /// <MetaDataID>{78e3b85a-cefd-4a92-aef3-66ad79121d13}</MetaDataID>
         Dictionary<string, JObject> Translations = new Dictionary<string, JObject>();
+        private bool VibrateOn;
 
         /// <MetaDataID>{daa58ef0-acd5-443f-8fde-ebd20b3d3ec0}</MetaDataID>
         public string GetTranslation(string langCountry)
@@ -1926,7 +1979,7 @@ namespace WaiterApp.ViewModel
         public async Task<bool> CheckPermissionsForQRCodeScan()
         {
 #if DeviceDotNet
- 
+
             return (await Xamarin.Essentials.Permissions.CheckStatusAsync<Permissions.Camera>()) == Xamarin.Essentials.PermissionStatus.Granted;
 #else
             return false;

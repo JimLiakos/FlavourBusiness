@@ -702,46 +702,7 @@ namespace DontWaitApp
 #endif
 
                     //IRingtoneService ringtoneService = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IRingtoneService)) as IRingtoneService;
-                    var isInSleepMode = device.IsinSleepMode;
-                    lock (MessagesLock)
-                    {
-                        if (!VibrateOn)
-                        {
-                            VibrateOn = true;
-                            Task.Run(() =>
-                            {
-                                //ringtoneService.Play();
-                                try
-                                {
-                                    int count = 4;
-                                    if (!isInSleepMode)
-                                        count = 1;
-                                    var duration = TimeSpan.FromSeconds(2);
-#if DeviceDotNet
-                                    while (count > 0)
-                                    {
-                                        count--;
-                                        Vibration.Vibrate(duration);
-                                        System.Threading.Thread.Sleep(1000);
-
-                                        Vibration.Cancel();
-                                        System.Threading.Thread.Sleep(2000);
-
-                                        if (!device.IsinSleepMode)
-                                            break;
-
-                                    }
-#endif
-                                }
-                                finally
-                                {
-                                    lock (MessagesLock)
-                                        VibrateOn = false;
-                                }
-                                //ringtoneService.Stop();
-                            });
-                        }
-                    }
+                    AudioVibrationSignal();
 
                 }
                 else
@@ -808,6 +769,51 @@ namespace DontWaitApp
                          }
                      });
                     }
+                }
+            }
+        }
+
+        private void AudioVibrationSignal()
+        {
+            IDeviceOOAdvantechCore device = DependencyService.Get<IDeviceInstantiator>().GetDeviceSpecific(typeof(IDeviceOOAdvantechCore)) as IDeviceOOAdvantechCore;
+            var isInSleepMode = device.IsinSleepMode;
+            lock (MessagesLock)
+            {
+                if (!VibrateOn)
+                {
+                    VibrateOn = true;
+                    Task.Run(() =>
+                    {
+                        //ringtoneService.Play();
+                        try
+                        {
+                            int count = 4;
+                            if (!isInSleepMode)
+                                count = 1;
+                            var duration = TimeSpan.FromSeconds(2);
+#if DeviceDotNet
+                            while (count > 0)
+                            {
+                                count--;
+                                Vibration.Vibrate(duration);
+                                System.Threading.Thread.Sleep(1000);
+
+                                Vibration.Cancel();
+                                System.Threading.Thread.Sleep(2000);
+
+                                if (!device.IsinSleepMode)
+                                    break;
+
+                            }
+#endif
+                        }
+                        finally
+                        {
+                            lock (MessagesLock)
+                                VibrateOn = false;
+                        }
+                        //ringtoneService.Stop();
+                    });
                 }
             }
         }

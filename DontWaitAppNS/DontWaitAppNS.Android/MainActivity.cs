@@ -183,10 +183,7 @@ namespace DontWaitAppNS.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             if (permissions.Contains(Android.Manifest.Permission.PostNotifications))
-            {
                 OOAdvantech.Droid.DeviceOOAdvantechCore.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            }
             else
             {
                 Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
